@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Zone</title>
+    <script src="https://telegram-web-app.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header { 
+            background: #16213e;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            border: 1px solid #0f3460;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .stat {
+            background: #0f3460;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .stat span { 
+            display: block; 
+            font-size: 20px; 
+            font-weight: bold; 
+            color: #e94560;
+        }
+        .stat.hunger span { color: #f5a623; }
+        .stat.thirst span { color: #4a9eff; }
+        .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .menu button {
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            background: #16213e;
+            color: #eee;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #0f3460;
+        }
+        .menu button:hover {
+            transform: scale(1.02);
+            background: #1a1a4e;
+        }
+        .menu button.danger { background: #c0392b; border-color: #e74c3c; }
+        .menu button.success { background: #27ae60; border-color: #2ecc71; }
+        .screen {
+            display: none;
+            background: #16213e;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #0f3460;
+            margin: 10px 0;
+            flex: 1;
+        }
+        .screen.active { display: block; }
+        .raid-log {
+            background: #0f3460;
+            padding: 16px;
+            border-radius: 12px;
+            min-height: 150px;
+            margin: 12px 0;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .raid-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .raid-actions button {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #0f3460;
+            color: #eee;
+            cursor: pointer;
+        }
+        .shop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .shop-item {
+            background: #0f3460;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .shop-item button {
+            margin-top: 6px;
+            padding: 8px 16px;
+            background: #27ae60;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .inventory-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .inv-item {
+            background: #0f3460;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .back-btn {
+            margin-top: 16px;
+            padding: 12px;
+            background: #c0392b;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 20px;
+        }
+        .save-status {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading" class="loading">⏳ Загрузка...</div>
+
+<div id="app" style="display:none;">
+    <div class="header">
+        <h2>☢️ POCKET ZONE</h2>
+        <div class="stats">
+            <div class="stat">❤️ Здоровье <span id="health">100</span></div>
+            <div class="stat hunger">🍖 Голод <span id="hunger">100</span></div>
+            <div class="stat thirst">💧 Жажда <span id="thirst">100</span></div>
+        </div>
+        <div style="margin-top: 8px; font-size: 14px; color: #aaa;">
+            🪙 Монеты: <span id="coins">0</span> | 🎒 Снаряжение: <span id="gear">Без оружия</span>
+        </div>
+        <div id="saveStatus" class="save-status">✅ Данные сохранены</div>
+    </div>
+
+    <div id="mainMenu" class="menu">
+        <button onclick="openScreen('inventory')">🎒 Инвентарь</button>
+        <button onclick="openScreen('trader')">💰 Торговля</button>
+        <button class="success" onclick="startRaid()">⚔️ Рейд</button>
+        <button class="danger" onclick="exitGame()">🚪 Выйти</button>
+    </div>
+
+    <div id="inventoryScreen" class="screen">
+        <h3>🎒 Инвентарь</h3>
+        <div id="inventoryList" class="inventory-grid"></div>
+        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+    </div>
+
+    <div id="traderScreen" class="screen">
+        <h3>💰 Торговец</h3>
+        <div id="shopItems" class="shop-grid"></div>
+        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+    </div>
+
+    <div id="raidScreen" class="screen">
+        <h3>⚔️ Рейд</h3>
+        <div id="raidStatus" class="stats" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div>❤️ <span id="raidHealth">100</span></div>
+            <div>🍖 <span id="raidHunger">100</span></div>
+            <div>💧 <span id="raidThirst">100</span></div>
+        </div>
+        <div id="raidLog" class="raid-log">Нажми "Идти дальше" чтобы начать...</div>
+        <div class="raid-actions">
+            <button onclick="raidStep()">🚶 Идти дальше</button>
+            <button onclick="endRaid()">🏕️ Вернуться</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let player = {
+    health: 100,
+    hunger: 100,
+    thirst: 100,
+    coins: 0,
+    food: 3,
+    water: 3,
+    armor: 0,
+    weapon: 1,
+    weaponName: 'Кулаки',
+    level: 1,
+    exp: 0
+};
+
+let raidActive = false;
+let raidLogs = [];
+let userId = null;
+
+const traderItems = [
+    { id: 'bread', name: '🍞 Хлеб', price: 10, type: 'food', restore: 25 },
+    { id: 'water', name: '💧 Вода', price: 8, type: 'water', restore: 20 },
+    { id: 'armor', name: '🛡️ Легкая броня', price: 50, type: 'armor', value: 5 },
+    { id: 'pistol', name: '🔫 Пистолет', price: 75, type: 'weapon', value: 3 },
+    { id: 'rifle', name: '🔫 Автомат', price: 150, type: 'weapon', value: 8 }
+];
+
+function saveGame() {
+    localStorage.setItem('pocketZoneSave', JSON.stringify(player));
+}
+
+function loadGame() {
+    const data = localStorage.getItem('pocketZoneSave');
+    if (data) {
+        const saved = JSON.parse(data);
+        Object.assign(player, saved);
+    }
+    updateUI();
+}
+
+function updateUI() {
+    document.getElementById('health').textContent = Math.round(player.health);
+    document.getElementById('hunger').textContent = Math.round(player.hunger);
+    document.getElementById('thirst').textContent = Math.round(player.thirst);
+    document.getElementById('coins').textContent = player.coins;
+    document.getElementById('gear').textContent = player.weaponName || 'Без оружия';
+    
+    if (raidActive) {
+        document.getElementById('raidHealth').textContent = Math.round(player.health);
+        document.getElementById('raidHunger').textContent = Math.round(player.hunger);
+        document.getElementById('raidThirst').textContent = Math.round(player.thirst);
+    }
+    saveGame();
+}
+
+function openScreen(screen) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById('mainMenu').style.display = 'none';
+    
+    if (screen === 'main') {
+        document.getElementById('mainMenu').style.display = 'grid';
+        return;
+    }
+    
+    const target = document.getElementById(screen + 'Screen');
+    if (target) {
+        target.classList.add('active');
+        if (screen === 'inventory') renderInventory();
+        if (screen === 'trader') renderTrader();
+    }
+}
+
+function renderInventory() {
+    const list = document.getElementById('inventoryList');
+    list.innerHTML = `
+        <div class="inv-item">🍖 Еда: ${player.food}</div>
+        <div class="inv-item">💧 Вода: ${player.water}</div>
+        <div class="inv-item">🛡️ Броня: ${player.armor}</div>
+        <div class="inv-item">⚔️ Оружие: ${player.weaponName}</div>
+        <div class="inv-item">🪙 Монеты: ${player.coins}</div>
+    `;
+}
+
+function renderTrader() {
+    const grid = document.getElementById('shopItems');
+    grid.innerHTML = traderItems.map(item => `
+        <div class="shop-item">
+            <div>${item.name}</div>
+            <div style="font-size:12px;color:#aaa;">${item.price} монет</div>
+            <button onclick="buyItem('${item.id}')">Купить</button>
+        </div>
+    `).join('');
+}
+
+function buyItem(itemId) {
+    const item = traderItems.find(i => i.id === itemId);
+    if (!item) return;
+    if (player.coins < item.price) {
+        alert('❌ Не хватает монет!');
+        return;
+    }
+    
+    player.coins -= item.price;
+    
+    if (item.type === 'food') {
+        player.food += 1;
+        player.hunger = Math.min(100, player.hunger + item.restore);
+    } else if (item.type === 'water') {
+        player.water += 1;
+        player.thirst = Math.min(100, player.thirst + item.restore);
+    } else if (item.type === 'armor') {
+        player.armor += item.value;
+    } else if (item.type === 'weapon') {
+        player.weapon += item.value;
+        player.weaponName = item.name;
+    }
+    
+    updateUI();
+    renderTrader();
+    alert(`✅ Куплено: ${item.name}`);
+}
+
+function startRaid() {
+    if (player.health <= 0) {
+        alert('💀 Вы мертвы!');
+        return;
+    }
+    raidActive = true;
+    raidLogs = [];
+    document.getElementById('mainMenu').style.display = 'none';
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById('raidScreen').classList.add('active');
+    document.getElementById('raidLog').textContent = '⚔️ Вы входите в Зону...';
+    updateUI();
+}
+
+function raidStep() {
+    if (!raidActive) return;
+    
+    if (player.health <= 0) {
+        document.getElementById('raidLog').textContent = '💀 ВЫ УМЕРЛИ.';
+        raidActive = false;
+        return;
+    }
+    
+    player.hunger -= 3 + Math.floor(Math.random() * 3);
+    player.thirst -= 3 + Math.floor(Math.random() * 3);
+    
+    if (player.hunger < 20) player.health -= 2;
+    if (player.thirst < 20) player.health -= 2;
+    
+    const roll = Math.random();
+    let eventText = '';
+    
+    if (roll < 0.15) {
+        eventText = '🌫️ Ничего. Тишина.';
+    } else if (roll < 0.30) {
+        const dmg = 10 + Math.floor(Math.random() * 20);
+        player.health -= dmg;
+        eventText = `⚡ Аномалия! -${dmg} HP`;
+    } else if (roll < 0.50) {
+        const enemyHp = 20 + Math.floor(Math.random() * 30);
+        const enemyDmg = 3 + Math.floor(Math.random() * 6);
+        let playerDmg = player.weapon + Math.floor(Math.random() * 3);
+        let enemyCurrent = enemyHp;
+        let battleLog = `⚔️ Бой!\n`;
+        
+        while (enemyCurrent > 0 && player.health > 0) {
+            enemyCurrent -= playerDmg;
+            battleLog += `Вы нанесли ${playerDmg}. HP врага: ${Math.max(0, enemyCurrent)}\n`;
+            if (enemyCurrent <= 0) break;
+            
+            const enemyHit = Math.max(0, enemyDmg - player.armor);
+            player.health -= enemyHit;
+            battleLog += `Враг нанес ${enemyHit}. Ваше HP: ${Math.max(0, player.health)}\n`;
+        }
+        
+        if (enemyCurrent <= 0 && player.health > 0) {
+            const reward = 10 + Math.floor(Math.random() * 20);
+            player.coins += reward;
+            battleLog += `🏆 Победа! +${reward} монет`;
+        } else {
+            battleLog += '💀 Поражение...';
+        }
+        eventText = battleLog;
+    } else if (roll < 0.70) {
+        if (Math.random() < 0.5) {
+            const amount = 2 + Math.floor(Math.random() * 3);
+            player.food += amount;
+            eventText = `📦 Тайник! +${amount} еды`;
+        } else {
+            const amount = 10 + Math.floor(Math.random() * 30);
+            player.coins += amount;
+            eventText = `📦 Тайник! +${amount} монет`;
+        }
+    } else if (roll < 0.85) {
+        if (Math.random() < 0.5) {
+            const reward = 15 + Math.floor(Math.random() * 20);
+            player.coins += reward;
+            eventText = `💡 Удача! +${reward} монет`;
+        } else {
+            const dmg = 5 + Math.floor(Math.random() * 10);
+            player.health -= dmg;
+            eventText = `💡 Ловушка! -${dmg} HP`;
+        }
+    } else {
+        if (Math.random() < 0.5) {
+            player.water += 1;
+            player.thirst = Math.min(100, player.thirst + 20);
+            eventText = '💧 Нашли воду!';
+        } else {
+            player.health = Math.min(100, player.health + 25);
+            eventText = '💊 Аптечка! +25 HP';
+        }
+    }
+    
+    player.hunger = Math.max(0, Math.min(100, player.hunger));
+    player.thirst = Math.max(0, Math.min(100, player.thirst));
+    player.health = Math.max(0, Math.min(100, player.health));
+    
+    raidLogs.push(eventText);
+    if (raidLogs.length > 5) raidLogs.shift();
+    document.getElementById('raidLog').textContent = raidLogs.join('\n\n');
+    
+    updateUI();
+    
+    if (player.health <= 0) {
+        document.getElementById('raidLog').textContent += '\n\n💀 ВЫ УМЕРЛИ.';
+        raidActive = false;
+    }
+}
+
+function endRaid() {
+    raidActive = false;
+    document.getElementById('raidScreen').classList.remove('active');
+    document.getElementById('mainMenu').style.display = 'grid';
+    updateUI();
+}
+
+function exitGame() {
+    if (confirm('🚪 Точно выйти?')) {
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.close();
+        } else {
+            alert('Игра сохранена!');
+        }
+    }
+}
+
+function init() {
+    if (window.Telegram && window.Telegram.WebApp) {
+        const user = window.Telegram.WebApp.initDataUnsafe?.user;
+        if (user) {
+            userId = user.id;
+        }
+        window.Telegram.WebApp.ready();
+    }
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadGame();
+}
+
+init();
+</script>
+</body>
+</html>
