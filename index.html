@@ -77,7 +77,8 @@
         <button onclick="openScreen('arena')">🏟️ Арена</button>
         <button onclick="exitGame()">🚪 Выйти из игры</button>
     </div>
-        <div id="warehouseScreen" class="screen">
+
+    <div id="warehouseScreen" class="screen">
         <h3>🏠 Мой склад</h3>
         <div class="grid7" id="warehouseGrid" style="grid-template-columns: repeat(10, 1fr);"></div>
         <button class="back-btn" onclick="openScreen('main')">Выйти из склада</button>
@@ -121,8 +122,8 @@
 
     <div id="kpkScreen" class="screen">
         <h3>📱 КПК</h3>
-        <button onclick="openKpkTab('info')">Инфо о персонаже</button>
-        <button onclick="openKpkTab('players')">Список игроков</button>
+        <button onclick="openKpkInfo()">Инфо о персонаже</button>
+        <button onclick="openKpkPlayers()">Список игроков</button>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="kpkContent"></div>
     </div>
@@ -140,7 +141,6 @@
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="arenaContent"></div>
     </div>
-
 </div>
 
 <div id="adminModal" class="modal">
@@ -172,334 +172,276 @@
         <button onclick="closeAdminPanel()" style="background:#c0392b; margin-top:10px;">Закрыть</button>
     </div>
 </div>
+
 <script>
     let player = {
         health: 100, hunger: 100, thirst: 100, coins: 0, level: 1, exp: 0,
         vitality: 0, agility: 0, strength: 0, accuracy: 0, intellect: 0, luck: 0,
-        weapon: { name: 'Кулаки', tier: 0, dmg: 5 },
-        armor: { name: 'Нет', tier: 0, armor: 0, artifactProtection: 0 },
+        weapon: { name: 'Пистолет Макарова', tier: 1, dmg: 10 },
+        armor: { name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2 },
         detector: { name: 'Радэр 2-02', tier: 1 },
         maxHealth: 100,
         inventory: {},
         belt: [null, null, null, null, null, null],
         warehouse: {},
-        quickSlots: [null, null, null, null]
-    };
-// ===== МУТАНТЫ =====
-const mutants = [
-    { tier: 0, name: 'Тушкан', hp: 10, dmg: 10, loot: 'Хвост тушкана', lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1.0, runChance: 1.0, runSkill: 0.1, hitChance: 1.0, hitSkill: 0.1 },
-    { tier: 1, name: 'Слепая собака', hp: 20, dmg: 20, loot: 'Ухо слепого пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-    { tier: 2, name: 'Плоть', hp: 30, dmg: 30, loot: 'Глаз плоти', lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
-    { tier: 3, name: 'Боров', hp: 40, dmg: 40, loot: 'Клык борова', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-    { tier: 4, name: 'Зомби', hp: 50, dmg: 50, loot: 'Ухо зомби', lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
-    { tier: 5, name: 'Псевдо собака', hp: 60, dmg: 60, loot: 'Ухо псевдо пса', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-    { tier: 6, name: 'Пси собака', hp: 70, dmg: 70, loot: 'Ухо пси пса', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-    { tier: 7, name: 'Снорк', hp: 80, dmg: 80, loot: 'Ухо снорка', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-    { tier: 8, name: 'Кровосос', hp: 90, dmg: 90, loot: 'Щупальца кровососа', lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
-    { tier: 9, name: 'Полтергейст', hp: 100, dmg: 100, loot: 'Ухо полтергейста', lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1.0, hitChance: 0.55, hitSkill: 1.0 },
-    { tier: 10, name: 'Огненный полтергейст', hp: 110, dmg: 110, loot: 'Ухо огненного полтергейста', lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
-    { tier: 11, name: 'Бюрер', hp: 120, dmg: 120, loot: 'Ухо бюрера', lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
-    { tier: 12, name: 'Контролёр', hp: 140, dmg: 140, loot: 'Ухо контролёра', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-    { tier: 13, name: 'Химера', hp: 160, dmg: 160, loot: 'Коготь химеры', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
-    { tier: 14, name: 'Псевдогигант', hp: 190, dmg: 190, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
-];
-
-// ===== АНОМАЛИИ =====
-const anomalies = [
-    { id: 1, name: 'Жарка', tier: 1, dmg: 15, dropChance: 0.5, artifacts: ['Медуза', 'Жемчужина', 'Искра'] },
-    { id: 2, name: 'Электра', tier: 2, dmg: 20, dropChance: 0.5, artifacts: ['Вспышка', 'Батарейка', 'Молния'] },
-    { id: 3, name: 'Воронка', tier: 3, dmg: 30, dropChance: 0.5, artifacts: ['Камень крови', 'Гравитационный шар', 'Вихрь'] },
-    { id: 4, name: 'Кислотный туман', tier: 4, dmg: 40, dropChance: 0.5, artifacts: ['Огненный шар', 'Слеза', 'Глаз'] },
-    { id: 5, name: 'Карусель', tier: 5, dmg: 60, dropChance: 0.5, artifacts: ['Стеклянный шарик', 'Магнит', 'Пузырь'] },
-    { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб'] },
-    { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя'] },
-    { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия'] }
-];
-
-// ===== АРТЕФАКТЫ =====
-const artifacts = [
-    { name: 'Медуза', tier: 1, price: 200, stats: { health: 10 } },
-    { name: 'Жемчужина', tier: 1, price: 250, stats: { hunger: 5 } },
-    { name: 'Искра', tier: 1, price: 300, stats: { vitality: 1 } },
-    { name: 'Вспышка', tier: 2, price: 500, stats: { agility: 1 } },
-    { name: 'Батарейка', tier: 2, price: 600, stats: { health: 15 } },
-    { name: 'Молния', tier: 2, price: 700, stats: { strength: 1 } },
-    { name: 'Камень крови', tier: 3, price: 1200, stats: { vitality: 2 } },
-    { name: 'Гравитационный шар', tier: 3, price: 1400, stats: { strength: 2 } },
-    { name: 'Вихрь', tier: 3, price: 1600, stats: { agility: 2 } },
-    { name: 'Огненный шар', tier: 4, price: 2500, stats: { strength: 3 } },
-    { name: 'Слеза', tier: 4, price: 2800, stats: { health: 30 } },
-    { name: 'Глаз', tier: 4, price: 3200, stats: { intellect: 3 } },
-    { name: 'Стеклянный шарик', tier: 5, price: 4000, stats: { agility: 4 } },
-    { name: 'Магнит', tier: 5, price: 4500, stats: { strength: 4 } },
-    { name: 'Пузырь', tier: 5, price: 5000, stats: { luck: 5 } },
-    { name: 'Кусок мяса', tier: 6, price: 7000, stats: { vitality: 5 } },
-    { name: 'Коготь', tier: 6, price: 7500, stats: { agility: 5 } },
-    { name: 'Зуб', tier: 6, price: 8000, stats: { health: 60 } },
-    { name: 'Кровь земли', tier: 7, price: 12000, stats: { health: 70 } },
-    { name: 'Пепел', tier: 7, price: 14000, stats: { luck: 6 } },
-    { name: 'Пламя', tier: 7, price: 16000, stats: { strength: 6 } },
-    { name: 'Ядро', tier: 8, price: 30000, stats: { strength: 10 } },
-    { name: 'Звезда', tier: 8, price: 35000, stats: { health: 100 } },
-    { name: 'Антиматерия', tier: 8, price: 50000, stats: { luck: 10 } }
-];
-
-// ===== ОРУЖИЕ =====
-const weapons = [
-    { id: 1, name: 'Пистолет Макарова', tier: 1, dmg: 10, price: 150 },
-    { id: 2, name: 'Револьвер Наган', tier: 1, dmg: 15, price: 250 },
-    { id: 3, name: 'Пистолет ТТ', tier: 2, dmg: 20, price: 400 },
-    { id: 4, name: 'АК-74', tier: 2, dmg: 30, price: 700 },
-    { id: 5, name: 'Винтовка СВД', tier: 3, dmg: 40, price: 1200 },
-    { id: 6, name: 'Штурмовая винтовка', tier: 3, dmg: 55, price: 1800 },
-    { id: 7, name: 'Дробовик СПАС-12', tier: 4, dmg: 60, price: 2500 },
-    { id: 8, name: 'Снайперская винтовка', tier: 4, dmg: 90, price: 5000 },
-    { id: 9, name: 'Пулемет', tier: 5, dmg: 100, price: 8000 },
-    { id: 10, name: 'Гаусс-пушка', tier: 10, dmg: 150, price: 50000 }
-];
-
-// ===== БРОНЯ =====
-const armorItems = [
-    { id: 1, name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2, price: 100 },
-    { id: 2, name: 'Комбинезон Комбат', tier: 1, armor: 8, artifactProtection: 3, price: 200 },
-    { id: 3, name: 'Бронежилет Барьер', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
-    { id: 4, name: 'Комбинезон Долг', tier: 2, armor: 20, artifactProtection: 7, price: 700 },
-    { id: 5, name: 'Комбинезон Ветер', tier: 3, armor: 30, artifactProtection: 10, price: 1200 },
-    { id: 6, name: 'Комбинезон Заря', tier: 3, armor: 40, artifactProtection: 12, price: 2000 },
-    { id: 7, name: 'Бронежилет Выход', tier: 4, armor: 45, artifactProtection: 15, price: 2500 },
-    { id: 8, name: 'Экзоскелет Свобода', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
-    { id: 9, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
-    { id: 10, name: 'Экзоскелет', tier: 10, armor: 100, artifactProtection: 50, price: 50000 }
-];
-
-// ===== ДЕТЕКТОРЫ =====
-const detectors = [
-    { id: 1, name: 'Радэр 2-02', tier: 1, price: 100 },
-    { id: 2, name: 'Радэр 2-20', tier: 2, price: 500 },
-    { id: 3, name: 'Велес', tier: 3, price: 1500 },
-    { id: 4, name: 'Сварог', tier: 4, price: 3500 },
-    { id: 5, name: 'Варлорд', tier: 5, price: 7000 }
-];
-
-// ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
-const consumables = [
-    { id: 1, name: 'Хлеб', type: 'food', restore: 25, price: 20 },
-    { id: 2, name: 'Тушенка', type: 'food', restore: 50, price: 40 },
-    { id: 3, name: 'Вода', type: 'water', restore: 25, price: 15 },
-    { id: 4, name: 'Энергетик', type: 'water', restore: 50, price: 40 },
-    { id: 5, name: 'Аптечка', type: 'medkit', restore: 50, price: 100 }
-];
-
-// ===== ФРАКЦИИ И NPC =====
-const factions = [
-    { name: 'Наёмники', type: 'enemy', color: '#ff5e5e' },
-    { name: 'Бандиты', type: 'enemy', color: '#ff5e5e' },
-    { name: 'Монолит', type: 'enemy', color: '#ff5e5e' },
-    { name: 'Военные', type: 'enemy', color: '#ff5e5e' },
-    { name: 'Сталкеры', type: 'neutral', color: '#5e5eff' },
-    { name: 'Долг', type: 'neutral', color: '#5e5eff' },
-    { name: 'Свобода', type: 'neutral', color: '#5e5eff' },
-    { name: 'Учёные', type: 'neutral', color: '#5e5eff' }
-];
-
-const npcs = [];
-for (let i = 0; i < factions.length; i++) {
-    for (let tier = 1; tier <= 10; tier++) {
-        const weapon = weapons.find(w => w.tier === tier) || weapons[0];
-        const armor = armorItems.find(a => a.tier === tier) || armorItems[0];
-        npcs.push({
-            id: `${factions[i].name}_${tier}`,
-            faction: factions[i],
-            tier: tier,
-            name: `${factions[i].name} ${tier} ур.`,
-            weapon: weapon,
-            armor: armor,
-            coins: tier * 500,
-            exp: tier * 50,
-            hp: tier * 100,
-            dmg: tier * 15,
-            hitChance: 0.9,
-            runChance: 0.5,
-            runSkill: 0
-        });
-    }
-}
-// ===== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ =====
-const SERVER_URL = 'http://213.176.92.184:3000';
-
-function saveGame() {
-    const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-    const userId = tgUser ? tgUser.id : 'guest';
-    
-    fetch(`${SERVER_URL}/api/player`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: userId, username: tgUser?.username, data: player })
-    });
-}
-
-function loadGame() {
-    const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-    const userId = tgUser ? tgUser.id : 'guest';
-    
-    fetch(`${SERVER_URL}/api/player/${userId}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data) { Object.assign(player, data); }
-            updateUI();
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-        })
-        .catch(() => {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-        });
-}
-
-function updateUI() {
-    document.getElementById('health').textContent = Math.round(player.health);
-    document.getElementById('hunger').textContent = Math.round(player.hunger);
-    document.getElementById('thirst').textContent = Math.round(player.thirst);
-    document.getElementById('coins').textContent = player.coins;
-    document.getElementById('level').textContent = player.level;
-    document.getElementById('weapon').textContent = player.weapon.name;
-    document.getElementById('detector').textContent = player.detector.name;
-    document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
-}
-
-// ===== АДМИН МЕНЮ =====
-const ADMIN_PASSWORD = 'admin123';
-
-function adminClickCounter() {
-    adminClickCount++;
-    if (adminClickCount >= 10) {
-        adminClickCount = 0;
-        openAdminModal();
-    }
-}
-
-function openAdminModal() {
-    document.getElementById('adminModal').classList.add('active');
-}
-
-function checkAdminPassword() {
-    const password = document.getElementById('adminPassword').value;
-    if (password === ADMIN_PASSWORD) {
-        document.getElementById('adminModal').classList.remove('active');
-        document.getElementById('adminPanel').classList.add('active');
-    } else {
-        alert('Неверный пароль!');
-    }
-}
-
-function closeAdminPanel() {
-    document.getElementById('adminPanel').classList.remove('active');
-}
-
-function giveAdminItem() {
-    const type = document.getElementById('giveType').value;
-    const amount = parseInt(document.getElementById('giveAmount').value) || 1;
-    const tier = parseInt(document.getElementById('giveTier').value) || 1;
-    const targetId = document.getElementById('targetUserId').value;
-    const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-    const adminId = tgUser ? tgUser.id : 'guest';
-    
-    if (targetId) {
-        let itemName = '';
-        if (type === 'level') {
-            itemName = 'level';
-        } else if (type === 'coins') {
-            itemName = 'coins';
-        } else if (type === 'artifact') {
-            const artifact = artifacts.find(a => a.tier === tier);
-            if (artifact) itemName = artifact.name;
-        } else if (type === 'weapon') {
-            const weapon = weapons.find(w => w.tier === tier);
-            if (weapon) itemName = weapon.name;
-        } else if (type === 'armor') {
-            const armor = armorItems.find(a => a.tier === tier);
-            if (armor) itemName = armor.name;
-        } else if (type === 'detector') {
-            const detector = detectors.find(d => d.tier === tier);
-            if (detector) itemName = detector.name;
+        quickSlots: [null, null, null, null],
+        stats: {
+            artifactsFound: 0,
+            artifactsByTier: {},
+            mutantsKilled: 0,
+            mutantsByTier: {},
+            npcsKilled: 0,
+            npcsByTier: {},
+            deaths: 0,
+            onlinePlayersKilled: 0
         }
+    };
+
+    let raidActive = false;
+    let raidLogs = [];
+    let currentEnemy = null;
+    let battleTurn = 0;
+    let adminClickCount = 0;
+    let kpkTab = 'info';
+    let marketTab = 'my';
+
+    // ===== МУТАНТЫ =====
+    const mutants = [
+        { tier: 0, name: 'Тушкан', hp: 10, dmg: 10, loot: 'Хвост тушкана', lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1.0, runChance: 1.0, runSkill: 0.1, hitChance: 1.0, hitSkill: 0.1 },
+        { tier: 1, name: 'Слепая собака', hp: 20, dmg: 20, loot: 'Ухо слепого пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 2, name: 'Плоть', hp: 30, dmg: 30, loot: 'Глаз плоти', lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
+        { tier: 3, name: 'Боров', hp: 40, dmg: 40, loot: 'Клык борова', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 4, name: 'Зомби', hp: 50, dmg: 50, loot: 'Ухо зомби', lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
+        { tier: 5, name: 'Псевдо собака', hp: 60, dmg: 60, loot: 'Ухо псевдо пса', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 6, name: 'Пси собака', hp: 70, dmg: 70, loot: 'Ухо пси пса', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 7, name: 'Снорк', hp: 80, dmg: 80, loot: 'Ухо снорка', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 8, name: 'Кровосос', hp: 90, dmg: 90, loot: 'Щупальца кровососа', lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
+        { tier: 9, name: 'Полтергейст', hp: 100, dmg: 100, loot: 'Ухо полтергейста', lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1.0, hitChance: 0.55, hitSkill: 1.0 },
+        { tier: 10, name: 'Огненный полтергейст', hp: 110, dmg: 110, loot: 'Ухо огненного полтергейста', lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
+        { tier: 11, name: 'Бюрер', hp: 120, dmg: 120, loot: 'Ухо бюрера', lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
+        { tier: 12, name: 'Контролёр', hp: 140, dmg: 140, loot: 'Ухо контролёра', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 13, name: 'Химера', hp: 160, dmg: 160, loot: 'Коготь химеры', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
+        { tier: 14, name: 'Псевдогигант', hp: 190, dmg: 190, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
+    ];
+
+    // ===== АНОМАЛИИ =====
+    const anomalies = [
+        { id: 1, name: 'Жарка', tier: 1, dmg: 15, dropChance: 0.5, artifacts: ['Медуза', 'Жемчужина', 'Искра'] },
+        { id: 2, name: 'Электра', tier: 2, dmg: 20, dropChance: 0.5, artifacts: ['Вспышка', 'Батарейка', 'Молния'] },
+        { id: 3, name: 'Воронка', tier: 3, dmg: 30, dropChance: 0.5, artifacts: ['Камень крови', 'Гравитационный шар', 'Вихрь'] },
+        { id: 4, name: 'Кислотный туман', tier: 4, dmg: 40, dropChance: 0.5, artifacts: ['Огненный шар', 'Слеза', 'Глаз'] },
+        { id: 5, name: 'Карусель', tier: 5, dmg: 60, dropChance: 0.5, artifacts: ['Стеклянный шарик', 'Магнит', 'Пузырь'] },
+        { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб'] },
+        { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя'] },
+        { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия'] }
+    ];
+
+    // ===== АРТЕФАКТЫ =====
+    const artifacts = [
+        { name: 'Медуза', tier: 1, price: 200, stats: { health: 10 } },
+        { name: 'Жемчужина', tier: 1, price: 250, stats: { hunger: 5 } },
+        { name: 'Искра', tier: 1, price: 300, stats: { vitality: 1 } },
+        { name: 'Вспышка', tier: 2, price: 500, stats: { agility: 1 } },
+        { name: 'Батарейка', tier: 2, price: 600, stats: { health: 15 } },
+        { name: 'Молния', tier: 2, price: 700, stats: { strength: 1 } },
+        { name: 'Камень крови', tier: 3, price: 1200, stats: { vitality: 2 } },
+        { name: 'Гравитационный шар', tier: 3, price: 1400, stats: { strength: 2 } },
+        { name: 'Вихрь', tier: 3, price: 1600, stats: { agility: 2 } },
+        { name: 'Огненный шар', tier: 4, price: 2500, stats: { strength: 3 } },
+        { name: 'Слеза', tier: 4, price: 2800, stats: { health: 30 } },
+        { name: 'Глаз', tier: 4, price: 3200, stats: { intellect: 3 } },
+        { name: 'Стеклянный шарик', tier: 5, price: 4000, stats: { agility: 4 } },
+        { name: 'Магнит', tier: 5, price: 4500, stats: { strength: 4 } },
+        { name: 'Пузырь', tier: 5, price: 5000, stats: { luck: 5 } },
+        { name: 'Кусок мяса', tier: 6, price: 7000, stats: { vitality: 5 } },
+        { name: 'Коготь', tier: 6, price: 7500, stats: { agility: 5 } },
+        { name: 'Зуб', tier: 6, price: 8000, stats: { health: 60 } },
+        { name: 'Кровь земли', tier: 7, price: 12000, stats: { health: 70 } },
+        { name: 'Пепел', tier: 7, price: 14000, stats: { luck: 6 } },
+        { name: 'Пламя', tier: 7, price: 16000, stats: { strength: 6 } },
+        { name: 'Ядро', tier: 8, price: 30000, stats: { strength: 10 } },
+        { name: 'Звезда', tier: 8, price: 35000, stats: { health: 100 } },
+        { name: 'Антиматерия', tier: 8, price: 50000, stats: { luck: 10 } }
+    ];
+
+    // ===== ОРУЖИЕ =====
+    const weapons = [
+        { id: 1, name: 'Пистолет Макарова', tier: 1, dmg: 10, price: 150 },
+        { id: 2, name: 'Револьвер Наган', tier: 1, dmg: 15, price: 250 },
+        { id: 3, name: 'Пистолет ТТ', tier: 2, dmg: 20, price: 400 },
+        { id: 4, name: 'АК-74', tier: 2, dmg: 30, price: 700 },
+        { id: 5, name: 'Винтовка СВД', tier: 3, dmg: 40, price: 1200 },
+        { id: 6, name: 'Штурмовая винтовка', tier: 3, dmg: 55, price: 1800 },
+        { id: 7, name: 'Дробовик СПАС-12', tier: 4, dmg: 60, price: 2500 },
+        { id: 8, name: 'Снайперская винтовка', tier: 4, dmg: 90, price: 5000 },
+        { id: 9, name: 'Пулемет', tier: 5, dmg: 100, price: 8000 },
+        { id: 10, name: 'Гаусс-пушка', tier: 10, dmg: 150, price: 50000 }
+    ];
+
+    // ===== БРОНЯ =====
+    const armorItems = [
+        { id: 1, name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2, price: 100 },
+        { id: 2, name: 'Комбинезон Комбат', tier: 1, armor: 8, artifactProtection: 3, price: 200 },
+        { id: 3, name: 'Бронежилет Барьер', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
+        { id: 4, name: 'Комбинезон Долг', tier: 2, armor: 20, artifactProtection: 7, price: 700 },
+        { id: 5, name: 'Комбинезон Ветер', tier: 3, armor: 30, artifactProtection: 10, price: 1200 },
+        { id: 6, name: 'Комбинезон Заря', tier: 3, armor: 40, artifactProtection: 12, price: 2000 },
+        { id: 7, name: 'Бронежилет Выход', tier: 4, armor: 45, artifactProtection: 15, price: 2500 },
+        { id: 8, name: 'Экзоскелет Свобода', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
+        { id: 9, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
+        { id: 10, name: 'Экзоскелет', tier: 10, armor: 100, artifactProtection: 50, price: 50000 }
+    ];
+
+    // ===== ДЕТЕКТОРЫ =====
+    const detectors = [
+        { id: 1, name: 'Радэр 2-02', tier: 1, price: 100 },
+        { id: 2, name: 'Радэр 2-20', tier: 2, price: 500 },
+        { id: 3, name: 'Велес', tier: 3, price: 1500 },
+        { id: 4, name: 'Сварог', tier: 4, price: 3500 },
+        { id: 5, name: 'Варлорд', tier: 5, price: 7000 }
+    ];
+
+    // ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
+    const consumables = [
+        { id: 1, name: 'Хлеб', type: 'food', restore: 25, price: 20 },
+        { id: 2, name: 'Тушенка', type: 'food', restore: 50, price: 40 },
+        { id: 3, name: 'Вода', type: 'water', restore: 25, price: 15 },
+        { id: 4, name: 'Энергетик', type: 'water', restore: 50, price: 40 },
+        { id: 5, name: 'Аптечка', type: 'medkit', restore: 50, price: 100 }
+    ];
+
+    // ===== ФРАКЦИИ =====
+    const factions = [
+        { name: 'Наёмники', type: 'enemy', color: '#ff5e5e' },
+        { name: 'Бандиты', type: 'enemy', color: '#ff5e5e' },
+        { name: 'Монолит', type: 'enemy', color: '#ff5e5e' },
+        { name: 'Военные', type: 'enemy', color: '#ff5e5e' },
+        { name: 'Сталкеры', type: 'neutral', color: '#5e5eff' },
+        { name: 'Долг', type: 'neutral', color: '#5e5eff' },
+        { name: 'Свобода', type: 'neutral', color: '#5e5eff' },
+        { name: 'Учёные', type: 'neutral', color: '#5e5eff' }
+    ];
+
+    // ===== NPC =====
+    const npcs = [];
+    for (let i = 0; i < factions.length; i++) {
+        for (let tier = 1; tier <= 10; tier++) {
+            const weapon = weapons.find(w => w.tier === tier) || weapons[0];
+            const armor = armorItems.find(a => a.tier === tier) || armorItems[0];
+            npcs.push({
+                id: `${factions[i].name}_${tier}`,
+                faction: factions[i],
+                tier: tier,
+                name: `${factions[i].name} ${tier} ур.`,
+                weapon: weapon,
+                armor: armor,
+                coins: tier * 500,
+                exp: tier * 50,
+                hp: tier * 100,
+                dmg: tier * 15,
+                hitChance: 0.9,
+                runChance: 0.5,
+                runSkill: 0
+            });
+        }
+    }
+
+    // ===== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ =====
+    const SERVER_URL = 'http://213.176.92.184:3000';
+
+    function saveGame() {
+        const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
+        const userId = tgUser ? tgUser.id : 'guest';
         
-        fetch(`${SERVER_URL}/api/admin/give`, {
+        fetch(`${SERVER_URL}/api/player`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ adminId, targetId, item: itemName, amount })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                alert('Выдача выполнена!');
-            } else {
-                alert('Ошибка: ' + data.error);
-            }
+            body: JSON.stringify({ id: userId, username: tgUser?.username, data: player })
         });
-    } else {
-        if (type === 'level') {
-            player.level += amount;
-        } else if (type === 'coins') {
-            player.coins += amount;
-        } else if (type === 'artifact') {
-            const artifact = artifacts.find(a => a.tier === tier);
-            if (artifact) {
-                player.inventory[artifact.name] = (player.inventory[artifact.name] || 0) + 1;
-            }
-        } else if (type === 'weapon') {
-            const weapon = weapons.find(w => w.tier === tier);
-            if (weapon) {
-                player.inventory[weapon.name] = (player.inventory[weapon.name] || 0) + 1;
-            }
-        } else if (type === 'armor') {
-            const armor = armorItems.find(a => a.tier === tier);
-            if (armor) {
-                player.inventory[armor.name] = (player.inventory[armor.name] || 0) + 1;
-            }
-        } else if (type === 'detector') {
-            const detector = detectors.find(d => d.tier === tier);
-            if (detector) {
-                player.detector = detector;
-            }
+    }
+
+    function loadGame() {
+        const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
+        const userId = tgUser ? tgUser.id : 'guest';
+        
+        fetch(`${SERVER_URL}/api/player/${userId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) { Object.assign(player, data); }
+                updateUI();
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            })
+            .catch(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            });
+    }
+
+    function updateUI() {
+        document.getElementById('health').textContent = Math.round(player.health);
+        document.getElementById('hunger').textContent = Math.round(player.hunger);
+        document.getElementById('thirst').textContent = Math.round(player.thirst);
+        document.getElementById('coins').textContent = player.coins;
+        document.getElementById('level').textContent = player.level;
+        document.getElementById('weapon').textContent = player.weapon.name;
+        document.getElementById('detector').textContent = player.detector.name;
+        document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
+    }
+
+    // ===== АДМИН МЕНЮ =====
+    const ADMIN_PASSWORD = 'admin123';
+
+    function adminClickCounter() {
+        adminClickCount++;
+        if (adminClickCount >= 10) {
+            adminClickCount = 0;
+            openAdminModal();
+        }
+    }
+
+    function openAdminModal() {
+        document.getElementById('adminModal').classList.add('active');
+    }
+
+    function checkAdminPassword() {
+        const password = document.getElementById('adminPassword').value;
+        if (password === ADMIN_PASSWORD) {
+            document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminPanel').classList.add('active');
+        } else {
+            alert('Неверный пароль!');
+        }
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminPanel').classList.remove('active');
+    }
+
+    // ===== НАВИГАЦИЯ =====
+    function openScreen(screen) {
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById('mainMenu').style.display = 'none';
+        
+        if (screen === 'main') {
+            document.getElementById('mainMenu').style.display = 'grid';
+            return;
         }
         
-        updateUI();
-        saveGame();
-        alert('Выдача выполнена!');
+        const target = document.getElementById(screen + 'Screen');
+        if (target) {
+            target.classList.add('active');
+            if (screen === 'inventory') renderInventory();
+            if (screen === 'shop') renderShop();
+            if (screen === 'warehouse') renderWarehouse();
+            if (screen === 'detectors') renderDetectors();
+        }
     }
-    
-    closeAdminPanel();
-}
-// ===== НАВИГАЦИЯ =====
-function openScreen(screen) {
-    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-    document.getElementById('mainMenu').style.display = 'none';
-    
-    if (screen === 'main') {
-        document.getElementById('mainMenu').style.display = 'grid';
-        return;
-    }
-    
-    const target = document.getElementById(screen + 'Screen');
-    if (target) {
-        target.classList.add('active');
-        if (screen === 'inventory') renderInventory();
-        if (screen === 'shop') renderShop();
-        if (screen === 'warehouse') renderWarehouse();
-        if (screen === 'detectors') renderDetectors();
-        if (screen === 'kpk') renderKpk();
-        if (screen === 'market') renderMarket();
-        if (screen === 'arena') renderArena();
-    }
-}
 
-// ===== КПК =====
-function renderKpk() {
-    const content = document.getElementById('kpkContent');
-    content.innerHTML = '';
-    
-    if (kpkTab === 'info') {
+    // ===== КПК =====
+    function renderKpk() {
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = '';
         const stats = player.stats;
         content.innerHTML = `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
@@ -523,117 +465,103 @@ function renderKpk() {
                 <p>Снаряжение: ${player.weapon.name}, ${player.armor.name}</p>
             </div>
         `;
-    } else if (kpkTab === 'players') {
-        fetch(`${SERVER_URL}/api/players`)
+    }
+
+    function openKpkTab(tab) {
+        kpkTab = tab;
+        renderKpk();
+    }
+
+    function showPlayerInfo(playerId) {
+        fetch(`${SERVER_URL}/api/player/${playerId}`)
             .then(res => res.json())
-            .then(players => {
-                content.innerHTML = players.map(p => `
-                    <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;" onclick="showPlayerInfo('${p.id}')">
-                        <p><strong>${p.username || 'Игрок'}</strong></p>
-                        <p>Уровень: ${JSON.parse(p.data).level}</p>
-                    </div>
-                `).join('');
+            .then(data => {
+                alert(`
+                    Игрок: ${data.username}
+                    Уровень: ${data.level}
+                    Монеты: ${data.coins}
+                `);
             });
     }
-}
 
-function openKpkTab(tab) {
-    kpkTab = tab;
-    renderKpk();
-}
+    // ===== РЫНОК =====
+    function renderMarket() {
+        const content = document.getElementById('marketContent');
+        content.innerHTML = '';
+        if (marketTab === 'my') {
+            fetch(`${SERVER_URL}/api/market`)
+                .then(res => res.json())
+                .then(lots => {
+                    const myLots = lots.filter(l => l.seller_id === getPlayerId());
+                    content.innerHTML = myLots.map(lot => `
+                        <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                            <p><strong>${lot.item}</strong></p>
+                            <p>Цена: ${lot.price} монет</p>
+                            <p>Количество: ${lot.quantity}</p>
+                        </div>
+                    `).join('');
+                });
+        } else if (marketTab === 'buy') {
+            fetch(`${SERVER_URL}/api/market`)
+                .then(res => res.json())
+                .then(lots => {
+                    const buyableLots = lots.filter(l => l.seller_id !== getPlayerId());
+                    content.innerHTML = buyableLots.map(lot => `
+                        <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                            <p><strong>${lot.item}</strong></p>
+                            <p>Цена: ${lot.price} монет</p>
+                            <p>Количество: ${lot.quantity}</p>
+                            <button onclick="buyMarketItem(${lot.id})">Купить</button>
+                        </div>
+                    `).join('');
+                });
+        }
+    }
 
-function showPlayerInfo(playerId) {
-    fetch(`${SERVER_URL}/api/player/${playerId}`)
+    function openMarketTab(tab) {
+        marketTab = tab;
+        renderMarket();
+    }
+
+    function getPlayerId() {
+        const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
+        return tgUser ? tgUser.id : 'guest';
+    }
+
+    function buyMarketItem(lotId) {
+        const buyerId = getPlayerId();
+        fetch(`${SERVER_URL}/api/market/buy`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ buyerId, lotId })
+        })
         .then(res => res.json())
         .then(data => {
-            alert(`
-                Игрок: ${data.username}
-                Уровень: ${data.level}
-                Монеты: ${data.coins}
-            `);
+            if (data.success) {
+                alert('Покупка успешна!');
+            } else {
+                alert('Ошибка: ' + data.error);
+            }
         });
-}
+    }
 
-// ===== РЫНОК =====
-function renderMarket() {
-    const content = document.getElementById('marketContent');
-    content.innerHTML = '';
-    
-    if (marketTab === 'my') {
-        fetch(`${SERVER_URL}/api/market`)
+    // ===== АРЕНА =====
+    function renderArena() {
+        const content = document.getElementById('arenaContent');
+        content.innerHTML = '';
+        fetch(`${SERVER_URL}/api/arena`)
             .then(res => res.json())
-            .then(lots => {
-                const myLots = lots.filter(l => l.seller_id === getPlayerId());
-                content.innerHTML = myLots.map(lot => `
+            .then(arena => {
+                content.innerHTML = arena.map((player, index) => `
                     <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                        <p><strong>${lot.item}</strong></p>
-                        <p>Цена: ${lot.price} монет</p>
-                        <p>Количество: ${lot.quantity}</p>
-                    </div>
-                `).join('');
-            });
-    } else if (marketTab === 'buy') {
-        fetch(`${SERVER_URL}/api/market`)
-            .then(res => res.json())
-            .then(lots => {
-                const buyableLots = lots.filter(l => l.seller_id !== getPlayerId());
-                content.innerHTML = buyableLots.map(lot => `
-                    <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                        <p><strong>${lot.item}</strong></p>
-                        <p>Цена: ${lot.price} монет</p>
-                        <p>Количество: ${lot.quantity}</p>
-                        <button onclick="buyMarketItem(${lot.id})">Купить</button>
+                        <p><strong>${index + 1}. ${player.player_id}</strong></p>
+                        <p>Рейтинг: ${player.rating}</p>
+                        <p>Победы: ${player.wins}</p>
                     </div>
                 `).join('');
             });
     }
-}
 
-function openMarketTab(tab) {
-    marketTab = tab;
-    renderMarket();
-}
-
-function getPlayerId() {
-    const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-    return tgUser ? tgUser.id : 'guest';
-}
-
-function buyMarketItem(lotId) {
-    const buyerId = getPlayerId();
-    
-    fetch(`${SERVER_URL}/api/market/buy`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ buyerId, lotId })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            alert('Покупка успешна!');
-        } else {
-            alert('Ошибка: ' + data.error);
-        }
-    });
-}
-
-// ===== АРЕНА =====
-function renderArena() {
-    const content = document.getElementById('arenaContent');
-    content.innerHTML = '';
-    
-    fetch(`${SERVER_URL}/api/arena`)
-        .then(res => res.json())
-        .then(arena => {
-            content.innerHTML = arena.map((player, index) => `
-                <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                    <p><strong>${index + 1}. ${player.player_id}</strong></p>
-                    <p>Рейтинг: ${player.rating}</p>
-                    <p>Победы: ${player.wins}</p>
-                </div>
-            `).join('');
-        });
-}
     // ===== БОЙ =====
     function startBattle(enemy) {
         currentEnemy = enemy;
@@ -772,7 +700,6 @@ function renderArena() {
         if (currentEnemy) return;
         
         const npcChance = Math.random();
-        
         if (npcChance < 0.3) {
             const npc = findRandomNPC();
             startBattle(npc);
@@ -780,11 +707,8 @@ function renderArena() {
             const anomaly = anomalies[Math.floor(Math.random() * anomalies.length)];
             const dmg = anomaly.dmg - player.armor.armor - player.armor.artifactProtection;
             const finalDmg = Math.max(0, dmg);
-            
             player.health -= finalDmg;
-            
             let eventText = `Аномалия ${anomaly.name}! -${finalDmg} HP`;
-            
             if (player.detector.tier >= anomaly.tier) {
                 if (Math.random() < 0.5 + player.luck * 0.01) {
                     const artifactName = anomaly.artifacts[Math.floor(Math.random() * anomaly.artifacts.length)];
@@ -795,28 +719,23 @@ function renderArena() {
             } else {
                 eventText += `\nДетектор слабоват для этого тира!`;
             }
-            
             raidLogs.push(eventText);
         } else if (npcChance < 0.8) {
             const mutationChance = Math.random();
             let chosenMutant = null;
-            
             for (let i = mutants.length - 1; i >= 0; i--) {
                 if (mutationChance < mutants[i].chance) {
                     chosenMutant = mutants[i];
                     break;
                 }
             }
-            
             if (!chosenMutant) chosenMutant = mutants[0];
-            
             startBattle(chosenMutant);
         } else {
             raidLogs.push('🌫️ Вы ничего не нашли. Тишина...');
         }
         
         if (raidLogs.length > 3) raidLogs.shift();
-        
         player.health = Math.max(0, Math.min(player.maxHealth, player.health));
         player.hunger = Math.max(0, Math.min(100, player.hunger));
         player.thirst = Math.max(0, Math.min(100, player.thirst));
