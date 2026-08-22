@@ -573,28 +573,29 @@
     }
 
     function renderBattleButtons() {
-        const raidScreen = document.getElementById('raidScreen');
-        const battleDiv = document.createElement('div');
-        battleDiv.id = 'battleButtons';
-        battleDiv.style.display = 'grid';
-        battleDiv.style.gridTemplateColumns = '1fr 1fr';
-        battleDiv.style.gap = '8px';
-        battleDiv.style.marginTop = '10px';
-        
-        if (battleTurn === 0) {
-            battleDiv.innerHTML = `
-                <button onclick="battleAction('attack')" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Атаковать</button>
-                <button onclick="battleAction('medkit')" style="background: #2980b9; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Аптечка</button>
-                <button onclick="battleAction('escape')" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Сбежать</button>
-            `;
-        } else {
-            battleDiv.innerHTML = `
-                <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px;">Ход врага...</button>
-            `;
-        }
-        
-        raidScreen.appendChild(battleDiv);
+    document.getElementById('battleButtons')?.remove();
+    const raidScreen = document.getElementById('raidScreen');
+    const battleDiv = document.createElement('div');
+    battleDiv.id = 'battleButtons';
+    battleDiv.style.display = 'grid';
+    battleDiv.style.gridTemplateColumns = '1fr 1fr';
+    battleDiv.style.gap = '8px';
+    battleDiv.style.marginTop = '10px';
+    
+    if (battleTurn === 0) {
+        battleDiv.innerHTML = `
+            <button onclick="battleAction('attack')" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Атаковать</button>
+            <button onclick="battleAction('medkit')" style="background: #2980b9; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Аптечка</button>
+            <button onclick="battleAction('escape')" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Сбежать</button>
+        `;
+    } else {
+        battleDiv.innerHTML = `
+            <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px;">Ход врага...</button>
+        `;
     }
+    
+    raidScreen.appendChild(battleDiv);
+}
 
     function battleAction(action) {
         if (!currentEnemy) return;
