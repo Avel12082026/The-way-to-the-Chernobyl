@@ -71,15 +71,38 @@
         <button onclick="openScreen('shop')">💰 Торговец</button>
         <button onclick="startRaid()">⚔️ В Рейд</button>
         <button onclick="openScreen('warehouse')">🏠 Мой склад</button>
-        <button onclick="openScreen('detectors')">📡 Детекторы</button>
+        <button onclick="openScreen('technician')">🔧 Техник</button>
         <button onclick="openScreen('kpk')">📱 КПК</button>
         <button onclick="openScreen('market')">🏦 Рынок</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
+        <button onclick="openScreen('starsShop')">⭐ Магазин монет</button>
         <button onclick="exitGame()">🚪 Выйти из игры</button>
+    </div>
+
+    <div id="starsShopScreen" class="screen">
+        <h3>⭐ Магазин монет</h3>
+        <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
+        <div id="starsShopItems"></div>
+        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+    </div>
+
+    <div id="technicianScreen" class="screen">
+        <h3>🔧 Техник</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="openTechnicianTab('upgrade')">⬆️ Улучшить снаряжение</button>
+            <button onclick="openTechnicianTab('sell')">💰 Продать снаряжение</button>
+        </div>
+        <div id="technicianItems"></div>
+        <button class="back-btn" onclick="openScreen('main')">Назад</button>
     </div>
 
     <div id="warehouseScreen" class="screen">
         <h3>🏠 Мой склад</h3>
+        <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Занято ячеек: <span id="warehouseSlotsUsed">0</span> / 50</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="depositAllToWarehouse()">📥 Положить всё</button>
+            <button onclick="withdrawAllFromWarehouse()">📤 Забрать всё</button>
+        </div>
         <div class="grid7" id="warehouseGrid" style="grid-template-columns: repeat(10, 1fr);"></div>
         <button class="back-btn" onclick="openScreen('main')">Выйти из склада</button>
     </div>
@@ -87,6 +110,10 @@
     <div id="inventoryScreen" class="screen">
         <h3>🎒 Инвентарь</h3>
         <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Текущее максимальное здоровье: <span id="maxHealthDisplay">100</span></div>
+        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Надето (нажмите, чтобы снять):</div>
+        <div id="equippedGear" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;"></div>
+        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Артефакты (6 слотов):</div>
+        <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
         <div class="belt-grid" id="beltGrid"></div>
         <div class="grid7" id="inventoryGrid"></div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
@@ -94,13 +121,11 @@
 
     <div id="shopScreen" class="screen">
         <h3>💰 Торговец</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="openShopTab('buy')">🛒 Купить</button>
+            <button onclick="openShopTab('sell')">💵 Продать</button>
+        </div>
         <div id="shopItems"></div>
-        <button class="back-btn" onclick="openScreen('main')">Назад</button>
-    </div>
-
-    <div id="detectorsScreen" class="screen">
-        <h3>📡 Детекторы</h3>
-        <div id="detectorList"></div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
     </div>
 
@@ -117,6 +142,18 @@
             <div class="quick-slot" onclick="useQuickSlot(1)">Пусто</div>
             <div class="quick-slot" onclick="useQuickSlot(2)">Пусто</div>
             <div class="quick-slot" onclick="useQuickSlot(3)">Пусто</div>
+        </div>
+    </div>
+
+    <div id="friendlyTradeModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 id="friendlyTradeTitle">🤝 Торговля</h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+                <button onclick="openFriendlyTradeTab('buy')">Купить</button>
+                <button onclick="openFriendlyTradeTab('sell')">Продать</button>
+            </div>
+            <div id="friendlyTradeItems"></div>
+            <button onclick="closeFriendlyTrade()" style="background:#c0392b; margin-top:10px;">Уйти</button>
         </div>
     </div>
 
@@ -141,6 +178,14 @@
         <h3>🏟️ Арена</h3>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="arenaContent"></div>
+    </div>
+</div>
+
+<div id="itemActionModal" class="modal">
+    <div class="modal-content">
+        <h3 id="itemActionTitle">Предмет</h3>
+        <div id="itemActionButtons" style="display:flex; flex-direction:column; gap:8px;"></div>
+        <button onclick="closeItemActionModal()" style="background:#c0392b; margin-top:10px;">Закрыть</button>
     </div>
 </div>
 
@@ -184,6 +229,8 @@
         maxHealth: 100,
         inventory: {},
         belt: [null, null, null, null, null, null],
+        artifactSlots: [null, null, null, null, null, null],
+        hostileFactions: [], // фракции, ставшие враждебными после нападения игрока
         warehouse: {},
         quickSlots: [null, null, null, null],
         stats: {
@@ -204,6 +251,8 @@
     let battleTurn = 0;
     let adminClickCount = 0;
     let kpkTab = 'info';
+    let shopTab = 'buy';
+    let technicianTab = 'upgrade';
     let marketTab = 'my';
 
     // ===== МУТАНТЫ =====
@@ -302,6 +351,11 @@
         { id: 5, name: 'Варлорд', tier: 5, price: 7000 }
     ];
 
+    // Базовое снаряжение "без ничего" — используется при действии "Снять"
+    const DEFAULT_WEAPON = { name: 'Кулаки', tier: 0, dmg: 5 };
+    const DEFAULT_ARMOR = { name: 'Без брони', tier: 0, armor: 0, artifactProtection: 0 };
+    const DEFAULT_DETECTOR = { name: 'Без детектора', tier: 0 };
+
     // ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
     const consumables = [
         { id: 1, name: 'Хлеб', type: 'food', restore: 25, price: 20 },
@@ -369,6 +423,7 @@
             .then(res => res.json())
             .then(data => {
                 if (data) { Object.assign(player, data); }
+                sanitizePlayerNumbers();
                 updateUI();
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
@@ -379,7 +434,24 @@
             });
     }
 
+    // Защита от NaN/null в числовых полях (например, после битых записей в базе)
+    function sanitizePlayerNumbers() {
+        const numericFields = ['health', 'hunger', 'thirst', 'coins', 'level', 'exp', 'maxHealth',
+            'vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck'];
+        numericFields.forEach(field => {
+            const v = Number(player[field]);
+            player[field] = Number.isFinite(v) ? v : (field === 'maxHealth' || field === 'health' ? 100 : (field === 'level' ? 1 : 0));
+        });
+        if (!Array.isArray(player.artifactSlots) || player.artifactSlots.length !== 6) {
+            player.artifactSlots = [null, null, null, null, null, null];
+        }
+        if (!Array.isArray(player.hostileFactions)) {
+            player.hostileFactions = [];
+        }
+    }
+
     function updateUI() {
+        sanitizePlayerNumbers();
         document.getElementById('health').textContent = Math.round(player.health);
         document.getElementById('hunger').textContent = Math.round(player.hunger);
         document.getElementById('thirst').textContent = Math.round(player.thirst);
@@ -434,12 +506,13 @@
         if (target) {
             target.classList.add('active');
             if (screen === 'inventory') renderInventory();
-            if (screen === 'shop') renderShop();
+            if (screen === 'shop') openShopTab(shopTab);
             if (screen === 'warehouse') renderWarehouse();
-            if (screen === 'detectors') renderDetectors();
+            if (screen === 'technician') openTechnicianTab(technicianTab);
             if (screen === 'kpk') openKpkTab(kpkTab);
             if (screen === 'market') openMarketTab(marketTab);
             if (screen === 'arena') renderArena();
+            if (screen === 'starsShop') renderStarsShop();
         }
     }
 
@@ -454,6 +527,25 @@
     }
 
     // Единая карточка статистики — используется и для себя, и для чужого профиля
+    // Перки: значение + краткое описание эффекта (для отображения в КПК)
+    const PERK_INFO = {
+        vitality: { label: '❤️ Живучесть', desc: '+0.1 к макс. здоровью за каждое убийство врага (макс. 100)', capped: true },
+        agility: { label: '🏃 Ловкость', desc: 'повышает шанс успешного побега из боя' },
+        strength: { label: '💪 Сила', desc: 'прибавляется к урону оружия напрямую' },
+        accuracy: { label: '🎯 Меткость', desc: '+0.1 за каждое попадание по врагу (макс. 100), даёт шанс крит. удара (×2 урона)', capped: true },
+        intellect: { label: '🧠 Интеллект', desc: '+0.1 за каждую продажу торговцу (макс. 100), снижает цены покупки', capped: true },
+        luck: { label: '🍀 Удача', desc: 'повышает шанс найти артефакт в аномалии' }
+    };
+
+    function renderPerksBlock(data) {
+        return Object.keys(PERK_INFO).map(key => {
+            const info = PERK_INFO[key];
+            const value = Math.round((data[key] ?? 0) * 10) / 10;
+            return `<div style="margin-bottom:6px;"><b>${info.label}: ${value}${info.capped ? ' / 100' : ''}</b><br>
+                <span style="color:#888; font-size:11px;">${info.desc}</span></div>`;
+        }).join('');
+    }
+
     function renderPlayerStatsCard(data, titleText) {
         const stats = data.stats || {};
         const weaponName = data.weapon?.name || '—';
@@ -474,6 +566,8 @@
                 <p>Артефактов найдено: ${stats.artifactsFound ?? 0}<br>
                    <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.artifactsByTier)}</span></p>
                 <p>Снаряжение: ⚔️ ${weaponName} | 🛡️ ${armorName} | 📡 ${detectorName}</p>
+                <p style="margin-top:10px; border-top:1px solid #333; padding-top:8px;"><b>Перки:</b></p>
+                ${renderPerksBlock(data)}
             </div>
         `;
     }
@@ -713,23 +807,97 @@
     // ===== АРЕНА =====
     function renderArena() {
         const content = document.getElementById('arenaContent');
-        content.innerHTML = '';
+        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка...</p>';
         fetch(`${SERVER_URL}/api/arena`)
             .then(res => res.json())
             .then(arena => {
-                content.innerHTML = arena.map((player, index) => `
-                    <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                        <p><strong>${index + 1}. ${player.player_id}</strong></p>
-                        <p>Рейтинг: ${player.rating}</p>
-                        <p>Победы: ${player.wins}</p>
+                const myId = String(getPlayerId());
+                if (!arena || arena.length === 0) {
+                    content.innerHTML = '<p style="padding:10px; color:#888;">На арене пока никого нет</p>';
+                    return;
+                }
+                content.innerHTML = arena.map((p, index) => `
+                    <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <p><strong>${index + 1}. ${p.username || p.player_id}</strong></p>
+                            <p style="font-size:12px; color:#aaa;">Рейтинг: ${p.rating} | Победы: ${p.wins}</p>
+                        </div>
+                        ${String(p.player_id) === myId
+                            ? '<span style="color:#666; font-size:11px;">Это вы</span>'
+                            : `<button onclick="attackArenaPlayer('${p.player_id}')" style="background:#c0392b;">⚔️ Атаковать</button>`}
                     </div>
                 `).join('');
+            })
+            .catch(() => { content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить арену</p>'; });
+    }
+
+    // Бой на арене — асинхронный, разрешается на сервере по сохранённым характеристикам обоих игроков.
+    // Лут, здоровье и снаряжение не теряются в любом случае — меняется только рейтинг (+победителю, -проигравшему)
+    // и небольшая награда монетами победителю.
+    function attackArenaPlayer(targetId) {
+        fetch(`${SERVER_URL}/api/arena/attack`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.win
+                    ? `🏆 Победа на арене! Рейтинг +${data.ratingChange}, +200 🪙`
+                    : `💀 Поражение на арене. Рейтинг ${data.ratingChange}. Лут и снаряжение не пострадали.`);
+                loadGame();
+                renderArena();
+            } else {
+                alert('Ошибка: ' + (data.error || 'не удалось атаковать'));
+            }
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    // ===== МАГАЗИН МОНЕТ ЗА TELEGRAM STARS =====
+    const STAR_PACKAGES = [
+        { id: 'small', stars: 100, coins: 5000, title: 'Малый набор' },
+        { id: 'medium', stars: 250, coins: 15000, title: 'Средний набор' },
+        { id: 'large', stars: 500, coins: 35000, title: 'Большой набор' }
+    ];
+
+    function renderStarsShop() {
+        const el = document.getElementById('starsShopItems');
+        el.innerHTML = STAR_PACKAGES.map(p => `
+            <div class="shop-item">
+                <div>${p.title} — 🪙 ${p.coins.toLocaleString('ru-RU')}</div>
+                <div class="price">⭐ ${p.stars}</div>
+                <button onclick="buyStarsPackage('${p.id}')">Купить</button>
+            </div>
+        `).join('');
+    }
+
+    function buyStarsPackage(packageId) {
+        fetch(`${SERVER_URL}/api/shop/create-invoice`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, packageId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) { alert('Ошибка: ' + (data.error || 'не удалось создать счёт')); return; }
+            if (!window.Telegram?.WebApp?.openInvoice) { alert('Оплата доступна только внутри Telegram.'); return; }
+            window.Telegram.WebApp.openInvoice(data.link, (status) => {
+                if (status === 'paid') {
+                    alert('Оплата прошла успешно! Монеты будут начислены через несколько секунд.');
+                    setTimeout(() => { loadGame(); }, 2000);
+                } else if (status === 'failed') {
+                    alert('Оплата не удалась.');
+                }
             });
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
     }
 
     // ===== БОЙ =====
     function startBattle(enemy) {
-        currentEnemy = enemy;
+        currentEnemy = { ...enemy }; // клон — иначе бой портит hp в общем шаблоне mutants/npcs навсегда
         battleTurn = 0;
         raidLogs = [];
         raidLogs.push(`⚔️ Бой с ${enemy.name}! Ваш ход.`);
@@ -766,15 +934,18 @@
         if (!currentEnemy) return;
         
         if (action === 'attack') {
-            const dmg = player.weapon.dmg + player.strength;
+            const critChance = (Number(player.accuracy) || 0) * 0.005; // до 50% шанса крита при меткости 100
+            const isCrit = Math.random() < critChance;
+            let dmg = player.weapon.dmg + player.strength;
+            if (isCrit) dmg *= 2;
             currentEnemy.hp -= dmg;
-            raidLogs.push(`Вы атаковали! Урон: ${dmg}. У врага ${Math.max(0, currentEnemy.hp)} HP.`);
-            player.accuracy += 0.1 * currentEnemy.tier;
+            raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, currentEnemy.hp)} HP.`);
+            player.accuracy = Math.min(100, (Number(player.accuracy) || 0) + 0.1);
         } else if (action === 'medkit') {
             if (player.inventory['Аптечка'] > 0) {
                 player.inventory['Аптечка']--;
                 player.health = Math.min(player.maxHealth, player.health + 50);
-                player.vitality += 0.1;
+                player.vitality = Math.min(100, (Number(player.vitality) || 0) + 0.1);
                 player.maxHealth += 0.1;
                 raidLogs.push('Вы использовали аптечку! +50 HP.');
             } else {
@@ -795,14 +966,27 @@
         
         if (currentEnemy.hp <= 0) {
             const isNpc = !!currentEnemy.faction;
-            const lootText = isNpc ? '' : `, ${currentEnemy.loot}`;
+            const npcLootText = isNpc ? `, ${currentEnemy.weapon.name}, ${currentEnemy.armor.name}` : '';
+            const lootText = isNpc ? npcLootText : `, ${currentEnemy.loot}`;
             raidLogs.push(`🏆 Победа! Вы получили: ${currentEnemy.coins} монет, ${currentEnemy.exp} EXP${lootText}`);
             player.coins += currentEnemy.coins;
             player.exp += currentEnemy.exp;
             if (!isNpc && currentEnemy.loot) {
                 player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + 1;
             }
+            if (isNpc) {
+                // с побеждённого NPC падает его же экипировка (оружие и броня)
+                player.inventory[currentEnemy.weapon.name] = (player.inventory[currentEnemy.weapon.name] || 0) + 1;
+                player.inventory[currentEnemy.armor.name] = (player.inventory[currentEnemy.armor.name] || 0) + 1;
+            }
             player.strength += 0.1 * currentEnemy.tier;
+
+            // Живучесть: +0.1 к макс. здоровью за каждое убийство, максимум +100 от этого перка
+            const vitalityGain = Math.min(0.1, 100 - (Number(player.vitality) || 0));
+            if (vitalityGain > 0) {
+                player.vitality += vitalityGain;
+                player.maxHealth += vitalityGain;
+            }
 
             if (isNpc) {
                 player.stats.npcsKilled = (player.stats.npcsKilled || 0) + 1;
@@ -835,8 +1019,8 @@
             
             if (player.health <= 0) {
                 raidLogs.push('💀 Вы мертвы...');
-                player.stats.deaths = (player.stats.deaths || 0) + 1;
-                endBattle(false);
+                updateRaidLog();
+                handlePlayerDeath();
                 return;
             }
             
@@ -852,6 +1036,30 @@
         document.getElementById('battleButtons')?.remove();
         saveGame();
         updateUI();
+    }
+
+    // Смерть игрока: сброс здоровья, потеря лута (кроме одетого снаряжения и артефактов), выход в главное меню
+    function handlePlayerDeath() {
+        player.stats.deaths = (player.stats.deaths || 0) + 1;
+
+        const artifactNames = new Set(artifacts.map(a => a.name));
+        Object.keys(player.inventory).forEach(name => {
+            if (!artifactNames.has(name)) delete player.inventory[name];
+        });
+        player.belt = player.belt.map(n => (n && player.inventory[n] > 0) ? n : null);
+        player.quickSlots = player.quickSlots.map(n => (n && player.inventory[n] > 0) ? n : null);
+
+        player.health = player.maxHealth; // возрождение на базе с полным здоровьем
+
+        raidActive = false;
+        currentEnemy = null;
+        battleTurn = 0;
+        document.getElementById('battleButtons')?.remove();
+
+        alert('💀 Вы погибли и потеряли весь лут (кроме снаряжения и артефактов). Возвращение на базу.');
+        openScreen('main');
+        updateUI();
+        saveGame();
     }
 
     function updateRaidLog() {
@@ -880,11 +1088,22 @@
     function raidStep() {
         if (!raidActive) return;
         if (currentEnemy) return;
+        if (player.health <= 0) { handlePlayerDeath(); return; }
+
+        player.hunger = Math.max(0, Math.min(100, player.hunger - 5));
+        player.thirst = Math.max(0, Math.min(100, player.thirst - 5));
         
         const npcChance = Math.random();
         if (npcChance < 0.3) {
             const npc = findRandomNPC();
-            startBattle(npc);
+            if (isFactionHostile(npc.faction)) {
+                startBattle(npc);
+            } else {
+                startFriendlyEncounter(npc);
+                updateUI();
+                saveGame();
+                return; // ждём решения игрока — не продолжаем шаг рейда дальше
+            }
         } else if (npcChance < 0.6) {
             const anomaly = anomalies[Math.floor(Math.random() * anomalies.length)];
             const dmg = anomaly.dmg - player.armor.armor - player.armor.artifactProtection;
@@ -912,9 +1131,13 @@
         }
         
         if (raidLogs.length > 3) raidLogs.shift();
+
+        if (player.health <= 0) {
+            updateRaidLog();
+            handlePlayerDeath();
+            return;
+        }
         player.health = Math.max(0, Math.min(player.maxHealth, player.health));
-        player.hunger = Math.max(0, Math.min(100, player.hunger));
-        player.thirst = Math.max(0, Math.min(100, player.thirst));
         
         while (player.exp >= 150) {
             player.level += 1;
@@ -925,10 +1148,140 @@
         saveGame();
     }
 
-    // ===== НАЙТИ СЛУЧАЙНЫЙ NPC =====
+    // ===== НАЙТИ СЛУЧАЙНЫЙ NPC (ограничено тиром снаряжения игрока — иначе новичка сразу убивает топовый NPC) =====
     function findRandomNPC() {
-        const randomIndex = Math.floor(Math.random() * npcs.length);
-        return npcs[randomIndex];
+        const playerTier = Math.max(player.weapon.tier || 1, player.armor.tier || 1, 1);
+        const pool = npcs.filter(n => n.tier <= playerTier);
+        const randomIndex = Math.floor(Math.random() * pool.length);
+        return pool[randomIndex];
+    }
+
+    // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Учёные) =====
+    // Враждебна ли фракция по отношению к игроку: изначально враждебны только 'enemy'-фракции,
+    // но игрок может сделать враждебной любую фракцию, напав на неё
+    function isFactionHostile(faction) {
+        return faction.type === 'enemy' || (player.hostileFactions || []).includes(faction.name);
+    }
+
+    function startFriendlyEncounter(npc) {
+        currentEnemy = npc;
+        raidLogs.push(`🤝 Вы встретили отряд фракции "${npc.faction.name}". Они настроены дружелюбно.`);
+        updateRaidLog();
+        renderFriendlyEncounterButtons();
+    }
+
+    function renderFriendlyEncounterButtons() {
+        document.getElementById('battleButtons')?.remove();
+        const raidScreen = document.getElementById('raidScreen');
+        const div = document.createElement('div');
+        div.id = 'battleButtons';
+        div.style.display = 'grid';
+        div.style.gridTemplateColumns = '1fr 1fr 1fr';
+        div.style.gap = '8px';
+        div.style.marginTop = '10px';
+        div.innerHTML = `
+            <button onclick="openFriendlyTrade()" style="background:#2980b9; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">🤝 Торговать</button>
+            <button onclick="attackFriendlyNpc()" style="background:#c0392b; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">⚔️ Атаковать</button>
+            <button onclick="leaveFriendlyPeacefully()" style="background:#333; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">🚶 Уйти</button>
+        `;
+        raidScreen.appendChild(div);
+    }
+
+    function leaveFriendlyPeacefully() {
+        raidLogs.push('Вы разошлись с ними мирно.');
+        currentEnemy = null;
+        document.getElementById('battleButtons')?.remove();
+        updateRaidLog();
+        saveGame();
+    }
+
+    function attackFriendlyNpc() {
+        const npc = currentEnemy;
+        if (!npc) return;
+        player.hostileFactions = player.hostileFactions || [];
+        if (!player.hostileFactions.includes(npc.faction.name)) {
+            player.hostileFactions.push(npc.faction.name);
+        }
+        document.getElementById('battleButtons')?.remove();
+        raidLogs.push(`⚔️ Вы напали на "${npc.faction.name}"! Теперь эта фракция враждебна к вам, торговля с ней недоступна.`);
+        updateRaidLog();
+        startBattle(npc);
+    }
+
+    // ===== ТОРГОВЛЯ С ДРУЖЕСТВЕННОЙ ФРАКЦИЕЙ =====
+    let friendlyTradeTab = 'buy';
+
+    function openFriendlyTrade() {
+        if (!currentEnemy) return;
+        friendlyTradeTab = 'buy';
+        document.getElementById('friendlyTradeTitle').textContent = `🤝 ${currentEnemy.faction.name}: торговля`;
+        document.getElementById('friendlyTradeModal').classList.add('active');
+        renderFriendlyTrade();
+    }
+
+    function closeFriendlyTrade() {
+        document.getElementById('friendlyTradeModal').classList.remove('active');
+        raidLogs.push('Вы завершили торговлю и разошлись мирно.');
+        currentEnemy = null;
+        document.getElementById('battleButtons')?.remove();
+        updateRaidLog();
+        saveGame();
+    }
+
+    function openFriendlyTradeTab(tab) {
+        friendlyTradeTab = tab;
+        renderFriendlyTrade();
+    }
+
+    // Расходники у фракции стоят на 10% дороже, чем у обычного торговца (с учётом скидки за интеллект)
+    function getFriendlyBuyPrice(basePrice) {
+        const markedUp = basePrice * 1.1;
+        const discount = (Number(player.intellect) || 0) * 0.1;
+        return Math.max(1, Math.round(markedUp - discount));
+    }
+
+    function renderFriendlyTrade() {
+        const el = document.getElementById('friendlyTradeItems');
+        if (friendlyTradeTab === 'buy') {
+            el.innerHTML = consumables.map(item => {
+                const price = getFriendlyBuyPrice(item.price);
+                return `
+                <div class="shop-item">
+                    <div>${item.name}</div>
+                    <div class="price">🪙 ${price}</div>
+                    <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+                </div>`;
+            }).join('');
+        } else {
+            const items = Object.keys(player.inventory).filter(n => player.inventory[n] > 0);
+            if (items.length === 0) {
+                el.innerHTML = '<p style="padding:10px; color:#888;">Нечего продать</p>';
+                return;
+            }
+            el.innerHTML = items.map(name => `
+                <div class="shop-item">
+                    <div>${name} ×${player.inventory[name]}</div>
+                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                    <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
+                </div>`).join('');
+        }
+    }
+
+    function buyFromFriendly(name) {
+        const item = consumables.find(c => c.name === name);
+        if (!item) return;
+        const price = getFriendlyBuyPrice(item.price);
+        if (player.coins < price) return;
+        player.coins -= price;
+        player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
+        renderFriendlyTrade();
+        updateUI();
+        saveGame();
+    }
+
+    function sellToFriendly(name) {
+        sellToShop(name); // те же цена и логика, что у обычного торговца
+        renderFriendlyTrade();
     }
 
     // ===== ВЫХОД ИЗ ИГРЫ =====
@@ -954,45 +1307,134 @@
     }
 
     // ===== ЭКИПИРОВКА ПРЕДМЕТА (оружие/броня/детектор) =====
+    // Разбирает имя вида "Пистолет Макарова +3" на базовое имя и уровень улучшения
+    function parseGearName(name) {
+        const m = name.match(/^(.*) \+(\d+)$/);
+        if (m) return { baseName: m[1], level: parseInt(m[2], 10) };
+        return { baseName: name, level: 0 };
+    }
+
     function equipItem(itemName) {
-        const weapon = weapons.find(w => w.name === itemName);
+        const parsed = parseGearName(itemName);
+        const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
             const old = player.weapon.name;
             player.inventory[itemName]--;
-            player.weapon = { name: weapon.name, tier: weapon.tier, dmg: weapon.dmg };
-            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            alert(`Экипировано оружие: ${weapon.name}`);
+            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+            player.weapon = { name: itemName, tier: weapon.tier, dmg: weapon.dmg + parsed.level };
+            if (old && old !== itemName && old !== DEFAULT_WEAPON.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
             renderInventory(); updateUI(); saveGame();
             return true;
         }
-        const armor = armorItems.find(a => a.name === itemName);
+        const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
             const old = player.armor.name;
             player.inventory[itemName]--;
-            player.armor = { name: armor.name, tier: armor.tier, armor: armor.armor, artifactProtection: armor.artifactProtection };
-            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            alert(`Экипирована броня: ${armor.name}`);
+            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+            player.armor = { name: itemName, tier: armor.tier, armor: armor.armor + parsed.level, artifactProtection: armor.artifactProtection };
+            if (old && old !== itemName && old !== DEFAULT_ARMOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
             renderInventory(); updateUI(); saveGame();
             return true;
         }
-        const detector = detectors.find(d => d.name === itemName);
+        const detector = detectors.find(d => d.name === parsed.baseName);
         if (detector) {
             const old = player.detector.name;
             player.inventory[itemName]--;
-            player.detector = { name: detector.name, tier: detector.tier };
-            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            alert(`Экипирован детектор: ${detector.name}`);
+            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+            player.detector = { name: itemName, tier: detector.tier };
+            if (old && old !== itemName && old !== DEFAULT_DETECTOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
             renderInventory(); updateUI(); saveGame();
             return true;
         }
         return false;
     }
 
-    // ===== ИСПОЛЬЗОВАНИЕ ПРЕДМЕТА ИЗ ИНВЕНТАРЯ =====
-    function useInventoryItem(itemName) {
-        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+    // Снять текущее снаряжение обратно в инвентарь, надеть "по умолчанию"
+    function unequipSlot(slotType) {
+        if (slotType === 'weapon') {
+            if (player.weapon.name === DEFAULT_WEAPON.name) return;
+            player.inventory[player.weapon.name] = (player.inventory[player.weapon.name] || 0) + 1;
+            player.weapon = { ...DEFAULT_WEAPON };
+        } else if (slotType === 'armor') {
+            if (player.armor.name === DEFAULT_ARMOR.name) return;
+            player.inventory[player.armor.name] = (player.inventory[player.armor.name] || 0) + 1;
+            player.armor = { ...DEFAULT_ARMOR };
+        } else if (slotType === 'detector') {
+            if (player.detector.name === DEFAULT_DETECTOR.name) return;
+            player.inventory[player.detector.name] = (player.inventory[player.detector.name] || 0) + 1;
+            player.detector = { ...DEFAULT_DETECTOR };
+        }
+        closeItemActionModal();
+        renderInventory(); updateUI(); saveGame();
+    }
 
-        if (equipItem(itemName)) return;
+    function getEquipSlotType(itemName) {
+        const base = parseGearName(itemName).baseName;
+        if (weapons.some(w => w.name === base)) return 'weapon';
+        if (armorItems.some(a => a.name === base)) return 'armor';
+        if (detectors.some(d => d.name === base)) return 'detector';
+        return null;
+    }
+
+    // ===== ОКНО НАДЕТОГО ПРЕДМЕТА — единственная кнопка "Снять" =====
+    function openEquippedItemActions(slotType) {
+        const current = slotType === 'weapon' ? player.weapon : slotType === 'armor' ? player.armor : player.detector;
+        const def = slotType === 'weapon' ? DEFAULT_WEAPON : slotType === 'armor' ? DEFAULT_ARMOR : DEFAULT_DETECTOR;
+        if (current.name === def.name) return; // нечего снимать — базовое состояние
+
+        document.getElementById('itemActionTitle').textContent = `${current.name} (надето)`;
+        document.getElementById('itemActionButtons').innerHTML =
+            `<button onclick="unequipSlot('${slotType}')">Снять</button>`;
+        document.getElementById('itemActionModal').classList.add('active');
+    }
+
+    // ===== АРТЕФАКТЫ: 6 слотов экипировки (бонусы действуют, пока артефакт надет) =====
+    function applyArtifactStats(artifact, sign) {
+        Object.keys(artifact.stats).forEach(stat => {
+            if (stat === 'health') player.maxHealth += sign * artifact.stats.health;
+            else player[stat] = (player[stat] || 0) + sign * artifact.stats[stat];
+        });
+    }
+
+    function equipArtifactItem(itemName) {
+        const artifact = artifacts.find(a => a.name === itemName);
+        if (!artifact || !player.inventory[itemName]) return;
+        const freeIndex = player.artifactSlots.findIndex(s => !s);
+        if (freeIndex === -1) { alert('Все 6 слотов артефактов заняты. Сначала снимите один.'); return; }
+
+        player.inventory[itemName]--;
+        if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+        player.artifactSlots[freeIndex] = itemName;
+        applyArtifactStats(artifact, 1);
+
+        closeItemActionModal();
+        renderInventory(); updateUI(); saveGame();
+    }
+
+    function openArtifactSlotActions(index) {
+        const name = player.artifactSlots[index];
+        if (!name) return;
+        document.getElementById('itemActionTitle').textContent = `${name} (надето)`;
+        document.getElementById('itemActionButtons').innerHTML =
+            `<button onclick="unequipArtifactSlot(${index})">Снять</button>`;
+        document.getElementById('itemActionModal').classList.add('active');
+    }
+
+    function unequipArtifactSlot(index) {
+        const name = player.artifactSlots[index];
+        if (!name) return;
+        const artifact = artifacts.find(a => a.name === name);
+        if (artifact) applyArtifactStats(artifact, -1);
+        player.inventory[name] = (player.inventory[name] || 0) + 1;
+        player.artifactSlots[index] = null;
+
+        closeItemActionModal();
+        renderInventory(); updateUI(); saveGame();
+    }
+
+    // ===== ПРИМЕНЕНИЕ / ВЫБРОС / ПЕРЕМЕЩЕНИЕ ПРЕДМЕТА =====
+    function applyInventoryItem(itemName) {
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
 
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
@@ -1000,29 +1442,120 @@
             if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
             if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
             if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            closeItemActionModal();
             renderInventory(); updateUI(); saveGame();
             return;
         }
+    }
 
+    function dropInventoryItem(itemName) {
+        if (!player.inventory[itemName]) return;
+        if (!confirm(`Выкинуть "${itemName}" (×${player.inventory[itemName]})? Предмет будет утерян безвозвратно.`)) return;
+        delete player.inventory[itemName];
+        player.belt = player.belt.map(n => n === itemName ? null : n);
+        player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
+        closeItemActionModal();
+        renderInventory(); updateUI(); saveGame();
+        if (document.getElementById('shopScreen').classList.contains('active')) renderShop();
+    }
+
+    function moveItemToWarehouse(itemName, qty) {
+        qty = qty || player.inventory[itemName];
+        if (!player.inventory[itemName] || qty <= 0) return;
+
+        const usedSlots = Object.keys(player.warehouse).filter(n => player.warehouse[n] > 0).length;
+        const isNewSlot = !(player.warehouse[itemName] > 0);
+        if (isNewSlot && usedSlots >= 50) {
+            alert('Склад полон (50/50 ячеек). Освободите место.');
+            return;
+        }
+
+        qty = Math.min(qty, player.inventory[itemName]);
+        player.inventory[itemName] -= qty;
+        if (player.inventory[itemName] <= 0) {
+            delete player.inventory[itemName];
+            player.belt = player.belt.map(n => n === itemName ? null : n);
+            player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
+        }
+        player.warehouse[itemName] = (player.warehouse[itemName] || 0) + qty;
+        closeItemActionModal();
+        renderInventory(); updateUI(); saveGame();
+        if (document.getElementById('shopScreen').classList.contains('active')) renderShop();
+    }
+
+    function sellItemFromModal(itemName) {
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        sellToShop(itemName); // уже делает saveGame/updateUI/renderShop
+        closeItemActionModal();
+        if (player.inventory[itemName] > 0) openItemActions(itemName, 'shop'); // если ещё осталось — обновить окно
+    }
+
+    // ===== МОДАЛКА ДЕЙСТВИЙ С ПРЕДМЕТОМ ИЗ ИНВЕНТАРЯ =====
+    // context: 'inventory' (обычный инвентарь) или 'shop' (открыто из вкладки "Продать" у торговца — добавляет кнопку Продать)
+    function openItemActions(itemName, context) {
+        context = context || 'inventory';
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        document.getElementById('itemActionTitle').textContent = `${itemName} ×${player.inventory[itemName]}`;
+        const btnsEl = document.getElementById('itemActionButtons');
+        const esc = itemName.replace(/'/g, "\\'");
+        let buttons = '';
+
+        const slotType = getEquipSlotType(itemName);
+        const consumable = consumables.find(c => c.name === itemName);
         const artifact = artifacts.find(a => a.name === itemName);
+
+        // Артефакты: только Одеть / Продать (в магазине) / Выкинуть — без "переместить в склад"
         if (artifact) {
-            if (!confirm(`Применить артефакт "${itemName}"? Он будет израсходован и навсегда улучшит характеристики.`)) return;
-            player.inventory[itemName]--;
-            Object.keys(artifact.stats).forEach(stat => {
-                if (stat === 'health') player.maxHealth += artifact.stats.health;
-                else player[stat] = (player[stat] || 0) + artifact.stats[stat];
-            });
-            alert(`Артефакт применён! Эффект: ${JSON.stringify(artifact.stats)}`);
-            renderInventory(); updateUI(); saveGame();
+            buttons += `<button onclick="equipArtifactItem('${esc}')">Одеть</button>`;
+            if (context === 'shop') {
+                buttons += `<button onclick="sellItemFromModal('${esc}')" style="background:#27ae60;">💵 Продать (🪙 ${getSellPrice(itemName)})</button>`;
+            }
+            buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
+            btnsEl.innerHTML = buttons;
+            document.getElementById('itemActionModal').classList.add('active');
             return;
         }
 
-        alert('Этот предмет нельзя использовать здесь.');
+        if (slotType) {
+            buttons += `<button onclick="equipItem('${esc}')">Одеть</button>`;
+        } else if (consumable) {
+            buttons += `<button onclick="applyInventoryItem('${esc}')">Применить</button>`;
+        }
+
+        buttons += `<button onclick="moveItemToWarehouse('${esc}')">📦 Переместить в склад</button>`;
+        if (context === 'shop') {
+            buttons += `<button onclick="sellItemFromModal('${esc}')" style="background:#27ae60;">💵 Продать (🪙 ${getSellPrice(itemName)})</button>`;
+        }
+        buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
+
+        btnsEl.innerHTML = buttons;
+        document.getElementById('itemActionModal').classList.add('active');
+    }
+
+    function closeItemActionModal() {
+        document.getElementById('itemActionModal').classList.remove('active');
     }
 
     // ===== ИНВЕНТАРЬ =====
     function renderInventory() {
         document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
+
+        const equippedGear = document.getElementById('equippedGear');
+        const gearBox = (label, name, slotType) => `
+            <div class="slot" style="aspect-ratio: unset; padding:8px; flex-direction:column;" onclick="openEquippedItemActions('${slotType}')">
+                <div style="font-size:9px; text-align:center; line-height:1.3;">${label}<br><b>${name}</b></div>
+            </div>`;
+        equippedGear.innerHTML =
+            gearBox('⚔️ Оружие', player.weapon.name, 'weapon') +
+            gearBox('🛡️ Броня', player.armor.name, 'armor') +
+            gearBox('📡 Детектор', player.detector.name, 'detector');
+
+        const artifactGrid = document.getElementById('artifactSlotsGrid');
+        artifactGrid.innerHTML = player.artifactSlots.map((name, i) => `
+            <div class="slot" style="aspect-ratio: unset; padding:6px;" onclick="openArtifactSlotActions(${i})">
+                <div style="font-size:8px; text-align:center; line-height:1.2;">${name || 'Пусто'}</div>
+            </div>
+        `).join('');
 
         const beltGrid = document.getElementById('beltGrid');
         beltGrid.innerHTML = player.belt.map((item, i) => `
@@ -1036,7 +1569,7 @@
             return;
         }
         invGrid.innerHTML = items.map(name => `
-            <div class="slot" title="${name} x${player.inventory[name]}" onclick="useInventoryItem('${name.replace(/'/g, "\\'")}')">
+            <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')">
                 <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
             </div>
         `).join('');
@@ -1055,11 +1588,7 @@
             }
             return;
         }
-        useInventoryItem(itemName);
-        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) {
-            player.belt[i] = null;
-        }
-        renderInventory();
+        openItemActions(itemName);
     }
 
     // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
@@ -1104,10 +1633,11 @@
         saveGame();
     }
 
-    // ===== СКЛАД =====
+    // ===== СКЛАД (50 ячеек) =====
     function renderWarehouse() {
         const grid = document.getElementById('warehouseGrid');
         const items = Object.keys(player.warehouse).filter(name => player.warehouse[name] > 0);
+        document.getElementById('warehouseSlotsUsed').textContent = items.length;
         if (items.length === 0) {
             grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Склад пуст</div>';
             return;
@@ -1128,22 +1658,105 @@
         saveGame();
     }
 
-    // ===== МАГАЗИН =====
-    function renderShop() {
-        const shopItems = document.getElementById('shopItems');
-        const allGoods = [
+    function depositAllToWarehouse() {
+        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+        if (items.length === 0) { alert('Инвентарь пуст.'); return; }
+        let usedSlots = Object.keys(player.warehouse).filter(n => player.warehouse[n] > 0).length;
+        let movedAny = false;
+        for (const name of items) {
+            const isNewSlot = !(player.warehouse[name] > 0);
+            if (isNewSlot) {
+                if (usedSlots >= 50) continue; // склад полон — пропускаем то, что не влезло
+                usedSlots++;
+            }
+            player.warehouse[name] = (player.warehouse[name] || 0) + player.inventory[name];
+            delete player.inventory[name];
+            movedAny = true;
+        }
+        player.belt = player.belt.map(n => (n && player.inventory[n] > 0) ? n : null);
+        player.quickSlots = player.quickSlots.map(n => (n && player.inventory[n] > 0) ? n : null);
+        if (!movedAny) alert('Склад полон (50/50 ячеек) — ничего не поместилось.');
+        renderInventory(); renderWarehouse(); updateUI(); saveGame();
+    }
+
+    function withdrawAllFromWarehouse() {
+        const items = Object.keys(player.warehouse).filter(name => player.warehouse[name] > 0);
+        if (items.length === 0) { alert('Склад пуст.'); return; }
+        items.forEach(name => {
+            player.inventory[name] = (player.inventory[name] || 0) + player.warehouse[name];
+            delete player.warehouse[name];
+        });
+        renderInventory(); renderWarehouse(); updateUI(); saveGame();
+    }
+
+    // ===== ТОРГОВЕЦ =====
+    // Общий каталог для покупки — расходники, оружие, броня и детекторы (детекторы теперь тут, не отдельным экраном)
+    function getShopCatalog() {
+        return [
             ...consumables.map(c => ({ ...c, category: 'consumable' })),
             ...weapons.map(w => ({ ...w, category: 'weapon' })),
             ...armorItems.map(a => ({ ...a, category: 'armor' })),
             ...detectors.map(d => ({ ...d, category: 'detector' }))
         ];
-        shopItems.innerHTML = allGoods.map(item => `
+    }
+
+    // Цена покупки с учётом скидки от перка "Интеллект" (0.1 монеты за каждый пункт интеллекта)
+    function getBuyPrice(basePrice) {
+        const discount = (player.intellect || 0) * 0.1;
+        return Math.max(1, Math.round(basePrice - discount));
+    }
+
+    // Цена продажи любого предмета торговцу (лут мутантов/фракций, артефакты, снаряжение) — 50% от базовой стоимости
+    // Улучшенное снаряжение (+N) даёт +10% базовой цены за каждый уровень улучшения
+    function getSellPrice(name) {
+        const parsed = parseGearName(name);
+        const catalog = getShopCatalog();
+        const known = catalog.find(i => i.name === parsed.baseName);
+        if (known) {
+            const upgradedBase = known.price * (1 + parsed.level * 0.1);
+            return Math.max(1, Math.round(upgradedBase * 0.5));
+        }
+        const artifact = artifacts.find(a => a.name === name);
+        if (artifact) return Math.max(1, Math.round(artifact.price * 0.5));
+        const mutantLoot = mutants.find(m => m.loot === name);
+        if (mutantLoot) return Math.max(1, Math.round(mutantLoot.lootPrice * 0.5));
+        return 5; // прочий неопознанный лут — минимальная цена, чтобы не залёживался бесполезно
+    }
+
+    function openShopTab(tab) {
+        shopTab = tab;
+        renderShop();
+    }
+
+    function renderShop() {
+        const shopItems = document.getElementById('shopItems');
+
+        if (shopTab === 'sell') {
+            const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+            if (items.length === 0) {
+                shopItems.innerHTML = '<p style="padding:10px; color:#888;">Нечего продать</p>';
+                return;
+            }
+            shopItems.innerHTML = items.map(name => `
+                <div class="shop-item" style="cursor:pointer;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
+                    <div>${name} ×${player.inventory[name]}</div>
+                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                </div>
+            `).join('');
+            return;
+        }
+
+        const allGoods = getShopCatalog();
+        shopItems.innerHTML = allGoods.map(item => {
+            const price = getBuyPrice(item.price);
+            const discounted = price < item.price;
+            return `
             <div class="shop-item">
                 <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
-                <div class="price">🪙 ${item.price}</div>
-                <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < item.price ? 'disabled' : ''}>Купить</button>
-            </div>
-        `).join('');
+                <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
+                <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+            </div>`;
+        }).join('');
     }
 
     function buyShopItem(category, name) {
@@ -1152,26 +1765,27 @@
         else if (category === 'weapon') item = weapons.find(w => w.name === name);
         else if (category === 'armor') item = armorItems.find(a => a.name === name);
         else if (category === 'detector') item = detectors.find(d => d.name === name);
-        if (!item || player.coins < item.price) return;
+        if (!item) return;
+        const price = getBuyPrice(item.price);
+        if (player.coins < price) return;
 
-        player.coins -= item.price;
+        player.coins -= price;
         player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
         renderShop();
         updateUI();
         saveGame();
     }
 
-    // ===== ДЕТЕКТОРЫ =====
-    function renderDetectors() {
-        const list = document.getElementById('detectorList');
-        list.innerHTML = detectors.map(d => `
-            <div class="shop-item">
-                <div>${d.name} (Тир ${d.tier}) ${player.detector.name === d.name ? '✅ Экипирован' : ''}</div>
-                <div class="price">🪙 ${d.price}</div>
-                <button onclick="buyShopItem('detector', '${d.name.replace(/'/g, "\\'")}')" ${player.coins < d.price ? 'disabled' : ''}>Купить</button>
-                ${(player.inventory[d.name] > 0 && player.detector.name !== d.name) ? `<button onclick="equipItem('${d.name.replace(/'/g, "\\'")}')" style="margin-top:4px;">Экипировать</button>` : ''}
-            </div>
-        `).join('');
+    function sellToShop(name) {
+        if (!player.inventory[name] || player.inventory[name] <= 0) return;
+        const price = getSellPrice(name);
+        player.inventory[name]--;
+        if (player.inventory[name] <= 0) delete player.inventory[name];
+        player.coins = (Number(player.coins) || 0) + price;
+        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1);
+        renderShop();
+        updateUI();
+        saveGame();
     }
 
     // ===== АДМИН: ВЫДАЧА ПРЕДМЕТОВ =====
@@ -1228,6 +1842,93 @@
                 else alert('Ошибка: ' + (result.error || 'нет прав или не удалось обновить'));
             })
             .catch(() => alert('Ошибка: не удалось найти/обновить игрока'));
+    }
+
+    // ===== ТЕХНИК: улучшение и продажа снаряжения =====
+    const UPGRADE_COST = 20000;
+    const UPGRADE_MAX_LEVEL = 100;
+
+    function openTechnicianTab(tab) {
+        technicianTab = tab;
+        renderTechnician();
+    }
+
+    function renderTechnician() {
+        const el = document.getElementById('technicianItems');
+        const gearItems = Object.keys(player.inventory).filter(name => player.inventory[name] > 0 && getEquipSlotType(name));
+
+        if (technicianTab === 'sell') {
+            if (gearItems.length === 0) {
+                el.innerHTML = '<p style="padding:10px; color:#888;">У вас нет оружия, брони или детекторов на продажу</p>';
+                return;
+            }
+            el.innerHTML = gearItems.map(name => `
+                <div class="shop-item">
+                    <div>${name} ×${player.inventory[name]}</div>
+                    <div class="price">🪙 ${Math.round(getSellPrice(name) * 1.02)} за шт. (на 2% выгоднее торговца)</div>
+                    <button onclick="sellToTechnician('${name.replace(/'/g, "\\'")}')">Продать</button>
+                </div>
+            `).join('');
+            return;
+        }
+
+        // upgrade — только оружие и броня (детекторы не улучшаются)
+        const upgradable = gearItems.filter(name => {
+            const st = getEquipSlotType(name);
+            return st === 'weapon' || st === 'armor';
+        });
+        if (upgradable.length === 0) {
+            el.innerHTML = '<p style="padding:10px; color:#888;">Нет оружия или брони для улучшения</p>';
+            return;
+        }
+        el.innerHTML = upgradable.map(name => {
+            const parsed = parseGearName(name);
+            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
+            return `
+            <div class="shop-item">
+                <div>${name} ×${player.inventory[name]}</div>
+                <div class="price">Цена улучшения: 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}</div>
+                <button onclick="upgradeGearItem('${name.replace(/'/g, "\\'")}')" ${maxed || player.coins < UPGRADE_COST ? 'disabled' : ''}>
+                    ${maxed ? 'Улучшено до максимума' : '⬆️ Улучшить (+1)'}
+                </button>
+            </div>`;
+        }).join('');
+    }
+
+    function sellToTechnician(name) {
+        if (!player.inventory[name] || player.inventory[name] <= 0) return;
+        if (!getEquipSlotType(name)) { alert('Техник покупает только оружие, броню и детекторы.'); return; }
+        const price = Math.round(getSellPrice(name) * 1.02);
+        player.inventory[name]--;
+        if (player.inventory[name] <= 0) delete player.inventory[name];
+        player.coins = (Number(player.coins) || 0) + price;
+        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1);
+        renderTechnician();
+        updateUI();
+        saveGame();
+    }
+
+    function upgradeGearItem(itemName) {
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        const slotType = getEquipSlotType(itemName);
+        if (slotType !== 'weapon' && slotType !== 'armor') return;
+        if (player.coins < UPGRADE_COST) { alert(`Недостаточно монет. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
+
+        const parsed = parseGearName(itemName);
+        if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
+
+        player.coins -= UPGRADE_COST;
+        player.inventory[itemName]--;
+        if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+
+        const newLevel = parsed.level + 1;
+        const newName = `${parsed.baseName} +${newLevel}`;
+        player.inventory[newName] = (player.inventory[newName] || 0) + 1;
+
+        renderTechnician();
+        updateUI();
+        saveGame();
+        alert(`Улучшено! Теперь: ${newName}`);
     }
 
     // ===== ИНИЦИАЛИЗАЦИЯ =====
