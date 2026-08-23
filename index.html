@@ -122,8 +122,8 @@
 
     <div id="kpkScreen" class="screen">
         <h3>📱 КПК</h3>
-        <button onclick="openKpkInfo()">Инфо о персонаже</button>
-        <button onclick="openKpkPlayers()">Список игроков</button>
+        <button onclick="openKpkTab('info')">Инфо о персонаже</button>
+        <button onclick="openKpkTab('players')">Список игроков</button>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="kpkContent"></div>
     </div>
@@ -132,6 +132,7 @@
         <h3>🏦 Рынок</h3>
         <button onclick="openMarketTab('my')">Сейчас продается</button>
         <button onclick="openMarketTab('buy')">Купить</button>
+        <button onclick="openMarketTab('sell')">📤 Выставить на продажу</button>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="marketContent"></div>
     </div>
@@ -347,17 +348,17 @@
     }
 
     // ===== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ =====
-    const SERVER_URL = 'http://213.176.92.184:3000';
+    const SERVER_URL = 'https://213-176-92-184.sslip.io';
 
     function saveGame() {
-        const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
-        const userId = tgUser ? tgUser.id : 'guest';
-        
+        const initData = window.Telegram?.WebApp?.initData;
+        if (!initData) return; // вне Telegram сохранение недоступно — так и должно быть
+
         fetch(`${SERVER_URL}/api/player`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: userId, username: tgUser?.username, data: player })
-        });
+            body: JSON.stringify({ initData, data: player })
+        }).catch(() => { /* тихая ошибка сети */ });
     }
 
     function loadGame() {
@@ -387,6 +388,7 @@
         document.getElementById('weapon').textContent = player.weapon.name;
         document.getElementById('detector').textContent = player.detector.name;
         document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
+        renderQuickSlots();
     }
 
     // ===== АДМИН МЕНЮ =====
@@ -435,36 +437,92 @@
             if (screen === 'shop') renderShop();
             if (screen === 'warehouse') renderWarehouse();
             if (screen === 'detectors') renderDetectors();
+            if (screen === 'kpk') openKpkTab(kpkTab);
+            if (screen === 'market') openMarketTab(marketTab);
+            if (screen === 'arena') renderArena();
         }
     }
 
     // ===== КПК =====
+    // Форматирует объект {тир: количество} в список строк "Тир N: count"
+    function formatByTier(obj) {
+        if (!obj || Object.keys(obj).length === 0) return '<span style="color:#666;">нет данных</span>';
+        return Object.keys(obj)
+            .sort((a, b) => Number(a) - Number(b))
+            .map(tier => `Тир ${tier}: ${obj[tier]}`)
+            .join(', ');
+    }
+
+    // Единая карточка статистики — используется и для себя, и для чужого профиля
+    function renderPlayerStatsCard(data, titleText) {
+        const stats = data.stats || {};
+        const weaponName = data.weapon?.name || '—';
+        const armorName = data.armor?.name || '—';
+        const detectorName = data.detector?.name || '—';
+        return `
+            <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
+                <h4>${titleText}</h4>
+                ${data.username ? `<p>Ник: ${data.username}</p>` : ''}
+                <p>Уровень: ${data.level ?? 1}</p>
+                <p>Опыт: ${data.exp ?? 0}</p>
+                <p>🪙 Валюта: ${data.coins ?? 0}</p>
+                <p>Смертей: ${stats.deaths ?? 0}</p>
+                <p>Мутантов убито: ${stats.mutantsKilled ?? 0}<br>
+                   <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.mutantsByTier)}</span></p>
+                <p>Бойцов фракций убито: ${stats.npcsKilled ?? 0}<br>
+                   <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.npcsByTier)}</span></p>
+                <p>Артефактов найдено: ${stats.artifactsFound ?? 0}<br>
+                   <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.artifactsByTier)}</span></p>
+                <p>Снаряжение: ⚔️ ${weaponName} | 🛡️ ${armorName} | 📡 ${detectorName}</p>
+            </div>
+        `;
+    }
+
     function renderKpk() {
         const content = document.getElementById('kpkContent');
         content.innerHTML = '';
-        const stats = player.stats;
+
+        if (kpkTab === 'players') {
+            renderPlayersList('');
+            return;
+        }
+
+        content.innerHTML = renderPlayerStatsCard(player, '📋 Инфо о персонаже');
+    }
+
+    // Список игроков (онлайн/офлайн) с поиском по нику или ID
+    function renderPlayersList(query) {
+        const content = document.getElementById('kpkContent');
         content.innerHTML = `
-            <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
-                <h4>Инфо о персонаже</h4>
-                <p>Уровень: ${player.level}</p>
-                <p>Опыт: ${player.exp}</p>
-                <p>Монеты: ${player.coins}</p>
-                <p>Артефакты найдено: ${stats.artifactsFound}</p>
-                <p>Мутантов убито: ${stats.mutantsKilled}</p>
-                <p>NPC убито: ${stats.npcsKilled}</p>
-                <p>Смертей: ${stats.deaths}</p>
-                <p>Онлайн игроков убито: ${stats.onlinePlayersKilled}</p>
-                <p>Перки: ${JSON.stringify({
-                    vitality: player.vitality,
-                    agility: player.agility,
-                    strength: player.strength,
-                    accuracy: player.accuracy,
-                    intellect: player.intellect,
-                    luck: player.luck
-                })}</p>
-                <p>Снаряжение: ${player.weapon.name}, ${player.armor.name}</p>
-            </div>
+            <input type="text" id="playerSearchInput" placeholder="Поиск по нику или ID..." value="${query.replace(/"/g, '&quot;')}"
+                style="width:100%; padding:10px; margin:8px 0; background:#111; border:1px solid #333; color:#fff; border-radius:6px;">
+            <div id="playersListResults"><p style="padding:10px; color:#888;">Загрузка списка игроков...</p></div>
         `;
+        const input = document.getElementById('playerSearchInput');
+        input.oninput = () => renderPlayersList(input.value);
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+
+        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(query)}`)
+            .then(res => res.json())
+            .then(list => {
+                const results = document.getElementById('playersListResults');
+                if (!results) return;
+                if (!list || list.length === 0) {
+                    results.innerHTML = '<p style="padding:10px; color:#888;">Игроков не найдено</p>';
+                    return;
+                }
+                results.innerHTML = list.map(p => `
+                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="showPlayerInfo('${p.id}')">
+                        <span><strong>${p.username || p.id}</strong> <span style="color:#666; font-size:11px;">(ID: ${p.id})</span></span>
+                        <span style="color:${p.online ? '#27ae60' : '#666'}; font-size:12px;">${p.online ? '🟢 Онлайн' : '⚫ Офлайн'}</span>
+                    </div>
+                `).join('');
+            })
+            .catch(() => {
+                const results = document.getElementById('playersListResults');
+                if (results) results.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить список игроков</p>';
+            });
     }
 
     function openKpkTab(tab) {
@@ -473,53 +531,110 @@
     }
 
     function showPlayerInfo(playerId) {
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка профиля...</p>';
         fetch(`${SERVER_URL}/api/player/${playerId}`)
             .then(res => res.json())
             .then(data => {
-                alert(`
-                    Игрок: ${data.username}
-                    Уровень: ${data.level}
-                    Монеты: ${data.coins}
-                `);
+                content.innerHTML = renderPlayerStatsCard(data || {}, `👤 Профиль игрока`) +
+                    `<button class="back-btn" onclick="renderPlayersList('')">← К списку игроков</button>`;
+            })
+            .catch(() => {
+                content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
+                    `<button class="back-btn" onclick="renderPlayersList('')">← К списку игроков</button>`;
             });
     }
 
     // ===== РЫНОК =====
+    let marketCategory = null; // выбранная категория во вкладке "Купить"
+    const MARKET_CATEGORIES = ['Оружие', 'Броня', 'Артефакты', 'Части тел мутантов'];
+
+    function categorizeMarketItem(name) {
+        if (weapons.some(w => w.name === name)) return 'Оружие';
+        if (armorItems.some(a => a.name === name)) return 'Броня';
+        if (artifacts.some(a => a.name === name)) return 'Артефакты';
+        return 'Части тел мутантов';
+    }
+
     function renderMarket() {
         const content = document.getElementById('marketContent');
         content.innerHTML = '';
+
         if (marketTab === 'my') {
+            content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка...</p>';
             fetch(`${SERVER_URL}/api/market`)
                 .then(res => res.json())
                 .then(lots => {
-                    const myLots = lots.filter(l => l.seller_id === getPlayerId());
+                    const myLots = lots.filter(l => String(l.seller_id) === String(getPlayerId()));
+                    if (myLots.length === 0) {
+                        content.innerHTML = '<p style="padding:10px; color:#888;">Вы ничего не продаёте</p>';
+                        return;
+                    }
                     content.innerHTML = myLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong></p>
                             <p>Цена: ${lot.price} монет</p>
                             <p>Количество: ${lot.quantity}</p>
+                            <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
                     `).join('');
-                });
+                })
+                .catch(() => { content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рынок</p>'; });
+
         } else if (marketTab === 'buy') {
+            if (!marketCategory) {
+                content.innerHTML = MARKET_CATEGORIES.map(cat => `
+                    <button onclick="openMarketCategory('${cat}')" style="width:100%; margin-bottom:8px; padding:14px; background:#1a1a1a; border:2px solid #333; color:#ddd; border-radius:8px; font-weight:bold;">${cat}</button>
+                `).join('');
+                return;
+            }
+            content.innerHTML = `<p style="padding:6px 0; color:#8a7a4a; font-weight:bold;">${marketCategory}</p>
+                <button onclick="openMarketCategory(null)" style="margin-bottom:8px;">← Все категории</button>
+                <div id="marketBuyList"><p style="padding:10px; color:#888;">Загрузка...</p></div>`;
             fetch(`${SERVER_URL}/api/market`)
                 .then(res => res.json())
                 .then(lots => {
-                    const buyableLots = lots.filter(l => l.seller_id !== getPlayerId());
-                    content.innerHTML = buyableLots.map(lot => `
+                    const list = document.getElementById('marketBuyList');
+                    if (!list) return;
+                    const buyableLots = lots.filter(l => String(l.seller_id) !== String(getPlayerId()) && categorizeMarketItem(l.item) === marketCategory);
+                    if (buyableLots.length === 0) {
+                        list.innerHTML = '<p style="padding:10px; color:#888;">Пока никто не продаёт</p>';
+                        return;
+                    }
+                    list.innerHTML = buyableLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                            <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} монет</p>
-                            <p>Количество: ${lot.quantity}</p>
-                            <button onclick="buyMarketItem(${lot.id})">Купить</button>
+                            <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
+                            <p style="color:#aaa; font-size:12px;">Продавец: ${lot.seller_username || lot.seller_id}</p>
+                            <p>Цена: 🪙 ${lot.price}</p>
+                            <button onclick="buyMarketItem(${lot.id})" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
                         </div>
                     `).join('');
-                });
+                })
+                .catch(() => { const list = document.getElementById('marketBuyList'); if (list) list.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рынок</p>'; });
+
+        } else if (marketTab === 'sell') {
+            const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+            if (items.length === 0) {
+                content.innerHTML = '<p style="padding:10px; color:#888;">Нечего выставить на продажу</p>';
+                return;
+            }
+            content.innerHTML = items.map(name => `
+                <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${name} ×${player.inventory[name]}</span>
+                    <button onclick="listItemForSale('${name.replace(/'/g, "\\'")}')">Продать</button>
+                </div>
+            `).join('');
         }
+    }
+
+    function openMarketCategory(cat) {
+        marketCategory = cat;
+        renderMarket();
     }
 
     function openMarketTab(tab) {
         marketTab = tab;
+        marketCategory = null;
         renderMarket();
     }
 
@@ -529,20 +644,70 @@
     }
 
     function buyMarketItem(lotId) {
-        const buyerId = getPlayerId();
         fetch(`${SERVER_URL}/api/market/buy`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ buyerId, lotId })
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, lotId })
         })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
                 alert('Покупка успешна!');
+                loadGame();
+                renderMarket();
             } else {
-                alert('Ошибка: ' + data.error);
+                alert('Ошибка: ' + (data.error || 'не удалось купить'));
             }
-        });
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function cancelMarketLot(lotId) {
+        if (!confirm('Снять этот лот с продажи?')) return;
+        fetch(`${SERVER_URL}/api/market/cancel`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, lotId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Лот снят с продажи, предмет возвращён в инвентарь');
+                loadGame();
+                renderMarket();
+            } else {
+                alert('Ошибка: ' + (data.error || 'не удалось снять лот'));
+            }
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function listItemForSale(itemName) {
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        const maxQty = player.inventory[itemName];
+        const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, '1');
+        const qty = parseInt(qtyStr);
+        if (!qty || qty <= 0 || qty > maxQty) return;
+        const priceStr = prompt('Цена за партию (в монетах):', '100');
+        const price = parseInt(priceStr);
+        if (!price || price <= 0) return;
+
+        fetch(`${SERVER_URL}/api/market/sell`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, item: itemName, quantity: qty, price })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Выставлено на продажу!');
+                loadGame(); // сервер уже списал предмет из инвентаря — просто синхронизируемся
+                openMarketTab('my');
+            } else {
+                alert('Ошибка: ' + (data.error || 'не удалось выставить лот'));
+            }
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
     }
 
     // ===== АРЕНА =====
@@ -629,11 +794,26 @@
         }
         
         if (currentEnemy.hp <= 0) {
-            raidLogs.push(`🏆 Победа! Вы получили: ${currentEnemy.coins} монет, ${currentEnemy.exp} EXP, ${currentEnemy.loot}`);
+            const isNpc = !!currentEnemy.faction;
+            const lootText = isNpc ? '' : `, ${currentEnemy.loot}`;
+            raidLogs.push(`🏆 Победа! Вы получили: ${currentEnemy.coins} монет, ${currentEnemy.exp} EXP${lootText}`);
             player.coins += currentEnemy.coins;
             player.exp += currentEnemy.exp;
-            player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + 1;
+            if (!isNpc && currentEnemy.loot) {
+                player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + 1;
+            }
             player.strength += 0.1 * currentEnemy.tier;
+
+            if (isNpc) {
+                player.stats.npcsKilled = (player.stats.npcsKilled || 0) + 1;
+                player.stats.npcsByTier = player.stats.npcsByTier || {};
+                player.stats.npcsByTier[currentEnemy.tier] = (player.stats.npcsByTier[currentEnemy.tier] || 0) + 1;
+            } else {
+                player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
+                player.stats.mutantsByTier = player.stats.mutantsByTier || {};
+                player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
+            }
+
             endBattle(true);
             return;
         }
@@ -655,6 +835,7 @@
             
             if (player.health <= 0) {
                 raidLogs.push('💀 Вы мертвы...');
+                player.stats.deaths = (player.stats.deaths || 0) + 1;
                 endBattle(false);
                 return;
             }
@@ -716,22 +897,16 @@
                     player.inventory[artifactName] = (player.inventory[artifactName] || 0) + 1;
                     eventText += `\nВы нашли артефакт: ${artifactName}!`;
                     player.luck += 0.1 * anomaly.tier;
+                    player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
+                    player.stats.artifactsByTier = player.stats.artifactsByTier || {};
+                    player.stats.artifactsByTier[anomaly.tier] = (player.stats.artifactsByTier[anomaly.tier] || 0) + 1;
                 }
             } else {
                 eventText += `\nДетектор слабоват для этого тира!`;
             }
             raidLogs.push(eventText);
         } else if (npcChance < 0.8) {
-            const mutationChance = Math.random();
-            let chosenMutant = null;
-            for (let i = mutants.length - 1; i >= 0; i--) {
-                if (mutationChance < mutants[i].chance) {
-                    chosenMutant = mutants[i];
-                    break;
-                }
-            }
-            if (!chosenMutant) chosenMutant = mutants[0];
-            startBattle(chosenMutant);
+            startBattle(pickWeightedMutant());
         } else {
             raidLogs.push('🌫️ Вы ничего не нашли. Тишина...');
         }
@@ -765,6 +940,294 @@
                 alert('Игра сохранена!');
             }
         }
+    }
+
+    // ===== ВЗВЕШЕННЫЙ ВЫБОР МУТАНТА (исправление бага с "мёртвыми" тирами) =====
+    function pickWeightedMutant() {
+        const totalWeight = mutants.reduce((sum, m) => sum + m.chance, 0);
+        let roll = Math.random() * totalWeight;
+        for (const m of mutants) {
+            if (roll < m.chance) return m;
+            roll -= m.chance;
+        }
+        return mutants[mutants.length - 1];
+    }
+
+    // ===== ЭКИПИРОВКА ПРЕДМЕТА (оружие/броня/детектор) =====
+    function equipItem(itemName) {
+        const weapon = weapons.find(w => w.name === itemName);
+        if (weapon) {
+            const old = player.weapon.name;
+            player.inventory[itemName]--;
+            player.weapon = { name: weapon.name, tier: weapon.tier, dmg: weapon.dmg };
+            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            alert(`Экипировано оружие: ${weapon.name}`);
+            renderInventory(); updateUI(); saveGame();
+            return true;
+        }
+        const armor = armorItems.find(a => a.name === itemName);
+        if (armor) {
+            const old = player.armor.name;
+            player.inventory[itemName]--;
+            player.armor = { name: armor.name, tier: armor.tier, armor: armor.armor, artifactProtection: armor.artifactProtection };
+            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            alert(`Экипирована броня: ${armor.name}`);
+            renderInventory(); updateUI(); saveGame();
+            return true;
+        }
+        const detector = detectors.find(d => d.name === itemName);
+        if (detector) {
+            const old = player.detector.name;
+            player.inventory[itemName]--;
+            player.detector = { name: detector.name, tier: detector.tier };
+            if (old && old !== itemName) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            alert(`Экипирован детектор: ${detector.name}`);
+            renderInventory(); updateUI(); saveGame();
+            return true;
+        }
+        return false;
+    }
+
+    // ===== ИСПОЛЬЗОВАНИЕ ПРЕДМЕТА ИЗ ИНВЕНТАРЯ =====
+    function useInventoryItem(itemName) {
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+
+        if (equipItem(itemName)) return;
+
+        const consumable = consumables.find(c => c.name === itemName);
+        if (consumable) {
+            player.inventory[itemName]--;
+            if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
+            if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
+            if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            renderInventory(); updateUI(); saveGame();
+            return;
+        }
+
+        const artifact = artifacts.find(a => a.name === itemName);
+        if (artifact) {
+            if (!confirm(`Применить артефакт "${itemName}"? Он будет израсходован и навсегда улучшит характеристики.`)) return;
+            player.inventory[itemName]--;
+            Object.keys(artifact.stats).forEach(stat => {
+                if (stat === 'health') player.maxHealth += artifact.stats.health;
+                else player[stat] = (player[stat] || 0) + artifact.stats[stat];
+            });
+            alert(`Артефакт применён! Эффект: ${JSON.stringify(artifact.stats)}`);
+            renderInventory(); updateUI(); saveGame();
+            return;
+        }
+
+        alert('Этот предмет нельзя использовать здесь.');
+    }
+
+    // ===== ИНВЕНТАРЬ =====
+    function renderInventory() {
+        document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
+
+        const beltGrid = document.getElementById('beltGrid');
+        beltGrid.innerHTML = player.belt.map((item, i) => `
+            <div class="belt-slot" onclick="useBeltSlot(${i})">${item || 'Пусто'}</div>
+        `).join('');
+
+        const invGrid = document.getElementById('inventoryGrid');
+        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+        if (items.length === 0) {
+            invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
+            return;
+        }
+        invGrid.innerHTML = items.map(name => `
+            <div class="slot" title="${name} x${player.inventory[name]}" onclick="useInventoryItem('${name.replace(/'/g, "\\'")}')">
+                <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
+            </div>
+        `).join('');
+    }
+
+    function useBeltSlot(i) {
+        const itemName = player.belt[i];
+        if (!itemName) {
+            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0);
+            if (available.length === 0) { alert('Инвентарь пуст, нечего добавить в пояс!'); return; }
+            const choice = prompt('Введите точное название предмета из инвентаря:\n' + available.join(', '));
+            if (choice && available.includes(choice)) {
+                player.belt[i] = choice;
+                renderInventory();
+                saveGame();
+            }
+            return;
+        }
+        useInventoryItem(itemName);
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) {
+            player.belt[i] = null;
+        }
+        renderInventory();
+    }
+
+    // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
+    function renderQuickSlots() {
+        const slots = document.querySelectorAll('#quickSlots .quick-slot');
+        slots.forEach((el, i) => {
+            el.textContent = player.quickSlots[i] || 'Пусто';
+        });
+    }
+
+    function useQuickSlot(index) {
+        const itemName = player.quickSlots[index];
+        if (!itemName) {
+            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0 && consumables.some(c => c.name === n));
+            if (available.length === 0) { alert('Нет расходников для быстрого слота!'); return; }
+            const choice = prompt('Введите точное название предмета для слота:\n' + available.join(', '));
+            if (choice && available.includes(choice)) {
+                player.quickSlots[index] = choice;
+                renderQuickSlots();
+                saveGame();
+            }
+            return;
+        }
+
+        const consumable = consumables.find(c => c.name === itemName);
+        if (!consumable || !player.inventory[itemName] || player.inventory[itemName] <= 0) {
+            player.quickSlots[index] = null;
+            renderQuickSlots();
+            return;
+        }
+
+        player.inventory[itemName]--;
+        if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
+        if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
+        if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+        if (player.inventory[itemName] <= 0) player.quickSlots[index] = null;
+
+        raidLogs.push(`Использован(а) ${itemName}!`);
+        updateRaidLog();
+        renderQuickSlots();
+        updateUI();
+        saveGame();
+    }
+
+    // ===== СКЛАД =====
+    function renderWarehouse() {
+        const grid = document.getElementById('warehouseGrid');
+        const items = Object.keys(player.warehouse).filter(name => player.warehouse[name] > 0);
+        if (items.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Склад пуст</div>';
+            return;
+        }
+        grid.innerHTML = items.map(name => `
+            <div class="slot" title="Забрать: ${name}" onclick="withdrawFromWarehouse('${name.replace(/'/g, "\\'")}')">
+                <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.warehouse[name]}</div>
+            </div>
+        `).join('');
+    }
+
+    function withdrawFromWarehouse(name) {
+        if (!player.warehouse[name] || player.warehouse[name] <= 0) return;
+        player.warehouse[name]--;
+        player.inventory[name] = (player.inventory[name] || 0) + 1;
+        if (player.warehouse[name] <= 0) delete player.warehouse[name];
+        renderWarehouse();
+        saveGame();
+    }
+
+    // ===== МАГАЗИН =====
+    function renderShop() {
+        const shopItems = document.getElementById('shopItems');
+        const allGoods = [
+            ...consumables.map(c => ({ ...c, category: 'consumable' })),
+            ...weapons.map(w => ({ ...w, category: 'weapon' })),
+            ...armorItems.map(a => ({ ...a, category: 'armor' })),
+            ...detectors.map(d => ({ ...d, category: 'detector' }))
+        ];
+        shopItems.innerHTML = allGoods.map(item => `
+            <div class="shop-item">
+                <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
+                <div class="price">🪙 ${item.price}</div>
+                <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < item.price ? 'disabled' : ''}>Купить</button>
+            </div>
+        `).join('');
+    }
+
+    function buyShopItem(category, name) {
+        let item;
+        if (category === 'consumable') item = consumables.find(c => c.name === name);
+        else if (category === 'weapon') item = weapons.find(w => w.name === name);
+        else if (category === 'armor') item = armorItems.find(a => a.name === name);
+        else if (category === 'detector') item = detectors.find(d => d.name === name);
+        if (!item || player.coins < item.price) return;
+
+        player.coins -= item.price;
+        player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
+        renderShop();
+        updateUI();
+        saveGame();
+    }
+
+    // ===== ДЕТЕКТОРЫ =====
+    function renderDetectors() {
+        const list = document.getElementById('detectorList');
+        list.innerHTML = detectors.map(d => `
+            <div class="shop-item">
+                <div>${d.name} (Тир ${d.tier}) ${player.detector.name === d.name ? '✅ Экипирован' : ''}</div>
+                <div class="price">🪙 ${d.price}</div>
+                <button onclick="buyShopItem('detector', '${d.name.replace(/'/g, "\\'")}')" ${player.coins < d.price ? 'disabled' : ''}>Купить</button>
+                ${(player.inventory[d.name] > 0 && player.detector.name !== d.name) ? `<button onclick="equipItem('${d.name.replace(/'/g, "\\'")}')" style="margin-top:4px;">Экипировать</button>` : ''}
+            </div>
+        `).join('');
+    }
+
+    // ===== АДМИН: ВЫДАЧА ПРЕДМЕТОВ =====
+    function giveAdminItem() {
+        const targetId = document.getElementById('targetUserId').value.trim();
+        const giveType = document.getElementById('giveType').value;
+        const amount = parseInt(document.getElementById('giveAmount').value) || 0;
+        const tier = parseInt(document.getElementById('giveTier').value) || 1;
+
+        const applyGive = (targetPlayer) => {
+            targetPlayer.inventory = targetPlayer.inventory || {};
+            if (giveType === 'level') {
+                targetPlayer.level = (targetPlayer.level || 1) + (amount || 1);
+            } else if (giveType === 'coins') {
+                targetPlayer.coins = (targetPlayer.coins || 0) + (amount || 0);
+            } else if (giveType === 'artifact') {
+                const item = artifacts.find(a => a.tier === tier) || artifacts[0];
+                targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
+            } else if (giveType === 'weapon') {
+                const item = weapons.find(w => w.tier === tier) || weapons[0];
+                targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
+            } else if (giveType === 'armor') {
+                const item = armorItems.find(a => a.tier === tier) || armorItems[0];
+                targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
+            } else if (giveType === 'detector') {
+                const item = detectors.find(d => d.tier === tier) || detectors[0];
+                targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
+            }
+            return targetPlayer;
+        };
+
+        if (!targetId) {
+            applyGive(player);
+            renderInventory();
+            updateUI();
+            saveGame();
+            alert('Выдано самому себе!');
+            return;
+        }
+
+        fetch(`${SERVER_URL}/api/player/${targetId}`)
+            .then(res => res.json())
+            .then(data => {
+                const targetPlayer = applyGive(data || {});
+                return fetch(`${SERVER_URL}/api/player`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId, data: targetPlayer })
+                });
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) alert(`Выдано игроку ${targetId}!`);
+                else alert('Ошибка: ' + (result.error || 'нет прав или не удалось обновить'));
+            })
+            .catch(() => alert('Ошибка: не удалось найти/обновить игрока'));
     }
 
     // ===== ИНИЦИАЛИЗАЦИЯ =====
