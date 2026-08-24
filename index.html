@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; }
         .header { background: #1a1a1a; border: 2px solid #333; padding: 12px; margin-bottom: 12px; border-radius: 4px; text-align: center; }
-        .header h1 { color: #8a7a4a; font-size: 20px; letter-spacing: 2px; }
+        .header h1 { color: #8a7a4a; font-size: 16px; letter-spacing: 1px; line-height: 1.3; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: #111; border: 1px solid #2a2a2a; padding: 6px; font-size: 12px; color: #aaa; text-align: center; border-radius: 4px; }
         .stat-box .value { display: block; font-size: 18px; font-weight: bold; color: #fff; }
@@ -55,7 +55,7 @@
 
 <div id="app" style="display: none;">
     <div class="header">
-        <h1>POCKET ZONE</h1>
+        <h1>THE WAY TO THE CHERNOBYL</h1>
         <div class="stats-grid">
             <div class="stat-box health">❤️ <span class="value" id="health">100</span></div>
             <div class="stat-box hunger">🍖 <span class="value" id="hunger">100</span></div>
@@ -75,8 +75,28 @@
         <button onclick="openScreen('kpk')">📱 КПК</button>
         <button onclick="openScreen('market')">🏦 Рынок</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
+        <button onclick="openScreen('scientists')">🧪 Ученые</button>
         <button onclick="openScreen('starsShop')">⭐ Магазин монет</button>
-        <button onclick="exitGame()">🚪 Выйти из игры</button>
+
+        <div style="grid-column: 1 / -1; margin-top:4px;">
+            <h4 style="margin:4px 0 6px; color:#8a7a4a;">💬 Чат</h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px;">
+                <button onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
+                <button onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
+                <button onclick="openChatTab('dm')" id="chatTabDmBtn">Личный</button>
+            </div>
+            <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
+                <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
+            </div>
+            <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
+            <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
+            <div style="display:flex; gap:8px;">
+                <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
+            </div>
+        </div>
+
+        <button onclick="exitGame()" style="grid-column: 1 / -1; margin-top:8px;">🚪 Выйти из игры</button>
     </div>
 
     <div id="starsShopScreen" class="screen">
@@ -84,6 +104,35 @@
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
+    </div>
+
+    <div id="scientistsScreen" class="screen">
+        <h3>🧪 Ученые</h3>
+        <div style="font-size:16px; font-weight:bold; color:#8a7a4a; margin-bottom:6px; background:#1a1a1a; padding:10px; border-radius:8px; text-align:center;">
+            🧬 Жетонов селекции: <span id="breedCreditsCount">0</span>
+        </div>
+        <div style="font-size:12px; color:#888; margin-bottom:10px;">
+            Скрестите два артефакта — получите новый, с суммой их свойств. Каждое скрещивание стоит 1 жетон селекции
+            (покупается за ⭐ в Магазине монет). Один и тот же артефакт можно улучшать так до 20 раз подряд.
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
+            <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column;" onclick="openBreedSlotPicker(1)">
+                <div style="font-size:10px; text-align:center;">Слот 1<br><b id="breedSlot1Label">Пусто</b></div>
+            </div>
+            <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column;" onclick="openBreedSlotPicker(2)">
+                <div style="font-size:10px; text-align:center;">Слот 2<br><b id="breedSlot2Label">Пусто</b></div>
+            </div>
+            <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column; border-color:#8a7a4a;">
+                <div style="font-size:10px; text-align:center;">Результат<br><b id="breedSlot3Label">Пусто</b></div>
+            </div>
+        </div>
+        <div id="breedResultInfo" style="font-size:12px; color:#aaa; margin-bottom:10px;"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="doBreedArtifacts()">Селекционировать</button>
+            <button onclick="openScientistsSellView()" style="background:#27ae60;">💰 Продать</button>
+        </div>
+        <div id="scientistsSellList"></div>
+        <button class="back-btn" onclick="exitScientists()">Выход</button>
     </div>
 
     <div id="technicianScreen" class="screen">
@@ -167,6 +216,9 @@
         <h3>📱 КПК</h3>
         <button onclick="openKpkTab('info')">Инфо о персонаже</button>
         <button onclick="openKpkTab('players')">Список игроков</button>
+        <button onclick="openKpkTab('factions')">🚩 Фракции</button>
+        <button onclick="openKpkTab('rating')">🏅 Рейтинг</button>
+        <button onclick="changeNickname()" style="background:#8a7a4a;">✏️ Сменить ник</button>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="kpkContent"></div>
     </div>
@@ -209,7 +261,7 @@
         <input type="text" id="targetUserId" placeholder="ID игрока (оставьте пустым для себя)">
         <div style="margin-bottom: 10px;">
             <label>Тип выдачи:</label>
-            <select id="giveType" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333;">
+            <select id="giveType" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333;" onchange="updateGiveItemSelect()">
                 <option value="level">Уровень</option>
                 <option value="coins">Деньги</option>
                 <option value="artifact">Артефакт</option>
@@ -217,12 +269,26 @@
                 <option value="armor">Броня</option>
                 <option value="detector">Детектор</option>
                 <option value="bodypart">Часть тела мутанта</option>
+                <option value="knowledgebook">Книга знаний</option>
+                <option value="breedcredits">Жетоны селекции</option>
+                <option value="nicknamecredits">Жетоны смены ника</option>
+                <option value="perk">Перк</option>
             </select>
         </div>
-        <input type="number" id="giveAmount" placeholder="Количество (для уровня/денег/частей тела)" style="margin-bottom:10px;">
-        <input type="number" id="giveTier" placeholder="Тир (для предметов, мутантов 0-14)" style="margin-bottom:10px;">
+        <input type="number" id="giveAmount" placeholder="Количество (для уровня/денег/частей тела/жетонов/перков)" style="margin-bottom:10px;">
+        <input type="number" id="giveTier" placeholder="Тир (для предметов, мутантов/NPC-снаряжения 0-14)" style="margin-bottom:10px;">
+        <select id="giveItemSelect" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:10px; display:none;"></select>
+        <input type="text" id="giveItemName" placeholder="Или точное название вручную (необязательно)" style="margin-bottom:10px;">
         <input type="number" id="giveGearLevel" placeholder="Уровень улучшения +N (0-100, для оружия/брони)" min="0" max="100" style="margin-bottom:10px;">
         <button onclick="giveAdminItem()">Выдать</button>
+        <div style="margin:16px 0 8px; border-top:1px solid #333; padding-top:10px;">
+            <label>🔍 Поиск и блокировка игроков:</label>
+            <div style="display:flex; gap:8px; margin:6px 0;">
+                <input type="text" id="adminPlayerSearch" placeholder="Ник или ID" style="flex:1;">
+                <button onclick="searchAdminPlayers()" style="width:auto; padding:8px 14px;">Найти</button>
+            </div>
+            <div id="adminSearchResults" style="max-height:200px; overflow-y:auto;"></div>
+        </div>
         <button onclick="closeAdminPanel()" style="background:#c0392b; margin-top:10px;">Закрыть</button>
     </div>
 </div>
@@ -241,6 +307,12 @@
         hostileFactions: [], // фракции, ставшие враждебными после нападения игрока
         warehouse: {},
         quickSlots: [null, null, null, null],
+        craftedArtifacts: {}, // скрещенные у Учёных артефакты — {имя: {tier, price, stats, gen}}, восстанавливаются при загрузке
+        breedCredits: 0, // жетоны селекции у Учёных — отдельное числовое поле, как монеты
+        nickname: '', // ник, придуманный игроком при первом входе — показывается на рынке/арене/в списке игроков
+        freeNicknameChangeUsed: false, // использована ли единственная бесплатная смена ника
+        nicknameChangeCredits: 0, // оплаченные смены ника (по 20 ⭐ за штуку), отдельное числовое поле
+        hybridCounter: 0, // счётчик для уникальных имён скрещенных артефактов
         stats: {
             artifactsFound: 0,
             artifactsByTier: {},
@@ -325,45 +397,177 @@
     // ===== ОРУЖИЕ =====
     const weapons = [
         { id: 1, name: 'Пистолет Макарова', tier: 1, dmg: 10, price: 150 },
-        { id: 2, name: 'Револьвер Наган', tier: 1, dmg: 15, price: 250 },
-        { id: 3, name: 'Пистолет ТТ', tier: 2, dmg: 20, price: 400 },
-        { id: 4, name: 'АК-74', tier: 2, dmg: 30, price: 700 },
-        { id: 5, name: 'Винтовка СВД', tier: 3, dmg: 40, price: 1200 },
-        { id: 6, name: 'Штурмовая винтовка', tier: 3, dmg: 55, price: 1800 },
-        { id: 7, name: 'Дробовик СПАС-12', tier: 4, dmg: 60, price: 2500 },
-        { id: 8, name: 'Снайперская винтовка', tier: 4, dmg: 90, price: 5000 },
-        { id: 9, name: 'Пулемет', tier: 5, dmg: 100, price: 8000 },
-        { id: 10, name: 'Крупнокалиберный пулемёт', tier: 6, dmg: 110, price: 12000 },
-        { id: 11, name: 'Автоматический гранатомёт', tier: 7, dmg: 120, price: 18000 },
-        { id: 12, name: 'Штурмовая винтовка Гроза', tier: 8, dmg: 130, price: 26000 },
-        { id: 13, name: 'Крупнокалиберная снайперка', tier: 9, dmg: 140, price: 36000 },
-        { id: 14, name: 'Гаусс-пушка', tier: 10, dmg: 150, price: 50000 },
-        { id: 15, name: 'Плазменная винтовка', tier: 11, dmg: 170, price: 70000 },
-        { id: 16, name: 'Ионный бластер', tier: 12, dmg: 190, price: 95000 },
-        { id: 17, name: 'Прототип X-17', tier: 13, dmg: 215, price: 130000 },
-        { id: 18, name: 'Оружие Стрелка', tier: 14, dmg: 250, price: 180000 }
+        { id: 2, name: 'Пистолет ПСМ', tier: 1, dmg: 11, price: 160 },
+        { id: 3, name: 'Пистолет ИЖ-71', tier: 1, dmg: 12, price: 180 },
+        { id: 4, name: 'Обрез охотничьего ружья', tier: 1, dmg: 13, price: 200 },
+        { id: 5, name: 'Пистолет ОЦ-33 «Пернач»', tier: 1, dmg: 14, price: 210 },
+        { id: 6, name: 'Револьвер Наган', tier: 1, dmg: 15, price: 250 },
+        { id: 7, name: 'Пистолет ТТ', tier: 2, dmg: 20, price: 400 },
+        { id: 8, name: 'ПП «Кедр»', tier: 2, dmg: 21, price: 420 },
+        { id: 9, name: 'Карабин Сайга-12', tier: 2, dmg: 22, price: 440 },
+        { id: 10, name: 'ПП-19 «Бизон»', tier: 2, dmg: 23, price: 460 },
+        { id: 11, name: 'Автомат АКС-74У', tier: 2, dmg: 25, price: 500 },
+        { id: 12, name: 'Автомат АК-74', tier: 2, dmg: 30, price: 700 },
+        { id: 13, name: 'Винтовка СВД', tier: 3, dmg: 40, price: 1200 },
+        { id: 14, name: 'Винтовка СКС', tier: 3, dmg: 41, price: 1230 },
+        { id: 15, name: 'Автомат АК-103', tier: 3, dmg: 42, price: 1260 },
+        { id: 16, name: 'Карабин «Вепрь»', tier: 3, dmg: 44, price: 1320 },
+        { id: 17, name: 'Пулемёт РПК-74', tier: 3, dmg: 46, price: 1380 },
+        { id: 18, name: 'Автомат АС «Вал»', tier: 3, dmg: 55, price: 1800 },
+        { id: 19, name: 'Дробовик СПАС-12', tier: 4, dmg: 60, price: 2500 },
+        { id: 20, name: 'Дробовик Сайга-410', tier: 4, dmg: 62, price: 2580 },
+        { id: 21, name: 'Автомат АК-12', tier: 4, dmg: 65, price: 2710 },
+        { id: 22, name: 'Пулемёт ПКМ', tier: 4, dmg: 68, price: 2830 },
+        { id: 23, name: 'Винтовка Т-5000', tier: 4, dmg: 72, price: 3000 },
+        { id: 24, name: 'Винтовка СВДС', tier: 4, dmg: 90, price: 5000 },
+        { id: 25, name: 'Пулемёт РПД', tier: 5, dmg: 100, price: 8000 },
+        { id: 26, name: 'Автомат АН-94 «Абакан»', tier: 5, dmg: 101, price: 8080 },
+        { id: 27, name: 'Винтовка ОРСИС T-5000M', tier: 5, dmg: 102, price: 8160 },
+        { id: 28, name: 'Винтовка СВ-98', tier: 5, dmg: 104, price: 8320 },
+        { id: 29, name: 'Пулемёт «Печенег»', tier: 5, dmg: 108, price: 8640 },
+        { id: 30, name: 'Винтовка ВСС «Винторез»', tier: 5, dmg: 112, price: 8960 },
+        { id: 31, name: 'Винтовка СВ-338', tier: 6, dmg: 110, price: 12000 },
+        { id: 32, name: 'Дробовик Сайга-12К', tier: 6, dmg: 110, price: 12000 },
+        { id: 33, name: 'Винтовка «Выхлоп»', tier: 6, dmg: 111, price: 12110 },
+        { id: 34, name: 'Пулемёт «Корд»', tier: 6, dmg: 113, price: 12330 },
+        { id: 35, name: 'Винтовка ОСВ-96', tier: 6, dmg: 114, price: 12440 },
+        { id: 36, name: 'Винтовка СВК', tier: 6, dmg: 118, price: 12870 },
+        { id: 37, name: 'Автомат АК-107', tier: 7, dmg: 120, price: 18000 },
+        { id: 38, name: 'Автомат ADAR 2-15', tier: 7, dmg: 120, price: 18000 },
+        { id: 39, name: 'Винтовка ORSIS T-5000 Sniper Pro', tier: 7, dmg: 121, price: 18150 },
+        { id: 40, name: 'Винтовка ВСК-94', tier: 7, dmg: 123, price: 18450 },
+        { id: 41, name: 'Пулемёт «Утёс»', tier: 7, dmg: 126, price: 18900 },
+        { id: 42, name: 'Винтовка SR-25', tier: 7, dmg: 128, price: 19200 },
+        { id: 43, name: 'Автомат ОЦ-14 «Гроза»', tier: 8, dmg: 130, price: 26000 },
+        { id: 44, name: 'Дробовик «Вепрь-12»', tier: 8, dmg: 130, price: 26000 },
+        { id: 45, name: 'Автомат АК-19', tier: 8, dmg: 131, price: 26200 },
+        { id: 46, name: 'Винтовка SSG 08', tier: 8, dmg: 132, price: 26400 },
+        { id: 47, name: 'Пулемёт «Корд-М»', tier: 8, dmg: 134, price: 26800 },
+        { id: 48, name: 'Винтовка Barrett M98B', tier: 8, dmg: 136, price: 27200 },
+        { id: 49, name: 'Винтовка Barrett M82', tier: 9, dmg: 140, price: 36000 },
+        { id: 50, name: 'Дробовик Benelli M4', tier: 9, dmg: 140, price: 36000 },
+        { id: 51, name: 'Автомат ЛР-308', tier: 9, dmg: 141, price: 36260 },
+        { id: 52, name: 'Винтовка АСВК «Корд»', tier: 9, dmg: 142, price: 36510 },
+        { id: 53, name: 'Пулемёт «Печенег-СП»', tier: 9, dmg: 144, price: 37030 },
+        { id: 54, name: 'Винтовка McMillan TAC-50', tier: 9, dmg: 147, price: 37800 },
+        { id: 55, name: 'Гаусс-пушка', tier: 10, dmg: 150, price: 50000 },
+        { id: 56, name: 'Дробовик AA-12', tier: 10, dmg: 150, price: 50000 },
+        { id: 57, name: 'Автомат HK416', tier: 10, dmg: 152, price: 50670 },
+        { id: 58, name: 'Винтовка Steyr HS .50', tier: 10, dmg: 154, price: 51330 },
+        { id: 59, name: 'Пулемёт M240', tier: 10, dmg: 156, price: 52000 },
+        { id: 60, name: 'Винтовка Accuracy International AXMC', tier: 10, dmg: 158, price: 52670 },
+        { id: 61, name: 'Пулемёт M60E6', tier: 11, dmg: 170, price: 70000 },
+        { id: 62, name: 'Дробовик Kel-Tec KSG', tier: 11, dmg: 170, price: 70000 },
+        { id: 63, name: 'Автомат АК-308', tier: 11, dmg: 171, price: 70410 },
+        { id: 64, name: 'Винтовка ORSIS T-5000 Elite', tier: 11, dmg: 172, price: 70820 },
+        { id: 65, name: 'Пулемёт «Утёс-М»', tier: 11, dmg: 174, price: 71650 },
+        { id: 66, name: 'Винтовка Zastava M93 Black Arrow', tier: 11, dmg: 178, price: 73290 },
+        { id: 67, name: 'Пулемёт Minimi Mk3', tier: 12, dmg: 190, price: 95000 },
+        { id: 68, name: 'Дробовик Franchi SPAS-15', tier: 12, dmg: 190, price: 95000 },
+        { id: 69, name: 'Автомат CZ Bren 2', tier: 12, dmg: 191, price: 95500 },
+        { id: 70, name: 'Винтовка Sako TRG-42', tier: 12, dmg: 192, price: 96000 },
+        { id: 71, name: 'Пулемёт FN MAG', tier: 12, dmg: 194, price: 97000 },
+        { id: 72, name: 'Винтовка Desert Tech HTI', tier: 12, dmg: 198, price: 99000 },
+        { id: 73, name: 'Прототип X-17', tier: 13, dmg: 215, price: 130000 },
+        { id: 74, name: 'Дробовик USAS-12', tier: 13, dmg: 215, price: 130000 },
+        { id: 75, name: 'Автомат SCAR-H', tier: 13, dmg: 216, price: 130600 },
+        { id: 76, name: 'Винтовка Blaser R93 Tactical 2', tier: 13, dmg: 217, price: 131210 },
+        { id: 77, name: 'Пулемёт Negev NG7', tier: 13, dmg: 219, price: 132420 },
+        { id: 78, name: 'Винтовка Cheytac M200 Intervention', tier: 13, dmg: 223, price: 134840 },
+        { id: 79, name: 'РПГ-7', tier: 14, dmg: 250, price: 180000 },
+        { id: 80, name: 'РПГ-26 «Аглень»', tier: 14, dmg: 250, price: 180000 },
+        { id: 81, name: 'РПГ-29 «Вампир»', tier: 14, dmg: 251, price: 180720 },
+        { id: 82, name: 'РПГ-32 «Хашим»', tier: 14, dmg: 252, price: 181440 },
+        { id: 83, name: 'Carl Gustaf M4', tier: 14, dmg: 253, price: 182160 },
+        { id: 84, name: 'FGM-148 Javelin', tier: 14, dmg: 258, price: 185760 }
     ];
 
     // ===== БРОНЯ =====
     const armorItems = [
         { id: 1, name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2, price: 100 },
-        { id: 2, name: 'Комбинезон Комбат', tier: 1, armor: 8, artifactProtection: 3, price: 200 },
-        { id: 3, name: 'Бронежилет Барьер', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
-        { id: 4, name: 'Комбинезон Долг', tier: 2, armor: 20, artifactProtection: 7, price: 700 },
-        { id: 5, name: 'Комбинезон Ветер', tier: 3, armor: 30, artifactProtection: 10, price: 1200 },
-        { id: 6, name: 'Комбинезон Заря', tier: 3, armor: 40, artifactProtection: 12, price: 2000 },
-        { id: 7, name: 'Бронежилет Выход', tier: 4, armor: 45, artifactProtection: 15, price: 2500 },
-        { id: 8, name: 'Экзоскелет Свобода', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
-        { id: 9, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
-        { id: 10, name: 'Бронекостюм СЕВА', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
-        { id: 11, name: 'Экзоскелет Штурмовой', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
-        { id: 12, name: 'Бронекостюм Титан', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
-        { id: 13, name: 'Защитный костюм Периметр', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
-        { id: 14, name: 'Экзоскелет', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
-        { id: 15, name: 'Экзоскелет Монолит-11', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
-        { id: 16, name: 'Броня Легион', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 17, name: 'Прототип Брони X-17', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 18, name: 'Броня Стрелка', tier: 14, armor: 180, artifactProtection: 100, price: 180000 }
+        { id: 2, name: 'Куртка кожаная армейская', tier: 1, armor: 6, artifactProtection: 2, price: 120 },
+        { id: 3, name: 'Ватник утеплённый', tier: 1, armor: 6, artifactProtection: 2, price: 120 },
+        { id: 4, name: 'Плащ-палатка ОЗК', tier: 1, armor: 7, artifactProtection: 3, price: 140 },
+        { id: 5, name: 'Комбинезон Комбат', tier: 1, armor: 8, artifactProtection: 3, price: 200 },
+        { id: 6, name: 'Роба сталкера', tier: 1, armor: 8, artifactProtection: 3, price: 160 },
+        { id: 7, name: 'Бронежилет Барьер', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
+        { id: 8, name: 'Разгрузка тактическая с бронепанелями', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
+        { id: 9, name: 'Бронежилет 6Б23', tier: 2, armor: 16, artifactProtection: 5, price: 530 },
+        { id: 10, name: 'Костюм Беркут', tier: 2, armor: 17, artifactProtection: 6, price: 570 },
+        { id: 11, name: 'Комбинезон Свобода-Новобранец', tier: 2, armor: 19, artifactProtection: 6, price: 630 },
+        { id: 12, name: 'Комбинезон Долг', tier: 2, armor: 20, artifactProtection: 7, price: 700 },
+        { id: 13, name: 'Комбинезон Ветер', tier: 3, armor: 30, artifactProtection: 10, price: 1200 },
+        { id: 14, name: 'Костюм Скат', tier: 3, armor: 31, artifactProtection: 10, price: 1240 },
+        { id: 15, name: 'Экзокостюм СЭВ', tier: 3, armor: 33, artifactProtection: 11, price: 1320 },
+        { id: 16, name: 'Бронежилет 6Б43 Ратник', tier: 3, armor: 34, artifactProtection: 11, price: 1360 },
+        { id: 17, name: 'Бронежилет Долга «Скала»', tier: 3, armor: 36, artifactProtection: 12, price: 1440 },
+        { id: 18, name: 'Комбинезон Заря', tier: 3, armor: 40, artifactProtection: 12, price: 2000 },
+        { id: 19, name: 'Бронежилет Выход', tier: 4, armor: 45, artifactProtection: 15, price: 2500 },
+        { id: 20, name: 'Бронежилет 6Б45 Ратник-2', tier: 4, armor: 47, artifactProtection: 16, price: 2610 },
+        { id: 21, name: 'Бронекостюм Монолит-Патрульный', tier: 4, armor: 48, artifactProtection: 16, price: 2670 },
+        { id: 22, name: 'Костюм СИРИУС', tier: 4, armor: 52, artifactProtection: 17, price: 2890 },
+        { id: 23, name: 'Экзокостюм Чистое небо', tier: 4, armor: 58, artifactProtection: 19, price: 3220 },
+        { id: 24, name: 'Экзоскелет Свобода', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
+        { id: 25, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
+        { id: 26, name: 'Бронекостюм СКАТ-9М', tier: 5, armor: 76, artifactProtection: 25, price: 8110 },
+        { id: 27, name: 'Бронежилет 6Б47 Ратник-3', tier: 5, armor: 78, artifactProtection: 26, price: 8320 },
+        { id: 28, name: 'Экзокостюм Периметр-1', tier: 5, armor: 79, artifactProtection: 26, price: 8430 },
+        { id: 29, name: 'Экзоскелет Атлант', tier: 5, armor: 80, artifactProtection: 27, price: 8530 },
+        { id: 30, name: 'Костюм Штурмовик', tier: 5, armor: 84, artifactProtection: 28, price: 8960 },
+        { id: 31, name: 'Бронекостюм СЕВА', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
+        { id: 32, name: 'Бронекостюм Долг-Элит', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
+        { id: 33, name: 'Бронежилет 6Б13 Модерн', tier: 6, armor: 86, artifactProtection: 30, price: 12140 },
+        { id: 34, name: 'Экзоскелет Периметр-2', tier: 6, armor: 87, artifactProtection: 31, price: 12280 },
+        { id: 35, name: 'Экзокостюм Титан-Лайт', tier: 6, armor: 88, artifactProtection: 31, price: 12420 },
+        { id: 36, name: 'Костюм Гроза', tier: 6, armor: 89, artifactProtection: 31, price: 12560 },
+        { id: 37, name: 'Экзоскелет Штурмовой', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
+        { id: 38, name: 'Бронежилет 6Б49 Ратник-4', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
+        { id: 39, name: 'Костюм Ветер-Штурм', tier: 7, armor: 91, artifactProtection: 35, price: 18200 },
+        { id: 40, name: 'Бронекостюм Титан-Про', tier: 7, armor: 92, artifactProtection: 36, price: 18400 },
+        { id: 41, name: 'Экзокостюм Периметр-3', tier: 7, armor: 93, artifactProtection: 36, price: 18600 },
+        { id: 42, name: 'Броня Монолит-Элит', tier: 7, armor: 94, artifactProtection: 37, price: 18800 },
+        { id: 43, name: 'Бронекостюм Титан', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
+        { id: 44, name: 'Костюм Аванпост', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
+        { id: 45, name: 'Броня Стража', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
+        { id: 46, name: 'Экзоскелет Крепость', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
+        { id: 47, name: 'Бронежилет 6Б51 Ратник-5', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
+        { id: 48, name: 'Экзокостюм Периметр-4', tier: 8, armor: 97, artifactProtection: 41, price: 26550 },
+        { id: 49, name: 'Защитный костюм Периметр', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
+        { id: 50, name: 'Костюм Форпост', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
+        { id: 51, name: 'Броня Стража-Элит', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
+        { id: 52, name: 'Экзоскелет Крепость-2', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
+        { id: 53, name: 'Бронежилет 6Б53 Ратник-6', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
+        { id: 54, name: 'Экзокостюм Бастион', tier: 9, armor: 100, artifactProtection: 46, price: 36730 },
+        { id: 55, name: 'Экзоскелет', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
+        { id: 56, name: 'Костюм Абсолют', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
+        { id: 57, name: 'Броня Периметр-Финал', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
+        { id: 58, name: 'Бронежилет 6Б55 Ратник-Финал', tier: 10, armor: 101, artifactProtection: 50, price: 50500 },
+        { id: 59, name: 'Экзоскелет Титан-Финал', tier: 10, armor: 102, artifactProtection: 51, price: 51000 },
+        { id: 60, name: 'Экзокостюм Бастион-2', tier: 10, armor: 103, artifactProtection: 52, price: 51500 },
+        { id: 61, name: 'Экзоскелет Монолит-11', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
+        { id: 62, name: 'Костюм Стража-Финал', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
+        { id: 63, name: 'Бронежилет 6Б57 Ратник-Элит', tier: 11, armor: 116, artifactProtection: 61, price: 70610 },
+        { id: 64, name: 'Бронекостюм Периметр-5', tier: 11, armor: 117, artifactProtection: 61, price: 71220 },
+        { id: 65, name: 'Броня Легион-Лайт', tier: 11, armor: 118, artifactProtection: 62, price: 71830 },
+        { id: 66, name: 'Экзоскелет Титан-Экстрим', tier: 11, armor: 119, artifactProtection: 62, price: 72430 },
+        { id: 67, name: 'Броня Легион', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
+        { id: 68, name: 'Костюм Абсолют-2', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
+        { id: 69, name: 'Броня Стража-Легенда', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
+        { id: 70, name: 'Бронежилет 6Б59 Элит', tier: 12, armor: 131, artifactProtection: 71, price: 95730 },
+        { id: 71, name: 'Экзоскелет Периметр-Финал', tier: 12, armor: 132, artifactProtection: 71, price: 96460 },
+        { id: 72, name: 'Экзокостюм Бастион-Финал', tier: 12, armor: 133, artifactProtection: 72, price: 97190 },
+        { id: 73, name: 'Прототип Брони X-17', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
+        { id: 74, name: 'Костюм Затвор-Броня', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
+        { id: 75, name: 'Броня Раскат', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
+        { id: 76, name: 'Бронежилет 6Б61 Легенда', tier: 13, armor: 151, artifactProtection: 86, price: 130870 },
+        { id: 77, name: 'Экзоскелет Реликт', tier: 13, armor: 152, artifactProtection: 86, price: 131730 },
+        { id: 78, name: 'Экзокостюм Возмездие', tier: 13, armor: 153, artifactProtection: 87, price: 132600 },
+        { id: 79, name: 'Броня Стрелка', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
+        { id: 80, name: 'Костюм Последний Рубеж', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
+        { id: 81, name: 'Броня Зоны', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
+        { id: 82, name: 'Бронежилет 6Б63 Легенда-Финал', tier: 14, armor: 181, artifactProtection: 101, price: 181000 },
+        { id: 83, name: 'Экзоскелет Абсолют-Финал', tier: 14, armor: 182, artifactProtection: 101, price: 182000 },
+        { id: 84, name: 'Экзокостюм Апокалипсис', tier: 14, armor: 183, artifactProtection: 102, price: 183000 }
     ];
 
     // ===== ДЕТЕКТОРЫ =====
@@ -405,22 +609,20 @@
     ];
 
     // ===== NPC =====
+    // Оружие и броня NPC теперь выбираются случайно из 6 вариантов данного тира при каждой встрече
+    // (см. findRandomNPC) — здесь создаётся только базовый шаблон (тир/фракция/боевые статы)
     const npcs = [];
     for (let i = 0; i < factions.length; i++) {
-        for (let tier = 1; tier <= 10; tier++) {
-            const weapon = weapons.find(w => w.tier === tier) || weapons[0];
-            const armor = armorItems.find(a => a.tier === tier) || armorItems[0];
+        for (let tier = 1; tier <= 14; tier++) {
             npcs.push({
                 id: `${factions[i].name}_${tier}`,
                 faction: factions[i],
                 tier: tier,
                 name: `${factions[i].name} ${tier} ур.`,
-                weapon: weapon,
-                armor: armor,
                 coins: tier * 500,
                 exp: tier * 50,
                 hp: tier * 100,
-                dmg: tier * 15,
+                dmg: tier * 12, // множитель снижен с 15 до 12 — на 15 бой был нечестным на нескольких тирах (см. проверку баланса)
                 hitChance: 0.9,
                 runChance: 0.5,
                 runSkill: 0
@@ -468,9 +670,12 @@
             .then(data => {
                 if (data) { Object.assign(player, data); }
                 sanitizePlayerNumbers();
+                reinjectCraftedArtifacts();
                 updateUI();
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
+                if (!player.nickname) promptForNickname(true);
+                openChatTab(chatTab); // чат встроен в главное меню — сразу подгружаем при старте
             })
             .catch(() => {
                 document.getElementById('loading').style.display = 'none';
@@ -481,7 +686,7 @@
     // Защита от NaN/null в числовых полях (например, после битых записей в базе)
     function sanitizePlayerNumbers() {
         const numericFields = ['health', 'hunger', 'thirst', 'coins', 'level', 'exp', 'maxHealth',
-            'vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck'];
+            'vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck', 'breedCredits', 'nicknameChangeCredits'];
         numericFields.forEach(field => {
             const v = Number(player[field]);
             player[field] = Number.isFinite(v) ? v : (field === 'maxHealth' || field === 'health' ? 100 : (field === 'level' ? 1 : 0));
@@ -492,6 +697,23 @@
         if (!Array.isArray(player.hostileFactions)) {
             player.hostileFactions = [];
         }
+        if (!player.craftedArtifacts || typeof player.craftedArtifacts !== 'object') {
+            player.craftedArtifacts = {};
+        }
+        if (!Number.isFinite(Number(player.hybridCounter))) {
+            player.hybridCounter = 0;
+        }
+    }
+
+    // Скрещенные артефакты хранятся в player.craftedArtifacts (переживают перезагрузку),
+    // но все игровые системы (одеть/продать/показ инфо) читают их из общего runtime-массива artifacts —
+    // поэтому при каждой загрузке нужно заново подмешать их туда
+    function reinjectCraftedArtifacts() {
+        Object.values(player.craftedArtifacts || {}).forEach(crafted => {
+            if (!artifacts.some(a => a.name === crafted.name)) {
+                artifacts.push(crafted);
+            }
+        });
     }
 
     function updateUI() {
@@ -536,6 +758,53 @@
         document.getElementById('adminPanel').classList.remove('active');
     }
 
+    // ===== АДМИН: ПОИСК И БЛОКИРОВКА ИГРОКОВ =====
+    function searchAdminPlayers() {
+        const query = document.getElementById('adminPlayerSearch').value.trim();
+        const resultsEl = document.getElementById('adminSearchResults');
+        resultsEl.innerHTML = '<p style="color:#888; padding:6px;">Поиск...</p>';
+        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(query)}`)
+            .then(r => r.json())
+            .then(list => {
+                if (!list || list.length === 0) {
+                    resultsEl.innerHTML = '<p style="color:#888; padding:6px;">Никого не найдено</p>';
+                    return;
+                }
+                resultsEl.innerHTML = list.slice(0, 30).map(p => `
+                    <div style="background:#111; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:12px;">${escapeHtml(p.username || p.id)} <span style="color:#666;">(ID: ${p.id})</span>${p.banned ? ' <span style="color:#c0392b;">🚫 заблокирован</span>' : ''}</span>
+                        ${p.banned
+                            ? `<button onclick="unbanAdminPlayer('${p.id}')" style="background:#27ae60; width:auto; padding:6px 10px; font-size:11px;">Разблокировать</button>`
+                            : `<button onclick="banAdminPlayer('${p.id}')" style="background:#c0392b; width:auto; padding:6px 10px; font-size:11px;">Заблокировать</button>`}
+                    </div>
+                `).join('');
+            })
+            .catch(() => { resultsEl.innerHTML = '<p style="color:#888; padding:6px;">Ошибка поиска</p>'; });
+    }
+
+    function banAdminPlayer(targetId) {
+        if (!confirm('Заблокировать этого игрока за нарушение правил?')) return;
+        fetch(`${SERVER_URL}/api/admin/ban`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId })
+        }).then(r => r.json()).then(res => {
+            if (res.success) { alert('Игрок заблокирован.'); searchAdminPlayers(); }
+            else alert('Ошибка: ' + (res.error || 'не удалось заблокировать'));
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function unbanAdminPlayer(targetId) {
+        fetch(`${SERVER_URL}/api/admin/unban`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId })
+        }).then(r => r.json()).then(res => {
+            if (res.success) { alert('Игрок разблокирован.'); searchAdminPlayers(); }
+            else alert('Ошибка: ' + (res.error || 'не удалось разблокировать'));
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
     // ===== НАВИГАЦИЯ =====
     function openScreen(screen) {
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
@@ -543,6 +812,7 @@
         
         if (screen === 'main') {
             document.getElementById('mainMenu').style.display = 'grid';
+            openChatTab(chatTab); // чат встроен в главное меню — обновляем при каждом возврате в него
             return;
         }
         
@@ -557,6 +827,7 @@
             if (screen === 'market') openMarketTab(marketTab);
             if (screen === 'arena') renderArena();
             if (screen === 'starsShop') renderStarsShop();
+            if (screen === 'scientists') renderScientists();
         }
     }
 
@@ -595,11 +866,15 @@
         const weaponName = data.weapon?.name || '—';
         const armorName = data.armor?.name || '—';
         const detectorName = data.detector?.name || '—';
+        const factionName = data.factionName || 'Одиночка';
+        const factionPosition = data.factionName ? (data.factionPosition || 'Рядовой') : '-------';
         return `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
                 <h4>${titleText}</h4>
-                ${data.username ? `<p>Ник: ${data.username}</p>` : ''}
-                <p>Уровень: ${data.level ?? 1}</p>
+                ${(data.nickname || data.username) ? `<p>Имя: ${escapeHtml(data.nickname || data.username)}</p>` : ''}
+                <p>Фракция: ${factionName}</p>
+                <p>Должность в фракции: ${factionPosition}</p>
+                <p>Уровень: ${data.level ?? 1} (🏅 ${getRankTitle(data.level ?? 1)})</p>
                 <p>Опыт: ${data.exp ?? 0}</p>
                 <p>🪙 Валюта: ${data.coins ?? 0}</p>
                 <p>Смертей: ${stats.deaths ?? 0}</p>
@@ -622,6 +897,14 @@
 
         if (kpkTab === 'players') {
             renderPlayersList('');
+            return;
+        }
+        if (kpkTab === 'factions') {
+            renderFactionsTab();
+            return;
+        }
+        if (kpkTab === 'rating') {
+            renderRatingTab();
             return;
         }
 
@@ -651,9 +934,17 @@
                     return;
                 }
                 results.innerHTML = list.map(p => `
-                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onclick="showPlayerInfo('${p.id}')">
-                        <span><strong>${p.username || p.id}</strong> <span style="color:#666; font-size:11px;">(ID: ${p.id})</span></span>
-                        <span style="color:${p.online ? '#27ae60' : '#666'}; font-size:12px;">${p.online ? '🟢 Онлайн' : '⚫ Офлайн'}</span>
+                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="showPlayerInfo('${p.id}')">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span><strong>${escapeHtml(p.username || p.id)}</strong> <span style="color:#666; font-size:11px;">(ID: ${p.id})</span></span>
+                            <span style="color:${p.online ? '#27ae60' : '#666'}; font-size:12px;">${p.online ? '🟢 Онлайн' : '⚫ Офлайн'}</span>
+                        </div>
+                        <div style="font-size:11px; color:#8a7a4a; margin-top:4px;">
+                            🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}
+                        </div>
+                        <div style="font-size:11px; color:#ccc; margin-top:2px;">
+                            Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}
+                        </div>
                     </div>
                 `).join('');
             })
@@ -683,16 +974,495 @@
             });
     }
 
+    // ===== РЕЙТИНГ / ЗВАНИЯ ЗА УРОВЕНЬ =====
+    const RANK_TITLES = [
+        { level: 1, title: 'Новичёк' },
+        { level: 10, title: 'Искатель' },
+        { level: 20, title: 'Бродяга' },
+        { level: 30, title: 'Бывалый' },
+        { level: 40, title: 'Сталкер' },
+        { level: 50, title: 'Мастер' },
+        { level: 60, title: 'Ветеран' },
+        { level: 70, title: 'Знакомый Зоны' },
+        { level: 80, title: 'Друг Зоны' },
+        { level: 90, title: 'Любимчик Зоны' },
+        { level: 100, title: 'Фаворит Зоны' },
+        { level: 110, title: 'Эпик' },
+        { level: 120, title: 'Уникум' },
+        { level: 130, title: 'Мифический' },
+        { level: 140, title: 'Легенда Зоны' },
+        { level: 150, title: 'Чёрный сталкер' },
+        { level: 1000, title: 'Хозяин Зоны' }
+    ];
+
+    // Экранирование пользовательского текста (ник, сообщения в чате) перед вставкой в innerHTML —
+    // без этого игрок мог бы вписать HTML/скрипт в ник или сообщение чата и он выполнился бы у других игроков
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str ?? '');
+        return div.innerHTML;
+    }
+
+    function getRankTitle(level) {
+        let title = RANK_TITLES[0].title;
+        for (const r of RANK_TITLES) {
+            if (level >= r.level) title = r.title; else break;
+        }
+        return title;
+    }
+
+    function renderRatingTab() {
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка рейтинга...</p>';
+        fetch(`${SERVER_URL}/api/players`)
+            .then(res => res.json())
+            .then(list => {
+                if (kpkTab !== 'rating') return;
+                const sorted = [...list].sort((a, b) => (b.level || 1) - (a.level || 1));
+                const myId = String(getPlayerId());
+                content.innerHTML = sorted.map((p, i) => `
+                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; ${String(p.id)===myId ? 'border:1px solid #8a7a4a;' : ''}">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span><strong>${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
+                            <span style="color:#8a7a4a; font-size:12px;">Ур. ${p.level || 1}</span>
+                        </div>
+                        <div style="font-size:12px; color:#ccc; margin-top:2px;">🏅 ${getRankTitle(p.level || 1)}</div>
+                        <div style="font-size:11px; color:#888; margin-top:2px;">🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</div>
+                    </div>
+                `).join('');
+            })
+            .catch(() => { content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рейтинг</p>'; });
+    }
+
+    // ===== ЧАТ (общий / фракции / личный) =====
+    let chatTab = 'general';
+    let chatDmPartnerId = null; // с кем сейчас открыт личный диалог (null = список диалогов)
+
+    function setActiveChatTabButton() {
+        ['general', 'faction', 'dm'].forEach(t => {
+            const btn = document.getElementById('chatTab' + t.charAt(0).toUpperCase() + t.slice(1) + 'Btn');
+            if (btn) btn.style.background = (t === chatTab) ? '#8a7a4a' : '';
+        });
+    }
+
+    function openChatTab(tab) {
+        chatTab = tab;
+        setActiveChatTabButton();
+        document.getElementById('chatDmPicker').style.display = 'none';
+        document.getElementById('chatDmBackBar').style.display = 'none';
+        document.getElementById('chatInput').style.display = '';
+        if (tab === 'general') loadGeneralChat();
+        else if (tab === 'faction') loadFactionChat();
+        else if (tab === 'dm') {
+            // Если диалог уже был открыт (например, просто вернулись из другого экрана) — не сбрасываем на список
+            if (chatDmPartnerId) openDmWith(chatDmPartnerId);
+            else loadDmConversations();
+        }
+    }
+
+    function renderChatMessages(messages) {
+        const el = document.getElementById('chatMessages');
+        if (!messages || messages.length === 0) {
+            el.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Сообщений пока нет</p>';
+            return;
+        }
+        // Контейнер отображается column-reverse — переворачиваем массив, чтобы новые сообщения были внизу
+        el.innerHTML = [...messages].reverse().map(m => `
+            <div style="margin-bottom:10px; padding:8px; background:#1a1a1a; border-radius:6px;">
+                <div style="font-size:11px; color:#8a7a4a;">
+                    <strong>${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(m.factionName || 'Одиночка')}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''}
+                </div>
+                <div style="margin-top:4px; word-break:break-word;">${escapeHtml(m.text)}</div>
+            </div>
+        `).join('');
+    }
+
+    function loadGeneralChat() {
+        document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
+        fetch(`${SERVER_URL}/api/chat/general`)
+            .then(r => r.json())
+            .then(messages => { if (chatTab === 'general') renderChatMessages(messages); })
+            .catch(() => {});
+    }
+
+    function loadFactionChat() {
+        document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
+        fetch(`${SERVER_URL}/api/chat/faction/get`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(res => {
+            if (chatTab !== 'faction') return;
+            if (!res.success) {
+                document.getElementById('chatMessages').innerHTML = `<p style="color:#888; text-align:center; padding:10px;">${res.error || 'Вы не состоите во фракции'}</p>`;
+                document.getElementById('chatInput').style.display = 'none';
+                return;
+            }
+            document.getElementById('chatInput').style.display = '';
+            renderChatMessages(res.messages);
+        }).catch(() => {});
+    }
+
+    function loadDmConversations() {
+        chatDmPartnerId = null;
+        document.getElementById('chatMessages').innerHTML = '';
+        document.getElementById('chatDmBackBar').style.display = 'none';
+        document.getElementById('chatInput').style.display = 'none';
+        const picker = document.getElementById('chatDmPicker');
+        picker.style.display = '';
+        picker.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка диалогов...</p>';
+
+        fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => {
+            if (chatTab !== 'dm' || chatDmPartnerId) return;
+            const newBtn = `<button onclick="startNewDm()" style="margin-bottom:8px;">✉️ Написать новому игроку</button>`;
+            if (!list || list.length === 0) {
+                picker.innerHTML = newBtn + '<p style="color:#888; text-align:center; padding:10px;">Диалогов пока нет</p>';
+                return;
+            }
+            picker.innerHTML = newBtn + list.map(c => `
+                <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="openDmWith('${c.playerId}')">
+                    <strong>${escapeHtml(c.username)}</strong>
+                    <p style="font-size:12px; color:#888; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.lastMessage)}</p>
+                </div>
+            `).join('');
+        }).catch(() => {});
+    }
+
+    function startNewDm() {
+        const nickname = prompt('Введите ник игрока, которому хотите написать:');
+        if (!nickname) return;
+        const trimmed = nickname.trim();
+        if (!trimmed) return;
+
+        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(trimmed)}`)
+            .then(r => r.json())
+            .then(list => {
+                if (!list || list.length === 0) { alert('Игрок с таким ником не найден.'); return; }
+                // Точное совпадение ника — приоритетнее частичного
+                const exact = list.find(p => (p.username || '').toLowerCase() === trimmed.toLowerCase());
+                if (exact) { openDmWith(exact.id); return; }
+                if (list.length === 1) { openDmWith(list[0].id); return; }
+                // Несколько похожих совпадений — просим уточнить
+                const choicesText = list.slice(0, 10).map((p, i) => `${i + 1}. ${p.username || p.id}`).join('\n');
+                const choice = prompt(`Найдено несколько игроков, выберите номер:\n${choicesText}`);
+                const idx = parseInt(choice) - 1;
+                if (idx >= 0 && idx < list.length) openDmWith(list[idx].id);
+            })
+            .catch(() => alert('Ошибка поиска игрока'));
+    }
+
+    function openDmWith(playerId) {
+        chatDmPartnerId = String(playerId);
+        document.getElementById('chatDmPicker').style.display = 'none';
+        document.getElementById('chatDmBackBar').style.display = '';
+        document.getElementById('chatInput').style.display = '';
+        document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
+
+        fetch(`${SERVER_URL}/api/chat/dm/get`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, otherPlayerId: chatDmPartnerId })
+        }).then(r => r.json()).then(res => {
+            if (chatTab !== 'dm' || chatDmPartnerId !== String(playerId)) return;
+            if (!res.success) {
+                document.getElementById('chatMessages').innerHTML = `<p style="color:#888; text-align:center; padding:10px;">${res.error || 'Не удалось открыть диалог'}</p>`;
+                return;
+            }
+            renderChatMessages(res.messages, true);
+        }).catch(() => {});
+    }
+
+    function backToDmList() {
+        chatDmPartnerId = null;
+        loadDmConversations();
+    }
+
+    function sendChatMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+        const initData = window.Telegram?.WebApp?.initData;
+
+        let request;
+        if (chatTab === 'general') {
+            request = fetch(`${SERVER_URL}/api/chat/general/send`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initData, text })
+            }).then(r => r.json()).then(res => { if (res.success) loadGeneralChat(); else alert('Ошибка: ' + (res.error || '')); });
+        } else if (chatTab === 'faction') {
+            request = fetch(`${SERVER_URL}/api/chat/faction/send`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initData, text })
+            }).then(r => r.json()).then(res => { if (res.success) loadFactionChat(); else alert('Ошибка: ' + (res.error || '')); });
+        } else if (chatTab === 'dm') {
+            if (!chatDmPartnerId) { alert('Сначала выберите собеседника.'); return; }
+            request = fetch(`${SERVER_URL}/api/chat/dm/send`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initData, otherPlayerId: chatDmPartnerId, text })
+            }).then(r => r.json()).then(res => { if (res.success) openDmWith(chatDmPartnerId); else alert('Ошибка: ' + (res.error || '')); });
+        } else return;
+
+        input.value = '';
+        request.catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    // ===== ФРАКЦИИ =====
+    const FACTION_PRICE = 300000;
+    const RANK_ORDER = { 'Лидер фракции': 4, 'Заместитель лидера': 3, 'Старшина': 2, 'Взводник': 1, 'Рядовой': 0 };
+    let factionDetailView = null; // имя открытой сейчас фракции (null = список всех фракций)
+    let myFactionStatus = { factionName: null, position: null, pendingApplication: null };
+
+    function fetchMyFactionStatus() {
+        return fetch(`${SERVER_URL}/api/factions/me`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(s => { myFactionStatus = s; return s; }).catch(() => myFactionStatus);
+    }
+
+    function renderFactionsTab() {
+        factionDetailView = null;
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка фракций...</p>';
+        Promise.all([
+            fetch(`${SERVER_URL}/api/factions`).then(r => r.json()),
+            fetchMyFactionStatus()
+        ]).then(([factions]) => {
+            if (kpkTab !== 'factions') return;
+            content.innerHTML = `
+                <div style="font-size:12px; color:#888; margin-bottom:10px;">
+                    ${myFactionStatus.factionName
+                        ? `Вы состоите во фракции «${myFactionStatus.factionName}» (${myFactionStatus.position})`
+                        : (myFactionStatus.pendingApplication
+                            ? `Заявка подана во фракцию «${myFactionStatus.pendingApplication}» — ждите решения лидера. <button onclick="cancelFactionApplication()" style="margin-left:6px;">Отменить</button>`
+                            : 'Вы — Одиночка')}
+                </div>
+                ${factions.map(f => `
+                    <div style="background:#1a1a1a; padding:12px; border-radius:8px; margin-bottom:8px;">
+                        <p style="font-weight:bold; color:#8a7a4a;">🚩 ${f.name}</p>
+                        ${f.forSale
+                            ? `<p style="font-size:12px; color:#aaa;">Свободна — можно купить</p>
+                               <button onclick="buyFaction('${f.name}')" ${myFactionStatus.factionName ? 'disabled' : ''}>💰 Купить за ${FACTION_PRICE.toLocaleString('ru-RU')}</button>`
+                            : `<p style="font-size:12px; color:#aaa;">Лидер: ${escapeHtml(f.leaderUsername || f.leaderId)} | Участников: ${f.memberCount}</p>
+                               <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                   <button onclick="openFactionDetail('${f.name}')">ℹ️ Информация</button>
+                                   ${(!myFactionStatus.factionName && !myFactionStatus.pendingApplication)
+                                        ? `<button onclick="applyToFaction('${f.name}')">📨 Вступить</button>`
+                                        : ''}
+                               </div>`}
+                    </div>
+                `).join('')}
+            `;
+        });
+    }
+
+    function buyFaction(name) {
+        if (!confirm(`Купить фракцию «${name}» за ${FACTION_PRICE.toLocaleString('ru-RU')} монет? Вы станете её лидером.`)) return;
+        fetch(`${SERVER_URL}/api/factions/buy`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, factionName: name })
+        }).then(r => r.json()).then(res => {
+            if (res.success) { alert('Фракция куплена! Вы её лидер.'); loadGame(); renderFactionsTab(); }
+            else alert('Ошибка: ' + (res.error || 'не удалось купить'));
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function applyToFaction(name) {
+        fetch(`${SERVER_URL}/api/factions/apply`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, factionName: name })
+        }).then(r => r.json()).then(res => {
+            if (res.success) alert('Заявка отправлена лидеру фракции.');
+            else alert('Ошибка: ' + (res.error || 'не удалось подать заявку'));
+            renderFactionsTab();
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function cancelFactionApplication() {
+        fetch(`${SERVER_URL}/api/factions/apply-cancel`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(() => renderFactionsTab()).catch(() => {});
+    }
+
+    function openFactionDetail(name) {
+        factionDetailView = name;
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка...</p>';
+
+        const isMyFaction = myFactionStatus.factionName === name;
+        const myPosition = isMyFaction ? myFactionStatus.position : null;
+        const canManage = myPosition && myPosition !== 'Рядовой';
+
+        const membersPromise = fetch(`${SERVER_URL}/api/factions/${encodeURIComponent(name)}/members`).then(r => r.json());
+        const applicationsPromise = canManage
+            ? fetch(`${SERVER_URL}/api/factions/applications-list`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, factionName: name })
+              }).then(r => r.json())
+            : Promise.resolve([]);
+
+        Promise.all([membersPromise, applicationsPromise]).then(([members, applications]) => {
+            if (factionDetailView !== name) return;
+            const myId = String(getPlayerId());
+
+            const applicationsHtml = canManage ? `
+                <p style="margin-top:12px; font-weight:bold;">📨 Заявки на вступление:</p>
+                ${applications.length === 0 ? '<p style="color:#888; font-size:12px;">Заявок нет</p>' : applications.map(a => `
+                    <div style="background:#111; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                        <span>${escapeHtml(a.player_username || a.player_id)}</span>
+                        <div>
+                            <button onclick="acceptFactionApplication(${a.id})" style="background:#27ae60; padding:6px 10px;">✔</button>
+                            ${myPosition !== 'Взводник' ? `<button onclick="declineFactionApplication(${a.id})" style="background:#c0392b; padding:6px 10px;">✘</button>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            ` : '';
+
+            const membersHtml = members.map(m => {
+                const isSelf = String(m.id) === myId;
+                let actions = '';
+                if (canManage && !isSelf && m.position !== 'Лидер фракции') {
+                    // Назначение должности — доступные варианты зависят от ранга actor'а
+                    let appointOptions = [];
+                    if (myPosition === 'Лидер фракции') appointOptions = ['Заместитель лидера', 'Старшина', 'Взводник', 'Рядовой'];
+                    else if (myPosition === 'Заместитель лидера') appointOptions = ['Заместитель лидера', 'Старшина', 'Взводник', 'Рядовой'];
+                    else if (myPosition === 'Старшина') appointOptions = ['Взводник', 'Рядовой'];
+
+                    const canKickThis =
+                        myPosition === 'Лидер фракции' ||
+                        myPosition === 'Заместитель лидера' ||
+                        (myPosition === 'Взводник' && m.position === 'Рядовой');
+
+                    if (appointOptions.length > 0) {
+                        actions += `<select onchange="appointFactionMember('${m.id}', this.value)" style="font-size:11px; padding:4px; margin-right:4px;">
+                            <option value="">Назначить...</option>
+                            ${appointOptions.map(p => `<option value="${p}" ${p===m.position?'selected':''}>${p}</option>`).join('')}
+                        </select>`;
+                    }
+                    if (canKickThis) {
+                        actions += `<button onclick="kickFactionMember('${m.id}')" style="background:#c0392b; font-size:11px; padding:4px 8px;">Выгнать</button>`;
+                    }
+                    if (myPosition === 'Лидер фракции') {
+                        actions += `<button onclick="transferFactionLeadership('${m.id}')" style="background:#8a7a4a; font-size:11px; padding:4px 8px;">Сделать лидером</button>`;
+                    }
+                }
+                return `
+                    <div style="background:#111; padding:8px; border-radius:6px; margin-bottom:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span>${escapeHtml(m.username || m.id)}${isSelf ? ' (вы)' : ''} — <span style="color:#8a7a4a;">${m.position}</span> <span style="color:#ccc; font-size:11px;">(Ур. ${m.level || 1}, 🏅 ${getRankTitle(m.level || 1)})</span></span>
+                        </div>
+                        ${actions ? `<div style="margin-top:6px;">${actions}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            content.innerHTML = `
+                <h4>🚩 ${name}</h4>
+                <p style="font-size:12px; color:#888;">Участников: ${members.length}</p>
+                ${membersHtml || '<p style="color:#888;">Пусто</p>'}
+                ${applicationsHtml}
+                ${isMyFaction ? `<button onclick="leaveFactionAction()" style="background:#c0392b; margin-top:12px;">🚪 Покинуть фракцию</button>` : ''}
+                <button class="back-btn" onclick="openKpkTab('factions')">← К списку фракций</button>
+            `;
+        }).catch(() => {
+            content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить фракцию</p>' +
+                `<button class="back-btn" onclick="openKpkTab('factions')">← К списку фракций</button>`;
+        });
+    }
+
+    function acceptFactionApplication(applicationId) {
+        fetch(`${SERVER_URL}/api/factions/applications/accept`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, applicationId })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) alert('Ошибка: ' + (res.error || 'не удалось принять'));
+            openFactionDetail(factionDetailView);
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function declineFactionApplication(applicationId) {
+        fetch(`${SERVER_URL}/api/factions/applications/decline`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, applicationId })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) alert('Ошибка: ' + (res.error || 'не удалось отклонить'));
+            openFactionDetail(factionDetailView);
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function appointFactionMember(targetId, newPosition) {
+        if (!newPosition) return;
+        fetch(`${SERVER_URL}/api/factions/appoint`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId, newPosition })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) alert('Ошибка: ' + (res.error || 'нет прав на такое назначение'));
+            openFactionDetail(factionDetailView);
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function kickFactionMember(targetId) {
+        if (!confirm('Выгнать этого игрока из фракции?')) return;
+        fetch(`${SERVER_URL}/api/factions/kick`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) alert('Ошибка: ' + (res.error || 'нет прав выгнать'));
+            openFactionDetail(factionDetailView);
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function transferFactionLeadership(newLeaderId) {
+        if (!confirm('Передать лидерство этому игроку? Вы после этого покинете фракцию.')) return;
+        fetch(`${SERVER_URL}/api/factions/transfer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, newLeaderId })
+        }).then(r => r.json()).then(res => {
+            if (res.success) { alert('Лидерство передано. Вы покинули фракцию.'); loadGame(); openKpkTab('factions'); }
+            else alert('Ошибка: ' + (res.error || 'не удалось передать лидерство'));
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
+    function leaveFactionAction() {
+        if (!confirm('Покинуть фракцию?')) return;
+        fetch(`${SERVER_URL}/api/factions/leave`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(res => {
+            if (res.success) { alert('Вы покинули фракцию.'); loadGame(); openKpkTab('factions'); }
+            else alert('Ошибка: ' + (res.error || 'сначала передайте лидерство'));
+        }).catch(() => alert('Ошибка соединения с сервером'));
+    }
+
     // ===== РЫНОК =====
     let marketCategory = null; // выбранная категория во вкладке "Купить"
-    const MARKET_CATEGORIES = ['Оружие', 'Броня', 'Детекторы', 'Артефакты', 'Части тел мутантов'];
+    const MARKET_CATEGORIES = ['Оружие', 'Улучшенное оружие', 'Броня', 'Улучшенная броня', 'Детекторы', 'Артефакты', 'Гибриды артефактов', 'Части тел мутантов'];
 
     function categorizeMarketItem(name) {
+        // Гибриды артефактов (скрещены у Учёных) — отдельная категория, определяется по префиксу имени
+        if (name.startsWith('Гибрид #')) return 'Гибриды артефактов';
         // Улучшенное снаряжение хранится под именем вида "АК-74 +15" — сначала убираем суффикс,
-        // иначе такой предмет не совпадёт ни с одним известным именем и попадёт не в ту категорию
-        const baseName = parseGearName(name).baseName;
-        if (weapons.some(w => w.name === baseName)) return 'Оружие';
-        if (armorItems.some(a => a.name === baseName)) return 'Броня';
+        // иначе такой предмет не совпадёт ни с одним известным именем и попадёт не в ту категорию.
+        // При этом улучшенное (level > 0) оружие/броня уходит в отдельные категории от базового
+        const parsed = parseGearName(name);
+        const baseName = parsed.baseName;
+        if (weapons.some(w => w.name === baseName)) return parsed.level > 0 ? 'Улучшенное оружие' : 'Оружие';
+        if (armorItems.some(a => a.name === baseName)) return parsed.level > 0 ? 'Улучшенная броня' : 'Броня';
         if (detectors.some(d => d.name === baseName)) return 'Детекторы';
         if (artifacts.some(a => a.name === baseName)) return 'Артефакты';
         return 'Части тел мутантов';
@@ -733,24 +1503,39 @@
             content.innerHTML = `<p style="padding:6px 0; color:#8a7a4a; font-weight:bold;">${marketCategory}</p>
                 <button onclick="openMarketCategory(null)" style="margin-bottom:8px;">← Все категории</button>
                 <div id="marketBuyList"><p style="padding:10px; color:#888;">Загрузка...</p></div>`;
-            fetch(`${SERVER_URL}/api/market`)
-                .then(res => res.json())
-                .then(lots => {
+
+            const isHybridCategory = marketCategory === 'Гибриды артефактов';
+            const showStatsInList = isHybridCategory || marketCategory === 'Улучшенное оружие' || marketCategory === 'Улучшенная броня';
+            // Для гибридов сначала подтягиваем реестр характеристик с сервера — иначе не покажем,
+            // что именно продаётся (гибриды других игроков не описаны в локальных данных)
+            const registryPromise = isHybridCategory
+                ? fetch(`${SERVER_URL}/api/artifacts`).then(r => r.json()).catch(() => [])
+                : Promise.resolve([]);
+
+            Promise.all([fetch(`${SERVER_URL}/api/market`).then(r => r.json()), registryPromise])
+                .then(([lots, registry]) => {
                     const list = document.getElementById('marketBuyList');
                     if (!list) return;
+                    if (isHybridCategory) {
+                        registry.forEach(def => { if (!artifacts.some(a => a.name === def.name)) artifacts.push(def); });
+                    }
                     const buyableLots = lots.filter(l => String(l.seller_id) !== String(getPlayerId()) && categorizeMarketItem(l.item) === marketCategory);
                     if (buyableLots.length === 0) {
                         list.innerHTML = '<p style="padding:10px; color:#888;">Пока никто не продаёт</p>';
                         return;
                     }
-                    list.innerHTML = buyableLots.map(lot => `
+                    list.innerHTML = buyableLots.map(lot => {
+                        const statsHtml = showStatsInList ? getItemInfoHtml(lot.item) : '';
+                        return `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
-                            <p style="color:#aaa; font-size:12px;">Продавец: ${lot.seller_username || lot.seller_id}</p>
+                            ${statsHtml}
+                            <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
                             <p>Цена: 🪙 ${lot.price}</p>
-                            <button onclick="buyMarketItem(${lot.id})" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
+                            <button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
                         </div>
-                    `).join('');
+                    `;
+                    }).join('');
                 })
                 .catch(() => { const list = document.getElementById('marketBuyList'); if (list) list.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рынок</p>'; });
 
@@ -785,7 +1570,7 @@
         return tgUser ? tgUser.id : 'guest';
     }
 
-    function buyMarketItem(lotId) {
+    function buyMarketItem(lotId, itemName) {
         fetch(`${SERVER_URL}/api/market/buy`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -793,13 +1578,32 @@
         })
         .then(res => res.json())
         .then(data => {
-            if (data.success) {
-                alert('Покупка успешна!');
-                loadGame();
-                renderMarket();
-            } else {
+            if (!data.success) {
                 alert('Ошибка: ' + (data.error || 'не удалось купить'));
+                return;
             }
+            alert('Покупка успешна!');
+            // Если купили гибрид артефакта — подтягиваем его характеристики с сервера и СРАЗУ сохраняем
+            // в своих данных (до loadGame), иначе последующая перезагрузка сотрёт только что добавленное
+            const needsHybridDef = itemName && itemName.startsWith('Гибрид #') && !artifacts.some(a => a.name === itemName);
+            const fetchDef = needsHybridDef
+                ? fetch(`${SERVER_URL}/api/artifacts/${encodeURIComponent(itemName)}`).then(r => r.json()).catch(() => null)
+                : Promise.resolve(null);
+
+            fetchDef.then(def => {
+                if (!def) { loadGame(); renderMarket(); return; }
+                artifacts.push(def);
+                player.craftedArtifacts = player.craftedArtifacts || {};
+                player.craftedArtifacts[def.name] = def;
+                const initData = window.Telegram?.WebApp?.initData;
+                fetch(`${SERVER_URL}/api/player`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData, data: player })
+                })
+                .catch(() => {})
+                .finally(() => { loadGame(); renderMarket(); });
+            });
         })
         .catch(() => alert('Ошибка соединения с сервером'));
     }
@@ -867,7 +1671,9 @@
                 content.innerHTML = arena.map((p, index) => `
                     <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
                         <div>
-                            <p><strong>${index + 1}. ${p.username || p.player_id}</strong></p>
+                            <p><strong>${index + 1}. ${escapeHtml(p.username || p.player_id)}</strong></p>
+                            <p style="font-size:11px; color:#8a7a4a;">🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</p>
+                            <p style="font-size:11px; color:#ccc;">Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}</p>
                             <p style="font-size:12px; color:#aaa;">Рейтинг: ${p.rating} | Победы: ${p.wins}</p>
                         </div>
                         ${String(p.player_id) === myId
@@ -905,27 +1711,51 @@
 
     // ===== МАГАЗИН МОНЕТ ЗА TELEGRAM STARS =====
     const STAR_PACKAGES = [
-        { id: 'small', stars: 100, coins: 5000, title: 'Малый набор' },
-        { id: 'medium', stars: 250, coins: 15000, title: 'Средний набор' },
-        { id: 'large', stars: 500, coins: 35000, title: 'Большой набор' }
+        { id: 'small', stars: 50, coins: 50000, title: 'Малый набор' },
+        { id: 'medium', stars: 125, coins: 125000, title: 'Средний набор' },
+        { id: 'large', stars: 250, coins: 250000, title: 'Большой набор' }
+    ];
+
+    // Предметы (не монеты) за Telegram Stars
+    const ITEM_PACKAGES = [
+        { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование сразу поднимает уровень персонажа на 5' },
+        { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон селекции', title: 'Жетон селекции', desc: 'Даёт 1 скрещивание артефактов у Учёных' },
+        { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' }
     ];
 
     function renderStarsShop() {
         const el = document.getElementById('starsShopItems');
-        el.innerHTML = STAR_PACKAGES.map(p => `
+        const coinsHtml = STAR_PACKAGES.map(p => `
             <div class="shop-item">
                 <div>${p.title} — 🪙 ${p.coins.toLocaleString('ru-RU')}</div>
                 <div class="price">⭐ ${p.stars}</div>
                 <button onclick="buyStarsPackage('${p.id}')">Купить</button>
             </div>
         `).join('');
+        const itemsHtml = ITEM_PACKAGES.map(p => `
+            <div class="shop-item">
+                <div>${p.title}</div>
+                <div style="font-size:12px; color:#aaa; margin:4px 0;">${p.desc}</div>
+                <div class="price">⭐ ${p.stars}</div>
+                <button onclick="buyStarsItem('${p.id}')">Купить</button>
+            </div>
+        `).join('');
+        el.innerHTML = coinsHtml + '<div style="font-size:12px; color:#888; margin:10px 0 4px;">📚 Предметы:</div>' + itemsHtml;
     }
 
     function buyStarsPackage(packageId) {
+        purchaseViaStars(packageId, 'coins', () => alert('Оплата прошла успешно! Монеты будут начислены через несколько секунд.'));
+    }
+
+    function buyStarsItem(packageId) {
+        purchaseViaStars(packageId, 'item', () => alert('Оплата прошла успешно! Предмет будет начислен через несколько секунд.'));
+    }
+
+    function purchaseViaStars(packageId, packageType, onPaidMessage) {
         fetch(`${SERVER_URL}/api/shop/create-invoice`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, packageId })
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, packageId, packageType })
         })
         .then(res => res.json())
         .then(data => {
@@ -933,7 +1763,7 @@
             if (!window.Telegram?.WebApp?.openInvoice) { alert('Оплата доступна только внутри Telegram.'); return; }
             window.Telegram.WebApp.openInvoice(data.link, (status) => {
                 if (status === 'paid') {
-                    alert('Оплата прошла успешно! Монеты будут начислены через несколько секунд.');
+                    onPaidMessage();
                     setTimeout(() => { loadGame(); }, 2000);
                 } else if (status === 'failed') {
                     alert('Оплата не удалась.');
@@ -1003,6 +1833,7 @@
                 raidLogs.push('Вы использовали аптечку! +50 HP.');
             } else {
                 raidLogs.push('У вас нет аптечек!');
+                updateRaidLog();
                 return;
             }
         } else if (action === 'escape') {
@@ -1010,6 +1841,7 @@
             if (Math.random() < escapeChance) {
                 raidLogs.push('Вы успешно сбежали!');
                 player.agility += currentEnemy.runSkill;
+                updateRaidLog();
                 endBattle(false);
                 return;
             } else {
@@ -1049,8 +1881,14 @@
                 player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
                 player.stats.mutantsByTier = player.stats.mutantsByTier || {};
                 player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
+                // Мутант последнего (14) тира — особо ценная добыча: 5 жетонов селекции для Учёных
+                if (currentEnemy.tier === 14) {
+                    player.breedCredits = (Number(player.breedCredits) || 0) + 5;
+                    raidLogs.push('🧬 Мутант высшего тира! Получено 5 жетонов селекции.');
+                }
             }
 
+            updateRaidLog();
             endBattle(true);
             return;
         }
@@ -1096,12 +1934,12 @@
     function handlePlayerDeath() {
         player.stats.deaths = (player.stats.deaths || 0) + 1;
 
-        const artifactNames = new Set(artifacts.map(a => a.name));
-        Object.keys(player.inventory).forEach(name => {
-            if (!artifactNames.has(name)) delete player.inventory[name];
-        });
-        player.belt = player.belt.map(n => (n && player.inventory[n] > 0) ? n : null);
-        player.quickSlots = player.quickSlots.map(n => (n && player.inventory[n] > 0) ? n : null);
+        // При смерти теряется ВЕСЬ инвентарь, включая артефакты, которые просто лежали в инвентаре
+        // (не были надеты). Не теряются: надетое оружие/броня/детектор, артефакты в слотах пояса
+        // (хранятся отдельно от player.inventory), деньги и жетоны селекции (отдельные числовые поля)
+        player.inventory = {};
+        player.belt = [null, null, null, null, null, null];
+        player.quickSlots = [null, null, null, null];
 
         player.health = player.maxHealth; // возрождение на базе с полным здоровьем
 
@@ -1110,7 +1948,7 @@
         battleTurn = 0;
         document.getElementById('battleButtons')?.remove();
 
-        alert('💀 Вы погибли и потеряли весь лут (кроме снаряжения и артефактов). Возвращение на базу.');
+        alert('💀 Вы погибли и потеряли весь инвентарь. Сохранились: надетые оружие/броня/детектор, артефакты в слотах пояса, деньги, ник и все жетоны. Возвращение на базу.');
         openScreen('main');
         updateUI();
         saveGame();
@@ -1225,6 +2063,7 @@
             player.exp = player.exp - 150;
         }
         
+        updateRaidLog();
         updateUI();
         saveGame();
     }
@@ -1233,22 +2072,54 @@
     // Используется, чтобы честно подбирать врагов/аномалии по тиру снаряжения игрока —
     // без этого свежего игрока могли убить противники/аномалии любого тира случайно
     function getPlayerTier() {
-        return Math.max(player.weapon.tier || 1, player.armor.tier || 1, 1);
+        const baseTier = Math.max(player.weapon.tier || 1, player.armor.tier || 1, 1);
+        // Тир 10+ противники доступны только с УЛУЧШЕННЫМ оружием (хотя бы +1) —
+        // иначе снаряжение тира 10+ без апгрейда ограничиваем до тира 9
+        const weaponLevel = parseGearName(player.weapon.name).level;
+        if (baseTier >= 10 && weaponLevel === 0) return 9;
+        return baseTier;
     }
 
     // ===== НАЙТИ СЛУЧАЙНЫЙ NPC (ограничено тиром снаряжения игрока — иначе новичка сразу убивает топовый NPC) =====
     function findRandomNPC() {
         const playerTier = getPlayerTier();
-        const pool = npcs.filter(n => n.tier <= playerTier);
+        // Враги теперь строго равны тиру игрока (не ниже), а не любой тир до playerTier включительно
+        const pool = npcs.filter(n => n.tier === playerTier);
         const randomIndex = Math.floor(Math.random() * pool.length);
-        return pool[randomIndex];
+        const npc = pool[randomIndex];
+        // Случайное оружие и броня из 6 вариантов данного тира — при каждой встрече своё сочетание
+        const tierWeapons = weapons.filter(w => w.tier === npc.tier);
+        const tierArmors = armorItems.filter(a => a.tier === npc.tier);
+        const weapon = tierWeapons[Math.floor(Math.random() * tierWeapons.length)] || weapons[0];
+        const armor = tierArmors[Math.floor(Math.random() * tierArmors.length)] || armorItems[0];
+        return { ...npc, weapon, armor };
     }
 
     // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Учёные) =====
     // Враждебна ли фракция по отношению к игроку: изначально враждебны только 'enemy'-фракции,
     // но игрок может сделать враждебной любую фракцию, напав на неё
+    // Матрица вражды между фракциями: с кем враждует игрок в зависимости от ТОЙ фракции, в которой он состоит.
+    // Если игрок не состоит ни в одной фракции ("Одиночка") — действует базовый набор врагов (как было изначально)
+    // плюс всё, что стало враждебным лично для него после нападения (player.hostileFactions)
+    const FACTION_HOSTILITY = {
+        'Долг': ['Наёмники', 'Бандиты', 'Монолит', 'Свобода'],
+        'Монолит': ['Наёмники', 'Бандиты', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Учёные'],
+        'Свобода': ['Долг', 'Военные', 'Монолит', 'Наёмники'],
+        'Наёмники': ['Бандиты', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Учёные'],
+        'Бандиты': ['Наёмники', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Учёные'],
+        'Сталкеры': ['Наёмники', 'Военные', 'Монолит', 'Бандиты'],
+        'Военные': ['Сталкеры', 'Свобода', 'Бандиты', 'Монолит', 'Наёмники'],
+        'Учёные': ['Бандиты', 'Монолит', 'Наёмники']
+    };
+    const LONER_HOSTILE_FACTIONS = ['Бандиты', 'Наёмники', 'Монолит', 'Военные'];
+
     function isFactionHostile(faction) {
-        return faction.type === 'enemy' || (player.hostileFactions || []).includes(faction.name);
+        const myFaction = player.factionName;
+        if (myFaction && FACTION_HOSTILITY[myFaction]) {
+            return FACTION_HOSTILITY[myFaction].includes(faction.name);
+        }
+        // Одиночка — старый базовый набор врагов + всё, что стало враждебным лично после нападения игрока
+        return LONER_HOSTILE_FACTIONS.includes(faction.name) || (player.hostileFactions || []).includes(faction.name);
     }
 
     function startFriendlyEncounter(npc) {
@@ -1392,7 +2263,8 @@
     // игрока мог случайно убить мутант топового тира (например Химера/Псевдогигант)
     function pickWeightedMutant() {
         const playerTier = getPlayerTier();
-        const pool = mutants.filter(m => m.tier <= playerTier);
+        // Мутанты теперь строго тира игрока, а не любой тир ниже
+        const pool = mutants.filter(m => m.tier === playerTier);
         const totalWeight = pool.reduce((sum, m) => sum + m.chance, 0);
         let roll = Math.random() * totalWeight;
         for (const m of pool) {
@@ -1480,6 +2352,12 @@
 
     // Возвращает HTML-блок с характеристиками предмета: урон/броня (база+улучшение), тир, пассивки артефакта
     function getItemInfoHtml(itemName) {
+        if (itemName === 'Книга знаний') {
+            return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
+                Особый предмет за Telegram Stars.<br>
+                При использовании сразу поднимает уровень персонажа на 5.
+            </div>`;
+        }
         const parsed = parseGearName(itemName);
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
@@ -1515,8 +2393,10 @@
                 const val = artifact.stats[stat];
                 return `+${val} к параметру «${STAT_LABELS[stat] || stat}»`;
             }).join('<br>');
+            const isHybrid = itemName.startsWith('Гибрид #');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${artifact.tier}<br>
+                ${isHybrid ? `Модификаций (скрещиваний): ${artifact.gen || 1} / 20<br>` : ''}
                 Пассивный эффект (пока артефакт надет):<br>${effects}
             </div>`;
         }
@@ -1581,9 +2461,229 @@
         renderInventory(); updateUI(); saveGame();
     }
 
+    // ===== УЧЁНЫЕ: СКРЕЩИВАНИЕ АРТЕФАКТОВ =====
+    const BREED_MAX_GEN = 20;
+    let breedSlot1 = null; // имя артефакта в слоте 1 (просто выбран, ещё не потрачен)
+    let breedSlot2 = null;
+    let lastBreedResult = null;
+
+    function renderScientists() {
+        document.getElementById('breedSlot1Label').textContent = breedSlot1 || 'Пусто';
+        document.getElementById('breedSlot2Label').textContent = breedSlot2 || 'Пусто';
+        document.getElementById('breedSlot3Label').textContent = lastBreedResult ? lastBreedResult.name : 'Пусто';
+        document.getElementById('breedCreditsCount').textContent = Number(player.breedCredits) || 0;
+
+        const infoEl = document.getElementById('breedResultInfo');
+        if (lastBreedResult) {
+            const effects = Object.keys(lastBreedResult.stats).map(stat =>
+                `+${lastBreedResult.stats[stat]} к параметру «${STAT_LABELS[stat] || stat}»`
+            ).join('<br>');
+            infoEl.innerHTML = `Последний результат: <b>${lastBreedResult.name}</b> (поколение ${lastBreedResult.gen}/${BREED_MAX_GEN})<br>${effects}`;
+        } else {
+            infoEl.innerHTML = '';
+        }
+    }
+
+    function openBreedSlotPicker(slotNum) {
+        // Повторный клик по уже заполненному слоту — очищает его
+        if (slotNum === 1 && breedSlot1) { breedSlot1 = null; renderScientists(); return; }
+        if (slotNum === 2 && breedSlot2) { breedSlot2 = null; renderScientists(); return; }
+
+        const ownedArtifacts = Object.keys(player.inventory).filter(name =>
+            player.inventory[name] > 0 && artifacts.some(a => a.name === name)
+        );
+        if (ownedArtifacts.length === 0) { alert('В инвентаре нет артефактов для скрещивания.'); return; }
+
+        const list = ownedArtifacts.map((name, i) => `${i + 1}. ${name} ×${player.inventory[name]}`).join('\n');
+        const choice = prompt(`Выберите артефакт для слота ${slotNum} (введите номер):\n${list}`);
+        const idx = parseInt(choice) - 1;
+        if (idx < 0 || idx >= ownedArtifacts.length || isNaN(idx)) return;
+
+        const chosenName = ownedArtifacts[idx];
+        if (slotNum === 1) breedSlot1 = chosenName; else breedSlot2 = chosenName;
+        renderScientists();
+    }
+
+    function doBreedArtifacts() {
+        if (!breedSlot1 || !breedSlot2) { alert('Заполните оба слота артефактами.'); return; }
+        if ((Number(player.breedCredits) || 0) < 1) {
+            alert('Нужен жетон селекции (⭐ Магазин монет, 10 звёзд за штуку).');
+            return;
+        }
+        const a1 = artifacts.find(a => a.name === breedSlot1);
+        const a2 = artifacts.find(a => a.name === breedSlot2);
+        if (!a1 || !a2) { alert('Один из выбранных артефактов не найден.'); return; }
+        if (!player.inventory[breedSlot1] || !player.inventory[breedSlot2]) {
+            alert('Одного из выбранных артефактов уже нет в инвентаре.');
+            breedSlot1 = null; breedSlot2 = null; renderScientists();
+            return;
+        }
+        const gen1 = a1.gen || 0;
+        if (gen1 >= BREED_MAX_GEN) {
+            alert(`Артефакт в слоте 1 уже достиг максимума улучшений (${BREED_MAX_GEN}).`);
+            return;
+        }
+
+        // Списываем жетон и оба артефакта
+        player.breedCredits = (Number(player.breedCredits) || 0) - 1;
+        player.inventory[breedSlot1]--;
+        if (player.inventory[breedSlot1] <= 0) delete player.inventory[breedSlot1];
+        player.inventory[breedSlot2]--;
+        if (player.inventory[breedSlot2] <= 0) delete player.inventory[breedSlot2];
+
+        // Новый артефакт — сумма характеристик обоих родителей
+        const mergedStats = {};
+        [a1.stats, a2.stats].forEach(statsObj => {
+            Object.keys(statsObj).forEach(key => {
+                mergedStats[key] = (mergedStats[key] || 0) + statsObj[key];
+            });
+        });
+
+        player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
+        const newArtifact = {
+            name: `Гибрид #${getPlayerId()}-${player.hybridCounter}`, // ID игрока в имени — гарантирует уникальность между разными игроками
+            tier: Math.max(a1.tier, a2.tier),
+            price: a1.price + a2.price,
+            stats: mergedStats,
+            gen: gen1 + 1
+        };
+
+        artifacts.push(newArtifact); // чтобы equip/sell/info сразу узнавали новый артефакт
+        player.craftedArtifacts = player.craftedArtifacts || {};
+        player.craftedArtifacts[newArtifact.name] = newArtifact;
+        player.inventory[newArtifact.name] = (player.inventory[newArtifact.name] || 0) + 1;
+
+        // Регистрируем гибрид в общем реестре на сервере — иначе другие игроки не увидят его характеристики
+        fetch(`${SERVER_URL}/api/artifacts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, ...newArtifact })
+        }).catch(() => {});
+
+        breedSlot1 = null;
+        breedSlot2 = null;
+        lastBreedResult = newArtifact;
+
+        renderScientists();
+        updateUI();
+        saveGame();
+    }
+
+    function exitScientists() {
+        breedSlot1 = null;
+        breedSlot2 = null;
+        const sellList = document.getElementById('scientistsSellList');
+        if (sellList) sellList.innerHTML = '';
+        openScreen('main');
+    }
+
+    // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон селекции) =====
+    function openScientistsSellView() {
+        const el = document.getElementById('scientistsSellList');
+        const maxArtifactTier = Math.max(...artifacts.map(a => a.tier));
+        const ownedArtifacts = Object.keys(player.inventory).filter(name =>
+            player.inventory[name] > 0 && artifacts.some(a => a.name === name)
+        );
+        if (ownedArtifacts.length === 0) {
+            el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов для продажи</p>';
+            return;
+        }
+        el.innerHTML = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу. Артефакты тира ${maxArtifactTier} (последнего) продаются за 1 жетон селекции:</div>` +
+            ownedArtifacts.map(name => {
+                const artifact = artifacts.find(a => a.name === name);
+                const isTopTier = artifact.tier === maxArtifactTier;
+                const price = isTopTier ? null : Math.round(getSellPrice(name) * 1.05);
+                const esc = name.replace(/'/g, "\\'");
+                return `
+                    <div class="shop-item">
+                        <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
+                        <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">
+                            ${isTopTier ? '💰 Продать за 🧬 1 жетон селекции' : '💰 Продать за 🪙 ' + price}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+    }
+
+    function sellArtifactToScientists(name) {
+        if (!player.inventory[name] || player.inventory[name] <= 0) return;
+        const artifact = artifacts.find(a => a.name === name);
+        if (!artifact) return;
+        const maxArtifactTier = Math.max(...artifacts.map(a => a.tier));
+
+        player.inventory[name]--;
+        if (player.inventory[name] <= 0) delete player.inventory[name];
+
+        if (artifact.tier === maxArtifactTier) {
+            player.breedCredits = (Number(player.breedCredits) || 0) + 1;
+            alert('Продано за 1 жетон селекции!');
+        } else {
+            const price = Math.round(getSellPrice(name) * 1.05);
+            player.coins += price;
+            alert(`Продано за ${price} монет!`);
+        }
+
+        openScientistsSellView();
+        updateUI();
+        saveGame();
+    }
+
+    // ===== НИК ИГРОКА =====
+    // Первая смена (включая самое первое придумывание ника) — бесплатна.
+    // Каждая следующая смена требует оплаченный жетон (20 ⭐, покупается в Магазине монет).
+    function promptForNickname(isFirstTime) {
+        const raw = prompt(isFirstTime
+            ? 'Добро пожаловать в Зону! Придумайте ник вашего персонажа (2-20 символов):'
+            : 'Введите новый ник (2-20 символов):', player.nickname || '');
+        if (raw === null) return; // отмена
+        const nick = raw.trim().replace(/[<>]/g, '').slice(0, 20);
+        if (nick.length < 2) { alert('Ник должен быть не короче 2 символов.'); return; }
+        player.nickname = nick;
+        updateUI();
+        saveGame();
+        alert(`Ник установлен: ${nick}`);
+    }
+
+    function changeNickname() {
+        const isVeryFirstTime = !player.nickname; // ещё ни разу не задавали ник — это просто первичная настройка, бесплатно всегда
+        if (isVeryFirstTime) { promptForNickname(true); return; }
+
+        const freeAvailable = !player.freeNicknameChangeUsed;
+        const hasCredit = (Number(player.nicknameChangeCredits) || 0) >= 1;
+        if (!freeAvailable && !hasCredit) {
+            alert('Бесплатная смена ника уже использована. Следующая смена стоит 20 ⭐ — купите жетон смены ника в Магазине монет.');
+            return;
+        }
+
+        const raw = prompt('Введите новый ник (2-20 символов):', player.nickname || '');
+        if (raw === null) return; // отмена
+        const nick = raw.trim().replace(/[<>]/g, '').slice(0, 20);
+        if (nick.length < 2) { alert('Ник должен быть не короче 2 символов.'); return; }
+        if (nick === player.nickname) return; // без изменений — не тратим смену
+
+        if (freeAvailable) {
+            player.freeNicknameChangeUsed = true;
+        } else {
+            player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) - 1;
+        }
+        player.nickname = nick;
+        updateUI();
+        saveGame();
+        alert(`Ник изменён на: ${nick}`);
+    }
+
     // ===== ПРИМЕНЕНИЕ / ВЫБРОС / ПЕРЕМЕЩЕНИЕ ПРЕДМЕТА =====
     function applyInventoryItem(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+
+        if (itemName === 'Книга знаний') {
+            player.inventory[itemName]--;
+            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+            player.level = (Number(player.level) || 1) + 5;
+            closeItemActionModal();
+            renderInventory(); updateUI(); saveGame();
+            return;
+        }
 
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
@@ -1652,6 +2752,7 @@
         const slotType = getEquipSlotType(itemName);
         const consumable = consumables.find(c => c.name === itemName);
         const artifact = artifacts.find(a => a.name === itemName);
+        const isKnowledgeBook = itemName === 'Книга знаний';
 
         // Артефакты: только Одеть / Продать (в магазине) / Выкинуть — без "переместить в склад"
         if (artifact) {
@@ -1670,7 +2771,7 @@
 
         if (slotType) {
             buttons += `<button onclick="equipItem('${esc}')">Одеть</button>`;
-        } else if (consumable) {
+        } else if (consumable || isKnowledgeBook) {
             buttons += `<button onclick="applyInventoryItem('${esc}')">Применить</button>`;
         }
 
@@ -1693,13 +2794,13 @@
         document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
 
         const equippedGear = document.getElementById('equippedGear');
-        const gearBox = (label, name, slotType) => `
+        const gearBox = (label, name, slotType, statLine) => `
             <div class="slot" style="aspect-ratio: unset; padding:8px; flex-direction:column;" onclick="openEquippedItemActions('${slotType}')">
-                <div style="font-size:9px; text-align:center; line-height:1.3;">${label}<br><b>${name}</b></div>
+                <div style="font-size:9px; text-align:center; line-height:1.3;">${label}<br><b>${name}</b>${statLine ? `<br><span style="color:#8a7a4a;">${statLine}</span>` : ''}</div>
             </div>`;
         equippedGear.innerHTML =
-            gearBox('⚔️ Оружие', player.weapon.name, 'weapon') +
-            gearBox('🛡️ Броня', player.armor.name, 'armor') +
+            gearBox('⚔️ Оружие', player.weapon.name, 'weapon', `Урон: ${player.weapon.dmg}`) +
+            gearBox('🛡️ Броня', player.armor.name, 'armor', `Броня: ${player.armor.armor}`) +
             gearBox('📡 Детектор', player.detector.name, 'detector');
 
         const artifactGrid = document.getElementById('artifactSlotsGrid');
@@ -1868,10 +2969,21 @@
     // ===== ТОРГОВЕЦ =====
     // Общий каталог для покупки — расходники, оружие, броня и детекторы (детекторы теперь тут, не отдельным экраном)
     function getShopCatalog() {
+        const playerTier = getPlayerTier();
+        // Внутри каждого доступного по тиру блока сначала открыты только 3 из 6 видов (самые слабые
+        // по статам в тире, они первые в массиве) — остальные 3 открываются по достижении уровня tier*10
+        const unlockByTierAndLevel = (list) => list.filter(item => {
+            if (item.tier > playerTier) return false;
+            const tierItems = list.filter(x => x.tier === item.tier);
+            const indexInTier = tierItems.indexOf(item);
+            if (indexInTier < 3) return true;
+            return player.level >= item.tier * 10;
+        });
+
         return [
             ...consumables.map(c => ({ ...c, category: 'consumable' })),
-            ...weapons.map(w => ({ ...w, category: 'weapon' })),
-            ...armorItems.map(a => ({ ...a, category: 'armor' })),
+            ...unlockByTierAndLevel(weapons).map(w => ({ ...w, category: 'weapon' })),
+            ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' })),
             ...detectors.map(d => ({ ...d, category: 'detector' }))
         ];
     }
@@ -1965,12 +3077,44 @@
     }
 
     // ===== АДМИН: ВЫДАЧА ПРЕДМЕТОВ =====
+    function updateGiveItemSelect() {
+        const giveType = document.getElementById('giveType').value;
+        const selectEl = document.getElementById('giveItemSelect');
+        if (giveType === 'weapon') {
+            selectEl.style.display = 'block';
+            selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
+                weapons.map(w => `<option value="${w.name}">Тир ${w.tier}: ${w.name} (урон ${w.dmg})</option>`).join('');
+        } else if (giveType === 'armor') {
+            selectEl.style.display = 'block';
+            selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
+                armorItems.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name} (броня ${a.armor})</option>`).join('');
+        } else if (giveType === 'perk') {
+            selectEl.style.display = 'block';
+            selectEl.innerHTML = Object.keys(PERK_INFO).map(key => `<option value="${key}">${PERK_INFO[key].label}</option>`).join('');
+        } else {
+            selectEl.style.display = 'none';
+            selectEl.innerHTML = '';
+        }
+    }
+
     function giveAdminItem() {
         const targetId = document.getElementById('targetUserId').value.trim();
         const giveType = document.getElementById('giveType').value;
         const amount = parseInt(document.getElementById('giveAmount').value) || 0;
         const tier = parseInt(document.getElementById('giveTier').value) || 1;
+        const selectedItem = document.getElementById('giveItemSelect').value.trim();
+        const itemNameFilter = selectedItem || document.getElementById('giveItemName').value.trim();
         const gearLevel = Math.max(0, Math.min(100, parseInt(document.getElementById('giveGearLevel').value) || 0));
+
+        // Если указано точное название — ищем именно его (в пределах указанного тира, если совпадает),
+        // иначе берём первый предмет данного тира (из 6 возможных)
+        const pickItem = (list) => {
+            if (itemNameFilter) {
+                const exact = list.find(x => x.name === itemNameFilter);
+                if (exact) return exact;
+            }
+            return list.find(x => x.tier === tier) || list[0];
+        };
 
         const applyGive = (targetPlayer) => {
             targetPlayer.inventory = targetPlayer.inventory || {};
@@ -1979,22 +3123,33 @@
             } else if (giveType === 'coins') {
                 targetPlayer.coins = (targetPlayer.coins || 0) + (amount || 0);
             } else if (giveType === 'artifact') {
-                const item = artifacts.find(a => a.tier === tier) || artifacts[0];
+                const item = pickItem(artifacts);
                 targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
             } else if (giveType === 'weapon') {
-                const item = weapons.find(w => w.tier === tier) || weapons[0];
+                const item = pickItem(weapons);
                 const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name;
                 targetPlayer.inventory[name] = (targetPlayer.inventory[name] || 0) + (amount || 1);
             } else if (giveType === 'armor') {
-                const item = armorItems.find(a => a.tier === tier) || armorItems[0];
+                const item = pickItem(armorItems);
                 const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name;
                 targetPlayer.inventory[name] = (targetPlayer.inventory[name] || 0) + (amount || 1);
             } else if (giveType === 'detector') {
-                const item = detectors.find(d => d.tier === tier) || detectors[0];
+                const item = pickItem(detectors);
                 targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
             } else if (giveType === 'bodypart') {
                 const mutant = mutants.find(m => m.tier === tier) || mutants[0];
                 targetPlayer.inventory[mutant.loot] = (targetPlayer.inventory[mutant.loot] || 0) + (amount || 1);
+            } else if (giveType === 'knowledgebook') {
+                targetPlayer.inventory['Книга знаний'] = (targetPlayer.inventory['Книга знаний'] || 0) + (amount || 1);
+            } else if (giveType === 'breedcredits') {
+                targetPlayer.breedCredits = (Number(targetPlayer.breedCredits) || 0) + (amount || 1);
+            } else if (giveType === 'nicknamecredits') {
+                targetPlayer.nicknameChangeCredits = (Number(targetPlayer.nicknameChangeCredits) || 0) + (amount || 1);
+            } else if (giveType === 'perk') {
+                const perkKey = selectedItem;
+                if (perkKey && PERK_INFO[perkKey]) {
+                    targetPlayer[perkKey] = (Number(targetPlayer[perkKey]) || 0) + (amount || 1);
+                }
             }
             return targetPlayer;
         };
