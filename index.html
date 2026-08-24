@@ -19,7 +19,7 @@
         .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
         .menu button { padding: 18px; background: #1a1a1a; border: 2px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .menu button:active { transform: scale(0.96); background: #222; }
-        .screen { display: none; background: #111; border: 2px solid #2a2a2a; padding: 12px; border-radius: 4px; margin-bottom: 12px; }
+        .screen { display: none; background: #111; border: 2px solid #2a2a2a; padding: 12px; border-radius: 4px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; }
         .screen.active { display: block; }
         .grid7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
         .slot { background: #0d0d0d; border: 1px solid #222; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; }
@@ -27,7 +27,7 @@
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .belt-slot { background: #0d0d0d; border: 2px solid #8a7a4a; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
         .back-btn { margin-top: 15px; width: 100%; padding: 12px; background: #c0392b; border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
-        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; min-height: 100px; }
+        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 160px; overflow-y: auto; }
         .stats-details { margin-top: 10px; font-size: 12px; }
         .stats-details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a1a; }
         .shop-item { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 10px; margin-bottom: 6px; }
@@ -38,9 +38,13 @@
         .admin-btn { position: fixed; bottom: 10px; left: 10px; padding: 8px 16px; background: transparent; border: none; border-radius: 8px; color: transparent; font-weight: bold; font-size: 14px; z-index: 999; cursor: pointer; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; padding: 30px; justify-content: center; align-items: center; }
         .modal.active { display: flex; }
-        .modal-content { background: #1a1a1a; border: 2px solid #e6a23c; border-radius: 12px; padding: 20px; width: 100%; max-width: 400px; }
+        .modal-content { background: #1a1a1a; border: 2px solid #e6a23c; border-radius: 12px; padding: 20px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; }
         .modal-content h3 { color: #e6a23c; margin-bottom: 15px; }
         .modal-content input { width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: #fff; margin-bottom: 10px; border-radius: 6px; }
+        /* Страховка: НИ ОДНО поле ввода/выпадающий список нигде в игре не должно оставаться без явного
+           цвета текста и фона — иначе на некоторых телефонах/браузерах вводимый текст становится невидимым */
+        input, select, textarea { color: #fff; background: #1a1a1a; caret-color: #fff; }
+        input::placeholder, textarea::placeholder { color: #888; }
         .modal-content button { width: 100%; padding: 10px; background: #27ae60; border: none; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; }
         .quick-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
         .quick-slot { background: #0d0d0d; border: 1px solid #333; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
@@ -61,8 +65,10 @@
             <div class="stat-box hunger">🍖 <span class="value" id="hunger">100</span></div>
             <div class="stat-box thirst">💧 <span class="value" id="thirst">100</span></div>
         </div>
-        <div style="margin-top: 6px; font-size: 12px; color: #888;">
-            🪙 <span id="coins">0</span> | ⭐ <span id="level">1</span> | ⚔️ <span id="weapon">Кулаки</span>
+        <div style="margin-top: 6px; font-size: 12px; color: #888; line-height:1.7;">
+            🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
+            🧬 Жетоны селекции: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
+            ⚔️ <span id="weapon">Кулаки</span> | 🛡️ <span id="armorHeader">Без брони</span> | 📡 <span id="detectorHeader">Без детектора</span>
         </div>
     </div>
 
@@ -76,31 +82,32 @@
         <button onclick="openScreen('market')">🏦 Рынок</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
         <button onclick="openScreen('scientists')">🧪 Ученые</button>
-        <button onclick="openScreen('starsShop')">⭐ Магазин монет</button>
-
-        <div style="grid-column: 1 / -1; margin-top:4px;">
-            <h4 style="margin:4px 0 6px; color:#8a7a4a;">💬 Чат</h4>
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px;">
-                <button onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
-                <button onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
-                <button onclick="openChatTab('dm')" id="chatTabDmBtn">Личный</button>
-            </div>
-            <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
-                <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
-            </div>
-            <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
-            <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
-            <div style="display:flex; gap:8px;">
-                <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
-                <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
-            </div>
-        </div>
-
+        <button onclick="openScreen('starsShop')">⭐ Магазин Байт</button>
         <button onclick="exitGame()" style="grid-column: 1 / -1; margin-top:8px;">🚪 Выйти из игры</button>
     </div>
 
+    <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда (не дублируется,
+         поэтому автоматически полностью синхронизирован между ними) -->
+    <div id="embeddedChatWidget" style="display:none;">
+        <h4 style="margin:4px 0 6px; color:#8a7a4a;">💬 Чат</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px;">
+            <button onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
+            <button onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
+            <button onclick="openChatTab('dm')" id="chatTabDmBtn" style="position:relative;">Личный<span id="dmUnreadDot" style="display:none; position:absolute; top:2px; right:6px; width:9px; height:9px; background:#e74c3c; border-radius:50%;"></span></button>
+        </div>
+        <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
+            <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
+        </div>
+        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
+        <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
+        <div style="display:flex; gap:8px;">
+            <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
+        </div>
+    </div>
+
     <div id="starsShopScreen" class="screen">
-        <h3>⭐ Магазин монет</h3>
+        <h3>⭐ Магазин Байт</h3>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
@@ -113,7 +120,7 @@
         </div>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">
             Скрестите два артефакта — получите новый, с суммой их свойств. Каждое скрещивание стоит 1 жетон селекции
-            (покупается за ⭐ в Магазине монет). Один и тот же артефакт можно улучшать так до 20 раз подряд.
+            (покупается за ⭐ в Магазине Байт). Один и тот же артефакт можно улучшать так до 20 раз подряд.
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
             <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column;" onclick="openBreedSlotPicker(1)">
@@ -170,11 +177,12 @@
         <div class="belt-grid" id="beltGrid"></div>
         <div style="font-size: 12px; color: #888; margin: 12px 0 4px;">Весь инвентарь:</div>
         <div class="grid7" id="inventoryGrid"></div>
-        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+        <button class="back-btn" onclick="closeInventoryScreen()">Назад</button>
     </div>
 
     <div id="shopScreen" class="screen">
         <h3>💰 Торговец</h3>
+        <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="openShopTab('buy')">🛒 Купить</button>
             <button onclick="openShopTab('sell')">💵 Продать</button>
@@ -191,6 +199,7 @@
             <button onclick="raidStep()" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Идти дальше</button>
             <button onclick="endRaid()" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Вернуться с рейда</button>
         </div>
+        <button onclick="openBackpackFromRaid()" style="width:100%; margin-top:8px; background:#8a7a4a;">🎒 Рюкзак</button>
         <div class="quick-slots" id="quickSlots">
             <div class="quick-slot" onclick="useQuickSlot(0)">Пусто</div>
             <div class="quick-slot" onclick="useQuickSlot(1)">Пусто</div>
@@ -258,12 +267,13 @@
 <div id="adminPanel" class="modal">
     <div class="modal-content" style="max-width: 500px;">
         <h3>🛠️ Админ Панель</h3>
-        <input type="text" id="targetUserId" placeholder="ID игрока (оставьте пустым для себя)">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">ID или НИК игрока, которому выдать (оставьте пустым, чтобы выдать себе):</label>
+        <input type="text" id="targetUserId" placeholder="Например: 123456789 или ЕгоНик">
         <div style="margin-bottom: 10px;">
-            <label>Тип выдачи:</label>
+            <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Что именно выдать:</label>
             <select id="giveType" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333;" onchange="updateGiveItemSelect()">
                 <option value="level">Уровень</option>
-                <option value="coins">Деньги</option>
+                <option value="coins">Деньги (Байты)</option>
                 <option value="artifact">Артефакт</option>
                 <option value="weapon">Оружие</option>
                 <option value="armor">Броня</option>
@@ -275,19 +285,28 @@
                 <option value="perk">Перк</option>
             </select>
         </div>
-        <input type="number" id="giveAmount" placeholder="Количество (для уровня/денег/частей тела/жетонов/перков)" style="margin-bottom:10px;">
-        <input type="number" id="giveTier" placeholder="Тир (для предметов, мутантов/NPC-снаряжения 0-14)" style="margin-bottom:10px;">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Количество — сколько выдать (для уровня/денег/частей тела/жетонов/перков):</label>
+        <input type="number" id="giveAmount" placeholder="Например: 5" style="margin-bottom:10px;">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Тир — для оружия/брони/артефактов/детекторов (1-14), для мутантов (0-14):</label>
+        <input type="number" id="giveTier" placeholder="Например: 5" style="margin-bottom:10px;">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Выбор конкретного вида оружия/брони/перка из списка (появляется автоматически при выборе типа выше):</label>
         <select id="giveItemSelect" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:10px; display:none;"></select>
-        <input type="text" id="giveItemName" placeholder="Или точное название вручную (необязательно)" style="margin-bottom:10px;">
-        <input type="number" id="giveGearLevel" placeholder="Уровень улучшения +N (0-100, для оружия/брони)" min="0" max="100" style="margin-bottom:10px;">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Или впишите точное название вручную (необязательно, только если не нашли нужное в списке выше):</label>
+        <input type="text" id="giveItemName" placeholder="Например: Автомат SCAR-H" style="margin-bottom:10px;">
+        <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Уровень улучшения +N — только для оружия/брони, от 0 (без улучшения) до 100:</label>
+        <input type="number" id="giveGearLevel" placeholder="Например: 20" min="0" max="100" style="margin-bottom:10px;">
         <button onclick="giveAdminItem()">Выдать</button>
         <div style="margin:16px 0 8px; border-top:1px solid #333; padding-top:10px;">
-            <label>🔍 Поиск и блокировка игроков:</label>
+            <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">🔍 Поиск игроков по нику или ID — здесь же можно заблокировать/разблокировать найденного игрока:</label>
             <div style="display:flex; gap:8px; margin:6px 0;">
-                <input type="text" id="adminPlayerSearch" placeholder="Ник или ID" style="flex:1;">
+                <input type="text" id="adminPlayerSearch" placeholder="Введите ник или ID" style="flex:1;">
                 <button onclick="searchAdminPlayers()" style="width:auto; padding:8px 14px;">Найти</button>
             </div>
             <div id="adminSearchResults" style="max-height:200px; overflow-y:auto;"></div>
+        </div>
+        <div style="margin:16px 0 8px; border-top:1px solid #c0392b; padding-top:10px;">
+            <label style="display:block; font-size:12px; color:#c0392b; margin-bottom:6px;">⚠️ Опасная зона — необратимо:</label>
+            <button onclick="resetMyOwnProgress()" style="background:#c0392b;">🔄 Сбросить мой прогресс</button>
         </div>
         <button onclick="closeAdminPanel()" style="background:#c0392b; margin-top:10px;">Закрыть</button>
     </div>
@@ -324,8 +343,11 @@
             onlinePlayersKilled: 0
         }
     };
+    // Снимок изначального состояния игрока "с нуля" — нужен для кнопки сброса прогресса в админ-панели
+    const PRISTINE_PLAYER_DEFAULTS = JSON.parse(JSON.stringify(player));
 
     let raidActive = false;
+    let inventoryOpenedFromRaid = false; // рюкзак открыт прямо из рейда — "Назад" должен вернуть в рейд, а не в главное меню
     let raidLogs = [];
     let currentEnemy = null;
     let battleTurn = 0;
@@ -339,18 +361,32 @@
     const mutants = [
         { tier: 0, name: 'Тушкан', hp: 10, dmg: 10, loot: 'Хвост тушкана', lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1.0, runChance: 1.0, runSkill: 0.1, hitChance: 1.0, hitSkill: 0.1 },
         { tier: 1, name: 'Слепая собака', hp: 20, dmg: 20, loot: 'Ухо слепого пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: 'Чернобыльский пёс', hp: 20, dmg: 20, loot: 'Клык чернобыльского пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: 'Кракозябра', hp: 20, dmg: 20, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1, 1] },
         { tier: 2, name: 'Плоть', hp: 30, dmg: 30, loot: 'Глаз плоти', lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
         { tier: 3, name: 'Боров', hp: 40, dmg: 40, loot: 'Клык борова', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 3, name: 'Изотоп', hp: 40, dmg: 40, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3, 3] },
+        { tier: 3, name: 'Шарнир', hp: 40, dmg: 40, loot: 'Непонятный металл', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
         { tier: 4, name: 'Зомби', hp: 50, dmg: 50, loot: 'Ухо зомби', lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
         { tier: 5, name: 'Псевдо собака', hp: 60, dmg: 60, loot: 'Ухо псевдо пса', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: 'Рысь', hp: 60, dmg: 60, loot: 'Ухо рыси', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: 'Чупакабра', hp: 60, dmg: 60, loot: 'Хвост чупакабры', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
         { tier: 6, name: 'Пси собака', hp: 70, dmg: 70, loot: 'Ухо пси пса', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 6, name: 'Кот Баюн', hp: 70, dmg: 70, loot: 'Хвост баюна', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
         { tier: 7, name: 'Снорк', hp: 80, dmg: 80, loot: 'Ухо снорка', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: 'Стрегун', hp: 80, dmg: 80, loot: 'Хитин стрегуна', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: 'Филин', hp: 80, dmg: 80, loot: 'Рука покрытая перьями', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
         { tier: 8, name: 'Кровосос', hp: 90, dmg: 90, loot: 'Щупальца кровососа', lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
         { tier: 9, name: 'Полтергейст', hp: 100, dmg: 100, loot: 'Ухо полтергейста', lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1.0, hitChance: 0.55, hitSkill: 1.0 },
         { tier: 10, name: 'Огненный полтергейст', hp: 110, dmg: 110, loot: 'Ухо огненного полтергейста', lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
+        { tier: 10, name: 'Излом', hp: 110, dmg: 110, loot: 'Ухо излома', lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1, 5] },
         { tier: 11, name: 'Бюрер', hp: 120, dmg: 120, loot: 'Ухо бюрера', lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
+        { tier: 11, name: 'Лось', hp: 120, dmg: 120, loot: 'Рог лося', lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7, 8] },
         { tier: 12, name: 'Контролёр', hp: 140, dmg: 140, loot: 'Ухо контролёра', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 12, name: 'Стронглав', hp: 140, dmg: 140, loot: 'Щупальца стронглава', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
         { tier: 13, name: 'Химера', hp: 160, dmg: 160, loot: 'Коготь химеры', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
+        { tier: 13, name: 'Электро химера', hp: 160, dmg: 160, loot: 'Коготь электро химеры', lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8, 8] },
+        { tier: 13, name: 'Наблюдатель', hp: 160, dmg: 160, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
         { tier: 14, name: 'Псевдогигант', hp: 190, dmg: 190, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
     ];
 
@@ -507,20 +543,20 @@
         { id: 21, name: 'Бронекостюм Монолит-Патрульный', tier: 4, armor: 48, artifactProtection: 16, price: 2670 },
         { id: 22, name: 'Костюм СИРИУС', tier: 4, armor: 52, artifactProtection: 17, price: 2890 },
         { id: 23, name: 'Экзокостюм Чистое небо', tier: 4, armor: 58, artifactProtection: 19, price: 3220 },
-        { id: 24, name: 'Экзоскелет Свобода', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
+        { id: 24, name: 'Костюм Стража-Финал', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
         { id: 25, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
         { id: 26, name: 'Бронекостюм СКАТ-9М', tier: 5, armor: 76, artifactProtection: 25, price: 8110 },
         { id: 27, name: 'Бронежилет 6Б47 Ратник-3', tier: 5, armor: 78, artifactProtection: 26, price: 8320 },
         { id: 28, name: 'Экзокостюм Периметр-1', tier: 5, armor: 79, artifactProtection: 26, price: 8430 },
-        { id: 29, name: 'Экзоскелет Атлант', tier: 5, armor: 80, artifactProtection: 27, price: 8530 },
+        { id: 29, name: 'Бронежилет 6Б57 Ратник-Элит', tier: 5, armor: 80, artifactProtection: 27, price: 8530 },
         { id: 30, name: 'Костюм Штурмовик', tier: 5, armor: 84, artifactProtection: 28, price: 8960 },
         { id: 31, name: 'Бронекостюм СЕВА', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
         { id: 32, name: 'Бронекостюм Долг-Элит', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
         { id: 33, name: 'Бронежилет 6Б13 Модерн', tier: 6, armor: 86, artifactProtection: 30, price: 12140 },
-        { id: 34, name: 'Экзоскелет Периметр-2', tier: 6, armor: 87, artifactProtection: 31, price: 12280 },
+        { id: 34, name: 'Костюм Абсолют-2', tier: 6, armor: 87, artifactProtection: 31, price: 12280 },
         { id: 35, name: 'Экзокостюм Титан-Лайт', tier: 6, armor: 88, artifactProtection: 31, price: 12420 },
         { id: 36, name: 'Костюм Гроза', tier: 6, armor: 89, artifactProtection: 31, price: 12560 },
-        { id: 37, name: 'Экзоскелет Штурмовой', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
+        { id: 37, name: 'Бронежилет 6Б59 Элит', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
         { id: 38, name: 'Бронежилет 6Б49 Ратник-4', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
         { id: 39, name: 'Костюм Ветер-Штурм', tier: 7, armor: 91, artifactProtection: 35, price: 18200 },
         { id: 40, name: 'Бронекостюм Титан-Про', tier: 7, armor: 92, artifactProtection: 36, price: 18400 },
@@ -529,43 +565,43 @@
         { id: 43, name: 'Бронекостюм Титан', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
         { id: 44, name: 'Костюм Аванпост', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
         { id: 45, name: 'Броня Стража', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
-        { id: 46, name: 'Экзоскелет Крепость', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
+        { id: 46, name: 'Костюм Затвор-Броня', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
         { id: 47, name: 'Бронежилет 6Б51 Ратник-5', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
         { id: 48, name: 'Экзокостюм Периметр-4', tier: 8, armor: 97, artifactProtection: 41, price: 26550 },
         { id: 49, name: 'Защитный костюм Периметр', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
         { id: 50, name: 'Костюм Форпост', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
         { id: 51, name: 'Броня Стража-Элит', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
-        { id: 52, name: 'Экзоскелет Крепость-2', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
+        { id: 52, name: 'Бронежилет 6Б61 Легенда', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
         { id: 53, name: 'Бронежилет 6Б53 Ратник-6', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
         { id: 54, name: 'Экзокостюм Бастион', tier: 9, armor: 100, artifactProtection: 46, price: 36730 },
-        { id: 55, name: 'Экзоскелет', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
+        { id: 55, name: 'Костюм Последний Рубеж', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
         { id: 56, name: 'Костюм Абсолют', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
         { id: 57, name: 'Броня Периметр-Финал', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
         { id: 58, name: 'Бронежилет 6Б55 Ратник-Финал', tier: 10, armor: 101, artifactProtection: 50, price: 50500 },
-        { id: 59, name: 'Экзоскелет Титан-Финал', tier: 10, armor: 102, artifactProtection: 51, price: 51000 },
+        { id: 59, name: 'Бронежилет 6Б63 Легенда-Финал', tier: 10, armor: 102, artifactProtection: 51, price: 51000 },
         { id: 60, name: 'Экзокостюм Бастион-2', tier: 10, armor: 103, artifactProtection: 52, price: 51500 },
         { id: 61, name: 'Экзоскелет Монолит-11', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
-        { id: 62, name: 'Костюм Стража-Финал', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
-        { id: 63, name: 'Бронежилет 6Б57 Ратник-Элит', tier: 11, armor: 116, artifactProtection: 61, price: 70610 },
+        { id: 62, name: 'Экзоскелет Свобода', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
+        { id: 63, name: 'Экзоскелет Атлант', tier: 11, armor: 116, artifactProtection: 61, price: 70610 },
         { id: 64, name: 'Бронекостюм Периметр-5', tier: 11, armor: 117, artifactProtection: 61, price: 71220 },
         { id: 65, name: 'Броня Легион-Лайт', tier: 11, armor: 118, artifactProtection: 62, price: 71830 },
         { id: 66, name: 'Экзоскелет Титан-Экстрим', tier: 11, armor: 119, artifactProtection: 62, price: 72430 },
         { id: 67, name: 'Броня Легион', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 68, name: 'Костюм Абсолют-2', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
+        { id: 68, name: 'Экзоскелет Периметр-2', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
         { id: 69, name: 'Броня Стража-Легенда', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 70, name: 'Бронежилет 6Б59 Элит', tier: 12, armor: 131, artifactProtection: 71, price: 95730 },
+        { id: 70, name: 'Экзоскелет Штурмовой', tier: 12, armor: 131, artifactProtection: 71, price: 95730 },
         { id: 71, name: 'Экзоскелет Периметр-Финал', tier: 12, armor: 132, artifactProtection: 71, price: 96460 },
         { id: 72, name: 'Экзокостюм Бастион-Финал', tier: 12, armor: 133, artifactProtection: 72, price: 97190 },
         { id: 73, name: 'Прототип Брони X-17', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 74, name: 'Костюм Затвор-Броня', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
+        { id: 74, name: 'Экзоскелет Крепость', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
         { id: 75, name: 'Броня Раскат', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 76, name: 'Бронежилет 6Б61 Легенда', tier: 13, armor: 151, artifactProtection: 86, price: 130870 },
+        { id: 76, name: 'Экзоскелет Крепость-2', tier: 13, armor: 151, artifactProtection: 86, price: 130870 },
         { id: 77, name: 'Экзоскелет Реликт', tier: 13, armor: 152, artifactProtection: 86, price: 131730 },
         { id: 78, name: 'Экзокостюм Возмездие', tier: 13, armor: 153, artifactProtection: 87, price: 132600 },
         { id: 79, name: 'Броня Стрелка', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
-        { id: 80, name: 'Костюм Последний Рубеж', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
+        { id: 80, name: 'Экзоскелет', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
         { id: 81, name: 'Броня Зоны', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
-        { id: 82, name: 'Бронежилет 6Б63 Легенда-Финал', tier: 14, armor: 181, artifactProtection: 101, price: 181000 },
+        { id: 82, name: 'Экзоскелет Титан-Финал', tier: 14, armor: 181, artifactProtection: 101, price: 181000 },
         { id: 83, name: 'Экзоскелет Абсолют-Финал', tier: 14, armor: 182, artifactProtection: 101, price: 182000 },
         { id: 84, name: 'Экзокостюм Апокалипсис', tier: 14, armor: 183, artifactProtection: 102, price: 183000 }
     ];
@@ -592,7 +628,7 @@
         { id: 1, name: 'Хлеб', type: 'food', restore: 25, price: 20 },
         { id: 2, name: 'Тушенка', type: 'food', restore: 50, price: 40 },
         { id: 3, name: 'Вода', type: 'water', restore: 25, price: 15 },
-        { id: 4, name: 'Энергетик', type: 'water', restore: 50, price: 40 },
+        { id: 4, name: 'Энергетик', type: 'water', restore: 100, price: 40 },
         { id: 5, name: 'Аптечка', type: 'medkit', restore: 50, price: 100 }
     ];
 
@@ -675,7 +711,8 @@
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 if (!player.nickname) promptForNickname(true);
-                openChatTab(chatTab); // чат встроен в главное меню — сразу подгружаем при старте
+                document.getElementById('embeddedChatWidget').style.display = 'block';
+                openChatTab(chatTab); // чат общий для главного меню и рейда — сразу подгружаем при старте
             })
             .catch(() => {
                 document.getElementById('loading').style.display = 'none';
@@ -723,7 +760,11 @@
         document.getElementById('thirst').textContent = Math.round(player.thirst);
         document.getElementById('coins').textContent = player.coins;
         document.getElementById('level').textContent = player.level;
+        document.getElementById('breedCreditsHeader').textContent = Number(player.breedCredits) || 0;
+        document.getElementById('nicknameCreditsHeader').textContent = Number(player.nicknameChangeCredits) || 0;
         document.getElementById('weapon').textContent = player.weapon.name;
+        document.getElementById('armorHeader').textContent = player.armor.name;
+        document.getElementById('detectorHeader').textContent = player.detector.name;
         document.getElementById('detector').textContent = player.detector.name;
         document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
         renderQuickSlots();
@@ -756,6 +797,28 @@
 
     function closeAdminPanel() {
         document.getElementById('adminPanel').classList.remove('active');
+    }
+
+    // Полный сброс СВОЕГО ЖЕ прогресса до начального состояния — необратимо, поэтому двойное подтверждение
+    function resetMyOwnProgress() {
+        if (!confirm('Сбросить ВЕСЬ ваш прогресс до начального состояния? Это необратимо — деньги, уровень, снаряжение, инвентарь, артефакты будут потеряны.')) return;
+        if (!confirm('Точно? Это последнее предупреждение — отменить сброс будет нельзя.')) return;
+
+        // На случай сброса прямо во время боя/рейда — обнуляем и это состояние тоже, иначе
+        // "зависший" бой мог бы попытаться нанести урон уже свежему после сброса персонажу
+        raidActive = false;
+        currentEnemy = null;
+        battleTurn = 0;
+        inventoryOpenedFromRaid = false;
+        document.getElementById('battleButtons')?.remove();
+
+        Object.keys(player).forEach(key => delete player[key]);
+        Object.assign(player, JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS)));
+
+        closeAdminPanel();
+        renderInventory(); updateUI(); saveGame();
+        alert('Прогресс сброшен.');
+        openScreen('main');
     }
 
     // ===== АДМИН: ПОИСК И БЛОКИРОВКА ИГРОКОВ =====
@@ -812,10 +875,14 @@
         
         if (screen === 'main') {
             document.getElementById('mainMenu').style.display = 'grid';
-            openChatTab(chatTab); // чат встроен в главное меню — обновляем при каждом возврате в него
+            document.getElementById('embeddedChatWidget').style.display = 'block';
+            openChatTab(chatTab); // чат общий для главного меню и рейда — обновляем при каждом возврате
             return;
         }
         
+        // Любой другой экран (кроме главного меню и рейда) — чат скрываем, там для него нет места
+        document.getElementById('embeddedChatWidget').style.display = 'none';
+
         const target = document.getElementById(screen + 'Screen');
         if (target) {
             target.classList.add('active');
@@ -1037,6 +1104,25 @@
     // ===== ЧАТ (общий / фракции / личный) =====
     let chatTab = 'general';
     let chatDmPartnerId = null; // с кем сейчас открыт личный диалог (null = список диалогов)
+    let lastDmSeenTime = Date.now(); // момент последнего захода в личные диалоги — для красной точки "новое сообщение"
+
+    // Периодическая проверка новых личных сообщений — показывает красную точку на кнопке "Личный",
+    // если последнее сообщение в каком-то диалоге пришло ПОСЛЕ последнего захода игрока в личные диалоги
+    // и написано не самим игроком
+    function checkForNewDms() {
+        if (!player.nickname) return; // профиль ещё не готов
+        fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => {
+            const myId = String(getPlayerId());
+            const hasUnread = (list || []).some(c => c.lastMessageAt > lastDmSeenTime && String(c.lastSenderId) !== myId);
+            const dot = document.getElementById('dmUnreadDot');
+            if (dot) dot.style.display = hasUnread ? 'block' : 'none';
+        }).catch(() => {});
+    }
+    setInterval(checkForNewDms, 20000);
 
     function setActiveChatTabButton() {
         ['general', 'faction', 'dm'].forEach(t => {
@@ -1054,6 +1140,10 @@
         if (tab === 'general') loadGeneralChat();
         else if (tab === 'faction') loadFactionChat();
         else if (tab === 'dm') {
+            // Заходим в личные диалоги — отмечаем момент и сразу гасим красную точку
+            lastDmSeenTime = Date.now();
+            const dot = document.getElementById('dmUnreadDot');
+            if (dot) dot.style.display = 'none';
             // Если диалог уже был открыт (например, просто вернулись из другого экрана) — не сбрасываем на список
             if (chatDmPartnerId) openDmWith(chatDmPartnerId);
             else loadDmConversations();
@@ -1261,7 +1351,7 @@
     }
 
     function buyFaction(name) {
-        if (!confirm(`Купить фракцию «${name}» за ${FACTION_PRICE.toLocaleString('ru-RU')} монет? Вы станете её лидером.`)) return;
+        if (!confirm(`Купить фракцию «${name}» за ${FACTION_PRICE.toLocaleString('ru-RU')} Байт? Вы станете её лидером.`)) return;
         fetch(`${SERVER_URL}/api/factions/buy`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1343,7 +1433,7 @@
                         (myPosition === 'Взводник' && m.position === 'Рядовой');
 
                     if (appointOptions.length > 0) {
-                        actions += `<select onchange="appointFactionMember('${m.id}', this.value)" style="font-size:11px; padding:4px; margin-right:4px;">
+                        actions += `<select onchange="appointFactionMember('${m.id}', this.value)" style="font-size:11px; padding:4px; margin-right:4px; background:#111; color:#fff; border:1px solid #333; border-radius:4px;">
                             <option value="">Назначить...</option>
                             ${appointOptions.map(p => `<option value="${p}" ${p===m.position?'selected':''}>${p}</option>`).join('')}
                         </select>`;
@@ -1455,7 +1545,7 @@
 
     function categorizeMarketItem(name) {
         // Гибриды артефактов (скрещены у Учёных) — отдельная категория, определяется по префиксу имени
-        if (name.startsWith('Гибрид #')) return 'Гибриды артефактов';
+        if (name.startsWith('Гибрид ')) return 'Гибриды артефактов'; // ловит и старый, и новый формат имени
         // Улучшенное снаряжение хранится под именем вида "АК-74 +15" — сначала убираем суффикс,
         // иначе такой предмет не совпадёт ни с одним известным именем и попадёт не в ту категорию.
         // При этом улучшенное (level > 0) оружие/броня уходит в отдельные категории от базового
@@ -1485,7 +1575,7 @@
                     content.innerHTML = myLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} монет</p>
+                            <p>Цена: ${lot.price} Байт</p>
                             <p>Количество: ${lot.quantity}</p>
                             <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
@@ -1505,7 +1595,7 @@
                 <div id="marketBuyList"><p style="padding:10px; color:#888;">Загрузка...</p></div>`;
 
             const isHybridCategory = marketCategory === 'Гибриды артефактов';
-            const showStatsInList = isHybridCategory || marketCategory === 'Улучшенное оружие' || marketCategory === 'Улучшенная броня';
+            const showStatsInList = marketCategory !== 'Части тел мутантов'; // у частей тел нет игровых характеристик
             // Для гибридов сначала подтягиваем реестр характеристик с сервера — иначе не покажем,
             // что именно продаётся (гибриды других игроков не описаны в локальных данных)
             const registryPromise = isHybridCategory
@@ -1585,7 +1675,7 @@
             alert('Покупка успешна!');
             // Если купили гибрид артефакта — подтягиваем его характеристики с сервера и СРАЗУ сохраняем
             // в своих данных (до loadGame), иначе последующая перезагрузка сотрёт только что добавленное
-            const needsHybridDef = itemName && itemName.startsWith('Гибрид #') && !artifacts.some(a => a.name === itemName);
+            const needsHybridDef = itemName && itemName.startsWith('Гибрид ') && !artifacts.some(a => a.name === itemName);
             const fetchDef = needsHybridDef
                 ? fetch(`${SERVER_URL}/api/artifacts/${encodeURIComponent(itemName)}`).then(r => r.json()).catch(() => null)
                 : Promise.resolve(null);
@@ -1631,12 +1721,15 @@
     function listItemForSale(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const maxQty = player.inventory[itemName];
-        const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, '1');
+        const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, String(maxQty));
+        if (qtyStr === null) return; // отмена
         const qty = parseInt(qtyStr);
-        if (!qty || qty <= 0 || qty > maxQty) return;
-        const priceStr = prompt('Цена за партию (в монетах):', '100');
+        if (!qty || qty <= 0) { alert('Введите корректное количество (целое число больше нуля).'); return; }
+        if (qty > maxQty) { alert(`У вас есть только ${maxQty} шт. Введите число не больше доступного.`); return; }
+        const priceStr = prompt('Цена за партию (в Байтах):', '100');
+        if (priceStr === null) return; // отмена
         const price = parseInt(priceStr);
-        if (!price || price <= 0) return;
+        if (!price || price <= 0) { alert('Введите корректную цену (целое число больше нуля).'); return; }
 
         fetch(`${SERVER_URL}/api/market/sell`, {
             method: 'POST',
@@ -1817,7 +1910,7 @@
             let dmg = player.weapon.dmg + player.strength;
             if (isCrit) dmg *= 2;
             currentEnemy.hp -= dmg;
-            raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, currentEnemy.hp)} HP.`);
+            raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, Math.round(currentEnemy.hp * 10) / 10)} HP.`);
             player.accuracy = Math.min(100, (Number(player.accuracy) || 0) + 0.1);
         } else if (action === 'medkit') {
             if (player.inventory['Аптечка'] > 0) {
@@ -1831,6 +1924,7 @@
                     player.maxHealth += vitalityGain;
                 }
                 raidLogs.push('Вы использовали аптечку! +50 HP.');
+                updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
             } else {
                 raidLogs.push('У вас нет аптечек!');
                 updateRaidLog();
@@ -1852,12 +1946,37 @@
         if (currentEnemy.hp <= 0) {
             const isNpc = !!currentEnemy.faction;
             const npcLootText = isNpc ? `, ${currentEnemy.weapon.name}, ${currentEnemy.armor.name}` : '';
-            const lootText = isNpc ? npcLootText : `, ${currentEnemy.loot}`;
-            raidLogs.push(`🏆 Победа! Вы получили: ${currentEnemy.coins} монет, ${currentEnemy.exp} EXP${lootText}`);
-            player.coins += currentEnemy.coins;
+            const lootText = isNpc ? npcLootText : (currentEnemy.loot ? `, ${currentEnemy.loot}` : '');
+            // У мутантов (в отличие от NPC) нет собственного поля coins — считаем награду по тиру,
+            // иначе player.coins += undefined portит баланс в NaN (баг "пропадающей валюты" после боёв с мутантами)
+            const coinsReward = Number(currentEnemy.coins) || Math.round(((currentEnemy.tier || 0) + 1) * 200);
+            raidLogs.push(`🏆 Победа! Вы получили: ${coinsReward} Байт, ${currentEnemy.exp} EXP${lootText}`);
+            player.coins += coinsReward;
             player.exp += currentEnemy.exp;
             if (!isNpc && currentEnemy.loot) {
                 player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + 1;
+            }
+            // Некоторые мутанты (Излом, Лось, Электро химера) дополнительно роняют случайный артефакт в заданном диапазоне тиров
+            if (!isNpc && currentEnemy.bonusArtifactTierRange) {
+                const [minT, maxT] = currentEnemy.bonusArtifactTierRange;
+                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT);
+                if (pool.length > 0) {
+                    const art = pool[Math.floor(Math.random() * pool.length)];
+                    player.inventory[art.name] = (player.inventory[art.name] || 0) + 1;
+                    player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
+                    player.stats.artifactsByTier = player.stats.artifactsByTier || {};
+                    player.stats.artifactsByTier[art.tier] = (player.stats.artifactsByTier[art.tier] || 0) + 1;
+                    raidLogs.push(`✨ Дополнительно найден артефакт: ${art.name}!`);
+                }
+            }
+            // Наблюдатель: не роняет обычный лут, зато сразу поднимает уровень и даёт жетоны селекции
+            if (!isNpc && currentEnemy.bonusLevel) {
+                player.level = (Number(player.level) || 1) + currentEnemy.bonusLevel;
+                raidLogs.push(`⭐ Уровень повышен на ${currentEnemy.bonusLevel}!`);
+            }
+            if (!isNpc && currentEnemy.bonusBreedCredits) {
+                player.breedCredits = (Number(player.breedCredits) || 0) + currentEnemy.bonusBreedCredits;
+                raidLogs.push(`🧬 Получено жетонов селекции: ${currentEnemy.bonusBreedCredits}!`);
             }
             if (isNpc) {
                 // с побеждённого NPC падает его же экипировка (оружие и броня)
@@ -1893,6 +2012,15 @@
             return;
         }
         
+        triggerEnemyTurn();
+    }
+
+    // Единая логика ответного хода врага — вызывается после ЛЮБОГО действия игрока во время боя
+    // (атака, аптечка в бою, использование расходника из рюкзака или быстрого слота), чтобы враг
+    // не мог оставаться безнаказанным, пока игрок бесплатно лечится в обход боевых кнопок
+    function triggerEnemyTurn() {
+        if (!currentEnemy) return;
+
         battleTurn = 1;
         renderBattleButtons();
         updateRaidLog();
@@ -1908,6 +2036,7 @@
             } else {
                 raidLogs.push(`${currentEnemy.name} промахнулся!`);
             }
+            updateUI(); // здоровье в шапке должно отражать урон сразу после хода врага
             
             if (player.health <= 0) {
                 raidLogs.push('💀 Вы мертвы...');
@@ -1919,6 +2048,7 @@
             battleTurn = 0;
             renderBattleButtons();
             updateRaidLog();
+            saveGame();
         }, 1000);
     }
 
@@ -1966,6 +2096,8 @@
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('raidScreen').classList.add('active');
         document.getElementById('raidLog').textContent = 'Вы входите в Зону...';
+        document.getElementById('embeddedChatWidget').style.display = 'block'; // чат доступен и во время рейда
+        openChatTab(chatTab);
         saveGame();
     }
 
@@ -1980,6 +2112,37 @@
         document.getElementById('battleButtons')?.remove();
         openScreen('main');
         saveGame();
+    }
+
+    // Открыть рюкзак прямо во время рейда (в том числе во время боя) — не прерывает и не завершает рейд
+    function openBackpackFromRaid() {
+        inventoryOpenedFromRaid = true;
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById('inventoryScreen').classList.add('active');
+        document.getElementById('embeddedChatWidget').style.display = 'none'; // на экране инвентаря места для чата нет
+        renderInventory();
+    }
+
+    // "Назад" из инвентаря — если инвентарь был открыт из рейда, возвращаем в рейд (а не в главное меню),
+    // сохраняя состояние боя, если он ещё идёт
+    function closeInventoryScreen() {
+        if (inventoryOpenedFromRaid && raidActive) {
+            inventoryOpenedFromRaid = false;
+            returnToRaid();
+        } else {
+            openScreen('main');
+        }
+    }
+
+    function returnToRaid() {
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById('mainMenu').style.display = 'none';
+        document.getElementById('raidScreen').classList.add('active');
+        document.getElementById('embeddedChatWidget').style.display = 'block';
+        openChatTab(chatTab);
+        renderQuickSlots();
+        if (currentEnemy) renderBattleButtons(); // бой всё ещё идёт — восстанавливаем боевые кнопки
+        updateRaidLog();
     }
 
     function raidStep() {
@@ -2022,8 +2185,8 @@
             document.getElementById('battleButtons')?.remove();
             // Пул аномалий ограничен тиром снаряжения игрока — та же логика, что для мутантов и NPC,
             // иначе свежего игрока могла случайно убить аномалия топового тира (до 110 урона)
-            const playerTier = getPlayerTier();
-            const anomalyPool = anomalies.filter(a => a.tier <= playerTier);
+            const encounterTier = getEncounterTier();
+            const anomalyPool = anomalies.filter(a => a.tier <= encounterTier);
             const anomaly = anomalyPool[Math.floor(Math.random() * anomalyPool.length)];
             const dmg = anomaly.dmg - player.armor.armor - player.armor.artifactProtection;
             const finalDmg = Math.max(0, dmg);
@@ -2080,9 +2243,18 @@
         return baseTier;
     }
 
+    // Тир встречаемых мутантов/NPC/аномалий зависит от УРОВНЯ игрока (не от снаряжения) —
+    // на 1 уровне тир 1, на 5 уровне тир 2, на 10 уровне тир 3, далее +1 тир за каждые 5 уровней,
+    // максимум тир 14 (достигается на 65 уровне). Тир снаряжения (getPlayerTier) отдельно
+    // продолжает определять, какие товары открыты у Торговца — это разные вещи
+    function getEncounterTier() {
+        const level = Number(player.level) || 1;
+        return Math.min(14, 1 + Math.floor(level / 5));
+    }
+
     // ===== НАЙТИ СЛУЧАЙНЫЙ NPC (ограничено тиром снаряжения игрока — иначе новичка сразу убивает топовый NPC) =====
     function findRandomNPC() {
-        const playerTier = getPlayerTier();
+        const playerTier = getEncounterTier();
         // Враги теперь строго равны тиру игрока (не ниже), а не любой тир до playerTier включительно
         const pool = npcs.filter(n => n.tier === playerTier);
         const randomIndex = Math.floor(Math.random() * pool.length);
@@ -2262,9 +2434,13 @@
     // Пул ограничен тиром снаряжения игрока (та же логика, что и для NPC) — иначе свежего
     // игрока мог случайно убить мутант топового тира (например Химера/Псевдогигант)
     function pickWeightedMutant() {
-        const playerTier = getPlayerTier();
-        // Мутанты теперь строго тира игрока, а не любой тир ниже
-        const pool = mutants.filter(m => m.tier === playerTier);
+        const playerTier = getEncounterTier();
+        // Мутант тира 0 (Тушкан) иначе был бы недостижим в принципе — тир встреч никогда не равен 0.
+        // Добавляем его в пул СПЕЦИАЛЬНО только на самом старте (пока встречи ещё тира 1, то есть
+        // уровень 1-4) — для тира 2 и выше пул остаётся ровно таким же, как был, без изменений
+        const pool = playerTier === 1
+            ? mutants.filter(m => m.tier === 1 || m.tier === 0)
+            : mutants.filter(m => m.tier === playerTier);
         const totalWeight = pool.reduce((sum, m) => sum + m.chance, 0);
         let roll = Math.random() * totalWeight;
         for (const m of pool) {
@@ -2283,6 +2459,14 @@
     }
 
     function equipItem(itemName) {
+        // Защита от повторного клика "Одеть" по уже надетому/использованному предмету — без этого
+        // количество в инвентаре могло бы уйти в минус, если модалка не успела закрыться/обновиться
+        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return false;
+
+        // ВАЖНО: старое надетое снаряжение всегда возвращается в инвентарь, ДАЖЕ если его имя совпадает
+        // с новым (например, надеваем второй такой же детектор поверх такого же надетого) — иначе один
+        // экземпляр из пары одинаковых предметов бесследно исчезает (можно было исчезнуть только в этом случае,
+        // поскольку это единственная ситуация, когда старое и новое имя совпадают)
         const parsed = parseGearName(itemName);
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
@@ -2290,8 +2474,9 @@
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
             player.weapon = { name: itemName, tier: weapon.tier, dmg: weapon.dmg + parsed.level };
-            if (old && old !== itemName && old !== DEFAULT_WEAPON.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            renderInventory(); updateUI(); saveGame();
+            if (old && old !== DEFAULT_WEAPON.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            closeItemActionModal();
+            renderInventory(); renderShop(); updateUI(); saveGame();
             return true;
         }
         const armor = armorItems.find(a => a.name === parsed.baseName);
@@ -2300,8 +2485,9 @@
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
             player.armor = { name: itemName, tier: armor.tier, armor: armor.armor + parsed.level, artifactProtection: armor.artifactProtection };
-            if (old && old !== itemName && old !== DEFAULT_ARMOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            renderInventory(); updateUI(); saveGame();
+            if (old && old !== DEFAULT_ARMOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            closeItemActionModal();
+            renderInventory(); renderShop(); updateUI(); saveGame();
             return true;
         }
         const detector = detectors.find(d => d.name === parsed.baseName);
@@ -2310,8 +2496,9 @@
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
             player.detector = { name: itemName, tier: detector.tier };
-            if (old && old !== itemName && old !== DEFAULT_DETECTOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            renderInventory(); updateUI(); saveGame();
+            if (old && old !== DEFAULT_DETECTOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            closeItemActionModal();
+            renderInventory(); renderShop(); updateUI(); saveGame();
             return true;
         }
         return false;
@@ -2352,6 +2539,13 @@
 
     // Возвращает HTML-блок с характеристиками предмета: урон/броня (база+улучшение), тир, пассивки артефакта
     function getItemInfoHtml(itemName) {
+        const consumable = consumables.find(c => c.name === itemName);
+        if (consumable) {
+            const restoreLabel = consumable.type === 'food' ? 'сытость' : consumable.type === 'water' ? 'жажду' : 'здоровье';
+            return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
+                Восстанавливает ${restoreLabel} на: <b style="color:#fff;">${consumable.restore}</b>
+            </div>`;
+        }
         if (itemName === 'Книга знаний') {
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Особый предмет за Telegram Stars.<br>
@@ -2393,7 +2587,7 @@
                 const val = artifact.stats[stat];
                 return `+${val} к параметру «${STAT_LABELS[stat] || stat}»`;
             }).join('<br>');
-            const isHybrid = itemName.startsWith('Гибрид #');
+            const isHybrid = itemName.startsWith('Гибрид ');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${artifact.tier}<br>
                 ${isHybrid ? `Модификаций (скрещиваний): ${artifact.gen || 1} / 20<br>` : ''}
@@ -2507,7 +2701,7 @@
     function doBreedArtifacts() {
         if (!breedSlot1 || !breedSlot2) { alert('Заполните оба слота артефактами.'); return; }
         if ((Number(player.breedCredits) || 0) < 1) {
-            alert('Нужен жетон селекции (⭐ Магазин монет, 10 звёзд за штуку).');
+            alert('Нужен жетон селекции (⭐ Магазин Байт, 10 звёзд за штуку).');
             return;
         }
         const a1 = artifacts.find(a => a.name === breedSlot1);
@@ -2531,18 +2725,34 @@
         player.inventory[breedSlot2]--;
         if (player.inventory[breedSlot2] <= 0) delete player.inventory[breedSlot2];
 
-        // Новый артефакт — сумма характеристик обоих родителей
-        const mergedStats = {};
+        // Новый артефакт — сумма характеристик родителей, но с ограничением суммарной силы по тиру.
+        // Без этого ограничения повторное скрещивание уже скрещенных гибридов друг с другом давало
+        // ЭКСПОНЕНЦИАЛЬНЫЙ рост характеристик (каждое поколение примерно удваивало сумму), из-за чего
+        // скрещивание двух гибридов высокого поколения могло дать абсурдные значения статов
+        const rawStats = {};
         [a1.stats, a2.stats].forEach(statsObj => {
             Object.keys(statsObj).forEach(key => {
-                mergedStats[key] = (mergedStats[key] || 0) + statsObj[key];
+                rawStats[key] = (rawStats[key] || 0) + statsObj[key];
             });
         });
+        const resultTier = Math.max(a1.tier, a2.tier);
+        const MAX_TOTAL_HYBRID_STATS = resultTier * 60; // потолок суммы ВСЕХ статов гибрида, зависит от тира
+        const rawTotal = Object.values(rawStats).reduce((sum, v) => sum + v, 0);
+        const mergedStats = {};
+        if (rawTotal > MAX_TOTAL_HYBRID_STATS && rawTotal > 0) {
+            const scale = MAX_TOTAL_HYBRID_STATS / rawTotal;
+            Object.keys(rawStats).forEach(key => { mergedStats[key] = Math.round(rawStats[key] * scale); });
+        } else {
+            Object.keys(rawStats).forEach(key => { mergedStats[key] = Math.round(rawStats[key]); });
+        }
 
         player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
+        // Название гибрида: только "Гибрид (поколение N)" + короткий код для уникальности между игроками —
+        // без длинного Telegram ID и служебного счётчика, которые раньше засоряли название
+        const uniqueSuffix = Math.random().toString(36).slice(2, 6);
         const newArtifact = {
-            name: `Гибрид #${getPlayerId()}-${player.hybridCounter}`, // ID игрока в имени — гарантирует уникальность между разными игроками
-            tier: Math.max(a1.tier, a2.tier),
+            name: `Гибрид (поколение ${gen1 + 1}) ${uniqueSuffix}`,
+            tier: resultTier,
             price: a1.price + a2.price,
             stats: mergedStats,
             gen: gen1 + 1
@@ -2620,7 +2830,7 @@
         } else {
             const price = Math.round(getSellPrice(name) * 1.05);
             player.coins += price;
-            alert(`Продано за ${price} монет!`);
+            alert(`Продано за ${price} Байт!`);
         }
 
         openScientistsSellView();
@@ -2638,10 +2848,27 @@
         if (raw === null) return; // отмена
         const nick = raw.trim().replace(/[<>]/g, '').slice(0, 20);
         if (nick.length < 2) { alert('Ник должен быть не короче 2 символов.'); return; }
+
+        const oldNickname = player.nickname;
         player.nickname = nick;
-        updateUI();
-        saveGame();
-        alert(`Ник установлен: ${nick}`);
+        const initData = window.Telegram?.WebApp?.initData;
+        fetch(`${SERVER_URL}/api/player`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData, data: player })
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) {
+                updateUI();
+                alert(`Ник установлен: ${nick}`);
+            } else {
+                player.nickname = oldNickname; // сервер отклонил (например, ник уже занят) — откатываем
+                alert('Не удалось установить ник: ' + (result.error || 'неизвестная ошибка'));
+                if (!oldNickname) promptForNickname(isFirstTime); // ника всё ещё нет вообще — просим попробовать снова
+            }
+        })
+        .catch(() => alert('Ошибка соединения с сервером — попробуйте ещё раз'));
     }
 
     function changeNickname() {
@@ -2651,7 +2878,7 @@
         const freeAvailable = !player.freeNicknameChangeUsed;
         const hasCredit = (Number(player.nicknameChangeCredits) || 0) >= 1;
         if (!freeAvailable && !hasCredit) {
-            alert('Бесплатная смена ника уже использована. Следующая смена стоит 20 ⭐ — купите жетон смены ника в Магазине монет.');
+            alert('Бесплатная смена ника уже использована. Следующая смена стоит 20 ⭐ — купите жетон смены ника в Магазине Байт.');
             return;
         }
 
@@ -2661,15 +2888,41 @@
         if (nick.length < 2) { alert('Ник должен быть не короче 2 символов.'); return; }
         if (nick === player.nickname) return; // без изменений — не тратим смену
 
-        if (freeAvailable) {
-            player.freeNicknameChangeUsed = true;
-        } else {
-            player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) - 1;
-        }
+        // ВАЖНО: жетон/бесплатную смену списываем ТОЛЬКО после подтверждения сервера — иначе при отказе
+        // (например, ник уже занят) игрок терял бы смену впустую
+        const oldNickname = player.nickname;
+        const wasFree = freeAvailable;
         player.nickname = nick;
-        updateUI();
-        saveGame();
-        alert(`Ник изменён на: ${nick}`);
+        if (wasFree) player.freeNicknameChangeUsed = true;
+        else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) - 1;
+
+        const initData = window.Telegram?.WebApp?.initData;
+        fetch(`${SERVER_URL}/api/player`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData, data: player })
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) {
+                updateUI();
+                alert(`Ник изменён на: ${nick}`);
+            } else {
+                // Откатываем и ник, и списание смены — попытка не удалась
+                player.nickname = oldNickname;
+                if (wasFree) player.freeNicknameChangeUsed = false;
+                else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) + 1;
+                updateUI();
+                alert('Не удалось сменить ник: ' + (result.error || 'неизвестная ошибка'));
+            }
+        })
+        .catch(() => {
+            player.nickname = oldNickname;
+            if (wasFree) player.freeNicknameChangeUsed = false;
+            else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) + 1;
+            updateUI();
+            alert('Ошибка соединения с сервером — попробуйте ещё раз');
+        });
     }
 
     // ===== ПРИМЕНЕНИЕ / ВЫБРОС / ПЕРЕМЕЩЕНИЕ ПРЕДМЕТА =====
@@ -2682,6 +2935,9 @@
             player.level = (Number(player.level) || 1) + 5;
             closeItemActionModal();
             renderInventory(); updateUI(); saveGame();
+            // Использование любого предмета во время боя (даже из рюкзака, не только боевыми кнопками)
+            // считается ходом — враг сразу атакует в ответ
+            if (currentEnemy) { raidLogs.push(`Использован(а) ${itemName}!`); triggerEnemyTurn(); }
             return;
         }
 
@@ -2691,8 +2947,10 @@
             if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
             if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
             if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            renderQuickSlots(); // остаток в быстром слоте (если этот же предмет туда назначен) должен обновиться
             closeItemActionModal();
             renderInventory(); updateUI(); saveGame();
+            if (currentEnemy) { raidLogs.push(`Использован(а) ${itemName}!`); triggerEnemyTurn(); }
             return;
         }
     }
@@ -2774,6 +3032,9 @@
         } else if (consumable || isKnowledgeBook) {
             buttons += `<button onclick="applyInventoryItem('${esc}')">Применить</button>`;
         }
+        if (consumable) {
+            buttons += `<button onclick="assignToQuickSlot('${esc}')" style="background:#2980b9;">📌 В быстрый слот (для боя)</button>`;
+        }
 
         buttons += `<button onclick="moveItemToWarehouse('${esc}')">📦 Переместить в склад</button>`;
         if (context === 'shop') {
@@ -2787,6 +3048,19 @@
 
     function closeItemActionModal() {
         document.getElementById('itemActionModal').classList.remove('active');
+    }
+
+    // Назначить расходник (аптечка/еда/вода) в один из 4 быстрых слотов, видимых во время рейда/боя
+    function assignToQuickSlot(itemName) {
+        const list = player.quickSlots.map((n, i) => `${i + 1}. ${n || 'Пусто'}`).join('\n');
+        const choiceStr = prompt(`В какой быстрый слот поместить "${itemName}"? Введите номер:\n${list}`);
+        const idx = parseInt(choiceStr) - 1;
+        if (isNaN(idx) || idx < 0 || idx > 3) return;
+        player.quickSlots[idx] = itemName;
+        renderQuickSlots();
+        closeItemActionModal();
+        saveGame();
+        alert(`«${itemName}» помещён(а) в быстрый слот ${idx + 1}.`);
     }
 
     // ===== ИНВЕНТАРЬ =====
@@ -2848,7 +3122,9 @@
     function renderQuickSlots() {
         const slots = document.querySelectorAll('#quickSlots .quick-slot');
         slots.forEach((el, i) => {
-            el.textContent = player.quickSlots[i] || 'Пусто';
+            const itemName = player.quickSlots[i];
+            const qty = itemName ? (player.inventory[itemName] || 0) : 0;
+            el.textContent = itemName ? `${itemName} ×${qty}` : 'Пусто';
         });
     }
 
@@ -2880,10 +3156,17 @@
         if (player.inventory[itemName] <= 0) player.quickSlots[index] = null;
 
         raidLogs.push(`Использован(а) ${itemName}!`);
-        updateRaidLog();
         renderQuickSlots();
         updateUI();
         saveGame();
+
+        // Если игрок сейчас в бою — использование предмета через быстрый слот тоже считается
+        // ходом: враг сразу же атакует в ответ, как и после любого другого действия в бою
+        if (currentEnemy) {
+            triggerEnemyTurn();
+        } else {
+            updateRaidLog();
+        }
     }
 
     // ===== СКЛАД (50 ячеек) =====
@@ -3016,6 +3299,53 @@
         renderShop();
     }
 
+    function renderAutoBuyPanel() {
+        player.autoBuyTargets = player.autoBuyTargets || {};
+        const targets = player.autoBuyTargets;
+        return `
+        <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid #8a7a4a;">
+            <p style="font-size:12px; color:#8a7a4a; margin-bottom:8px;">🛒 Автозакупка расходников — укажите, сколько всегда иметь при себе:</p>
+            ${consumables.map(c => `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px;">${c.name} <span style="color:#888;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
+                    <input type="number" min="0" value="${targets[c.name] || 0}" style="width:70px; padding:4px;" onchange="setAutoBuyTarget('${c.name}', this.value)">
+                </div>
+            `).join('')}
+            <button onclick="doAutoBuy()" style="margin-top:4px; background:#27ae60;">Купить до нормы</button>
+        </div>`;
+    }
+
+    function setAutoBuyTarget(name, value) {
+        player.autoBuyTargets = player.autoBuyTargets || {};
+        player.autoBuyTargets[name] = Math.max(0, parseInt(value) || 0);
+        saveGame();
+    }
+
+    function doAutoBuy() {
+        const targets = player.autoBuyTargets || {};
+        let totalCost = 0;
+        const toBuy = [];
+        consumables.forEach(c => {
+            const target = targets[c.name] || 0;
+            const have = player.inventory[c.name] || 0;
+            const need = Math.max(0, target - have);
+            if (need > 0) {
+                const price = getBuyPrice(c.price);
+                toBuy.push({ item: c, need });
+                totalCost += price * need;
+            }
+        });
+        if (toBuy.length === 0) { alert('Всё уже в норме, покупать нечего.'); return; }
+        if (player.coins < totalCost) { alert(`Недостаточно Байт. Нужно 🪙 ${totalCost}, у вас 🪙 ${player.coins}.`); return; }
+
+        toBuy.forEach(({ item, need }) => {
+            player.inventory[item.name] = (player.inventory[item.name] || 0) + need;
+        });
+        player.coins -= totalCost;
+        renderShop(); updateUI(); saveGame();
+        alert(`Куплено на 🪙 ${totalCost}.`);
+    }
+
     function renderShop() {
         const shopItems = document.getElementById('shopItems');
 
@@ -3035,12 +3365,13 @@
         }
 
         const allGoods = getShopCatalog();
-        shopItems.innerHTML = allGoods.map(item => {
+        shopItems.innerHTML = renderAutoBuyPanel() + allGoods.map(item => {
             const price = getBuyPrice(item.price);
             const discounted = price < item.price;
             return `
             <div class="shop-item">
                 <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
+                ${getItemInfoHtml(item.name)}
                 <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
                 <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
             </div>`;
@@ -3163,22 +3494,41 @@
             return;
         }
 
-        fetch(`${SERVER_URL}/api/player/${targetId}`)
-            .then(res => res.json())
-            .then(data => {
-                const targetPlayer = applyGive(data || {});
-                return fetch(`${SERVER_URL}/api/player`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId, data: targetPlayer })
-                });
-            })
-            .then(res => res.json())
-            .then(result => {
-                if (result.success) alert(`Выдано игроку ${targetId}!`);
-                else alert('Ошибка: ' + (result.error || 'нет прав или не удалось обновить'));
-            })
-            .catch(() => alert('Ошибка: не удалось найти/обновить игрока'));
+        // ВАЖНО: если targetId — это ник (не число), нужно СНАЧАЛА найти реальный числовой ID игрока
+        // и забрать ЕГО данные. Раньше при выдаче по нику GET /api/player/<ник> не находил запись
+        // (эндпоинт понимает только числовой ID), и выдача сохраняла ПУСТЫЕ данные поверх настоящих —
+        // стирая весь остальной прогресс цели, оставляя только выданный предмет
+        const giveToResolvedId = (resolvedId) => {
+            fetch(`${SERVER_URL}/api/player/${resolvedId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const targetPlayer = applyGive(data || {});
+                    return fetch(`${SERVER_URL}/api/player`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId: resolvedId, data: targetPlayer })
+                    });
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) alert(`Выдано игроку ${resolvedId}!`);
+                    else alert('Ошибка: ' + (result.error || 'нет прав или не удалось обновить'));
+                })
+                .catch(() => alert('Ошибка: не удалось найти/обновить игрока'));
+        };
+
+        if (/^\d+$/.test(targetId)) {
+            giveToResolvedId(targetId);
+        } else {
+            fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(targetId)}`)
+                .then(r => r.json())
+                .then(list => {
+                    const exact = (list || []).find(p => (p.username || '').toLowerCase() === targetId.toLowerCase());
+                    if (!exact) { alert('Игрок с таким ником не найден.'); return; }
+                    giveToResolvedId(exact.id);
+                })
+                .catch(() => alert('Ошибка поиска игрока по нику'));
+        }
     }
 
     // ===== ТЕХНИК: улучшение и продажа снаряжения =====
@@ -3214,11 +3564,36 @@
             const st = getEquipSlotType(name);
             return st === 'weapon' || st === 'armor';
         });
-        if (upgradable.length === 0) {
+
+        // Надетые прямо сейчас оружие и броня — тоже можно улучшать, не снимая и не заходя в инвентарь
+        const equippedRow = (label, current, slotType, def) => {
+            if (current.name === def.name) return ''; // ничего не надето — нечего улучшать
+            const parsed = parseGearName(current.name);
+            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
+            const base = slotType === 'weapon' ? weapons.find(w => w.name === parsed.baseName) : armorItems.find(a => a.name === parsed.baseName);
+            const statLabel = slotType === 'weapon' ? 'Урон' : 'Броня';
+            const currentStat = slotType === 'weapon' ? base.dmg + parsed.level : base.armor + parsed.level;
+            const nextStat = currentStat + 1;
+            return `
+            <div class="shop-item" style="border-color:#8a7a4a;">
+                <div>${label}: ${current.name} <span style="color:#8a7a4a;">(надето)</span></div>
+                <div style="font-size:12px; color:#aaa; margin:4px 0;">
+                    ${statLabel} сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
+                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}
+                </div>
+                <div class="price">Цена улучшения: 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}</div>
+                <button onclick="upgradeGearItem('${current.name.replace(/'/g, "\\'")}', true)" ${maxed || player.coins < UPGRADE_COST ? 'disabled' : ''}>
+                    ${maxed ? 'Улучшено до максимума' : '⬆️ Улучшить надетое (+1)'}
+                </button>
+            </div>`;
+        };
+        const equippedHtml = equippedRow('⚔️ Оружие', player.weapon, 'weapon', DEFAULT_WEAPON) + equippedRow('🛡️ Броня', player.armor, 'armor', DEFAULT_ARMOR);
+
+        if (upgradable.length === 0 && !equippedHtml) {
             el.innerHTML = '<p style="padding:10px; color:#888;">Нет оружия или брони для улучшения</p>';
             return;
         }
-        el.innerHTML = upgradable.map(name => {
+        el.innerHTML = equippedHtml + upgradable.map(name => {
             const parsed = parseGearName(name);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const slotType = getEquipSlotType(name);
@@ -3254,11 +3629,37 @@
         saveGame();
     }
 
-    function upgradeGearItem(itemName) {
+    function upgradeGearItem(itemName, isEquipped) {
+        if (isEquipped) {
+            const slotType = getEquipSlotType(itemName);
+            if (slotType !== 'weapon' && slotType !== 'armor') return;
+            // На случай гонки состояний — то, что реально надето, должно совпадать с тем, что мы улучшаем
+            const currentEquipped = slotType === 'weapon' ? player.weapon : player.armor;
+            if (currentEquipped.name !== itemName) { renderTechnician(); return; }
+            if (player.coins < UPGRADE_COST) { alert(`Недостаточно Байт. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
+
+            const parsed = parseGearName(itemName);
+            if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
+
+            player.coins -= UPGRADE_COST;
+            const newLevel = parsed.level + 1;
+            const newName = `${parsed.baseName} +${newLevel}`;
+            if (slotType === 'weapon') {
+                const base = weapons.find(w => w.name === parsed.baseName);
+                player.weapon = { name: newName, tier: base.tier, dmg: base.dmg + newLevel };
+            } else {
+                const base = armorItems.find(a => a.name === parsed.baseName);
+                player.armor = { name: newName, tier: base.tier, armor: base.armor + newLevel, artifactProtection: base.artifactProtection };
+            }
+            renderTechnician(); renderInventory(); updateUI(); saveGame();
+            alert(`Улучшено! Теперь: ${newName}`);
+            return;
+        }
+
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const slotType = getEquipSlotType(itemName);
         if (slotType !== 'weapon' && slotType !== 'armor') return;
-        if (player.coins < UPGRADE_COST) { alert(`Недостаточно монет. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
+        if (player.coins < UPGRADE_COST) { alert(`Недостаточно Байт. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
 
         const parsed = parseGearName(itemName);
         if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
