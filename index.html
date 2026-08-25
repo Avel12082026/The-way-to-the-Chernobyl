@@ -12,8 +12,8 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { color-scheme: dark; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; }
+        html { color-scheme: dark; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
         .header { background: #1a1a1a; border: 2px solid #333; padding: 12px; margin-bottom: 12px; border-radius: 4px; text-align: center; }
         .header h1 { color: #8a7a4a; font-size: 16px; letter-spacing: 1px; line-height: 1.3; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
@@ -30,7 +30,7 @@
         .screen { display: none; background: #111; border: 2px solid #2a2a2a; padding: 12px; border-radius: 4px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; }
         .screen.active { display: block; }
         .grid7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
-        .slot { background: #0d0d0d; border: 1px solid #222; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; }
+        .slot { background: #0d0d0d; border: 1px solid #222; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
         .slot:hover { border-color: #8a7a4a; }
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .belt-slot { background: #0d0d0d; border: 2px solid #8a7a4a; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
@@ -51,8 +51,8 @@
         .modal-content input { width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: #fff; margin-bottom: 10px; border-radius: 6px; }
         /* Страховка: НИ ОДНО поле ввода/выпадающий список нигде в игре не должно оставаться без явного
            цвета текста и фона — иначе на некоторых телефонах/браузерах вводимый текст становится невидимым */
-        input, select, textarea { color: #fff; background: #1a1a1a; caret-color: #fff; }
-        input::placeholder, textarea::placeholder { color: #888; }
+        input, select, textarea { color: #fff !important; background: #1a1a1a !important; -webkit-text-fill-color: #fff !important; caret-color: #fff !important; }
+        input::placeholder, textarea::placeholder { color: #888 !important; -webkit-text-fill-color: #888 !important; }
         .modal-content button { width: 100%; padding: 10px; background: #27ae60; border: none; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; }
         .quick-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
         .quick-slot { background: #0d0d0d; border: 1px solid #333; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
@@ -143,10 +143,12 @@
             </div>
         </div>
         <div id="breedResultInfo" style="font-size:12px; color:#aaa; margin-bottom:10px;"></div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="doBreedArtifacts()">Селекционировать</button>
+            <button onclick="openScientistsBuyView()" style="background:#2980b9;">🛒 Купить</button>
             <button onclick="openScientistsSellView()" style="background:#27ae60;">💰 Продать</button>
         </div>
+        <div id="scientistsBuyList"></div>
         <div id="scientistsSellList"></div>
         <button class="back-btn" onclick="exitScientists()">Выход</button>
     </div>
@@ -182,8 +184,8 @@
         <div id="equippedGear" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;"></div>
         <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
         <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
-        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Пояс (быстрый доступ в рейде, нажмите на слот, чтобы назначить предмет):</div>
-        <div class="belt-grid" id="beltGrid"></div>
+        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Быстрые слоты (для боя в рейде — нажмите, чтобы назначить/снять предмет):</div>
+        <div class="belt-grid" id="quickSlotsGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
         <div style="font-size: 12px; color: #888; margin: 12px 0 4px;">Весь инвентарь:</div>
         <div class="grid7" id="inventoryGrid"></div>
         <button class="back-btn" onclick="closeInventoryScreen()">Назад</button>
@@ -409,14 +411,14 @@
 
     // ===== АНОМАЛИИ =====
     const anomalies = [
-        { id: 1, name: 'Жарка', tier: 1, dmg: 15, dropChance: 0.5, artifacts: ['Медуза', 'Жемчужина', 'Искра'] },
-        { id: 2, name: 'Электра', tier: 2, dmg: 20, dropChance: 0.5, artifacts: ['Вспышка', 'Батарейка', 'Молния'] },
-        { id: 3, name: 'Воронка', tier: 3, dmg: 30, dropChance: 0.5, artifacts: ['Камень крови', 'Гравитационный шар', 'Вихрь'] },
-        { id: 4, name: 'Кислотный туман', tier: 4, dmg: 40, dropChance: 0.5, artifacts: ['Огненный шар', 'Слеза', 'Глаз'] },
-        { id: 5, name: 'Карусель', tier: 5, dmg: 60, dropChance: 0.5, artifacts: ['Стеклянный шарик', 'Магнит', 'Пузырь'] },
-        { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб'] },
-        { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя'] },
-        { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия'] }
+        { id: 1, name: 'Жарка', tier: 1, dmg: 15, dropChance: 0.5, artifacts: ['Медуза', 'Жемчужина', 'Искра', 'Пружина', 'Льдинка', 'Уголёк', 'Хрусталик', 'Паутинка', 'Камешек'] },
+        { id: 2, name: 'Электра', tier: 2, dmg: 20, dropChance: 0.5, artifacts: ['Вспышка', 'Батарейка', 'Молния', 'Стеклярус', 'Смола', 'Раковина', 'Осколок', 'Заноза', 'Пыльца'] },
+        { id: 3, name: 'Воронка', tier: 3, dmg: 30, dropChance: 0.5, artifacts: ['Камень крови', 'Гравитационный шар', 'Вихрь', 'Слюда', 'Ракушка', 'Пыльный кристалл', 'Обломок', 'Игла', 'Чешуйка'] },
+        { id: 4, name: 'Кислотный туман', tier: 4, dmg: 40, dropChance: 0.5, artifacts: ['Огненный шар', 'Слеза', 'Глаз', 'Гарпун', 'Клык', 'Шип', 'Капля ртути', 'Осколок кости', 'Жёлудь'] },
+        { id: 5, name: 'Карусель', tier: 5, dmg: 60, dropChance: 0.5, artifacts: ['Стеклянный шарик', 'Магнит', 'Пузырь', 'Кварц', 'Спираль', 'Обсидиан', 'Лунный камень', 'Игольчатый кристалл', 'Вихревой шар'] },
+        { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб', 'Ржавый механизм', 'Кристалл разума', 'Тлеющий уголь', 'Ледяная слеза', 'Шёпот бездны', 'Стальное перо'] },
+        { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя', 'Осколок звезды', 'Сердце бури', 'Плачущий кристалл', 'Вой пустоты', 'Живая ртуть', 'Тень зоны'] },
+        { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия', 'Сердце Зоны', 'Осколок Монолита', 'Слеза Вселенной', 'Дыхание Чернобыля', 'Кровь Зоны', 'Разум Аномалии'] }
     ];
 
     // ===== АРТЕФАКТЫ =====
@@ -424,27 +426,75 @@
         { name: 'Медуза', tier: 1, price: 200, stats: { health: 10 } },
         { name: 'Жемчужина', tier: 1, price: 250, stats: { hunger: 5 } },
         { name: 'Искра', tier: 1, price: 300, stats: { vitality: 1 } },
+        { name: 'Пружина', tier: 1, price: 220, stats: { accuracy: 1 } },
+        { name: 'Льдинка', tier: 1, price: 260, stats: { luck: 1 } },
+        { name: 'Уголёк', tier: 1, price: 280, stats: { intellect: 1 } },
+        { name: 'Хрусталик', tier: 1, price: 320, stats: { health: 12 } },
+        { name: 'Паутинка', tier: 1, price: 240, stats: { agility: 1 } },
+        { name: 'Камешек', tier: 1, price: 210, stats: { strength: 1 } },
         { name: 'Вспышка', tier: 2, price: 500, stats: { agility: 1 } },
         { name: 'Батарейка', tier: 2, price: 600, stats: { health: 15 } },
         { name: 'Молния', tier: 2, price: 700, stats: { strength: 1 } },
+        { name: 'Стеклярус', tier: 2, price: 550, stats: { accuracy: 2 } },
+        { name: 'Смола', tier: 2, price: 620, stats: { luck: 2 } },
+        { name: 'Раковина', tier: 2, price: 580, stats: { intellect: 2 } },
+        { name: 'Осколок', tier: 2, price: 650, stats: { health: 18 } },
+        { name: 'Заноза', tier: 2, price: 530, stats: { vitality: 1 } },
+        { name: 'Пыльца', tier: 2, price: 510, stats: { agility: 1 } },
         { name: 'Камень крови', tier: 3, price: 1200, stats: { vitality: 2 } },
         { name: 'Гравитационный шар', tier: 3, price: 1400, stats: { strength: 2 } },
         { name: 'Вихрь', tier: 3, price: 1600, stats: { agility: 2 } },
+        { name: 'Слюда', tier: 3, price: 1300, stats: { accuracy: 3 } },
+        { name: 'Ракушка', tier: 3, price: 1450, stats: { luck: 3 } },
+        { name: 'Пыльный кристалл', tier: 3, price: 1500, stats: { intellect: 3 } },
+        { name: 'Обломок', tier: 3, price: 1550, stats: { health: 25 } },
+        { name: 'Игла', tier: 3, price: 1250, stats: { strength: 2 } },
+        { name: 'Чешуйка', tier: 3, price: 1350, stats: { agility: 2 } },
         { name: 'Огненный шар', tier: 4, price: 2500, stats: { strength: 3 } },
         { name: 'Слеза', tier: 4, price: 2800, stats: { health: 30 } },
         { name: 'Глаз', tier: 4, price: 3200, stats: { intellect: 3 } },
+        { name: 'Гарпун', tier: 4, price: 2700, stats: { accuracy: 4 } },
+        { name: 'Клык', tier: 4, price: 2900, stats: { luck: 4 } },
+        { name: 'Шип', tier: 4, price: 2600, stats: { agility: 3 } },
+        { name: 'Капля ртути', tier: 4, price: 3000, stats: { vitality: 3 } },
+        { name: 'Осколок кости', tier: 4, price: 3100, stats: { health: 32 } },
+        { name: 'Жёлудь', tier: 4, price: 2650, stats: { strength: 3 } },
         { name: 'Стеклянный шарик', tier: 5, price: 4000, stats: { agility: 4 } },
         { name: 'Магнит', tier: 5, price: 4500, stats: { strength: 4 } },
         { name: 'Пузырь', tier: 5, price: 5000, stats: { luck: 5 } },
+        { name: 'Кварц', tier: 5, price: 4300, stats: { accuracy: 5 } },
+        { name: 'Спираль', tier: 5, price: 4400, stats: { intellect: 4 } },
+        { name: 'Обсидиан', tier: 5, price: 4200, stats: { vitality: 4 } },
+        { name: 'Лунный камень', tier: 5, price: 4800, stats: { health: 45 } },
+        { name: 'Игольчатый кристалл', tier: 5, price: 4100, stats: { strength: 4 } },
+        { name: 'Вихревой шар', tier: 5, price: 4600, stats: { agility: 4 } },
         { name: 'Кусок мяса', tier: 6, price: 7000, stats: { vitality: 5 } },
         { name: 'Коготь', tier: 6, price: 7500, stats: { agility: 5 } },
         { name: 'Зуб', tier: 6, price: 8000, stats: { health: 60 } },
+        { name: 'Ржавый механизм', tier: 6, price: 7800, stats: { agility: 4, accuracy: 4 } },
+        { name: 'Кристалл разума', tier: 6, price: 8200, stats: { intellect: 4, luck: 3 } },
+        { name: 'Тлеющий уголь', tier: 6, price: 7600, stats: { health: 35, strength: 3 } },
+        { name: 'Ледяная слеза', tier: 6, price: 7900, stats: { health: 35, vitality: 3 } },
+        { name: 'Шёпот бездны', tier: 6, price: 8400, stats: { luck: 4, intellect: 3 } },
+        { name: 'Стальное перо', tier: 6, price: 8100, stats: { strength: 4, agility: 3 } },
         { name: 'Кровь земли', tier: 7, price: 12000, stats: { health: 70 } },
         { name: 'Пепел', tier: 7, price: 14000, stats: { luck: 6 } },
         { name: 'Пламя', tier: 7, price: 16000, stats: { strength: 6 } },
+        { name: 'Осколок звезды', tier: 7, price: 13500, stats: { health: 30, luck: 4, intellect: 3 } },
+        { name: 'Сердце бури', tier: 7, price: 14500, stats: { strength: 4, agility: 4, accuracy: 3 } },
+        { name: 'Плачущий кристалл', tier: 7, price: 13800, stats: { health: 40, vitality: 3, luck: 3 } },
+        { name: 'Вой пустоты', tier: 7, price: 15000, stats: { intellect: 4, accuracy: 4, luck: 3 } },
+        { name: 'Живая ртуть', tier: 7, price: 14200, stats: { agility: 5, strength: 3, vitality: 3 } },
+        { name: 'Тень зоны', tier: 7, price: 15500, stats: { luck: 5, accuracy: 3, intellect: 3 } },
         { name: 'Ядро', tier: 8, price: 30000, stats: { strength: 10 } },
         { name: 'Звезда', tier: 8, price: 35000, stats: { health: 100 } },
-        { name: 'Антиматерия', tier: 8, price: 50000, stats: { luck: 10 } }
+        { name: 'Антиматерия', tier: 8, price: 50000, stats: { luck: 10 } },
+        { name: 'Сердце Зоны', tier: 8, price: 38000, stats: { health: 40, vitality: 5, strength: 4, luck: 4 } },
+        { name: 'Осколок Монолита', tier: 8, price: 40000, stats: { strength: 6, accuracy: 5, agility: 4, intellect: 3 } },
+        { name: 'Слеза Вселенной', tier: 8, price: 42000, stats: { health: 35, luck: 6, intellect: 5, vitality: 4 } },
+        { name: 'Дыхание Чернобыля', tier: 8, price: 39000, stats: { vitality: 6, health: 30, agility: 5, accuracy: 4 } },
+        { name: 'Кровь Зоны', tier: 8, price: 41000, stats: { strength: 5, health: 35, luck: 5, accuracy: 4 } },
+        { name: 'Разум Аномалии', tier: 8, price: 43000, stats: { intellect: 6, luck: 5, accuracy: 5, agility: 3 } }
     ];
 
     // ===== ОРУЖИЕ =====
@@ -624,15 +674,16 @@
     ];
 
     // ===== ДЕТЕКТОРЫ =====
+    // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Учёных, не у Торговца
     const detectors = [
-        { id: 1, name: 'Радэр 2-02', tier: 1, price: 100 },
-        { id: 2, name: 'Радэр 2-20', tier: 2, price: 500 },
-        { id: 3, name: 'Велес', tier: 3, price: 1500 },
-        { id: 4, name: 'Сварог', tier: 4, price: 3500 },
-        { id: 5, name: 'Варлорд', tier: 5, price: 7000 },
-        { id: 6, name: 'Бинокль-Сканер Око', tier: 6, price: 12000 },
-        { id: 7, name: 'Детектор Авангард', tier: 7, price: 18000 },
-        { id: 8, name: 'Детектор Омега', tier: 8, price: 26000 }
+        { id: 1, name: 'Радэр 2-02', tier: 1, price: 140 },
+        { id: 2, name: 'Радэр 2-20', tier: 2, price: 700 },
+        { id: 3, name: 'Велес', tier: 3, price: 2100 },
+        { id: 4, name: 'Сварог', tier: 4, price: 4900 },
+        { id: 5, name: 'Варлорд', tier: 5, price: 9800 },
+        { id: 6, name: 'Бинокль-Сканер Око', tier: 6, price: 16800 },
+        { id: 7, name: 'Детектор Авангард', tier: 7, price: 25200 },
+        { id: 8, name: 'Детектор Омега', tier: 8, price: 36400 }
     ];
 
     // Базовое снаряжение "без ничего" — используется при действии "Снять"
@@ -646,7 +697,9 @@
         { id: 2, name: 'Тушенка', type: 'food', restore: 50, price: 40 },
         { id: 3, name: 'Вода', type: 'water', restore: 25, price: 15 },
         { id: 4, name: 'Энергетик', type: 'water', restore: 100, price: 40 },
-        { id: 5, name: 'Аптечка', type: 'medkit', restore: 50, price: 100 }
+        { id: 5, name: 'Гражданская аптечка', type: 'medkit', restore: 50, price: 100 },
+        { id: 6, name: 'Аптечка армейская', type: 'medkit', restore: 100, price: 150 },
+        { id: 7, name: 'Аптечка научная', type: 'medkit', restore: 150, price: 200 }
     ];
 
     // ===== ФРАКЦИИ =====
@@ -728,14 +781,23 @@
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 if (!player.nickname) promptForNickname(true);
-                document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-                document.getElementById('embeddedChatWidget').style.display = 'block';
-                openChatTab(chatTab); // чат общий для главного меню и рейда — сразу подгружаем при старте
+                // ВАЖНО: чат НЕ трогаем и никуда не переносим здесь — loadGame() вызывается из
+                // множества мест как обычная пересинхронизация данных (например, после покупки
+                // фракции), в том числе когда игрок находится совсем на другом экране (КПК и т.д.).
+                // Раньше это принудительно показывало виджет чата поверх текущего экрана —
+                // отсюда баг "всё смешивается". Инициализация чата — отдельно, один раз при старте.
             })
             .catch(() => {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
             });
+    }
+
+    // Однократная инициализация чата — вызывается ТОЛЬКО при самом первом запуске приложения
+    function initChatOnFirstLoad() {
+        document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
+        document.getElementById('embeddedChatWidget').style.display = 'block';
+        openChatTab(chatTab);
     }
 
     // Защита от NaN/null в числовых полях (например, после битых записей в базе)
@@ -827,6 +889,14 @@
         battleTurn = 0;
         inventoryOpenedFromRaid = false;
         clearBattleUiAndRestoreNav();
+
+        // Членство во фракции хранится ОТДЕЛЬНО на сервере (не в самом объекте player) — без
+        // явного выхода игрок оставался бы во фракции даже после полного сброса всего остального
+        fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).catch(() => {});
 
         Object.keys(player).forEach(key => delete player[key]);
         Object.assign(player, JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS)));
@@ -1954,17 +2024,20 @@
             raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, Math.round(currentEnemy.hp * 10) / 10)} HP.`);
             player.accuracy = Math.min(100, (Number(player.accuracy) || 0) + 0.1);
         } else if (action === 'medkit') {
-            if (player.inventory['Аптечка'] > 0) {
-                player.inventory['Аптечка']--;
-                player.health = Math.min(player.maxHealth, player.health + 50);
+            const availableMedkits = consumables.filter(c => c.type === 'medkit' && (player.inventory[c.name] || 0) > 0);
+            if (availableMedkits.length > 0) {
+                const best = availableMedkits.sort((a, b) => b.restore - a.restore)[0]; // используем самую сильную доступную
+                player.inventory[best.name]--;
+                if (player.inventory[best.name] <= 0) delete player.inventory[best.name];
+                player.health = Math.min(player.maxHealth, player.health + best.restore);
                 // Прирост maxHealth от аптечки ограничен тем же капом в 100 очков живучести,
-                // что и прирост за убийства — иначе аптечки (100 монет) дают бесконечный maxHealth
+                // что и прирост за убийства — иначе аптечки дают бесконечный maxHealth
                 const vitalityGain = Math.min(0.1, 100 - (Number(player.vitality) || 0));
                 if (vitalityGain > 0) {
                     player.vitality += vitalityGain;
                     player.maxHealth += vitalityGain;
                 }
-                raidLogs.push('Вы использовали аптечку! +50 HP.');
+                raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP.`);
                 updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
             } else {
                 raidLogs.push('У вас нет аптечек!');
@@ -2000,7 +2073,10 @@
             // Некоторые мутанты (Излом, Лось, Электро химера) дополнительно роняют случайный артефакт в заданном диапазоне тиров
             if (!isNpc && currentEnemy.bonusArtifactTierRange) {
                 const [minT, maxT] = currentEnemy.bonusArtifactTierRange;
-                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT);
+                // ВАЖНО: пул только из БАЗОВЫХ артефактов — гибриды (в т.ч. чужие, оказавшиеся в этом же
+                // рантайм-массиве после подгрузки) исключаются, иначе мутант мог "уронить" чей-то
+                // персональный гибрид под чужим именем
+                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
                 if (pool.length > 0) {
                     const art = pool[Math.floor(Math.random() * pool.length)];
                     player.inventory[art.name] = (player.inventory[art.name] || 0) + 1;
@@ -2072,7 +2148,7 @@
             if (Math.random() < enemyHitChance) {
                 const enemyDmg = currentEnemy.dmg - player.armor.armor;
                 const finalDmg = Math.max(0, enemyDmg);
-                player.health -= finalDmg;
+                player.health = Math.round((player.health - finalDmg) * 10) / 10; // округляем сразу и хранимое значение, не только вывод в лог
                 raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${finalDmg}. Ваше HP: ${Math.max(0, player.health)}`);
             } else {
                 raidLogs.push(`${currentEnemy.name} промахнулся!`);
@@ -2120,7 +2196,6 @@
         // (не были надеты). Не теряются: надетое оружие/броня/детектор, артефакты в слотах пояса
         // (хранятся отдельно от player.inventory), деньги и жетоны селекции (отдельные числовые поля)
         player.inventory = {};
-        player.belt = [null, null, null, null, null, null];
         player.quickSlots = [null, null, null, null];
 
         player.health = player.maxHealth; // возрождение на базе с полным здоровьем
@@ -2137,7 +2212,9 @@
     }
 
     function updateRaidLog() {
-        document.getElementById('raidLog').textContent = raidLogs.join('\n\n');
+        const logEl = document.getElementById('raidLog');
+        logEl.textContent = raidLogs.join('\n\n');
+        logEl.scrollTop = logEl.scrollHeight; // всегда прокручиваем к последней строке — иначе на длинном бою не видно, что происходит сейчас
     }
 
     // ===== РЕЙД =====
@@ -2278,7 +2355,7 @@
             handlePlayerDeath();
             return;
         }
-        player.health = Math.max(0, Math.min(player.maxHealth, player.health));
+        player.health = Math.round(Math.max(0, Math.min(player.maxHealth, player.health)) * 10) / 10;
         
         while (player.exp >= 150) {
             player.level += 1;
@@ -2809,15 +2886,19 @@
         });
 
         player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
-        // Название гибрида: видно только "Артефакт гибрид (N)" — уникальность между разными
-        // гибридами того же поколения обеспечивается невидимыми символами в конце имени
+        // Название гибрида: "Артефакт гибрид (N) сделал сталкер: НИК" — уникальность между разными
+        // гибридами того же поколения обеспечивается невидимыми символами в конце имени.
+        // Гибриды, выпадающие из мутантов/аномалий (без привязки к игроку), называются просто
+        // "Артефакт гибрид (N)" — без части про создателя
         const uniqueSuffix = Math.random().toString(36).slice(2, 8);
+        const creatorNick = player.nickname || 'Неизвестный';
         const newArtifact = {
-            name: `Артефакт гибрид (${gen1 + 1})${encodeInvisibleSuffix(uniqueSuffix)}`,
+            name: `Артефакт гибрид (${gen1 + 1}) сделал сталкер: ${creatorNick}${encodeInvisibleSuffix(uniqueSuffix)}`,
             tier: resultTier,
             price: a1.price + a2.price,
             stats: mergedStats,
-            gen: gen1 + 1
+            gen: gen1 + 1,
+            createdBy: creatorNick
         };
 
         artifacts.push(newArtifact); // чтобы equip/sell/info сразу узнавали новый артефакт
@@ -2846,35 +2927,112 @@
         breedSlot2 = null;
         const sellList = document.getElementById('scientistsSellList');
         if (sellList) sellList.innerHTML = '';
+        const buyList = document.getElementById('scientistsBuyList');
+        if (buyList) buyList.innerHTML = '';
         openScreen('main');
     }
 
     // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон селекции) =====
+    // Тир детекторов, доступных для покупки у Учёных — зависит от УРОВНЯ игрока (не от снаряжения):
+    // ур.1→тир1, ур.20→тир2, ур.40→тир3, ... ур.140→тир8 (шаг 20 уровней на тир)
+    function getDetectorUnlockTier(level) {
+        return Math.min(8, 1 + Math.floor((Number(level) || 1) / 20));
+    }
+
+    function openScientistsBuyView() {
+        document.getElementById('scientistsSellList').innerHTML = '';
+        const el = document.getElementById('scientistsBuyList');
+        const unlockTier = getDetectorUnlockTier(player.level);
+        const availableDetectors = detectors.filter(d => d.tier <= unlockTier);
+        const medkits = consumables.filter(c => c.type === 'medkit');
+
+        el.innerHTML = `
+            <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
+            ${medkits.map(item => `
+                <div class="shop-item">
+                    <div>${item.name}</div>
+                    ${getItemInfoHtml(item.name)}
+                    <div class="price">🪙 ${getBuyPrice(item.price)}</div>
+                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+                </div>
+            `).join('')}
+            <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">📡 Детекторы (открыты по уровню, сейчас доступен тир ${unlockTier}):</div>
+            ${availableDetectors.map(item => `
+                <div class="shop-item">
+                    <div>${item.name} (Тир ${item.tier})</div>
+                    <div class="price">🪙 ${getBuyPrice(item.price)}</div>
+                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+                </div>
+            `).join('')}
+        `;
+    }
+
+    function buyFromScientists(name) {
+        const item = [...consumables, ...detectors].find(i => i.name === name);
+        if (!item) return;
+        const price = getBuyPrice(item.price);
+        if (player.coins < price) { alert('Недостаточно Байт.'); return; }
+        player.coins -= price;
+        player.inventory[name] = (player.inventory[name] || 0) + 1;
+        openScientistsBuyView();
+        updateUI();
+        saveGame();
+    }
+
     function openScientistsSellView() {
+        document.getElementById('scientistsBuyList').innerHTML = '';
         const el = document.getElementById('scientistsSellList');
         const maxArtifactTier = Math.max(...artifacts.map(a => a.tier));
         const ownedArtifacts = Object.keys(player.inventory).filter(name =>
             player.inventory[name] > 0 && artifacts.some(a => a.name === name)
         );
-        if (ownedArtifacts.length === 0) {
-            el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов для продажи</p>';
+        // Части тел мутантов — тоже можно продать Учёным, на 5% дороже, чем торговцу
+        const ownedBodyParts = Object.keys(player.inventory).filter(name =>
+            player.inventory[name] > 0 && mutants.some(m => m.loot === name)
+        );
+        if (ownedArtifacts.length === 0 && ownedBodyParts.length === 0) {
+            el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        el.innerHTML = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу. Артефакты тира ${maxArtifactTier} (последнего) продаются за 1 жетон селекции:</div>` +
-            ownedArtifacts.map(name => {
-                const artifact = artifacts.find(a => a.name === name);
-                const isTopTier = artifact.tier === maxArtifactTier;
-                const price = isTopTier ? null : Math.round(getSellPrice(name) * 1.05);
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу. Артефакты тира ${maxArtifactTier} (последнего) продаются за 1 жетон селекции:</div>`;
+        html += ownedArtifacts.map(name => {
+            const artifact = artifacts.find(a => a.name === name);
+            const isTopTier = artifact.tier === maxArtifactTier;
+            const price = isTopTier ? null : Math.round(getSellPrice(name) * 1.05);
+            const esc = name.replace(/'/g, "\\'");
+            return `
+                <div class="shop-item">
+                    <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
+                    <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">
+                        ${isTopTier ? '💰 Продать за 🧬 1 жетон селекции' : '💰 Продать за 🪙 ' + price}
+                    </button>
+                </div>
+            `;
+        }).join('');
+        if (ownedBodyParts.length > 0) {
+            html += ownedBodyParts.map(name => {
+                const price = Math.round(getSellPrice(name) * 1.05);
                 const esc = name.replace(/'/g, "\\'");
                 return `
                     <div class="shop-item">
-                        <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
-                        <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">
-                            ${isTopTier ? '💰 Продать за 🧬 1 жетон селекции' : '💰 Продать за 🪙 ' + price}
-                        </button>
+                        <div>${name} ×${player.inventory[name]}</div>
+                        <button onclick="sellBodyPartToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
                     </div>
                 `;
             }).join('');
+        }
+        el.innerHTML = html;
+    }
+
+    function sellBodyPartToScientists(name) {
+        if (!player.inventory[name] || player.inventory[name] <= 0) return;
+        const price = Math.round(getSellPrice(name) * 1.05);
+        player.inventory[name]--;
+        if (player.inventory[name] <= 0) delete player.inventory[name];
+        player.coins += price;
+        openScientistsSellView();
+        updateUI();
+        saveGame();
     }
 
     function sellArtifactToScientists(name) {
@@ -2888,11 +3046,9 @@
 
         if (artifact.tier === maxArtifactTier) {
             player.breedCredits = (Number(player.breedCredits) || 0) + 1;
-            alert('Продано за 1 жетон селекции!');
         } else {
             const price = Math.round(getSellPrice(name) * 1.05);
             player.coins += price;
-            alert(`Продано за ${price} Байт!`);
         }
 
         openScientistsSellView();
@@ -3030,7 +3186,6 @@
         if (!player.inventory[itemName]) return;
         if (!confirm(`Выкинуть "${itemName}" (×${player.inventory[itemName]})? Предмет будет утерян безвозвратно.`)) return;
         delete player.inventory[itemName];
-        player.belt = player.belt.map(n => n === itemName ? null : n);
         player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
         closeItemActionModal();
         renderInventory(); updateUI(); saveGame();
@@ -3052,7 +3207,6 @@
         player.inventory[itemName] -= qty;
         if (player.inventory[itemName] <= 0) {
             delete player.inventory[itemName];
-            player.belt = player.belt.map(n => n === itemName ? null : n);
             player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
         }
         player.warehouse[itemName] = (player.warehouse[itemName] || 0) + qty;
@@ -3155,9 +3309,9 @@
             </div>
         `).join('');
 
-        const beltGrid = document.getElementById('beltGrid');
-        beltGrid.innerHTML = player.belt.map((item, i) => `
-            <div class="belt-slot" onclick="useBeltSlot(${i})">${item || 'Пусто'}</div>
+        const quickSlotsGrid = document.getElementById('quickSlotsGrid');
+        quickSlotsGrid.innerHTML = player.quickSlots.map((item, i) => `
+            <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">${item ? `${item} ×${player.inventory[item] || 0}` : 'Пусто'}</div>
         `).join('');
 
         const invGrid = document.getElementById('inventoryGrid');
@@ -3174,20 +3328,28 @@
         `).join('');
     }
 
-    function useBeltSlot(i) {
-        const itemName = player.belt[i];
+    function useInventoryQuickSlot(i) {
+        const itemName = player.quickSlots[i];
         if (!itemName) {
-            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0);
-            if (available.length === 0) { alert('Инвентарь пуст, нечего добавить в пояс!'); return; }
-            const choice = prompt('Введите точное название предмета из инвентаря:\n' + available.join(', '));
-            if (choice && available.includes(choice)) {
-                player.belt[i] = choice;
+            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0 && consumables.some(c => c.name === n));
+            if (available.length === 0) { alert('Нет расходников (еда/вода/аптечки) для быстрого слота!'); return; }
+            const list = available.map((n, idx) => `${idx + 1}. ${n} ×${player.inventory[n]}`).join('\n');
+            const choice = prompt(`Выберите предмет для слота ${i + 1} (номер):\n${list}`);
+            const idx = parseInt(choice) - 1;
+            if (idx >= 0 && idx < available.length) {
+                player.quickSlots[i] = available[idx];
                 renderInventory();
+                renderQuickSlots(); // тот же массив используется в рейде — синхронизация мгновенная
                 saveGame();
             }
             return;
         }
-        openItemActions(itemName);
+        if (confirm(`Убрать «${itemName}» из быстрого слота ${i + 1}?`)) {
+            player.quickSlots[i] = null;
+            renderInventory();
+            renderQuickSlots();
+            saveGame();
+        }
     }
 
     // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
@@ -3305,7 +3467,6 @@
             delete player.inventory[name];
             movedAny = true;
         }
-        player.belt = player.belt.map(n => (n && player.inventory[n] > 0) ? n : null);
         player.quickSlots = player.quickSlots.map(n => (n && player.inventory[n] > 0) ? n : null);
         if (!movedAny) alert('Склад полон (50/50 ячеек) — ничего не поместилось.');
         renderInventory(); renderWarehouse(); updateUI(); saveGame();
@@ -3338,8 +3499,8 @@
         return [
             ...consumables.map(c => ({ ...c, category: 'consumable' })),
             ...unlockByTierAndLevel(weapons).map(w => ({ ...w, category: 'weapon' })),
-            ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' })),
-            ...detectors.map(d => ({ ...d, category: 'detector' }))
+            ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' }))
+            // Детекторы у Торговца больше не продаются — только у Учёных, и выдаются по уровню игрока
         ];
     }
 
@@ -3757,6 +3918,7 @@
     }
 
     loadGame();
+    initChatOnFirstLoad(); // чат инициализируется ровно один раз, при самом первом запуске
 </script>
 </body>
 </html>
