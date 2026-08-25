@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="dark">
+    <!-- Сообщаем браузеру, что страница УЖЕ тёмная — иначе некоторые Android-браузеры/WebView
+         с принудительным тёмным режимом переопределяют цвет текста в полях ввода поверх любых
+         явных inline-стилей страницы, из-за чего вводимый текст становится невидимым -->
+    <meta name="theme-color" content="#0a0a0a">
     <title>Pocket Zone</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { color-scheme: dark; }
         body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; }
         .header { background: #1a1a1a; border: 2px solid #333; padding: 12px; margin-bottom: 12px; border-radius: 4px; text-align: center; }
         .header h1 { color: #8a7a4a; font-size: 16px; letter-spacing: 1px; line-height: 1.3; }
@@ -17,6 +23,8 @@
         .stat-box.hunger .value { color: #e6a23c; }
         .stat-box.thirst .value { color: #3c8de6; }
         .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        button { padding: 10px 14px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; color: #ddd; font-weight: bold; cursor: pointer; transition: 0.15s; }
+        button:active { opacity: 0.75; }
         .menu button { padding: 18px; background: #1a1a1a; border: 2px solid #333; border-radius: 8px; color: #ddd; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .menu button:active { transform: scale(0.96); background: #222; }
         .screen { display: none; background: #111; border: 2px solid #2a2a2a; padding: 12px; border-radius: 4px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; }
@@ -68,7 +76,7 @@
         <div style="margin-top: 6px; font-size: 12px; color: #888; line-height:1.7;">
             🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
             🧬 Жетоны селекции: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
-            ⚔️ <span id="weapon">Кулаки</span> | 🛡️ <span id="armorHeader">Без брони</span> | 📡 <span id="detectorHeader">Без детектора</span>
+            📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:11px; margin-left:4px;">Использовать</button>
         </div>
     </div>
 
@@ -79,15 +87,16 @@
         <button onclick="openScreen('warehouse')">🏠 Мой склад</button>
         <button onclick="openScreen('technician')">🔧 Техник</button>
         <button onclick="openScreen('kpk')">📱 КПК</button>
-        <button onclick="openScreen('market')">🏦 Рынок</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
         <button onclick="openScreen('scientists')">🧪 Ученые</button>
-        <button onclick="openScreen('starsShop')">⭐ Магазин Байт</button>
         <button onclick="exitGame()" style="grid-column: 1 / -1; margin-top:8px;">🚪 Выйти из игры</button>
     </div>
+    <div id="mainMenuChatSlot"></div>
 
-    <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда (не дублируется,
-         поэтому автоматически полностью синхронизирован между ними) -->
+    <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда. При входе в рейд
+         переносится JS'ом в #raidChatSlot (под кнопки "Идти дальше"/"Вернуться с рейда"), при
+         возврате в главное меню — обратно в #mainMenuChatSlot. Это один и тот же DOM-элемент,
+         поэтому чат гарантированно синхронизирован между обоими режимами -->
     <div id="embeddedChatWidget" style="display:none;">
         <h4 style="margin:4px 0 6px; color:#8a7a4a;">💬 Чат</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-bottom:8px;">
@@ -110,7 +119,7 @@
         <h3>⭐ Магазин Байт</h3>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
-        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+        <button class="back-btn" onclick="openScreen('shop')">Назад</button>
     </div>
 
     <div id="scientistsScreen" class="screen">
@@ -183,9 +192,13 @@
     <div id="shopScreen" class="screen">
         <h3>💰 Торговец</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
             <button onclick="openShopTab('buy')">🛒 Купить</button>
             <button onclick="openShopTab('sell')">💵 Продать</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="openScreen('market')" style="background:#8a7a4a;">🏦 Рынок игроков</button>
+            <button onclick="openScreen('starsShop')" style="background:#8a7a4a;">⭐ Магазин Байт</button>
         </div>
         <div id="shopItems"></div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
@@ -195,10 +208,11 @@
         <h3>⚔️ Рейд</h3>
         <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
         <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+        <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
             <button onclick="raidStep()" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Идти дальше</button>
             <button onclick="endRaid()" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Вернуться с рейда</button>
         </div>
+        <div id="battleButtonsContainer"></div>
         <button onclick="openBackpackFromRaid()" style="width:100%; margin-top:8px; background:#8a7a4a;">🎒 Рюкзак</button>
         <div class="quick-slots" id="quickSlots">
             <div class="quick-slot" onclick="useQuickSlot(0)">Пусто</div>
@@ -206,6 +220,7 @@
             <div class="quick-slot" onclick="useQuickSlot(2)">Пусто</div>
             <div class="quick-slot" onclick="useQuickSlot(3)">Пусто</div>
         </div>
+        <div id="raidChatSlot"></div>
     </div>
 
     <div id="friendlyTradeModal" class="modal">
@@ -223,11 +238,13 @@
 
     <div id="kpkScreen" class="screen">
         <h3>📱 КПК</h3>
-        <button onclick="openKpkTab('info')">Инфо о персонаже</button>
-        <button onclick="openKpkTab('players')">Список игроков</button>
-        <button onclick="openKpkTab('factions')">🚩 Фракции</button>
-        <button onclick="openKpkTab('rating')">🏅 Рейтинг</button>
-        <button onclick="changeNickname()" style="background:#8a7a4a;">✏️ Сменить ник</button>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+            <button onclick="openKpkTab('info')" style="background:#1a1a1a; border:2px solid #333;">📋 Инфо о персонаже</button>
+            <button onclick="openKpkTab('players')" style="background:#1a1a1a; border:2px solid #333;">👥 Список игроков</button>
+            <button onclick="openKpkTab('factions')" style="background:#1a1a1a; border:2px solid #333;">🚩 Фракции</button>
+            <button onclick="openKpkTab('rating')" style="background:#1a1a1a; border:2px solid #333;">🏅 Рейтинг</button>
+            <button onclick="changeNickname()" style="background:#8a7a4a; border:2px solid #8a7a4a; grid-column: 1 / -1;">✏️ Сменить ник</button>
+        </div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
         <div id="kpkContent"></div>
     </div>
@@ -237,7 +254,7 @@
         <button onclick="openMarketTab('my')">Сейчас продается</button>
         <button onclick="openMarketTab('buy')">Купить</button>
         <button onclick="openMarketTab('sell')">📤 Выставить на продажу</button>
-        <button class="back-btn" onclick="openScreen('main')">Назад</button>
+        <button class="back-btn" onclick="openScreen('shop')">Назад</button>
         <div id="marketContent"></div>
     </div>
 
@@ -711,6 +728,7 @@
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 if (!player.nickname) promptForNickname(true);
+                document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
                 document.getElementById('embeddedChatWidget').style.display = 'block';
                 openChatTab(chatTab); // чат общий для главного меню и рейда — сразу подгружаем при старте
             })
@@ -762,9 +780,7 @@
         document.getElementById('level').textContent = player.level;
         document.getElementById('breedCreditsHeader').textContent = Number(player.breedCredits) || 0;
         document.getElementById('nicknameCreditsHeader').textContent = Number(player.nicknameChangeCredits) || 0;
-        document.getElementById('weapon').textContent = player.weapon.name;
-        document.getElementById('armorHeader').textContent = player.armor.name;
-        document.getElementById('detectorHeader').textContent = player.detector.name;
+        document.getElementById('knowledgeBooksHeader').textContent = Number(player.inventory['Книга знаний']) || 0;
         document.getElementById('detector').textContent = player.detector.name;
         document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
         renderQuickSlots();
@@ -810,7 +826,7 @@
         currentEnemy = null;
         battleTurn = 0;
         inventoryOpenedFromRaid = false;
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
 
         Object.keys(player).forEach(key => delete player[key]);
         Object.assign(player, JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS)));
@@ -875,6 +891,7 @@
         
         if (screen === 'main') {
             document.getElementById('mainMenu').style.display = 'grid';
+            document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
             document.getElementById('embeddedChatWidget').style.display = 'block';
             openChatTab(chatTab); // чат общий для главного меню и рейда — обновляем при каждом возврате
             return;
@@ -1070,6 +1087,20 @@
         return div.innerHTML;
     }
 
+    // Кодирует короткую случайную строку НЕВИДИМЫМИ юникод-символами (zero-width) — используется,
+    // чтобы имя гибридного артефакта могло технически оставаться уникальным (для инвентаря/рынка/
+    // реестра гибридов), но визуально выглядело чистым, без единого лишнего символа или цифры
+    function encodeInvisibleSuffix(str) {
+        let result = '';
+        for (const ch of str) {
+            const code = parseInt(ch, 36);
+            for (let bit = 3; bit >= 0; bit--) {
+                result += (code & (1 << bit)) ? '\u200C' : '\u200B';
+            }
+        }
+        return result;
+    }
+
     function getRankTitle(level) {
         let title = RANK_TITLES[0].title;
         for (const r of RANK_TITLES) {
@@ -1157,14 +1188,22 @@
             return;
         }
         // Контейнер отображается column-reverse — переворачиваем массив, чтобы новые сообщения были внизу
-        el.innerHTML = [...messages].reverse().map(m => `
+        el.innerHTML = [...messages].reverse().map(m => {
+            if (m.isSystem) {
+                return `
+                <div style="margin-bottom:10px; padding:8px; background:#1a1408; border:1px solid #4a3f1a; border-radius:6px;">
+                    <div style="font-size:11px; color:#c0392b; font-weight:bold;">☠️ ${escapeHtml(m.username)}</div>
+                    <div style="margin-top:4px; word-break:break-word; color:#ccc; font-family:monospace; font-size:12px;">${escapeHtml(m.text)}</div>
+                </div>`;
+            }
+            return `
             <div style="margin-bottom:10px; padding:8px; background:#1a1a1a; border-radius:6px;">
                 <div style="font-size:11px; color:#8a7a4a;">
                     <strong>${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(m.factionName || 'Одиночка')}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''}
                 </div>
                 <div style="margin-top:4px; word-break:break-word;">${escapeHtml(m.text)}</div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
     }
 
     function loadGeneralChat() {
@@ -1545,7 +1584,7 @@
 
     function categorizeMarketItem(name) {
         // Гибриды артефактов (скрещены у Учёных) — отдельная категория, определяется по префиксу имени
-        if (name.startsWith('Гибрид ')) return 'Гибриды артефактов'; // ловит и старый, и новый формат имени
+        if (name.startsWith('Гибрид ') || name.startsWith('Артефакт гибрид')) return 'Гибриды артефактов'; // ловит и старый, и новый формат имени
         // Улучшенное снаряжение хранится под именем вида "АК-74 +15" — сначала убираем суффикс,
         // иначе такой предмет не совпадёт ни с одним известным именем и попадёт не в ту категорию.
         // При этом улучшенное (level > 0) оружие/броня уходит в отдельные категории от базового
@@ -1675,7 +1714,7 @@
             alert('Покупка успешна!');
             // Если купили гибрид артефакта — подтягиваем его характеристики с сервера и СРАЗУ сохраняем
             // в своих данных (до loadGame), иначе последующая перезагрузка сотрёт только что добавленное
-            const needsHybridDef = itemName && itemName.startsWith('Гибрид ') && !artifacts.some(a => a.name === itemName);
+            const needsHybridDef = itemName && (itemName.startsWith('Гибрид ') || itemName.startsWith('Артефакт гибрид')) && !artifacts.some(a => a.name === itemName);
             const fetchDef = needsHybridDef
                 ? fetch(`${SERVER_URL}/api/artifacts/${encodeURIComponent(itemName)}`).then(r => r.json()).catch(() => null)
                 : Promise.resolve(null);
@@ -1877,29 +1916,31 @@
     }
 
     function renderBattleButtons() {
-    document.getElementById('battleButtons')?.remove();
-    const raidScreen = document.getElementById('raidScreen');
-    const battleDiv = document.createElement('div');
-    battleDiv.id = 'battleButtons';
-    battleDiv.style.display = 'grid';
-    battleDiv.style.gridTemplateColumns = '1fr 1fr';
-    battleDiv.style.gap = '8px';
-    battleDiv.style.marginTop = '10px';
-    
-    if (battleTurn === 0) {
-        battleDiv.innerHTML = `
-            <button onclick="battleAction('attack')" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Атаковать</button>
-            <button onclick="battleAction('medkit')" style="background: #2980b9; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Аптечка</button>
-            <button onclick="battleAction('escape')" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Сбежать</button>
-        `;
-    } else {
-        battleDiv.innerHTML = `
-            <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px;">Ход врага...</button>
-        `;
+        document.getElementById('battleButtonsContainer').innerHTML = '';
+        const navButtons = document.getElementById('raidNavButtons');
+        if (navButtons) navButtons.style.display = 'none'; // во время боя "Идти дальше"/"Вернуться с рейда" скрыты — их место занимают боевые кнопки
+        const container = document.getElementById('battleButtonsContainer');
+        const battleDiv = document.createElement('div');
+        battleDiv.id = 'battleButtons';
+        battleDiv.style.display = 'grid';
+        battleDiv.style.gridTemplateColumns = '1fr 1fr';
+        battleDiv.style.gap = '8px';
+        battleDiv.style.marginTop = '12px';
+
+        if (battleTurn === 0) {
+            battleDiv.innerHTML = `
+                <button onclick="battleAction('attack')" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Атаковать</button>
+                <button onclick="battleAction('medkit')" style="background: #2980b9; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Аптечка</button>
+                <button onclick="battleAction('escape')" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; grid-column: 1 / -1;">Сбежать</button>
+            `;
+        } else {
+            battleDiv.innerHTML = `
+                <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px; grid-column: 1 / -1;">Ход врага...</button>
+            `;
+        }
+
+        container.appendChild(battleDiv);
     }
-    
-    raidScreen.appendChild(battleDiv);
-}
 
     function battleAction(action) {
         if (!currentEnemy) return;
@@ -2055,9 +2096,20 @@
     function endBattle(win) {
         currentEnemy = null;
         battleTurn = 0;
-        document.getElementById('battleButtons')?.remove();
+        document.getElementById('battleButtonsContainer').innerHTML = '';
+        const navButtons = document.getElementById('raidNavButtons');
+        if (navButtons) navButtons.style.display = 'grid'; // бой закончен — возвращаем "Идти дальше"/"Вернуться с рейда"
         saveGame();
         updateUI();
+    }
+
+    // Общий помощник: убрать боевые/переговорные кнопки и вернуть на их место навигацию рейда —
+    // используется везде, где встреча (бой или переговоры с фракцией) завершается любым способом
+    function clearBattleUiAndRestoreNav() {
+        const container = document.getElementById('battleButtonsContainer');
+        if (container) container.innerHTML = '';
+        const navButtons = document.getElementById('raidNavButtons');
+        if (navButtons) navButtons.style.display = 'grid';
     }
 
     // Смерть игрока: сброс здоровья, потеря лута (кроме одетого снаряжения и артефактов), выход в главное меню
@@ -2076,7 +2128,7 @@
         raidActive = false;
         currentEnemy = null;
         battleTurn = 0;
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
 
         alert('💀 Вы погибли и потеряли весь инвентарь. Сохранились: надетые оружие/броня/детектор, артефакты в слотах пояса, деньги, ник и все жетоны. Возвращение на базу.');
         openScreen('main');
@@ -2096,7 +2148,9 @@
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('raidScreen').classList.add('active');
         document.getElementById('raidLog').textContent = 'Вы входите в Зону...';
-        document.getElementById('embeddedChatWidget').style.display = 'block'; // чат доступен и во время рейда
+        clearBattleUiAndRestoreNav();
+        document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
+        document.getElementById('embeddedChatWidget').style.display = 'block'; // чат доступен и во время рейда, под кнопками навигации
         openChatTab(chatTab);
         saveGame();
     }
@@ -2109,7 +2163,7 @@
         raidActive = false;
         currentEnemy = null;
         battleTurn = 0;
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
         openScreen('main');
         saveGame();
     }
@@ -2138,10 +2192,15 @@
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById('raidScreen').classList.add('active');
+        document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
         document.getElementById('embeddedChatWidget').style.display = 'block';
         openChatTab(chatTab);
         renderQuickSlots();
-        if (currentEnemy) renderBattleButtons(); // бой всё ещё идёт — восстанавливаем боевые кнопки
+        if (currentEnemy) {
+            renderBattleButtons(); // бой всё ещё идёт — восстанавливаем боевые кнопки (сама функция скроет навигацию)
+        } else {
+            clearBattleUiAndRestoreNav(); // боя нет — навигация рейда должна быть на месте
+        }
         updateRaidLog();
     }
 
@@ -2182,7 +2241,7 @@
             // Аномалия — чисто событие урона/находки, никакого взаимодействия/торговли тут быть не должно.
             // На всякий случай принудительно закрываем любые окна торговли/боя, которые могли остаться от предыдущего шага
             document.getElementById('friendlyTradeModal')?.classList.remove('active');
-            document.getElementById('battleButtons')?.remove();
+            clearBattleUiAndRestoreNav();
             // Пул аномалий ограничен тиром снаряжения игрока — та же логика, что для мутантов и NPC,
             // иначе свежего игрока могла случайно убить аномалия топового тира (до 110 урона)
             const encounterTier = getEncounterTier();
@@ -2302,26 +2361,28 @@
     }
 
     function renderFriendlyEncounterButtons() {
-        document.getElementById('battleButtons')?.remove();
-        const raidScreen = document.getElementById('raidScreen');
+        document.getElementById('battleButtonsContainer').innerHTML = '';
+        const navButtons = document.getElementById('raidNavButtons');
+        if (navButtons) navButtons.style.display = 'none';
+        const container = document.getElementById('battleButtonsContainer');
         const div = document.createElement('div');
         div.id = 'battleButtons';
         div.style.display = 'grid';
         div.style.gridTemplateColumns = '1fr 1fr 1fr';
         div.style.gap = '8px';
-        div.style.marginTop = '10px';
+        div.style.marginTop = '12px';
         div.innerHTML = `
             <button onclick="openFriendlyTrade()" style="background:#2980b9; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">🤝 Торговать</button>
             <button onclick="attackFriendlyNpc()" style="background:#c0392b; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">⚔️ Атаковать</button>
             <button onclick="leaveFriendlyPeacefully()" style="background:#333; border:none; padding:10px; color:#fff; font-weight:bold; border-radius:8px; font-size:13px;">🚶 Уйти</button>
         `;
-        raidScreen.appendChild(div);
+        container.appendChild(div);
     }
 
     function leaveFriendlyPeacefully() {
         raidLogs.push('Вы разошлись с ними мирно.');
         currentEnemy = null;
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
         updateRaidLog();
         saveGame();
     }
@@ -2333,7 +2394,7 @@
         if (!player.hostileFactions.includes(npc.faction.name)) {
             player.hostileFactions.push(npc.faction.name);
         }
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
         raidLogs.push(`⚔️ Вы напали на "${npc.faction.name}"! Теперь эта фракция враждебна к вам, торговля с ней недоступна.`);
         updateRaidLog();
         startBattle(npc);
@@ -2354,7 +2415,7 @@
         document.getElementById('friendlyTradeModal').classList.remove('active');
         raidLogs.push('Вы завершили торговлю и разошлись мирно.');
         currentEnemy = null;
-        document.getElementById('battleButtons')?.remove();
+        clearBattleUiAndRestoreNav();
         updateRaidLog();
         saveGame();
     }
@@ -2383,6 +2444,7 @@
                 return `
                 <div class="shop-item">
                     <div>${item.name}</div>
+                    ${getItemInfoHtml(item.name)}
                     <div class="price">🪙 ${price}</div>
                     <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
                 </div>`;
@@ -2396,6 +2458,7 @@
             el.innerHTML = items.map(name => `
                 <div class="shop-item">
                     <div>${name} ×${player.inventory[name]}</div>
+                    ${getItemInfoHtml(name)}
                     <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
                     <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
                 </div>`).join('');
@@ -2587,7 +2650,7 @@
                 const val = artifact.stats[stat];
                 return `+${val} к параметру «${STAT_LABELS[stat] || stat}»`;
             }).join('<br>');
-            const isHybrid = itemName.startsWith('Гибрид ');
+            const isHybrid = itemName.startsWith('Гибрид ') || itemName.startsWith('Артефакт гибрид');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${artifact.tier}<br>
                 ${isHybrid ? `Модификаций (скрещиваний): ${artifact.gen || 1} / 20<br>` : ''}
@@ -2725,10 +2788,12 @@
         player.inventory[breedSlot2]--;
         if (player.inventory[breedSlot2] <= 0) delete player.inventory[breedSlot2];
 
-        // Новый артефакт — сумма характеристик родителей, но с ограничением суммарной силы по тиру.
-        // Без этого ограничения повторное скрещивание уже скрещенных гибридов друг с другом давало
-        // ЭКСПОНЕНЦИАЛЬНЫЙ рост характеристик (каждое поколение примерно удваивало сумму), из-за чего
-        // скрещивание двух гибридов высокого поколения могло дать абсурдные значения статов
+        // Новый артефакт — сумма характеристик родителей, но с ограничением по КАЖДОМУ стату отдельно,
+        // растущим ЛИНЕЙНО вместе с поколением результата. Без этого повторное скрещивание уже
+        // скрещенных гибридов друг с другом давало ЭКСПОНЕНЦИАЛЬНЫЙ рост (удвоение за поколение) —
+        // абсурдные значения статов. Фиксированный (не растущий) потолок тоже не годился: рост упирался
+        // в него уже к 2-3 поколению и дальше не двигался. Потолок, растущий с поколением, даёт плавный
+        // продолжающийся рост вплоть до 20-го поколения, но кратно медленнее исходной формулы
         const rawStats = {};
         [a1.stats, a2.stats].forEach(statsObj => {
             Object.keys(statsObj).forEach(key => {
@@ -2736,22 +2801,19 @@
             });
         });
         const resultTier = Math.max(a1.tier, a2.tier);
-        const MAX_TOTAL_HYBRID_STATS = resultTier * 60; // потолок суммы ВСЕХ статов гибрида, зависит от тира
-        const rawTotal = Object.values(rawStats).reduce((sum, v) => sum + v, 0);
+        const resultGen = gen1 + 1;
+        const perStatCap = resultTier * 10 * Math.min(resultGen, BREED_MAX_GEN); // растёт с каждым поколением
         const mergedStats = {};
-        if (rawTotal > MAX_TOTAL_HYBRID_STATS && rawTotal > 0) {
-            const scale = MAX_TOTAL_HYBRID_STATS / rawTotal;
-            Object.keys(rawStats).forEach(key => { mergedStats[key] = Math.round(rawStats[key] * scale); });
-        } else {
-            Object.keys(rawStats).forEach(key => { mergedStats[key] = Math.round(rawStats[key]); });
-        }
+        Object.keys(rawStats).forEach(key => {
+            mergedStats[key] = Math.min(Math.round(rawStats[key]), perStatCap);
+        });
 
         player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
-        // Название гибрида: только "Гибрид (поколение N)" + короткий код для уникальности между игроками —
-        // без длинного Telegram ID и служебного счётчика, которые раньше засоряли название
-        const uniqueSuffix = Math.random().toString(36).slice(2, 6);
+        // Название гибрида: видно только "Артефакт гибрид (N)" — уникальность между разными
+        // гибридами того же поколения обеспечивается невидимыми символами в конце имени
+        const uniqueSuffix = Math.random().toString(36).slice(2, 8);
         const newArtifact = {
-            name: `Гибрид (поколение ${gen1 + 1}) ${uniqueSuffix}`,
+            name: `Артефакт гибрид (${gen1 + 1})${encodeInvisibleSuffix(uniqueSuffix)}`,
             tier: resultTier,
             price: a1.price + a2.price,
             stats: mergedStats,
@@ -2925,6 +2987,15 @@
         });
     }
 
+    // Использовать книгу знаний прямо из шапки (хаба) — книги больше не отображаются в общей сетке инвентаря
+    function useKnowledgeBookFromHeader() {
+        if (!player.inventory['Книга знаний'] || player.inventory['Книга знаний'] <= 0) {
+            alert('У вас нет книг знаний. Их можно купить в Магазине Байт.');
+            return;
+        }
+        applyInventoryItem('Книга знаний');
+    }
+
     // ===== ПРИМЕНЕНИЕ / ВЫБРОС / ПЕРЕМЕЩЕНИЕ ПРЕДМЕТА =====
     function applyInventoryItem(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
@@ -3090,7 +3161,8 @@
         `).join('');
 
         const invGrid = document.getElementById('inventoryGrid');
-        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+        // "Книга знаний" теперь живёт только в шапке (хаб), а не в общей сетке инвентаря
+        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0 && name !== 'Книга знаний');
         if (items.length === 0) {
             invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
             return;
