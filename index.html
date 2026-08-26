@@ -75,7 +75,7 @@
         </div>
         <div style="margin-top: 4px; font-size: 11px; color: #888; line-height:1.5;">
             🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
-            🧬 Жетоны селекции: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
+            🧬 Жетоны сталкера: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
             📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:11px; margin-left:4px;">Использовать</button>
         </div>
     </div>
@@ -127,10 +127,10 @@
         <h3>🧪 Ученые</h3>
         <button class="back-btn" onclick="exitScientists()" style="margin-bottom:10px;">← Выход</button>
         <div style="font-size:16px; font-weight:bold; color:#8a7a4a; margin-bottom:6px; background:#1a1a1a; padding:10px; border-radius:8px; text-align:center;">
-            🧬 Жетонов селекции: <span id="breedCreditsCount">0</span>
+            🧬 Жетонов сталкера: <span id="breedCreditsCount">0</span>
         </div>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">
-            Скрестите два артефакта — получите новый, с суммой их свойств. Каждое скрещивание стоит 1 жетон селекции
+            Скрестите два артефакта — получите новый, с суммой их свойств. Стоимость растёт с каждым уровнем: 1-й уровень — 1 жетон сталкера, 2-й — 2 жетона, и так далее
             (покупается за ⭐ в Магазине Байт). Один и тот же артефакт можно улучшать так до 20 раз подряд.
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
@@ -311,7 +311,7 @@
                 <option value="detector">Детектор</option>
                 <option value="bodypart">Часть тела мутанта</option>
                 <option value="knowledgebook">Книга знаний</option>
-                <option value="breedcredits">Жетоны селекции</option>
+                <option value="breedcredits">Жетоны сталкера</option>
                 <option value="nicknamecredits">Жетоны смены ника</option>
                 <option value="perk">Перк</option>
             </select>
@@ -362,7 +362,7 @@
         warehouse: {},
         quickSlots: [null, null, null, null],
         craftedArtifacts: {}, // скрещенные у Учёных артефакты — {имя: {tier, price, stats, gen}}, восстанавливаются при загрузке
-        breedCredits: 0, // жетоны селекции у Учёных — отдельное числовое поле, как монеты
+        breedCredits: 0, // жетоны сталкера у Учёных — отдельное числовое поле, как монеты
         nickname: '', // ник, придуманный игроком при первом входе — показывается на рынке/арене/в списке игроков
         freeNicknameChangeUsed: false, // использована ли единственная бесплатная смена ника
         nicknameChangeCredits: 0, // оплаченные смены ника (по 20 ⭐ за штуку), отдельное числовое поле
@@ -1812,7 +1812,7 @@
                     content.innerHTML = myLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} ${lot.currency === 'stars' ? '⭐ Stars' : 'Байт'}</p>
+                            <p>Цена: ${lot.price} Байт</p>
                             <p>Количество: ${lot.quantity}</p>
                             <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
@@ -1853,16 +1853,13 @@
                     }
                     list.innerHTML = buyableLots.map(lot => {
                         const statsHtml = showStatsInList ? getItemInfoHtml(lot.item) : '';
-                        const isStars = lot.currency === 'stars';
                         return `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
                             ${statsHtml}
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
-                            <p>Цена: ${isStars ? '⭐ ' + lot.price + ' Stars' : '🪙 ' + lot.price + ' Байт'}</p>
-                            ${isStars
-                                ? `<button onclick="buyMarketItemWithStars(${lot.id})" style="background:#8a7a4a;">⭐ Купить за Stars</button>`
-                                : `<button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>`}
+                            <p>Цена: 🪙 ${lot.price} Байт</p>
+                            <button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
                         </div>
                     `;
                     }).join('');
@@ -1938,30 +1935,6 @@
         .catch(() => alert('Ошибка соединения с сервером'));
     }
 
-    // Покупка лота за Telegram Stars — реальная оплата, через тот же механизм счетов, что и
-    // покупка Байт/предметов в Магазине Байт
-    function buyMarketItemWithStars(lotId) {
-        fetch(`${SERVER_URL}/api/market/create-star-invoice`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, lotId })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (!data.success) { alert('Ошибка: ' + (data.error || 'не удалось создать счёт')); return; }
-            if (!window.Telegram?.WebApp?.openInvoice) { alert('Оплата доступна только внутри Telegram.'); return; }
-            window.Telegram.WebApp.openInvoice(data.link, (status) => {
-                if (status === 'paid') {
-                    alert('Оплата прошла успешно! Предмет будет начислен через несколько секунд.');
-                    setTimeout(() => { loadGame(); renderMarket(); }, 2000);
-                } else if (status === 'failed') {
-                    alert('Оплата не удалась.');
-                }
-            });
-        })
-        .catch(() => alert('Ошибка соединения с сервером'));
-    }
-
     function cancelMarketLot(lotId) {
         if (!confirm('Снять этот лот с продажи?')) return;
         fetch(`${SERVER_URL}/api/market/cancel`, {
@@ -1986,17 +1959,13 @@
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const maxQty = player.inventory[itemName];
 
-        const currencyChoice = prompt('За какую валюту продавать?\n1 — Байты (внутриигровая валюта)\n2 — Telegram Stars (настоящая оплата)', '1');
-        if (currencyChoice === null) return; // отмена
-        const currency = currencyChoice.trim() === '2' ? 'stars' : 'bytes';
-
         const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, String(maxQty));
         if (qtyStr === null) return; // отмена
         const qty = parseInt(qtyStr);
         if (!qty || qty <= 0) { alert('Введите корректное количество (целое число больше нуля).'); return; }
         if (qty > maxQty) { alert(`У вас есть только ${maxQty} шт. Введите число не больше доступного.`); return; }
 
-        const priceStr = prompt(currency === 'stars' ? 'Цена за партию (в Telegram Stars):' : 'Цена за партию (в Байтах):', currency === 'stars' ? '10' : '100');
+        const priceStr = prompt('Цена за партию (в Байтах):', '100');
         if (priceStr === null) return; // отмена
         const price = parseInt(priceStr);
         if (!price || price <= 0) { alert('Введите корректную цену (целое число больше нуля).'); return; }
@@ -2004,7 +1973,7 @@
         fetch(`${SERVER_URL}/api/market/sell`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, item: itemName, quantity: qty, price, currency })
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, item: itemName, quantity: qty, price })
         })
         .then(res => res.json())
         .then(data => {
@@ -2082,7 +2051,7 @@
     // Предметы (не монеты) за Telegram Stars
     const ITEM_PACKAGES = [
         { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование сразу поднимает уровень персонажа на 5' },
-        { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон селекции', title: 'Жетон селекции', desc: 'Даёт 1 скрещивание артефактов у Учёных' },
+        { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Учёных' },
         { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' }
     ];
 
@@ -2247,14 +2216,14 @@
                     raidLogs.push(`✨ Дополнительно найден артефакт: ${art.name}!`);
                 }
             }
-            // Наблюдатель: не роняет обычный лут, зато сразу поднимает уровень и даёт жетоны селекции
+            // Наблюдатель: не роняет обычный лут, зато сразу поднимает уровень и даёт жетоны сталкера
             if (!isNpc && currentEnemy.bonusLevel) {
                 player.level = (Number(player.level) || 1) + currentEnemy.bonusLevel;
                 raidLogs.push(`⭐ Уровень повышен на ${currentEnemy.bonusLevel}!`);
             }
             if (!isNpc && currentEnemy.bonusBreedCredits) {
                 player.breedCredits = (Number(player.breedCredits) || 0) + currentEnemy.bonusBreedCredits;
-                raidLogs.push(`🧬 Получено жетонов селекции: ${currentEnemy.bonusBreedCredits}!`);
+                raidLogs.push(`🧬 Получено жетонов сталкера: ${currentEnemy.bonusBreedCredits}!`);
             }
             if (isNpc) {
                 // с побеждённого NPC падает его же экипировка (оружие и броня)
@@ -2275,10 +2244,10 @@
                 player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
                 player.stats.mutantsByTier = player.stats.mutantsByTier || {};
                 player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
-                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона селекции для Учёных
+                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона сталкера для Учёных
                 if (currentEnemy.tier === 14) {
                     player.breedCredits = (Number(player.breedCredits) || 0) + 2;
-                    raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона селекции.');
+                    raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона сталкера.');
                 }
             }
 
@@ -2355,7 +2324,7 @@
 
         // При смерти теряется ВЕСЬ инвентарь, включая артефакты, которые просто лежали в инвентаре
         // (не были надеты). Не теряются: надетое оружие/броня/детектор, артефакты в слотах пояса
-        // (хранятся отдельно от player.inventory), деньги и жетоны селекции (отдельные числовые поля)
+        // (хранятся отдельно от player.inventory), деньги и жетоны сталкера (отдельные числовые поля)
         player.inventory = {};
         player.quickSlots = [null, null, null, null];
 
@@ -3059,14 +3028,20 @@
         document.getElementById('breedCreditsCount').textContent = Number(player.breedCredits) || 0;
 
         const infoEl = document.getElementById('breedResultInfo');
+        let html = '';
+        if (breedSlot1) {
+            const a1 = findArtifactDef(breedSlot1);
+            const gen1 = a1 ? (a1.gen || 0) : 0;
+            const nextCost = gen1 + 1;
+            html += `Стоимость следующей селекции (уровень ${nextCost}): 🧬 ${nextCost} Жетон(ов) сталкера<br>`;
+        }
         if (lastBreedResult) {
             const effects = Object.keys(lastBreedResult.stats).map(stat =>
                 `+${lastBreedResult.stats[stat]} к параметру «${STAT_LABELS[stat] || stat}»`
             ).join('<br>');
-            infoEl.innerHTML = `Последний результат: <b>${lastBreedResult.name}</b> (поколение ${lastBreedResult.gen}/${BREED_MAX_GEN})<br>${effects}`;
-        } else {
-            infoEl.innerHTML = '';
+            html += `Последний результат: <b>${lastBreedResult.name}</b> (поколение ${lastBreedResult.gen}/${BREED_MAX_GEN})<br>${effects}`;
         }
+        infoEl.innerHTML = html;
     }
 
     function openBreedSlotPicker(slotNum) {
@@ -3091,10 +3066,6 @@
 
     function doBreedArtifacts() {
         if (!breedSlot1 || !breedSlot2) { alert('Заполните оба слота артефактами.'); return; }
-        if ((Number(player.breedCredits) || 0) < 1) {
-            alert('Нужен жетон селекции (⭐ Магазин Байт, 10 звёзд за штуку).');
-            return;
-        }
         const a1 = findArtifactDef(breedSlot1);
         const a2 = findArtifactDef(breedSlot2);
         if (!a1 || !a2) { alert('Один из выбранных артефактов не найден.'); return; }
@@ -3109,8 +3080,16 @@
             return;
         }
 
-        // Списываем жетон и оба артефакта
-        player.breedCredits = (Number(player.breedCredits) || 0) - 1;
+        // Стоимость селекции растёт с каждым уровнем: на 1-й уровень нужен 1 жетон сталкера,
+        // на 2-й — 2 жетона, и так далее (стоимость = номер получаемого поколения)
+        const tokenCost = gen1 + 1;
+        if ((Number(player.breedCredits) || 0) < tokenCost) {
+            alert(`Нужно 🧬 ${tokenCost} Жетон(ов) сталкера для селекции ${tokenCost} уровня (сейчас: ${Number(player.breedCredits) || 0}).`);
+            return;
+        }
+
+        // Списываем жетоны и оба артефакта
+        player.breedCredits = (Number(player.breedCredits) || 0) - tokenCost;
         player.inventory[breedSlot1]--;
         if (player.inventory[breedSlot1] <= 0) delete player.inventory[breedSlot1];
         player.inventory[breedSlot2]--;
@@ -3183,7 +3162,7 @@
         openScreen('main');
     }
 
-    // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон селекции) =====
+    // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон сталкера) =====
     // Тир детекторов, доступных для покупки у Учёных — зависит от УРОВНЯ игрока (не от снаряжения):
     // ур.1→тир1, ур.20→тир2, ур.40→тир3, ... ур.140→тир8 (шаг 20 уровней на тир)
     function getDetectorUnlockTier(level) {
@@ -3291,8 +3270,7 @@
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
 
-        // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты — обмен на жетоны
-        // селекции убран
+        // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты (обмен на жетоны сталкера убран ранее)
         const price = Math.round(getSellPrice(name) * 1.05);
         player.coins += price;
 
@@ -4053,8 +4031,19 @@
     }
 
     // ===== ТЕХНИК: улучшение и продажа снаряжения =====
-    const UPGRADE_COST = 20000;
     const UPGRADE_MAX_LEVEL = 100;
+    const UPGRADE_BYTE_THRESHOLD = 50; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
+
+    // Стоимость улучшения В БАЙТАХ для перехода С уровня currentLevel на currentLevel+1 (только 0-49) —
+    // растёт с каждым уровнем, а не фиксированная сумма
+    function getUpgradeCostBytes(currentLevel) {
+        return 20000 + currentLevel * 3000;
+    }
+    // Стоимость улучшения В ЖЕТОНАХ СТАЛКЕРА для перехода С уровня currentLevel на currentLevel+1
+    // (только 50-99) — растёт линейно: 1 жетон за первое такое улучшение, 2 за следующее, ..., 50 за последнее
+    function getUpgradeCostTokens(currentLevel) {
+        return currentLevel - UPGRADE_BYTE_THRESHOLD + 1;
+    }
 
     function openTechnicianTab(tab) {
         technicianTab = tab;
@@ -4096,15 +4085,18 @@
             const statLabel = slotType === 'weapon' ? 'Урон' : 'Броня';
             const currentStat = slotType === 'weapon' ? base.dmg + parsed.level : base.armor + parsed.level;
             const nextStat = currentStat + 1;
+            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+            const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
+            const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
             return `
             <div class="shop-item" style="border-color:#8a7a4a;">
                 <div>${label}: ${current.name} <span style="color:#8a7a4a;">(надето)</span></div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     ${statLabel} сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
-                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}
+                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
-                <div class="price">Цена улучшения: 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}</div>
-                <button onclick="upgradeGearItem('${current.name.replace(/'/g, "\\'")}', true)" ${maxed || player.coins < UPGRADE_COST ? 'disabled' : ''}>
+                <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
+                <button onclick="upgradeGearItem('${current.name.replace(/'/g, "\\'")}', true)" ${maxed || !canAfford ? 'disabled' : ''}>
                     ${maxed ? 'Улучшено до максимума' : '⬆️ Улучшить надетое (+1)'}
                 </button>
             </div>`;
@@ -4123,15 +4115,18 @@
             const statLabel = slotType === 'weapon' ? 'Урон' : 'Броня';
             const currentStat = slotType === 'weapon' ? base.dmg + parsed.level : base.armor + parsed.level;
             const nextStat = currentStat + 1;
+            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+            const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
+            const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
             return `
             <div class="shop-item">
                 <div>${name} ×${player.inventory[name]}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     ${statLabel} сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
-                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}
+                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
-                <div class="price">Цена улучшения: 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}</div>
-                <button onclick="upgradeGearItem('${name.replace(/'/g, "\\'")}')" ${maxed || player.coins < UPGRADE_COST ? 'disabled' : ''}>
+                <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
+                <button onclick="upgradeGearItem('${name.replace(/'/g, "\\'")}')" ${maxed || !canAfford ? 'disabled' : ''}>
                     ${maxed ? 'Улучшено до максимума' : '⬆️ Улучшить (+1)'}
                 </button>
             </div>`;
@@ -4152,18 +4147,32 @@
     }
 
     function upgradeGearItem(itemName, isEquipped) {
+        const parsed = parseGearName(itemName);
+        if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
+
+        // Уровни 1-50 — за Байты (сумма растёт с каждым уровнем), уровни 51-100 — за Жетоны сталкера
+        // (тоже растёт: 1 жетон за первое такое улучшение, 2 за следующее, и так далее до 50)
+        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+        const tokenCost = usesTokens ? getUpgradeCostTokens(parsed.level) : 0;
+        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(parsed.level);
+
+        if (usesTokens && (Number(player.breedCredits) || 0) < tokenCost) {
+            alert(`Недостаточно жетонов сталкера. Нужно 🧬 ${tokenCost}.`);
+            return;
+        }
+        if (!usesTokens && player.coins < byteCost) {
+            alert(`Недостаточно Байт. Нужно 🪙 ${byteCost.toLocaleString('ru-RU')}.`);
+            return;
+        }
+
         if (isEquipped) {
             const slotType = getEquipSlotType(itemName);
             if (slotType !== 'weapon' && slotType !== 'armor') return;
             // На случай гонки состояний — то, что реально надето, должно совпадать с тем, что мы улучшаем
             const currentEquipped = slotType === 'weapon' ? player.weapon : player.armor;
             if (currentEquipped.name !== itemName) { renderTechnician(); return; }
-            if (player.coins < UPGRADE_COST) { alert(`Недостаточно Байт. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
 
-            const parsed = parseGearName(itemName);
-            if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
-
-            player.coins -= UPGRADE_COST;
+            if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
             const newLevel = parsed.level + 1;
             const newName = `${parsed.baseName} +${newLevel}`;
             if (slotType === 'weapon') {
@@ -4181,12 +4190,8 @@
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const slotType = getEquipSlotType(itemName);
         if (slotType !== 'weapon' && slotType !== 'armor') return;
-        if (player.coins < UPGRADE_COST) { alert(`Недостаточно Байт. Нужно 🪙 ${UPGRADE_COST.toLocaleString('ru-RU')}.`); return; }
 
-        const parsed = parseGearName(itemName);
-        if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
-
-        player.coins -= UPGRADE_COST;
+        if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
         player.inventory[itemName]--;
         if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
 
