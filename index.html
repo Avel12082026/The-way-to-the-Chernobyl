@@ -117,6 +117,7 @@
 
     <div id="starsShopScreen" class="screen">
         <h3>⭐ Магазин Байт</h3>
+        <button class="back-btn" onclick="openScreen('shop')" style="margin-bottom:10px;">← Назад</button>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
         <button class="back-btn" onclick="openScreen('shop')">Назад</button>
@@ -124,6 +125,7 @@
 
     <div id="scientistsScreen" class="screen">
         <h3>🧪 Ученые</h3>
+        <button class="back-btn" onclick="exitScientists()" style="margin-bottom:10px;">← Выход</button>
         <div style="font-size:16px; font-weight:bold; color:#8a7a4a; margin-bottom:6px; background:#1a1a1a; padding:10px; border-radius:8px; text-align:center;">
             🧬 Жетонов селекции: <span id="breedCreditsCount">0</span>
         </div>
@@ -155,6 +157,7 @@
 
     <div id="technicianScreen" class="screen">
         <h3>🔧 Техник</h3>
+        <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="openTechnicianTab('upgrade')">⬆️ Улучшить снаряжение</button>
             <button onclick="openTechnicianTab('sell')">💰 Продать снаряжение</button>
@@ -165,6 +168,7 @@
 
     <div id="warehouseScreen" class="screen">
         <h3>🏠 Мой склад</h3>
+        <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
         <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Занято ячеек: <span id="warehouseSlotsUsed">0</span> / 50</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="depositAllToWarehouse()">📥 Положить всё</button>
@@ -211,7 +215,15 @@
         <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
         <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
         <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
-            <button onclick="raidStep()" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Идти дальше</button>
+            <button id="raidStepBtn"
+                onpointerdown="startHoldToConfirm(this, raidStep)"
+                onpointerup="cancelHoldToConfirm(this)"
+                onpointerleave="cancelHoldToConfirm(this)"
+                onpointercancel="cancelHoldToConfirm(this)"
+                style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; position:relative; overflow:hidden; user-select:none;">
+                <span style="position:relative; z-index:1;">Идти дальше (удержите)</span>
+                <div id="raidStepBtnFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.35); transition:width 0.05s linear; pointer-events:none;"></div>
+            </button>
             <button onclick="endRaid()" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Вернуться с рейда</button>
         </div>
         <div id="battleButtonsContainer"></div>
@@ -253,6 +265,7 @@
 
     <div id="marketScreen" class="screen">
         <h3>🏦 Рынок</h3>
+        <button class="back-btn" onclick="openScreen('shop')" style="margin-bottom:10px;">← Назад</button>
         <button onclick="openMarketTab('my')">Сейчас продается</button>
         <button onclick="openMarketTab('buy')">Купить</button>
         <button onclick="openMarketTab('sell')">📤 Выставить на продажу</button>
@@ -326,6 +339,10 @@
         <div style="margin:16px 0 8px; border-top:1px solid #c0392b; padding-top:10px;">
             <label style="display:block; font-size:12px; color:#c0392b; margin-bottom:6px;">⚠️ Опасная зона — необратимо:</label>
             <button onclick="resetMyOwnProgress()" style="background:#c0392b;">🔄 Сбросить мой прогресс</button>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+                <input type="text" id="resetTargetInput" placeholder="Ник или ID игрока" style="flex:1;">
+                <button onclick="resetOtherPlayerProgress()" style="width:auto; padding:8px 14px; background:#c0392b;">Сбросить его</button>
+            </div>
         </div>
         <button onclick="closeAdminPanel()" style="background:#c0392b; margin-top:10px;">Закрыть</button>
     </div>
@@ -406,7 +423,7 @@
         { tier: 13, name: 'Химера', hp: 160, dmg: 160, loot: 'Коготь химеры', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
         { tier: 13, name: 'Электро химера', hp: 160, dmg: 160, loot: 'Коготь электро химеры', lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8, 8] },
         { tier: 13, name: 'Наблюдатель', hp: 160, dmg: 160, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
-        { tier: 14, name: 'Псевдогигант', hp: 190, dmg: 190, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
+        { tier: 14, name: 'Псевдогигант', hp: 1000, dmg: 600, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
     ];
 
     // ===== АНОМАЛИИ =====
@@ -418,7 +435,7 @@
         { id: 5, name: 'Карусель', tier: 5, dmg: 60, dropChance: 0.5, artifacts: ['Стеклянный шарик', 'Магнит', 'Пузырь', 'Кварц', 'Спираль', 'Обсидиан', 'Лунный камень', 'Игольчатый кристалл', 'Вихревой шар'] },
         { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб', 'Ржавый механизм', 'Кристалл разума', 'Тлеющий уголь', 'Ледяная слеза', 'Шёпот бездны', 'Стальное перо'] },
         { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя', 'Осколок звезды', 'Сердце бури', 'Плачущий кристалл', 'Вой пустоты', 'Живая ртуть', 'Тень зоны'] },
-        { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия', 'Сердце Зоны', 'Осколок Монолита', 'Слеза Вселенной', 'Дыхание Чернобыля', 'Кровь Зоны', 'Разум Аномалии'] }
+        { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия', 'Сердце Зоны', 'Осколок Монолита', 'Слеза Вселенной', 'Дыхание Чернобыля', 'Кровь Зоны', 'Разум Аномалии', 'Шустряк'] }
     ];
 
     // ===== АРТЕФАКТЫ =====
@@ -494,7 +511,9 @@
         { name: 'Слеза Вселенной', tier: 8, price: 42000, stats: { health: 35, luck: 6, intellect: 5, vitality: 4 } },
         { name: 'Дыхание Чернобыля', tier: 8, price: 39000, stats: { vitality: 6, health: 30, agility: 5, accuracy: 4 } },
         { name: 'Кровь Зоны', tier: 8, price: 41000, stats: { strength: 5, health: 35, luck: 5, accuracy: 4 } },
-        { name: 'Разум Аномалии', tier: 8, price: 43000, stats: { intellect: 6, luck: 5, accuracy: 5, agility: 3 } }
+        { name: 'Разум Аномалии', tier: 8, price: 43000, stats: { intellect: 6, luck: 5, accuracy: 5, agility: 3 } },
+        { name: 'Шустряк', tier: 8, price: 45000, stats: { agility: 15 } },
+        { name: 'Сердце Зоны: Абсолют', tier: 8, price: 666000, adminOnly: true, stats: { vitality: 666, agility: 666, strength: 666, accuracy: 666, intellect: 666, luck: 666 } }
     ];
 
     // ===== ОРУЖИЕ =====
@@ -582,7 +601,8 @@
         { id: 81, name: 'РПГ-29 «Вампир»', tier: 14, dmg: 251, price: 180720 },
         { id: 82, name: 'РПГ-32 «Хашим»', tier: 14, dmg: 252, price: 181440 },
         { id: 83, name: 'Carl Gustaf M4', tier: 14, dmg: 253, price: 182160 },
-        { id: 84, name: 'FGM-148 Javelin', tier: 14, dmg: 258, price: 185760 }
+        { id: 84, name: 'FGM-148 Javelin', tier: 14, dmg: 258, price: 185760 },
+        { id: 85, name: 'Убиваю взглядом', tier: 14, dmg: 666, price: 666000, adminOnly: true }
     ];
 
     // ===== БРОНЯ =====
@@ -670,7 +690,8 @@
         { id: 81, name: 'Броня Зоны', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
         { id: 82, name: 'Экзоскелет Титан-Финал', tier: 14, armor: 181, artifactProtection: 101, price: 181000 },
         { id: 83, name: 'Экзоскелет Абсолют-Финал', tier: 14, armor: 182, artifactProtection: 101, price: 182000 },
-        { id: 84, name: 'Экзокостюм Апокалипсис', tier: 14, armor: 183, artifactProtection: 102, price: 183000 }
+        { id: 84, name: 'Экзокостюм Апокалипсис', tier: 14, armor: 183, artifactProtection: 102, price: 183000 },
+        { id: 85, name: 'Плащ черного сталкера', tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true }
     ];
 
     // ===== ДЕТЕКТОРЫ =====
@@ -738,6 +759,14 @@
 
     // ===== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ =====
     const SERVER_URL = 'https://213-176-92-184.sslip.io';
+    const ADMIN_ID = '1152441515'; // только для отображения (ярлык "Мутант" вместо "Одиночка") — не даёт никаких прав
+
+    // Подпись фракции игрока: обычно "Одиночка" для тех, кто ни в одной фракции — но у админа
+    // это должно быть "Мутант", у всех остальных без фракции — по-прежнему "Одиночка"
+    function factionLabel(factionName, playerId) {
+        if (factionName) return factionName;
+        return String(playerId) === ADMIN_ID ? 'Мутант' : 'Одиночка';
+    }
 
     let saveFailureWarned = false; // чтобы не спамить алертами на каждое действие при повторных сбоях
 
@@ -801,6 +830,26 @@
     }
 
     // Защита от NaN/null в числовых полях (например, после битых записей в базе)
+    // Подстраховка: разбивает любой случайно слипшийся стек оружия/брони/артефактов (например,
+    // после покупки на рынке — эта операция идёт через сервер, у которого нет доступа к данным
+    // игры, чтобы знать заранее, что стакать нельзя) на отдельные ячейки по 1 штуке
+    function deStackNonStackingItems() {
+        const toSplit = Object.keys(player.inventory).filter(name => {
+            const qty = player.inventory[name];
+            if (!qty || qty <= 1) return false;
+            const clean = stripInvisibleSuffix(name);
+            const baseName = parseGearName(clean).baseName;
+            return weapons.some(w => w.name === baseName) || armorItems.some(a => a.name === baseName) || artifacts.some(a => a.name === clean);
+        });
+        toSplit.forEach(name => {
+            const qty = player.inventory[name];
+            player.inventory[name] = 1;
+            for (let i = 1; i < qty; i++) {
+                player.inventory[name + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8))] = 1;
+            }
+        });
+    }
+
     function sanitizePlayerNumbers() {
         const numericFields = ['health', 'hunger', 'thirst', 'coins', 'level', 'exp', 'maxHealth',
             'vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck', 'breedCredits', 'nicknameChangeCredits'];
@@ -808,6 +857,29 @@
             const v = Number(player[field]);
             player[field] = Number.isFinite(v) ? v : (field === 'maxHealth' || field === 'health' ? 100 : (field === 'level' ? 1 : 0));
         });
+        // Все 6 перков ограничены 100 — раньше выдача через админку могла превысить этот предел
+        // без проверки, оставляя завышенные значения в уже сохранённых профилях. НО: потолок
+        // динамически поднимается на сумму бонуса от НАДЕТЫХ спецпредметов админа (adminOnly) —
+        // иначе такой предмет (например, "+666 ко всем перкам") стал бы бесполезен после
+        // следующей же перезагрузки, ведь обычный игровой рост всё равно капается на 100
+        const adminPerkBonus = { vitality: 0, agility: 0, strength: 0, accuracy: 0, intellect: 0, luck: 0 };
+        (player.artifactSlots || []).forEach(name => {
+            if (!name) return;
+            const art = findArtifactDef(name);
+            if (art && art.adminOnly && art.stats) {
+                Object.keys(art.stats).forEach(stat => {
+                    if (adminPerkBonus.hasOwnProperty(stat)) adminPerkBonus[stat] += art.stats[stat];
+                });
+            }
+        });
+        ['vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck'].forEach(perk => {
+            const cap = 100 + adminPerkBonus[perk];
+            player[perk] = Math.max(0, Math.min(cap, player[perk]));
+        });
+        // maxHealth растёт вместе с живучестью (1:1) — раз живучесть теперь ограничена 100,
+        // maxHealth тоже не может законно превышать 100 (база) + 100 (макс. живучесть)
+        player.maxHealth = Math.min(player.maxHealth, 200);
+        player.health = Math.min(player.health, player.maxHealth);
         if (!Array.isArray(player.artifactSlots) || player.artifactSlots.length !== 6) {
             player.artifactSlots = [null, null, null, null, null, null];
         }
@@ -819,6 +891,9 @@
         }
         if (!Number.isFinite(Number(player.hybridCounter))) {
             player.hybridCounter = 0;
+        }
+        if (player.inventory && typeof player.inventory === 'object') {
+            deStackNonStackingItems();
         }
     }
 
@@ -878,6 +953,33 @@
     }
 
     // Полный сброс СВОЕГО ЖЕ прогресса до начального состояния — необратимо, поэтому двойное подтверждение
+    function resetOtherPlayerProgress() {
+        const target = document.getElementById('resetTargetInput').value.trim();
+        if (!target) { alert('Введите ник или ID игрока.'); return; }
+        if (!confirm(`Сбросить ВЕСЬ прогресс игрока «${target}»? Это необратимо.`)) return;
+        if (!confirm('Точно? Это последнее предупреждение — отменить будет нельзя.')) return;
+
+        const initData = window.Telegram?.WebApp?.initData;
+        fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData, targetId: target })
+        }).catch(() => {});
+
+        const freshData = JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS));
+        fetch(`${SERVER_URL}/api/player`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData, targetId: target, data: freshData })
+        })
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) alert(`Прогресс игрока «${target}» сброшен.`);
+            else alert('Ошибка: ' + (result.error || 'не удалось сбросить'));
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
+    }
+
     function resetMyOwnProgress() {
         if (!confirm('Сбросить ВЕСЬ ваш прогресс до начального состояния? Это необратимо — деньги, уровень, снаряжение, инвентарь, артефакты будут потеряны.')) return;
         if (!confirm('Точно? Это последнее предупреждение — отменить сброс будет нельзя.')) return;
@@ -997,6 +1099,18 @@
 
     // Единая карточка статистики — используется и для себя, и для чужого профиля
     // Перки: значение + краткое описание эффекта (для отображения в КПК)
+    // Единая точка роста любого перка — жёсткий потолок 100 везде без исключений, и единое место
+    // для регулировки скорости роста (раньше перки типа силы/ловкости/удачи росли вообще без
+    // потолка, а через админ-панель могли быть выданы сверх 100 без проверки)
+    const PERK_GROWTH_RATE = 0.1; // ещё вдвое медленнее (итого в 10 раз медленнее исходного темпа)
+    function gainPerk(perkName, rawAmount) {
+        const current = Number(player[perkName]) || 0;
+        if (current >= 100) return 0;
+        const newValue = Math.min(100, current + rawAmount * PERK_GROWTH_RATE);
+        player[perkName] = newValue;
+        return newValue - current;
+    }
+
     const PERK_INFO = {
         vitality: { label: '❤️ Живучесть', desc: '+0.1 к макс. здоровью за каждое убийство врага (макс. 100)', capped: true },
         agility: { label: '🏃 Ловкость', desc: 'повышает шанс успешного побега из боя' },
@@ -1015,12 +1129,12 @@
         }).join('');
     }
 
-    function renderPlayerStatsCard(data, titleText) {
+    function renderPlayerStatsCard(data, titleText, playerId) {
         const stats = data.stats || {};
         const weaponName = data.weapon?.name || '—';
         const armorName = data.armor?.name || '—';
         const detectorName = data.detector?.name || '—';
-        const factionName = data.factionName || 'Одиночка';
+        const factionName = factionLabel(data.factionName, playerId);
         const factionPosition = data.factionName ? (data.factionPosition || 'Рядовой') : '-------';
         return `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
@@ -1062,7 +1176,7 @@
             return;
         }
 
-        content.innerHTML = renderPlayerStatsCard(player, '📋 Инфо о персонаже');
+        content.innerHTML = renderPlayerStatsCard(player, '📋 Инфо о персонаже', getPlayerId());
     }
 
     // Список игроков (онлайн/офлайн) с поиском по нику или ID
@@ -1094,7 +1208,7 @@
                             <span style="color:${p.online ? '#27ae60' : '#666'}; font-size:12px;">${p.online ? '🟢 Онлайн' : '⚫ Офлайн'}</span>
                         </div>
                         <div style="font-size:11px; color:#8a7a4a; margin-top:4px;">
-                            🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}
+                            🚩 ${factionLabel(p.factionName, p.id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}
                         </div>
                         <div style="font-size:11px; color:#ccc; margin-top:2px;">
                             Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}
@@ -1119,7 +1233,7 @@
         fetch(`${SERVER_URL}/api/player/${playerId}`)
             .then(res => res.json())
             .then(data => {
-                content.innerHTML = renderPlayerStatsCard(data || {}, `👤 Профиль игрока`) +
+                content.innerHTML = renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
                     `<button class="back-btn" onclick="renderPlayersList('')">← К списку игроков</button>`;
             })
             .catch(() => {
@@ -1195,7 +1309,7 @@
                             <span style="color:#8a7a4a; font-size:12px;">Ур. ${p.level || 1}</span>
                         </div>
                         <div style="font-size:12px; color:#ccc; margin-top:2px;">🏅 ${getRankTitle(p.level || 1)}</div>
-                        <div style="font-size:11px; color:#888; margin-top:2px;">🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</div>
+                        <div style="font-size:11px; color:#888; margin-top:2px;">🚩 ${factionLabel(p.factionName, p.id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</div>
                     </div>
                 `).join('');
             })
@@ -1269,7 +1383,7 @@
             return `
             <div style="margin-bottom:10px; padding:8px; background:#1a1a1a; border-radius:6px;">
                 <div style="font-size:11px; color:#8a7a4a;">
-                    <strong>${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(m.factionName || 'Одиночка')}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''}
+                    <strong>${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''}
                 </div>
                 <div style="margin-top:4px; word-break:break-word;">${escapeHtml(m.text)}</div>
             </div>`;
@@ -1438,7 +1552,7 @@
                         ? `Вы состоите во фракции «${myFactionStatus.factionName}» (${myFactionStatus.position})`
                         : (myFactionStatus.pendingApplication
                             ? `Заявка подана во фракцию «${myFactionStatus.pendingApplication}» — ждите решения лидера. <button onclick="cancelFactionApplication()" style="margin-left:6px;">Отменить</button>`
-                            : 'Вы — Одиночка')}
+                            : `Вы — ${factionLabel(null, getPlayerId())}`)}
                 </div>
                 ${factions.map(f => `
                     <div style="background:#1a1a1a; padding:12px; border-radius:8px; margin-bottom:8px;">
@@ -1874,7 +1988,7 @@
                     <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
                         <div>
                             <p><strong>${index + 1}. ${escapeHtml(p.username || p.player_id)}</strong></p>
-                            <p style="font-size:11px; color:#8a7a4a;">🚩 ${p.factionName || 'Одиночка'}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</p>
+                            <p style="font-size:11px; color:#8a7a4a;">🚩 ${factionLabel(p.factionName, p.player_id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</p>
                             <p style="font-size:11px; color:#ccc;">Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}</p>
                             <p style="font-size:12px; color:#aaa;">Рейтинг: ${p.rating} | Победы: ${p.wins}</p>
                         </div>
@@ -2010,6 +2124,9 @@
         }
 
         container.appendChild(battleDiv);
+        // На случай, если текущая позиция прокрутки экрана "потерялась" после скрытия навигации —
+        // явно прокручиваем к боевым кнопкам, чтобы они не оказались вне видимой области
+        battleDiv.scrollIntoView({ block: 'nearest' });
     }
 
     function battleAction(action) {
@@ -2022,7 +2139,7 @@
             if (isCrit) dmg *= 2;
             currentEnemy.hp -= dmg;
             raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, Math.round(currentEnemy.hp * 10) / 10)} HP.`);
-            player.accuracy = Math.min(100, (Number(player.accuracy) || 0) + 0.1);
+            gainPerk('accuracy', 0.1);
         } else if (action === 'medkit') {
             const availableMedkits = consumables.filter(c => c.type === 'medkit' && (player.inventory[c.name] || 0) > 0);
             if (availableMedkits.length > 0) {
@@ -2032,11 +2149,8 @@
                 player.health = Math.min(player.maxHealth, player.health + best.restore);
                 // Прирост maxHealth от аптечки ограничен тем же капом в 100 очков живучести,
                 // что и прирост за убийства — иначе аптечки дают бесконечный maxHealth
-                const vitalityGain = Math.min(0.1, 100 - (Number(player.vitality) || 0));
-                if (vitalityGain > 0) {
-                    player.vitality += vitalityGain;
-                    player.maxHealth += vitalityGain;
-                }
+                const vitalityGain = gainPerk('vitality', 0.1);
+                player.maxHealth += vitalityGain;
                 raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP.`);
                 updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
             } else {
@@ -2048,7 +2162,7 @@
             const escapeChance = Math.min(1.0, currentEnemy.runChance + player.agility * 0.01);
             if (Math.random() < escapeChance) {
                 raidLogs.push('Вы успешно сбежали!');
-                player.agility += currentEnemy.runSkill;
+                gainPerk('agility', currentEnemy.runSkill);
                 updateRaidLog();
                 endBattle(false);
                 return;
@@ -2079,7 +2193,7 @@
                 const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
                 if (pool.length > 0) {
                     const art = pool[Math.floor(Math.random() * pool.length)];
-                    player.inventory[art.name] = (player.inventory[art.name] || 0) + 1;
+                    addNonStackingItem(art.name);
                     player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
                     player.stats.artifactsByTier = player.stats.artifactsByTier || {};
                     player.stats.artifactsByTier[art.tier] = (player.stats.artifactsByTier[art.tier] || 0) + 1;
@@ -2097,17 +2211,14 @@
             }
             if (isNpc) {
                 // с побеждённого NPC падает его же экипировка (оружие и броня)
-                player.inventory[currentEnemy.weapon.name] = (player.inventory[currentEnemy.weapon.name] || 0) + 1;
-                player.inventory[currentEnemy.armor.name] = (player.inventory[currentEnemy.armor.name] || 0) + 1;
+                addNonStackingItem(currentEnemy.weapon.name);
+                addNonStackingItem(currentEnemy.armor.name);
             }
-            player.strength += 0.1 * currentEnemy.tier;
+            gainPerk('strength', 0.1 * currentEnemy.tier);
 
             // Живучесть: +0.1 к макс. здоровью за каждое убийство, максимум +100 от этого перка
-            const vitalityGain = Math.min(0.1, 100 - (Number(player.vitality) || 0));
-            if (vitalityGain > 0) {
-                player.vitality += vitalityGain;
-                player.maxHealth += vitalityGain;
-            }
+            const vitalityGainOnKill = gainPerk('vitality', 0.1);
+            player.maxHealth += vitalityGainOnKill;
 
             if (isNpc) {
                 player.stats.npcsKilled = (player.stats.npcsKilled || 0) + 1;
@@ -2117,10 +2228,10 @@
                 player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
                 player.stats.mutantsByTier = player.stats.mutantsByTier || {};
                 player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
-                // Мутант последнего (14) тира — особо ценная добыча: 5 жетонов селекции для Учёных
+                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона селекции для Учёных
                 if (currentEnemy.tier === 14) {
-                    player.breedCredits = (Number(player.breedCredits) || 0) + 5;
-                    raidLogs.push('🧬 Мутант высшего тира! Получено 5 жетонов селекции.');
+                    player.breedCredits = (Number(player.breedCredits) || 0) + 2;
+                    raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона селекции.');
                 }
             }
 
@@ -2146,8 +2257,11 @@
             if (!currentEnemy) return; // бой уже завершён/прерван другим путём — не трогаем состояние
             const enemyHitChance = currentEnemy.hitChance;
             if (Math.random() < enemyHitChance) {
-                const enemyDmg = currentEnemy.dmg - player.armor.armor;
-                const finalDmg = Math.max(0, enemyDmg);
+                // Процентное снижение урона бронёй (падающая отдача) вместо прямого вычитания —
+                // раньше при достаточно высокой броне урон полностью обнулялся (100% неуязвимость),
+                // теперь броня даёт сильную защиту, но никогда не даёт полный иммунитет
+                const armorReduction = player.armor.armor / (player.armor.armor + 100);
+                const finalDmg = Math.round(currentEnemy.dmg * (1 - armorReduction) * 10) / 10;
                 player.health = Math.round((player.health - finalDmg) * 10) / 10; // округляем сразу и хранимое значение, не только вывод в лог
                 raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${finalDmg}. Ваше HP: ${Math.max(0, player.health)}`);
             } else {
@@ -2281,6 +2395,39 @@
         updateRaidLog();
     }
 
+    // Опыт, необходимый для перехода С текущего уровня на следующий — растёт вместе с уровнем,
+    // поэтому прогресс закономерно замедляется, а не остаётся одинаково быстрым на любом уровне
+    function expNeededForLevel(level) {
+        return 150 + Math.floor((Number(level) || 1) * 15);
+    }
+
+    // Удержание кнопки 3 секунды перед срабатыванием — защита от автокликеров на "Идти дальше"
+    let holdToConfirmTimer = null;
+    function startHoldToConfirm(btn, actionFn) {
+        if (holdToConfirmTimer) return; // уже удерживается
+        const fill = document.getElementById(btn.id + 'Fill');
+        const duration = 3000, stepMs = 50;
+        let elapsed = 0;
+        holdToConfirmTimer = setInterval(() => {
+            elapsed += stepMs;
+            if (fill) fill.style.width = Math.min(100, (elapsed / duration) * 100) + '%';
+            if (elapsed >= duration) {
+                clearInterval(holdToConfirmTimer);
+                holdToConfirmTimer = null;
+                if (fill) fill.style.width = '0%';
+                actionFn();
+            }
+        }, stepMs);
+    }
+    function cancelHoldToConfirm(btn) {
+        if (holdToConfirmTimer) {
+            clearInterval(holdToConfirmTimer);
+            holdToConfirmTimer = null;
+        }
+        const fill = document.getElementById(btn.id + 'Fill');
+        if (fill) fill.style.width = '0%';
+    }
+
     function raidStep() {
         if (!raidActive) return;
         if (currentEnemy) return;
@@ -2331,9 +2478,9 @@
             if (player.detector.tier >= anomaly.tier) {
                 if (Math.random() < 0.5 + player.luck * 0.01) {
                     const artifactName = anomaly.artifacts[Math.floor(Math.random() * anomaly.artifacts.length)];
-                    player.inventory[artifactName] = (player.inventory[artifactName] || 0) + 1;
+                    addNonStackingItem(artifactName);
                     eventText += `\nВы нашли артефакт: ${artifactName}!`;
-                    player.luck += 0.1 * anomaly.tier;
+                    gainPerk('luck', 0.1 * anomaly.tier);
                     player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
                     player.stats.artifactsByTier = player.stats.artifactsByTier || {};
                     player.stats.artifactsByTier[anomaly.tier] = (player.stats.artifactsByTier[anomaly.tier] || 0) + 1;
@@ -2357,9 +2504,12 @@
         }
         player.health = Math.round(Math.max(0, Math.min(player.maxHealth, player.health)) * 10) / 10;
         
-        while (player.exp >= 150) {
+        // Стоимость следующего уровня растёт вместе с текущим уровнем — раньше была фиксированной
+        // (150 опыта всегда), из-за чего прогресс ничем не замедлялся и уровень мог улетать в тысячи
+        // за считанные часы игры
+        while (player.exp >= expNeededForLevel(player.level)) {
+            player.exp -= expNeededForLevel(player.level);
             player.level += 1;
-            player.exp = player.exp - 150;
         }
         
         updateRaidLog();
@@ -2592,10 +2742,53 @@
 
     // ===== ЭКИПИРОВКА ПРЕДМЕТА (оружие/броня/детектор) =====
     // Разбирает имя вида "Пистолет Макарова +3" на базовое имя и уровень улучшения
+    // Убирает невидимый уникальный суффикс (если есть) перед разбором имени — иначе он мешал бы
+    // распознать "+N" апгрейд у оружия/брони
+    function stripInvisibleSuffix(name) {
+        return String(name).replace(/[\u200B\u200C]+$/, '');
+    }
+
     function parseGearName(name) {
-        const m = name.match(/^(.*) \+(\d+)$/);
+        const clean = stripInvisibleSuffix(name);
+        const m = clean.match(/^(.*) \+(\d+)$/);
         if (m) return { baseName: m[1], level: parseInt(m[2], 10) };
-        return { baseName: name, level: 0 };
+        return { baseName: clean, level: 0 };
+    }
+
+    const MAX_NONSTACKING_ITEMS = 50;
+    // Оружие/броня/артефакты НЕ стакаются — каждый подобранный экземпляр занимает отдельную
+    // ячейку инвентаря, даже если название совпадает с уже имеющимся. Уникальность второго и
+    // последующих экземпляров с одинаковым именем обеспечивается невидимым суффиксом (как у
+    // гибридов) — визуально ничем не отличаются. Также ограничивает общее число РАЗНЫХ ячеек
+    // такого снаряжения 50 штуками (расходники и части тел мутантов в этот лимит не входят,
+    // так как они стакаются как обычно)
+    function addNonStackingItem(baseName, qty) {
+        qty = qty || 1;
+        for (let i = 0; i < qty; i++) {
+            const nonStackingCount = Object.keys(player.inventory).filter(n => {
+                const clean = stripInvisibleSuffix(n);
+                return weapons.some(w => w.name === parseGearName(clean).baseName) ||
+                       armorItems.some(a => a.name === parseGearName(clean).baseName) ||
+                       artifacts.some(a => a.name === clean);
+            }).length;
+            if (nonStackingCount >= MAX_NONSTACKING_ITEMS) {
+                alert(`Достигнут предел в ${MAX_NONSTACKING_ITEMS} разных единиц оружия/брони/артефактов в инвентаре. Продайте или выбросьте что-нибудь, чтобы освободить место.`);
+                return false;
+            }
+            const finalName = player.inventory[baseName] ? baseName + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8)) : baseName;
+            player.inventory[finalName] = 1;
+        }
+        return true;
+    }
+
+    // Версия для выдачи ЧУЖОМУ игроку через админку (работает с любым объектом инвентаря,
+    // не только с глобальным player) — без проверки лимита в 50 (админ-выдача её не ограничивает)
+    function addNonStackingItemTo(targetInv, baseName, qty) {
+        qty = qty || 1;
+        for (let i = 0; i < qty; i++) {
+            const finalName = targetInv[baseName] ? baseName + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8)) : baseName;
+            targetInv[finalName] = 1;
+        }
     }
 
     function equipItem(itemName) {
@@ -2678,6 +2871,17 @@
     };
 
     // Возвращает HTML-блок с характеристиками предмета: урон/броня (база+улучшение), тир, пассивки артефакта
+    // Умный поиск определения артефакта по имени: сначала точное совпадение (нужно для гибридов —
+    // у каждого своя уникальная невидимая часть имени), а если не нашли — пробуем без невидимого
+    // суффикса (это второй и последующий экземпляр БАЗОВОГО артефакта — у них общее определение
+    // статов, суффикс есть только чтобы не стакаться в инвентаре)
+    function findArtifactDef(itemName) {
+        const exact = artifacts.find(a => a.name === itemName);
+        if (exact) return exact;
+        const clean = stripInvisibleSuffix(itemName);
+        return artifacts.find(a => a.name === clean);
+    }
+
     function getItemInfoHtml(itemName) {
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
@@ -2721,7 +2925,7 @@
                 Позволяет находить артефакты из аномалий тира ${detector.tier} и ниже
             </div>`;
         }
-        const artifact = artifacts.find(a => a.name === itemName);
+        const artifact = findArtifactDef(itemName);
         if (artifact) {
             const effects = Object.keys(artifact.stats).map(stat => {
                 const val = artifact.stats[stat];
@@ -2759,7 +2963,7 @@
     }
 
     function equipArtifactItem(itemName) {
-        const artifact = artifacts.find(a => a.name === itemName);
+        const artifact = findArtifactDef(itemName);
         if (!artifact || !player.inventory[itemName]) return;
         const freeIndex = player.artifactSlots.findIndex(s => !s);
         if (freeIndex === -1) { alert('Все 6 слотов артефактов заняты. Сначала снимите один.'); return; }
@@ -2786,7 +2990,7 @@
     function unequipArtifactSlot(index) {
         const name = player.artifactSlots[index];
         if (!name) return;
-        const artifact = artifacts.find(a => a.name === name);
+        const artifact = findArtifactDef(name);
         if (artifact) applyArtifactStats(artifact, -1);
         player.inventory[name] = (player.inventory[name] || 0) + 1;
         player.artifactSlots[index] = null;
@@ -2844,8 +3048,8 @@
             alert('Нужен жетон селекции (⭐ Магазин Байт, 10 звёзд за штуку).');
             return;
         }
-        const a1 = artifacts.find(a => a.name === breedSlot1);
-        const a2 = artifacts.find(a => a.name === breedSlot2);
+        const a1 = findArtifactDef(breedSlot1);
+        const a2 = findArtifactDef(breedSlot2);
         if (!a1 || !a2) { alert('Один из выбранных артефактов не найден.'); return; }
         if (!player.inventory[breedSlot1] || !player.inventory[breedSlot2]) {
             alert('Одного из выбранных артефактов уже нет в инвентаре.');
@@ -2982,7 +3186,6 @@
     function openScientistsSellView() {
         document.getElementById('scientistsBuyList').innerHTML = '';
         const el = document.getElementById('scientistsSellList');
-        const maxArtifactTier = Math.max(...artifacts.map(a => a.tier));
         const ownedArtifacts = Object.keys(player.inventory).filter(name =>
             player.inventory[name] > 0 && artifacts.some(a => a.name === name)
         );
@@ -2994,18 +3197,16 @@
             el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу. Артефакты тира ${maxArtifactTier} (последнего) продаются за 1 жетон селекции:</div>`;
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу:</div>`;
         html += ownedArtifacts.map(name => {
-            const artifact = artifacts.find(a => a.name === name);
-            const isTopTier = artifact.tier === maxArtifactTier;
-            const price = isTopTier ? null : Math.round(getSellPrice(name) * 1.05);
+            const artifact = findArtifactDef(name);
+            const price = Math.round(getSellPrice(name) * 1.05);
             const esc = name.replace(/'/g, "\\'");
             return `
                 <div class="shop-item">
                     <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
-                    <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">
-                        ${isTopTier ? '💰 Продать за 🧬 1 жетон селекции' : '💰 Продать за 🪙 ' + price}
-                    </button>
+                    ${getItemInfoHtml(name)}
+                    <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
                 </div>
             `;
         }).join('');
@@ -3037,19 +3238,16 @@
 
     function sellArtifactToScientists(name) {
         if (!player.inventory[name] || player.inventory[name] <= 0) return;
-        const artifact = artifacts.find(a => a.name === name);
+        const artifact = findArtifactDef(name);
         if (!artifact) return;
-        const maxArtifactTier = Math.max(...artifacts.map(a => a.tier));
 
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
 
-        if (artifact.tier === maxArtifactTier) {
-            player.breedCredits = (Number(player.breedCredits) || 0) + 1;
-        } else {
-            const price = Math.round(getSellPrice(name) * 1.05);
-            player.coins += price;
-        }
+        // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты — обмен на жетоны
+        // селекции убран
+        const price = Math.round(getSellPrice(name) * 1.05);
+        player.coins += price;
 
         openScientistsSellView();
         updateUI();
@@ -3234,7 +3432,7 @@
 
         const slotType = getEquipSlotType(itemName);
         const consumable = consumables.find(c => c.name === itemName);
-        const artifact = artifacts.find(a => a.name === itemName);
+        const artifact = findArtifactDef(itemName);
         const isKnowledgeBook = itemName === 'Книга знаний';
 
         // Артефакты: только Одеть / Продать (в магазине) / Выкинуть — без "переместить в склад"
@@ -3445,8 +3643,17 @@
 
     function withdrawFromWarehouse(name) {
         if (!player.warehouse[name] || player.warehouse[name] <= 0) return;
+        const clean = stripInvisibleSuffix(name);
+        const baseName = parseGearName(clean).baseName;
+        const isNonStacking = weapons.some(w => w.name === baseName) || armorItems.some(a => a.name === baseName) || artifacts.some(a => a.name === clean);
+        if (isNonStacking) {
+            // addNonStackingItem сама разрулит совпадение имени (даст новый невидимый суффикс,
+            // если в инвентаре уже есть предмет с таким же именем) — вызываем с точным ключом склада
+            if (!addNonStackingItem(name)) return; // достигнут лимит 50 — не снимаем со склада
+        } else {
+            player.inventory[name] = (player.inventory[name] || 0) + 1;
+        }
         player.warehouse[name]--;
-        player.inventory[name] = (player.inventory[name] || 0) + 1;
         if (player.warehouse[name] <= 0) delete player.warehouse[name];
         renderWarehouse();
         saveGame();
@@ -3489,6 +3696,7 @@
         // Внутри каждого доступного по тиру блока сначала открыты только 3 из 6 видов (самые слабые
         // по статам в тире, они первые в массиве) — остальные 3 открываются по достижении уровня tier*10
         const unlockByTierAndLevel = (list) => list.filter(item => {
+            if (item.adminOnly) return false; // спецпредметы админа никогда не продаются обычным способом
             if (item.tier > playerTier) return false;
             const tierItems = list.filter(x => x.tier === item.tier);
             const indexInTier = tierItems.indexOf(item);
@@ -3513,14 +3721,20 @@
     // Цена продажи любого предмета торговцу (лут мутантов/фракций, артефакты, снаряжение) — 50% от базовой стоимости
     // Улучшенное снаряжение (+N) даёт +10% базовой цены за каждый уровень улучшения
     function getSellPrice(name) {
+        // ВАЖНО: ищем по ПОЛНЫМ спискам (weapons/armorItems/detectors/consumables), а НЕ по
+        // getShopCatalog() — тот отфильтрован по тиру/уровню игрока (что можно купить прямо
+        // сейчас), и если игрок нашёл предмет, который магазин ему ещё не "открыл" для покупки,
+        // поиск проваливался и цена продажи падала на заглушку в 5 Байт
         const parsed = parseGearName(name);
-        const catalog = getShopCatalog();
-        const known = catalog.find(i => i.name === parsed.baseName);
-        if (known) {
-            const upgradedBase = known.price * (1 + parsed.level * 0.1);
-            return Math.max(1, Math.round(upgradedBase * 0.5));
-        }
-        const artifact = artifacts.find(a => a.name === name);
+        const weapon = weapons.find(w => w.name === parsed.baseName);
+        if (weapon) return Math.max(1, Math.round(weapon.price * (1 + parsed.level * 0.1) * 0.5));
+        const armor = armorItems.find(a => a.name === parsed.baseName);
+        if (armor) return Math.max(1, Math.round(armor.price * (1 + parsed.level * 0.1) * 0.5));
+        const detector = detectors.find(d => d.name === parsed.baseName);
+        if (detector) return Math.max(1, Math.round(detector.price * 0.5));
+        const consumable = consumables.find(c => c.name === name);
+        if (consumable) return Math.max(1, Math.round(consumable.price * 0.5));
+        const artifact = findArtifactDef(name);
         if (artifact) return Math.max(1, Math.round(artifact.price * 0.5));
         const mutantLoot = mutants.find(m => m.loot === name);
         if (mutantLoot) return Math.max(1, Math.round(mutantLoot.lootPrice * 0.5));
@@ -3622,7 +3836,11 @@
         if (player.coins < price) return;
 
         player.coins -= price;
-        player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
+        if (category === 'weapon' || category === 'armor') {
+            if (!addNonStackingItem(item.name)) { player.coins += price; return; } // лимит достигнут — откатываем списание
+        } else {
+            player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
+        }
         renderShop();
         updateUI();
         saveGame();
@@ -3634,7 +3852,7 @@
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
         player.coins = (Number(player.coins) || 0) + price;
-        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1);
+        gainPerk('intellect', 0.1);
         renderShop();
         updateUI();
         saveGame();
@@ -3647,11 +3865,15 @@
         if (giveType === 'weapon') {
             selectEl.style.display = 'block';
             selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
-                weapons.map(w => `<option value="${w.name}">Тир ${w.tier}: ${w.name} (урон ${w.dmg})</option>`).join('');
+                weapons.map(w => `<option value="${w.name}">Тир ${w.tier}: ${w.name} (урон ${w.dmg})${w.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
         } else if (giveType === 'armor') {
             selectEl.style.display = 'block';
             selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
-                armorItems.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name} (броня ${a.armor})</option>`).join('');
+                armorItems.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name} (броня ${a.armor})${a.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
+        } else if (giveType === 'artifact') {
+            selectEl.style.display = 'block';
+            selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
+                artifacts.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name}${a.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
         } else if (giveType === 'perk') {
             selectEl.style.display = 'block';
             selectEl.innerHTML = Object.keys(PERK_INFO).map(key => `<option value="${key}">${PERK_INFO[key].label}</option>`).join('');
@@ -3688,15 +3910,15 @@
                 targetPlayer.coins = (targetPlayer.coins || 0) + (amount || 0);
             } else if (giveType === 'artifact') {
                 const item = pickItem(artifacts);
-                targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
+                addNonStackingItemTo(targetPlayer.inventory, item.name, amount || 1);
             } else if (giveType === 'weapon') {
                 const item = pickItem(weapons);
                 const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name;
-                targetPlayer.inventory[name] = (targetPlayer.inventory[name] || 0) + (amount || 1);
+                addNonStackingItemTo(targetPlayer.inventory, name, amount || 1);
             } else if (giveType === 'armor') {
                 const item = pickItem(armorItems);
                 const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name;
-                targetPlayer.inventory[name] = (targetPlayer.inventory[name] || 0) + (amount || 1);
+                addNonStackingItemTo(targetPlayer.inventory, name, amount || 1);
             } else if (giveType === 'detector') {
                 const item = pickItem(detectors);
                 targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
@@ -3712,7 +3934,7 @@
             } else if (giveType === 'perk') {
                 const perkKey = selectedItem;
                 if (perkKey && PERK_INFO[perkKey]) {
-                    targetPlayer[perkKey] = (Number(targetPlayer[perkKey]) || 0) + (amount || 1);
+                    targetPlayer[perkKey] = Math.min(100, (Number(targetPlayer[perkKey]) || 0) + (amount || 1));
                 }
             }
             return targetPlayer;
@@ -3785,6 +4007,7 @@
             el.innerHTML = gearItems.map(name => `
                 <div class="shop-item">
                     <div>${name} ×${player.inventory[name]}</div>
+                    ${getItemInfoHtml(name)}
                     <div class="price">🪙 ${Math.round(getSellPrice(name) * 1.02)} за шт. (на 2% выгоднее торговца)</div>
                     <button onclick="sellToTechnician('${name.replace(/'/g, "\\'")}')">Продать</button>
                 </div>
@@ -3856,7 +4079,7 @@
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
         player.coins = (Number(player.coins) || 0) + price;
-        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1);
+        gainPerk('intellect', 0.1);
         renderTechnician();
         updateUI();
         saveGame();
@@ -3910,6 +4133,28 @@
         saveGame();
         alert(`Улучшено! Теперь: ${newName}`);
     }
+
+    // ===== ПРИНУДИТЕЛЬНАЯ ВИДИМОСТЬ ТЕКСТА В ПОЛЯХ ВВОДА =====
+    // Крайняя мера: если даже CSS с !important не помогает (вероятно, WebView Telegram
+    // переопределяет стили страницы после её загрузки), inline-стиль, установленный через JS
+    // с !important — единственный уровень приоритета CSS выше ЛЮБОГО внешнего/инжектированного
+    // правила. MutationObserver дополнительно следит за динамически создаваемыми полями
+    // (админ-панель, автозакупка и т.д.), которых не было на странице при первой загрузке
+    function forceInputVisibility() {
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.style.setProperty('color', '#fff', 'important');
+            el.style.setProperty('background-color', '#1a1a1a', 'important');
+            el.style.setProperty('-webkit-text-fill-color', '#fff', 'important');
+            el.style.setProperty('caret-color', '#fff', 'important');
+        });
+    }
+    forceInputVisibility();
+    let inputVisibilityDebounce = null;
+    const inputVisibilityObserver = new MutationObserver(() => {
+        clearTimeout(inputVisibilityDebounce);
+        inputVisibilityDebounce = setTimeout(forceInputVisibility, 100);
+    });
+    inputVisibilityObserver.observe(document.body, { childList: true, subtree: true });
 
     // ===== ИНИЦИАЛИЗАЦИЯ =====
     if (window.Telegram && window.Telegram.WebApp) {
