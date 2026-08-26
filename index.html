@@ -14,8 +14,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { color-scheme: dark; overflow-x: hidden; }
         body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
-        .header { background: #1a1a1a; border: 2px solid #333; padding: 12px; margin-bottom: 12px; border-radius: 4px; text-align: center; }
-        .header h1 { color: #8a7a4a; font-size: 16px; letter-spacing: 1px; line-height: 1.3; }
+        .header { background: #1a1a1a; border: 2px solid #333; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px; text-align: center; }
+        .header h1 { color: #8a7a4a; font-size: 14px; letter-spacing: 1px; line-height: 1.2; margin-bottom: 4px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: #111; border: 1px solid #2a2a2a; padding: 6px; font-size: 12px; color: #aaa; text-align: center; border-radius: 4px; }
         .stat-box .value { display: block; font-size: 18px; font-weight: bold; color: #fff; }
@@ -35,7 +35,7 @@
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .belt-slot { background: #0d0d0d; border: 2px solid #8a7a4a; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
         .back-btn { margin-top: 15px; width: 100%; padding: 12px; background: #c0392b; border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
-        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 160px; overflow-y: auto; }
+        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 90px; overflow-y: auto; }
         .stats-details { margin-top: 10px; font-size: 12px; }
         .stats-details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a1a; }
         .shop-item { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 10px; margin-bottom: 6px; }
@@ -73,7 +73,7 @@
             <div class="stat-box hunger">🍖 <span class="value" id="hunger">100</span></div>
             <div class="stat-box thirst">💧 <span class="value" id="thirst">100</span></div>
         </div>
-        <div style="margin-top: 6px; font-size: 12px; color: #888; line-height:1.7;">
+        <div style="margin-top: 4px; font-size: 11px; color: #888; line-height:1.5;">
             🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
             🧬 Жетоны селекции: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
             📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:11px; margin-left:4px;">Использовать</button>
@@ -107,7 +107,7 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
+        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:110px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
         <div style="display:flex; gap:8px;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
@@ -254,9 +254,8 @@
         <h3>📱 КПК</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="openKpkTab('info')" style="background:#1a1a1a; border:2px solid #333;">📋 Инфо о персонаже</button>
-            <button onclick="openKpkTab('players')" style="background:#1a1a1a; border:2px solid #333;">👥 Список игроков</button>
             <button onclick="openKpkTab('factions')" style="background:#1a1a1a; border:2px solid #333;">🚩 Фракции</button>
-            <button onclick="openKpkTab('rating')" style="background:#1a1a1a; border:2px solid #333;">🏅 Рейтинг</button>
+            <button onclick="openKpkTab('rating')" style="background:#1a1a1a; border:2px solid #333; grid-column: 1 / -1;">🏅 Рейтинг игроков (поиск, полный профиль)</button>
             <button onclick="changeNickname()" style="background:#8a7a4a; border:2px solid #8a7a4a; grid-column: 1 / -1;">✏️ Сменить ник</button>
         </div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
@@ -291,7 +290,7 @@
 <div id="adminModal" class="modal">
     <div class="modal-content">
         <h3>🛠️ Админ меню</h3>
-        <input type="text" id="adminPassword" placeholder="Введите пароль (6 символов)">
+        <input type="text" id="adminPassword" placeholder="Введите пароль (6 символов)" style="color:#fff; background:#1a1a1a;">
         <button onclick="checkAdminPassword()">Войти</button>
     </div>
 </div>
@@ -395,35 +394,35 @@
 
     // ===== МУТАНТЫ =====
     const mutants = [
-        { tier: 0, name: 'Тушкан', hp: 10, dmg: 10, loot: 'Хвост тушкана', lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1.0, runChance: 1.0, runSkill: 0.1, hitChance: 1.0, hitSkill: 0.1 },
-        { tier: 1, name: 'Слепая собака', hp: 20, dmg: 20, loot: 'Ухо слепого пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: 'Чернобыльский пёс', hp: 20, dmg: 20, loot: 'Клык чернобыльского пса', lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: 'Кракозябра', hp: 20, dmg: 20, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1, 1] },
-        { tier: 2, name: 'Плоть', hp: 30, dmg: 30, loot: 'Глаз плоти', lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
-        { tier: 3, name: 'Боров', hp: 40, dmg: 40, loot: 'Клык борова', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 3, name: 'Изотоп', hp: 40, dmg: 40, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3, 3] },
-        { tier: 3, name: 'Шарнир', hp: 40, dmg: 40, loot: 'Непонятный металл', lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 4, name: 'Зомби', hp: 50, dmg: 50, loot: 'Ухо зомби', lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
-        { tier: 5, name: 'Псевдо собака', hp: 60, dmg: 60, loot: 'Ухо псевдо пса', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: 'Рысь', hp: 60, dmg: 60, loot: 'Ухо рыси', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: 'Чупакабра', hp: 60, dmg: 60, loot: 'Хвост чупакабры', lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 6, name: 'Пси собака', hp: 70, dmg: 70, loot: 'Ухо пси пса', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 6, name: 'Кот Баюн', hp: 70, dmg: 70, loot: 'Хвост баюна', lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 7, name: 'Снорк', hp: 80, dmg: 80, loot: 'Ухо снорка', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: 'Стрегун', hp: 80, dmg: 80, loot: 'Хитин стрегуна', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: 'Филин', hp: 80, dmg: 80, loot: 'Рука покрытая перьями', lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 8, name: 'Кровосос', hp: 90, dmg: 90, loot: 'Щупальца кровососа', lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
-        { tier: 9, name: 'Полтергейст', hp: 100, dmg: 100, loot: 'Ухо полтергейста', lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1.0, hitChance: 0.55, hitSkill: 1.0 },
-        { tier: 10, name: 'Огненный полтергейст', hp: 110, dmg: 110, loot: 'Ухо огненного полтергейста', lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
-        { tier: 10, name: 'Излом', hp: 110, dmg: 110, loot: 'Ухо излома', lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1, 5] },
-        { tier: 11, name: 'Бюрер', hp: 120, dmg: 120, loot: 'Ухо бюрера', lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
-        { tier: 11, name: 'Лось', hp: 120, dmg: 120, loot: 'Рог лося', lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7, 8] },
-        { tier: 12, name: 'Контролёр', hp: 140, dmg: 140, loot: 'Ухо контролёра', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 12, name: 'Стронглав', hp: 140, dmg: 140, loot: 'Щупальца стронглава', lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 13, name: 'Химера', hp: 160, dmg: 160, loot: 'Коготь химеры', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
-        { tier: 13, name: 'Электро химера', hp: 160, dmg: 160, loot: 'Коготь электро химеры', lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8, 8] },
-        { tier: 13, name: 'Наблюдатель', hp: 160, dmg: 160, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
-        { tier: 14, name: 'Псевдогигант', hp: 1000, dmg: 600, loot: 'Ухо гиганта', lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
+        { tier: 0, name: "Тушкан", hp: 10, dmg: 10, loot: "Хвост тушкана", lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1, runChance: 1, runSkill: 0.1, hitChance: 1, hitSkill: 0.1 },
+        { tier: 1, name: "Слепая собака", hp: 51, dmg: 51, loot: "Ухо слепого пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Чернобыльский пёс", hp: 51, dmg: 51, loot: "Клык чернобыльского пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Кракозябра", hp: 51, dmg: 51, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1,1] },
+        { tier: 2, name: "Плоть", hp: 78, dmg: 78, loot: "Глаз плоти", lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
+        { tier: 3, name: "Боров", hp: 123, dmg: 123, loot: "Клык борова", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 3, name: "Изотоп", hp: 123, dmg: 123, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3,3] },
+        { tier: 3, name: "Шарнир", hp: 123, dmg: 123, loot: "Непонятный металл", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 4, name: "Зомби", hp: 163, dmg: 163, loot: "Ухо зомби", lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
+        { tier: 5, name: "Псевдо собака", hp: 201, dmg: 201, loot: "Ухо псевдо пса", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: "Рысь", hp: 201, dmg: 201, loot: "Ухо рыси", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: "Чупакабра", hp: 201, dmg: 201, loot: "Хвост чупакабры", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 6, name: "Пси собака", hp: 287, dmg: 287, loot: "Ухо пси пса", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 6, name: "Кот Баюн", hp: 287, dmg: 287, loot: "Хвост баюна", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 7, name: "Снорк", hp: 340, dmg: 340, loot: "Ухо снорка", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: "Стрегун", hp: 340, dmg: 340, loot: "Хитин стрегуна", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: "Филин", hp: 340, dmg: 340, loot: "Рука покрытая перьями", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 8, name: "Кровосос", hp: 329, dmg: 329, loot: "Щупальца кровососа", lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
+        { tier: 9, name: "Полтергейст", hp: 320, dmg: 320, loot: "Ухо полтергейста", lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1, hitChance: 0.55, hitSkill: 1 },
+        { tier: 10, name: "Огненный полтергейст", hp: 303, dmg: 303, loot: "Ухо огненного полтергейста", lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
+        { tier: 10, name: "Излом", hp: 303, dmg: 303, loot: "Ухо излома", lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1,5] },
+        { tier: 11, name: "Бюрер", hp: 481, dmg: 481, loot: "Ухо бюрера", lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
+        { tier: 11, name: "Лось", hp: 481, dmg: 481, loot: "Рог лося", lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7,8] },
+        { tier: 12, name: "Контролёр", hp: 549, dmg: 549, loot: "Ухо контролёра", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 12, name: "Стронглав", hp: 549, dmg: 549, loot: "Щупальца стронглава", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 13, name: "Химера", hp: 599, dmg: 599, loot: "Коготь химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
+        { tier: 13, name: "Электро химера", hp: 599, dmg: 599, loot: "Коготь электро химеры", lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8,8] },
+        { tier: 13, name: "Наблюдатель", hp: 599, dmg: 599, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
+        { tier: 14, name: "Псевдогигант", hp: 1000, dmg: 600, loot: "Ухо гиганта", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
     ];
 
     // ===== АНОМАЛИИ =====
@@ -518,193 +517,193 @@
 
     // ===== ОРУЖИЕ =====
     const weapons = [
-        { id: 1, name: 'Пистолет Макарова', tier: 1, dmg: 10, price: 150 },
-        { id: 2, name: 'Пистолет ПСМ', tier: 1, dmg: 11, price: 160 },
-        { id: 3, name: 'Пистолет ИЖ-71', tier: 1, dmg: 12, price: 180 },
-        { id: 4, name: 'Обрез охотничьего ружья', tier: 1, dmg: 13, price: 200 },
-        { id: 5, name: 'Пистолет ОЦ-33 «Пернач»', tier: 1, dmg: 14, price: 210 },
-        { id: 6, name: 'Револьвер Наган', tier: 1, dmg: 15, price: 250 },
-        { id: 7, name: 'Пистолет ТТ', tier: 2, dmg: 20, price: 400 },
-        { id: 8, name: 'ПП «Кедр»', tier: 2, dmg: 21, price: 420 },
-        { id: 9, name: 'Карабин Сайга-12', tier: 2, dmg: 22, price: 440 },
-        { id: 10, name: 'ПП-19 «Бизон»', tier: 2, dmg: 23, price: 460 },
-        { id: 11, name: 'Автомат АКС-74У', tier: 2, dmg: 25, price: 500 },
-        { id: 12, name: 'Автомат АК-74', tier: 2, dmg: 30, price: 700 },
-        { id: 13, name: 'Винтовка СВД', tier: 3, dmg: 40, price: 1200 },
-        { id: 14, name: 'Винтовка СКС', tier: 3, dmg: 41, price: 1230 },
-        { id: 15, name: 'Автомат АК-103', tier: 3, dmg: 42, price: 1260 },
-        { id: 16, name: 'Карабин «Вепрь»', tier: 3, dmg: 44, price: 1320 },
-        { id: 17, name: 'Пулемёт РПК-74', tier: 3, dmg: 46, price: 1380 },
-        { id: 18, name: 'Автомат АС «Вал»', tier: 3, dmg: 55, price: 1800 },
-        { id: 19, name: 'Дробовик СПАС-12', tier: 4, dmg: 60, price: 2500 },
-        { id: 20, name: 'Дробовик Сайга-410', tier: 4, dmg: 62, price: 2580 },
-        { id: 21, name: 'Автомат АК-12', tier: 4, dmg: 65, price: 2710 },
-        { id: 22, name: 'Пулемёт ПКМ', tier: 4, dmg: 68, price: 2830 },
-        { id: 23, name: 'Винтовка Т-5000', tier: 4, dmg: 72, price: 3000 },
-        { id: 24, name: 'Винтовка СВДС', tier: 4, dmg: 90, price: 5000 },
-        { id: 25, name: 'Пулемёт РПД', tier: 5, dmg: 100, price: 8000 },
-        { id: 26, name: 'Автомат АН-94 «Абакан»', tier: 5, dmg: 101, price: 8080 },
-        { id: 27, name: 'Винтовка ОРСИС T-5000M', tier: 5, dmg: 102, price: 8160 },
-        { id: 28, name: 'Винтовка СВ-98', tier: 5, dmg: 104, price: 8320 },
-        { id: 29, name: 'Пулемёт «Печенег»', tier: 5, dmg: 108, price: 8640 },
-        { id: 30, name: 'Винтовка ВСС «Винторез»', tier: 5, dmg: 112, price: 8960 },
-        { id: 31, name: 'Винтовка СВ-338', tier: 6, dmg: 110, price: 12000 },
-        { id: 32, name: 'Дробовик Сайга-12К', tier: 6, dmg: 110, price: 12000 },
-        { id: 33, name: 'Винтовка «Выхлоп»', tier: 6, dmg: 111, price: 12110 },
-        { id: 34, name: 'Пулемёт «Корд»', tier: 6, dmg: 113, price: 12330 },
-        { id: 35, name: 'Винтовка ОСВ-96', tier: 6, dmg: 114, price: 12440 },
-        { id: 36, name: 'Винтовка СВК', tier: 6, dmg: 118, price: 12870 },
-        { id: 37, name: 'Автомат АК-107', tier: 7, dmg: 120, price: 18000 },
-        { id: 38, name: 'Автомат ADAR 2-15', tier: 7, dmg: 120, price: 18000 },
-        { id: 39, name: 'Винтовка ORSIS T-5000 Sniper Pro', tier: 7, dmg: 121, price: 18150 },
-        { id: 40, name: 'Винтовка ВСК-94', tier: 7, dmg: 123, price: 18450 },
-        { id: 41, name: 'Пулемёт «Утёс»', tier: 7, dmg: 126, price: 18900 },
-        { id: 42, name: 'Винтовка SR-25', tier: 7, dmg: 128, price: 19200 },
-        { id: 43, name: 'Автомат ОЦ-14 «Гроза»', tier: 8, dmg: 130, price: 26000 },
-        { id: 44, name: 'Дробовик «Вепрь-12»', tier: 8, dmg: 130, price: 26000 },
-        { id: 45, name: 'Автомат АК-19', tier: 8, dmg: 131, price: 26200 },
-        { id: 46, name: 'Винтовка SSG 08', tier: 8, dmg: 132, price: 26400 },
-        { id: 47, name: 'Пулемёт «Корд-М»', tier: 8, dmg: 134, price: 26800 },
-        { id: 48, name: 'Винтовка Barrett M98B', tier: 8, dmg: 136, price: 27200 },
-        { id: 49, name: 'Винтовка Barrett M82', tier: 9, dmg: 140, price: 36000 },
-        { id: 50, name: 'Дробовик Benelli M4', tier: 9, dmg: 140, price: 36000 },
-        { id: 51, name: 'Автомат ЛР-308', tier: 9, dmg: 141, price: 36260 },
-        { id: 52, name: 'Винтовка АСВК «Корд»', tier: 9, dmg: 142, price: 36510 },
-        { id: 53, name: 'Пулемёт «Печенег-СП»', tier: 9, dmg: 144, price: 37030 },
-        { id: 54, name: 'Винтовка McMillan TAC-50', tier: 9, dmg: 147, price: 37800 },
-        { id: 55, name: 'Гаусс-пушка', tier: 10, dmg: 150, price: 50000 },
-        { id: 56, name: 'Дробовик AA-12', tier: 10, dmg: 150, price: 50000 },
-        { id: 57, name: 'Автомат HK416', tier: 10, dmg: 152, price: 50670 },
-        { id: 58, name: 'Винтовка Steyr HS .50', tier: 10, dmg: 154, price: 51330 },
-        { id: 59, name: 'Пулемёт M240', tier: 10, dmg: 156, price: 52000 },
-        { id: 60, name: 'Винтовка Accuracy International AXMC', tier: 10, dmg: 158, price: 52670 },
-        { id: 61, name: 'Пулемёт M60E6', tier: 11, dmg: 170, price: 70000 },
-        { id: 62, name: 'Дробовик Kel-Tec KSG', tier: 11, dmg: 170, price: 70000 },
-        { id: 63, name: 'Автомат АК-308', tier: 11, dmg: 171, price: 70410 },
-        { id: 64, name: 'Винтовка ORSIS T-5000 Elite', tier: 11, dmg: 172, price: 70820 },
-        { id: 65, name: 'Пулемёт «Утёс-М»', tier: 11, dmg: 174, price: 71650 },
-        { id: 66, name: 'Винтовка Zastava M93 Black Arrow', tier: 11, dmg: 178, price: 73290 },
-        { id: 67, name: 'Пулемёт Minimi Mk3', tier: 12, dmg: 190, price: 95000 },
-        { id: 68, name: 'Дробовик Franchi SPAS-15', tier: 12, dmg: 190, price: 95000 },
-        { id: 69, name: 'Автомат CZ Bren 2', tier: 12, dmg: 191, price: 95500 },
-        { id: 70, name: 'Винтовка Sako TRG-42', tier: 12, dmg: 192, price: 96000 },
-        { id: 71, name: 'Пулемёт FN MAG', tier: 12, dmg: 194, price: 97000 },
-        { id: 72, name: 'Винтовка Desert Tech HTI', tier: 12, dmg: 198, price: 99000 },
-        { id: 73, name: 'Прототип X-17', tier: 13, dmg: 215, price: 130000 },
-        { id: 74, name: 'Дробовик USAS-12', tier: 13, dmg: 215, price: 130000 },
-        { id: 75, name: 'Автомат SCAR-H', tier: 13, dmg: 216, price: 130600 },
-        { id: 76, name: 'Винтовка Blaser R93 Tactical 2', tier: 13, dmg: 217, price: 131210 },
-        { id: 77, name: 'Пулемёт Negev NG7', tier: 13, dmg: 219, price: 132420 },
-        { id: 78, name: 'Винтовка Cheytac M200 Intervention', tier: 13, dmg: 223, price: 134840 },
-        { id: 79, name: 'РПГ-7', tier: 14, dmg: 250, price: 180000 },
-        { id: 80, name: 'РПГ-26 «Аглень»', tier: 14, dmg: 250, price: 180000 },
-        { id: 81, name: 'РПГ-29 «Вампир»', tier: 14, dmg: 251, price: 180720 },
-        { id: 82, name: 'РПГ-32 «Хашим»', tier: 14, dmg: 252, price: 181440 },
-        { id: 83, name: 'Carl Gustaf M4', tier: 14, dmg: 253, price: 182160 },
-        { id: 84, name: 'FGM-148 Javelin', tier: 14, dmg: 258, price: 185760 },
-        { id: 85, name: 'Убиваю взглядом', tier: 14, dmg: 666, price: 666000, adminOnly: true }
+        { id: 1, name: "Пистолет Макарова", tier: 1, dmg: 10, price: 195 },
+        { id: 2, name: "Пистолет ПСМ", tier: 1, dmg: 11, price: 208 },
+        { id: 3, name: "Пистолет ИЖ-71", tier: 1, dmg: 12, price: 234 },
+        { id: 4, name: "Обрез охотничьего ружья", tier: 1, dmg: 13, price: 260 },
+        { id: 5, name: "Пистолет ОЦ-33 «Пернач»", tier: 1, dmg: 14, price: 273 },
+        { id: 6, name: "Револьвер Наган", tier: 1, dmg: 15, price: 325 },
+        { id: 7, name: "Пистолет ТТ", tier: 2, dmg: 20, price: 520 },
+        { id: 8, name: "ПП «Кедр»", tier: 2, dmg: 21, price: 546 },
+        { id: 9, name: "Карабин Сайга-12", tier: 2, dmg: 22, price: 572 },
+        { id: 10, name: "ПП-19 «Бизон»", tier: 2, dmg: 23, price: 598 },
+        { id: 11, name: "Автомат АКС-74У", tier: 2, dmg: 25, price: 650 },
+        { id: 12, name: "Автомат АК-74", tier: 2, dmg: 30, price: 910 },
+        { id: 13, name: "Винтовка СВД", tier: 3, dmg: 40, price: 1560 },
+        { id: 14, name: "Винтовка СКС", tier: 3, dmg: 41, price: 1599 },
+        { id: 15, name: "Автомат АК-103", tier: 3, dmg: 42, price: 1638 },
+        { id: 16, name: "Карабин «Вепрь»", tier: 3, dmg: 44, price: 1716 },
+        { id: 17, name: "Пулемёт РПК-74", tier: 3, dmg: 46, price: 1794 },
+        { id: 18, name: "Автомат АС «Вал»", tier: 3, dmg: 55, price: 2340 },
+        { id: 19, name: "Дробовик СПАС-12", tier: 4, dmg: 60, price: 3250 },
+        { id: 20, name: "Дробовик Сайга-410", tier: 4, dmg: 62, price: 3354 },
+        { id: 21, name: "Автомат АК-12", tier: 4, dmg: 65, price: 3523 },
+        { id: 22, name: "Пулемёт ПКМ", tier: 4, dmg: 68, price: 3679 },
+        { id: 23, name: "Винтовка Т-5000", tier: 4, dmg: 72, price: 3900 },
+        { id: 24, name: "Винтовка СВДС", tier: 4, dmg: 90, price: 6500 },
+        { id: 25, name: "Пулемёт РПД", tier: 5, dmg: 100, price: 10400 },
+        { id: 26, name: "Автомат АН-94 «Абакан»", tier: 5, dmg: 101, price: 10504 },
+        { id: 27, name: "Винтовка ОРСИС T-5000M", tier: 5, dmg: 102, price: 10608 },
+        { id: 28, name: "Винтовка СВ-98", tier: 5, dmg: 104, price: 10816 },
+        { id: 29, name: "Пулемёт «Печенег»", tier: 5, dmg: 108, price: 11232 },
+        { id: 30, name: "Винтовка ВСС «Винторез»", tier: 5, dmg: 112, price: 11648 },
+        { id: 31, name: "Винтовка СВ-338", tier: 6, dmg: 110, price: 15600 },
+        { id: 32, name: "Дробовик Сайга-12К", tier: 6, dmg: 110, price: 15600 },
+        { id: 33, name: "Винтовка «Выхлоп»", tier: 6, dmg: 111, price: 15743 },
+        { id: 34, name: "Пулемёт «Корд»", tier: 6, dmg: 113, price: 16029 },
+        { id: 35, name: "Винтовка ОСВ-96", tier: 6, dmg: 114, price: 16172 },
+        { id: 36, name: "Винтовка СВК", tier: 6, dmg: 118, price: 16731 },
+        { id: 37, name: "Автомат АК-107", tier: 7, dmg: 120, price: 23400 },
+        { id: 38, name: "Автомат ADAR 2-15", tier: 7, dmg: 120, price: 23400 },
+        { id: 39, name: "Винтовка ORSIS T-5000 Sniper Pro", tier: 7, dmg: 121, price: 23595 },
+        { id: 40, name: "Винтовка ВСК-94", tier: 7, dmg: 123, price: 23985 },
+        { id: 41, name: "Пулемёт «Утёс»", tier: 7, dmg: 126, price: 24570 },
+        { id: 42, name: "Винтовка SR-25", tier: 7, dmg: 128, price: 24960 },
+        { id: 43, name: "Автомат ОЦ-14 «Гроза»", tier: 8, dmg: 130, price: 33800 },
+        { id: 44, name: "Дробовик «Вепрь-12»", tier: 8, dmg: 130, price: 33800 },
+        { id: 45, name: "Автомат АК-19", tier: 8, dmg: 131, price: 34060 },
+        { id: 46, name: "Винтовка SSG 08", tier: 8, dmg: 132, price: 34320 },
+        { id: 47, name: "Пулемёт «Корд-М»", tier: 8, dmg: 134, price: 34840 },
+        { id: 48, name: "Винтовка Barrett M98B", tier: 8, dmg: 136, price: 35360 },
+        { id: 49, name: "Винтовка Barrett M82", tier: 9, dmg: 140, price: 46800 },
+        { id: 50, name: "Дробовик Benelli M4", tier: 9, dmg: 140, price: 46800 },
+        { id: 51, name: "Автомат ЛР-308", tier: 9, dmg: 141, price: 47138 },
+        { id: 52, name: "Винтовка АСВК «Корд»", tier: 9, dmg: 142, price: 47463 },
+        { id: 53, name: "Пулемёт «Печенег-СП»", tier: 9, dmg: 144, price: 48139 },
+        { id: 54, name: "Винтовка McMillan TAC-50", tier: 9, dmg: 147, price: 49140 },
+        { id: 55, name: "Гаусс-пушка", tier: 10, dmg: 150, price: 65000 },
+        { id: 56, name: "Дробовик AA-12", tier: 10, dmg: 150, price: 65000 },
+        { id: 57, name: "Автомат HK416", tier: 10, dmg: 152, price: 65871 },
+        { id: 58, name: "Винтовка Steyr HS .50", tier: 10, dmg: 154, price: 66729 },
+        { id: 59, name: "Пулемёт M240", tier: 10, dmg: 156, price: 67600 },
+        { id: 60, name: "Винтовка Accuracy International AXMC", tier: 10, dmg: 158, price: 68471 },
+        { id: 61, name: "Пулемёт M60E6", tier: 11, dmg: 170, price: 91000 },
+        { id: 62, name: "Дробовик Kel-Tec KSG", tier: 11, dmg: 170, price: 91000 },
+        { id: 63, name: "Автомат АК-308", tier: 11, dmg: 171, price: 91533 },
+        { id: 64, name: "Винтовка ORSIS T-5000 Elite", tier: 11, dmg: 172, price: 92066 },
+        { id: 65, name: "Пулемёт «Утёс-М»", tier: 11, dmg: 174, price: 93145 },
+        { id: 66, name: "Винтовка Zastava M93 Black Arrow", tier: 11, dmg: 178, price: 95277 },
+        { id: 67, name: "Пулемёт Minimi Mk3", tier: 12, dmg: 190, price: 123500 },
+        { id: 68, name: "Дробовик Franchi SPAS-15", tier: 12, dmg: 190, price: 123500 },
+        { id: 69, name: "Автомат CZ Bren 2", tier: 12, dmg: 191, price: 124150 },
+        { id: 70, name: "Винтовка Sako TRG-42", tier: 12, dmg: 192, price: 124800 },
+        { id: 71, name: "Пулемёт FN MAG", tier: 12, dmg: 194, price: 126100 },
+        { id: 72, name: "Винтовка Desert Tech HTI", tier: 12, dmg: 198, price: 128700 },
+        { id: 73, name: "Прототип X-17", tier: 13, dmg: 215, price: 169000 },
+        { id: 74, name: "Дробовик USAS-12", tier: 13, dmg: 215, price: 169000 },
+        { id: 75, name: "Автомат SCAR-H", tier: 13, dmg: 216, price: 169780 },
+        { id: 76, name: "Винтовка Blaser R93 Tactical 2", tier: 13, dmg: 217, price: 170573 },
+        { id: 77, name: "Пулемёт Negev NG7", tier: 13, dmg: 219, price: 172146 },
+        { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 223, price: 175292 },
+        { id: 79, name: "РПГ-7", tier: 14, dmg: 250, price: 234000 },
+        { id: 80, name: "РПГ-26 «Аглень»", tier: 14, dmg: 250, price: 234000 },
+        { id: 81, name: "РПГ-29 «Вампир»", tier: 14, dmg: 251, price: 234936 },
+        { id: 82, name: "РПГ-32 «Хашим»", tier: 14, dmg: 252, price: 235872 },
+        { id: 83, name: "Carl Gustaf M4", tier: 14, dmg: 253, price: 236808 },
+        { id: 84, name: "FGM-148 Javelin", tier: 14, dmg: 258, price: 241488 },
+        { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 666, price: 666000, adminOnly: true }
     ];
 
     // ===== БРОНЯ =====
     const armorItems = [
-        { id: 1, name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2, price: 100 },
-        { id: 2, name: 'Куртка кожаная армейская', tier: 1, armor: 6, artifactProtection: 2, price: 120 },
-        { id: 3, name: 'Ватник утеплённый', tier: 1, armor: 6, artifactProtection: 2, price: 120 },
-        { id: 4, name: 'Плащ-палатка ОЗК', tier: 1, armor: 7, artifactProtection: 3, price: 140 },
-        { id: 5, name: 'Комбинезон Комбат', tier: 1, armor: 8, artifactProtection: 3, price: 200 },
-        { id: 6, name: 'Роба сталкера', tier: 1, armor: 8, artifactProtection: 3, price: 160 },
-        { id: 7, name: 'Бронежилет Барьер', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
-        { id: 8, name: 'Разгрузка тактическая с бронепанелями', tier: 2, armor: 15, artifactProtection: 5, price: 500 },
-        { id: 9, name: 'Бронежилет 6Б23', tier: 2, armor: 16, artifactProtection: 5, price: 530 },
-        { id: 10, name: 'Костюм Беркут', tier: 2, armor: 17, artifactProtection: 6, price: 570 },
-        { id: 11, name: 'Комбинезон Свобода-Новобранец', tier: 2, armor: 19, artifactProtection: 6, price: 630 },
-        { id: 12, name: 'Комбинезон Долг', tier: 2, armor: 20, artifactProtection: 7, price: 700 },
-        { id: 13, name: 'Комбинезон Ветер', tier: 3, armor: 30, artifactProtection: 10, price: 1200 },
-        { id: 14, name: 'Костюм Скат', tier: 3, armor: 31, artifactProtection: 10, price: 1240 },
-        { id: 15, name: 'Экзокостюм СЭВ', tier: 3, armor: 33, artifactProtection: 11, price: 1320 },
-        { id: 16, name: 'Бронежилет 6Б43 Ратник', tier: 3, armor: 34, artifactProtection: 11, price: 1360 },
-        { id: 17, name: 'Бронежилет Долга «Скала»', tier: 3, armor: 36, artifactProtection: 12, price: 1440 },
-        { id: 18, name: 'Комбинезон Заря', tier: 3, armor: 40, artifactProtection: 12, price: 2000 },
-        { id: 19, name: 'Бронежилет Выход', tier: 4, armor: 45, artifactProtection: 15, price: 2500 },
-        { id: 20, name: 'Бронежилет 6Б45 Ратник-2', tier: 4, armor: 47, artifactProtection: 16, price: 2610 },
-        { id: 21, name: 'Бронекостюм Монолит-Патрульный', tier: 4, armor: 48, artifactProtection: 16, price: 2670 },
-        { id: 22, name: 'Костюм СИРИУС', tier: 4, armor: 52, artifactProtection: 17, price: 2890 },
-        { id: 23, name: 'Экзокостюм Чистое небо', tier: 4, armor: 58, artifactProtection: 19, price: 3220 },
-        { id: 24, name: 'Костюм Стража-Финал', tier: 4, armor: 60, artifactProtection: 18, price: 4000 },
-        { id: 25, name: 'Броня Монолит', tier: 5, armor: 75, artifactProtection: 25, price: 8000 },
-        { id: 26, name: 'Бронекостюм СКАТ-9М', tier: 5, armor: 76, artifactProtection: 25, price: 8110 },
-        { id: 27, name: 'Бронежилет 6Б47 Ратник-3', tier: 5, armor: 78, artifactProtection: 26, price: 8320 },
-        { id: 28, name: 'Экзокостюм Периметр-1', tier: 5, armor: 79, artifactProtection: 26, price: 8430 },
-        { id: 29, name: 'Бронежилет 6Б57 Ратник-Элит', tier: 5, armor: 80, artifactProtection: 27, price: 8530 },
-        { id: 30, name: 'Костюм Штурмовик', tier: 5, armor: 84, artifactProtection: 28, price: 8960 },
-        { id: 31, name: 'Бронекостюм СЕВА', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
-        { id: 32, name: 'Бронекостюм Долг-Элит', tier: 6, armor: 85, artifactProtection: 30, price: 12000 },
-        { id: 33, name: 'Бронежилет 6Б13 Модерн', tier: 6, armor: 86, artifactProtection: 30, price: 12140 },
-        { id: 34, name: 'Костюм Абсолют-2', tier: 6, armor: 87, artifactProtection: 31, price: 12280 },
-        { id: 35, name: 'Экзокостюм Титан-Лайт', tier: 6, armor: 88, artifactProtection: 31, price: 12420 },
-        { id: 36, name: 'Костюм Гроза', tier: 6, armor: 89, artifactProtection: 31, price: 12560 },
-        { id: 37, name: 'Бронежилет 6Б59 Элит', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
-        { id: 38, name: 'Бронежилет 6Б49 Ратник-4', tier: 7, armor: 90, artifactProtection: 35, price: 18000 },
-        { id: 39, name: 'Костюм Ветер-Штурм', tier: 7, armor: 91, artifactProtection: 35, price: 18200 },
-        { id: 40, name: 'Бронекостюм Титан-Про', tier: 7, armor: 92, artifactProtection: 36, price: 18400 },
-        { id: 41, name: 'Экзокостюм Периметр-3', tier: 7, armor: 93, artifactProtection: 36, price: 18600 },
-        { id: 42, name: 'Броня Монолит-Элит', tier: 7, armor: 94, artifactProtection: 37, price: 18800 },
-        { id: 43, name: 'Бронекостюм Титан', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
-        { id: 44, name: 'Костюм Аванпост', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
-        { id: 45, name: 'Броня Стража', tier: 8, armor: 95, artifactProtection: 40, price: 26000 },
-        { id: 46, name: 'Костюм Затвор-Броня', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
-        { id: 47, name: 'Бронежилет 6Б51 Ратник-5', tier: 8, armor: 96, artifactProtection: 40, price: 26270 },
-        { id: 48, name: 'Экзокостюм Периметр-4', tier: 8, armor: 97, artifactProtection: 41, price: 26550 },
-        { id: 49, name: 'Защитный костюм Периметр', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
-        { id: 50, name: 'Костюм Форпост', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
-        { id: 51, name: 'Броня Стража-Элит', tier: 9, armor: 98, artifactProtection: 45, price: 36000 },
-        { id: 52, name: 'Бронежилет 6Б61 Легенда', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
-        { id: 53, name: 'Бронежилет 6Б53 Ратник-6', tier: 9, armor: 99, artifactProtection: 45, price: 36370 },
-        { id: 54, name: 'Экзокостюм Бастион', tier: 9, armor: 100, artifactProtection: 46, price: 36730 },
-        { id: 55, name: 'Костюм Последний Рубеж', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
-        { id: 56, name: 'Костюм Абсолют', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
-        { id: 57, name: 'Броня Периметр-Финал', tier: 10, armor: 100, artifactProtection: 50, price: 50000 },
-        { id: 58, name: 'Бронежилет 6Б55 Ратник-Финал', tier: 10, armor: 101, artifactProtection: 50, price: 50500 },
-        { id: 59, name: 'Бронежилет 6Б63 Легенда-Финал', tier: 10, armor: 102, artifactProtection: 51, price: 51000 },
-        { id: 60, name: 'Экзокостюм Бастион-2', tier: 10, armor: 103, artifactProtection: 52, price: 51500 },
-        { id: 61, name: 'Экзоскелет Монолит-11', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
-        { id: 62, name: 'Экзоскелет Свобода', tier: 11, armor: 115, artifactProtection: 60, price: 70000 },
-        { id: 63, name: 'Экзоскелет Атлант', tier: 11, armor: 116, artifactProtection: 61, price: 70610 },
-        { id: 64, name: 'Бронекостюм Периметр-5', tier: 11, armor: 117, artifactProtection: 61, price: 71220 },
-        { id: 65, name: 'Броня Легион-Лайт', tier: 11, armor: 118, artifactProtection: 62, price: 71830 },
-        { id: 66, name: 'Экзоскелет Титан-Экстрим', tier: 11, armor: 119, artifactProtection: 62, price: 72430 },
-        { id: 67, name: 'Броня Легион', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 68, name: 'Экзоскелет Периметр-2', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 69, name: 'Броня Стража-Легенда', tier: 12, armor: 130, artifactProtection: 70, price: 95000 },
-        { id: 70, name: 'Экзоскелет Штурмовой', tier: 12, armor: 131, artifactProtection: 71, price: 95730 },
-        { id: 71, name: 'Экзоскелет Периметр-Финал', tier: 12, armor: 132, artifactProtection: 71, price: 96460 },
-        { id: 72, name: 'Экзокостюм Бастион-Финал', tier: 12, armor: 133, artifactProtection: 72, price: 97190 },
-        { id: 73, name: 'Прототип Брони X-17', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 74, name: 'Экзоскелет Крепость', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 75, name: 'Броня Раскат', tier: 13, armor: 150, artifactProtection: 85, price: 130000 },
-        { id: 76, name: 'Экзоскелет Крепость-2', tier: 13, armor: 151, artifactProtection: 86, price: 130870 },
-        { id: 77, name: 'Экзоскелет Реликт', tier: 13, armor: 152, artifactProtection: 86, price: 131730 },
-        { id: 78, name: 'Экзокостюм Возмездие', tier: 13, armor: 153, artifactProtection: 87, price: 132600 },
-        { id: 79, name: 'Броня Стрелка', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
-        { id: 80, name: 'Экзоскелет', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
-        { id: 81, name: 'Броня Зоны', tier: 14, armor: 180, artifactProtection: 100, price: 180000 },
-        { id: 82, name: 'Экзоскелет Титан-Финал', tier: 14, armor: 181, artifactProtection: 101, price: 181000 },
-        { id: 83, name: 'Экзоскелет Абсолют-Финал', tier: 14, armor: 182, artifactProtection: 101, price: 182000 },
-        { id: 84, name: 'Экзокостюм Апокалипсис', tier: 14, armor: 183, artifactProtection: 102, price: 183000 },
-        { id: 85, name: 'Плащ черного сталкера', tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true }
+        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, artifactProtection: 2, price: 130 },
+        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, artifactProtection: 2, price: 156 },
+        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, artifactProtection: 2, price: 156 },
+        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, artifactProtection: 3, price: 182 },
+        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, artifactProtection: 3, price: 260 },
+        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, artifactProtection: 3, price: 208 },
+        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, artifactProtection: 5, price: 650 },
+        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, artifactProtection: 5, price: 650 },
+        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, artifactProtection: 5, price: 689 },
+        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, artifactProtection: 6, price: 741 },
+        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, artifactProtection: 6, price: 819 },
+        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, artifactProtection: 7, price: 910 },
+        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, artifactProtection: 10, price: 1560 },
+        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, artifactProtection: 10, price: 1612 },
+        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, artifactProtection: 11, price: 1716 },
+        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, artifactProtection: 11, price: 1768 },
+        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, artifactProtection: 12, price: 1872 },
+        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, artifactProtection: 12, price: 2600 },
+        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, artifactProtection: 15, price: 3250 },
+        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, artifactProtection: 16, price: 3393 },
+        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, artifactProtection: 16, price: 3471 },
+        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, artifactProtection: 17, price: 3757 },
+        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, artifactProtection: 19, price: 4186 },
+        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, artifactProtection: 18, price: 5200 },
+        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, artifactProtection: 25, price: 10400 },
+        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, artifactProtection: 25, price: 10543 },
+        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, artifactProtection: 26, price: 10816 },
+        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, artifactProtection: 26, price: 10959 },
+        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, artifactProtection: 27, price: 11089 },
+        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, artifactProtection: 28, price: 11648 },
+        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, artifactProtection: 30, price: 15600 },
+        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, artifactProtection: 30, price: 15600 },
+        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, artifactProtection: 30, price: 15782 },
+        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, artifactProtection: 31, price: 15964 },
+        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, artifactProtection: 31, price: 16146 },
+        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, artifactProtection: 31, price: 16328 },
+        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, artifactProtection: 35, price: 23400 },
+        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, artifactProtection: 35, price: 23400 },
+        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, artifactProtection: 35, price: 23660 },
+        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, artifactProtection: 36, price: 23920 },
+        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, artifactProtection: 36, price: 24180 },
+        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, artifactProtection: 37, price: 24440 },
+        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
+        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
+        { id: 45, name: "Броня Стража", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
+        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, artifactProtection: 40, price: 34151 },
+        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, artifactProtection: 40, price: 34151 },
+        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, artifactProtection: 41, price: 34515 },
+        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
+        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
+        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
+        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, artifactProtection: 45, price: 47281 },
+        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, artifactProtection: 45, price: 47281 },
+        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, artifactProtection: 46, price: 47749 },
+        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
+        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
+        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
+        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, artifactProtection: 50, price: 65650 },
+        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, artifactProtection: 51, price: 66300 },
+        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, artifactProtection: 52, price: 66950 },
+        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, artifactProtection: 60, price: 91000 },
+        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, artifactProtection: 60, price: 91000 },
+        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, artifactProtection: 61, price: 91793 },
+        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, artifactProtection: 61, price: 92586 },
+        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, artifactProtection: 62, price: 93379 },
+        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, artifactProtection: 62, price: 94159 },
+        { id: 67, name: "Броня Легион", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
+        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
+        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
+        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, artifactProtection: 71, price: 124449 },
+        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, artifactProtection: 71, price: 125398 },
+        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, artifactProtection: 72, price: 126347 },
+        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
+        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
+        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
+        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, artifactProtection: 86, price: 170131 },
+        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, artifactProtection: 86, price: 171249 },
+        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, artifactProtection: 87, price: 172380 },
+        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
+        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
+        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
+        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, artifactProtection: 101, price: 235300 },
+        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, artifactProtection: 101, price: 236600 },
+        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, artifactProtection: 102, price: 237900 },
+        { id: 85, name: "Плащ черного сталкера", tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true }
     ];
 
     // ===== ДЕТЕКТОРЫ =====
     // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Учёных, не у Торговца
     const detectors = [
-        { id: 1, name: 'Радэр 2-02', tier: 1, price: 140 },
-        { id: 2, name: 'Радэр 2-20', tier: 2, price: 700 },
-        { id: 3, name: 'Велес', tier: 3, price: 2100 },
-        { id: 4, name: 'Сварог', tier: 4, price: 4900 },
-        { id: 5, name: 'Варлорд', tier: 5, price: 9800 },
-        { id: 6, name: 'Бинокль-Сканер Око', tier: 6, price: 16800 },
-        { id: 7, name: 'Детектор Авангард', tier: 7, price: 25200 },
-        { id: 8, name: 'Детектор Омега', tier: 8, price: 36400 }
+        { id: 1, name: "Радэр 2-02", tier: 1, price: 182 },
+        { id: 2, name: "Радэр 2-20", tier: 2, price: 910 },
+        { id: 3, name: "Велес", tier: 3, price: 2730 },
+        { id: 4, name: "Сварог", tier: 4, price: 6370 },
+        { id: 5, name: "Варлорд", tier: 5, price: 12740 },
+        { id: 6, name: "Бинокль-Сканер Око", tier: 6, price: 21840 },
+        { id: 7, name: "Детектор Авангард", tier: 7, price: 32760 },
+        { id: 8, name: "Детектор Омега", tier: 8, price: 47320 }
     ];
 
     // Базовое снаряжение "без ничего" — используется при действии "Снять"
@@ -714,13 +713,13 @@
 
     // ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
     const consumables = [
-        { id: 1, name: 'Хлеб', type: 'food', restore: 25, price: 20 },
-        { id: 2, name: 'Тушенка', type: 'food', restore: 50, price: 40 },
-        { id: 3, name: 'Вода', type: 'water', restore: 25, price: 15 },
-        { id: 4, name: 'Энергетик', type: 'water', restore: 100, price: 40 },
-        { id: 5, name: 'Гражданская аптечка', type: 'medkit', restore: 50, price: 100 },
-        { id: 6, name: 'Аптечка армейская', type: 'medkit', restore: 100, price: 150 },
-        { id: 7, name: 'Аптечка научная', type: 'medkit', restore: 150, price: 200 }
+        { id: 1, name: "Хлеб", type: "food", restore: 25, price: 26 },
+        { id: 2, name: "Тушенка", type: "food", restore: 50, price: 52 },
+        { id: 3, name: "Вода", type: "water", restore: 25, price: 20 },
+        { id: 4, name: "Энергетик", type: "water", restore: 100, price: 52 },
+        { id: 5, name: "Гражданская аптечка", type: "medkit", restore: 50, price: 130 },
+        { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 195 },
+        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 260 }
     ];
 
     // ===== ФРАКЦИИ =====
@@ -738,9 +737,13 @@
     // ===== NPC =====
     // Оружие и броня NPC теперь выбираются случайно из 6 вариантов данного тира при каждой встрече
     // (см. findRandomNPC) — здесь создаётся только базовый шаблон (тир/фракция/боевые статы)
+    // Множитель силы NPC подобран индивидуально по тиру (симуляцией) — цель: ~51% шанс победы
+    // игрока при слабейшем снаряжении своего тира. Раньше был гарантированный 100% выигрыш везде.
+    const NPC_TIER_MULT = { 1: 1.44, 2: 1.02, 3: 1.1, 4: 1.14, 5: 1.2, 6: 1.1, 7: 1.02, 8: 0.9, 9: 0.9, 10: 0.76, 11: 0.8, 12: 0.92, 13: 0.82, 14: 0.88 };
     const npcs = [];
     for (let i = 0; i < factions.length; i++) {
         for (let tier = 1; tier <= 14; tier++) {
+            const mult = NPC_TIER_MULT[tier];
             npcs.push({
                 id: `${factions[i].name}_${tier}`,
                 faction: factions[i],
@@ -748,8 +751,8 @@
                 name: `${factions[i].name} ${tier} ур.`,
                 coins: tier * 500,
                 exp: tier * 50,
-                hp: tier * 100,
-                dmg: tier * 12, // множитель снижен с 15 до 12 — на 15 бой был нечестным на нескольких тирах (см. проверку баланса)
+                hp: Math.round(tier * 100 * mult),
+                dmg: Math.round(tier * 12 * mult),
                 hitChance: 0.9,
                 runChance: 0.5,
                 runSkill: 0
@@ -1163,10 +1166,6 @@
         const content = document.getElementById('kpkContent');
         content.innerHTML = '';
 
-        if (kpkTab === 'players') {
-            renderPlayersList('');
-            return;
-        }
         if (kpkTab === 'factions') {
             renderFactionsTab();
             return;
@@ -1234,11 +1233,11 @@
             .then(res => res.json())
             .then(data => {
                 content.innerHTML = renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
-                    `<button class="back-btn" onclick="renderPlayersList('')">← К списку игроков</button>`;
+                    `<button class="back-btn" onclick="renderRatingTab('')">← К рейтингу</button>`;
             })
             .catch(() => {
                 content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
-                    `<button class="back-btn" onclick="renderPlayersList('')">← К списку игроков</button>`;
+                    `<button class="back-btn" onclick="renderRatingTab('')">← К рейтингу</button>`;
             });
     }
 
@@ -1293,17 +1292,32 @@
         return title;
     }
 
-    function renderRatingTab() {
+    function renderRatingTab(query) {
+        query = query || '';
         const content = document.getElementById('kpkContent');
-        content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка рейтинга...</p>';
-        fetch(`${SERVER_URL}/api/players`)
+        content.innerHTML = `
+            <input type="text" id="ratingSearchInput" placeholder="Поиск по нику или ID..." value="${query.replace(/"/g, '&quot;')}"
+                style="width:100%; padding:10px; margin:8px 0; background:#111; border:1px solid #333; color:#fff; border-radius:6px;">
+            <div id="ratingListResults"><p style="padding:10px; color:#888;">Загрузка рейтинга...</p></div>
+        `;
+        const input = document.getElementById('ratingSearchInput');
+        input.oninput = () => renderRatingTab(input.value);
+        if (query) { input.focus(); input.setSelectionRange(input.value.length, input.value.length); }
+
+        fetch(`${SERVER_URL}/api/players${query ? '?search=' + encodeURIComponent(query) : ''}`)
             .then(res => res.json())
             .then(list => {
                 if (kpkTab !== 'rating') return;
+                const results = document.getElementById('ratingListResults');
+                if (!results) return;
                 const sorted = [...list].sort((a, b) => (b.level || 1) - (a.level || 1));
+                if (sorted.length === 0) {
+                    results.innerHTML = '<p style="padding:10px; color:#888;">Игроков не найдено</p>';
+                    return;
+                }
                 const myId = String(getPlayerId());
-                content.innerHTML = sorted.map((p, i) => `
-                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; ${String(p.id)===myId ? 'border:1px solid #8a7a4a;' : ''}">
+                results.innerHTML = sorted.map((p, i) => `
+                    <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; ${String(p.id)===myId ? 'border:1px solid #8a7a4a;' : ''}" onclick="showPlayerInfo('${p.id}')">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span><strong>${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
                             <span style="color:#8a7a4a; font-size:12px;">Ур. ${p.level || 1}</span>
@@ -1313,7 +1327,7 @@
                     </div>
                 `).join('');
             })
-            .catch(() => { content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рейтинг</p>'; });
+            .catch(() => { const r = document.getElementById('ratingListResults'); if (r) r.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рейтинг</p>'; });
     }
 
     // ===== ЧАТ (общий / фракции / личный) =====
@@ -1798,7 +1812,7 @@
                     content.innerHTML = myLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} Байт</p>
+                            <p>Цена: ${lot.price} ${lot.currency === 'stars' ? '⭐ Stars' : 'Байт'}</p>
                             <p>Количество: ${lot.quantity}</p>
                             <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
@@ -1839,13 +1853,16 @@
                     }
                     list.innerHTML = buyableLots.map(lot => {
                         const statsHtml = showStatsInList ? getItemInfoHtml(lot.item) : '';
+                        const isStars = lot.currency === 'stars';
                         return `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
                             ${statsHtml}
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
-                            <p>Цена: 🪙 ${lot.price}</p>
-                            <button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
+                            <p>Цена: ${isStars ? '⭐ ' + lot.price + ' Stars' : '🪙 ' + lot.price + ' Байт'}</p>
+                            ${isStars
+                                ? `<button onclick="buyMarketItemWithStars(${lot.id})" style="background:#8a7a4a;">⭐ Купить за Stars</button>`
+                                : `<button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>`}
                         </div>
                     `;
                     }).join('');
@@ -1921,6 +1938,30 @@
         .catch(() => alert('Ошибка соединения с сервером'));
     }
 
+    // Покупка лота за Telegram Stars — реальная оплата, через тот же механизм счетов, что и
+    // покупка Байт/предметов в Магазине Байт
+    function buyMarketItemWithStars(lotId) {
+        fetch(`${SERVER_URL}/api/market/create-star-invoice`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, lotId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) { alert('Ошибка: ' + (data.error || 'не удалось создать счёт')); return; }
+            if (!window.Telegram?.WebApp?.openInvoice) { alert('Оплата доступна только внутри Telegram.'); return; }
+            window.Telegram.WebApp.openInvoice(data.link, (status) => {
+                if (status === 'paid') {
+                    alert('Оплата прошла успешно! Предмет будет начислен через несколько секунд.');
+                    setTimeout(() => { loadGame(); renderMarket(); }, 2000);
+                } else if (status === 'failed') {
+                    alert('Оплата не удалась.');
+                }
+            });
+        })
+        .catch(() => alert('Ошибка соединения с сервером'));
+    }
+
     function cancelMarketLot(lotId) {
         if (!confirm('Снять этот лот с продажи?')) return;
         fetch(`${SERVER_URL}/api/market/cancel`, {
@@ -1944,12 +1985,18 @@
     function listItemForSale(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const maxQty = player.inventory[itemName];
+
+        const currencyChoice = prompt('За какую валюту продавать?\n1 — Байты (внутриигровая валюта)\n2 — Telegram Stars (настоящая оплата)', '1');
+        if (currencyChoice === null) return; // отмена
+        const currency = currencyChoice.trim() === '2' ? 'stars' : 'bytes';
+
         const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, String(maxQty));
         if (qtyStr === null) return; // отмена
         const qty = parseInt(qtyStr);
         if (!qty || qty <= 0) { alert('Введите корректное количество (целое число больше нуля).'); return; }
         if (qty > maxQty) { alert(`У вас есть только ${maxQty} шт. Введите число не больше доступного.`); return; }
-        const priceStr = prompt('Цена за партию (в Байтах):', '100');
+
+        const priceStr = prompt(currency === 'stars' ? 'Цена за партию (в Telegram Stars):' : 'Цена за партию (в Байтах):', currency === 'stars' ? '10' : '100');
         if (priceStr === null) return; // отмена
         const price = parseInt(priceStr);
         if (!price || price <= 0) { alert('Введите корректную цену (целое число больше нуля).'); return; }
@@ -1957,7 +2004,7 @@
         fetch(`${SERVER_URL}/api/market/sell`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, item: itemName, quantity: qty, price })
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, item: itemName, quantity: qty, price, currency })
         })
         .then(res => res.json())
         .then(data => {
@@ -2406,7 +2453,7 @@
     function startHoldToConfirm(btn, actionFn) {
         if (holdToConfirmTimer) return; // уже удерживается
         const fill = document.getElementById(btn.id + 'Fill');
-        const duration = 3000, stepMs = 50;
+        const duration = 1000, stepMs = 50;
         let elapsed = 0;
         holdToConfirmTimer = setInterval(() => {
             elapsed += stepMs;
@@ -3420,6 +3467,22 @@
         if (player.inventory[itemName] > 0) openItemActions(itemName, 'shop'); // если ещё осталось — обновить окно
     }
 
+    // Продать ВЕСЬ стак предмета одним нажатием — цена продажи не зависит от интеллекта
+    // (в отличие от цены покупки), поэтому можно просто умножить цену за штуку на количество
+    function sellAllFromModal(itemName) {
+        const qty = player.inventory[itemName] || 0;
+        if (qty <= 0) return;
+        const unitPrice = getSellPrice(itemName);
+        const totalEarned = unitPrice * qty;
+        delete player.inventory[itemName];
+        player.coins = (Number(player.coins) || 0) + totalEarned;
+        for (let i = 0; i < qty; i++) gainPerk('intellect', 0.1); // интеллект растёт за каждую продажу, как и при поштучной
+        renderShop();
+        updateUI();
+        saveGame();
+        closeItemActionModal();
+    }
+
     // ===== МОДАЛКА ДЕЙСТВИЙ С ПРЕДМЕТОМ ИЗ ИНВЕНТАРЯ =====
     // context: 'inventory' (обычный инвентарь) или 'shop' (открыто из вкладки "Продать" у торговца — добавляет кнопку Продать)
     function openItemActions(itemName, context) {
@@ -3462,6 +3525,9 @@
         buttons += `<button onclick="moveItemToWarehouse('${esc}')">📦 Переместить в склад</button>`;
         if (context === 'shop') {
             buttons += `<button onclick="sellItemFromModal('${esc}')" style="background:#27ae60;">💵 Продать (🪙 ${getSellPrice(itemName)})</button>`;
+            if (player.inventory[itemName] > 1) {
+                buttons += `<button onclick="sellAllFromModal('${esc}')" style="background:#1e8449;">💰 Продать всё ×${player.inventory[itemName]} (🪙 ${getSellPrice(itemName) * player.inventory[itemName]})</button>`;
+            }
         }
         buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
 
