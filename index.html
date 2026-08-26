@@ -35,7 +35,7 @@
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .belt-slot { background: #0d0d0d; border: 2px solid #8a7a4a; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
         .back-btn { margin-top: 15px; width: 100%; padding: 12px; background: #c0392b; border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
-        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 90px; overflow-y: auto; }
+        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 160px; max-height: 160px; overflow-y: auto; overflow-x: hidden; overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; box-sizing: border-box; }
         .stats-details { margin-top: 10px; font-size: 12px; }
         .stats-details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a1a; }
         .shop-item { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 10px; margin-bottom: 6px; }
@@ -107,9 +107,9 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:110px; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column-reverse;"></div>
+        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; max-height:220px; overflow-y:auto; overflow-x:hidden; margin-bottom:8px; display:flex; flex-direction:column-reverse; box-sizing:border-box;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:8px; position:sticky; bottom:0; background:#111; padding:6px 0; z-index:5;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
         </div>
@@ -213,6 +213,12 @@
     <div id="raidScreen" class="screen">
         <h3>⚔️ Рейд</h3>
         <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
+        <div style="margin-bottom:8px;">
+            <div style="font-size:11px; color:#888; margin-bottom:2px;">☢️ Радиация: <span id="radiationValue">0</span> / 100</div>
+            <div style="background:#0d0d0d; border:1px solid #222; border-radius:6px; height:10px; overflow:hidden;">
+                <div id="radiationBar" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
+            </div>
+        </div>
         <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
         <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
             <button id="raidStepBtn"
@@ -290,7 +296,7 @@
 <div id="adminModal" class="modal">
     <div class="modal-content">
         <h3>🛠️ Админ меню</h3>
-        <input type="text" id="adminPassword" placeholder="Введите пароль (6 символов)" style="color:#fff; background:#1a1a1a;">
+        <input type="text" id="adminPassword" placeholder="Введите пароль (6 символов)" style="color:#fff; background:#1a1a1a;" maxlength="20">
         <button onclick="checkAdminPassword()">Войти</button>
     </div>
 </div>
@@ -299,7 +305,7 @@
     <div class="modal-content" style="max-width: 500px;">
         <h3>🛠️ Админ Панель</h3>
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">ID или НИК игрока, которому выдать (оставьте пустым, чтобы выдать себе):</label>
-        <input type="text" id="targetUserId" placeholder="Например: 123456789 или ЕгоНик">
+        <input type="text" id="targetUserId" placeholder="Например: 123456789 или ЕгоНик" maxlength="32">
         <div style="margin-bottom: 10px;">
             <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Что именно выдать:</label>
             <select id="giveType" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333;" onchange="updateGiveItemSelect()">
@@ -317,20 +323,20 @@
             </select>
         </div>
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Количество — сколько выдать (для уровня/денег/частей тела/жетонов/перков):</label>
-        <input type="number" id="giveAmount" placeholder="Например: 5" style="margin-bottom:10px;">
+        <input type="number" id="giveAmount" placeholder="Например: 5" min="0" max="1000000" style="margin-bottom:10px;">
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Тир — для оружия/брони/артефактов/детекторов (1-14), для мутантов (0-14):</label>
-        <input type="number" id="giveTier" placeholder="Например: 5" style="margin-bottom:10px;">
+        <input type="number" id="giveTier" placeholder="Например: 5" min="0" max="14" style="margin-bottom:10px;">
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Выбор конкретного вида оружия/брони/перка из списка (появляется автоматически при выборе типа выше):</label>
         <select id="giveItemSelect" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:10px; display:none;"></select>
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Или впишите точное название вручную (необязательно, только если не нашли нужное в списке выше):</label>
-        <input type="text" id="giveItemName" placeholder="Например: Автомат SCAR-H" style="margin-bottom:10px;">
+        <input type="text" id="giveItemName" placeholder="Например: Автомат SCAR-H" style="margin-bottom:10px;" maxlength="80">
         <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Уровень улучшения +N — только для оружия/брони, от 0 (без улучшения) до 100:</label>
         <input type="number" id="giveGearLevel" placeholder="Например: 20" min="0" max="100" style="margin-bottom:10px;">
         <button onclick="giveAdminItem()">Выдать</button>
         <div style="margin:16px 0 8px; border-top:1px solid #333; padding-top:10px;">
             <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">🔍 Поиск игроков по нику или ID — здесь же можно заблокировать/разблокировать найденного игрока:</label>
             <div style="display:flex; gap:8px; margin:6px 0;">
-                <input type="text" id="adminPlayerSearch" placeholder="Введите ник или ID" style="flex:1;">
+                <input type="text" id="adminPlayerSearch" placeholder="Введите ник или ID" style="flex:1;" maxlength="32">
                 <button onclick="searchAdminPlayers()" style="width:auto; padding:8px 14px;">Найти</button>
             </div>
             <div id="adminSearchResults" style="max-height:200px; overflow-y:auto;"></div>
@@ -339,7 +345,7 @@
             <label style="display:block; font-size:12px; color:#c0392b; margin-bottom:6px;">⚠️ Опасная зона — необратимо:</label>
             <button onclick="resetMyOwnProgress()" style="background:#c0392b;">🔄 Сбросить мой прогресс</button>
             <div style="display:flex; gap:8px; margin-top:8px;">
-                <input type="text" id="resetTargetInput" placeholder="Ник или ID игрока" style="flex:1;">
+                <input type="text" id="resetTargetInput" placeholder="Ник или ID игрока" style="flex:1;" maxlength="32">
                 <button onclick="resetOtherPlayerProgress()" style="width:auto; padding:8px 14px; background:#c0392b;">Сбросить его</button>
             </div>
         </div>
@@ -351,6 +357,9 @@
     let player = {
         health: 100, hunger: 100, thirst: 100, coins: 0, level: 1, exp: 0,
         vitality: 0, agility: 0, strength: 0, accuracy: 0, intellect: 0, luck: 0,
+        radiation: 0, // 0-100, растёт от поиска артефактов в аномалиях; снимается спецаптечками
+        radiationResist: 0, // от надетых артефактов — снижает получаемую радиацию при поиске
+        anomalyResist: {}, // от надетых артефактов/брони — {имя аномалии: число} снижает риск при поиске именно в этой аномалии
         weapon: { name: 'Пистолет Макарова', tier: 1, dmg: 10 },
         armor: { name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2 },
         detector: { name: 'Радэр 2-02', tier: 1 },
@@ -361,8 +370,8 @@
         hostileFactions: [], // фракции, ставшие враждебными после нападения игрока
         warehouse: {},
         quickSlots: [null, null, null, null],
-        craftedArtifacts: {}, // скрещенные у Учёных артефакты — {имя: {tier, price, stats, gen}}, восстанавливаются при загрузке
-        breedCredits: 0, // жетоны сталкера у Учёных — отдельное числовое поле, как монеты
+        craftedArtifacts: {}, // скрещенные у Бункера экологов артефакты — {имя: {tier, price, stats, gen}}, восстанавливаются при загрузке
+        breedCredits: 0, // жетоны сталкера у Бункера экологов — отдельное числовое поле, как монеты
         nickname: '', // ник, придуманный игроком при первом входе — показывается на рынке/арене/в списке игроков
         freeNicknameChangeUsed: false, // использована ли единственная бесплатная смена ника
         nicknameChangeCredits: 0, // оплаченные смены ника (по 20 ⭐ за штуку), отдельное числовое поле
@@ -385,6 +394,7 @@
     let inventoryOpenedFromRaid = false; // рюкзак открыт прямо из рейда — "Назад" должен вернуть в рейд, а не в главное меню
     let raidLogs = [];
     let currentEnemy = null;
+    let currentAnomaly = null; // { ...anomalyDef, attemptsUsed, resolved } — интерактивная встреча с аномалией
     let battleTurn = 0;
     let adminClickCount = 0;
     let kpkTab = 'info';
@@ -439,80 +449,80 @@
 
     // ===== АРТЕФАКТЫ =====
     const artifacts = [
-        { name: 'Медуза', tier: 1, price: 200, stats: { health: 10 } },
-        { name: 'Жемчужина', tier: 1, price: 250, stats: { hunger: 5 } },
-        { name: 'Искра', tier: 1, price: 300, stats: { vitality: 1 } },
-        { name: 'Пружина', tier: 1, price: 220, stats: { accuracy: 1 } },
-        { name: 'Льдинка', tier: 1, price: 260, stats: { luck: 1 } },
-        { name: 'Уголёк', tier: 1, price: 280, stats: { intellect: 1 } },
-        { name: 'Хрусталик', tier: 1, price: 320, stats: { health: 12 } },
-        { name: 'Паутинка', tier: 1, price: 240, stats: { agility: 1 } },
-        { name: 'Камешек', tier: 1, price: 210, stats: { strength: 1 } },
-        { name: 'Вспышка', tier: 2, price: 500, stats: { agility: 1 } },
-        { name: 'Батарейка', tier: 2, price: 600, stats: { health: 15 } },
-        { name: 'Молния', tier: 2, price: 700, stats: { strength: 1 } },
-        { name: 'Стеклярус', tier: 2, price: 550, stats: { accuracy: 2 } },
-        { name: 'Смола', tier: 2, price: 620, stats: { luck: 2 } },
-        { name: 'Раковина', tier: 2, price: 580, stats: { intellect: 2 } },
-        { name: 'Осколок', tier: 2, price: 650, stats: { health: 18 } },
-        { name: 'Заноза', tier: 2, price: 530, stats: { vitality: 1 } },
-        { name: 'Пыльца', tier: 2, price: 510, stats: { agility: 1 } },
-        { name: 'Камень крови', tier: 3, price: 1200, stats: { vitality: 2 } },
-        { name: 'Гравитационный шар', tier: 3, price: 1400, stats: { strength: 2 } },
-        { name: 'Вихрь', tier: 3, price: 1600, stats: { agility: 2 } },
-        { name: 'Слюда', tier: 3, price: 1300, stats: { accuracy: 3 } },
-        { name: 'Ракушка', tier: 3, price: 1450, stats: { luck: 3 } },
-        { name: 'Пыльный кристалл', tier: 3, price: 1500, stats: { intellect: 3 } },
-        { name: 'Обломок', tier: 3, price: 1550, stats: { health: 25 } },
-        { name: 'Игла', tier: 3, price: 1250, stats: { strength: 2 } },
-        { name: 'Чешуйка', tier: 3, price: 1350, stats: { agility: 2 } },
-        { name: 'Огненный шар', tier: 4, price: 2500, stats: { strength: 3 } },
-        { name: 'Слеза', tier: 4, price: 2800, stats: { health: 30 } },
-        { name: 'Глаз', tier: 4, price: 3200, stats: { intellect: 3 } },
-        { name: 'Гарпун', tier: 4, price: 2700, stats: { accuracy: 4 } },
-        { name: 'Клык', tier: 4, price: 2900, stats: { luck: 4 } },
-        { name: 'Шип', tier: 4, price: 2600, stats: { agility: 3 } },
-        { name: 'Капля ртути', tier: 4, price: 3000, stats: { vitality: 3 } },
-        { name: 'Осколок кости', tier: 4, price: 3100, stats: { health: 32 } },
-        { name: 'Жёлудь', tier: 4, price: 2650, stats: { strength: 3 } },
-        { name: 'Стеклянный шарик', tier: 5, price: 4000, stats: { agility: 4 } },
-        { name: 'Магнит', tier: 5, price: 4500, stats: { strength: 4 } },
-        { name: 'Пузырь', tier: 5, price: 5000, stats: { luck: 5 } },
-        { name: 'Кварц', tier: 5, price: 4300, stats: { accuracy: 5 } },
-        { name: 'Спираль', tier: 5, price: 4400, stats: { intellect: 4 } },
-        { name: 'Обсидиан', tier: 5, price: 4200, stats: { vitality: 4 } },
-        { name: 'Лунный камень', tier: 5, price: 4800, stats: { health: 45 } },
-        { name: 'Игольчатый кристалл', tier: 5, price: 4100, stats: { strength: 4 } },
-        { name: 'Вихревой шар', tier: 5, price: 4600, stats: { agility: 4 } },
-        { name: 'Кусок мяса', tier: 6, price: 7000, stats: { vitality: 5 } },
-        { name: 'Коготь', tier: 6, price: 7500, stats: { agility: 5 } },
-        { name: 'Зуб', tier: 6, price: 8000, stats: { health: 60 } },
-        { name: 'Ржавый механизм', tier: 6, price: 7800, stats: { agility: 4, accuracy: 4 } },
-        { name: 'Кристалл разума', tier: 6, price: 8200, stats: { intellect: 4, luck: 3 } },
-        { name: 'Тлеющий уголь', tier: 6, price: 7600, stats: { health: 35, strength: 3 } },
-        { name: 'Ледяная слеза', tier: 6, price: 7900, stats: { health: 35, vitality: 3 } },
-        { name: 'Шёпот бездны', tier: 6, price: 8400, stats: { luck: 4, intellect: 3 } },
-        { name: 'Стальное перо', tier: 6, price: 8100, stats: { strength: 4, agility: 3 } },
-        { name: 'Кровь земли', tier: 7, price: 12000, stats: { health: 70 } },
-        { name: 'Пепел', tier: 7, price: 14000, stats: { luck: 6 } },
-        { name: 'Пламя', tier: 7, price: 16000, stats: { strength: 6 } },
-        { name: 'Осколок звезды', tier: 7, price: 13500, stats: { health: 30, luck: 4, intellect: 3 } },
-        { name: 'Сердце бури', tier: 7, price: 14500, stats: { strength: 4, agility: 4, accuracy: 3 } },
-        { name: 'Плачущий кристалл', tier: 7, price: 13800, stats: { health: 40, vitality: 3, luck: 3 } },
-        { name: 'Вой пустоты', tier: 7, price: 15000, stats: { intellect: 4, accuracy: 4, luck: 3 } },
-        { name: 'Живая ртуть', tier: 7, price: 14200, stats: { agility: 5, strength: 3, vitality: 3 } },
-        { name: 'Тень зоны', tier: 7, price: 15500, stats: { luck: 5, accuracy: 3, intellect: 3 } },
-        { name: 'Ядро', tier: 8, price: 30000, stats: { strength: 10 } },
-        { name: 'Звезда', tier: 8, price: 35000, stats: { health: 100 } },
-        { name: 'Антиматерия', tier: 8, price: 50000, stats: { luck: 10 } },
-        { name: 'Сердце Зоны', tier: 8, price: 38000, stats: { health: 40, vitality: 5, strength: 4, luck: 4 } },
-        { name: 'Осколок Монолита', tier: 8, price: 40000, stats: { strength: 6, accuracy: 5, agility: 4, intellect: 3 } },
-        { name: 'Слеза Вселенной', tier: 8, price: 42000, stats: { health: 35, luck: 6, intellect: 5, vitality: 4 } },
-        { name: 'Дыхание Чернобыля', tier: 8, price: 39000, stats: { vitality: 6, health: 30, agility: 5, accuracy: 4 } },
-        { name: 'Кровь Зоны', tier: 8, price: 41000, stats: { strength: 5, health: 35, luck: 5, accuracy: 4 } },
-        { name: 'Разум Аномалии', tier: 8, price: 43000, stats: { intellect: 6, luck: 5, accuracy: 5, agility: 3 } },
-        { name: 'Шустряк', tier: 8, price: 45000, stats: { agility: 15 } },
-        { name: 'Сердце Зоны: Абсолют', tier: 8, price: 666000, adminOnly: true, stats: { vitality: 666, agility: 666, strength: 666, accuracy: 666, intellect: 666, luck: 666 } }
+        { name: "Медуза", tier: 1, price: 200, stats: {"anomaly_Мясорубка":-3,"health":-3,"anomaly_Плазменная сфера":-2,"anomaly_Жарка":2} },
+        { name: "Жемчужина", tier: 1, price: 250, stats: {"radiation":-3,"anomaly_Печка":-2,"thirst":-3,"anomaly_Плазменная сфера":4} },
+        { name: "Искра", tier: 1, price: 300, stats: {"anomaly_Мясорубка":-4,"anomaly_Кислотный туман":-3,"anomaly_Воронка":-3,"thirst":3} },
+        { name: "Пружина", tier: 1, price: 220, stats: {"anomaly_Электра":-3,"hunger":-3,"anomaly_Печка":-2,"anomaly_Плазменная сфера":3} },
+        { name: "Льдинка", tier: 1, price: 260, stats: {"anomaly_Жарка":-3,"anomaly_Мясорубка":-3,"anomaly_Печка":-3,"anomaly_Воронка":4} },
+        { name: "Уголёк", tier: 1, price: 280, stats: {"hunger":-2,"radiation":-2,"anomaly_Воронка":-2,"health":3} },
+        { name: "Хрусталик", tier: 1, price: 320, stats: {"health":-2,"thirst":-2,"hunger":-3,"radiation":3} },
+        { name: "Паутинка", tier: 1, price: 240, stats: {"anomaly_Плазменная сфера":-4,"thirst":-2,"anomaly_Электра":-2,"hunger":2} },
+        { name: "Камешек", tier: 1, price: 210, stats: {"thirst":-2,"hunger":-3,"anomaly_Печка":-3,"anomaly_Карусель":4} },
+        { name: "Вспышка", tier: 2, price: 500, stats: {"radiation":-4,"thirst":-5,"anomaly_Электра":-5,"anomaly_Жарка":8} },
+        { name: "Батарейка", tier: 2, price: 600, stats: {"anomaly_Кислотный туман":-4,"anomaly_Электра":-5,"anomaly_Мясорубка":-4,"anomaly_Плазменная сфера":6} },
+        { name: "Молния", tier: 2, price: 700, stats: {"anomaly_Жарка":-3,"radiation":-5,"thirst":-5,"health":8} },
+        { name: "Стеклярус", tier: 2, price: 550, stats: {"anomaly_Электра":-4,"radiation":-4,"hunger":-5,"anomaly_Мясорубка":6} },
+        { name: "Смола", tier: 2, price: 620, stats: {"anomaly_Кислотный туман":-3,"hunger":-3,"radiation":-4,"anomaly_Электра":5} },
+        { name: "Раковина", tier: 2, price: 580, stats: {"anomaly_Карусель":-4,"anomaly_Печка":-4,"anomaly_Воронка":-5,"anomaly_Жарка":5} },
+        { name: "Осколок", tier: 2, price: 650, stats: {"radiation":-3,"hunger":-4,"thirst":-3,"anomaly_Кислотный туман":7} },
+        { name: "Заноза", tier: 2, price: 530, stats: {"anomaly_Мясорубка":-4,"anomaly_Воронка":-3,"anomaly_Кислотный туман":-4,"hunger":8} },
+        { name: "Пыльца", tier: 2, price: 510, stats: {"anomaly_Печка":-5,"health":-5,"anomaly_Плазменная сфера":-4,"anomaly_Жарка":7} },
+        { name: "Камень крови", tier: 3, price: 1200, stats: {"anomaly_Кислотный туман":-6,"health":-4,"thirst":10} },
+        { name: "Гравитационный шар", tier: 3, price: 1400, stats: {"anomaly_Печка":-5,"anomaly_Мясорубка":-6,"anomaly_Жарка":9} },
+        { name: "Вихрь", tier: 3, price: 1600, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-6,"radiation":12} },
+        { name: "Слюда", tier: 3, price: 1300, stats: {"thirst":-4,"hunger":-4,"anomaly_Жарка":9} },
+        { name: "Ракушка", tier: 3, price: 1450, stats: {"anomaly_Плазменная сфера":-5,"anomaly_Мясорубка":-6,"radiation":7} },
+        { name: "Пыльный кристалл", tier: 3, price: 1500, stats: {"health":-5,"anomaly_Мясорубка":-6,"anomaly_Карусель":10} },
+        { name: "Обломок", tier: 3, price: 1550, stats: {"anomaly_Печка":-5,"anomaly_Электра":-4,"anomaly_Воронка":9} },
+        { name: "Игла", tier: 3, price: 1250, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Воронка":-6,"health":9} },
+        { name: "Чешуйка", tier: 3, price: 1350, stats: {"health":-6,"anomaly_Печка":-6,"anomaly_Жарка":10} },
+        { name: "Огненный шар", tier: 4, price: 2500, stats: {"hunger":-6,"radiation":-8,"anomaly_Воронка":13,"anomaly_Жарка":15} },
+        { name: "Слеза", tier: 4, price: 2800, stats: {"anomaly_Печка":-5,"anomaly_Карусель":-8,"anomaly_Плазменная сфера":8,"radiation":14} },
+        { name: "Глаз", tier: 4, price: 3200, stats: {"radiation":-5,"anomaly_Кислотный туман":-5,"health":14,"anomaly_Мясорубка":8} },
+        { name: "Гарпун", tier: 4, price: 2700, stats: {"thirst":-5,"anomaly_Воронка":-7,"health":15,"anomaly_Электра":16} },
+        { name: "Клык", tier: 4, price: 2900, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-5,"hunger":9,"health":11} },
+        { name: "Шип", tier: 4, price: 2600, stats: {"radiation":-7,"anomaly_Мясорубка":-6,"anomaly_Воронка":14,"anomaly_Карусель":11} },
+        { name: "Капля ртути", tier: 4, price: 3000, stats: {"anomaly_Печка":-6,"anomaly_Мясорубка":-6,"health":9,"hunger":15} },
+        { name: "Осколок кости", tier: 4, price: 3100, stats: {"radiation":-5,"anomaly_Мясорубка":-5,"anomaly_Жарка":13,"anomaly_Карусель":11} },
+        { name: "Жёлудь", tier: 4, price: 2650, stats: {"anomaly_Жарка":-6,"anomaly_Воронка":-7,"anomaly_Печка":8,"anomaly_Мясорубка":14} },
+        { name: "Стеклянный шарик", tier: 5, price: 4000, stats: {"anomaly_Электра":-8,"anomaly_Карусель":13,"hunger":13} },
+        { name: "Магнит", tier: 5, price: 4500, stats: {"anomaly_Кислотный туман":-8,"anomaly_Плазменная сфера":13,"anomaly_Карусель":12} },
+        { name: "Пузырь", tier: 5, price: 5000, stats: {"anomaly_Печка":-8,"thirst":13,"hunger":15} },
+        { name: "Кварц", tier: 5, price: 4300, stats: {"thirst":-5,"health":11,"anomaly_Печка":11} },
+        { name: "Спираль", tier: 5, price: 4400, stats: {"anomaly_Печка":-8,"health":14,"radiation":13} },
+        { name: "Обсидиан", tier: 5, price: 4200, stats: {"anomaly_Жарка":-9,"anomaly_Электра":17,"health":15} },
+        { name: "Лунный камень", tier: 5, price: 4800, stats: {"anomaly_Жарка":-6,"anomaly_Электра":19,"thirst":18} },
+        { name: "Игольчатый кристалл", tier: 5, price: 4100, stats: {"radiation":-7,"anomaly_Мясорубка":11,"anomaly_Плазменная сфера":18} },
+        { name: "Вихревой шар", tier: 5, price: 4600, stats: {"radiation":-7,"anomaly_Воронка":17,"anomaly_Печка":18} },
+        { name: "Кусок мяса", tier: 6, price: 7000, stats: {"anomaly_Карусель":-9,"anomaly_Кислотный туман":17,"anomaly_Плазменная сфера":23} },
+        { name: "Коготь", tier: 6, price: 7500, stats: {"radiation":-9,"anomaly_Воронка":14,"anomaly_Карусель":19} },
+        { name: "Зуб", tier: 6, price: 8000, stats: {"radiation":-8,"anomaly_Кислотный туман":17,"anomaly_Воронка":15} },
+        { name: "Ржавый механизм", tier: 6, price: 7800, stats: {"anomaly_Кислотный туман":-6,"hunger":21,"radiation":23} },
+        { name: "Кристалл разума", tier: 6, price: 8200, stats: {"hunger":-7,"anomaly_Кислотный туман":15,"anomaly_Карусель":19} },
+        { name: "Тлеющий уголь", tier: 6, price: 7600, stats: {"anomaly_Карусель":-9,"health":20,"anomaly_Кислотный туман":19} },
+        { name: "Ледяная слеза", tier: 6, price: 7900, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Печка":18,"anomaly_Воронка":14} },
+        { name: "Шёпот бездны", tier: 6, price: 8400, stats: {"anomaly_Жарка":-6,"radiation":23,"anomaly_Электра":22} },
+        { name: "Стальное перо", tier: 6, price: 8100, stats: {"anomaly_Жарка":-10,"anomaly_Воронка":17,"anomaly_Печка":13} },
+        { name: "Кровь земли", tier: 7, price: 12000, stats: {"health":16,"anomaly_Кислотный туман":23,"anomaly_Электра":18} },
+        { name: "Пепел", tier: 7, price: 14000, stats: {"anomaly_Электра":21,"thirst":20,"anomaly_Кислотный туман":21} },
+        { name: "Пламя", tier: 7, price: 16000, stats: {"anomaly_Печка":21,"anomaly_Воронка":27,"anomaly_Карусель":24} },
+        { name: "Осколок звезды", tier: 7, price: 13500, stats: {"radiation":24,"hunger":21,"anomaly_Кислотный туман":23} },
+        { name: "Сердце бури", tier: 7, price: 14500, stats: {"anomaly_Электра":22,"hunger":25,"anomaly_Воронка":24} },
+        { name: "Плачущий кристалл", tier: 7, price: 13800, stats: {"anomaly_Электра":22,"anomaly_Мясорубка":26,"health":22} },
+        { name: "Вой пустоты", tier: 7, price: 15000, stats: {"anomaly_Кислотный туман":21,"radiation":26,"anomaly_Электра":16} },
+        { name: "Живая ртуть", tier: 7, price: 14200, stats: {"anomaly_Жарка":16,"anomaly_Электра":23,"anomaly_Печка":27} },
+        { name: "Тень зоны", tier: 7, price: 15500, stats: {"anomaly_Воронка":20,"anomaly_Кислотный туман":18,"anomaly_Плазменная сфера":15} },
+        { name: "Ядро", tier: 8, price: 30000, stats: {"anomaly_Печка":19,"anomaly_Плазменная сфера":19,"anomaly_Кислотный туман":19,"anomaly_Электра":21} },
+        { name: "Звезда", tier: 8, price: 35000, stats: {"anomaly_Печка":29,"radiation":19,"anomaly_Электра":30,"hunger":30} },
+        { name: "Антиматерия", tier: 8, price: 50000, stats: {"hunger":24,"anomaly_Кислотный туман":24,"anomaly_Электра":20,"anomaly_Печка":29} },
+        { name: "Сердце Зоны", tier: 8, price: 38000, stats: {"anomaly_Плазменная сфера":28,"anomaly_Электра":29,"anomaly_Карусель":23,"anomaly_Кислотный туман":27} },
+        { name: "Осколок Монолита", tier: 8, price: 40000, stats: {"radiation":23,"anomaly_Жарка":29,"anomaly_Печка":25,"anomaly_Карусель":27} },
+        { name: "Слеза Вселенной", tier: 8, price: 42000, stats: {"anomaly_Печка":29,"anomaly_Воронка":26,"hunger":19,"health":29} },
+        { name: "Дыхание Чернобыля", tier: 8, price: 39000, stats: {"health":29,"radiation":25,"anomaly_Воронка":29,"anomaly_Жарка":19} },
+        { name: "Кровь Зоны", tier: 8, price: 41000, stats: {"anomaly_Воронка":17,"health":19,"radiation":25,"thirst":24} },
+        { name: "Разум Аномалии", tier: 8, price: 43000, stats: {"anomaly_Мясорубка":31,"anomaly_Плазменная сфера":19,"anomaly_Печка":18,"anomaly_Электра":21} },
+        { name: "Шустряк", tier: 8, price: 45000, stats: {"anomaly_Плазменная сфера":19,"anomaly_Электра":23,"anomaly_Кислотный туман":19,"anomaly_Мясорубка":27} },
+        { name: "Сердце Зоны: Абсолют", tier: 8, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666,"health":666,"hunger":666,"thirst":666} }
     ];
 
     // ===== ОРУЖИЕ =====
@@ -606,95 +616,106 @@
 
     // ===== БРОНЯ =====
     const armorItems = [
-        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, artifactProtection: 2, price: 130 },
-        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, artifactProtection: 2, price: 156 },
-        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, artifactProtection: 2, price: 156 },
-        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, artifactProtection: 3, price: 182 },
-        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, artifactProtection: 3, price: 260 },
-        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, artifactProtection: 3, price: 208 },
-        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, artifactProtection: 5, price: 650 },
-        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, artifactProtection: 5, price: 650 },
-        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, artifactProtection: 5, price: 689 },
-        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, artifactProtection: 6, price: 741 },
-        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, artifactProtection: 6, price: 819 },
-        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, artifactProtection: 7, price: 910 },
-        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, artifactProtection: 10, price: 1560 },
-        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, artifactProtection: 10, price: 1612 },
-        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, artifactProtection: 11, price: 1716 },
-        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, artifactProtection: 11, price: 1768 },
-        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, artifactProtection: 12, price: 1872 },
-        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, artifactProtection: 12, price: 2600 },
-        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, artifactProtection: 15, price: 3250 },
-        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, artifactProtection: 16, price: 3393 },
-        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, artifactProtection: 16, price: 3471 },
-        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, artifactProtection: 17, price: 3757 },
-        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, artifactProtection: 19, price: 4186 },
-        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, artifactProtection: 18, price: 5200 },
-        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, artifactProtection: 25, price: 10400 },
-        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, artifactProtection: 25, price: 10543 },
-        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, artifactProtection: 26, price: 10816 },
-        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, artifactProtection: 26, price: 10959 },
-        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, artifactProtection: 27, price: 11089 },
-        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, artifactProtection: 28, price: 11648 },
-        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, artifactProtection: 30, price: 15600 },
-        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, artifactProtection: 30, price: 15600 },
-        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, artifactProtection: 30, price: 15782 },
-        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, artifactProtection: 31, price: 15964 },
-        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, artifactProtection: 31, price: 16146 },
-        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, artifactProtection: 31, price: 16328 },
-        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, artifactProtection: 35, price: 23400 },
-        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, artifactProtection: 35, price: 23400 },
-        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, artifactProtection: 35, price: 23660 },
-        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, artifactProtection: 36, price: 23920 },
-        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, artifactProtection: 36, price: 24180 },
-        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, artifactProtection: 37, price: 24440 },
-        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
-        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
-        { id: 45, name: "Броня Стража", tier: 8, armor: 95, artifactProtection: 40, price: 33800 },
-        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, artifactProtection: 40, price: 34151 },
-        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, artifactProtection: 40, price: 34151 },
-        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, artifactProtection: 41, price: 34515 },
-        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
-        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
-        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, artifactProtection: 45, price: 46800 },
-        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, artifactProtection: 45, price: 47281 },
-        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, artifactProtection: 45, price: 47281 },
-        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, artifactProtection: 46, price: 47749 },
-        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
-        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
-        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, artifactProtection: 50, price: 65000 },
-        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, artifactProtection: 50, price: 65650 },
-        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, artifactProtection: 51, price: 66300 },
-        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, artifactProtection: 52, price: 66950 },
-        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, artifactProtection: 60, price: 91000 },
-        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, artifactProtection: 60, price: 91000 },
-        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, artifactProtection: 61, price: 91793 },
-        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, artifactProtection: 61, price: 92586 },
-        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, artifactProtection: 62, price: 93379 },
-        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, artifactProtection: 62, price: 94159 },
-        { id: 67, name: "Броня Легион", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
-        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
-        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, artifactProtection: 70, price: 123500 },
-        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, artifactProtection: 71, price: 124449 },
-        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, artifactProtection: 71, price: 125398 },
-        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, artifactProtection: 72, price: 126347 },
-        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
-        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
-        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, artifactProtection: 85, price: 169000 },
-        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, artifactProtection: 86, price: 170131 },
-        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, artifactProtection: 86, price: 171249 },
-        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, artifactProtection: 87, price: 172380 },
-        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
-        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
-        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, artifactProtection: 100, price: 234000 },
-        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, artifactProtection: 101, price: 235300 },
-        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, artifactProtection: 101, price: 236600 },
-        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, artifactProtection: 102, price: 237900 },
-        { id: 85, name: "Плащ черного сталкера", tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true }
+        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, artifactProtection: 2, price: 130, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1} },
+        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, artifactProtection: 2, price: 156, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1} },
+        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, artifactProtection: 2, price: 156, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1} },
+        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, artifactProtection: 3, price: 182, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1} },
+        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, artifactProtection: 3, price: 260, stats: {"anomaly_Электра":1,"anomaly_Жарка":1} },
+        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, artifactProtection: 3, price: 208, stats: {"anomaly_Карусель":1,"anomaly_Печка":1} },
+        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, artifactProtection: 5, price: 650, stats: {"anomaly_Электра":1,"anomaly_Печка":1} },
+        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, artifactProtection: 5, price: 650, stats: {"anomaly_Воронка":1,"anomaly_Мясорубка":1} },
+        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, artifactProtection: 5, price: 689, stats: {"anomaly_Печка":2,"anomaly_Мясорубка":2} },
+        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, artifactProtection: 6, price: 741, stats: {"anomaly_Кислотный туман":2,"anomaly_Карусель":1} },
+        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, artifactProtection: 6, price: 819, stats: {"anomaly_Воронка":2,"anomaly_Мясорубка":2} },
+        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, artifactProtection: 7, price: 910, stats: {"anomaly_Печка":2,"anomaly_Электра":1} },
+        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, artifactProtection: 10, price: 1560, stats: {"anomaly_Электра":2,"anomaly_Печка":3} },
+        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, artifactProtection: 10, price: 1612, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2} },
+        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, artifactProtection: 11, price: 1716, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2} },
+        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, artifactProtection: 11, price: 1768, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3} },
+        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, artifactProtection: 12, price: 1872, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2} },
+        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, artifactProtection: 12, price: 2600, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2} },
+        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, artifactProtection: 15, price: 3250, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2} },
+        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, artifactProtection: 16, price: 3393, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3} },
+        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, artifactProtection: 16, price: 3471, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3} },
+        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, artifactProtection: 17, price: 3757, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3} },
+        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, artifactProtection: 19, price: 4186, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2} },
+        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, artifactProtection: 18, price: 5200, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2} },
+        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, artifactProtection: 25, price: 10400, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4} },
+        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, artifactProtection: 25, price: 10543, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5} },
+        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, artifactProtection: 26, price: 10816, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5} },
+        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, artifactProtection: 26, price: 10959, stats: {"anomaly_Карусель":4,"anomaly_Печка":4} },
+        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, artifactProtection: 27, price: 11089, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3} },
+        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, artifactProtection: 28, price: 11648, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4} },
+        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, artifactProtection: 30, price: 15600, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5} },
+        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, artifactProtection: 30, price: 15600, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5} },
+        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, artifactProtection: 30, price: 15782, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4} },
+        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, artifactProtection: 31, price: 15964, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6} },
+        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, artifactProtection: 31, price: 16146, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3} },
+        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, artifactProtection: 31, price: 16328, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6} },
+        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, artifactProtection: 35, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3} },
+        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, artifactProtection: 35, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6} },
+        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, artifactProtection: 35, price: 23660, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5} },
+        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, artifactProtection: 36, price: 23920, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5} },
+        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, artifactProtection: 36, price: 24180, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6} },
+        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, artifactProtection: 37, price: 24440, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6} },
+        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4} },
+        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4} },
+        { id: 45, name: "Броня Стража", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8} },
+        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, artifactProtection: 40, price: 34151, stats: {"anomaly_Воронка":6,"anomaly_Печка":4} },
+        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, artifactProtection: 40, price: 34151, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3} },
+        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, artifactProtection: 41, price: 34515, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8} },
+        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5} },
+        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4} },
+        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4} },
+        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, artifactProtection: 45, price: 47281, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4} },
+        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, artifactProtection: 45, price: 47281, stats: {"anomaly_Электра":5,"anomaly_Карусель":7} },
+        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, artifactProtection: 46, price: 47749, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6} },
+        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5} },
+        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8} },
+        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4} },
+        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, artifactProtection: 50, price: 65650, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7} },
+        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, artifactProtection: 51, price: 66300, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6} },
+        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, artifactProtection: 52, price: 66950, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6} },
+        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, artifactProtection: 60, price: 91000, stats: {"anomaly_Электра":8,"anomaly_Жарка":5} },
+        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, artifactProtection: 60, price: 91000, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7} },
+        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, artifactProtection: 61, price: 91793, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10} },
+        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, artifactProtection: 61, price: 92586, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9} },
+        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, artifactProtection: 62, price: 93379, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8} },
+        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, artifactProtection: 62, price: 94159, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7} },
+        { id: 67, name: "Броня Легион", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11} },
+        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10} },
+        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6} },
+        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, artifactProtection: 71, price: 124449, stats: {"anomaly_Печка":11,"anomaly_Воронка":11} },
+        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, artifactProtection: 71, price: 125398, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6} },
+        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, artifactProtection: 72, price: 126347, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5} },
+        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12} },
+        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8} },
+        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8} },
+        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, artifactProtection: 86, price: 170131, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11} },
+        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, artifactProtection: 86, price: 171249, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10} },
+        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, artifactProtection: 87, price: 172380, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10} },
+        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11} },
+        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8} },
+        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10} },
+        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, artifactProtection: 101, price: 235300, stats: {"anomaly_Печка":13,"anomaly_Карусель":11} },
+        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, artifactProtection: 101, price: 236600, stats: {"anomaly_Печка":12,"anomaly_Жарка":11} },
+        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, artifactProtection: 102, price: 237900, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8} },
+        { id: 85, name: "Плащ тёмного сталкера", tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666} },
+        { id: 86, name: "Исследовательский комбинезон A", tier: 4, armor: 25, artifactProtection: 15, price: 9360, isResearchSuit: true, stats: {"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9} },
+        { id: 87, name: "Исследовательский комбинезон B", tier: 5, armor: 41, artifactProtection: 25, price: 20966, isResearchSuit: true, stats: {"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17} },
+        { id: 88, name: "Исследовательский комбинезон C", tier: 6, armor: 47, artifactProtection: 28, price: 29390, isResearchSuit: true, stats: {"radiation":18,"anomaly_Жарка":17,"anomaly_Электра":21,"anomaly_Воронка":19,"anomaly_Кислотный туман":23,"anomaly_Карусель":12,"anomaly_Мясорубка":23,"anomaly_Печка":13,"anomaly_Плазменная сфера":17} },
+        { id: 89, name: "Исследовательский комбинезон D", tier: 7, armor: 50, artifactProtection: 30, price: 43992, isResearchSuit: true, stats: {"radiation":21,"anomaly_Жарка":21,"anomaly_Электра":19,"anomaly_Воронка":17,"anomaly_Кислотный туман":20,"anomaly_Карусель":15,"anomaly_Мясорубка":23,"anomaly_Печка":19,"anomaly_Плазменная сфера":23} },
+        { id: 90, name: "Исследовательский комбинезон E", tier: 8, armor: 52, artifactProtection: 31, price: 62127, isResearchSuit: true, stats: {"radiation":24,"anomaly_Жарка":26,"anomaly_Электра":21,"anomaly_Воронка":27,"anomaly_Кислотный туман":30,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":19,"anomaly_Плазменная сфера":17} },
+        { id: 91, name: "Исследовательский комбинезон F", tier: 9, armor: 54, artifactProtection: 32, price: 85948, isResearchSuit: true, stats: {"radiation":27,"anomaly_Жарка":21,"anomaly_Электра":21,"anomaly_Воронка":22,"anomaly_Кислотный туман":20,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":35,"anomaly_Плазменная сфера":19} },
+        { id: 92, name: "Исследовательский комбинезон G", tier: 10, armor: 55, artifactProtection: 33, price: 120510, isResearchSuit: true, stats: {"radiation":30,"anomaly_Жарка":33,"anomaly_Электра":21,"anomaly_Воронка":23,"anomaly_Кислотный туман":39,"anomaly_Карусель":24,"anomaly_Мясорубка":37,"anomaly_Печка":36,"anomaly_Плазменная сфера":21} },
+        { id: 93, name: "Исследовательский комбинезон H", tier: 11, armor: 63, artifactProtection: 38, price: 169486, isResearchSuit: true, stats: {"radiation":33,"anomaly_Жарка":32,"anomaly_Электра":26,"anomaly_Воронка":41,"anomaly_Кислотный туман":40,"anomaly_Карусель":30,"anomaly_Мясорубка":26,"anomaly_Печка":24,"anomaly_Плазменная сфера":44} },
+        { id: 94, name: "Исследовательский комбинезон I", tier: 12, armor: 72, artifactProtection: 43, price: 227425, isResearchSuit: true, stats: {"radiation":36,"anomaly_Жарка":38,"anomaly_Электра":35,"anomaly_Воронка":46,"anomaly_Кислотный туман":28,"anomaly_Карусель":25,"anomaly_Мясорубка":28,"anomaly_Печка":39,"anomaly_Плазменная сфера":32} },
+        { id: 95, name: "Исследовательский комбинезон J", tier: 13, armor: 83, artifactProtection: 50, price: 310284, isResearchSuit: true, stats: {"radiation":39,"anomaly_Жарка":38,"anomaly_Электра":28,"anomaly_Воронка":45,"anomaly_Кислотный туман":33,"anomaly_Карусель":34,"anomaly_Мясорубка":47,"anomaly_Печка":38,"anomaly_Плазменная сфера":47} },
+        { id: 96, name: "Исследовательский комбинезон K", tier: 14, armor: 99, artifactProtection: 59, price: 428220, isResearchSuit: true, stats: {"radiation":42,"anomaly_Жарка":40,"anomaly_Электра":32,"anomaly_Воронка":48,"anomaly_Кислотный туман":32,"anomaly_Карусель":51,"anomaly_Мясорубка":48,"anomaly_Печка":45,"anomaly_Плазменная сфера":51} }
     ];
 
     // ===== ДЕТЕКТОРЫ =====
-    // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Учёных, не у Торговца
+    // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Бункера экологов, не у Торговца
     const detectors = [
         { id: 1, name: "Радэр 2-02", tier: 1, price: 182 },
         { id: 2, name: "Радэр 2-20", tier: 2, price: 910 },
@@ -719,7 +740,10 @@
         { id: 4, name: "Энергетик", type: "water", restore: 100, price: 52 },
         { id: 5, name: "Гражданская аптечка", type: "medkit", restore: 50, price: 130 },
         { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 195 },
-        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 260 }
+        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 400, radiationRemove: 100 },
+        // "Антирад" не лечит здоровье — только снимает радиацию, но за счёт еды и воды. Продаётся
+        // только в Бункере экологов (не у обычного Торговца)
+        { id: 8, name: "Антирад", type: "antirad", radiationRemove: 100, foodCost: 50, waterCost: 50, price: 200 }
     ];
 
     // ===== ФРАКЦИИ =====
@@ -731,7 +755,7 @@
         { name: 'Сталкеры', type: 'neutral', color: '#5e5eff' },
         { name: 'Долг', type: 'neutral', color: '#5e5eff' },
         { name: 'Свобода', type: 'neutral', color: '#5e5eff' },
-        { name: 'Учёные', type: 'neutral', color: '#5e5eff' }
+        { name: 'Бункер экологов', type: 'neutral', color: '#5e5eff' }
     ];
 
     // ===== NPC =====
@@ -853,8 +877,41 @@
         });
     }
 
+    // Пересчитывает radiationResist/anomalyResist "с нуля" из РЕАЛЬНО надетых сейчас артефактов
+    // И брони (включая исследовательские комбинезоны) — не накапливаем их инкрементально (риск
+    // рассинхронизации при сбоях сохранения), а всегда выводим заново из текущего состояния.
+    // ВАЖНО: у брони эти статы берутся из СТАТИЧНОГО определения по базовому имени (без учёта
+    // "+N" от улучшения) — поэтому защита от радиации/аномалий у брони НЕ растёт при улучшении,
+    // растёт только сам параметр "броня"
+    function recomputeArtifactResistances() {
+        if (!Array.isArray(player.artifactSlots)) return;
+        player.radiationResist = 0;
+        player.anomalyResist = {};
+        const addStats = (statsObj) => {
+            if (!statsObj) return;
+            Object.keys(statsObj).forEach(stat => {
+                if (stat === 'radiation') {
+                    player.radiationResist += statsObj.radiation;
+                } else if (stat.startsWith('anomaly_')) {
+                    const anomalyName = stat.slice('anomaly_'.length);
+                    player.anomalyResist[anomalyName] = (player.anomalyResist[anomalyName] || 0) + statsObj[stat];
+                }
+            });
+        };
+        player.artifactSlots.forEach(name => {
+            if (!name) return;
+            const artifact = findArtifactDef(name);
+            if (artifact) addStats(artifact.stats);
+        });
+        if (player.armor && player.armor.name) {
+            const baseName = parseGearName(player.armor.name).baseName;
+            const armorDef = armorItems.find(a => a.name === baseName);
+            if (armorDef) addStats(armorDef.stats);
+        }
+    }
+
     function sanitizePlayerNumbers() {
-        const numericFields = ['health', 'hunger', 'thirst', 'coins', 'level', 'exp', 'maxHealth',
+        const numericFields = ['health', 'hunger', 'thirst', 'coins', 'level', 'exp', 'maxHealth', 'radiation',
             'vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck', 'breedCredits', 'nicknameChangeCredits'];
         numericFields.forEach(field => {
             const v = Number(player[field]);
@@ -883,6 +940,8 @@
         // maxHealth тоже не может законно превышать 100 (база) + 100 (макс. живучесть)
         player.maxHealth = Math.min(player.maxHealth, 200);
         player.health = Math.min(player.health, player.maxHealth);
+        player.radiation = Math.max(0, Math.min(100, player.radiation));
+        recomputeArtifactResistances();
         if (!Array.isArray(player.artifactSlots) || player.artifactSlots.length !== 6) {
             player.artifactSlots = [null, null, null, null, null, null];
         }
@@ -916,6 +975,10 @@
         document.getElementById('health').textContent = Math.round(player.health);
         document.getElementById('hunger').textContent = Math.round(player.hunger);
         document.getElementById('thirst').textContent = Math.round(player.thirst);
+        const radVal = document.getElementById('radiationValue');
+        const radBar = document.getElementById('radiationBar');
+        if (radVal) radVal.textContent = Math.round(player.radiation);
+        if (radBar) radBar.style.width = Math.round(player.radiation) + '%';
         document.getElementById('coins').textContent = player.coins;
         document.getElementById('level').textContent = player.level;
         document.getElementById('breedCreditsHeader').textContent = Number(player.breedCredits) || 0;
@@ -955,7 +1018,7 @@
         document.getElementById('adminPanel').classList.remove('active');
     }
 
-    // Полный сброс СВОЕГО ЖЕ прогресса до начального состояния — необратимо, поэтому двойное подтверждение
+    // Полный сброс прогресса ДРУГОГО игрока (по нику/ID) — необратимо, поэтому двойное подтверждение
     function resetOtherPlayerProgress() {
         const target = document.getElementById('resetTargetInput').value.trim();
         if (!target) { alert('Введите ник или ID игрока.'); return; }
@@ -1116,11 +1179,11 @@
 
     const PERK_INFO = {
         vitality: { label: '❤️ Живучесть', desc: '+0.1 к макс. здоровью за каждое убийство врага (макс. 100)', capped: true },
-        agility: { label: '🏃 Ловкость', desc: 'повышает шанс успешного побега из боя' },
-        strength: { label: '💪 Сила', desc: 'прибавляется к урону оружия напрямую' },
+        agility: { label: '🏃 Ловкость', desc: 'повышает шанс успешного побега из боя (макс. 100)', capped: true },
+        strength: { label: '💪 Сила', desc: 'прибавляется к урону оружия напрямую (макс. 100)', capped: true },
         accuracy: { label: '🎯 Меткость', desc: '+0.1 за каждое попадание по врагу (макс. 100), даёт шанс крит. удара (×2 урона)', capped: true },
         intellect: { label: '🧠 Интеллект', desc: '+0.1 за каждую продажу торговцу (макс. 100), снижает цены покупки', capped: true },
-        luck: { label: '🍀 Удача', desc: 'повышает шанс найти артефакт в аномалии' }
+        luck: { label: '🍀 Удача', desc: 'повышает шанс найти артефакт в аномалии (макс. 100)', capped: true }
     };
 
     function renderPerksBlock(data) {
@@ -1132,11 +1195,53 @@
         }).join('');
     }
 
+    // Подробная информация о надетом снаряжении — оружие/броня с ТЕКУЩИМИ характеристиками
+    // (с учётом улучшения, если оно есть), детектор, и все надетые артефакты со своими статами
+    function renderEquipmentDetails(data) {
+        let html = '';
+
+        if (data.weapon && data.weapon.name && data.weapon.name !== DEFAULT_WEAPON.name) {
+            const parsed = parseGearName(data.weapon.name);
+            const base = weapons.find(w => w.name === parsed.baseName);
+            const currentDmg = base ? base.dmg + parsed.level : data.weapon.dmg;
+            html += `<p>⚔️ Оружие: ${escapeHtml(data.weapon.name)}<br>
+                <span style="color:#aaa; font-size:11px;">Урон: ${currentDmg}${parsed.level > 0 ? ` (базовый ${base ? base.dmg : '?'} +${parsed.level} от улучшений)` : ''}</span></p>`;
+        }
+
+        if (data.armor && data.armor.name && data.armor.name !== DEFAULT_ARMOR.name) {
+            const parsed = parseGearName(data.armor.name);
+            const base = armorItems.find(a => a.name === parsed.baseName);
+            const currentArmor = base ? base.armor + parsed.level : data.armor.armor;
+            const resistLines = base && base.stats ? Object.keys(base.stats).map(stat => `${getStatLabel(stat)}: +${base.stats[stat]}`).join(', ') : '';
+            html += `<p>🛡️ Броня: ${escapeHtml(data.armor.name)}<br>
+                <span style="color:#aaa; font-size:11px;">Броня: ${currentArmor}${parsed.level > 0 ? ` (базовая ${base ? base.armor : '?'} +${parsed.level} от улучшений)` : ''}${base ? `, защита от артефактов: ${base.artifactProtection}` : ''}${resistLines ? '<br>' + resistLines : ''}</span></p>`;
+        }
+
+        if (data.detector && data.detector.name && data.detector.name !== DEFAULT_DETECTOR.name) {
+            html += `<p>📡 Детектор: ${escapeHtml(data.detector.name)} (тир ${data.detector.tier})</p>`;
+        }
+
+        const equippedArtifacts = (data.artifactSlots || []).filter(Boolean);
+        if (equippedArtifacts.length > 0) {
+            html += `<p>💎 Надетые артефакты:</p>`;
+            equippedArtifacts.forEach(name => {
+                const artifact = findArtifactDef(name);
+                if (!artifact) return;
+                const effects = Object.keys(artifact.stats).map(stat => {
+                    const val = artifact.stats[stat];
+                    const sign = val >= 0 ? '+' : '';
+                    const color = val >= 0 ? '#27ae60' : '#c0392b';
+                    return `<span style="color:${color};">${sign}${val}</span> ${getStatLabel(stat)}`;
+                }).join(', ');
+                html += `<p style="margin-left:10px; font-size:11px;">— ${escapeHtml(name)} <span style="color:#aaa;">(тир ${artifact.tier})</span><br><span style="color:#aaa;">${effects}</span></p>`;
+            });
+        }
+
+        return html;
+    }
+
     function renderPlayerStatsCard(data, titleText, playerId) {
         const stats = data.stats || {};
-        const weaponName = data.weapon?.name || '—';
-        const armorName = data.armor?.name || '—';
-        const detectorName = data.detector?.name || '—';
         const factionName = factionLabel(data.factionName, playerId);
         const factionPosition = data.factionName ? (data.factionPosition || 'Рядовой') : '-------';
         return `
@@ -1155,7 +1260,8 @@
                    <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.npcsByTier)}</span></p>
                 <p>Артефактов найдено: ${stats.artifactsFound ?? 0}<br>
                    <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.artifactsByTier)}</span></p>
-                <p>Снаряжение: ⚔️ ${weaponName} | 🛡️ ${armorName} | 📡 ${detectorName}</p>
+                <p style="margin-top:10px; border-top:1px solid #333; padding-top:8px;"><b>Экипировка:</b></p>
+                ${renderEquipmentDetails(data)}
                 <p style="margin-top:10px; border-top:1px solid #333; padding-top:8px;"><b>Перки:</b></p>
                 ${renderPerksBlock(data)}
             </div>
@@ -1232,11 +1338,13 @@
         fetch(`${SERVER_URL}/api/player/${playerId}`)
             .then(res => res.json())
             .then(data => {
-                content.innerHTML = renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
+                content.innerHTML = `<button class="back-btn" onclick="renderRatingTab('')" style="margin-bottom:10px;">← К рейтингу</button>` +
+                    renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
                     `<button class="back-btn" onclick="renderRatingTab('')">← К рейтингу</button>`;
             })
             .catch(() => {
-                content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
+                content.innerHTML = `<button class="back-btn" onclick="renderRatingTab('')" style="margin-bottom:10px;">← К рейтингу</button>` +
+                    '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
                     `<button class="back-btn" onclick="renderRatingTab('')">← К рейтингу</button>`;
             });
     }
@@ -1781,7 +1889,7 @@
     const MARKET_CATEGORIES = ['Оружие', 'Улучшенное оружие', 'Броня', 'Улучшенная броня', 'Детекторы', 'Артефакты', 'Гибриды артефактов', 'Части тел мутантов'];
 
     function categorizeMarketItem(name) {
-        // Гибриды артефактов (скрещены у Учёных) — отдельная категория, определяется по префиксу имени
+        // Гибриды артефактов (скрещены у Бункера экологов) — отдельная категория, определяется по префиксу имени
         if (name.startsWith('Гибрид ') || name.startsWith('Артефакт гибрид')) return 'Гибриды артефактов'; // ловит и старый, и новый формат имени
         // Улучшенное снаряжение хранится под именем вида "АК-74 +15" — сначала убираем суффикс,
         // иначе такой предмет не совпадёт ни с одним известным именем и попадёт не в ту категорию.
@@ -2051,7 +2159,7 @@
     // Предметы (не монеты) за Telegram Stars
     const ITEM_PACKAGES = [
         { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование сразу поднимает уровень персонажа на 5' },
-        { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Учёных' },
+        { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Бункера экологов' },
         { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' }
     ];
 
@@ -2140,6 +2248,10 @@
         }
 
         container.appendChild(battleDiv);
+        // Принудительный пересчёт раскладки — известный приём против "зависшей" отрисовки в
+        // некоторых мобильных WebView, когда новый DOM-контент технически уже есть в дереве, но
+        // экран не перерисовывается сам по себе, пока что-то (например, касание) не вызовет reflow
+        void container.offsetHeight;
         // На случай, если текущая позиция прокрутки экрана "потерялась" после скрытия навигации —
         // явно прокручиваем к боевым кнопкам, чтобы они не оказались вне видимой области
         battleDiv.scrollIntoView({ block: 'nearest' });
@@ -2244,7 +2356,7 @@
                 player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
                 player.stats.mutantsByTier = player.stats.mutantsByTier || {};
                 player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
-                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона сталкера для Учёных
+                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона сталкера для Бункера экологов
                 if (currentEnemy.tier === 14) {
                     player.breedCredits = (Number(player.breedCredits) || 0) + 2;
                     raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона сталкера.');
@@ -2315,7 +2427,10 @@
         const container = document.getElementById('battleButtonsContainer');
         if (container) container.innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
-        if (navButtons) navButtons.style.display = 'grid';
+        if (navButtons) {
+            navButtons.style.display = 'grid';
+            void navButtons.offsetHeight; // тот же приём против зависшей отрисовки в WebView
+        }
     }
 
     // Смерть игрока: сброс здоровья, потеря лута (кроме одетого снаряжения и артефактов), выход в главное меню
@@ -2329,9 +2444,11 @@
         player.quickSlots = [null, null, null, null];
 
         player.health = player.maxHealth; // возрождение на базе с полным здоровьем
+        player.radiation = 0; // радиация тоже сбрасывается при возрождении
 
         raidActive = false;
         currentEnemy = null;
+        currentAnomaly = null;
         battleTurn = 0;
         clearBattleUiAndRestoreNav();
 
@@ -2367,8 +2484,13 @@
             alert('Нельзя покинуть рейд, пока не разрешена текущая встреча! Сначала завершите бой или разойдитесь с фракцией.');
             return;
         }
+        if (currentAnomaly && !currentAnomaly.resolved) {
+            alert('Нельзя покинуть рейд, пока не разрешена аномалия! Найдите артефакт, исчерпайте попытки или обойдите её стороной.');
+            return;
+        }
         raidActive = false;
         currentEnemy = null;
+        currentAnomaly = null;
         battleTurn = 0;
         clearBattleUiAndRestoreNav();
         openScreen('main');
@@ -2447,6 +2569,7 @@
     function raidStep() {
         if (!raidActive) return;
         if (currentEnemy) return;
+        if (currentAnomaly && !currentAnomaly.resolved) return;
         if (player.health <= 0) { handlePlayerDeath(); return; }
 
         player.hunger = Math.max(0, Math.min(100, player.hunger - 5));
@@ -2478,39 +2601,31 @@
                 return; // ждём решения игрока — не продолжаем шаг рейда дальше
             }
         } else if (npcChance < 0.6) {
-            // Аномалия — чисто событие урона/находки, никакого взаимодействия/торговли тут быть не должно.
-            // На всякий случай принудительно закрываем любые окна торговли/боя, которые могли остаться от предыдущего шага
+            // Аномалия теперь ИНТЕРАКТИВНА: вместо мгновенного урона/находки — игрок сам решает,
+            // рисковать ли поиском артефакта (до 3 попыток, каждая опасна радиацией) или обойти
+            // её стороной без всякого риска. Останавливаем здесь и ждём решения игрока
             document.getElementById('friendlyTradeModal')?.classList.remove('active');
             clearBattleUiAndRestoreNav();
-            // Пул аномалий ограничен тиром снаряжения игрока — та же логика, что для мутантов и NPC,
-            // иначе свежего игрока могла случайно убить аномалия топового тира (до 110 урона)
             const encounterTier = getEncounterTier();
             const anomalyPool = anomalies.filter(a => a.tier <= encounterTier);
             const anomaly = anomalyPool[Math.floor(Math.random() * anomalyPool.length)];
-            const dmg = anomaly.dmg - player.armor.armor - player.armor.artifactProtection;
-            const finalDmg = Math.max(0, dmg);
-            player.health -= finalDmg;
-            let eventText = `Аномалия ${anomaly.name}! -${finalDmg} HP`;
-            if (player.detector.tier >= anomaly.tier) {
-                if (Math.random() < 0.5 + player.luck * 0.01) {
-                    const artifactName = anomaly.artifacts[Math.floor(Math.random() * anomaly.artifacts.length)];
-                    addNonStackingItem(artifactName);
-                    eventText += `\nВы нашли артефакт: ${artifactName}!`;
-                    gainPerk('luck', 0.1 * anomaly.tier);
-                    player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
-                    player.stats.artifactsByTier = player.stats.artifactsByTier || {};
-                    player.stats.artifactsByTier[anomaly.tier] = (player.stats.artifactsByTier[anomaly.tier] || 0) + 1;
-                }
-            } else {
-                eventText += `\nДетектор слабоват для этого тира!`;
-            }
-            raidLogs.push(eventText);
+            startAnomalyEncounter(anomaly);
+            updateUI();
+            saveGame();
+            return; // ждём решения игрока — не продолжаем шаг рейда дальше
         } else if (npcChance < 0.8) {
             startBattle(pickWeightedMutant());
         } else {
             raidLogs.push('🌫️ Вы ничего не нашли. Тишина...');
         }
         
+        finishRaidStep();
+    }
+
+    // Общий "хвост" шага рейда (проверка смерти, округление здоровья, опыт/уровень, обновление
+    // экрана и сохранение) — вынесен отдельно, чтобы его можно было переиспользовать после
+    // разрешения интерактивной встречи с аномалией (обход или завершение поиска артефакта)
+    function finishRaidStep() {
         if (raidLogs.length > 3) raidLogs.shift();
 
         if (player.health <= 0) {
@@ -2531,6 +2646,117 @@
         updateRaidLog();
         updateUI();
         saveGame();
+    }
+
+    // ===== ИНТЕРАКТИВНАЯ ВСТРЕЧА С АНОМАЛИЕЙ =====
+    function startAnomalyEncounter(anomaly) {
+        currentAnomaly = { ...anomaly, attemptsUsed: 0, resolved: false };
+        raidLogs.push(`☢️ Аномалия «${anomaly.name}»!\n«Надеюсь на твою щедрость, Тёмный сталкер. У меня есть всего 3 попытки узнать есть ли артефакт в этой аномалии, 4 попытка убьёт меня в любом случае.»`);
+        renderAnomalyButtons();
+    }
+
+    function renderAnomalyButtons() {
+        const container = document.getElementById('battleButtonsContainer');
+        container.innerHTML = '';
+        const navButtons = document.getElementById('raidNavButtons');
+        if (navButtons) navButtons.style.display = 'none';
+
+        const div = document.createElement('div');
+        div.style.display = 'grid';
+        div.style.gridTemplateColumns = '1fr 1fr';
+        div.style.gap = '8px';
+        div.style.marginTop = '12px';
+
+        if (currentAnomaly.resolved) {
+            div.innerHTML = `<button onclick="continueAfterAnomaly()" style="background:#27ae60; border:none; padding:12px; color:#fff; font-weight:bold; border-radius:8px; grid-column:1/-1;">Идти дальше</button>`;
+        } else {
+            div.innerHTML = `
+                <button id="searchArtifactBtn"
+                    onpointerdown="startHoldToConfirm(this, searchForArtifact)"
+                    onpointerup="cancelHoldToConfirm(this)"
+                    onpointerleave="cancelHoldToConfirm(this)"
+                    onpointercancel="cancelHoldToConfirm(this)"
+                    style="background:#2980b9; border:none; padding:12px; color:#fff; font-weight:bold; border-radius:8px; position:relative; overflow:hidden; user-select:none;">
+                    <span style="position:relative; z-index:1;">🔍 Поиск артефакта (${currentAnomaly.attemptsUsed}/3, удержите)</span>
+                    <div id="searchArtifactBtnFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.35); transition:width 0.05s linear; pointer-events:none;"></div>
+                </button>
+                <button onclick="bypassAnomaly()" style="background:#c0392b; border:none; padding:12px; color:#fff; font-weight:bold; border-radius:8px;">🚶 Обойти аномалию</button>
+            `;
+        }
+        container.appendChild(div);
+        void container.offsetHeight; // против зависшей отрисовки в WebView
+        div.scrollIntoView({ block: 'nearest' });
+    }
+
+    function searchForArtifact() {
+        if (!currentAnomaly || currentAnomaly.resolved) return;
+        currentAnomaly.attemptsUsed++;
+        const attempt = currentAnomaly.attemptsUsed;
+
+        // Базовый шанс — случайное число в диапазоне, зависящем от номера попытки
+        const ranges = { 1: [5, 10], 2: [10, 20], 3: [20, 30] };
+        const [minC, maxC] = ranges[attempt] || [20, 30];
+        let chance = minC + Math.random() * (maxC - minC);
+        chance += (Number(player.luck) || 0) * 0.1; // удача: +0.1% за каждый пункт удачи
+        chance += (player.detector.tier || 0) * 1; // детектор: +1% за тир
+        if (currentAnomaly.tier === 8) chance += 5; // аномалии последнего тира — бонус к шансу
+
+        // Радиация: КАЖДОЕ нажатие добавляет 91-98 из 100 в полосу — крайне рискованно.
+        // Итоговое здоровье после броска — от 2 до 9 (без учёта брони/артефактов) при "голом"
+        // персонаже, смягчается удачей (чем выше удача, тем меньше здоровья теряется) и надетыми
+        // артефактами/бронёй с защитой от радиации (общей) и от именно этой аномалии (конкретно)
+        const rawRadiationAdded = 91 + Math.floor(Math.random() * 8); // 91-98, "сырое" значение до защиты
+        const radiationResist = Math.max(0, Number(player.radiationResist) || 0);
+        const radiationAdded = Math.max(10, rawRadiationAdded - radiationResist); // минимум 10 — риск никогда не исчезает полностью
+        player.radiation = Math.min(100, player.radiation + radiationAdded);
+        const baseHp = 100 - radiationAdded; // 2-9 без защиты, больше — с защитой от радиации
+        const luckMitigation = (Number(player.luck) || 0) * 0.5;
+        const anomalySpecificResist = Math.max(0, (player.anomalyResist && player.anomalyResist[currentAnomaly.name]) || 0);
+        player.health = Math.round(Math.min(player.maxHealth, baseHp + luckMitigation + anomalySpecificResist) * 10) / 10;
+
+        const success = Math.random() * 100 < chance;
+        if (success) {
+            const artifactName = currentAnomaly.artifacts[Math.floor(Math.random() * currentAnomaly.artifacts.length)];
+            addNonStackingItem(artifactName);
+            // ВАЖНО: не через gainPerk() — тот применяет общее замедление роста перков (×0.1),
+            // а здесь пользователь явно указал точный прирост +0.1 удачи за каждое успешное
+            // извлечение, без этого замедления (это отдельная, специально оговорённая механика)
+            player.luck = Math.min(100, (Number(player.luck) || 0) + 0.1);
+            player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
+            player.stats.artifactsByTier = player.stats.artifactsByTier || {};
+            player.stats.artifactsByTier[currentAnomaly.tier] = (player.stats.artifactsByTier[currentAnomaly.tier] || 0) + 1;
+            raidLogs.push(`✨ Вы нашли артефакт: ${artifactName}!\n«Благодарю тебя Тёмный сталкер за твой щедрый дар для меня.»`);
+            currentAnomaly.resolved = true;
+        } else if (attempt >= 3) {
+            raidLogs.push(`«Спасибо что не дал мне загнуться в этой аномалии, Тёмный сталкер.»`);
+            currentAnomaly.resolved = true;
+        } else {
+            raidLogs.push(`Попытка ${attempt}/3 неудачна. Осталось попыток: ${3 - attempt}.`);
+        }
+
+        if (player.health <= 0) {
+            updateRaidLog();
+            updateUI();
+            handlePlayerDeath();
+            return;
+        }
+        renderAnomalyButtons();
+        updateRaidLog();
+        updateUI();
+        saveGame();
+    }
+
+    function bypassAnomaly() {
+        raidLogs.push('Вы обошли аномалию стороной, не рискуя.');
+        currentAnomaly = null;
+        clearBattleUiAndRestoreNav();
+        finishRaidStep();
+    }
+
+    function continueAfterAnomaly() {
+        currentAnomaly = null;
+        clearBattleUiAndRestoreNav();
+        finishRaidStep();
     }
 
     // ===== ЕДИНЫЙ РАСЧЁТ "БОЕВОГО ТИРА" ИГРОКА =====
@@ -2569,7 +2795,7 @@
         return { ...npc, weapon, armor };
     }
 
-    // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Учёные) =====
+    // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Бункер экологов) =====
     // Враждебна ли фракция по отношению к игроку: изначально враждебны только 'enemy'-фракции,
     // но игрок может сделать враждебной любую фракцию, напав на неё
     // Матрица вражды между фракциями: с кем враждует игрок в зависимости от ТОЙ фракции, в которой он состоит.
@@ -2577,13 +2803,13 @@
     // плюс всё, что стало враждебным лично для него после нападения (player.hostileFactions)
     const FACTION_HOSTILITY = {
         'Долг': ['Наёмники', 'Бандиты', 'Монолит', 'Свобода'],
-        'Монолит': ['Наёмники', 'Бандиты', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Учёные'],
+        'Монолит': ['Наёмники', 'Бандиты', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Бункер экологов'],
         'Свобода': ['Долг', 'Военные', 'Монолит', 'Наёмники'],
-        'Наёмники': ['Бандиты', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Учёные'],
-        'Бандиты': ['Наёмники', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Учёные'],
+        'Наёмники': ['Бандиты', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Бункер экологов'],
+        'Бандиты': ['Наёмники', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Бункер экологов'],
         'Сталкеры': ['Наёмники', 'Военные', 'Монолит', 'Бандиты'],
         'Военные': ['Сталкеры', 'Свобода', 'Бандиты', 'Монолит', 'Наёмники'],
-        'Учёные': ['Бандиты', 'Монолит', 'Наёмники']
+        'Бункер экологов': ['Бандиты', 'Монолит', 'Наёмники']
     };
     const LONER_HOSTILE_FACTIONS = ['Бандиты', 'Наёмники', 'Монолит', 'Военные'];
 
@@ -2882,9 +3108,15 @@
 
     // ===== ИНФОРМАЦИЯ О ПРЕДМЕТЕ (для модалок инвентаря/техника) =====
     const STAT_LABELS = {
-        health: 'макс. здоровье', hunger: 'голод', vitality: 'живучесть', agility: 'ловкость',
-        strength: 'сила', accuracy: 'меткость', intellect: 'интеллект', luck: 'удача'
+        health: 'макс. здоровье', hunger: 'сытость', thirst: 'жажда', radiation: 'защита от радиации'
     };
+    // Ключи вида "anomaly_ИмяАномалии" генерируются динамически (аномалий много и добавляются) —
+    // для них подпись строится налету, а не хранится в статичном словаре
+    function getStatLabel(statKey) {
+        if (STAT_LABELS[statKey]) return STAT_LABELS[statKey];
+        if (statKey.startsWith('anomaly_')) return `защита от аномалии «${statKey.slice(8)}»`;
+        return statKey;
+    }
 
     // Возвращает HTML-блок с характеристиками предмета: урон/броня (база+улучшение), тир, пассивки артефакта
     // Умный поиск определения артефакта по имени: сначала точное совпадение (нужно для гибридов —
@@ -2901,9 +3133,16 @@
     function getItemInfoHtml(itemName) {
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
+            if (consumable.type === 'antirad') {
+                return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
+                    Снимает радиацию: <b style="color:#8ac926;">-${consumable.radiationRemove}</b><br>
+                    Забирает сытость: <b style="color:#e67e22;">-${consumable.foodCost}</b> и жажду: <b style="color:#3498db;">-${consumable.waterCost}</b>
+                </div>`;
+            }
             const restoreLabel = consumable.type === 'food' ? 'сытость' : consumable.type === 'water' ? 'жажду' : 'здоровье';
+            const radLine = consumable.radiationRemove ? `<br>Снимает радиацию: <b style="color:#8ac926;">-${consumable.radiationRemove}</b>` : '';
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
-                Восстанавливает ${restoreLabel} на: <b style="color:#fff;">${consumable.restore}</b>
+                Восстанавливает ${restoreLabel} на: <b style="color:#fff;">${consumable.restore}</b>${radLine}
             </div>`;
         }
         if (itemName === 'Книга знаний') {
@@ -2926,12 +3165,17 @@
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
             const currentArmor = armor.armor + parsed.level;
+            const resistLines = Object.keys(armor.stats || {}).map(stat => {
+                const val = armor.stats[stat];
+                return `${getStatLabel(stat)}: <b style="color:#8ac926;">+${val}</b>`;
+            }).join('<br>');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${armor.tier}<br>
                 Базовая броня: ${armor.armor}<br>
                 Текущая броня: <b style="color:#fff;">${currentArmor}</b>${parsed.level > 0 ? ` (+${parsed.level} от улучшений)` : ''}<br>
                 Защита от артефактов: ${armor.artifactProtection}<br>
                 Улучшений: ${parsed.level} / 100
+                ${resistLines ? '<br>' + resistLines + (armor.isResearchSuit ? ' <span style="color:#888;">(не растёт при улучшении)</span>' : '') : ''}
             </div>`;
         }
         const detector = detectors.find(d => d.name === itemName);
@@ -2945,7 +3189,9 @@
         if (artifact) {
             const effects = Object.keys(artifact.stats).map(stat => {
                 const val = artifact.stats[stat];
-                return `+${val} к параметру «${STAT_LABELS[stat] || stat}»`;
+                const sign = val >= 0 ? '+' : '';
+                const color = val >= 0 ? '#27ae60' : '#c0392b';
+                return `<span style="color:${color};">${sign}${val}</span> к параметру «${getStatLabel(stat)}»`;
             }).join('<br>');
             const isHybrid = itemName.startsWith('Гибрид ') || itemName.startsWith('Артефакт гибрид');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
@@ -2973,8 +3219,20 @@
     // ===== АРТЕФАКТЫ: 6 слотов экипировки (бонусы действуют, пока артефакт надет) =====
     function applyArtifactStats(artifact, sign) {
         Object.keys(artifact.stats).forEach(stat => {
-            if (stat === 'health') player.maxHealth += sign * artifact.stats.health;
-            else player[stat] = (player[stat] || 0) + sign * artifact.stats[stat];
+            const val = sign * artifact.stats[stat];
+            if (stat === 'health') {
+                player.maxHealth += val;
+            } else if (stat === 'hunger') {
+                player.hunger = Math.max(0, Math.min(100, player.hunger + val));
+            } else if (stat === 'thirst') {
+                player.thirst = Math.max(0, Math.min(100, player.thirst + val));
+            }
+            // radiation/anomaly_* НЕ обрабатываем здесь инкрементально — radiationResist и
+            // anomalyResist всегда пересчитываются "с нуля" из реально надетых артефактов в
+            // recomputeArtifactResistances() (вызывается из sanitizePlayerNumbers на каждое
+            // обновление интерфейса), это надёжнее накопительного счётчика
+            // Артефакты БОЛЬШЕ НЕ влияют на перки (живучесть/ловкость/сила/меткость/интеллект/удача) —
+            // перки теперь растут только от действий самого игрока
         });
     }
 
@@ -3036,9 +3294,12 @@
             html += `Стоимость следующей селекции (уровень ${nextCost}): 🧬 ${nextCost} Жетон(ов) сталкера<br>`;
         }
         if (lastBreedResult) {
-            const effects = Object.keys(lastBreedResult.stats).map(stat =>
-                `+${lastBreedResult.stats[stat]} к параметру «${STAT_LABELS[stat] || stat}»`
-            ).join('<br>');
+            const effects = Object.keys(lastBreedResult.stats).map(stat => {
+                const val = lastBreedResult.stats[stat];
+                const sign = val >= 0 ? '+' : '';
+                const color = val >= 0 ? '#27ae60' : '#c0392b';
+                return `<span style="color:${color};">${sign}${val}</span> к параметру «${getStatLabel(stat)}»`;
+            }).join('<br>');
             html += `Последний результат: <b>${lastBreedResult.name}</b> (поколение ${lastBreedResult.gen}/${BREED_MAX_GEN})<br>${effects}`;
         }
         infoEl.innerHTML = html;
@@ -3101,18 +3362,27 @@
         // абсурдные значения статов. Фиксированный (не растущий) потолок тоже не годился: рост упирался
         // в него уже к 2-3 поколению и дальше не двигался. Потолок, растущий с поколением, даёт плавный
         // продолжающийся рост вплоть до 20-го поколения, но кратно медленнее исходной формулы
-        const rawStats = {};
-        [a1.stats, a2.stats].forEach(statsObj => {
-            Object.keys(statsObj).forEach(key => {
-                rawStats[key] = (rawStats[key] || 0) + statsObj[key];
-            });
-        });
         const resultTier = Math.max(a1.tier, a2.tier);
         const resultGen = gen1 + 1;
         const perStatCap = resultTier * 10 * Math.min(resultGen, BREED_MAX_GEN); // растёт с каждым поколением
+
+        // Собираем ВСЕ ключи статов, встречающиеся хотя бы у одного из родителей
+        const allKeys = new Set([...Object.keys(a1.stats), ...Object.keys(a2.stats)]);
         const mergedStats = {};
-        Object.keys(rawStats).forEach(key => {
-            mergedStats[key] = Math.min(Math.round(rawStats[key]), perStatCap);
+        allKeys.forEach(key => {
+            const v1 = a1.stats[key] || 0;
+            const v2 = a2.stats[key] || 0;
+            if (v1 < 0 || v2 < 0) {
+                // НЕГАТИВНОЕ свойство: не складываем родителей — берём худшее (более отрицательное)
+                // значение и улучшаем его на 1 за это скрещивание. По достижении -1 следующий шаг
+                // сразу даёт +1 (ноль пропускается) — с этого момента свойство становится обычным
+                // позитивным и дальше растёт как всегда (суммированием и потолком по поколению)
+                const worse = Math.min(v1, v2);
+                mergedStats[key] = worse >= -1 ? 1 : worse + 1;
+            } else {
+                // Обычное позитивное свойство — как и раньше: сумма родителей, с потолком по поколению
+                mergedStats[key] = Math.min(Math.round(v1 + v2), perStatCap);
+            }
         });
 
         player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
@@ -3163,10 +3433,15 @@
     }
 
     // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон сталкера) =====
-    // Тир детекторов, доступных для покупки у Учёных — зависит от УРОВНЯ игрока (не от снаряжения):
+    // Тир детекторов, доступных для покупки у Бункера экологов — зависит от УРОВНЯ игрока (не от снаряжения):
     // ур.1→тир1, ур.20→тир2, ур.40→тир3, ... ур.140→тир8 (шаг 20 уровней на тир)
     function getDetectorUnlockTier(level) {
         return Math.min(8, 1 + Math.floor((Number(level) || 1) / 20));
+    }
+    // Исследовательские комбинезоны начинаются с тира 4 (а не 1) и идут до 14 — 11 тиров,
+    // раскрываются по уровню с тем же шагом плотности, что и детекторы
+    function getResearchSuitUnlockTier(level) {
+        return Math.min(14, 4 + Math.floor((Number(level) || 1) / 15));
     }
 
     function openScientistsBuyView() {
@@ -3174,7 +3449,7 @@
         const el = document.getElementById('scientistsBuyList');
         const unlockTier = getDetectorUnlockTier(player.level);
         const availableDetectors = detectors.filter(d => d.tier <= unlockTier);
-        const medkits = consumables.filter(c => c.type === 'medkit');
+        const medkits = consumables.filter(c => c.type === 'medkit' || c.type === 'antirad');
 
         el.innerHTML = `
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
@@ -3194,10 +3469,30 @@
                     <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
                 </div>
             `).join('')}
+            <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🥼 Исследовательские комбинезоны (защита от радиации и аномалий, брони меньше обычной, дороже — открыты по уровню, сейчас доступен тир ${getResearchSuitUnlockTier(player.level)}):</div>
+            ${armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(item => `
+                <div class="shop-item">
+                    <div>${item.name} (Тир ${item.tier})</div>
+                    ${getItemInfoHtml(item.name)}
+                    <div class="price">🪙 ${getBuyPrice(item.price).toLocaleString('ru-RU')}</div>
+                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+                </div>
+            `).join('')}
         `;
     }
 
     function buyFromScientists(name) {
+        const researchSuit = armorItems.find(a => a.isResearchSuit && a.name === name);
+        if (researchSuit) {
+            const price = getBuyPrice(researchSuit.price);
+            if (player.coins < price) { alert('Недостаточно Байт.'); return; }
+            player.coins -= price;
+            if (!addNonStackingItem(name)) { player.coins += price; return; } // лимит инвентаря — откатываем списание
+            openScientistsBuyView();
+            updateUI();
+            saveGame();
+            return;
+        }
         const item = [...consumables, ...detectors].find(i => i.name === name);
         if (!item) return;
         const price = getBuyPrice(item.price);
@@ -3215,7 +3510,7 @@
         const ownedArtifacts = Object.keys(player.inventory).filter(name =>
             player.inventory[name] > 0 && artifacts.some(a => a.name === name)
         );
-        // Части тел мутантов — тоже можно продать Учёным, на 5% дороже, чем торговцу
+        // Части тел мутантов — тоже можно продать Бункеру экологов, на 5% дороже, чем торговцу
         const ownedBodyParts = Object.keys(player.inventory).filter(name =>
             player.inventory[name] > 0 && mutants.some(m => m.loot === name)
         );
@@ -3223,7 +3518,7 @@
             el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Учёным — на 5% дороже, чем торговцу:</div>`;
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Бункеру экологов — на 5% дороже, чем торговцу:</div>`;
         html += ownedArtifacts.map(name => {
             const artifact = findArtifactDef(name);
             const price = Math.round(getSellPrice(name) * 1.05);
@@ -3397,6 +3692,14 @@
             if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
             if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
             if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            if (consumable.type === 'antirad') {
+                // "Антирад" не лечит — только снимает радиацию, забирая взамен еду и воду
+                player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
+                player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
+            }
+            if (consumable.radiationRemove) {
+                player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
+            }
             renderQuickSlots(); // остаток в быстром слоте (если этот же предмет туда назначен) должен обновиться
             closeItemActionModal();
             renderInventory(); updateUI(); saveGame();
@@ -3629,6 +3932,13 @@
         if (consumable.type === 'food') player.hunger = Math.min(100, player.hunger + consumable.restore);
         if (consumable.type === 'water') player.thirst = Math.min(100, player.thirst + consumable.restore);
         if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+        if (consumable.type === 'antirad') {
+            player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
+            player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
+        }
+        if (consumable.radiationRemove) {
+            player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
+        }
         if (player.inventory[itemName] <= 0) player.quickSlots[index] = null;
 
         raidLogs.push(`Использован(а) ${itemName}!`);
@@ -3741,6 +4051,7 @@
         // по статам в тире, они первые в массиве) — остальные 3 открываются по достижении уровня tier*10
         const unlockByTierAndLevel = (list) => list.filter(item => {
             if (item.adminOnly) return false; // спецпредметы админа никогда не продаются обычным способом
+            if (item.isResearchSuit) return false; // исследовательские комбинезоны — только в Бункере экологов
             if (item.tier > playerTier) return false;
             const tierItems = list.filter(x => x.tier === item.tier);
             const indexInTier = tierItems.indexOf(item);
@@ -3749,10 +4060,11 @@
         });
 
         return [
-            ...consumables.map(c => ({ ...c, category: 'consumable' })),
+            // "Антирад" продаётся только в Бункере экологов, не у обычного Торговца
+            ...consumables.filter(c => c.name !== 'Антирад').map(c => ({ ...c, category: 'consumable' })),
             ...unlockByTierAndLevel(weapons).map(w => ({ ...w, category: 'weapon' })),
             ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' }))
-            // Детекторы у Торговца больше не продаются — только у Учёных, и выдаются по уровню игрока
+            // Детекторы у Торговца больше не продаются — только у Бункера экологов, и выдаются по уровню игрока
         ];
     }
 
@@ -3796,7 +4108,7 @@
         return `
         <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid #8a7a4a;">
             <p style="font-size:12px; color:#8a7a4a; margin-bottom:8px;">🛒 Автозакупка расходников — укажите, сколько всегда иметь при себе:</p>
-            ${consumables.map(c => `
+            ${consumables.filter(c => c.name !== 'Антирад').map(c => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                     <span style="font-size:12px;">${c.name} <span style="color:#888;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
                     <input type="number" min="0" value="${targets[c.name] || 0}" style="width:70px; padding:4px;" onchange="setAutoBuyTarget('${c.name}', this.value)">
@@ -3930,8 +4242,10 @@
     function giveAdminItem() {
         const targetId = document.getElementById('targetUserId').value.trim();
         const giveType = document.getElementById('giveType').value;
-        const amount = parseInt(document.getElementById('giveAmount').value) || 0;
-        const tier = parseInt(document.getElementById('giveTier').value) || 1;
+        let amount = parseInt(document.getElementById('giveAmount').value) || 0;
+        amount = Math.max(0, Math.min(1000000, amount)); // защита от опечаток/абсурдных значений
+        let tier = parseInt(document.getElementById('giveTier').value) || 1;
+        tier = Math.max(0, Math.min(14, tier));
         const selectedItem = document.getElementById('giveItemSelect').value.trim();
         const itemNameFilter = selectedItem || document.getElementById('giveItemName').value.trim();
         const gearLevel = Math.max(0, Math.min(100, parseInt(document.getElementById('giveGearLevel').value) || 0));
@@ -3967,7 +4281,11 @@
                 const item = pickItem(detectors);
                 targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1);
             } else if (giveType === 'bodypart') {
-                const mutant = mutants.find(m => m.tier === tier) || mutants[0];
+                // Некоторые мутанты (Кракозябра, Изотоп, Наблюдатель) не роняют часть тела вообще —
+                // только бонусный артефакт. Без фильтра поиск мог случайно выбрать именно такого
+                // мутанта, и в инвентарь попал бы мусорный ключ "undefined"
+                const mutantsWithLoot = mutants.filter(m => m.loot);
+                const mutant = mutantsWithLoot.find(m => m.tier === tier) || mutantsWithLoot[0];
                 targetPlayer.inventory[mutant.loot] = (targetPlayer.inventory[mutant.loot] || 0) + (amount || 1);
             } else if (giveType === 'knowledgebook') {
                 targetPlayer.inventory['Книга знаний'] = (targetPlayer.inventory['Книга знаний'] || 0) + (amount || 1);
@@ -4183,7 +4501,6 @@
                 player.armor = { name: newName, tier: base.tier, armor: base.armor + newLevel, artifactProtection: base.artifactProtection };
             }
             renderTechnician(); renderInventory(); updateUI(); saveGame();
-            alert(`Улучшено! Теперь: ${newName}`);
             return;
         }
 
@@ -4202,15 +4519,13 @@
         renderTechnician();
         updateUI();
         saveGame();
-        alert(`Улучшено! Теперь: ${newName}`);
     }
 
     // ===== ПРИНУДИТЕЛЬНАЯ ВИДИМОСТЬ ТЕКСТА В ПОЛЯХ ВВОДА =====
-    // Крайняя мера: если даже CSS с !important не помогает (вероятно, WebView Telegram
-    // переопределяет стили страницы после её загрузки), inline-стиль, установленный через JS
-    // с !important — единственный уровень приоритета CSS выше ЛЮБОГО внешнего/инжектированного
-    // правила. MutationObserver дополнительно следит за динамически создаваемыми полями
-    // (админ-панель, автозакупка и т.д.), которых не было на странице при первой загрузке
+    // Крайняя мера: похоже, что-то (вероятно, сам WebView Telegram) переопределяет стили НЕ
+    // только один раз при загрузке, а периодически — при фокусе на поле, открытии модалки и т.д.
+    // Поэтому одноразового применения недостаточно: держим стиль под постоянным контролем —
+    // по таймеру, по событиям фокуса/ввода на каждом поле, и по появлению новых полей в DOM
     function forceInputVisibility() {
         document.querySelectorAll('input, select, textarea').forEach(el => {
             el.style.setProperty('color', '#fff', 'important');
@@ -4220,12 +4535,29 @@
         });
     }
     forceInputVisibility();
+
+    // Постоянный "сторож" — переприменяет стиль каждые полсекунды, на случай, если что-то
+    // извне периодически сбрасывает inline-стиль уже ПОСЛЕ начальной загрузки
+    setInterval(forceInputVisibility, 500);
+
+    // Закрепление прямо в момент, когда пользователь начинает печатать или фокусируется на поле —
+    // самый надёжный момент для гарантии видимости именно того, что человек сейчас делает
+    document.addEventListener('focusin', (e) => {
+        if (e.target.matches('input, select, textarea')) forceInputVisibility();
+    });
+    document.addEventListener('input', (e) => {
+        if (e.target.matches('input, select, textarea')) forceInputVisibility();
+    });
+
     let inputVisibilityDebounce = null;
     const inputVisibilityObserver = new MutationObserver(() => {
         clearTimeout(inputVisibilityDebounce);
         inputVisibilityDebounce = setTimeout(forceInputVisibility, 100);
     });
-    inputVisibilityObserver.observe(document.body, { childList: true, subtree: true });
+    // Помимо добавления новых узлов — следим и за сменой атрибута class (модалки вроде админ-панели
+    // уже присутствуют в статичной разметке и просто переключают класс "active", без добавления
+    // новых DOM-узлов — childList-часть наблюдателя это не ловит)
+    inputVisibilityObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 
     // ===== ИНИЦИАЛИЗАЦИЯ =====
     if (window.Telegram && window.Telegram.WebApp) {
