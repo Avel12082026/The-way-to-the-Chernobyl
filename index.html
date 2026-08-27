@@ -361,12 +361,13 @@
         radiationResist: 0, // от надетых артефактов — снижает получаемую радиацию при поиске
         anomalyResist: {}, // от надетых артефактов/брони — {имя аномалии: число} снижает риск при поиске именно в этой аномалии
         weapon: { name: 'Пистолет Макарова', tier: 1, dmg: 10 },
-        armor: { name: 'Комбинезон Юность', tier: 1, armor: 5, artifactProtection: 2 },
+        armor: { name: 'Комбинезон Юность', tier: 1, armor: 5 },
         detector: { name: 'Радэр 2-02', tier: 1 },
         maxHealth: 100,
         inventory: {},
         belt: [null, null, null, null, null, null],
         artifactSlots: [null, null, null, null, null, null],
+        armorUpgradeData: {}, // {точное имя брони в инвентаре/надетой: {статКлюч: добавленные очки}} — какая ИМЕННО характеристика улучшена
         hostileFactions: [], // фракции, ставшие враждебными после нападения игрока
         warehouse: {},
         quickSlots: [null, null, null, null],
@@ -616,102 +617,102 @@
 
     // ===== БРОНЯ =====
     const armorItems = [
-        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, artifactProtection: 2, price: 130, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1} },
-        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, artifactProtection: 2, price: 156, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1} },
-        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, artifactProtection: 2, price: 156, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1} },
-        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, artifactProtection: 3, price: 182, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1} },
-        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, artifactProtection: 3, price: 260, stats: {"anomaly_Электра":1,"anomaly_Жарка":1} },
-        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, artifactProtection: 3, price: 208, stats: {"anomaly_Карусель":1,"anomaly_Печка":1} },
-        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, artifactProtection: 5, price: 650, stats: {"anomaly_Электра":1,"anomaly_Печка":1} },
-        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, artifactProtection: 5, price: 650, stats: {"anomaly_Воронка":1,"anomaly_Мясорубка":1} },
-        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, artifactProtection: 5, price: 689, stats: {"anomaly_Печка":2,"anomaly_Мясорубка":2} },
-        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, artifactProtection: 6, price: 741, stats: {"anomaly_Кислотный туман":2,"anomaly_Карусель":1} },
-        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, artifactProtection: 6, price: 819, stats: {"anomaly_Воронка":2,"anomaly_Мясорубка":2} },
-        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, artifactProtection: 7, price: 910, stats: {"anomaly_Печка":2,"anomaly_Электра":1} },
-        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, artifactProtection: 10, price: 1560, stats: {"anomaly_Электра":2,"anomaly_Печка":3} },
-        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, artifactProtection: 10, price: 1612, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2} },
-        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, artifactProtection: 11, price: 1716, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2} },
-        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, artifactProtection: 11, price: 1768, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3} },
-        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, artifactProtection: 12, price: 1872, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2} },
-        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, artifactProtection: 12, price: 2600, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2} },
-        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, artifactProtection: 15, price: 3250, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2} },
-        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, artifactProtection: 16, price: 3393, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3} },
-        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, artifactProtection: 16, price: 3471, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3} },
-        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, artifactProtection: 17, price: 3757, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3} },
-        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, artifactProtection: 19, price: 4186, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2} },
-        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, artifactProtection: 18, price: 5200, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2} },
-        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, artifactProtection: 25, price: 10400, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4} },
-        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, artifactProtection: 25, price: 10543, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5} },
-        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, artifactProtection: 26, price: 10816, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5} },
-        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, artifactProtection: 26, price: 10959, stats: {"anomaly_Карусель":4,"anomaly_Печка":4} },
-        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, artifactProtection: 27, price: 11089, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3} },
-        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, artifactProtection: 28, price: 11648, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4} },
-        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, artifactProtection: 30, price: 15600, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5} },
-        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, artifactProtection: 30, price: 15600, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5} },
-        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, artifactProtection: 30, price: 15782, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4} },
-        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, artifactProtection: 31, price: 15964, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6} },
-        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, artifactProtection: 31, price: 16146, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3} },
-        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, artifactProtection: 31, price: 16328, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6} },
-        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, artifactProtection: 35, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3} },
-        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, artifactProtection: 35, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6} },
-        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, artifactProtection: 35, price: 23660, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5} },
-        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, artifactProtection: 36, price: 23920, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5} },
-        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, artifactProtection: 36, price: 24180, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6} },
-        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, artifactProtection: 37, price: 24440, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6} },
-        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4} },
-        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4} },
-        { id: 45, name: "Броня Стража", tier: 8, armor: 95, artifactProtection: 40, price: 33800, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8} },
-        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, artifactProtection: 40, price: 34151, stats: {"anomaly_Воронка":6,"anomaly_Печка":4} },
-        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, artifactProtection: 40, price: 34151, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3} },
-        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, artifactProtection: 41, price: 34515, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8} },
-        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5} },
-        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4} },
-        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, artifactProtection: 45, price: 46800, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4} },
-        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, artifactProtection: 45, price: 47281, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4} },
-        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, artifactProtection: 45, price: 47281, stats: {"anomaly_Электра":5,"anomaly_Карусель":7} },
-        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, artifactProtection: 46, price: 47749, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6} },
-        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5} },
-        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8} },
-        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, artifactProtection: 50, price: 65000, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4} },
-        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, artifactProtection: 50, price: 65650, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7} },
-        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, artifactProtection: 51, price: 66300, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6} },
-        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, artifactProtection: 52, price: 66950, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6} },
-        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, artifactProtection: 60, price: 91000, stats: {"anomaly_Электра":8,"anomaly_Жарка":5} },
-        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, artifactProtection: 60, price: 91000, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7} },
-        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, artifactProtection: 61, price: 91793, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10} },
-        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, artifactProtection: 61, price: 92586, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9} },
-        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, artifactProtection: 62, price: 93379, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8} },
-        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, artifactProtection: 62, price: 94159, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7} },
-        { id: 67, name: "Броня Легион", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11} },
-        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10} },
-        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, artifactProtection: 70, price: 123500, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6} },
-        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, artifactProtection: 71, price: 124449, stats: {"anomaly_Печка":11,"anomaly_Воронка":11} },
-        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, artifactProtection: 71, price: 125398, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6} },
-        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, artifactProtection: 72, price: 126347, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5} },
-        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12} },
-        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8} },
-        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, artifactProtection: 85, price: 169000, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8} },
-        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, artifactProtection: 86, price: 170131, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11} },
-        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, artifactProtection: 86, price: 171249, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10} },
-        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, artifactProtection: 87, price: 172380, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10} },
-        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11} },
-        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8} },
-        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, artifactProtection: 100, price: 234000, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10} },
-        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, artifactProtection: 101, price: 235300, stats: {"anomaly_Печка":13,"anomaly_Карусель":11} },
-        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, artifactProtection: 101, price: 236600, stats: {"anomaly_Печка":12,"anomaly_Жарка":11} },
-        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, artifactProtection: 102, price: 237900, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8} },
-        { id: 85, name: "Плащ тёмного сталкера", tier: 14, armor: 666, artifactProtection: 200, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666} },
-        { id: 86, name: "Исследовательский комбинезон A", tier: 4, armor: 25, artifactProtection: 15, price: 9360, isResearchSuit: true, stats: {"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9} },
-        { id: 87, name: "Исследовательский комбинезон B", tier: 5, armor: 41, artifactProtection: 25, price: 20966, isResearchSuit: true, stats: {"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17} },
-        { id: 88, name: "Исследовательский комбинезон C", tier: 6, armor: 47, artifactProtection: 28, price: 29390, isResearchSuit: true, stats: {"radiation":18,"anomaly_Жарка":17,"anomaly_Электра":21,"anomaly_Воронка":19,"anomaly_Кислотный туман":23,"anomaly_Карусель":12,"anomaly_Мясорубка":23,"anomaly_Печка":13,"anomaly_Плазменная сфера":17} },
-        { id: 89, name: "Исследовательский комбинезон D", tier: 7, armor: 50, artifactProtection: 30, price: 43992, isResearchSuit: true, stats: {"radiation":21,"anomaly_Жарка":21,"anomaly_Электра":19,"anomaly_Воронка":17,"anomaly_Кислотный туман":20,"anomaly_Карусель":15,"anomaly_Мясорубка":23,"anomaly_Печка":19,"anomaly_Плазменная сфера":23} },
-        { id: 90, name: "Исследовательский комбинезон E", tier: 8, armor: 52, artifactProtection: 31, price: 62127, isResearchSuit: true, stats: {"radiation":24,"anomaly_Жарка":26,"anomaly_Электра":21,"anomaly_Воронка":27,"anomaly_Кислотный туман":30,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":19,"anomaly_Плазменная сфера":17} },
-        { id: 91, name: "Исследовательский комбинезон F", tier: 9, armor: 54, artifactProtection: 32, price: 85948, isResearchSuit: true, stats: {"radiation":27,"anomaly_Жарка":21,"anomaly_Электра":21,"anomaly_Воронка":22,"anomaly_Кислотный туман":20,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":35,"anomaly_Плазменная сфера":19} },
-        { id: 92, name: "Исследовательский комбинезон G", tier: 10, armor: 55, artifactProtection: 33, price: 120510, isResearchSuit: true, stats: {"radiation":30,"anomaly_Жарка":33,"anomaly_Электра":21,"anomaly_Воронка":23,"anomaly_Кислотный туман":39,"anomaly_Карусель":24,"anomaly_Мясорубка":37,"anomaly_Печка":36,"anomaly_Плазменная сфера":21} },
-        { id: 93, name: "Исследовательский комбинезон H", tier: 11, armor: 63, artifactProtection: 38, price: 169486, isResearchSuit: true, stats: {"radiation":33,"anomaly_Жарка":32,"anomaly_Электра":26,"anomaly_Воронка":41,"anomaly_Кислотный туман":40,"anomaly_Карусель":30,"anomaly_Мясорубка":26,"anomaly_Печка":24,"anomaly_Плазменная сфера":44} },
-        { id: 94, name: "Исследовательский комбинезон I", tier: 12, armor: 72, artifactProtection: 43, price: 227425, isResearchSuit: true, stats: {"radiation":36,"anomaly_Жарка":38,"anomaly_Электра":35,"anomaly_Воронка":46,"anomaly_Кислотный туман":28,"anomaly_Карусель":25,"anomaly_Мясорубка":28,"anomaly_Печка":39,"anomaly_Плазменная сфера":32} },
-        { id: 95, name: "Исследовательский комбинезон J", tier: 13, armor: 83, artifactProtection: 50, price: 310284, isResearchSuit: true, stats: {"radiation":39,"anomaly_Жарка":38,"anomaly_Электра":28,"anomaly_Воронка":45,"anomaly_Кислотный туман":33,"anomaly_Карусель":34,"anomaly_Мясорубка":47,"anomaly_Печка":38,"anomaly_Плазменная сфера":47} },
-        { id: 96, name: "Исследовательский комбинезон K", tier: 14, armor: 99, artifactProtection: 59, price: 428220, isResearchSuit: true, stats: {"radiation":42,"anomaly_Жарка":40,"anomaly_Электра":32,"anomaly_Воронка":48,"anomaly_Кислотный туман":32,"anomaly_Карусель":51,"anomaly_Мясорубка":48,"anomaly_Печка":45,"anomaly_Плазменная сфера":51} }
+        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
+        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, price: 156, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
+        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, price: 156, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1}, hitAbsorption: 3 },
+        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, price: 182, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1}, hitAbsorption: 4 },
+        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, price: 260, stats: {"anomaly_Электра":1,"anomaly_Жарка":1}, hitAbsorption: 4 },
+        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, price: 208, stats: {"anomaly_Карусель":1,"anomaly_Печка":1}, hitAbsorption: 4 },
+        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, price: 650, stats: {"anomaly_Электра":1,"anomaly_Печка":1}, hitAbsorption: 8 },
+        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, price: 650, stats: {"anomaly_Воронка":1,"anomaly_Мясорубка":1}, hitAbsorption: 8 },
+        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, price: 689, stats: {"anomaly_Печка":2,"anomaly_Мясорубка":2}, hitAbsorption: 8 },
+        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, price: 741, stats: {"anomaly_Кислотный туман":2,"anomaly_Карусель":1}, hitAbsorption: 9 },
+        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, price: 819, stats: {"anomaly_Воронка":2,"anomaly_Мясорубка":2}, hitAbsorption: 10 },
+        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, price: 910, stats: {"anomaly_Печка":2,"anomaly_Электра":1}, hitAbsorption: 10 },
+        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, price: 1560, stats: {"anomaly_Электра":2,"anomaly_Печка":3}, hitAbsorption: 15 },
+        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, price: 1612, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2}, hitAbsorption: 16 },
+        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, price: 1716, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2}, hitAbsorption: 17 },
+        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, price: 1768, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3}, hitAbsorption: 17 },
+        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, price: 1872, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2}, hitAbsorption: 18 },
+        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, price: 2600, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2}, hitAbsorption: 20 },
+        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, price: 3250, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2}, hitAbsorption: 23 },
+        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, price: 3393, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3}, hitAbsorption: 24 },
+        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, price: 3471, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3}, hitAbsorption: 24 },
+        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, price: 3757, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3}, hitAbsorption: 26 },
+        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, price: 4186, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 29 },
+        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, price: 5200, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 30 },
+        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, price: 10400, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4}, hitAbsorption: 38 },
+        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, price: 10543, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5}, hitAbsorption: 38 },
+        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, price: 10816, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5}, hitAbsorption: 39 },
+        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, price: 10959, stats: {"anomaly_Карусель":4,"anomaly_Печка":4}, hitAbsorption: 40 },
+        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, price: 11089, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3}, hitAbsorption: 40 },
+        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, price: 11648, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4}, hitAbsorption: 42 },
+        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, price: 15600, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5}, hitAbsorption: 43 },
+        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, price: 15600, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 43 },
+        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, price: 15782, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4}, hitAbsorption: 43 },
+        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, price: 15964, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6}, hitAbsorption: 44 },
+        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, price: 16146, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3}, hitAbsorption: 44 },
+        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, price: 16328, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6}, hitAbsorption: 45 },
+        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3}, hitAbsorption: 45 },
+        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6}, hitAbsorption: 45 },
+        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, price: 23660, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 46 },
+        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, price: 23920, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5}, hitAbsorption: 46 },
+        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, price: 24180, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6}, hitAbsorption: 47 },
+        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, price: 24440, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6}, hitAbsorption: 47 },
+        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4}, hitAbsorption: 48 },
+        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4}, hitAbsorption: 48 },
+        { id: 45, name: "Броня Стража", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8}, hitAbsorption: 48 },
+        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, price: 34151, stats: {"anomaly_Воронка":6,"anomaly_Печка":4}, hitAbsorption: 48 },
+        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, price: 34151, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3}, hitAbsorption: 48 },
+        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, price: 34515, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8}, hitAbsorption: 49 },
+        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5}, hitAbsorption: 49 },
+        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4}, hitAbsorption: 49 },
+        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4}, hitAbsorption: 49 },
+        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, price: 47281, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4}, hitAbsorption: 50 },
+        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, price: 47281, stats: {"anomaly_Электра":5,"anomaly_Карусель":7}, hitAbsorption: 50 },
+        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, price: 47749, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6}, hitAbsorption: 50 },
+        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5}, hitAbsorption: 50 },
+        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8}, hitAbsorption: 50 },
+        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4}, hitAbsorption: 50 },
+        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, price: 65650, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7}, hitAbsorption: 51 },
+        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, price: 66300, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6}, hitAbsorption: 51 },
+        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, price: 66950, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6}, hitAbsorption: 52 },
+        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, price: 91000, stats: {"anomaly_Электра":8,"anomaly_Жарка":5}, hitAbsorption: 58 },
+        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, price: 91000, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7}, hitAbsorption: 58 },
+        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, price: 91793, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10}, hitAbsorption: 58 },
+        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, price: 92586, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9}, hitAbsorption: 59 },
+        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, price: 93379, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8}, hitAbsorption: 59 },
+        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, price: 94159, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7}, hitAbsorption: 60 },
+        { id: 67, name: "Броня Легион", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11}, hitAbsorption: 65 },
+        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10}, hitAbsorption: 65 },
+        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6}, hitAbsorption: 65 },
+        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, price: 124449, stats: {"anomaly_Печка":11,"anomaly_Воронка":11}, hitAbsorption: 66 },
+        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, price: 125398, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6}, hitAbsorption: 66 },
+        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, price: 126347, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5}, hitAbsorption: 67 },
+        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12}, hitAbsorption: 75 },
+        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8}, hitAbsorption: 75 },
+        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8}, hitAbsorption: 75 },
+        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, price: 170131, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11}, hitAbsorption: 76 },
+        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, price: 171249, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10}, hitAbsorption: 76 },
+        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, price: 172380, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10}, hitAbsorption: 77 },
+        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11}, hitAbsorption: 90 },
+        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8}, hitAbsorption: 90 },
+        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10}, hitAbsorption: 90 },
+        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, price: 235300, stats: {"anomaly_Печка":13,"anomaly_Карусель":11}, hitAbsorption: 91 },
+        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, price: 236600, stats: {"anomaly_Печка":12,"anomaly_Жарка":11}, hitAbsorption: 91 },
+        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, price: 237900, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8}, hitAbsorption: 92 },
+        { id: 85, name: "Плащ тёмного сталкера", tier: 14, armor: 666, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666}, hitAbsorption: 333 },
+        { id: 86, name: "Исследовательский комбинезон A", tier: 4, armor: 25, price: 9360, isResearchSuit: true, stats: {"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9}, hitAbsorption: 13 },
+        { id: 87, name: "Исследовательский комбинезон B", tier: 5, armor: 41, price: 20966, isResearchSuit: true, stats: {"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17}, hitAbsorption: 21 },
+        { id: 88, name: "Исследовательский комбинезон C", tier: 6, armor: 47, price: 29390, isResearchSuit: true, stats: {"radiation":18,"anomaly_Жарка":17,"anomaly_Электра":21,"anomaly_Воронка":19,"anomaly_Кислотный туман":23,"anomaly_Карусель":12,"anomaly_Мясорубка":23,"anomaly_Печка":13,"anomaly_Плазменная сфера":17}, hitAbsorption: 24 },
+        { id: 89, name: "Исследовательский комбинезон D", tier: 7, armor: 50, price: 43992, isResearchSuit: true, stats: {"radiation":21,"anomaly_Жарка":21,"anomaly_Электра":19,"anomaly_Воронка":17,"anomaly_Кислотный туман":20,"anomaly_Карусель":15,"anomaly_Мясорубка":23,"anomaly_Печка":19,"anomaly_Плазменная сфера":23}, hitAbsorption: 25 },
+        { id: 90, name: "Исследовательский комбинезон E", tier: 8, armor: 52, price: 62127, isResearchSuit: true, stats: {"radiation":24,"anomaly_Жарка":26,"anomaly_Электра":21,"anomaly_Воронка":27,"anomaly_Кислотный туман":30,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":19,"anomaly_Плазменная сфера":17}, hitAbsorption: 26 },
+        { id: 91, name: "Исследовательский комбинезон F", tier: 9, armor: 54, price: 85948, isResearchSuit: true, stats: {"radiation":27,"anomaly_Жарка":21,"anomaly_Электра":21,"anomaly_Воронка":22,"anomaly_Кислотный туман":20,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":35,"anomaly_Плазменная сфера":19}, hitAbsorption: 27 },
+        { id: 92, name: "Исследовательский комбинезон G", tier: 10, armor: 55, price: 120510, isResearchSuit: true, stats: {"radiation":30,"anomaly_Жарка":33,"anomaly_Электра":21,"anomaly_Воронка":23,"anomaly_Кислотный туман":39,"anomaly_Карусель":24,"anomaly_Мясорубка":37,"anomaly_Печка":36,"anomaly_Плазменная сфера":21}, hitAbsorption: 28 },
+        { id: 93, name: "Исследовательский комбинезон H", tier: 11, armor: 63, price: 169486, isResearchSuit: true, stats: {"radiation":33,"anomaly_Жарка":32,"anomaly_Электра":26,"anomaly_Воронка":41,"anomaly_Кислотный туман":40,"anomaly_Карусель":30,"anomaly_Мясорубка":26,"anomaly_Печка":24,"anomaly_Плазменная сфера":44}, hitAbsorption: 32 },
+        { id: 94, name: "Исследовательский комбинезон I", tier: 12, armor: 72, price: 227425, isResearchSuit: true, stats: {"radiation":36,"anomaly_Жарка":38,"anomaly_Электра":35,"anomaly_Воронка":46,"anomaly_Кислотный туман":28,"anomaly_Карусель":25,"anomaly_Мясорубка":28,"anomaly_Печка":39,"anomaly_Плазменная сфера":32}, hitAbsorption: 36 },
+        { id: 95, name: "Исследовательский комбинезон J", tier: 13, armor: 83, price: 310284, isResearchSuit: true, stats: {"radiation":39,"anomaly_Жарка":38,"anomaly_Электра":28,"anomaly_Воронка":45,"anomaly_Кислотный туман":33,"anomaly_Карусель":34,"anomaly_Мясорубка":47,"anomaly_Печка":38,"anomaly_Плазменная сфера":47}, hitAbsorption: 42 },
+        { id: 96, name: "Исследовательский комбинезон K", tier: 14, armor: 99, price: 428220, isResearchSuit: true, stats: {"radiation":42,"anomaly_Жарка":40,"anomaly_Электра":32,"anomaly_Воронка":48,"anomaly_Кислотный туман":32,"anomaly_Карусель":51,"anomaly_Мясорубка":48,"anomaly_Печка":45,"anomaly_Плазменная сфера":51}, hitAbsorption: 50 }
     ];
 
     // ===== ДЕТЕКТОРЫ =====
@@ -729,7 +730,7 @@
 
     // Базовое снаряжение "без ничего" — используется при действии "Снять"
     const DEFAULT_WEAPON = { name: 'Кулаки', tier: 0, dmg: 5 };
-    const DEFAULT_ARMOR = { name: 'Без брони', tier: 0, armor: 0, artifactProtection: 0 };
+    const DEFAULT_ARMOR = { name: 'Без брони', tier: 0, armor: 0 };
     const DEFAULT_DETECTOR = { name: 'Без детектора', tier: 0 };
 
     // ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
@@ -936,9 +937,8 @@
             if (artifact) addStats(artifact.stats);
         });
         if (player.armor && player.armor.name) {
-            const baseName = parseGearName(player.armor.name).baseName;
-            const armorDef = armorItems.find(a => a.name === baseName);
-            if (armorDef) addStats(armorDef.stats);
+            const eff = getArmorEffectiveStats(player.armor.name);
+            if (eff) addStats(eff.stats);
         }
     }
 
@@ -1243,10 +1243,13 @@
         if (data.armor && data.armor.name && data.armor.name !== DEFAULT_ARMOR.name) {
             const parsed = parseGearName(data.armor.name);
             const base = armorItems.find(a => a.name === parsed.baseName);
-            const currentArmor = base ? base.armor + parsed.level : data.armor.armor;
-            const resistLines = base && base.stats ? Object.keys(base.stats).map(stat => `${getStatLabel(stat)}: +${base.stats[stat]}`).join(', ') : '';
+            const eff = getArmorEffectiveStats(data.armor.name, data);
+            const resistLines = eff ? Object.keys(eff.stats).map(stat => {
+                const val = eff.stats[stat];
+                return `${getStatLabel(stat)}: ${val >= 0 ? '+' : ''}${val}`;
+            }).join(', ') : '';
             html += `<p>🛡️ Броня: ${escapeHtml(data.armor.name)}<br>
-                <span style="color:#aaa; font-size:11px;">Броня: ${currentArmor}${parsed.level > 0 ? ` (базовая ${base ? base.armor : '?'} +${parsed.level} от улучшений)` : ''}${base ? `, защита от артефактов: ${base.artifactProtection}` : ''}${resistLines ? '<br>' + resistLines : ''}</span></p>`;
+                <span style="color:#aaa; font-size:11px;">Пулестойкость (от NPC): ${eff ? eff.bulletResist : '?'} · Гашение ударов (от мутантов): ${eff ? eff.hitAbsorption : '?'}${resistLines ? '<br>' + resistLines : ''}</span></p>`;
         }
 
         if (data.detector && data.detector.name && data.detector.name !== DEFAULT_DETECTOR.name) {
@@ -2418,10 +2421,13 @@
             if (!currentEnemy) return; // бой уже завершён/прерван другим путём — не трогаем состояние
             const enemyHitChance = currentEnemy.hitChance;
             if (Math.random() < enemyHitChance) {
-                // Процентное снижение урона бронёй (падающая отдача) вместо прямого вычитания —
-                // раньше при достаточно высокой броне урон полностью обнулялся (100% неуязвимость),
-                // теперь броня даёт сильную защиту, но никогда не даёт полный иммунитет
-                const armorReduction = player.armor.armor / (player.armor.armor + 100);
+                // Процентное снижение урона (падающая отдача) вместо прямого вычитания — броня даёт
+                // сильную защиту, но никогда не даёт полный иммунитет. Разные типы врагов пробивают
+                // РАЗНЫЕ защитные характеристики: NPC (у них есть .faction) — «Пулестойкость»
+                // (бывшая «Броня»), мутанты — «Гашение ударов» (обычно вдвое меньше «Пулестойкости»)
+                const isNpc = !!currentEnemy.faction;
+                const relevantDefense = isNpc ? (player.armor.armor || 0) : (player.armor.hitAbsorption || 0);
+                const armorReduction = relevantDefense / (relevantDefense + 100);
                 const finalDmg = Math.round(currentEnemy.dmg * (1 - armorReduction) * 10) / 10;
                 player.health = Math.round((player.health - finalDmg) * 10) / 10; // округляем сразу и хранимое значение, не только вывод в лог
                 raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${finalDmg}. Ваше HP: ${Math.max(0, player.health)}`);
@@ -3030,6 +3036,46 @@
         return { baseName: clean, level: 0 };
     }
 
+    // Стабильный ключ для armorUpgradeData — переживает рост "+N" (суффикс уровня улучшения меняется
+    // при каждом улучшении), но сохраняет невидимый суффикс уникальности экземпляра (если есть)
+    function getStableArmorKey(name) {
+        const invisibleMatch = name.match(/[\u200B\u200C]+$/);
+        const visiblePart = stripInvisibleSuffix(name);
+        const withoutLevel = visiblePart.replace(/ \+\d+$/, '');
+        return withoutLevel + (invisibleMatch ? invisibleMatch[0] : '');
+    }
+
+    // Считает ТЕКУЩИЕ эффективные характеристики конкретного экземпляра брони (по точному имени
+    // в инвентаре/надетой) — с учётом того, КАКИЕ ИМЕННО характеристики были улучшены игроком, а не
+    // просто "+N ко всему". Обратная совместимость: если для этого экземпляра ещё нет детальных
+    // данных об улучшении (armorUpgradeData пуст), но в самом имени есть "+N" — значит, эта броня
+    // улучшалась ДО введения выбора характеристики, когда все очки уходили в "Пулестойкость"
+    function getArmorEffectiveStats(itemName, playerData) {
+        playerData = playerData || player;
+        const parsed = parseGearName(itemName);
+        const base = armorItems.find(a => a.name === parsed.baseName);
+        if (!base) return null;
+        const stableKey = getStableArmorKey(itemName);
+        const stored = playerData.armorUpgradeData && playerData.armorUpgradeData[stableKey];
+        if (!stored && parsed.level > 0) {
+            return {
+                bulletResist: base.armor + parsed.level,
+                hitAbsorption: base.hitAbsorption || 0,
+                stats: { ...(base.stats || {}) },
+                totalUpgrades: parsed.level
+            };
+        }
+        const u = stored || {};
+        const bulletResist = base.armor + (u.armor || 0);
+        const hitAbsorption = (base.hitAbsorption || 0) + (u.hitAbsorption || 0);
+        const stats = { ...(base.stats || {}) };
+        Object.keys(u).forEach(key => {
+            if (key === 'armor' || key === 'hitAbsorption') return;
+            stats[key] = (stats[key] || 0) + u[key];
+        });
+        return { bulletResist, hitAbsorption, stats, totalUpgrades: parsed.level };
+    }
+
     const MAX_NONSTACKING_ITEMS = 50;
     // Оружие/броня/артефакты НЕ стакаются — каждый подобранный экземпляр занимает отдельную
     // ячейку инвентаря, даже если название совпадает с уже имеющимся. Уникальность второго и
@@ -3092,8 +3138,28 @@
             const old = player.armor.name;
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.armor = { name: itemName, tier: armor.tier, armor: armor.armor + parsed.level, artifactProtection: armor.artifactProtection };
-            if (old && old !== DEFAULT_ARMOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
+            const eff = getArmorEffectiveStats(itemName);
+            player.armor = { name: itemName, tier: armor.tier, armor: eff.bulletResist, hitAbsorption: eff.hitAbsorption };
+            if (old && old !== DEFAULT_ARMOR.name) {
+                let returnName = old;
+                if (player.inventory[old]) {
+                    // В инвентаре уже есть предмет с ТОЧНО таким же именем (например, подобрали
+                    // такую же неулучшенную броню, пока эта была надета) — снимаемая броня физически
+                    // другая и может иметь свою историю улучшений, даём ей новый невидимый суффикс,
+                    // чтобы не слиться с уже лежащей в одну ячейку и не перепутать данные улучшений
+                    returnName = old + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8));
+                    const oldStableKey = getStableArmorKey(old);
+                    const newStableKey = getStableArmorKey(returnName);
+                    if (player.armorUpgradeData && player.armorUpgradeData[oldStableKey]) {
+                        player.armorUpgradeData[newStableKey] = player.armorUpgradeData[oldStableKey];
+                        // Обязательно удаляем старый ключ — иначе он остался бы привязан к ЧИСТОМУ
+                        // имени, которое теперь принадлежит другому (свежему) предмету, и тот
+                        // ошибочно унаследовал бы чужие улучшения
+                        delete player.armorUpgradeData[oldStableKey];
+                    }
+                }
+                player.inventory[returnName] = (player.inventory[returnName] || 0) + 1;
+            }
             closeItemActionModal();
             renderInventory(); renderShop(); updateUI(); saveGame();
             return true;
@@ -3197,16 +3263,17 @@
         }
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
-            const currentArmor = armor.armor + parsed.level;
-            const resistLines = Object.keys(armor.stats || {}).map(stat => {
-                const val = armor.stats[stat];
-                return `${getStatLabel(stat)}: <b style="color:#8ac926;">+${val}</b>`;
+            const eff = getArmorEffectiveStats(itemName);
+            const resistLines = Object.keys(eff.stats).map(stat => {
+                const val = eff.stats[stat];
+                const sign = val >= 0 ? '+' : '';
+                const color = val >= 0 ? '#8ac926' : '#c0392b';
+                return `${getStatLabel(stat)}: <b style="color:${color};">${sign}${val}</b>`;
             }).join('<br>');
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${armor.tier}<br>
-                Базовая броня: ${armor.armor}<br>
-                Текущая броня: <b style="color:#fff;">${currentArmor}</b>${parsed.level > 0 ? ` (+${parsed.level} от улучшений)` : ''}<br>
-                Защита от артефактов: ${armor.artifactProtection}<br>
+                Пулестойкость (защита от NPC): <b style="color:#fff;">${eff.bulletResist}</b><br>
+                Гашение ударов (защита от мутантов): <b style="color:#fff;">${eff.hitAbsorption}</b><br>
                 Улучшений: ${parsed.level} / 100
                 ${resistLines ? '<br>' + resistLines + (armor.isResearchSuit ? ' <span style="color:#888;">(не растёт при улучшении)</span>' : '') : ''}
             </div>`;
@@ -4427,14 +4494,13 @@
             return st === 'weapon' || st === 'armor';
         });
 
-        // Надетые прямо сейчас оружие и броня — тоже можно улучшать, не снимая и не заходя в инвентарь
+        // Надетое прямо сейчас оружие — можно улучшать, не снимая и не заходя в инвентарь
         const equippedRow = (label, current, slotType, def) => {
             if (current.name === def.name) return ''; // ничего не надето — нечего улучшать
             const parsed = parseGearName(current.name);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
-            const base = slotType === 'weapon' ? weapons.find(w => w.name === parsed.baseName) : armorItems.find(a => a.name === parsed.baseName);
-            const statLabel = slotType === 'weapon' ? 'Урон' : 'Броня';
-            const currentStat = slotType === 'weapon' ? base.dmg + parsed.level : base.armor + parsed.level;
+            const base = weapons.find(w => w.name === parsed.baseName);
+            const currentStat = base.dmg + parsed.level;
             const nextStat = currentStat + 1;
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
@@ -4443,7 +4509,7 @@
             <div class="shop-item" style="border-color:#8a7a4a;">
                 <div>${label}: ${current.name} <span style="color:#8a7a4a;">(надето)</span></div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
-                    ${statLabel} сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
+                    Урон сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
                     Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
                 <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
@@ -4452,19 +4518,71 @@
                 </button>
             </div>`;
         };
-        const equippedHtml = equippedRow('⚔️ Оружие', player.weapon, 'weapon', DEFAULT_WEAPON) + equippedRow('🛡️ Броня', player.armor, 'armor', DEFAULT_ARMOR);
+
+        // Броня (надетая ИЛИ в инвентаре) — игрок выбирает КОНКРЕТНУЮ характеристику для улучшения
+        // из выпадающего списка: любую уже имеющуюся (растёт на +1), либо совсем новую (добавляется
+        // с нуля, начиная с 1), которой у этой брони ещё не было — остальные статы не трогаются
+        function renderArmorUpgradeCard(itemName, qty, isEquipped) {
+            const parsed = parseGearName(itemName);
+            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
+            const base = armorItems.find(a => a.name === parsed.baseName);
+            if (!base) return '';
+            const eff = getArmorEffectiveStats(itemName);
+            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+            const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
+            const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
+            const selectId = 'armorStatSelect_' + (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '') + '_' + parsed.level;
+
+            const existingOptions = [
+                `<option value="armor">Пулестойкость (сейчас ${eff.bulletResist}) → ${eff.bulletResist + 1}</option>`,
+                `<option value="hitAbsorption">Гашение ударов (сейчас ${eff.hitAbsorption}) → ${eff.hitAbsorption + 1}</option>`
+            ];
+            Object.keys(eff.stats).forEach(key => {
+                existingOptions.push(`<option value="${key}">${getStatLabel(key)} (сейчас ${eff.stats[key]}) → ${eff.stats[key] + 1}</option>`);
+            });
+            const newOptions = [];
+            if (!('radiation' in eff.stats)) newOptions.push(`<option value="radiation">➕ Добавить: защита от радиации (новая, станет 1)</option>`);
+            const allAnomalyNames = anomalies.map(a => a.name);
+            allAnomalyNames.forEach(aName => {
+                const key = 'anomaly_' + aName;
+                if (!(key in eff.stats)) newOptions.push(`<option value="${key}">➕ Добавить: ${getStatLabel(key)} (новая, станет 1)</option>`);
+            });
+
+            return `
+            <div class="shop-item" style="${isEquipped ? 'border-color:#8a7a4a;' : ''}">
+                <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}</div>
+                <div style="font-size:12px; color:#aaa; margin:4px 0;">
+                    Пулестойкость: <b style="color:#fff;">${eff.bulletResist}</b> · Гашение ударов: <b style="color:#fff;">${eff.hitAbsorption}</b><br>
+                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
+                </div>
+                <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
+                ${maxed ? '<button disabled>Улучшено до максимума</button>' : `
+                <select id="${selectId}" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:6px;">
+                    ${existingOptions.join('')}
+                    ${newOptions.join('')}
+                </select>
+                <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, document.getElementById('${selectId}').value)" ${!canAfford ? 'disabled' : ''}>
+                    ⬆️ Улучшить выбранное (+1)
+                </button>`}
+            </div>`;
+        }
+
+        const equippedHtml = equippedRow('⚔️ Оружие', player.weapon, 'weapon', DEFAULT_WEAPON) +
+            (player.armor.name !== DEFAULT_ARMOR.name ? renderArmorUpgradeCard(player.armor.name, 1, true) : '');
 
         if (upgradable.length === 0 && !equippedHtml) {
             el.innerHTML = '<p style="padding:10px; color:#888;">Нет оружия или брони для улучшения</p>';
             return;
         }
         el.innerHTML = equippedHtml + upgradable.map(name => {
+            const slotType = getEquipSlotType(name);
+            if (slotType === 'armor') {
+                return renderArmorUpgradeCard(name, player.inventory[name], false);
+            }
             const parsed = parseGearName(name);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
-            const slotType = getEquipSlotType(name);
-            const base = slotType === 'weapon' ? weapons.find(w => w.name === parsed.baseName) : armorItems.find(a => a.name === parsed.baseName);
-            const statLabel = slotType === 'weapon' ? 'Урон' : 'Броня';
-            const currentStat = slotType === 'weapon' ? base.dmg + parsed.level : base.armor + parsed.level;
+            const base = weapons.find(w => w.name === parsed.baseName);
+            const currentStat = base.dmg + parsed.level;
             const nextStat = currentStat + 1;
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
@@ -4473,7 +4591,7 @@
             <div class="shop-item">
                 <div>${name} ×${player.inventory[name]}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
-                    ${statLabel} сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
+                    Урон сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
                     Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
                 <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
@@ -4516,30 +4634,27 @@
             return;
         }
 
+        // Эта функция — ТОЛЬКО для оружия (у него одна улучшаемая характеристика — урон).
+        // У брони теперь несколько характеристик, и игрок выбирает, какую именно улучшать —
+        // см. upgradeArmorStat()
         if (isEquipped) {
             const slotType = getEquipSlotType(itemName);
-            if (slotType !== 'weapon' && slotType !== 'armor') return;
-            // На случай гонки состояний — то, что реально надето, должно совпадать с тем, что мы улучшаем
-            const currentEquipped = slotType === 'weapon' ? player.weapon : player.armor;
+            if (slotType !== 'weapon') return;
+            const currentEquipped = player.weapon;
             if (currentEquipped.name !== itemName) { renderTechnician(); return; }
 
             if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
             const newLevel = parsed.level + 1;
             const newName = `${parsed.baseName} +${newLevel}`;
-            if (slotType === 'weapon') {
-                const base = weapons.find(w => w.name === parsed.baseName);
-                player.weapon = { name: newName, tier: base.tier, dmg: base.dmg + newLevel };
-            } else {
-                const base = armorItems.find(a => a.name === parsed.baseName);
-                player.armor = { name: newName, tier: base.tier, armor: base.armor + newLevel, artifactProtection: base.artifactProtection };
-            }
+            const base = weapons.find(w => w.name === parsed.baseName);
+            player.weapon = { name: newName, tier: base.tier, dmg: base.dmg + newLevel };
             renderTechnician(); renderInventory(); updateUI(); saveGame();
             return;
         }
 
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
         const slotType = getEquipSlotType(itemName);
-        if (slotType !== 'weapon' && slotType !== 'armor') return;
+        if (slotType !== 'weapon') return;
 
         if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
         player.inventory[itemName]--;
@@ -4552,6 +4667,67 @@
         renderTechnician();
         updateUI();
         saveGame();
+    }
+
+    // ===== УЛУЧШЕНИЕ БРОНИ: игрок выбирает, КАКУЮ ИМЕННО характеристику улучшать =====
+    // statKey — либо существующая характеристика ('armor'=Пулестойкость, 'hitAbsorption'=Гашение
+    // ударов, 'radiation', 'anomaly_ИмяАномалии'), либо НОВАЯ характеристика, которой у брони ещё не
+    // было (тогда она добавляется с нуля, не трогая остальные). Каждое действие — ровно +1 к выбранной
+    // характеристике, независимо от того, какая это характеристика
+    function upgradeArmorStat(itemName, isEquipped, statKey) {
+        const parsed = parseGearName(itemName);
+        if (parsed.level >= UPGRADE_MAX_LEVEL) { alert('Этот предмет уже улучшен до максимума.'); return; }
+        if (!statKey) { alert('Выберите характеристику для улучшения.'); return; }
+
+        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+        const tokenCost = usesTokens ? getUpgradeCostTokens(parsed.level) : 0;
+        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(parsed.level);
+
+        if (usesTokens && (Number(player.breedCredits) || 0) < tokenCost) {
+            alert(`Недостаточно жетонов сталкера. Нужно 🧬 ${tokenCost}.`);
+            return;
+        }
+        if (!usesTokens && player.coins < byteCost) {
+            alert(`Недостаточно Байт. Нужно 🪙 ${byteCost.toLocaleString('ru-RU')}.`);
+            return;
+        }
+
+        const slotType = getEquipSlotType(itemName);
+        if (slotType !== 'armor') return;
+
+        if (isEquipped) {
+            if (player.armor.name !== itemName) { renderTechnician(); return; }
+        } else {
+            if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        }
+
+        if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
+
+        const stableKey = getStableArmorKey(itemName);
+        player.armorUpgradeData = player.armorUpgradeData || {};
+        player.armorUpgradeData[stableKey] = player.armorUpgradeData[stableKey] || {};
+        player.armorUpgradeData[stableKey][statKey] = (player.armorUpgradeData[stableKey][statKey] || 0) + 1;
+
+        const newLevel = parsed.level + 1;
+        const newName = `${parsed.baseName} +${newLevel}`;
+        // Переносим накопленные данные улучшения под новый видимый ключ (стабильная часть та же,
+        // но подчистим на всякий случай старый ключ, если он вдруг отличался от нового)
+        if (stableKey !== getStableArmorKey(newName)) {
+            player.armorUpgradeData[getStableArmorKey(newName)] = player.armorUpgradeData[stableKey];
+            delete player.armorUpgradeData[stableKey];
+        }
+
+        if (isEquipped) {
+            const eff = getArmorEffectiveStats(newName);
+            const base = armorItems.find(a => a.name === parsed.baseName);
+            player.armor = { name: newName, tier: base.tier, armor: eff.bulletResist, hitAbsorption: eff.hitAbsorption };
+        } else {
+            player.inventory[itemName]--;
+            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
+            player.inventory[newName] = (player.inventory[newName] || 0) + 1;
+        }
+
+        renderTechnician(); renderInventory(); updateUI(); saveGame();
     }
 
     // ===== ПРИНУДИТЕЛЬНАЯ ВИДИМОСТЬ ТЕКСТА В ПОЛЯХ ВВОДА =====
