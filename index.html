@@ -13,7 +13,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { color-scheme: dark; overflow-x: hidden; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
         .header { background: #1a1a1a; border: 2px solid #333; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px; text-align: center; }
         .header h1 { color: #8a7a4a; font-size: 14px; letter-spacing: 1px; line-height: 1.2; margin-bottom: 4px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
@@ -48,7 +48,7 @@
         .modal.active { display: flex; }
         .modal-content { background: #1a1a1a; border: 2px solid #e6a23c; border-radius: 12px; padding: 20px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; }
         .modal-content h3 { color: #e6a23c; margin-bottom: 15px; }
-        .modal-content input { width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: #fff; margin-bottom: 10px; border-radius: 6px; }
+        .modal-content input { width: 100%; padding: 10px; background: #111 !important; border: 1px solid #333; color: #fff !important; -webkit-text-fill-color: #fff !important; margin-bottom: 10px; border-radius: 6px; }
         /* Страховка: НИ ОДНО поле ввода/выпадающий список нигде в игре не должно оставаться без явного
            цвета текста и фона — иначе на некоторых телефонах/браузерах вводимый текст становится невидимым */
         input, select, textarea { color: #fff !important; background: #1a1a1a !important; -webkit-text-fill-color: #fff !important; caret-color: #fff !important; }
@@ -82,7 +82,7 @@
 
     <div id="mainMenu" class="menu">
         <button onclick="openScreen('inventory')">🎒 Инвентарь</button>
-        <button onclick="openScreen('shop')">💰 Торговец</button>
+        <button onclick="openScreen('shop')">💰 Торговец Жучара</button>
         <button onclick="startRaid()">⚔️ В Рейд</button>
         <button onclick="openScreen('warehouse')">🏠 Мой склад</button>
         <button onclick="openScreen('technician')">🔧 Техник</button>
@@ -109,7 +109,7 @@
         </div>
         <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; max-height:220px; overflow-y:auto; overflow-x:hidden; margin-bottom:8px; display:flex; flex-direction:column-reverse; box-sizing:border-box;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
-        <div style="display:flex; gap:8px; position:sticky; bottom:0; background:#111; padding:6px 0; z-index:5;">
+        <div style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#111; border-top:1px solid #2a2a2a; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
         </div>
@@ -196,7 +196,7 @@
     </div>
 
     <div id="shopScreen" class="screen">
-        <h3>💰 Торговец</h3>
+        <h3>💰 Торговец Жучара</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
             <button onclick="openShopTab('buy')">🛒 Купить</button>
@@ -246,6 +246,7 @@
     <div id="friendlyTradeModal" class="modal">
         <div class="modal-content" style="max-width: 500px;">
             <h3 id="friendlyTradeTitle">🤝 Торговля</h3>
+            <button onclick="closeFriendlyTrade()" style="background:#c0392b; margin-bottom:10px;">Уйти</button>
             <div id="friendlyTradeStats" style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:6px 8px; border-radius:6px;"></div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
                 <button onclick="openFriendlyTradeTab('buy')">Купить</button>
@@ -739,7 +740,7 @@
         { id: 2, name: "Тушенка", type: "food", restore: 50, price: 52 },
         { id: 3, name: "Вода", type: "water", restore: 25, price: 20 },
         { id: 4, name: "Энергетик", type: "water", restore: 100, price: 52 },
-        { id: 5, name: "Гражданская аптечка", type: "medkit", restore: 50, price: 130 },
+        { id: 5, name: "Аптечка гражданская", type: "medkit", restore: 50, price: 130 },
         { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 195 },
         { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 400, radiationRemove: 100 },
         // "Антирад" не лечит здоровье — только снимает радиацию, но за счёт еды и воды. Продаётся
@@ -916,6 +917,41 @@
     // ВАЖНО: у брони эти статы берутся из СТАТИЧНОГО определения по базовому имени (без учёта
     // "+N" от улучшения) — поэтому защита от радиации/аномалий у брони НЕ растёт при улучшении,
     // растёт только сам параметр "броня"
+    // Негативные свойства надетых артефактов бьют каждый ход (вызывается из raidStep — "ход" в
+    // значении "шаг по рейду", не отдельное боевое действие):
+    // - отрицательные "hunger"/"thirst" — доп. расход СВЕРХ обычных -5 за ход
+    // - отрицательная "radiation" — это буквально "радиоактивность" артефакта: полоса радиации
+    //   растёт на эту величину, и ровно столько же здоровья отнимается сразу же (отдельно от общего
+    //   урона накопленной радиацией, который бьёт при КАЖДОМ действии в рейде — см. applyRadiationPoisoningDamage)
+    function applyNegativeArtifactPerTurnEffects() {
+        let extraHunger = 0, extraThirst = 0, artifactRadiation = 0;
+        (player.artifactSlots || []).forEach(name => {
+            if (!name) return;
+            const artifact = findArtifactDef(name);
+            if (!artifact || !artifact.stats) return;
+            if (artifact.stats.hunger < 0) extraHunger += -artifact.stats.hunger;
+            if (artifact.stats.thirst < 0) extraThirst += -artifact.stats.thirst;
+            if (artifact.stats.radiation < 0) artifactRadiation += -artifact.stats.radiation;
+        });
+        if (extraHunger > 0) player.hunger = Math.max(0, player.hunger - extraHunger);
+        if (extraThirst > 0) player.thirst = Math.max(0, player.thirst - extraThirst);
+        if (artifactRadiation > 0) {
+            player.radiation = Math.min(100, player.radiation + artifactRadiation);
+            player.health = Math.round(Math.max(0, player.health - artifactRadiation) * 10) / 10;
+            raidLogs.push(`☢️ Артефакт(ы) фонят: радиация +${artifactRadiation}, здоровье -${artifactRadiation}`);
+        }
+    }
+
+    // Урон от УЖЕ НАКОПЛЕННОЙ радиации — бьёт при КАЖДОМ действии в рейде (не только шаг вперёд, но
+    // и вход/выход из рюкзака и т.д.), пока радиация не вылечена. Величина урона равна ТЕКУЩЕМУ
+    // значению полосы радиации — чем дольше не лечиться, тем разрушительнее становится каждое действие
+    function applyRadiationPoisoningDamage() {
+        if (player.radiation <= 0) return;
+        const dmg = player.radiation;
+        player.health = Math.round(Math.max(0, player.health - dmg) * 10) / 10;
+        raidLogs.push(`☢️ Лучевая болезнь: накопленная радиация (${dmg}) отнимает столько же здоровья`);
+    }
+
     function recomputeArtifactResistances() {
         if (!Array.isArray(player.artifactSlots)) return;
         player.radiationResist = 0;
@@ -2295,6 +2331,8 @@
 
     function battleAction(action) {
         if (!currentEnemy) return;
+        applyRadiationPoisoningDamage(); // любое боевое действие тоже "действие в рейде" — накопленная радиация бьёт и здесь
+        if (player.health <= 0) { handlePlayerDeath(); return; }
         
         if (action === 'attack') {
             const critChance = (Number(player.accuracy) || 0) * 0.005; // до 50% шанса крита при меткости 100
@@ -2539,10 +2577,12 @@
     // Открыть рюкзак прямо во время рейда (в том числе во время боя) — не прерывает и не завершает рейд
     function openBackpackFromRaid() {
         inventoryOpenedFromRaid = true;
+        applyRadiationPoisoningDamage(); // вход в рюкзак — тоже действие в рейде, накопленная радиация бьёт и здесь
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('inventoryScreen').classList.add('active');
         document.getElementById('embeddedChatWidget').style.display = 'none'; // на экране инвентаря места для чата нет
         renderInventory();
+        if (player.health <= 0) { handlePlayerDeath(); return; }
     }
 
     // "Назад" из инвентаря — если инвентарь был открыт из рейда, возвращаем в рейд (а не в главное меню),
@@ -2557,6 +2597,7 @@
     }
 
     function returnToRaid() {
+        applyRadiationPoisoningDamage(); // выход из рюкзака — тоже действие в рейде
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById('raidScreen').classList.add('active');
@@ -2564,8 +2605,11 @@
         document.getElementById('embeddedChatWidget').style.display = 'block';
         openChatTab(chatTab);
         renderQuickSlots();
+        if (player.health <= 0) { handlePlayerDeath(); return; }
         if (currentEnemy) {
-            renderBattleButtons(); // бой всё ещё идёт — восстанавливаем боевые кнопки (сама функция скроет навигацию)
+            // Визит в рюкзак во время боя тоже "тратит ход" — противник должен успеть атаковать,
+            // а не молча ждать, пока игрок разберётся с инвентарём без всяких последствий
+            triggerEnemyTurn();
         } else {
             clearBattleUiAndRestoreNav(); // боя нет — навигация рейда должна быть на месте
         }
@@ -2613,6 +2657,9 @@
 
         player.hunger = Math.max(0, Math.min(100, player.hunger - 5));
         player.thirst = Math.max(0, Math.min(100, player.thirst - 5));
+        applyNegativeArtifactPerTurnEffects(); // доп. расход голода/жажды и радиации от надетых артефактов с негативными свойствами
+        applyRadiationPoisoningDamage(); // урон от уже накопленной радиации — бьёт при каждом действии в рейде
+        if (player.health <= 0) { handlePlayerDeath(); return; }
 
         // Истощение: голод/жажда на нуле начинают отнимать здоровье каждый шаг рейда
         let starvationDmg = 0;
@@ -3411,7 +3458,7 @@
         if (slotNum === 2 && breedSlot2) { breedSlot2 = null; renderScientists(); return; }
 
         const ownedArtifacts = Object.keys(player.inventory).filter(name =>
-            player.inventory[name] > 0 && artifacts.some(a => a.name === name)
+            player.inventory[name] > 0 && findArtifactDef(name)
         );
         if (ownedArtifacts.length === 0) { alert('В инвентаре нет артефактов для скрещивания.'); return; }
 
@@ -3608,7 +3655,7 @@
         document.getElementById('scientistsBuyList').innerHTML = '';
         const el = document.getElementById('scientistsSellList');
         const ownedArtifacts = Object.keys(player.inventory).filter(name =>
-            player.inventory[name] > 0 && artifacts.some(a => a.name === name)
+            player.inventory[name] > 0 && findArtifactDef(name)
         );
         // Части тел мутантов — тоже можно продать Бункеру экологов, на 5% дороже, чем торговцу
         const ownedBodyParts = Object.keys(player.inventory).filter(name =>
@@ -3618,10 +3665,10 @@
             el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Продажа Бункеру экологов — на 5% дороже, чем торговцу:</div>`;
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Артефакты — на 10% дороже, чем торговцу. Части тел мутантов — на 5% дороже:</div>`;
         html += ownedArtifacts.map(name => {
             const artifact = findArtifactDef(name);
-            const price = Math.round(getSellPrice(name) * 1.05);
+            const price = Math.round(getSellPrice(name) * 1.10);
             const esc = name.replace(/'/g, "\\'");
             return `
                 <div class="shop-item">
@@ -3666,7 +3713,7 @@
         if (player.inventory[name] <= 0) delete player.inventory[name];
 
         // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты (обмен на жетоны сталкера убран ранее)
-        const price = Math.round(getSellPrice(name) * 1.05);
+        const price = Math.round(getSellPrice(name) * 1.10);
         player.coins += price;
 
         openScientistsSellView();
@@ -3958,6 +4005,7 @@
         quickSlotsGrid.innerHTML = player.quickSlots.map((item, i) => `
             <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">${item ? `${item} ×${player.inventory[item] || 0}` : 'Пусто'}</div>
         `).join('');
+        void quickSlotsGrid.offsetHeight; // принудительный reflow — иначе в некоторых WebView новая ячейка визуально не появляется сразу
 
         const invGrid = document.getElementById('inventoryGrid');
         // "Книга знаний" теперь живёт только в шапке (хаб), а не в общей сетке инвентаря
@@ -4005,6 +4053,8 @@
             const qty = itemName ? (player.inventory[itemName] || 0) : 0;
             el.textContent = itemName ? `${itemName} ×${qty}` : 'Пусто';
         });
+        const container = document.getElementById('quickSlots');
+        if (container) void container.offsetHeight; // тот же приём против зависшей отрисовки в WebView
     }
 
     function useQuickSlot(index) {
@@ -4160,8 +4210,13 @@
         });
 
         return [
-            // "Антирад" продаётся только в Бункере экологов, не у обычного Торговца
-            ...consumables.filter(c => c.name !== 'Антирад').map(c => ({ ...c, category: 'consumable' })),
+            // У Торговца Жучары аптечки (включая "Антирад") стоят на 1% дороже базовой цены —
+            // раньше "Антирад" тут вообще не продавался, теперь добавлен наравне с остальными
+            ...consumables.map(c => ({
+                ...c,
+                category: 'consumable',
+                price: (c.type === 'medkit' || c.type === 'antirad') ? Math.round(c.price * 1.01) : c.price
+            })),
             ...unlockByTierAndLevel(weapons).map(w => ({ ...w, category: 'weapon' })),
             ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' }))
             // Детекторы у Торговца больше не продаются — только у Бункера экологов, и выдаются по уровню игрока
@@ -4288,7 +4343,11 @@
         else if (category === 'armor') item = armorItems.find(a => a.name === name);
         else if (category === 'detector') item = detectors.find(d => d.name === name);
         if (!item) return;
-        const price = getBuyPrice(item.price);
+        // У Торговца Жучары аптечки (включая "Антирад") стоят на 1% дороже базовой цены — та же
+        // надбавка, что и в каталоге для отображения, применяем и здесь при реальном списании
+        const basePrice = (category === 'consumable' && (item.type === 'medkit' || item.type === 'antirad'))
+            ? Math.round(item.price * 1.01) : item.price;
+        const price = getBuyPrice(basePrice);
         if (player.coins < price) return;
 
         player.coins -= price;
@@ -4520,8 +4579,11 @@
         };
 
         // Броня (надетая ИЛИ в инвентаре) — игрок выбирает КОНКРЕТНУЮ характеристику для улучшения
-        // из выпадающего списка: любую уже имеющуюся (растёт на +1), либо совсем новую (добавляется
-        // с нуля, начиная с 1), которой у этой брони ещё не было — остальные статы не трогаются
+        // из "магазинного" списка (кнопка раскрывает список, похожий на торговлю с NPC — характеристика,
+        // текущее/новое значение, цена, отдельная кнопка на каждую строку).
+        // Исследовательские комбинезоны улучшают ТОЛЬКО защиту от радиации/аномалий — Пулестойкость и
+        // Гашение ударов у них зафиксированы навсегда. Обычная броня — ровно наоборот: только
+        // Пулестойкость и Гашение ударов, без защиты от аномалий/радиации вообще
         function renderArmorUpgradeCard(itemName, qty, isEquipped) {
             const parsed = parseGearName(itemName);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
@@ -4531,39 +4593,45 @@
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
-            const selectId = 'armorStatSelect_' + (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '') + '_' + parsed.level;
+            const panelId = 'armorStatPanel_' + (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '') + '_' + parsed.level;
 
-            const existingOptions = [
-                `<option value="armor">Пулестойкость (сейчас ${eff.bulletResist}) → ${eff.bulletResist + 1}</option>`,
-                `<option value="hitAbsorption">Гашение ударов (сейчас ${eff.hitAbsorption}) → ${eff.hitAbsorption + 1}</option>`
-            ];
-            Object.keys(eff.stats).forEach(key => {
-                existingOptions.push(`<option value="${key}">${getStatLabel(key)} (сейчас ${eff.stats[key]}) → ${eff.stats[key] + 1}</option>`);
-            });
-            const newOptions = [];
-            if (!('radiation' in eff.stats)) newOptions.push(`<option value="radiation">➕ Добавить: защита от радиации (новая, станет 1)</option>`);
-            const allAnomalyNames = anomalies.map(a => a.name);
-            allAnomalyNames.forEach(aName => {
-                const key = 'anomaly_' + aName;
-                if (!(key in eff.stats)) newOptions.push(`<option value="${key}">➕ Добавить: ${getStatLabel(key)} (новая, станет 1)</option>`);
-            });
+            const isSuit = !!base.isResearchSuit;
+            const rows = [];
+            if (!isSuit) {
+                rows.push({ key: 'armor', label: 'Пулестойкость', current: eff.bulletResist });
+                rows.push({ key: 'hitAbsorption', label: 'Гашение ударов', current: eff.hitAbsorption });
+            } else {
+                Object.keys(eff.stats).forEach(key => {
+                    rows.push({ key, label: getStatLabel(key), current: eff.stats[key] });
+                });
+                if (!('radiation' in eff.stats)) rows.push({ key: 'radiation', label: getStatLabel('radiation'), current: 0, isNew: true });
+                anomalies.forEach(a => {
+                    const key = 'anomaly_' + a.name;
+                    if (!(key in eff.stats)) rows.push({ key, label: getStatLabel(key), current: 0, isNew: true });
+                });
+            }
+
+            const rowsHtml = rows.map(r => `
+                <div class="shop-item">
+                    <div>${r.label}${r.isNew ? ' <span style="color:#8ac926;">(новая характеристика)</span>' : ''}</div>
+                    <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${r.current + 1}</b></div>
+                    <div class="price">Цена: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
+                    <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, '${r.key}')" ${!canAfford ? 'disabled' : ''}>⬆️ Улучшить</button>
+                </div>
+            `).join('');
 
             return `
             <div class="shop-item" style="${isEquipped ? 'border-color:#8a7a4a;' : ''}">
-                <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}</div>
+                <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}${isSuit ? ' <span style="color:#8a7a4a; font-size:11px;">(исследовательский — только защита от радиации/аномалий)</span>' : ''}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Пулестойкость: <b style="color:#fff;">${eff.bulletResist}</b> · Гашение ударов: <b style="color:#fff;">${eff.hitAbsorption}</b><br>
                     Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
-                <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
                 ${maxed ? '<button disabled>Улучшено до максимума</button>' : `
-                <select id="${selectId}" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:6px;">
-                    ${existingOptions.join('')}
-                    ${newOptions.join('')}
-                </select>
-                <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, document.getElementById('${selectId}').value)" ${!canAfford ? 'disabled' : ''}>
-                    ⬆️ Улучшить выбранное (+1)
-                </button>`}
+                <button onclick="const p = document.getElementById('${panelId}'); p.style.display = p.style.display === 'none' ? 'block' : 'none';">
+                    🔧 Выбрать и улучшить характеристику
+                </button>
+                <div id="${panelId}" style="display:none; margin-top:8px;">${rowsHtml}</div>`}
             </div>`;
         }
 
@@ -4694,6 +4762,21 @@
 
         const slotType = getEquipSlotType(itemName);
         if (slotType !== 'armor') return;
+
+        // Защита от несоответствия типа брони и выбранной характеристики (на случай прямого вызова
+        // в обход интерфейса) — исследовательские комбинезоны не улучшают Пулестойкость/Гашение
+        // ударов, обычная броня не улучшает защиту от радиации/аномалий
+        const baseForCheck = armorItems.find(a => a.name === parsed.baseName);
+        const isSuit = baseForCheck && baseForCheck.isResearchSuit;
+        const isCoreStat = statKey === 'armor' || statKey === 'hitAbsorption';
+        if (isSuit && isCoreStat) {
+            alert('У исследовательских комбинезонов нельзя улучшать Пулестойкость или Гашение ударов — только защиту от радиации/аномалий.');
+            return;
+        }
+        if (!isSuit && !isCoreStat) {
+            alert('У обычной брони нельзя улучшать защиту от радиации/аномалий — только Пулестойкость или Гашение ударов.');
+            return;
+        }
 
         if (isEquipped) {
             if (player.armor.name !== itemName) { renderTechnician(); return; }
