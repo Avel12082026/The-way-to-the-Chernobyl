@@ -88,7 +88,7 @@
         <button onclick="openScreen('technician')">🔧 Техник</button>
         <button onclick="openScreen('kpk')">📱 КПК</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
-        <button onclick="openScreen('scientists')">🧪 Ученые</button>
+        <button onclick="openScreen('scientists')">🧪 Бункер экологов</button>
         <button onclick="exitGame()" style="grid-column: 1 / -1; margin-top:8px;">🚪 Выйти из игры</button>
     </div>
     <div id="mainMenuChatSlot"></div>
@@ -124,7 +124,7 @@
     </div>
 
     <div id="scientistsScreen" class="screen">
-        <h3>🧪 Ученые</h3>
+        <h3>🧪 Бункер экологов</h3>
         <button class="back-btn" onclick="exitScientists()" style="margin-bottom:10px;">← Выход</button>
         <div style="font-size:16px; font-weight:bold; color:#8a7a4a; margin-bottom:6px; background:#1a1a1a; padding:10px; border-radius:8px; text-align:center;">
             🧬 Жетонов сталкера: <span id="breedCreditsCount">0</span>
@@ -755,7 +755,7 @@
         { name: 'Сталкеры', type: 'neutral', color: '#5e5eff' },
         { name: 'Долг', type: 'neutral', color: '#5e5eff' },
         { name: 'Свобода', type: 'neutral', color: '#5e5eff' },
-        { name: 'Бункер экологов', type: 'neutral', color: '#5e5eff' }
+        { name: 'Экологи', type: 'neutral', color: '#5e5eff' }
     ];
 
     // ===== NPC =====
@@ -763,6 +763,38 @@
     // (см. findRandomNPC) — здесь создаётся только базовый шаблон (тир/фракция/боевые статы)
     // Множитель силы NPC подобран индивидуально по тиру (симуляцией) — цель: ~51% шанс победы
     // игрока при слабейшем снаряжении своего тира. Раньше был гарантированный 100% выигрыш везде.
+    // Позывные NPC — комбинируются из имени + прозвища, отдельный пул прозвищ под характер
+    // каждой фракции (полсотни имён × десяток позывных на фракцию = сотни уникальных сочетаний,
+    // почти не повторяются в игре). Формат отображения: "Имя Позывной"
+    const NPC_FIRST_NAMES = [
+        'Гена', 'Толя', 'Витёк', 'Серый', 'Лёха', 'Мишка', 'Кузьма', 'Стёпа', 'Ромыч', 'Санёк',
+        'Колян', 'Петруха', 'Славик', 'Юрик', 'Данила', 'Игорян', 'Пашка', 'Валера', 'Жека', 'Костян',
+        'Тёма', 'Боря', 'Федя', 'Гриша', 'Andрей', 'Макс', 'Илюха', 'Димон', 'Ваня', 'Тимоха'
+    ].map(n => n === 'Andрей' ? 'Андрей' : n); // защита от случайной опечатки при правке списка
+
+    const NPC_CALLSIGNS_BY_FACTION = {
+        'Сталкеры': ['Лютый', 'Шустрый', 'Хмурый', 'Ёж', 'Косой', 'Кардан', 'Сорока', 'Краб', 'Зверобой', 'Мастер', 'Леший', 'Кочерга', 'Нимбл', 'Батя'],
+        'Долг': ['Комбат', 'Спирт', 'Гоблин', 'Клык', 'Барс', 'Штык', 'Ротный', 'Устав', 'Приказ', 'Дисциплина'],
+        'Свобода': ['Локи', 'Финт', 'Пират', 'Скай', 'Дюжина', 'Дрозд', 'Вольный', 'Бунтарь', 'Драйв', 'Панк'],
+        'Монолит': ['Голос', 'Пророк', 'Верный', 'Слепой', 'Одержимый', 'Избранный', 'Стражник', 'Аколит'],
+        'Наёмники': ['Волкодав', 'Гарри', 'Морган', 'Пантера', 'Зулус', 'Снайпер', 'Хват', 'Тень', 'Крюк'],
+        'Бандиты': ['Боров', 'Гнус', 'Крот', 'Скряга', 'Шакал', 'Рвань', 'Жила', 'Мясник', 'Хмырь'],
+        'Военные': ['Прапор', 'Полкан', 'Капрал', 'Сержант', 'Майор', 'Ефрейтор', 'Комбриг', 'Пехота'],
+        'Экологи': ['Сахаров', 'Круглов', 'Хирург', 'Герман', 'Ричард', 'Азот', 'Профессор', 'Ботаник', 'Очкарик', 'Колба']
+    };
+
+    // Детерминированный, но хорошо перемешанный выбор имени по фракции+тиру — одна и та же
+    // комбинация всегда получает ОДНО и то же имя (не меняется при каждой перезагрузке страницы).
+    // Множители 7/3 и 3/5 подобраны так, чтобы и имя, и позывной менялись НЕЗАВИСИМО друг от друга
+    // при переборе тиров 1-14 — иначе легко получить "Толя Лютый", "Витёк Лютый", ... с одним и тем
+    // же позывным на всю фракцию
+    function pickNpcName(factionName, tier, factionIndex) {
+        const callsigns = NPC_CALLSIGNS_BY_FACTION[factionName] || NPC_CALLSIGNS_BY_FACTION['Сталкеры'];
+        const nameIdx = (tier * 7 + factionIndex * 3) % NPC_FIRST_NAMES.length;
+        const callsignIdx = (tier * 3 + factionIndex * 5) % callsigns.length;
+        return `${NPC_FIRST_NAMES[nameIdx]} ${callsigns[callsignIdx]}`;
+    }
+
     const NPC_TIER_MULT = { 1: 1.44, 2: 1.02, 3: 1.1, 4: 1.14, 5: 1.2, 6: 1.1, 7: 1.02, 8: 0.9, 9: 0.9, 10: 0.76, 11: 0.8, 12: 0.92, 13: 0.82, 14: 0.88 };
     const npcs = [];
     for (let i = 0; i < factions.length; i++) {
@@ -772,7 +804,7 @@
                 id: `${factions[i].name}_${tier}`,
                 faction: factions[i],
                 tier: tier,
-                name: `${factions[i].name} ${tier} ур.`,
+                name: pickNpcName(factions[i].name, tier, i),
                 coins: tier * 500,
                 exp: tier * 50,
                 hp: Math.round(tier * 100 * mult),
@@ -2218,7 +2250,8 @@
         currentEnemy = { ...enemy }; // клон — иначе бой портит hp в общем шаблоне mutants/npcs навсегда
         battleTurn = 0;
         raidLogs = [];
-        raidLogs.push(`⚔️ Бой с ${enemy.name}! Ваш ход.`);
+        const nameWithFaction = enemy.faction ? `${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})` : enemy.name;
+        raidLogs.push(`⚔️ Бой с ${nameWithFaction}! Ваш ход.`);
         updateRaidLog();
         renderBattleButtons();
     }
@@ -2795,7 +2828,7 @@
         return { ...npc, weapon, armor };
     }
 
-    // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Бункер экологов) =====
+    // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Экологи) =====
     // Враждебна ли фракция по отношению к игроку: изначально враждебны только 'enemy'-фракции,
     // но игрок может сделать враждебной любую фракцию, напав на неё
     // Матрица вражды между фракциями: с кем враждует игрок в зависимости от ТОЙ фракции, в которой он состоит.
@@ -2803,13 +2836,13 @@
     // плюс всё, что стало враждебным лично для него после нападения (player.hostileFactions)
     const FACTION_HOSTILITY = {
         'Долг': ['Наёмники', 'Бандиты', 'Монолит', 'Свобода'],
-        'Монолит': ['Наёмники', 'Бандиты', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Бункер экологов'],
+        'Монолит': ['Наёмники', 'Бандиты', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Экологи'],
         'Свобода': ['Долг', 'Военные', 'Монолит', 'Наёмники'],
-        'Наёмники': ['Бандиты', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Бункер экологов'],
-        'Бандиты': ['Наёмники', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Бункер экологов'],
+        'Наёмники': ['Бандиты', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Свобода', 'Экологи'],
+        'Бандиты': ['Наёмники', 'Монолит', 'Военные', 'Сталкеры', 'Долг', 'Экологи'],
         'Сталкеры': ['Наёмники', 'Военные', 'Монолит', 'Бандиты'],
         'Военные': ['Сталкеры', 'Свобода', 'Бандиты', 'Монолит', 'Наёмники'],
-        'Бункер экологов': ['Бандиты', 'Монолит', 'Наёмники']
+        'Экологи': ['Бандиты', 'Монолит', 'Наёмники']
     };
     const LONER_HOSTILE_FACTIONS = ['Бандиты', 'Наёмники', 'Монолит', 'Военные'];
 
@@ -2824,7 +2857,7 @@
 
     function startFriendlyEncounter(npc) {
         currentEnemy = npc;
-        raidLogs.push(`🤝 Вы встретили отряд фракции "${npc.faction.name}". Они настроены дружелюбно.`);
+        raidLogs.push(`🤝 Вы встретили сталкера: ${npc.name} — Фракция (${npc.faction.name.toUpperCase()}). Он настроен дружелюбно.`);
         updateRaidLog();
         renderFriendlyEncounterButtons();
     }
@@ -2875,7 +2908,7 @@
     function openFriendlyTrade() {
         if (!currentEnemy) return;
         friendlyTradeTab = 'buy';
-        document.getElementById('friendlyTradeTitle').textContent = `🤝 ${currentEnemy.faction.name}: торговля`;
+        document.getElementById('friendlyTradeTitle').textContent = `🤝 ${currentEnemy.name} — Фракция (${currentEnemy.faction.name.toUpperCase()})`;
         document.getElementById('friendlyTradeModal').classList.add('active');
         renderFriendlyTrade();
     }
