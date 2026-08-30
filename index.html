@@ -205,7 +205,7 @@
             <button onclick="openTechnicianTab('sell')">💰 Продать снаряжение</button>
         </div>
         <div id="technicianItems"></div>
-        <button class="back-btn" onclick="openScreen('warehouse')">Назад</button>
+        <button class="back-btn" onclick="openScreen('main')">Назад</button>
     </div>
 
     <div id="warehouseScreen" class="screen">
@@ -1413,9 +1413,20 @@
         const stats = data.stats || {};
         const factionName = factionLabel(data.factionName, playerId);
         const factionPosition = data.factionName ? (data.factionPosition || 'Рядовой') : '-------';
+        const isOwnProfile = String(playerId) === String(getPlayerId());
+        const isAdminProfile = String(playerId) === ADMIN_ID;
+        const isLoner = !data.factionName && !isAdminProfile; // "Одиночка" — без фракции и не админ (у админа своя отдельная аватарка)
+        let avatarSrc = '';
+        if (isAdminProfile) avatarSrc = `${SERVER_URL}/avatars/${playerId}.jpg`;
+        else if (isLoner) avatarSrc = `${SERVER_URL}/avatars/${(data.level ?? 1) >= 120 ? 'default_loner_120.jpg' : (data.level ?? 1) >= 90 ? 'default_loner_90.jpg' : (data.level ?? 1) >= 60 ? 'default_loner_60.jpg' : (data.level ?? 1) >= 30 ? 'default_loner_30.jpg' : 'default_loner.jpg'}`;
+        else if (data.factionName) avatarSrc = `${SERVER_URL}/avatars/${encodeURIComponent(`faction_${data.factionName}_${data.factionPosition || 'Рядовой'}.jpg`)}`;
         return `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
                 <h4>${titleText}</h4>
+                ${avatarSrc ? `<div style="text-align:center; margin-bottom:10px;">
+                    <img src="${avatarSrc}" style="width:80px; height:80px; border-radius:50%; object-fit:cover; background:#222; border:2px solid #8a7a4a;" onerror="this.style.display='none'">
+                    ${isAdminProfile && isOwnProfile ? `<br><button onclick="pickAndUploadAvatar()" style="width:auto; padding:6px 14px; margin-top:8px; font-size:12px;">📷 Сменить аватарку</button>` : ''}
+                </div>` : ''}
                 ${(data.nickname || data.username) ? `<p>Имя: ${escapeHtml(data.nickname || data.username)}</p>` : ''}
                 ${data.registrationNumber ? `<p>🎖️ Игрок №${data.registrationNumber} в игре (зарегистрирован: ${data.registrationDate ? formatFullDateTime(data.registrationDate) : '—'})</p>` : ''}
                 <p>Фракция: ${factionName}</p>
@@ -1760,7 +1771,7 @@
                 results.innerHTML = sorted.map((p, i) => `
                     <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; ${String(p.id)===myId ? 'border:1px solid #8a7a4a;' : ''}" onclick="showPlayerInfo('${p.id}')">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>${onlineDot(p.online)}<strong>${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
+                            <span style="display:flex; align-items:center;">${avatarImgHtml(p.id, 24, p.factionName, p.factionPosition, p.level)}${onlineDot(p.online)}<strong>${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
                             <span style="color:#8a7a4a; font-size:12px;">Ур. ${p.level || 1}</span>
                         </div>
                         <div style="font-size:12px; color:#ccc; margin-top:2px;">🏅 ${getRankTitle(p.level || 1)}</div>
@@ -1846,6 +1857,71 @@
         return `${dd}.${mo}.${d.getFullYear()} ${hh}:${mm}`;
     }
     // Кружок статуса "в сети" — зелёный горит, серый не горит
+    // Круглая аватарка игрока — эксклюзивная возможность только для владельца игры (ADMIN_ID),
+    // не общая фича для всех. Для остальных игроков даже не пытаемся запросить картинку —
+    // её заведомо не может существовать, раз загрузка ограничена на сервере
+    // Аватарка: у владельца игры (ADMIN_ID) — своя личная загруженная картинка. У всех игроков без
+    // фракции ("Одиночка", включая всех будущих новых игроков) — единая стандартная аватарка
+    // "Одиночки". У игроков, состоящих в какой-либо фракции — аватарки нет вообще (запрос был
+    // именно про "Одиночек", а не про всех игроков подряд)
+    // Аватарка: у владельца игры (ADMIN_ID) — своя личная загруженная картинка. У "Одиночек" (без
+    // фракции) — стандартная общая аватарка. У членов фракций — своя аватарка на КАЖДУЮ КОМБИНАЦИЮ
+    // фракция+должность (расширяемо: пока загружена только "Долг"+"Рядовой" — для остальных
+    // комбинаций файла ещё нет, картинка просто не показывается, пока не добавят и её тоже)
+    function avatarImgHtml(playerId, size, factionName, factionPosition, playerLevel) {
+        size = size || 28;
+        const baseStyle = `width:${size}px; height:${size}px; min-width:${size}px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px; background:#222; border:1px solid #333;`;
+        if (String(playerId) === ADMIN_ID) {
+            return `<img src="${SERVER_URL}/avatars/${playerId}.jpg" style="${baseStyle}" onerror="this.style.display='none'">`;
+        }
+        if (!factionName) {
+            const lonerFile = (playerLevel || 1) >= 120 ? 'default_loner_120.jpg' : (playerLevel || 1) >= 90 ? 'default_loner_90.jpg' : (playerLevel || 1) >= 60 ? 'default_loner_60.jpg' : (playerLevel || 1) >= 30 ? 'default_loner_30.jpg' : 'default_loner.jpg';
+            return `<img src="${SERVER_URL}/avatars/${lonerFile}" style="${baseStyle}" onerror="this.style.display='none'">`;
+        }
+        const position = factionPosition || 'Рядовой';
+        const fileName = encodeURIComponent(`faction_${factionName}_${position}.jpg`);
+        return `<img src="${SERVER_URL}/avatars/${fileName}" style="${baseStyle}" onerror="this.style.display='none'">`;
+    }
+
+    // Загрузка своей аватарки — уменьшает картинку до 256×256 через Canvas ПРЯМО В БРАУЗЕРЕ перед
+    // отправкой (сервер только сохраняет файл как есть, никакой обработки изображения не делает)
+    function pickAndUploadAvatar() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = () => {
+            const file = input.files[0];
+            if (!file) return;
+            if (file.size > 15 * 1024 * 1024) { showGameAlert('Файл слишком большой (максимум 15MB до сжатия).'); return; }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const size = 256;
+                    canvas.width = size; canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    // Вписываем по меньшей стороне и обрезаем по центру — картинка не искажается
+                    const scale = Math.max(size / img.width, size / img.height);
+                    const w = img.width * scale, h = img.height * scale;
+                    ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                    fetch(`${SERVER_URL}/api/player/avatar`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, imageData: dataUrl })
+                    }).then(r => r.json()).then(res => {
+                        if (res.success) { showGameAlert('Аватарка обновлена!'); renderKpk(); }
+                        else showGameAlert('Ошибка: ' + (res.error || 'не удалось загрузить'));
+                    }).catch(() => showGameAlert('Ошибка соединения с сервером'));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }
+
     function onlineDot(online) {
         return `<span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:${online ? '#27ae60' : '#666'}; margin-right:4px;"></span>`;
     }
@@ -1890,11 +1966,14 @@
                 </div>`;
             }
             return `
-            <div style="margin-bottom:10px; padding:8px; background:#1a1a1a; border-radius:6px;">
-                <div style="font-size:11px; color:#8a7a4a;">
-                    ${onlineDot(m.online)}<strong style="cursor:pointer; text-decoration:underline;" onclick="openChatPlayerActions('${m.senderId}', '${escapeHtml(m.username).replace(/'/g, "\\'")}')">${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''} · <span style="color:#666;">${formatShortTime(m.createdAt)}</span>
+            <div style="margin-bottom:10px; padding:8px; background:#1a1a1a; border-radius:6px; display:flex; align-items:flex-start;">
+                ${avatarImgHtml(m.senderId, 32, m.factionName, m.factionPosition, m.level)}
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:11px; color:#8a7a4a;">
+                        ${onlineDot(m.online)}<strong style="cursor:pointer; text-decoration:underline;" onclick="openChatPlayerActions('${m.senderId}', '${escapeHtml(m.username).replace(/'/g, "\\'")}')">${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''} · <span style="color:#666;">${formatShortTime(m.createdAt)}</span>
+                    </div>
+                    <div style="margin-top:4px; word-break:break-word;">${escapeHtml(m.text)}</div>
                 </div>
-                <div style="margin-top:4px; word-break:break-word;">${escapeHtml(m.text)}</div>
             </div>`;
         }).join('');
     }
@@ -2723,7 +2802,7 @@
         battleTurn = 0;
         raidLogs = [];
         const nameWithFaction = enemy.faction ? `${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})` : enemy.name;
-        raidLogs.push(`⚔️ Бой с ${nameWithFaction}! Ваш ход.`);
+        raidLogs.push(`⚔️ Бой с ${nameWithFaction} (Тир ${enemy.tier})! Ваш ход.`);
         updateRaidLog();
         renderBattleButtons();
     }
@@ -2757,6 +2836,7 @@
         // некоторых мобильных WebView, когда новый DOM-контент технически уже есть в дереве, но
         // экран не перерисовывается сам по себе, пока что-то (например, касание) не вызовет reflow
         void container.offsetHeight;
+        requestAnimationFrame(() => { container.style.transform = 'translateZ(0)'; requestAnimationFrame(() => { container.style.transform = ''; }); });
         // На случай, если текущая позиция прокрутки экрана "потерялась" после скрытия навигации —
         // явно прокручиваем к боевым кнопкам, чтобы они не оказались вне видимой области
         battleDiv.scrollIntoView({ block: 'nearest' });
@@ -2764,7 +2844,10 @@
 
     function battleAction(action) {
         if (!currentEnemy) return;
-        applyNegativeArtifactPerTurnEffects(); // фонящие артефакты бьют и при каждом боевом действии
+        // Утечку радиации от "фонящих" артефактов НЕ применяем именно при использовании медикамента —
+        // иначе попытка вылечиться (особенно от самой радиации через Антирад/Аптечку научную)
+        // одновременно откатывалась бы назад той же самой утечкой в тот же ход, сводя лечение на нет
+        if (action !== 'medkit') applyNegativeArtifactPerTurnEffects(); // фонящие артефакты бьют при остальных боевых действиях
         applyRadiationPoisoningDamage(); // любое боевое действие тоже "действие в рейде" — накопленная радиация бьёт и здесь
         if (player.health <= 0) { handlePlayerDeath(); return; }
         
@@ -4318,7 +4401,7 @@
         if (sellList) sellList.innerHTML = '';
         const buyList = document.getElementById('scientistsBuyList');
         if (buyList) buyList.innerHTML = '';
-        openScreen('warehouse');
+        openScreen('main');
     }
 
     // ===== ПРОДАЖА АРТЕФАКТОВ УЧЁНЫМ (5% дороже торговца; артефакты последнего тира — за 1 жетон сталкера) =====
@@ -4407,11 +4490,20 @@
             el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Артефакты — на 35% дороже, чем торговцу. Части тел мутантов — на 20% дороже:</div>`;
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Артефакты — на 35% дороже, чем торговцу (именные тира 9 — фиксированно за 🧬 50 Жетонов сталкера). Части тел мутантов — на 20% дороже:</div>`;
         html += ownedArtifacts.map(name => {
             const artifact = findArtifactDef(name);
-            const price = Math.round(getSellPrice(name) * 1.35);
             const esc = name.replace(/'/g, "\\'");
+            if (artifact.isNamedArtifact) {
+                return `
+                <div class="shop-item">
+                    <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier}, именной)</span></div>
+                    ${getItemInfoHtml(name)}
+                    <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🧬 50 Жетонов сталкера</button>
+                </div>
+            `;
+            }
+            const price = Math.round(getSellPrice(name) * 1.35);
             return `
                 <div class="shop-item">
                     <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
@@ -4454,9 +4546,16 @@
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
 
-        // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты (обмен на жетоны сталкера убран ранее)
-        const price = Math.round(getSellPrice(name) * 1.35);
-        player.coins += price;
+        if (artifact.isNamedArtifact) {
+            // Именные артефакты тира 9 не имеют обычной цены в Байтах (уникальный подарок, не
+            // товар) — продаются Эколог Леонову строго за 50 Жетонов сталкера
+            player.breedCredits = (Number(player.breedCredits) || 0) + 50;
+            showGameAlert(`Продано за 🧬 50 Жетонов сталкера.`);
+        } else {
+            // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты (обмен на жетоны сталкера убран ранее)
+            const price = Math.round(getSellPrice(name) * 1.35);
+            player.coins += price;
+        }
 
         openScientistsSellView();
         updateUI();
@@ -4672,8 +4771,10 @@
         if (artifact) {
             buttons += getItemInfoHtml(itemName);
             buttons += `<button onclick="equipArtifactItem('${esc}')">Одеть</button>`;
-            if (context === 'shop') {
+            if (context === 'shop' && !artifact.isNamedArtifact) {
                 buttons += `<button onclick="sellItemFromModal('${esc}')" style="background:#27ae60;">💵 Продать (🪙 ${getSellPrice(itemName)})</button>`;
+            } else if (context === 'shop' && artifact.isNamedArtifact) {
+                buttons += `<p style="font-size:11px; color:#888; margin:6px 0;">Именной артефакт тира 9 продаётся только у «Эколог Леонов» — за 🧬 50 Жетонов сталкера.</p>`;
             }
             buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
             btnsEl.innerHTML = buttons;
@@ -4777,8 +4878,14 @@
             const idx = parseInt(choice) - 1;
             if (idx >= 0 && idx < available.length) {
                 player.quickSlots[i] = available[idx];
-                renderInventory();
-                renderQuickSlots(); // тот же массив используется в рейде — синхронизация мгновенная
+                // Небольшая отсрочка ПОСЛЕ закрытия prompt() — судя по всему, WebView не успевает
+                // полностью вернуть управление отрисовке сразу же после закрытия нативного диалога,
+                // из-за чего немедленный вызов renderInventory() визуально "не долетал". Уже пробовал
+                // принудительный reflow и requestAnimationFrame по отдельности — не помогало до конца
+                setTimeout(() => {
+                    renderInventory();
+                    renderQuickSlots(); // тот же массив используется в рейде — синхронизация мгновенная
+                }, 50);
                 saveGame();
             }
             return;
@@ -4995,7 +5102,13 @@
         const consumable = consumables.find(c => c.name === name);
         if (consumable) return Math.max(1, Math.round(consumable.price * 0.5));
         const artifact = findArtifactDef(name);
-        if (artifact) return Math.max(1, Math.round(artifact.price * 0.5));
+        if (artifact) {
+            // Именные артефакты тира 9 не имеют обычной цены в Байтах — у них своя,
+            // единственная цена продажи (50 Жетонов сталкера, только у Эколог Леонова). Здесь —
+            // просто защита от NaN, если функция вызвана для них где-то ещё в общих местах
+            if (artifact.isNamedArtifact) return 0;
+            return Math.max(1, Math.round(artifact.price * 0.5));
+        }
         const mutantLoot = mutants.find(m => m.loot === name);
         if (mutantLoot) return Math.max(1, Math.round(mutantLoot.lootPrice * 0.5));
         return 5; // прочий неопознанный лут — минимальная цена, чтобы не залёживался бесполезно
@@ -5334,14 +5447,20 @@
                 el.innerHTML = '<p style="padding:10px; color:#888;">У вас нет оружия, брони или детекторов на продажу</p>';
                 return;
             }
-            el.innerHTML = gearItems.map(name => `
+            el.innerHTML = gearItems.map(name => {
+                // Детекторы у Техника продаются на 10% выгоднее торговца, оружие/броня — на 2% (как и раньше)
+                const isDetector = getEquipSlotType(name) === 'detector';
+                const multiplier = isDetector ? 1.10 : 1.02;
+                const bonusText = isDetector ? 'на 10% выгоднее торговца' : 'на 2% выгоднее торговца';
+                return `
                 <div class="shop-item">
                     <div>${name} ×${player.inventory[name]}</div>
                     ${getItemInfoHtml(name)}
-                    <div class="price">🪙 ${Math.round(getSellPrice(name) * 1.02)} за шт. (на 2% выгоднее торговца)</div>
+                    <div class="price">🪙 ${Math.round(getSellPrice(name) * multiplier)} за шт. (${bonusText})</div>
                     <button onclick="sellToTechnician('${name.replace(/'/g, "\\'")}')">Продать</button>
                 </div>
-            `).join('');
+            `;
+            }).join('');
             return;
         }
 
@@ -5471,7 +5590,9 @@
     function sellToTechnician(name) {
         if (!player.inventory[name] || player.inventory[name] <= 0) return;
         if (!getEquipSlotType(name)) { showGameAlert('Техник покупает только оружие, броню и детекторы.'); return; }
-        const price = Math.round(getSellPrice(name) * 1.02);
+        // Детекторы — на 10% выгоднее торговца, оружие/броня — на 2% (совпадает с ценой в списке продажи)
+        const isDetector = getEquipSlotType(name) === 'detector';
+        const price = Math.round(getSellPrice(name) * (isDetector ? 1.10 : 1.02));
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
         player.coins = (Number(player.coins) || 0) + price;
@@ -5668,13 +5789,36 @@
     function adjustChatMessagesHeight() {
         const widget = document.getElementById('embeddedChatWidget');
         const messagesEl = document.getElementById('chatMessages');
+        const dmPicker = document.getElementById('chatDmPicker');
         const inputRow = document.getElementById('chatInputRow');
         if (!widget || !messagesEl || !inputRow) return;
         if (widget.style.display === 'none' || widget.offsetParent === null) return; // чат сейчас не виден — нечего пересчитывать
-        const messagesTop = messagesEl.getBoundingClientRect().top;
+        // Во время активного боя/аномалии НЕ трогаем раскладку — периодический пересчёт высоты чата
+        // (каждые 500мс) конкурировал с отрисовкой боевых кнопок в том же экране рейда, что и
+        // вызывало их периодическое "пропадание" (клик заново запускал верный layout, отсюда и
+        // временное "исчезновение до тапа")
+        if (currentEnemy || (currentAnomaly && !currentAnomaly.resolved)) return;
+
+        // ВАЖНО: реально видимый контент — ЛИБО #chatMessages (обычная переписка), ЛИБО #chatDmPicker
+        // (список диалогов на вкладке "Личный"), никогда оба сразу. Растягивать пустой #chatMessages
+        // на весь экран, пока реальный контент лежит в #chatDmPicker ниже — именно так список диалогов
+        // "убегал" далеко за пределы экрана, под прибитую строку ввода
+        const dmPickerVisible = dmPicker && dmPicker.style.display !== 'none';
         const inputHeight = inputRow.getBoundingClientRect().height;
-        const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
-        messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
+
+        if (dmPickerVisible) {
+            messagesEl.style.height = '0px';
+            messagesEl.style.marginBottom = '0px';
+            const pickerTop = dmPicker.getBoundingClientRect().top;
+            const available = window.innerHeight - pickerTop - inputHeight - 12;
+            dmPicker.style.maxHeight = Math.max(100, Math.round(available)) + 'px';
+            dmPicker.style.overflowY = 'auto';
+        } else {
+            messagesEl.style.marginBottom = '8px';
+            const messagesTop = messagesEl.getBoundingClientRect().top;
+            const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
+            messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
+        }
     }
     window.addEventListener('resize', adjustChatMessagesHeight);
     setInterval(adjustChatMessagesHeight, 500); // тот же надёжный периодический паттерн — ловит любую смену экрана/видимости чата, без необходимости перечислять каждое место вызова
