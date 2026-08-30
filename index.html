@@ -122,6 +122,8 @@
         <button onclick="openScreen('shop')">💰 Торговец Жучара</button>
         <button onclick="startRaid()">⚔️ В Рейд</button>
         <button onclick="openScreen('warehouse')">🏠 Мой склад</button>
+        <button onclick="openScreen('technician')">🔧 Техник Дизель</button>
+        <button onclick="openScreen('scientists')">🧪 Эколог Леонов</button>
         <button onclick="openScreen('kpk')">📱 КПК</button>
         <button onclick="openScreen('arena')">🏟️ Арена</button>
         <button onclick="exitGame()" style="grid-column: 1 / -1; margin-top:8px;">🚪 Выйти из игры</button>
@@ -142,9 +144,9 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:6px;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; max-height:220px; overflow-y:auto; overflow-x:hidden; margin-bottom:8px; display:flex; flex-direction:column-reverse; box-sizing:border-box;"></div>
+        <div id="chatMessages" style="background:#111; border-radius:8px; padding:8px; height:220px; overflow-y:auto; overflow-x:hidden; margin-bottom:8px; display:flex; flex-direction:column-reverse; box-sizing:border-box;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:8px;"></div>
-        <div style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#111; border-top:1px solid #2a2a2a; padding:8px 0; z-index:50; box-sizing:border-box;">
+        <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#111; border-top:1px solid #2a2a2a; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#1a1a1a; color:#fff; border:1px solid #333; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px;">➤</button>
         </div>
@@ -2374,7 +2376,7 @@
                     content.innerHTML = myLots.map(lot => `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} Байт</p>
+                            <p>Цена: ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
                             <p>Количество: ${lot.quantity}</p>
                             <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
@@ -2420,7 +2422,7 @@
                             <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
                             ${statsHtml}
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
-                            <p>Цена: 🪙 ${lot.price} Байт</p>
+                            <p>Цена: 🪙 ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
                             <button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
                         </div>
                     `;
@@ -2527,10 +2529,11 @@
         if (!qty || qty <= 0) { showGameAlert('Введите корректное количество (целое число больше нуля).'); return; }
         if (qty > maxQty) { showGameAlert(`У вас есть только ${maxQty} шт. Введите число не больше доступного.`); return; }
 
-        const priceStr = prompt('Цена за партию (в Байтах):', '100');
+        const priceStr = prompt('Цена за ОДНУ единицу (в Байтах):', '100');
         if (priceStr === null) return; // отмена
-        const price = parseInt(priceStr);
-        if (!price || price <= 0) { showGameAlert('Введите корректную цену (целое число больше нуля).'); return; }
+        const pricePerUnit = parseInt(priceStr);
+        if (!pricePerUnit || pricePerUnit <= 0) { showGameAlert('Введите корректную цену (целое число больше нуля).'); return; }
+        const price = pricePerUnit * qty; // сервер хранит цену за ВЕСЬ лот целиком, пересчитываем здесь
 
         fetch(`${SERVER_URL}/api/market/sell`, {
             method: 'POST',
@@ -3258,9 +3261,9 @@
         });
 
         const tierRanges = [
-            { min: 1, max: 4, weight: 6 },
-            { min: 4, max: 8, weight: 3 },
-            { min: 8, max: Math.min(13, encounterTier + 3), weight: 1 }
+            { min: 1, max: Math.min(4, encounterTier), weight: 6 },
+            { min: 4, max: Math.min(8, encounterTier), weight: 3 },
+            { min: 8, max: Math.min(13, encounterTier), weight: 1 }
         ];
         tierRanges.forEach(range => {
             const bodyParts = mutants.filter(m => m.loot && m.tier >= range.min && m.tier <= range.max);
@@ -3959,7 +3962,9 @@
     // ===== ИНФОРМАЦИЯ О ПРЕДМЕТЕ (для модалок инвентаря/техника) =====
     const STAT_LABELS = {
         health: 'макс. здоровье', hunger: 'сытость', thirst: 'жажда', radiation: 'защита от радиации',
-        radiationLeak: 'радиация'
+        radiationLeak: 'радиация',
+        vitality: 'живучесть', agility: 'ловкость', strength: 'сила', accuracy: 'меткость',
+        intellect: 'интеллект', luck: 'удача', bulletResist: 'пулестойкость', hitAbsorption: 'гашение ударов'
     };
     // Ключи вида "anomaly_ИмяАномалии" генерируются динамически (аномалий много и добавляются) —
     // для них подпись строится налету, а не хранится в статичном словаре
@@ -4742,7 +4747,11 @@
         quickSlotsGrid.innerHTML = player.quickSlots.map((item, i) => `
             <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">${item ? `${item} ×${player.inventory[item] || 0}` : 'Пусто'}</div>
         `).join('');
-        void quickSlotsGrid.offsetHeight; // принудительный reflow — иначе в некоторых WebView новая ячейка визуально не появляется сразу
+        // Принудительная перерисовка в 2 шага — offsetHeight форсирует пересчёт раскладки,
+        // requestAnimationFrame синхронизируется с реальным циклом отрисовки браузера. По отдельности
+        // одного offsetHeight иногда не хватало в некоторых WebView — оставляем оба на всякий случай
+        void quickSlotsGrid.offsetHeight;
+        requestAnimationFrame(() => { quickSlotsGrid.style.transform = 'translateZ(0)'; requestAnimationFrame(() => { quickSlotsGrid.style.transform = ''; }); });
 
         const invGrid = document.getElementById('inventoryGrid');
         // "Книга знаний" теперь живёт только в шапке (хаб), а не в общей сетке инвентаря
@@ -4791,7 +4800,10 @@
             el.textContent = itemName ? `${itemName} ×${qty}` : 'Пусто';
         });
         const container = document.getElementById('quickSlots');
-        if (container) void container.offsetHeight; // тот же приём против зависшей отрисовки в WebView
+        if (container) {
+            void container.offsetHeight; // тот же приём против зависшей отрисовки в WebView
+            requestAnimationFrame(() => { container.style.transform = 'translateZ(0)'; requestAnimationFrame(() => { container.style.transform = ''; }); });
+        }
     }
 
     function useQuickSlot(index) {
@@ -5646,6 +5658,26 @@
     // Постоянный "сторож" — переприменяет стиль каждые полсекунды, на случай, если что-то
     // извне периодически сбрасывает inline-стиль уже ПОСЛЕ начальной загрузки
     setInterval(forceInputVisibility, 500);
+
+    // ===== АДАПТИВНАЯ ВЫСОТА ОБЛАСТИ СООБЩЕНИЙ ЧАТА =====
+    // Раньше высота была жёстко зашита (220px) — на разных экранах (телефон/компьютер, разная
+    // высота из-за иного размера шрифта/масштаба системы) это давало то пустое пространство перед
+    // строкой ввода, то, наоборот, обрезанные снизу сообщения под "прибитой" строкой ввода.
+    // Вместо констант — измеряем РЕАЛЬНО доступное место (от верха области сообщений до верха
+    // строки ввода) и подгоняем высоту под него, при любом изменении размера экрана
+    function adjustChatMessagesHeight() {
+        const widget = document.getElementById('embeddedChatWidget');
+        const messagesEl = document.getElementById('chatMessages');
+        const inputRow = document.getElementById('chatInputRow');
+        if (!widget || !messagesEl || !inputRow) return;
+        if (widget.style.display === 'none' || widget.offsetParent === null) return; // чат сейчас не виден — нечего пересчитывать
+        const messagesTop = messagesEl.getBoundingClientRect().top;
+        const inputHeight = inputRow.getBoundingClientRect().height;
+        const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
+        messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
+    }
+    window.addEventListener('resize', adjustChatMessagesHeight);
+    setInterval(adjustChatMessagesHeight, 500); // тот же надёжный периодический паттерн — ловит любую смену экрана/видимости чата, без необходимости перечислять каждое место вызова
 
     // Закрепление прямо в момент, когда пользователь начинает печатать или фокусируется на поле —
     // самый надёжный момент для гарантии видимости именно того, что человек сейчас делает
