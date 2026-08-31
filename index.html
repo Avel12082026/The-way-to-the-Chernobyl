@@ -197,12 +197,20 @@
     <div id="starsShopScreen" class="screen">
         <h3>⭐ Магазин Байт</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
+        <div style="text-align:center; font-size:12px; color:#e6a23c; font-weight:bold; margin-bottom:10px; background:#1a1a1a; padding:8px; border-radius:8px; line-height:1.6;">
+            🪙 Байт: <span id="starsShopCoinsDisplayTop">0</span> &nbsp;|&nbsp; 🧬 Жетонов сталкера: <span id="starsShopBreedDisplayTop">0</span><br>
+            📖 Книг знаний: <span id="starsShopBooksDisplayTop">0</span> &nbsp;|&nbsp; ✏️ Жетонов смены ника: <span id="starsShopNicknameDisplayTop">0</span>
+        </div>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
         <div style="font-size:14px; font-weight:bold; color:#8a7a4a; margin:16px 0 8px; border-top:1px solid #333; padding-top:12px;">🧬 Обмен Жетонов сталкера на Байты (курс: 1 жетон = 1 000 Байт)</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="buyBreedCreditsForBytes()" style="background:#27ae60;">Купить жетоны за Байты</button>
             <button onclick="sellBreedCreditsForBytes()" style="background:#c0392b;">Продать жетоны за Байты</button>
+        </div>
+        <div style="text-align:center; font-size:12px; color:#e6a23c; font-weight:bold; margin-bottom:10px; background:#1a1a1a; padding:8px; border-radius:8px; line-height:1.6;">
+            🪙 Байт: <span id="starsShopCoinsDisplayBottom">0</span> &nbsp;|&nbsp; 🧬 Жетонов сталкера: <span id="starsShopBreedDisplayBottom">0</span><br>
+            📖 Книг знаний: <span id="starsShopBooksDisplayBottom">0</span> &nbsp;|&nbsp; ✏️ Жетонов смены ника: <span id="starsShopNicknameDisplayBottom">0</span>
         </div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
     </div>
@@ -211,7 +219,7 @@
         <h3>🧪 Эколог Леонов</h3>
         <button class="back-btn" onclick="exitScientists()" style="margin-bottom:10px;">← Выход</button>
         <div style="font-size:16px; font-weight:bold; color:#8a7a4a; margin-bottom:6px; background:#1a1a1a; padding:10px; border-radius:8px; text-align:center;">
-            🧬 Жетонов сталкера: <span id="breedCreditsCount">0</span>
+            🧬 Жетонов сталкера: <span id="breedCreditsCount">0</span> &nbsp;|&nbsp; 🪙 Байт: <span id="scientistsCoinsDisplay">0</span>
         </div>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">
             Скрестите два артефакта — получите новый, с суммой их свойств. Стоимость растёт с каждым уровнем: 1-й уровень — 1 жетон сталкера, 2-й — 2 жетона, и так далее
@@ -242,6 +250,7 @@
     <div id="technicianScreen" class="screen">
         <h3>🔧 Техник Дизель</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
+        <div style="text-align:center; font-size:13px; color:#e6a23c; font-weight:bold; margin-bottom:8px;">🪙 У вас: <span id="technicianCoinsDisplay">0</span> Байт</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="openTechnicianTab('upgrade')">⬆️ Улучшить снаряжение</button>
             <button onclick="openTechnicianTab('sell')">💰 Продать снаряжение</button>
@@ -286,6 +295,7 @@
     <div id="shopScreen" class="screen">
         <h3>💰 Торговец Жучара</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
+        <div style="text-align:center; font-size:13px; color:#e6a23c; font-weight:bold; margin-bottom:8px;">🪙 У вас: <span id="shopCoinsDisplay">0</span> Байт</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
             <button onclick="openShopTab('buy')">🛒 Купить</button>
             <button onclick="openShopTab('sell')">💵 Продать</button>
@@ -366,6 +376,7 @@
     <div id="marketScreen" class="screen">
         <h3>🏦 Рынок</h3>
         <button class="back-btn" onclick="openScreen('main')" style="margin-bottom:10px;">← Назад</button>
+        <div style="text-align:center; font-size:13px; color:#e6a23c; font-weight:bold; margin-bottom:8px;">🪙 Байт: <span id="marketCoinsDisplay">0</span> &nbsp;|&nbsp; 🧬 Жетонов сталкера: <span id="marketBreedDisplay">0</span></div>
         <button onclick="openMarketTab('my')">Сейчас продается</button>
         <button onclick="openMarketTab('buy')">Купить</button>
         <button onclick="openMarketTab('sell')">📤 Выставить на продажу</button>
@@ -880,8 +891,20 @@
         return `<img src="${SERVER_URL}/icons/${file}" style="width:${size}px; height:${size}px; min-width:${size}px; border-radius:4px; object-fit:cover; vertical-align:middle; margin-right:6px; background:#0d0d0c; border:1px solid #333;" onerror="this.style.display='none'">`;
     }
 
-    // Иконка предмета на ВСЮ рамку слота (инвентарь/склад/быстрые слоты) — количество показывается
-    // отдельным бейджиком в правом верхнем углу поверх картинки, без текста названия под ней
+    // Карточка товара у торговца: если у предмета есть иконка — она растягивается на всю высоту
+    // карточки слева, а всё остальное (название/характеристики/цена/кнопка) уходит вправо. Если
+    // иконки нет (оружие/броня/детекторы/артефакты) — карточка остаётся как раньше, без левого блока
+    function shopCardHtml(name, innerHtml) {
+        const file = ITEM_ICONS[name];
+        if (!file) return `<div class="shop-item">${innerHtml}</div>`;
+        return `<div class="shop-item" style="display:flex; align-items:stretch; padding:0; overflow:hidden;">
+            <div style="width:72px; min-width:72px; position:relative; background:#0d0d0c;">
+                <img src="${SERVER_URL}/icons/${file}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
+            </div>
+            <div style="flex:1; min-width:0; padding:10px;">${innerHtml}</div>
+        </div>`;
+    }
+
     function itemSlotFillHtml(name, qty) {
         const file = ITEM_ICONS[name];
         if (!file) return null; // нет иконки для этого предмета — вызывающий код сам покажет текст как раньше
@@ -1235,6 +1258,26 @@
         document.getElementById('detector').textContent = player.detector.name;
         document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
         renderQuickSlots();
+
+        // Валюта игрока на экранах торговцев/рынка/магазина Байт — обновляем везде разом, элемент
+        // просто отсутствует в DOM, если соответствующий экран не подгружен, поэтому проверяем каждый
+        const breedCount = Number(player.breedCredits) || 0;
+        const booksCount = Number(player.inventory['Книга знаний']) || 0;
+        const nicknameCount = Number(player.nicknameChangeCredits) || 0;
+        const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+        setText('shopCoinsDisplay', player.coins);
+        setText('technicianCoinsDisplay', player.coins);
+        setText('scientistsCoinsDisplay', player.coins);
+        setText('marketCoinsDisplay', player.coins);
+        setText('marketBreedDisplay', breedCount);
+        setText('starsShopCoinsDisplayTop', player.coins);
+        setText('starsShopBreedDisplayTop', breedCount);
+        setText('starsShopBooksDisplayTop', booksCount);
+        setText('starsShopNicknameDisplayTop', nicknameCount);
+        setText('starsShopCoinsDisplayBottom', player.coins);
+        setText('starsShopBreedDisplayBottom', breedCount);
+        setText('starsShopBooksDisplayBottom', booksCount);
+        setText('starsShopNicknameDisplayBottom', nicknameCount);
     }
 
     // ===== АДМИН МЕНЮ =====
@@ -1509,7 +1552,7 @@
                     ${isAdminProfile && isOwnProfile ? `<br><button onclick="pickAndUploadAvatar()" style="width:auto; padding:6px 14px; margin-top:8px; font-size:12px;">📷 Сменить аватарку</button>` : ''}
                 </div>` : ''}
                 ${(data.nickname || data.username) ? `<p>Имя: ${escapeHtml(data.nickname || data.username)}</p>` : ''}
-                ${data.registrationNumber ? `<p>🎖️ Игрок №${data.registrationNumber} в игре (зарегистрирован: ${data.registrationDate ? formatFullDateTime(data.registrationDate) : '—'})</p>` : ''}
+                ${data.registrationNumber ? `<p>🎖️ Игрок №${data.registrationNumber} в игре, зарегистрирован: ${data.registrationDate ? formatFullDateTime(data.registrationDate) : '—'}</p>` : ''}
                 <p>Фракция: ${factionName}</p>
                 <p>Должность в фракции: ${factionPosition}</p>
                 <p>Уровень: ${data.level ?? 1} (🏅 ${getRankTitle(data.level ?? 1)})</p>
@@ -3921,16 +3964,12 @@
         if (friendlyTradeTab === 'buy') {
             el.innerHTML = consumables.map(item => {
                 const price = getFriendlyBuyPrice(item.price);
-                return `
-                <div class="shop-item" style="display:flex; align-items:flex-start;">
-                    ${itemIconHtml(item.name)}
-                    <div style="flex:1;">
-                        <div>${item.name}</div>
-                        ${getItemInfoHtml(item.name)}
-                        <div class="price">🪙 ${price}</div>
-                        <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
-                    </div>
-                </div>`;
+                return shopCardHtml(item.name, `
+                    <div>${item.name}</div>
+                    ${getItemInfoHtml(item.name)}
+                    <div class="price">🪙 ${price}</div>
+                    <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+                `);
             }).join('');
         } else {
             const items = Object.keys(player.inventory).filter(n => player.inventory[n] > 0);
@@ -3938,16 +3977,12 @@
                 el.innerHTML = '<p style="padding:10px; color:#888;">Нечего продать</p>';
                 return;
             }
-            el.innerHTML = items.map(name => `
-                <div class="shop-item" style="display:flex; align-items:flex-start;">
-                    ${itemIconHtml(name)}
-                    <div style="flex:1;">
-                        <div>${name} ×${player.inventory[name]}</div>
-                        ${getItemInfoHtml(name)}
-                        <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
-                        <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
-                    </div>
-                </div>`).join('');
+            el.innerHTML = items.map(name => shopCardHtml(name, `
+                <div>${name} ×${player.inventory[name]}</div>
+                ${getItemInfoHtml(name)}
+                <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
+            `)).join('');
         }
     }
 
@@ -4566,17 +4601,12 @@
 
         el.innerHTML = `
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
-            ${medkits.map(item => `
-                <div class="shop-item" style="display:flex; align-items:flex-start;">
-                    ${itemIconHtml(item.name)}
-                    <div style="flex:1;">
-                        <div>${item.name}</div>
-                        ${getItemInfoHtml(item.name)}
-                        <div class="price">🪙 ${getBuyPrice(item.price)}</div>
-                        <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
-                    </div>
-                </div>
-            `).join('')}
+            ${medkits.map(item => shopCardHtml(item.name, `
+                <div>${item.name}</div>
+                ${getItemInfoHtml(item.name)}
+                <div class="price">🪙 ${getBuyPrice(item.price)}</div>
+                <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+            `)).join('')}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">📡 Детекторы (открыты по уровню, сейчас доступен тир ${unlockTier}):</div>
             ${availableDetectors.map(item => `
                 <div class="shop-item">
@@ -5360,15 +5390,12 @@
                 shopItems.innerHTML = '<p style="padding:10px; color:#888;">Нечего продать</p>';
                 return;
             }
-            shopItems.innerHTML = items.map(name => `
-                <div class="shop-item" style="cursor:pointer; display:flex; align-items:center;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
-                    ${itemIconHtml(name)}
-                    <div style="flex:1;">
-                        <div>${name} ×${player.inventory[name]}</div>
-                        <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
-                    </div>
+            shopItems.innerHTML = items.map(name => shopCardHtml(name, `
+                <div style="cursor:pointer;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
+                    <div>${name} ×${player.inventory[name]}</div>
+                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
                 </div>
-            `).join('');
+            `)).join('');
             return;
         }
 
@@ -5376,16 +5403,12 @@
         shopItems.innerHTML = renderAutoBuyPanel() + allGoods.map(item => {
             const price = getBuyPrice(item.price);
             const discounted = price < item.price;
-            return `
-            <div class="shop-item" style="display:flex; align-items:flex-start;">
-                ${itemIconHtml(item.name)}
-                <div style="flex:1;">
-                    <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
-                    ${getItemInfoHtml(item.name)}
-                    <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
-                    <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
-                </div>
-            </div>`;
+            return shopCardHtml(item.name, `
+                <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
+                ${getItemInfoHtml(item.name)}
+                <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
+                <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+            `);
         }).join('');
     }
 
@@ -5629,6 +5652,16 @@
         renderTechnician();
     }
 
+    // Запоминаем, какая именно панель выбора характеристики сейчас открыта (стабильный ключ без
+    // уровня улучшения — см. trackKey в renderArmorUpgradeCard), чтобы после каждого клика
+    // "Улучшить" панель сама снова открывалась, а не закрывалась целиком
+    let openStatPanelKey = null;
+    function toggleStatPanel(panelId, trackKey) {
+        openStatPanelKey = (openStatPanelKey === trackKey) ? null : trackKey;
+        const p = document.getElementById(panelId);
+        if (p) p.style.display = (openStatPanelKey === trackKey) ? 'block' : 'none';
+    }
+
     function renderTechnician() {
         const el = document.getElementById('technicianItems');
         const gearItems = Object.keys(player.inventory).filter(name => player.inventory[name] > 0 && getEquipSlotType(name));
@@ -5702,6 +5735,11 @@
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
             const panelId = 'armorStatPanel_' + (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '') + '_' + parsed.level;
+            // Отдельный СТАБИЛЬНЫЙ ключ (без уровня улучшения — он меняется после каждого клика) —
+            // по нему запоминаем, какая панель была открыта, чтобы она не закрывалась после каждого
+            // улучшения и не приходилось каждый раз заново нажимать "Выбрать и улучшить характеристику"
+            const trackKey = (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName;
+            const panelWasOpen = openStatPanelKey === trackKey;
 
             const isSuit = !!base.isResearchSuit;
             const rows = [];
@@ -5736,10 +5774,10 @@
                     Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
                 ${maxed ? '<button disabled>Улучшено до максимума</button>' : `
-                <button onclick="const p = document.getElementById('${panelId}'); p.style.display = p.style.display === 'none' ? 'block' : 'none';">
+                <button onclick="toggleStatPanel('${panelId}', '${trackKey.replace(/'/g, "\\'")}')">
                     🔧 Выбрать и улучшить характеристику
                 </button>
-                <div id="${panelId}" style="display:none; margin-top:8px;">${rowsHtml}</div>`}
+                <div id="${panelId}" style="display:${panelWasOpen ? 'block' : 'none'}; margin-top:8px;">${rowsHtml}</div>`}
             </div>`;
         }
 
