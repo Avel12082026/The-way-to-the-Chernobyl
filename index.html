@@ -8,6 +8,11 @@
          с принудительным тёмным режимом переопределяют цвет текста в полях ввода поверх любых
          явных inline-стилей страницы, из-за чего вводимый текст становится невидимым -->
     <meta name="theme-color" content="#0a0a0a">
+    <!-- Явный запрет кэширования — Telegram WebView и некоторые мобильные браузеры иногда
+         агрессивно кэшируют содержимое мини-приложения даже после обновления файла на сервере -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Pocket Zone</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,25 +147,25 @@
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:8%; width:40.9%;" onclick="openScreen('market')">Рынок игроков</button>
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:51.1%; width:40.9%;" onclick="openScreen('starsShop')">Магазин Байт</button>
         <button class="menu-word-btn menu-abs" style="top:64.13%; height:8.04%; left:8%; width:84%;" onclick="exitGame()">Выйти из игры</button>
-        <div id="mainMenuChatSlot" class="menu-abs" style="top:72.17%; height:23.52%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column; background:transparent !important;"></div>
+        <div id="mainMenuChatSlot" class="menu-abs" style="top:74%; height:21.5%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column; background:transparent !important;"></div>
     </div>
 
     <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда. При входе в рейд
          переносится JS'ом в #raidChatSlot (под кнопки "Идти дальше"/"Вернуться с рейда"), при
          возврате в главное меню — обратно в #mainMenuChatSlot. Это один и тот же DOM-элемент,
          поэтому чат гарантированно синхронизирован между обоими режимами -->
-    <div id="embeddedChatWidget" style="display:none;">
-        <h4 style="margin:0 0 4px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1px; font-size:13px;">💬 Чат</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; margin-bottom:4px;">
+    <div id="embeddedChatWidget" style="display:none; flex-direction:column; min-height:0; height:100%; box-sizing:border-box;">
+        <h4 style="margin:0 0 4px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1px; font-size:13px; flex-shrink:0;">💬 Чат</h4>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; margin-bottom:4px; flex-shrink:0;">
             <button class="chat-tab-btn" onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
             <button class="chat-tab-btn" onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
             <button class="chat-tab-btn" onclick="openChatTab('dm')" id="chatTabDmBtn" style="position:relative;">Личный<span id="dmUnreadDot" style="display:none; position:absolute; top:2px; right:6px; width:9px; height:9px; background:#e74c3c; border-radius:50%;"></span></button>
         </div>
-        <div id="chatDmBackBar" style="display:none; margin-bottom:4px;">
+        <div id="chatDmBackBar" style="display:none; margin-bottom:4px; flex-shrink:0;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; height:130px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; display:flex; flex-direction:column-reverse; box-sizing:border-box; font-size:13px;"></div>
-        <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto;"></div>
+        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; display:flex; flex-direction:column-reverse; box-sizing:border-box; font-size:13px;"></div>
+        <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto; flex-shrink:0;"></div>
         <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#0c0b09; border-top:1px solid #3a3424; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px; background:linear-gradient(180deg,#18160f,#0d0c09); border:1px solid #5a4f34; color:#cdbd8f;">➤</button>
@@ -975,7 +980,7 @@
     // Однократная инициализация чата — вызывается ТОЛЬКО при самом первом запуске приложения
     function initChatOnFirstLoad() {
         document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-        document.getElementById('embeddedChatWidget').style.display = 'block';
+        document.getElementById('embeddedChatWidget').style.display = 'flex';
         openChatTab(chatTab);
     }
 
@@ -1310,7 +1315,7 @@
         if (screen === 'main') {
             document.getElementById('mainMenu').style.display = 'grid';
             document.getElementById('mainMenuChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-            document.getElementById('embeddedChatWidget').style.display = 'block';
+            document.getElementById('embeddedChatWidget').style.display = 'flex';
             openChatTab(chatTab); // чат общий для главного меню и рейда — обновляем при каждом возврате
             return;
         }
@@ -3169,7 +3174,7 @@
         document.getElementById('raidLog').textContent = 'Вы входите в Зону...';
         clearBattleUiAndRestoreNav();
         document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-        document.getElementById('embeddedChatWidget').style.display = 'block'; // чат доступен и во время рейда, под кнопками навигации
+        document.getElementById('embeddedChatWidget').style.display = 'flex'; // чат доступен и во время рейда, под кнопками навигации
         openChatTab(chatTab);
         saveGame();
     }
@@ -3221,7 +3226,7 @@
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById('raidScreen').classList.add('active');
         document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-        document.getElementById('embeddedChatWidget').style.display = 'block';
+        document.getElementById('embeddedChatWidget').style.display = 'flex';
         openChatTab(chatTab);
         renderQuickSlots();
         if (player.health <= 0) { handlePlayerDeath(); return; }
