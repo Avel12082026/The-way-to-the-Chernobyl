@@ -35,7 +35,10 @@
         .stat-box.thirst .value { color: #3c8de6; }
         .menu {
             position: relative;
-            width: 100%;
+            width: calc(100% + 20px);
+            margin-left: -10px;
+            margin-right: -10px;
+            margin-top: -10px;
             height: calc(100vh - 100px);
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -5871,7 +5874,7 @@
         if (menu.style.display === 'none' || menu.offsetParent === null) return; // меню сейчас не видно
         const menuTop = Math.max(0, menu.getBoundingClientRect().top); // подстраховка от отрицательных значений
         const inputHeight = inputRow.getBoundingClientRect().height;
-        const available = window.innerHeight - menuTop - inputHeight - 20; // зазор снизу — чтобы нижний край картинки не прятался под строкой ввода
+        const available = window.innerHeight - menuTop - inputHeight - 6; // небольшой зазор снизу
         const newHeight = Math.max(400, Math.min(window.innerHeight, Math.round(available))) + 'px'; // не даём улететь выше реального экрана
         if (menu.style.height !== newHeight) menu.style.height = newHeight; // пишем только при реальном изменении — лишние перезаписи одного и того же значения провоцируют баг с "зависшей" отрисовкой в некоторых WebView
     }
