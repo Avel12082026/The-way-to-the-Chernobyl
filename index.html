@@ -903,7 +903,7 @@
 
     // ===== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ =====
     const SERVER_URL = 'https://213-176-92-184.sslip.io';
-    document.getElementById('mainMenu').style.backgroundImage = `url('${SERVER_URL}/images/main-menu-bg.jpg')`;
+    document.getElementById('mainMenu').style.backgroundImage = `url('${SERVER_URL}/images/main-menu-bg.jpg?v=20260831c')`;
     const ADMIN_ID = '1152441515'; // только для отображения (ярлык "Мутант" вместо "Одиночка") — не даёт никаких прав
 
     // Подпись фракции игрока: обычно "Одиночка" для тех, кто ни в одной фракции — но у админа
@@ -5802,6 +5802,24 @@
     // Постоянный "сторож" — переприменяет стиль каждые полсекунды, на случай, если что-то
     // извне периодически сбрасывает inline-стиль уже ПОСЛЕ начальной загрузки
     setInterval(forceInputVisibility, 500);
+
+    // ===== ТОЧНАЯ ВЫСОТА ФОНОВОЙ ПАНЕЛИ ГЛАВНОГО МЕНЮ =====
+    // В CSS задана только примерная высота (calc(100vh - 100px)) — она не всегда совпадает с
+    // реальным свободным местом на экране (разные телефоны, разная высота системной панели
+    // Telegram). Здесь измеряем РЕАЛЬНОЕ расстояние от верха меню до строки ввода чата и
+    // растягиваем фон точно до неё, без зазора
+    function adjustMainMenuHeight() {
+        const menu = document.getElementById('mainMenu');
+        const inputRow = document.getElementById('chatInputRow');
+        if (!menu || !inputRow) return;
+        if (menu.style.display === 'none' || menu.offsetParent === null) return; // меню сейчас не видно
+        const menuTop = menu.getBoundingClientRect().top;
+        const inputHeight = inputRow.getBoundingClientRect().height;
+        const available = window.innerHeight - menuTop - inputHeight - 4; // небольшой запас снизу
+        menu.style.height = Math.max(400, Math.round(available)) + 'px';
+    }
+    window.addEventListener('resize', adjustMainMenuHeight);
+    setInterval(adjustMainMenuHeight, 500);
 
     // ===== АДАПТИВНАЯ ВЫСОТА ОБЛАСТИ СООБЩЕНИЙ ЧАТА =====
     // Раньше высота была жёстко зашита (220px) — на разных экранах (телефон/компьютер, разная
