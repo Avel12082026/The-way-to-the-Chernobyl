@@ -19,22 +19,22 @@
         h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 15px; color: #cdbd8f; margin-bottom: 10px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: linear-gradient(180deg,#141310,#0a0a09); border: 1px solid #4a4230; padding: 7px 4px; color: #aaa; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .stat-label { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 10px; color: #a89a72; }
-        .stat-box .value { display: block; font-family: 'Russo One', sans-serif; font-size: 18px; font-weight: normal; color: #fff; }
+        .stat-label { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; color: #a89a72; }
+        .stat-box .value { display: block; font-family: 'Russo One', sans-serif; font-size: 22px; font-weight: normal; color: #fff; }
         .stat-box.health .value { color: #ff5e5e; }
         .stat-box.hunger .value { color: #e6a23c; }
         .stat-box.thirst .value { color: #3c8de6; }
         .menu {
             position: relative;
             width: 100%;
-            aspect-ratio: 944 / 1680;
+            height: calc(100vh - 100px);
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
             margin-bottom: 12px;
         }
         .menu-abs { position: absolute; box-sizing: border-box; }
-        .menu-word-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; background: none; border: none; box-shadow: none; padding: 4px 6px; color: #cdbd8f; font-size: 12.5px; line-height: 1.15; font-weight: normal; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .menu-word-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; background: none; border: none; box-shadow: none; padding: 4px 6px; color: #cdbd8f; font-size: 15px; line-height: 1.2; font-weight: normal; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
         .menu-word-btn:active { color: #fff; transform: scale(0.96); }
         button { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; background: linear-gradient(180deg,#18160f,#0d0c09); border: 1px solid #5a4f34; border-radius: 6px; color: #cdbd8f; font-weight: normal; cursor: pointer; transition: 0.15s; }
         button:active { opacity: 0.75; }
@@ -68,7 +68,7 @@
         .quick-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
         .quick-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #4a4230; border-radius: 6px; padding: 8px; text-align: center; font-size: 12px; font-weight: normal; cursor: pointer; }
         .quick-slot:hover { border-color: #8a7a4a; }
-        .chat-tab-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-size: 10px; padding: 6px 2px; background: linear-gradient(180deg,#151310,#0b0a08); border: 1px solid #4a4230; border-radius: 5px; color: #c9bb8d; }
+        .chat-tab-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; padding: 8px 2px; background: linear-gradient(180deg,#151310,#0b0a08); border: 1px solid #4a4230; border-radius: 5px; color: #c9bb8d; }
     </style>
 </head>
 <body>
@@ -116,17 +116,19 @@
         </div>
     </div>
     <div id="mainMenu" class="menu">
-        <div class="menu-abs" style="top:6.67%; left:8%; width:84%; height:17.62%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-            <h1 style="font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1.5px; color:#cdbd8f; font-size:14px; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,0.8); margin-bottom:6px;">THE WAY TO THE CHERNOBYL</h1>
+        <div class="menu-abs" style="top:0.5%; left:8%; width:84%; height:6.2%; display:flex; align-items:center; justify-content:center;">
+            <h1 style="font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1.5px; color:#cdbd8f; font-size:15px; text-align:center; text-shadow:0 1px 3px rgba(0,0,0,0.9); margin:0;">THE WAY TO THE CHERNOBYL</h1>
+        </div>
+        <div class="menu-abs" style="top:7.2%; left:8%; width:84%; height:17.1%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
             <div class="stats-grid" style="width:100%; margin-top:0;">
                 <div class="stat-box health" style="background:none; border:none; padding:0;"><span class="stat-label">Здоровье</span><span class="value" id="health">100</span></div>
                 <div class="stat-box hunger" style="background:none; border:none; padding:0;"><span class="stat-label">Сытость</span><span class="value" id="hunger">100</span></div>
                 <div class="stat-box thirst" style="background:none; border:none; padding:0;"><span class="stat-label">Жажда</span><span class="value" id="thirst">100</span></div>
             </div>
-            <div style="margin-top: 4px; font-size: 10px; color: #cdbd8f; line-height:1.5; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.3px; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
+            <div style="margin-top: 4px; font-size: 12px; color: #cdbd8f; line-height:1.6; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.3px; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
                 🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
                 🧬 Жетоны сталкера: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
-                📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:10px; margin-left:4px; font-family:'Russo One',sans-serif;">Использовать</button>
+                📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:11px; margin-left:4px; font-family:'Russo One',sans-serif;">Использовать</button>
             </div>
         </div>
         <button class="menu-word-btn menu-abs" style="top:24.29%; height:8.04%; left:8%; width:40.9%;" onclick="openScreen('inventory')">Инвентарь</button>
@@ -140,7 +142,7 @@
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:8%; width:40.9%;" onclick="openScreen('market')">Рынок игроков</button>
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:51.1%; width:40.9%;" onclick="openScreen('starsShop')">Магазин Байт</button>
         <button class="menu-word-btn menu-abs" style="top:64.13%; height:8.04%; left:8%; width:84%;" onclick="exitGame()">Выйти из игры</button>
-        <div id="mainMenuChatSlot" class="menu-abs" style="top:72.17%; height:23.52%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column;"></div>
+        <div id="mainMenuChatSlot" class="menu-abs" style="top:72.17%; height:23.52%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column; background:transparent !important;"></div>
     </div>
 
     <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда. При входе в рейд
@@ -148,7 +150,7 @@
          возврате в главное меню — обратно в #mainMenuChatSlot. Это один и тот же DOM-элемент,
          поэтому чат гарантированно синхронизирован между обоими режимами -->
     <div id="embeddedChatWidget" style="display:none;">
-        <h4 style="margin:0 0 4px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1px; font-size:11px;">💬 Чат</h4>
+        <h4 style="margin:0 0 4px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1px; font-size:13px;">💬 Чат</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; margin-bottom:4px;">
             <button class="chat-tab-btn" onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
             <button class="chat-tab-btn" onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
@@ -157,7 +159,7 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:4px;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:none; border:none; padding:2px; height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; display:flex; flex-direction:column-reverse; box-sizing:border-box; font-size:12px;"></div>
+        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; height:130px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; display:flex; flex-direction:column-reverse; box-sizing:border-box; font-size:13px;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto;"></div>
         <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#0c0b09; border-top:1px solid #3a3424; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
@@ -1976,19 +1978,19 @@
         el.innerHTML = [...messages].reverse().map(m => {
             if (m.isSystem) {
                 return `
-                <div style="margin-bottom:8px; padding:4px 2px;">
-                    <div style="font-size:11px; color:#ff6b6b; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">☠️ ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
-                    <div style="margin-top:2px; word-break:break-word; color:#eee; font-family:monospace; font-size:12px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
+                <div style="margin-bottom:8px; padding:4px 2px; background:transparent !important;">
+                    <div style="font-size:12px; color:#ff6b6b; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">☠️ ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
+                    <div style="margin-top:2px; word-break:break-word; color:#eee; font-family:monospace; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>`;
             }
             return `
-            <div style="margin-bottom:8px; padding:4px 2px; display:flex; align-items:flex-start;">
+            <div style="margin-bottom:8px; padding:4px 2px; display:flex; align-items:flex-start; background:transparent !important;">
                 ${avatarImgHtml(m.senderId, 32, m.factionName, m.factionPosition, m.level)}
                 <div style="flex:1; min-width:0;">
-                    <div style="font-size:11px; color:#e0d4a8; text-shadow:0 1px 2px rgba(0,0,0,0.9);">
+                    <div style="font-size:12px; color:#e0d4a8; text-shadow:0 1px 2px rgba(0,0,0,0.9);">
                         ${onlineDot(m.online)}<strong style="cursor:pointer; text-decoration:underline;" onclick="openChatPlayerActions('${m.senderId}', '${escapeHtml(m.username).replace(/'/g, "\\'")}')">${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''} · <span style="color:#bbb;">${formatShortTime(m.createdAt)}</span>
                     </div>
-                    <div style="margin-top:3px; word-break:break-word; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
+                    <div style="margin-top:3px; word-break:break-word; color:#fff; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>
             </div>`;
         }).join('');
