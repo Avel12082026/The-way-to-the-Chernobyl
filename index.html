@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="only dark">
     <!-- Сообщаем браузеру, что страница УЖЕ тёмная — иначе некоторые Android-браузеры/WebView
          с принудительным тёмным режимом переопределяют цвет текста в полях ввода поверх любых
          явных inline-стилей страницы, из-за чего вводимый текст становится невидимым -->
@@ -18,9 +18,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { color-scheme: dark; overflow-x: hidden; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; transform: translateZ(0); -webkit-transform: translateZ(0); }
+        * { margin: 0; padding: 0; box-sizing: border-box; color-scheme: only dark; forced-color-adjust: none; }
+        html { color-scheme: only dark; overflow-x: hidden; forced-color-adjust: none; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; height: 100vh; overflow: hidden; max-width: 100vw; box-sizing: border-box; transform: translateZ(0); -webkit-transform: translateZ(0); color-scheme: only dark; forced-color-adjust: none; }
+        /* Страница целиком больше НЕ прокручивается — это убирает целый класс багов (например,
+           неправильный пересчёт высоты фона главного меню при прокрутке). Экраны, которым реально
+           нужна прокрутка (магазин, инвентарь и т.д.), уже прокручиваются САМИ внутри себя через
+           .screen { overflow-y:auto } — это не затронуто */
         h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 15px; color: #cdbd8f; margin-bottom: 10px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: linear-gradient(180deg,#141310,#0a0a09); border: 1px solid #4a4230; padding: 7px 4px; color: #aaa; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -41,6 +45,8 @@
             -webkit-transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            color-scheme: only dark;
+            forced-color-adjust: none;
         }
         .menu-abs { position: absolute; box-sizing: border-box; }
         .menu-word-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; background: none; border: none; box-shadow: none; padding: 4px 6px; color: #cdbd8f; font-size: 15px; line-height: 1.2; font-weight: normal; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
@@ -168,7 +174,7 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:4px; flex-shrink:0;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; display:flex; flex-direction:column-reverse; box-sizing:border-box; font-size:13px;"></div>
+        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; box-sizing:border-box; font-size:13px; color-scheme:only dark; forced-color-adjust:none;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto; flex-shrink:0;"></div>
         <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#0c0b09; border-top:1px solid #3a3424; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
@@ -1983,8 +1989,7 @@
             el.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Сообщений пока нет</p>';
             return;
         }
-        // Контейнер отображается column-reverse — переворачиваем массив, чтобы новые сообщения были внизу
-        el.innerHTML = [...messages].reverse().map(m => {
+        el.innerHTML = messages.map(m => {
             if (m.isSystem) {
                 return `
                 <div style="margin-bottom:8px; padding:4px 2px; background:transparent !important;">
@@ -2003,6 +2008,7 @@
                 </div>
             </div>`;
         }).join('');
+        el.scrollTop = el.scrollHeight; // прокручиваем к последнему (самому новому) сообщению
     }
 
     function loadGeneralChat() {
@@ -5812,15 +5818,26 @@
     // реальным свободным местом на экране (разные телефоны, разная высота системной панели
     // Telegram). Здесь измеряем РЕАЛЬНОЕ расстояние от верха меню до строки ввода чата и
     // растягиваем фон точно до неё, без зазора
+    let keyboardLikelyOpen = false;
+    document.addEventListener('focusin', e => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) keyboardLikelyOpen = true;
+    });
+    document.addEventListener('focusout', e => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+            keyboardLikelyOpen = false;
+            setTimeout(adjustMainMenuHeight, 300); // даём клавиатуре время закрыться перед пересчётом
+        }
+    });
     function adjustMainMenuHeight() {
+        if (keyboardLikelyOpen) return; // на открытой клавиатуре window.innerHeight искусственно уменьшается — не сжимаем игру под это
         const menu = document.getElementById('mainMenu');
         const inputRow = document.getElementById('chatInputRow');
         if (!menu || !inputRow) return;
         if (menu.style.display === 'none' || menu.offsetParent === null) return; // меню сейчас не видно
-        const menuTop = menu.getBoundingClientRect().top;
+        const menuTop = Math.max(0, menu.getBoundingClientRect().top); // подстраховка от отрицательных значений
         const inputHeight = inputRow.getBoundingClientRect().height;
         const available = window.innerHeight - menuTop - inputHeight - 4; // небольшой запас снизу
-        const newHeight = Math.max(400, Math.round(available)) + 'px';
+        const newHeight = Math.max(400, Math.min(window.innerHeight, Math.round(available))) + 'px'; // не даём улететь выше реального экрана
         if (menu.style.height !== newHeight) menu.style.height = newHeight; // пишем только при реальном изменении — лишние перезаписи одного и того же значения провоцируют баг с "зависшей" отрисовкой в некоторых WebView
     }
     window.addEventListener('resize', adjustMainMenuHeight);
