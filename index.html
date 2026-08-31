@@ -862,6 +862,24 @@
         { id: 8, name: "Антирад", type: "antirad", radiationRemove: 100, foodCost: 50, waterCost: 50, price: 200 }
     ];
 
+    // Иконки расходников (еда/вода/аптечки) — по названию предмета. Пока только эти 7, для
+    // остального снаряжения (оружие/броня/артефакты) своих иконок нет, показываем как раньше
+    const ITEM_ICONS = {
+        'Хлеб': 'hleb.jpg',
+        'Тушенка': 'tushenka.jpg',
+        'Вода': 'voda.jpg',
+        'Энергетик': 'energetik.jpg',
+        'Аптечка гражданская': 'aptechka_grazhdanskaya.jpg',
+        'Аптечка армейская': 'aptechka_armeyskaya.jpg',
+        'Аптечка научная': 'aptechka_nauchnaya.jpg'
+    };
+    function itemIconHtml(name, size) {
+        size = size || 28;
+        const file = ITEM_ICONS[name];
+        if (!file) return '';
+        return `<img src="${SERVER_URL}/icons/${file}" style="width:${size}px; height:${size}px; min-width:${size}px; border-radius:4px; object-fit:cover; vertical-align:middle; margin-right:6px; background:#0d0d0c; border:1px solid #333;" onerror="this.style.display='none'">`;
+    }
+
     // ===== ФРАКЦИИ =====
     const factions = [
         { name: 'Наёмники', type: 'enemy', color: '#ff5e5e' },
@@ -2606,7 +2624,7 @@
                             : `<button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>`;
                         return `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                            <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
+                            <p>${itemIconHtml(lot.item)}<strong>${lot.item}</strong> ×${lot.quantity}</p>
                             ${statsHtml}
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
                             <p>Цена: 🪙 ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
@@ -2625,7 +2643,7 @@
             }
             content.innerHTML = items.map(name => `
                 <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
-                    <span>${name} ×${player.inventory[name]}</span>
+                    <span style="display:flex; align-items:center;">${itemIconHtml(name)}${name} ×${player.inventory[name]}</span>
                     <button onclick="listItemForSale('${name.replace(/'/g, "\\'")}')">Продать</button>
                 </div>
             `).join('');
@@ -4954,7 +4972,10 @@
 
         const quickSlotsGrid = document.getElementById('quickSlotsGrid');
         quickSlotsGrid.innerHTML = player.quickSlots.map((item, i) => `
-            <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">${item ? `${item} ×${player.inventory[item] || 0}` : 'Пусто'}</div>
+            <div class="belt-slot" onclick="useInventoryQuickSlot(${i})" style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                ${item ? itemIconHtml(item, 24) : ''}
+                <span>${item ? `${item} ×${player.inventory[item] || 0}` : 'Пусто'}</span>
+            </div>
         `).join('');
         // Принудительная перерисовка в 2 шага — offsetHeight форсирует пересчёт раскладки,
         // requestAnimationFrame синхронизируется с реальным циклом отрисовки браузера. По отдельности
@@ -4970,7 +4991,8 @@
             return;
         }
         invGrid.innerHTML = items.map(name => `
-            <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')">
+            <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')" style="flex-direction:column; gap:2px;">
+                ${itemIconHtml(name, 26)}
                 <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
             </div>
         `).join('');
@@ -5012,7 +5034,19 @@
         slots.forEach((el, i) => {
             const itemName = player.quickSlots[i];
             const qty = itemName ? (player.inventory[itemName] || 0) : 0;
-            el.textContent = itemName ? `${itemName} ×${qty}` : 'Пусто';
+            if (itemName) {
+                el.style.display = 'flex';
+                el.style.flexDirection = 'column';
+                el.style.alignItems = 'center';
+                el.style.gap = '2px';
+                el.innerHTML = `${itemIconHtml(itemName, 22)}<span>${itemName} ×${qty}</span>`;
+            } else {
+                el.style.display = '';
+                el.style.flexDirection = '';
+                el.style.alignItems = '';
+                el.style.gap = '';
+                el.textContent = 'Пусто';
+            }
         });
         const container = document.getElementById('quickSlots');
         if (container) {
@@ -5078,7 +5112,8 @@
             grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Склад пуст</div>';
         } else {
             grid.innerHTML = items.map(name => `
-                <div class="slot" title="Забрать: ${name}" onclick="withdrawFromWarehouse('${name.replace(/'/g, "\\'")}')">
+                <div class="slot" title="Забрать: ${name}" onclick="withdrawFromWarehouse('${name.replace(/'/g, "\\'")}')" style="flex-direction:column; gap:2px;">
+                    ${itemIconHtml(name, 26)}
                     <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.warehouse[name]}</div>
                 </div>
             `).join('');
@@ -5091,7 +5126,8 @@
             invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
         } else {
             invGrid.innerHTML = invItems.map(name => `
-                <div class="slot" title="Положить: ${name}" onclick="depositFromWarehouseScreen('${name.replace(/'/g, "\\'")}')">
+                <div class="slot" title="Положить: ${name}" onclick="depositFromWarehouseScreen('${name.replace(/'/g, "\\'")}')" style="flex-direction:column; gap:2px;">
+                    ${itemIconHtml(name, 26)}
                     <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
                 </div>
             `).join('');
@@ -5235,7 +5271,7 @@
             <p style="font-size:12px; color:#8a7a4a; margin-bottom:8px;">🛒 Автозакупка расходников — укажите, сколько всегда иметь при себе:</p>
             ${consumables.filter(c => c.name !== 'Антирад').map(c => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px;">${c.name} <span style="color:#888;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
+                    <span style="font-size:12px; display:flex; align-items:center;">${itemIconHtml(c.name, 20)} ${c.name} <span style="color:#888; margin-left:4px;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
                     <input type="number" min="0" value="${targets[c.name] || 0}" style="width:70px; padding:4px;" onchange="setAutoBuyTarget('${c.name}', this.value)">
                 </div>
             `).join('')}
@@ -5284,9 +5320,12 @@
                 return;
             }
             shopItems.innerHTML = items.map(name => `
-                <div class="shop-item" style="cursor:pointer;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
-                    <div>${name} ×${player.inventory[name]}</div>
-                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                <div class="shop-item" style="cursor:pointer; display:flex; align-items:center;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
+                    ${itemIconHtml(name)}
+                    <div style="flex:1;">
+                        <div>${name} ×${player.inventory[name]}</div>
+                        <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                    </div>
                 </div>
             `).join('');
             return;
@@ -5297,11 +5336,14 @@
             const price = getBuyPrice(item.price);
             const discounted = price < item.price;
             return `
-            <div class="shop-item">
-                <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
-                ${getItemInfoHtml(item.name)}
-                <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
-                <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+            <div class="shop-item" style="display:flex; align-items:flex-start;">
+                ${itemIconHtml(item.name)}
+                <div style="flex:1;">
+                    <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
+                    ${getItemInfoHtml(item.name)}
+                    <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
+                    <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+                </div>
             </div>`;
         }).join('');
     }
