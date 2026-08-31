@@ -2035,13 +2035,20 @@
                 </div>
             </div>`;
         }).join('');
-        // Прокручиваем к последнему (самому новому) сообщению. requestAnimationFrame (дважды, с запасом)
-        // гарантирует, что браузер уже посчитал реальную высоту нового содержимого — иначе, особенно
-        // сразу при входе в рейд, где высота чата ещё пересчитывается отдельным таймером, scrollHeight
-        // мог быть "старым"/заниженным, и прокрутка промахивалась мимо настоящего низа списка
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
-        });
+        // Прокручиваем к последнему (самому новому) сообщению. Один вызов ненадёжен — точная высота
+        // контейнера ещё может не быть готова (особенно сразу при входе в рейд, где высоту считает
+        // отдельный таймер), а аватарки игроков подгружаются асинхронно и уже ПОСЛЕ первой прокрутки
+        // могут увеличить реальную высоту списка. Поэтому пробуем несколько раз с разной задержкой —
+        // так гарантированно попадаем в настоящий низ списка при любых условиях
+        const scrollToBottom = () => {
+            if (typeof adjustChatMessagesHeight === 'function') adjustChatMessagesHeight();
+            el.scrollTop = el.scrollHeight;
+        };
+        scrollToBottom();
+        requestAnimationFrame(() => requestAnimationFrame(scrollToBottom));
+        setTimeout(scrollToBottom, 150);
+        setTimeout(scrollToBottom, 500);
+        setTimeout(scrollToBottom, 1000);
     }
 
     function loadGeneralChat() {
