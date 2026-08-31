@@ -294,34 +294,36 @@
     </div>
 
     <div id="raidScreen" class="screen">
-        <h3>⚔️ Рейд</h3>
-        <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
-        <div style="margin-bottom:8px;">
-            <div style="font-size:11px; color:#888; margin-bottom:2px;">☢️ Радиация: <span id="radiationValue">0</span> / 100</div>
-            <div style="background:#0d0d0d; border:1px solid #222; border-radius:6px; height:10px; overflow:hidden;">
-                <div id="radiationBar" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
+        <div style="position:sticky; top:-12px; z-index:5; background:linear-gradient(180deg,#141310,#0a0a09); margin:-12px -12px 0; padding:12px 12px 0;">
+            <h3>⚔️ Рейд</h3>
+            <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
+            <div style="margin-bottom:8px;">
+                <div style="font-size:11px; color:#888; margin-bottom:2px;">☢️ Радиация: <span id="radiationValue">0</span> / 100</div>
+                <div style="background:#0d0d0d; border:1px solid #222; border-radius:6px; height:10px; overflow:hidden;">
+                    <div id="radiationBar" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
+                </div>
             </div>
-        </div>
-        <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
-        <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
-            <button id="raidStepBtn"
-                onpointerdown="startHoldToConfirm(this, raidStep)"
-                onpointerup="cancelHoldToConfirm(this)"
-                onpointerleave="cancelHoldToConfirm(this)"
-                onpointercancel="cancelHoldToConfirm(this)"
-                style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; position:relative; overflow:hidden; user-select:none;">
-                <span style="position:relative; z-index:1;">Идти дальше (удержите)</span>
-                <div id="raidStepBtnFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.35); transition:width 0.05s linear; pointer-events:none;"></div>
-            </button>
-            <button onclick="endRaid()" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Вернуться с рейда</button>
-        </div>
-        <div id="battleButtonsContainer"></div>
-        <button onclick="openBackpackFromRaid()" style="width:100%; margin-top:8px; background:#8a7a4a;">🎒 Рюкзак</button>
-        <div class="quick-slots" id="quickSlots">
-            <div class="quick-slot" onclick="useQuickSlot(0)">Пусто</div>
-            <div class="quick-slot" onclick="useQuickSlot(1)">Пусто</div>
-            <div class="quick-slot" onclick="useQuickSlot(2)">Пусто</div>
-            <div class="quick-slot" onclick="useQuickSlot(3)">Пусто</div>
+            <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
+            <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+                <button id="raidStepBtn"
+                    onpointerdown="startHoldToConfirm(this, raidStep)"
+                    onpointerup="cancelHoldToConfirm(this)"
+                    onpointerleave="cancelHoldToConfirm(this)"
+                    onpointercancel="cancelHoldToConfirm(this)"
+                    style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; position:relative; overflow:hidden; user-select:none;">
+                    <span style="position:relative; z-index:1;">Идти дальше (удержите)</span>
+                    <div id="raidStepBtnFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.35); transition:width 0.05s linear; pointer-events:none;"></div>
+                </button>
+                <button onclick="endRaid()" style="background: #c0392b; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px;">Вернуться с рейда</button>
+            </div>
+            <div id="battleButtonsContainer"></div>
+            <button onclick="openBackpackFromRaid()" style="width:100%; margin-top:8px; background:#8a7a4a;">🎒 Рюкзак</button>
+            <div class="quick-slots" id="quickSlots">
+                <div class="quick-slot" onclick="useQuickSlot(0)">Пусто</div>
+                <div class="quick-slot" onclick="useQuickSlot(1)">Пусто</div>
+                <div class="quick-slot" onclick="useQuickSlot(2)">Пусто</div>
+                <div class="quick-slot" onclick="useQuickSlot(3)">Пусто</div>
+            </div>
         </div>
         <div id="raidChatSlot"></div>
     </div>
