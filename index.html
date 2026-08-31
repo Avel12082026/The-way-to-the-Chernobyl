@@ -2018,9 +2018,11 @@
         }
         el.innerHTML = messages.map(m => {
             if (m.isSystem) {
+                const icon = m.isRumor ? '📻' : '☠️';
+                const nameColor = m.isRumor ? '#e0c060' : '#ff6b6b';
                 return `
                 <div style="margin-bottom:8px; padding:4px 2px; background:rgba(10,9,7,0.01) !important;">
-                    <div style="font-size:12px; color:#ff6b6b; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">☠️ ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
+                    <div style="font-size:12px; color:${nameColor}; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${icon} ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
                     <div style="margin-top:2px; word-break:break-word; color:#eee; font-family:monospace; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>`;
             }
@@ -2053,7 +2055,7 @@
 
     function loadGeneralChat() {
         document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
-        fetch(`${SERVER_URL}/api/chat/general`)
+        fetch(`${SERVER_URL}/api/chat/general?_=${Date.now()}`)
             .then(r => r.json())
             .then(messages => { if (chatTab === 'general') renderChatMessages(messages); })
             .catch(() => {});
