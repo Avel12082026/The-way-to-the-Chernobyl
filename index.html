@@ -123,6 +123,19 @@
             <button onclick="closeChatPlayerActions()" style="background:#c0392b; margin-top:8px;">🚪 Выход</button>
         </div>
     </div>
+    <div id="dmListModal" class="modal">
+        <div class="modal-content" style="max-width:420px;">
+            <button onclick="closeDmListModal()" style="background:#c0392b; margin-bottom:10px;">✕ Закрыть</button>
+            <h3 style="margin-bottom:8px;">✉️ Личные сообщения</h3>
+            <div style="display:flex; gap:6px; margin-bottom:10px;">
+                <input type="text" id="dmSearchInput" placeholder="Поиск игрока по нику..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" onkeypress="if(event.key==='Enter') searchDmPlayers()">
+                <button onclick="searchDmPlayers()" style="width:auto; padding:10px 14px;">🔍</button>
+            </div>
+            <div id="dmSearchResults"></div>
+            <div id="dmConversationsList" style="max-height:340px; overflow-y:auto;"></div>
+            <button onclick="closeDmListModal()" style="background:#c0392b; margin-top:10px;">✕ Закрыть</button>
+        </div>
+    </div>
     <div id="gameConfirmModal" class="modal">
         <div class="modal-content" style="max-width:400px;">
             <div id="gameConfirmText" style="white-space:pre-wrap; margin-bottom:15px; line-height:1.5;"></div>
@@ -175,7 +188,6 @@
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
         <div id="chatMessages" style="background:rgba(10,9,7,0.01) !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; box-sizing:border-box; font-size:13px; color-scheme:only dark; forced-color-adjust:none;"></div>
-        <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto; flex-shrink:0;"></div>
         <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#0c0b09; border-top:1px solid #3a3424; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" style="width:auto; padding:10px 16px; background:linear-gradient(180deg,#18160f,#0d0c09); border:1px solid #5a4f34; color:#cdbd8f;">➤</button>
@@ -1819,11 +1831,25 @@
     // ===== ЧАТ (общий / фракции / личный) =====
     let chatTab = 'general';
     let chatDmPartnerId = null; // с кем сейчас открыт личный диалог (null = список диалогов)
-    let lastDmSeenTime = Date.now(); // момент последнего захода в личные диалоги — для красной точки "новое сообщение"
+
+    // Момент последнего просмотра диалога с конкретным собеседником — хранится в localStorage,
+    // чтобы красные точки "новое сообщение" не сбрасывались при перезаходе в игру. Ключ — id собеседника
+    function getDmSeenMap() {
+        try { return JSON.parse(localStorage.getItem('dmSeenTimes') || '{}'); } catch (e) { return {}; }
+    }
+    function markDmSeen(partnerId) {
+        const map = getDmSeenMap();
+        map[String(partnerId)] = Date.now();
+        try { localStorage.setItem('dmSeenTimes', JSON.stringify(map)); } catch (e) {}
+    }
+    function isDmConvUnread(conv, myId) {
+        const map = getDmSeenMap();
+        const seenAt = map[String(conv.playerId)] || 0;
+        return conv.lastMessageAt > seenAt && String(conv.lastSenderId) !== String(myId);
+    }
 
     // Периодическая проверка новых личных сообщений — показывает красную точку на кнопке "Личный",
-    // если последнее сообщение в каком-то диалоге пришло ПОСЛЕ последнего захода игрока в личные диалоги
-    // и написано не самим игроком
+    // если хотя бы в одном диалоге есть непрочитанное (см. isDmConvUnread)
     function checkForNewDms() {
         if (!player.nickname) return; // профиль ещё не готов
         fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
@@ -1832,7 +1858,7 @@
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
         }).then(r => r.json()).then(list => {
             const myId = String(getPlayerId());
-            const hasUnread = (list || []).some(c => c.lastMessageAt > lastDmSeenTime && String(c.lastSenderId) !== myId);
+            const hasUnread = (list || []).some(c => isDmConvUnread(c, myId));
             const dot = document.getElementById('dmUnreadDot');
             if (dot) dot.style.display = hasUnread ? 'block' : 'none';
         }).catch(() => {});
@@ -1849,19 +1875,19 @@
     function openChatTab(tab) {
         chatTab = tab;
         setActiveChatTabButton();
-        document.getElementById('chatDmPicker').style.display = 'none';
         document.getElementById('chatDmBackBar').style.display = 'none';
         document.getElementById('chatInput').style.display = '';
         if (tab === 'general') loadGeneralChat();
         else if (tab === 'faction') loadFactionChat();
         else if (tab === 'dm') {
-            // Заходим в личные диалоги — отмечаем момент и сразу гасим красную точку
-            lastDmSeenTime = Date.now();
-            const dot = document.getElementById('dmUnreadDot');
-            if (dot) dot.style.display = 'none';
-            // Если диалог уже был открыт (например, просто вернулись из другого экрана) — не сбрасываем на список
+            // Если диалог уже был открыт (например, просто вернулись из другого экрана) — показываем
+            // его сразу, а не список; иначе открываем полноценное окно со списком диалогов и поиском
             if (chatDmPartnerId) openDmWith(chatDmPartnerId);
-            else loadDmConversations();
+            else {
+                document.getElementById('chatMessages').innerHTML = '';
+                document.getElementById('chatInput').style.display = 'none';
+                openDmListModal();
+            }
         }
     }
 
@@ -2037,61 +2063,71 @@
         }).catch(() => {});
     }
 
-    function loadDmConversations() {
-        chatDmPartnerId = null;
-        document.getElementById('chatMessages').innerHTML = '';
-        document.getElementById('chatDmBackBar').style.display = 'none';
-        document.getElementById('chatInput').style.display = 'none';
-        const picker = document.getElementById('chatDmPicker');
-        picker.style.display = '';
-        picker.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка диалогов...</p>';
+    function openDmListModal() {
+        document.getElementById('dmListModal').classList.add('active');
+        document.getElementById('dmSearchInput').value = '';
+        document.getElementById('dmSearchResults').innerHTML = '';
+        loadDmConversationsList();
+    }
 
+    function closeDmListModal() {
+        document.getElementById('dmListModal').classList.remove('active');
+        if (!chatDmPartnerId) openChatTab('general'); // ничего не выбрали — возвращаемся в общий чат, а не висим на пустой вкладке
+    }
+
+    function loadDmConversationsList() {
+        const listEl = document.getElementById('dmConversationsList');
+        listEl.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка диалогов...</p>';
         fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
         }).then(r => r.json()).then(list => {
-            if (chatTab !== 'dm' || chatDmPartnerId) return;
-            const newBtn = `<button onclick="startNewDm()" style="margin-bottom:8px;">✉️ Написать новому игроку</button>`;
+            const myId = String(getPlayerId());
             if (!list || list.length === 0) {
-                picker.innerHTML = newBtn + '<p style="color:#888; text-align:center; padding:10px;">Диалогов пока нет</p>';
+                listEl.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Диалогов пока нет — найдите игрока через поиск выше</p>';
                 return;
             }
-            picker.innerHTML = newBtn + list.map(c => `
-                <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="openDmWith('${c.playerId}')">
+            listEl.innerHTML = list.map(c => `
+                <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; position:relative;" onclick="selectDmPlayer('${c.playerId}')">
+                    ${isDmConvUnread(c, myId) ? '<span style="position:absolute; top:8px; right:8px; width:10px; height:10px; background:#e74c3c; border-radius:50%;"></span>' : ''}
                     <strong>${escapeHtml(c.username)}</strong>
-                    <p style="font-size:12px; color:#888; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(c.lastMessage)}</p>
+                    <p style="font-size:12px; color:#888; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:16px;">${escapeHtml(c.lastMessage)}</p>
                 </div>
             `).join('');
-        }).catch(() => {});
+        }).catch(() => { listEl.innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Не удалось загрузить диалоги</p>'; });
     }
 
-    function startNewDm() {
-        const nickname = prompt('Введите ник игрока, которому хотите написать:');
-        if (!nickname) return;
-        const trimmed = nickname.trim();
-        if (!trimmed) return;
-
-        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(trimmed)}`)
+    function searchDmPlayers() {
+        const nickname = document.getElementById('dmSearchInput').value.trim();
+        const resultsEl = document.getElementById('dmSearchResults');
+        if (!nickname) { resultsEl.innerHTML = ''; return; }
+        resultsEl.innerHTML = '<p style="color:#888; text-align:center; padding:6px;">Поиск...</p>';
+        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(nickname)}`)
             .then(r => r.json())
             .then(list => {
-                if (!list || list.length === 0) { showGameAlert('Игрок с таким ником не найден.'); return; }
-                // Точное совпадение ника — приоритетнее частичного
-                const exact = list.find(p => (p.username || '').toLowerCase() === trimmed.toLowerCase());
-                if (exact) { openDmWith(exact.id); return; }
-                if (list.length === 1) { openDmWith(list[0].id); return; }
-                // Несколько похожих совпадений — просим уточнить
-                const choicesText = list.slice(0, 10).map((p, i) => `${i + 1}. ${p.username || p.id}`).join('\n');
-                const choice = prompt(`Найдено несколько игроков, выберите номер:\n${choicesText}`);
-                const idx = parseInt(choice) - 1;
-                if (idx >= 0 && idx < list.length) openDmWith(list[idx].id);
+                if (!list || list.length === 0) {
+                    resultsEl.innerHTML = '<p style="color:#888; text-align:center; padding:6px;">Игрок не найден</p>';
+                    return;
+                }
+                resultsEl.innerHTML = `<div style="margin-bottom:8px; font-size:11px; color:#a89a72; text-transform:uppercase;">Результаты поиска:</div>` +
+                    list.slice(0, 15).map(p => `
+                        <div style="background:#141310; border:1px solid #4a4230; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="selectDmPlayer('${p.id}')">
+                            <strong>${escapeHtml(p.username || p.id)}</strong> <span style="color:#888; font-size:12px;">Ур. ${p.level || 1}</span>
+                        </div>
+                    `).join('');
             })
-            .catch(() => showGameAlert('Ошибка поиска игрока'));
+            .catch(() => { resultsEl.innerHTML = '<p style="color:#888; text-align:center; padding:6px;">Ошибка поиска</p>'; });
+    }
+
+    function selectDmPlayer(playerId) {
+        document.getElementById('dmListModal').classList.remove('active');
+        openDmWith(playerId);
     }
 
     function openDmWith(playerId) {
         chatDmPartnerId = String(playerId);
-        document.getElementById('chatDmPicker').style.display = 'none';
+        markDmSeen(chatDmPartnerId); // отмечаем этот диалог просмотренным — гасим его точку непрочитанного
         document.getElementById('chatDmBackBar').style.display = '';
         document.getElementById('chatInput').style.display = '';
         document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
@@ -2112,7 +2148,10 @@
 
     function backToDmList() {
         chatDmPartnerId = null;
-        loadDmConversations();
+        document.getElementById('chatMessages').innerHTML = '';
+        document.getElementById('chatDmBackBar').style.display = 'none';
+        document.getElementById('chatInput').style.display = 'none';
+        openDmListModal();
     }
 
     function sendChatMessage() {
@@ -5836,7 +5875,7 @@
         if (menu.style.display === 'none' || menu.offsetParent === null) return; // меню сейчас не видно
         const menuTop = Math.max(0, menu.getBoundingClientRect().top); // подстраховка от отрицательных значений
         const inputHeight = inputRow.getBoundingClientRect().height;
-        const available = window.innerHeight - menuTop - inputHeight - 4; // небольшой запас снизу
+        const available = window.innerHeight - menuTop - inputHeight - 20; // зазор снизу — чтобы нижний край картинки не прятался под строкой ввода
         const newHeight = Math.max(400, Math.min(window.innerHeight, Math.round(available))) + 'px'; // не даём улететь выше реального экрана
         if (menu.style.height !== newHeight) menu.style.height = newHeight; // пишем только при реальном изменении — лишние перезаписи одного и того же значения провоцируют баг с "зависшей" отрисовкой в некоторых WebView
     }
@@ -5852,7 +5891,6 @@
     function adjustChatMessagesHeight() {
         const widget = document.getElementById('embeddedChatWidget');
         const messagesEl = document.getElementById('chatMessages');
-        const dmPicker = document.getElementById('chatDmPicker');
         const inputRow = document.getElementById('chatInputRow');
         if (!widget || !messagesEl || !inputRow) return;
         if (widget.style.display === 'none' || widget.offsetParent === null) return; // чат сейчас не виден — нечего пересчитывать
@@ -5867,26 +5905,11 @@
         // для рейда, где под чат отведено гораздо больше места
         if (widget.parentElement && widget.parentElement.id === 'mainMenuChatSlot') return;
 
-        // ВАЖНО: реально видимый контент — ЛИБО #chatMessages (обычная переписка), ЛИБО #chatDmPicker
-        // (список диалогов на вкладке "Личный"), никогда оба сразу. Растягивать пустой #chatMessages
-        // на весь экран, пока реальный контент лежит в #chatDmPicker ниже — именно так список диалогов
-        // "убегал" далеко за пределы экрана, под прибитую строку ввода
-        const dmPickerVisible = dmPicker && dmPicker.style.display !== 'none';
         const inputHeight = inputRow.getBoundingClientRect().height;
-
-        if (dmPickerVisible) {
-            messagesEl.style.height = '0px';
-            messagesEl.style.marginBottom = '0px';
-            const pickerTop = dmPicker.getBoundingClientRect().top;
-            const available = window.innerHeight - pickerTop - inputHeight - 12;
-            dmPicker.style.maxHeight = Math.max(100, Math.round(available)) + 'px';
-            dmPicker.style.overflowY = 'auto';
-        } else {
-            messagesEl.style.marginBottom = '8px';
-            const messagesTop = messagesEl.getBoundingClientRect().top;
-            const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
-            messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
-        }
+        messagesEl.style.marginBottom = '8px';
+        const messagesTop = messagesEl.getBoundingClientRect().top;
+        const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
+        messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
     }
     window.addEventListener('resize', adjustChatMessagesHeight);
     setInterval(adjustChatMessagesHeight, 500); // тот же надёжный периодический паттерн — ловит любую смену экрана/видимости чата, без необходимости перечислять каждое место вызова
