@@ -20,7 +20,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; color-scheme: only dark; forced-color-adjust: none; }
         html { color-scheme: only dark; overflow-x: hidden; forced-color-adjust: none; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; height: 100vh; overflow: hidden; max-width: 100vw; box-sizing: border-box; transform: translateZ(0); -webkit-transform: translateZ(0); color-scheme: only dark; forced-color-adjust: none; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; height: 100vh; overflow: hidden; max-width: 100vw; box-sizing: border-box; color-scheme: only dark; forced-color-adjust: none; }
         /* Страница целиком больше НЕ прокручивается — это убирает целый класс багов (например,
            неправильный пересчёт высоты фона главного меню при прокрутке). Экраны, которым реально
            нужна прокрутка (магазин, инвентарь и т.д.), уже прокручиваются САМИ внутри себя через
@@ -41,10 +41,6 @@
             background-repeat: no-repeat;
             background-position: center;
             margin-bottom: 12px;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
             color-scheme: only dark;
             forced-color-adjust: none;
         }
