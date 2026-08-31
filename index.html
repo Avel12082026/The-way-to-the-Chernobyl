@@ -2593,20 +2593,24 @@
                     if (isHybridCategory) {
                         registry.forEach(def => { if (!artifacts.some(a => a.name === def.name)) artifacts.push(def); });
                     }
-                    const buyableLots = lots.filter(l => String(l.seller_id) !== String(getPlayerId()) && categorizeMarketItem(l.item) === marketCategory);
+                    const buyableLots = lots.filter(l => categorizeMarketItem(l.item) === marketCategory); // свои лоты тоже показываем — просто без возможности купить
                     if (buyableLots.length === 0) {
                         list.innerHTML = '<p style="padding:10px; color:#888;">Пока никто не продаёт</p>';
                         return;
                     }
                     list.innerHTML = buyableLots.map(lot => {
                         const statsHtml = showStatsInList ? getItemInfoHtml(lot.item) : '';
+                        const isMine = String(lot.seller_id) === String(getPlayerId());
+                        const actionHtml = isMine
+                            ? `<span style="display:inline-block; padding:8px 14px; background:#3a3424; color:#a89a72; border-radius:6px; font-weight:bold;">Мой товар</span>`
+                            : `<button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>`;
                         return `
                         <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
                             <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
                             ${statsHtml}
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
                             <p>Цена: 🪙 ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
-                            <button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>
+                            ${actionHtml}
                         </div>
                     `;
                     }).join('');
