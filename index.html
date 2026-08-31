@@ -4990,12 +4990,16 @@
             invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
             return;
         }
-        invGrid.innerHTML = items.map(name => `
+        invGrid.innerHTML = items.map(name => {
+            const hasIcon = !!ITEM_ICONS[name];
+            return `
             <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')" style="flex-direction:column; gap:2px;">
-                ${itemIconHtml(name, 26)}
-                <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
+                ${hasIcon
+                    ? `${itemIconHtml(name, 36)}<div style="font-size:10px; text-align:center;">×${player.inventory[name]}</div>`
+                    : `<div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>`}
             </div>
-        `).join('');
+        `;
+        }).join('');
     }
 
     function useInventoryQuickSlot(i) {
@@ -5008,14 +5012,16 @@
             const idx = parseInt(choice) - 1;
             if (idx >= 0 && idx < available.length) {
                 player.quickSlots[i] = available[idx];
-                // Небольшая отсрочка ПОСЛЕ закрытия prompt() — судя по всему, WebView не успевает
-                // полностью вернуть управление отрисовке сразу же после закрытия нативного диалога,
-                // из-за чего немедленный вызов renderInventory() визуально "не долетал". Уже пробовал
-                // принудительный reflow и requestAnimationFrame по отдельности — не помогало до конца
-                setTimeout(() => {
-                    renderInventory();
-                    renderQuickSlots(); // тот же массив используется в рейде — синхронизация мгновенная
-                }, 50);
+                // Один вызов ненадёжен — WebView не всегда успевает вернуть управление отрисовке
+                // сразу же после закрытия нативного диалога prompt(), из-за чего немедленный
+                // renderInventory() визуально "не долетал" (виден только после полной перезагрузки
+                // экрана). Пробуем несколько раз с разной задержкой — так гарантированно долетает
+                const refreshQuickSlot = () => { renderInventory(); renderQuickSlots(); };
+                refreshQuickSlot();
+                requestAnimationFrame(() => requestAnimationFrame(refreshQuickSlot));
+                setTimeout(refreshQuickSlot, 100);
+                setTimeout(refreshQuickSlot, 300);
+                setTimeout(refreshQuickSlot, 600);
                 saveGame();
             }
             return;
@@ -5111,12 +5117,16 @@
         if (items.length === 0) {
             grid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Склад пуст</div>';
         } else {
-            grid.innerHTML = items.map(name => `
+            grid.innerHTML = items.map(name => {
+                const hasIcon = !!ITEM_ICONS[name];
+                return `
                 <div class="slot" title="Забрать: ${name}" onclick="withdrawFromWarehouse('${name.replace(/'/g, "\\'")}')" style="flex-direction:column; gap:2px;">
-                    ${itemIconHtml(name, 26)}
-                    <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.warehouse[name]}</div>
+                    ${hasIcon
+                        ? `${itemIconHtml(name, 36)}<div style="font-size:10px; text-align:center;">×${player.warehouse[name]}</div>`
+                        : `<div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.warehouse[name]}</div>`}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         // Инвентарь показывается тут же, чтобы было видно количество предмета перед переносом на склад
@@ -5125,12 +5135,16 @@
         if (invItems.length === 0) {
             invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
         } else {
-            invGrid.innerHTML = invItems.map(name => `
+            invGrid.innerHTML = invItems.map(name => {
+                const hasIcon = !!ITEM_ICONS[name];
+                return `
                 <div class="slot" title="Положить: ${name}" onclick="depositFromWarehouseScreen('${name.replace(/'/g, "\\'")}')" style="flex-direction:column; gap:2px;">
-                    ${itemIconHtml(name, 26)}
-                    <div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>
+                    ${hasIcon
+                        ? `${itemIconHtml(name, 36)}<div style="font-size:10px; text-align:center;">×${player.inventory[name]}</div>`
+                        : `<div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>`}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
     }
 
