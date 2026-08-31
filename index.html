@@ -2035,7 +2035,13 @@
                 </div>
             </div>`;
         }).join('');
-        el.scrollTop = el.scrollHeight; // прокручиваем к последнему (самому новому) сообщению
+        // Прокручиваем к последнему (самому новому) сообщению. requestAnimationFrame (дважды, с запасом)
+        // гарантирует, что браузер уже посчитал реальную высоту нового содержимого — иначе, особенно
+        // сразу при входе в рейд, где высота чата ещё пересчитывается отдельным таймером, scrollHeight
+        // мог быть "старым"/заниженным, и прокрутка промахивалась мимо настоящего низа списка
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
+        });
     }
 
     function loadGeneralChat() {
@@ -5907,10 +5913,12 @@
         if (widget.parentElement && widget.parentElement.id === 'mainMenuChatSlot') return;
 
         const inputHeight = inputRow.getBoundingClientRect().height;
+        const wasNearBottom = messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 40; // был ли пользователь у самого низа списка
         messagesEl.style.marginBottom = '8px';
         const messagesTop = messagesEl.getBoundingClientRect().top;
         const available = window.innerHeight - messagesTop - inputHeight - 12; // небольшой запас снизу
         messagesEl.style.height = Math.max(100, Math.round(available)) + 'px';
+        if (wasNearBottom) messagesEl.scrollTop = messagesEl.scrollHeight; // остаёмся у последнего сообщения после изменения высоты
     }
     window.addEventListener('resize', adjustChatMessagesHeight);
     setInterval(adjustChatMessagesHeight, 500); // тот же надёжный периодический паттерн — ловит любую смену экрана/видимости чата, без необходимости перечислять каждое место вызова
