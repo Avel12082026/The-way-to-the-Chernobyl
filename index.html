@@ -295,7 +295,14 @@
 
     <div id="raidScreen" class="screen">
         <div style="position:sticky; top:-12px; z-index:5; background:linear-gradient(180deg,#141310,#0a0a09); margin:-12px -12px 0; padding:12px 12px 0;">
-            <h3>⚔️ Рейд</h3>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+                <h3 style="margin-bottom:0;">⚔️ Рейд</h3>
+                <div style="display:flex; gap:8px; font-size:12px; font-weight:bold;">
+                    <span style="color:#ff5e5e;">❤️ <span id="raidHealthMini">100</span></span>
+                    <span style="color:#e6a23c;">🍖 <span id="raidHungerMini">100</span></span>
+                    <span style="color:#3c8de6;">💧 <span id="raidThirstMini">100</span></span>
+                </div>
+            </div>
             <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
             <div style="margin-bottom:8px;">
                 <div style="font-size:11px; color:#888; margin-bottom:2px;">☢️ Радиация: <span id="radiationValue">0</span> / 100</div>
@@ -1182,6 +1189,12 @@
         document.getElementById('health').textContent = Math.round(player.health);
         document.getElementById('hunger').textContent = Math.round(player.hunger);
         document.getElementById('thirst').textContent = Math.round(player.thirst);
+        const raidHealthMini = document.getElementById('raidHealthMini');
+        const raidHungerMini = document.getElementById('raidHungerMini');
+        const raidThirstMini = document.getElementById('raidThirstMini');
+        if (raidHealthMini) raidHealthMini.textContent = Math.round(player.health);
+        if (raidHungerMini) raidHungerMini.textContent = Math.round(player.hunger);
+        if (raidThirstMini) raidThirstMini.textContent = Math.round(player.thirst);
         const radVal = document.getElementById('radiationValue');
         const radBar = document.getElementById('radiationBar');
         if (radVal) radVal.textContent = Math.round(player.radiation);
@@ -2045,17 +2058,19 @@
         const scrollToBottom = () => {
             if (typeof adjustChatMessagesHeight === 'function') adjustChatMessagesHeight();
             el.scrollTop = el.scrollHeight;
+            if (el.lastElementChild) el.lastElementChild.scrollIntoView({ block: 'end' }); // более надёжный встроенный способ - не зависит от ручного расчёта scrollHeight
         };
         scrollToBottom();
         requestAnimationFrame(() => requestAnimationFrame(scrollToBottom));
         setTimeout(scrollToBottom, 150);
         setTimeout(scrollToBottom, 500);
         setTimeout(scrollToBottom, 1000);
+        setTimeout(scrollToBottom, 2000);
     }
 
     function loadGeneralChat() {
         document.getElementById('chatMessages').innerHTML = '<p style="color:#888; text-align:center; padding:10px;">Загрузка...</p>';
-        fetch(`${SERVER_URL}/api/chat/general?_=${Date.now()}`)
+        fetch(`${SERVER_URL}/api/chat/general?_=${Date.now()}`, { cache: 'no-store' })
             .then(r => r.json())
             .then(messages => { if (chatTab === 'general') renderChatMessages(messages); })
             .catch(() => {});
