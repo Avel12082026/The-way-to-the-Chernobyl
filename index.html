@@ -20,7 +20,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { color-scheme: dark; overflow-x: hidden; }
-        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; transform: translateZ(0); -webkit-transform: translateZ(0); }
         h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 15px; color: #cdbd8f; margin-bottom: 10px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: linear-gradient(180deg,#141310,#0a0a09); border: 1px solid #4a4230; padding: 7px 4px; color: #aaa; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -37,6 +37,10 @@
             background-repeat: no-repeat;
             background-position: center;
             margin-bottom: 12px;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         .menu-abs { position: absolute; box-sizing: border-box; }
         .menu-word-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; background: none; border: none; box-shadow: none; padding: 4px 6px; color: #cdbd8f; font-size: 15px; line-height: 1.2; font-weight: normal; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
@@ -5816,7 +5820,8 @@
         const menuTop = menu.getBoundingClientRect().top;
         const inputHeight = inputRow.getBoundingClientRect().height;
         const available = window.innerHeight - menuTop - inputHeight - 4; // небольшой запас снизу
-        menu.style.height = Math.max(400, Math.round(available)) + 'px';
+        const newHeight = Math.max(400, Math.round(available)) + 'px';
+        if (menu.style.height !== newHeight) menu.style.height = newHeight; // пишем только при реальном изменении — лишние перезаписи одного и того же значения провоцируют баг с "зависшей" отрисовкой в некоторых WebView
     }
     window.addEventListener('resize', adjustMainMenuHeight);
     setInterval(adjustMainMenuHeight, 500);
