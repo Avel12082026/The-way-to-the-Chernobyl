@@ -53,7 +53,7 @@
         .menu-word-btn:active { color: #fff; transform: scale(0.96); }
         button { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; background: linear-gradient(180deg,#18160f,#0d0c09); border: 1px solid #5a4f34; border-radius: 6px; color: #cdbd8f; font-weight: normal; cursor: pointer; transition: 0.15s; }
         button:active { opacity: 0.75; }
-        .screen { display: none; background: linear-gradient(180deg,#141310,#0a0a09); border: 2px solid #5a4f34; padding: 12px; border-radius: 10px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); }
+        .screen { display: none; background: linear-gradient(180deg,#141310,#0a0a09); border: 2px solid #5a4f34; padding: 12px; border-radius: 10px; margin-bottom: 12px; min-height: calc(100vh - 100px); max-height: calc(100vh - 100px); overflow-y: auto; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); box-sizing: border-box; }
         .screen.active { display: block; }
         .grid7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
         .slot { background: #0d0d0c; border: 1px solid #4a4230; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; border-radius: 4px; }
@@ -157,7 +157,7 @@
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:8%; width:40.9%;" onclick="openScreen('market')">Рынок игроков</button>
         <button class="menu-word-btn menu-abs" style="top:56.21%; height:7.92%; left:51.1%; width:40.9%;" onclick="openScreen('starsShop')">Магазин Байт</button>
         <button class="menu-word-btn menu-abs" style="top:64.13%; height:8.04%; left:8%; width:84%;" onclick="exitGame()">Выйти из игры</button>
-        <div id="mainMenuChatSlot" class="menu-abs" style="top:74%; height:21.5%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column; background:transparent !important;"></div>
+        <div id="mainMenuChatSlot" class="menu-abs" style="top:74%; height:21.5%; left:8%; width:84%; overflow:hidden; display:flex; flex-direction:column; background:rgba(10,9,7,0.01) !important;"></div>
     </div>
 
     <!-- Единый виджет чата — общий и для главного меню, и для экрана рейда. При входе в рейд
@@ -174,7 +174,7 @@
         <div id="chatDmBackBar" style="display:none; margin-bottom:4px; flex-shrink:0;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
         </div>
-        <div id="chatMessages" style="background:transparent !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; box-sizing:border-box; font-size:13px; color-scheme:only dark; forced-color-adjust:none;"></div>
+        <div id="chatMessages" style="background:rgba(10,9,7,0.01) !important; border:none; padding:2px; flex:1; min-height:90px; overflow-y:auto; overflow-x:hidden; margin-bottom:4px; box-sizing:border-box; font-size:13px; color-scheme:only dark; forced-color-adjust:none;"></div>
         <div id="chatDmPicker" style="display:none; margin-bottom:4px; max-height:90px; overflow-y:auto; flex-shrink:0;"></div>
         <div id="chatInputRow" style="display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:0; background:#0c0b09; border-top:1px solid #3a3424; padding:8px 0; z-index:50; box-sizing:border-box;">
             <input type="text" id="chatInput" placeholder="Сообщение..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" maxlength="500" onkeypress="if(event.key==='Enter') sendChatMessage()">
@@ -1992,13 +1992,13 @@
         el.innerHTML = messages.map(m => {
             if (m.isSystem) {
                 return `
-                <div style="margin-bottom:8px; padding:4px 2px; background:transparent !important;">
+                <div style="margin-bottom:8px; padding:4px 2px; background:rgba(10,9,7,0.01) !important;">
                     <div style="font-size:12px; color:#ff6b6b; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">☠️ ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
                     <div style="margin-top:2px; word-break:break-word; color:#eee; font-family:monospace; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>`;
             }
             return `
-            <div style="margin-bottom:8px; padding:4px 2px; display:flex; align-items:flex-start; background:transparent !important;">
+            <div style="margin-bottom:8px; padding:4px 2px; display:flex; align-items:flex-start; background:rgba(10,9,7,0.01) !important;">
                 ${avatarImgHtml(m.senderId, 32, m.factionName, m.factionPosition, m.level)}
                 <div style="flex:1; min-width:0;">
                     <div style="font-size:12px; color:#e0d4a8; text-shadow:0 1px 2px rgba(0,0,0,0.9);">
