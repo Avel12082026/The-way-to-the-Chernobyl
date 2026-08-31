@@ -3922,11 +3922,14 @@
             el.innerHTML = consumables.map(item => {
                 const price = getFriendlyBuyPrice(item.price);
                 return `
-                <div class="shop-item">
-                    <div>${item.name}</div>
-                    ${getItemInfoHtml(item.name)}
-                    <div class="price">🪙 ${price}</div>
-                    <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+                <div class="shop-item" style="display:flex; align-items:flex-start;">
+                    ${itemIconHtml(item.name)}
+                    <div style="flex:1;">
+                        <div>${item.name}</div>
+                        ${getItemInfoHtml(item.name)}
+                        <div class="price">🪙 ${price}</div>
+                        <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
+                    </div>
                 </div>`;
             }).join('');
         } else {
@@ -3936,11 +3939,14 @@
                 return;
             }
             el.innerHTML = items.map(name => `
-                <div class="shop-item">
-                    <div>${name} ×${player.inventory[name]}</div>
-                    ${getItemInfoHtml(name)}
-                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
-                    <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
+                <div class="shop-item" style="display:flex; align-items:flex-start;">
+                    ${itemIconHtml(name)}
+                    <div style="flex:1;">
+                        <div>${name} ×${player.inventory[name]}</div>
+                        ${getItemInfoHtml(name)}
+                        <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
+                        <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
+                    </div>
                 </div>`).join('');
         }
     }
@@ -4561,11 +4567,14 @@
         el.innerHTML = `
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
             ${medkits.map(item => `
-                <div class="shop-item">
-                    <div>${item.name}</div>
-                    ${getItemInfoHtml(item.name)}
-                    <div class="price">🪙 ${getBuyPrice(item.price)}</div>
-                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+                <div class="shop-item" style="display:flex; align-items:flex-start;">
+                    ${itemIconHtml(item.name)}
+                    <div style="flex:1;">
+                        <div>${item.name}</div>
+                        ${getItemInfoHtml(item.name)}
+                        <div class="price">🪙 ${getBuyPrice(item.price)}</div>
+                        <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+                    </div>
                 </div>
             `).join('')}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">📡 Детекторы (открыты по уровню, сейчас доступен тир ${unlockTier}):</div>
