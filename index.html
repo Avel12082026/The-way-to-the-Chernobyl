@@ -17,6 +17,7 @@
         html { color-scheme: dark; overflow-x: hidden; }
         body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #ddd; padding: 10px; padding-bottom: 76px; min-height: 100vh; overflow-x: hidden; max-width: 100vw; box-sizing: border-box; }
         .header { background: linear-gradient(180deg,#17140f,#0c0b08); border: 2px solid #5a4f34; padding: 10px 12px 12px; margin-bottom: 8px; border-radius: 10px; text-align: center; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 3px 10px rgba(0,0,0,0.5); }
+        h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 15px; color: #cdbd8f; margin-bottom: 10px; }
         .header h1 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 2px; color: #cdbd8f; font-size: 15px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
         .stat-box { background: linear-gradient(180deg,#141310,#0a0a09); border: 1px solid #4a4230; padding: 7px 4px; color: #aaa; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
@@ -26,39 +27,39 @@
         .stat-box.hunger .value { color: #e6a23c; }
         .stat-box.thirst .value { color: #3c8de6; }
         .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-        button { padding: 10px 14px; background: #1a1a1a; border: 1px solid #333; border-radius: 6px; color: #ddd; font-weight: bold; cursor: pointer; transition: 0.15s; }
+        button { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; background: linear-gradient(180deg,#18160f,#0d0c09); border: 1px solid #5a4f34; border-radius: 6px; color: #cdbd8f; font-weight: normal; cursor: pointer; transition: 0.15s; }
         button:active { opacity: 0.75; }
         .menu button { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; padding: 17px 10px; background: linear-gradient(180deg,#18160f,#0d0c09); border: 2px solid #5a4f34; border-radius: 8px; color: #cdbd8f; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); }
         .menu button:active { transform: scale(0.96); background: #221f16; }
-        .screen { display: none; background: #111; border: 2px solid #2a2a2a; padding: 12px; border-radius: 4px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; }
+        .screen { display: none; background: linear-gradient(180deg,#141310,#0a0a09); border: 2px solid #5a4f34; padding: 12px; border-radius: 10px; margin-bottom: 12px; max-height: 85vh; overflow-y: auto; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); }
         .screen.active { display: block; }
         .grid7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
-        .slot { background: #0d0d0d; border: 1px solid #222; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
+        .slot { background: #0d0d0c; border: 1px solid #4a4230; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; border-radius: 4px; }
         .slot:hover { border-color: #8a7a4a; }
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .belt-slot { background: #0d0d0d; border: 2px solid #8a7a4a; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .back-btn { margin-top: 15px; width: 100%; padding: 12px; background: #c0392b; border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
-        .log { background: #0d0d0d; padding: 10px; border: 1px solid #222; font-family: monospace; font-size: 12px; height: 160px; max-height: 160px; overflow-y: auto; overflow-x: hidden; overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; box-sizing: border-box; }
+        .belt-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 2px solid #8a7a4a; border-radius: 6px; padding: 8px; text-align: center; font-size: 12px; font-weight: normal; cursor: pointer; }
+        .back-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 15px; width: 100%; padding: 12px; background: linear-gradient(180deg,#7a2e22,#5a1f17); border: 1px solid #a04030; border-radius: 8px; color: #fff; font-weight: normal; cursor: pointer; }
+        .log { background: #0c0b09; padding: 10px; border: 1px solid #4a4230; border-radius: 8px; font-family: monospace; font-size: 12px; height: 160px; max-height: 160px; overflow-y: auto; overflow-x: hidden; overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; box-sizing: border-box; }
         .stats-details { margin-top: 10px; font-size: 12px; }
-        .stats-details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a1a1a; }
-        .shop-item { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 10px; margin-bottom: 6px; }
+        .stats-details div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #2a2620; }
+        .shop-item { background: linear-gradient(180deg,#171512,#0e0d0a); border: 1px solid #4a4230; border-radius: 8px; padding: 10px; margin-bottom: 6px; }
         .shop-item div { font-size: 14px; font-weight: bold; }
         .shop-item .price { color: #e6a23c; font-size: 12px; }
-        .shop-item button { margin-top: 4px; padding: 6px 12px; background: #27ae60; border: none; border-radius: 4px; color: #fff; font-weight: bold; cursor: pointer; }
+        .shop-item button { font-family: 'Russo One', sans-serif; margin-top: 4px; padding: 6px 12px; background: linear-gradient(180deg,#2d7a4e,#1e5c38); border: 1px solid #3a9b64; border-radius: 4px; color: #fff; font-weight: normal; cursor: pointer; }
         .shop-item button:disabled { opacity: 0.4; cursor: not-allowed; }
         .admin-btn { position: fixed; bottom: 10px; left: 10px; padding: 8px 16px; background: transparent; border: none; border-radius: 8px; color: transparent; font-weight: bold; font-size: 14px; z-index: 999; cursor: pointer; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; padding: 30px; justify-content: center; align-items: center; }
         .modal.active { display: flex; }
-        .modal-content { background: #1a1a1a; border: 2px solid #e6a23c; border-radius: 12px; padding: 20px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; }
-        .modal-content h3 { color: #e6a23c; margin-bottom: 15px; }
-        .modal-content input { width: 100%; padding: 10px; background: #111 !important; border: 1px solid #333; color: #fff !important; -webkit-text-fill-color: #fff !important; margin-bottom: 10px; border-radius: 6px; }
+        .modal-content { background: linear-gradient(180deg,#17140f,#0c0b08); border: 2px solid #5a4f34; border-radius: 12px; padding: 20px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04); }
+        .modal-content h3 { color: #cdbd8f; margin-bottom: 15px; }
+        .modal-content input { width: 100%; padding: 10px; background: #111 !important; border: 1px solid #4a4230; color: #fff !important; -webkit-text-fill-color: #fff !important; margin-bottom: 10px; border-radius: 6px; }
         /* Страховка: НИ ОДНО поле ввода/выпадающий список нигде в игре не должно оставаться без явного
            цвета текста и фона — иначе на некоторых телефонах/браузерах вводимый текст становится невидимым */
         input, select, textarea { color: #fff !important; background: #1a1a1a !important; -webkit-text-fill-color: #fff !important; caret-color: #fff !important; }
         input::placeholder, textarea::placeholder { color: #888 !important; -webkit-text-fill-color: #888 !important; }
-        .modal-content button { width: 100%; padding: 10px; background: #27ae60; border: none; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; }
+        .modal-content button { font-family: 'Russo One', sans-serif; width: 100%; padding: 10px; background: linear-gradient(180deg,#2d7a4e,#1e5c38); border: 1px solid #3a9b64; border-radius: 6px; color: #fff; font-weight: normal; cursor: pointer; }
         .quick-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-        .quick-slot { background: #0d0d0d; border: 1px solid #333; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .quick-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #4a4230; border-radius: 6px; padding: 8px; text-align: center; font-size: 12px; font-weight: normal; cursor: pointer; }
         .quick-slot:hover { border-color: #8a7a4a; }
         .chat-tab-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; padding: 9px 4px; background: linear-gradient(180deg,#151310,#0b0a08); border: 1px solid #4a4230; border-radius: 6px; color: #c9bb8d; }
     </style>
@@ -1418,8 +1419,8 @@
         const factionName = factionLabel(data.factionName, playerId);
         const factionPosition = data.factionName ? (data.factionPosition || 'Рядовой') : '-------';
         const isOwnProfile = String(playerId) === String(getPlayerId());
-        const isAdminProfile = String(playerId) === ADMIN_ID;
-        const isLoner = !data.factionName && !isAdminProfile; // "Одиночка" — без фракции и не админ (у админа своя отдельная аватарка)
+        const isAdminProfile = String(playerId) === ADMIN_ID && !data.factionName;
+        const isLoner = !data.factionName && !isAdminProfile; // "Одиночка" — без фракции и не админ (у админа своя отдельная аватарка, пока он не во фракции)
         let avatarSrc = '';
         if (isAdminProfile) avatarSrc = `${SERVER_URL}/avatars/${playerId}.jpg`;
         else if (isLoner) avatarSrc = `${SERVER_URL}/avatars/${(data.level ?? 1) >= 120 ? 'default_loner_120.jpg' : (data.level ?? 1) >= 90 ? 'default_loner_90.jpg' : (data.level ?? 1) >= 60 ? 'default_loner_60.jpg' : (data.level ?? 1) >= 30 ? 'default_loner_30.jpg' : 'default_loner.jpg'}`;
@@ -1875,7 +1876,7 @@
     function avatarImgHtml(playerId, size, factionName, factionPosition, playerLevel) {
         size = size || 28;
         const baseStyle = `width:${size}px; height:${size}px; min-width:${size}px; border-radius:50%; object-fit:cover; vertical-align:middle; margin-right:6px; background:#222; border:1px solid #333;`;
-        if (String(playerId) === ADMIN_ID) {
+        if (String(playerId) === ADMIN_ID && !factionName) {
             return `<img src="${SERVER_URL}/avatars/${playerId}.jpg" style="${baseStyle}" onerror="this.style.display='none'">`;
         }
         if (!factionName) {
