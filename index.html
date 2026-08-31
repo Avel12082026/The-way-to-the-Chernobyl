@@ -54,6 +54,7 @@
         button:active { opacity: 0.75; }
         .screen { display: none; background: linear-gradient(180deg,#141310,#0a0a09); border: 2px solid #5a4f34; padding: 12px; border-radius: 10px; margin-bottom: 12px; min-height: calc(100vh - 100px); max-height: calc(100vh - 100px); overflow-y: auto; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); box-sizing: border-box; }
         .screen.active { display: block; }
+        #raidScreen.active { display: flex; flex-direction: column; overflow: hidden; } /* только когда рейд реально активен - иначе экран никогда не скрывался бы через обычный класс active/неactive */
         .grid7 { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
         .slot { background: #0d0d0c; border: 1px solid #4a4230; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; border-radius: 4px; }
         .slot:hover { border-color: #8a7a4a; }
@@ -293,7 +294,7 @@
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
     </div>
 
-    <div id="raidScreen" class="screen" style="display:flex; flex-direction:column; overflow:hidden;">
+    <div id="raidScreen" class="screen">
         <div style="flex-shrink:0; background:linear-gradient(180deg,#141310,#0a0a09); margin:-12px -12px 0; padding:12px 12px 0;">
             <div style="display:flex; align-items:center; justify-content:space-between;">
                 <h3 style="margin-bottom:0;">⚔️ Рейд</h3>
