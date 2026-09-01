@@ -5305,6 +5305,7 @@
         const equippedGear = document.getElementById('equippedGear');
         const gearBox = (label, name, slotType, statLine) => `
             <div class="slot" style="aspect-ratio: unset; padding:8px; flex-direction:column;" onclick="openEquippedItemActions('${slotType}')">
+                ${ITEM_ICONS[name] ? `<img src="${SERVER_URL}/icons/${ITEM_ICONS[name]}" style="width:36px; height:36px; border-radius:4px; object-fit:cover; margin-bottom:4px; border:1px solid #333;" onerror="this.style.display='none'">` : ''}
                 <div style="font-size:9px; text-align:center; line-height:1.3;">${label}<br><b>${name}</b>${statLine ? `<br><span style="color:#8a7a4a;">${statLine}</span>` : ''}</div>
             </div>`;
         equippedGear.innerHTML =
