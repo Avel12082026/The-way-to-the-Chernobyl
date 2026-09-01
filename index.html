@@ -136,6 +136,8 @@
         <div class="modal-content" style="max-width:420px;">
             <button onclick="closeDmListModal()" style="background:#c0392b; margin-bottom:10px;">✕ Закрыть</button>
             <h3 style="margin-bottom:8px;">✉️ Личные сообщения</h3>
+            <button onclick="toggleDmFriendRequests()" style="background:#1a1a1a; border:2px solid #333; margin-bottom:10px; position:relative;">📨 Заявки в друзья<span id="friendReqDmDot" style="display:none; position:absolute; top:8px; right:14px; width:10px; height:10px; background:#e6c229; border-radius:50%;"></span></button>
+            <div id="dmFriendRequestsSection" style="display:none; margin-bottom:10px; max-height:300px; overflow-y:auto;"></div>
             <div style="display:flex; gap:6px; margin-bottom:10px;">
                 <input type="text" id="dmSearchInput" placeholder="Поиск игрока по нику..." style="flex:1; padding:10px; background:#141310; color:#fff; border:1px solid #4a4230; border-radius:6px;" onkeypress="if(event.key==='Enter') searchDmPlayers()">
                 <button onclick="searchDmPlayers()" style="width:auto; padding:10px 14px;">🔍</button>
@@ -1767,6 +1769,36 @@
         loadFriendRequestsList();
     }
 
+    // Тот же список заявок в друзья, но встроенный прямо в окно личных сообщений — раскрывается/
+    // сворачивается по кнопке, использует те же acceptFriendRequest/declineFriendRequest, что и в КПК
+    function toggleDmFriendRequests() {
+        const section = document.getElementById('dmFriendRequestsSection');
+        if (!section) return;
+        const opening = section.style.display === 'none';
+        section.style.display = opening ? 'block' : 'none';
+        if (opening) loadDmFriendRequestsList();
+    }
+    function loadDmFriendRequestsList() {
+        fetch(`${SERVER_URL}/api/friends/pending`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => {
+            const el = document.getElementById('dmFriendRequestsSection');
+            if (!el || el.style.display === 'none') return;
+            if (!list || list.length === 0) { el.innerHTML = '<p style="padding:10px; color:#888;">Заявок пока нет</p>'; return; }
+            el.innerHTML = list.map(p => `
+                <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${escapeHtml(p.username || p.id)}</span>
+                    <div style="display:flex; gap:6px;">
+                        <button onclick="acceptFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#27ae60;">✔ Принять</button>
+                        <button onclick="declineFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#c0392b;">✘ Отклонить</button>
+                    </div>
+                </div>
+            `).join('');
+        }).catch(() => {});
+    }
+
     function loadFriendRequestsList() {
         fetch(`${SERVER_URL}/api/friends/pending`, {
             method: 'POST',
@@ -1835,7 +1867,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, fromId })
         }).then(r => r.json()).then(res => {
-            if (res.success) { showGameAlert('Заявка принята!'); loadFriendRequestsList(); loadFriendsList(); checkForPendingFriendRequests(); }
+            if (res.success) { showGameAlert('Заявка принята!'); loadFriendRequestsList(); loadDmFriendRequestsList(); loadFriendsList(); checkForPendingFriendRequests(); }
             else showGameAlert('Ошибка: ' + (res.error || 'не удалось принять заявку'));
         }).catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
@@ -1845,7 +1877,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, fromId })
-        }).then(r => r.json()).then(() => { loadFriendRequestsList(); checkForPendingFriendRequests(); }).catch(() => {});
+        }).then(r => r.json()).then(() => { loadFriendRequestsList(); loadDmFriendRequestsList(); checkForPendingFriendRequests(); }).catch(() => {});
     }
 
     function removeFriend(friendId) {
@@ -2043,8 +2075,10 @@
             const hasPending = (list || []).length > 0;
             const kpkDot = document.getElementById('friendReqKpkDot');
             const chatDot = document.getElementById('friendReqUnreadDot');
+            const dmDot = document.getElementById('friendReqDmDot');
             if (kpkDot) kpkDot.style.display = hasPending ? 'block' : 'none';
             if (chatDot) chatDot.style.display = hasPending ? 'block' : 'none';
+            if (dmDot) dmDot.style.display = hasPending ? 'block' : 'none';
         }).catch(() => {});
     }
     setInterval(checkForPendingFriendRequests, 20000);
@@ -2268,6 +2302,7 @@
         document.getElementById('dmListModal').classList.add('active');
         document.getElementById('dmSearchInput').value = '';
         document.getElementById('dmSearchResults').innerHTML = '';
+        document.getElementById('dmFriendRequestsSection').style.display = 'none';
         loadDmConversationsList();
     }
 
