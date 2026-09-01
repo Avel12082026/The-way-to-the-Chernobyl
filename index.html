@@ -127,7 +127,7 @@
     <div id="chatPlayerActionsModal" class="modal">
         <div class="modal-content" style="max-width:350px;">
             <h3 id="chatPlayerActionsName" style="color:#8a7a4a;"></h3>
-            <button onclick="chatActionSendFriendRequest()" style="background:#27ae60;">📨 Отправить заявку в друзья</button>
+            <button id="chatPlayerActionsFriendBtn" onclick="chatActionSendFriendRequest()" style="background:#27ae60;">📨 Отправить заявку в друзья</button>
             <button onclick="chatActionShowInfo()" style="margin-top:8px;">📋 Инфо о персонаже</button>
             <button onclick="closeChatPlayerActions()" style="background:#c0392b; margin-top:8px;">🚪 Выход</button>
         </div>
@@ -1666,23 +1666,25 @@
         const content = document.getElementById('kpkContent');
         content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка профиля...</p>';
         const isOwnProfile = String(playerId) === String(getPlayerId());
-        const addFriendBtn = isOwnProfile ? '' : `<button onclick="sendFriendRequest('${playerId}')" style="background:#27ae60; margin-bottom:10px;">📨 Отправить заявку в друзья</button>
-            <button onclick="messagePlayerFromProfile('${playerId}')" style="background:#2980b9; margin-bottom:10px;">✉️ Написать личное сообщение</button>`;
-        fetch(`${SERVER_URL}/api/player/${playerId}`)
-            .then(res => res.json())
-            .then(data => {
-                if (kpkTab !== 'profile') return; // пользователь уже ушёл на другую вкладку — не перезаписываем её
-                content.innerHTML = `<button class="back-btn" onclick="openKpkTab('rating')" style="margin-bottom:10px;">← К рейтингу</button>` +
-                    addFriendBtn +
-                    renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
-                    `<button class="back-btn" onclick="openKpkTab('rating')">← К рейтингу</button>`;
-            })
-            .catch(() => {
-                if (kpkTab !== 'profile') return;
+        Promise.all([
+            fetch(`${SERVER_URL}/api/player/${playerId}`).then(res => res.json()).catch(() => null),
+            isOwnProfile ? Promise.resolve(new Set()) : fetchMyFriendIds()
+        ]).then(([data, friendIds]) => {
+            if (kpkTab !== 'profile') return; // пользователь уже ушёл на другую вкладку — не перезаписываем её
+            if (data === null) {
                 content.innerHTML = `<button class="back-btn" onclick="openKpkTab('rating')" style="margin-bottom:10px;">← К рейтингу</button>` +
                     '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
                     `<button class="back-btn" onclick="openKpkTab('rating')">← К рейтингу</button>`;
-            });
+                return;
+            }
+            const alreadyFriend = friendIds.has(String(playerId));
+            const addFriendBtn = isOwnProfile ? '' : `${alreadyFriend ? '<p style="color:#888; font-size:12px; margin-bottom:10px;">🤝 Уже в друзьях</p>' : `<button onclick="sendFriendRequest('${playerId}')" style="background:#27ae60; margin-bottom:10px;">📨 Отправить заявку в друзья</button>`}
+                <button onclick="messagePlayerFromProfile('${playerId}')" style="background:#2980b9; margin-bottom:10px;">✉️ Написать личное сообщение</button>`;
+            content.innerHTML = `<button class="back-btn" onclick="openKpkTab('rating')" style="margin-bottom:10px;">← К рейтингу</button>` +
+                addFriendBtn +
+                renderPlayerStatsCard(data || {}, `👤 Профиль игрока`, playerId) +
+                `<button class="back-btn" onclick="openKpkTab('rating')">← К рейтингу</button>`;
+        });
     }
 
     // ===== РЕЙТИНГ / ЗВАНИЯ ЗА УРОВЕНЬ =====
@@ -1825,9 +1827,10 @@
         const el = document.getElementById('friendsSearchResults');
         if (!el) return;
         if (!friendsSearchQuery.trim()) { el.innerHTML = ''; return; }
-        fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(friendsSearchQuery)}`)
-            .then(r => r.json())
-            .then(list => {
+        Promise.all([
+            fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(friendsSearchQuery)}`).then(r => r.json()).catch(() => []),
+            fetchMyFriendIds()
+        ]).then(([list, friendIds]) => {
                 if (kpkTab !== 'friends') return;
                 const myId = String(getPlayerId());
                 const filtered = (list || []).filter(p => String(p.id) !== myId);
@@ -1835,11 +1838,22 @@
                 el.innerHTML = filtered.map(p => `
                     <div style="background:#1a1a1a; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
                         <span>${onlineDot(p.online)}${escapeHtml(p.username || p.id)} <span style="color:#888; font-size:11px;">Ур.${p.level || 1}</span></span>
-                        <button onclick="sendFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px;">📨 Заявка в друзья</button>
+                        ${friendIds.has(String(p.id))
+                            ? '<span style="color:#888; font-size:11px;">🤝 Уже в друзьях</span>'
+                            : `<button onclick="sendFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px;">📨 Заявка в друзья</button>`}
                     </div>
                 `).join('');
-            })
-            .catch(() => {});
+            });
+    }
+
+    // Набор ID друзей текущего игрока — используется, чтобы скрывать кнопку "Добавить в друзья"
+    // там, где игрок уже есть в друзьях (профиль, поиск, модалка в чате)
+    function fetchMyFriendIds() {
+        return fetch(`${SERVER_URL}/api/friends/list`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => new Set((list || []).map(f => String(f.id)))).catch(() => new Set());
     }
 
     function sendFriendRequest(friendId) {
@@ -2208,7 +2222,15 @@
     function openChatPlayerActions(playerId, username) {
         chatPlayerActionTarget = { id: playerId, username };
         document.getElementById('chatPlayerActionsName').textContent = username;
+        const friendBtn = document.getElementById('chatPlayerActionsFriendBtn');
+        if (friendBtn) friendBtn.style.display = (String(playerId) === String(getPlayerId())) ? 'none' : 'none'; // прячем на время проверки статуса дружбы
         document.getElementById('chatPlayerActionsModal').classList.add('active');
+        if (friendBtn && String(playerId) !== String(getPlayerId())) {
+            fetchMyFriendIds().then(friendIds => {
+                if (!chatPlayerActionTarget || chatPlayerActionTarget.id !== playerId) return; // модалка уже закрыта/сменилась
+                friendBtn.style.display = friendIds.has(String(playerId)) ? 'none' : 'block';
+            });
+        }
     }
     function closeChatPlayerActions() {
         document.getElementById('chatPlayerActionsModal').classList.remove('active');
@@ -3835,10 +3857,11 @@
             chance += getFactionBonuses(null).artifactFindChancePct; // бонус фракции (Сталкеры/Свобода/Одиночка по уровню)
         }
 
-        // Радиация: КАЖДОЕ нажатие добавляет 91-98 из 100 в полосу — крайне рискованно.
+        // Радиация: КАЖДОЕ нажатие добавляет 86-93 из 100 в полосу — крайне рискованно (снижено на 5
+        // от изначальных 91-98 по просьбе — было слишком жёстко).
         // "Защита от радиации" (всегда ПОЛОЖИТЕЛЬНОЕ значение) снижает добавляемую радиацию —
         // без искусственного минимума, при достаточно высокой защите радиация может почти не расти
-        const rawRadiationAdded = 91 + Math.floor(Math.random() * 8); // 91-98, "сырое" значение до защиты
+        const rawRadiationAdded = 86 + Math.floor(Math.random() * 8); // 86-93, "сырое" значение до защиты
         const radiationResist = Math.max(0, Number(player.radiationResist) || 0);
         const radiationAdded = Math.max(0, rawRadiationAdded - radiationResist);
         player.radiation = Math.min(100, player.radiation + radiationAdded);
@@ -5553,10 +5576,12 @@
     function renderAutoBuyPanelScientists() {
         player.autoBuyTargets = player.autoBuyTargets || {};
         const targets = player.autoBuyTargets;
+        // У Леонова продаются только аптечки и антирад — не вся линейка расходников, как у Жучары
+        const scientistsConsumables = consumables.filter(c => c.type === 'medkit' || c.type === 'antirad');
         return `
         <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid #8a7a4a;">
             <p style="font-size:12px; color:#8a7a4a; margin-bottom:8px;">🛒 Автозакупка расходников — укажите, сколько всегда иметь при себе:</p>
-            ${consumables.filter(c => c.name !== 'Антирад').map(c => `
+            ${scientistsConsumables.map(c => `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                     <span style="font-size:12px; display:flex; align-items:center;">${itemIconHtml(c.name, 20)} ${c.name} <span style="color:#888; margin-left:4px;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
                     <input type="number" min="0" value="${targets[c.name] || 0}" style="width:70px; padding:4px;" onchange="setAutoBuyTarget('${c.name}', this.value)">
@@ -5570,7 +5595,9 @@
         const targets = player.autoBuyTargets || {};
         let totalCost = 0;
         const toBuy = [];
-        consumables.forEach(c => {
+        // Только то, что реально продаётся у Леонова — аптечки и антирад
+        const scientistsConsumables = consumables.filter(c => c.type === 'medkit' || c.type === 'antirad');
+        scientistsConsumables.forEach(c => {
             const target = targets[c.name] || 0;
             const have = player.inventory[c.name] || 0;
             const need = Math.max(0, target - have);
