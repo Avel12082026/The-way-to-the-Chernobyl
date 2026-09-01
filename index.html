@@ -882,7 +882,8 @@
         'Энергетик': 'energetik.jpg',
         'Аптечка гражданская': 'aptechka_grazhdanskaya.jpg',
         'Аптечка армейская': 'aptechka_armeyskaya.jpg',
-        'Аптечка научная': 'aptechka_nauchnaya.jpg'
+        'Аптечка научная': 'aptechka_nauchnaya.jpg',
+        'Антирад': 'antirad.jpg'
     };
     function itemIconHtml(name, size) {
         size = size || 28;
@@ -898,10 +899,10 @@
         const file = ITEM_ICONS[name];
         if (!file) return `<div class="shop-item">${innerHtml}</div>`;
         return `<div class="shop-item" style="display:flex; align-items:stretch; padding:0; overflow:hidden;">
-            <div style="width:72px; min-width:72px; position:relative; background:#0d0d0c;">
+            <div style="width:96px; min-width:96px; position:relative; background:#0d0d0c;">
                 <img src="${SERVER_URL}/icons/${file}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">
             </div>
-            <div style="flex:1; min-width:0; padding:10px;">${innerHtml}</div>
+            <div style="flex:1; min-width:0; padding:10px; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; text-align:right;">${innerHtml}</div>
         </div>`;
     }
 
