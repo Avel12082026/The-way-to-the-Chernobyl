@@ -5731,9 +5731,8 @@
             const base = armorItems.find(a => a.name === parsed.baseName);
             if (!base) return '';
             const eff = getArmorEffectiveStats(itemName);
-            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
-            const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
-            const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
+            const stableKey = getStableArmorKey(itemName);
+            const upgradeData = (player.armorUpgradeData && player.armorUpgradeData[stableKey]) || {};
             const panelId = 'armorStatPanel_' + (isEquipped ? 'eq' : 'inv') + '_' + parsed.baseName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '') + '_' + parsed.level;
             // Отдельный СТАБИЛЬНЫЙ ключ (без уровня улучшения — он меняется после каждого клика) —
             // по нему запоминаем, какая панель была открыта, чтобы она не закрывалась после каждого
@@ -5757,27 +5756,40 @@
                 });
             }
 
-            const rowsHtml = rows.map(r => `
+            // ВАЖНО: стоимость, порог "Байты/Жетоны" и потолок в 100 улучшений считаются ОТДЕЛЬНО
+            // для каждой характеристики — по тому, сколько раз улучшали именно её (а не по общему
+            // числу улучшений предмета). Раньше все строки делили один и тот же уровень предмета,
+            // из-за чего улучшение одной характеристики поднимало цену сразу у всех остальных
+            const rowsHtml = rows.map(r => {
+                const statLevel = Number(upgradeData[r.key]) || 0;
+                const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;
+                const rowUsesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
+                const rowCost = rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel);
+                const rowCanAfford = rowUsesTokens ? (Number(player.breedCredits) || 0) >= rowCost : player.coins >= rowCost;
+                return `
                 <div class="shop-item">
                     <div>${r.label}${r.isNew ? ' <span style="color:#8ac926;">(новая характеристика)</span>' : ''}</div>
                     <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${r.current + 1}</b></div>
-                    <div class="price">Цена: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
-                    <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, '${r.key}')" ${!canAfford ? 'disabled' : ''}>⬆️ Улучшить</button>
+                    <div style="font-size:11px; color:#888;">Уровень этой характеристики: ${statLevel} / ${UPGRADE_MAX_LEVEL}${statLevel < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}</div>
+                    ${rowMaxed
+                        ? `<button disabled>Эта характеристика улучшена до максимума</button>`
+                        : `<div class="price">Цена: ${rowUsesTokens ? '🧬 ' + rowCost + ' Жетон(ов) сталкера' : '🪙 ' + rowCost.toLocaleString('ru-RU') + ' Байт'}</div>
+                    <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, '${r.key}')" ${!rowCanAfford ? 'disabled' : ''}>⬆️ Улучшить</button>`}
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
             return `
             <div class="shop-item" style="${isEquipped ? 'border-color:#8a7a4a;' : ''}">
                 <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}${isSuit ? ' <span style="color:#8a7a4a; font-size:11px;">(исследовательский — только защита от радиации/аномалий)</span>' : ''}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Пулестойкость: <b style="color:#fff;">${eff.bulletResist}</b> · Гашение ударов: <b style="color:#fff;">${eff.hitAbsorption}</b><br>
-                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
+                    Всего улучшений предмета: ${parsed.level}
                 </div>
-                ${maxed ? '<button disabled>Улучшено до максимума</button>' : `
                 <button onclick="toggleStatPanel('${panelId}', '${trackKey.replace(/'/g, "\\'")}')">
                     🔧 Выбрать и улучшить характеристику
                 </button>
-                <div id="${panelId}" style="display:${panelWasOpen ? 'block' : 'none'}; margin-top:8px;">${rowsHtml}</div>`}
+                <div id="${panelId}" style="display:${panelWasOpen ? 'block' : 'none'}; margin-top:8px;">${rowsHtml}</div>
             </div>`;
         }
 
@@ -5892,12 +5904,18 @@
     // характеристике, независимо от того, какая это характеристика
     function upgradeArmorStat(itemName, isEquipped, statKey) {
         const parsed = parseGearName(itemName);
-        if (parsed.level >= UPGRADE_MAX_LEVEL) { showGameAlert('Этот предмет уже улучшен до максимума.'); return; }
         if (!statKey) { showGameAlert('Выберите характеристику для улучшения.'); return; }
 
-        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
-        const tokenCost = usesTokens ? getUpgradeCostTokens(parsed.level) : 0;
-        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(parsed.level);
+        // Стоимость и потолок в 100 считаем по тому, сколько раз улучшали ИМЕННО эту характеристику
+        // (statKey) — не по общему числу улучшений предмета. Раньше все характеристики делили один
+        // общий уровень, из-за чего улучшение одной поднимало цену сразу у всех остальных
+        const stableKeyForCost = getStableArmorKey(itemName);
+        const statLevel = Number((player.armorUpgradeData && player.armorUpgradeData[stableKeyForCost] && player.armorUpgradeData[stableKeyForCost][statKey]) || 0);
+        if (statLevel >= UPGRADE_MAX_LEVEL) { showGameAlert('Эта характеристика уже улучшена до максимума.'); return; }
+
+        const usesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
+        const tokenCost = usesTokens ? getUpgradeCostTokens(statLevel) : 0;
+        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(statLevel);
 
         if (usesTokens && (Number(player.breedCredits) || 0) < tokenCost) {
             showGameAlert(`Недостаточно жетонов сталкера. Нужно 🧬 ${tokenCost}.`);
