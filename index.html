@@ -511,7 +511,7 @@
         anomalyResist: {}, // от надетых артефактов/брони — {имя аномалии: число} снижает риск при поиске именно в этой аномалии
         weapon: { name: 'Пистолет Макарова', tier: 1, dmg: 10 },
         armor: { name: 'Комбинезон Юность', tier: 1, armor: 5 },
-        detector: { name: 'Радэр 2-02', tier: 1 },
+        detector: { name: 'РИПЕР', tier: 1 },
         maxHealth: 100,
         inventory: {},
         belt: [null, null, null, null, null, null],
@@ -907,17 +907,17 @@
     // ===== ДЕТЕКТОРЫ =====
     // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Бункера экологов, не у Торговца
     const detectors = [
-        { id: 1, name: "Радэр 2-02", tier: 1, price: 182 },
-        { id: 2, name: "Радэр 2-20", tier: 2, price: 910 },
-        { id: 3, name: "Велес", tier: 3, price: 2730 },
-        { id: 4, name: "Сварог", tier: 4, price: 6370 },
-        { id: 5, name: "Варлорд", tier: 5, price: 12740 },
-        { id: 6, name: "Бинокль-Сканер Око", tier: 6, price: 21840 },
-        { id: 7, name: "Детектор Авангард", tier: 7, price: 32760 },
-        { id: 8, name: "Детектор Омега", tier: 8, price: 47320 },
+        { id: 1, name: "РИПЕР", tier: 1, price: 182 },
+        { id: 2, name: "ПОЛЯРНАЯ ЗВЕЗДА", tier: 2, price: 910 },
+        { id: 3, name: "СВЕРЧОК", tier: 3, price: 2730 },
+        { id: 4, name: "ХАМЕЛЕОН", tier: 4, price: 6370 },
+        { id: 5, name: "БУРАН", tier: 5, price: 12740 },
+        { id: 6, name: "ГРОМ", tier: 6, price: 21840 },
+        { id: 7, name: "ВЕДЬМАК", tier: 7, price: 32760 },
+        { id: 8, name: "СВЕТЛЯК", tier: 8, price: 47320 },
         // Тир 9 — особый детектор, не продаётся обычным способом (только за Жетоны сталкера или
         // Telegram Stars в донатном магазине), нужен, чтобы вообще встречать аномалии тира 9
-        { id: 9, name: "Детектор Аномалия-9", tier: 9, price: 0, specialOnly: true }
+        { id: 9, name: "ВИЗИРЬ", tier: 9, price: 0, specialOnly: true }
     ];
 
     // Базовое снаряжение "без ничего" — используется при действии "Снять"
@@ -949,7 +949,16 @@
         'Аптечка гражданская': 'aptechka_grazhdanskaya.jpg',
         'Аптечка армейская': 'aptechka_armeyskaya.jpg',
         'Аптечка научная': 'aptechka_nauchnaya.jpg',
-        'Антирад': 'antirad.jpg'
+        'Антирад': 'antirad.jpg',
+        'РИПЕР': 'riper.jpg',
+        'ПОЛЯРНАЯ ЗВЕЗДА': 'polyarnaya_zvezda.jpg',
+        'СВЕРЧОК': 'sverchok.jpg',
+        'ХАМЕЛЕОН': 'hameleon.jpg',
+        'БУРАН': 'buran.jpg',
+        'ГРОМ': 'grom.jpg',
+        'ВЕДЬМАК': 'vedmak.jpg',
+        'СВЕТЛЯК': 'svetlyak.jpg',
+        'ВИЗИРЬ': 'vizir.jpg'
     };
     function itemIconHtml(name, size) {
         size = size || 28;
@@ -3138,19 +3147,19 @@
         { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование сразу поднимает уровень персонажа на 5' },
         { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Бункера экологов' },
         { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' },
-        { id: 'detector_t9', stars: 100, itemName: 'Детектор Аномалия-9', title: 'Детектор Аномалия-9', desc: 'Открывает доступ к 10 особым аномалиям тира 9 с именными артефактами первых 100 игроков' }
+        { id: 'detector_t9', stars: 100, itemName: 'ВИЗИРЬ', title: 'ВИЗИРЬ', desc: 'Открывает доступ к 10 особым аномалиям тира 9 с именными артефактами первых 100 игроков' }
     ];
 
-    // "Детектор Аномалия-9" можно купить и за Жетоны сталкера (100 штук), не только за Stars
+    // "ВИЗИРЬ" (детектор тира 9) можно купить и за Жетоны сталкера (100 штук), не только за Stars
     function buyDetectorT9ForBreedCredits() {
         const cost = 100;
         if ((Number(player.breedCredits) || 0) < cost) {
             showGameAlert(`Недостаточно жетонов сталкера. Нужно 🧬 ${cost}.`);
             return;
         }
-        if (!confirm(`Купить "Детектор Аномалия-9" за 🧬 ${cost} Жетонов сталкера?`)) return;
+        if (!confirm(`Купить "ВИЗИРЬ" за 🧬 ${cost} Жетонов сталкера?`)) return;
         player.breedCredits -= cost;
-        player.inventory['Детектор Аномалия-9'] = (player.inventory['Детектор Аномалия-9'] || 0) + 1;
+        player.inventory['ВИЗИРЬ'] = (player.inventory['ВИЗИРЬ'] || 0) + 1;
         showGameAlert('Куплено! Наденьте детектор, чтобы получить доступ к аномалиям тира 9.');
         updateUI();
         saveGame();
@@ -3195,15 +3204,13 @@
                 <button onclick="buyStarsPackage('${p.id}')">Купить</button>
             </div>
         `).join('');
-        const itemsHtml = ITEM_PACKAGES.map(p => `
-            <div class="shop-item">
+        const itemsHtml = ITEM_PACKAGES.map(p => shopCardHtml(p.itemName, `
                 <div>${p.title}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">${p.desc}</div>
                 <div class="price">⭐ ${p.stars}</div>
                 <button onclick="buyStarsItem('${p.id}')">Купить за Stars</button>
                 ${p.id === 'detector_t9' ? `<button onclick="buyDetectorT9ForBreedCredits()" style="margin-top:6px; background:#8a7a4a;">🧬 Купить за 100 Жетонов сталкера</button>` : ''}
-            </div>
-        `).join('');
+        `)).join('');
         el.innerHTML = coinsHtml + '<div style="font-size:12px; color:#888; margin:10px 0 4px;">📚 Предметы:</div>' + itemsHtml;
     }
 
@@ -3743,7 +3750,7 @@
             const encounterTier = getEncounterTier();
             // Тир-9 аномалии (именные артефакты) попадают в пул ТОЛЬКО если надет спец-детектор —
             // без него игрок никогда их не встретит, даже если тир по уровню уже позволяет
-            const hasT9Detector = player.detector && player.detector.name === 'Детектор Аномалия-9';
+            const hasT9Detector = player.detector && player.detector.name === 'ВИЗИРЬ';
             const anomalyPool = anomalies.filter(a => a.tier <= encounterTier && (!a.isNamedArtifactAnomaly || hasT9Detector));
             const anomaly = anomalyPool[Math.floor(Math.random() * anomalyPool.length)];
             startAnomalyEncounter(anomaly);
@@ -3963,7 +3970,7 @@
             chance = minC + Math.random() * (maxC - minC);
             chance += (Number(player.luck) || 0) * 0.1; // удача: +0.1% за каждый пункт удачи
             chance += (player.detector.tier || 0) * 1; // детектор: +1% за тир
-            if (player.detector.name === 'Детектор Аномалия-9') chance += 10; // спец-детектор — доп. бонус в обычных (не тир-9) аномалиях
+            if (player.detector.name === 'ВИЗИРЬ') chance += 10; // спец-детектор — доп. бонус в обычных (не тир-9) аномалиях
             if (currentAnomaly.tier === 8) chance += 5; // аномалии последнего обычного тира — бонус к шансу
             chance += getFactionBonuses(null).artifactFindChancePct; // бонус фракции (Сталкеры/Свобода/Одиночка по уровню)
         }
@@ -4877,13 +4884,11 @@
                 <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
             `)).join('')}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">📡 Детекторы (открыты по уровню, сейчас доступен тир ${unlockTier}):</div>
-            ${availableDetectors.map(item => `
-                <div class="shop-item">
-                    <div>${item.name} (Тир ${item.tier})</div>
-                    <div class="price">🪙 ${getBuyPrice(item.price)}</div>
-                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
-                </div>
-            `).join('')}
+            ${availableDetectors.map(item => shopCardHtml(item.name, `
+                <div>${item.name} (Тир ${item.tier})</div>
+                <div class="price">🪙 ${getBuyPrice(item.price)}</div>
+                <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+            `)).join('')}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🥼 Исследовательские комбинезоны (защита от радиации и аномалий, брони меньше обычной, дороже — открыты по уровню, сейчас доступен тир ${getResearchSuitUnlockTier(player.level)}):</div>
             ${armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(item => `
                 <div class="shop-item">
