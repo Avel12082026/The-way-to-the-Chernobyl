@@ -107,12 +107,21 @@
             <input type="number" id="giftCoins" placeholder="0" min="0">
             <label style="display:block; font-size:12px; color:#888; margin-bottom:4px;">Жетоны сталкера:</label>
             <input type="number" id="giftBreedCredits" placeholder="0" min="0">
-            <label style="display:block; font-size:12px; color:#888; margin-bottom:4px;">Название предмета из инвентаря (точно, необязательно):</label>
-            <input type="text" id="giftItemName" placeholder="Например: Аптечка армейская" maxlength="80">
-            <label style="display:block; font-size:12px; color:#888; margin-bottom:4px;">Количество этого предмета:</label>
-            <input type="number" id="giftItemQty" placeholder="0" min="0">
+            <label style="display:block; font-size:12px; color:#888; margin-bottom:4px;">Предмет из инвентаря:</label>
+            <div id="giftItemSlot" class="slot" style="aspect-ratio:unset; height:64px; margin-bottom:8px;" onclick="openGiftItemPicker()">Пусто</div>
+            <div id="giftItemQtyRow" style="display:none; margin-bottom:8px;">
+                <label style="display:block; font-size:12px; color:#888; margin-bottom:4px;">Количество:</label>
+                <input type="number" id="giftItemQty" placeholder="0" min="0">
+            </div>
             <button onclick="sendGift()" style="background:#27ae60;">Отправить</button>
             <button onclick="closeGiftModal()" style="background:#c0392b; margin-top:8px;">Отмена</button>
+        </div>
+    </div>
+    <div id="giftItemPickerModal" class="modal">
+        <div class="modal-content" style="max-width:420px;">
+            <h3>🎒 Выберите предмет</h3>
+            <div id="giftItemPickerList" style="max-height:60vh; overflow-y:auto;"></div>
+            <button onclick="closeGiftItemPicker()" style="background:#c0392b; margin-top:10px;">Отмена</button>
         </div>
     </div>
     <div id="chatPlayerActionsModal" class="modal">
@@ -182,7 +191,7 @@
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; margin-bottom:4px; flex-shrink:0;">
             <button class="chat-tab-btn" onclick="openChatTab('general')" id="chatTabGeneralBtn">Общий</button>
             <button class="chat-tab-btn" onclick="openChatTab('faction')" id="chatTabFactionBtn">Фракции</button>
-            <button class="chat-tab-btn" onclick="openChatTab('dm')" id="chatTabDmBtn" style="position:relative;">Личный<span id="dmUnreadDot" style="display:none; position:absolute; top:2px; right:6px; width:9px; height:9px; background:#e74c3c; border-radius:50%;"></span></button>
+            <button class="chat-tab-btn" onclick="openChatTab('dm')" id="chatTabDmBtn" style="position:relative;">Личный<span id="dmUnreadDot" style="display:none; position:absolute; top:2px; right:14px; width:9px; height:9px; background:#e74c3c; border-radius:50%;"></span><span id="friendReqUnreadDot" style="display:none; position:absolute; top:2px; right:6px; width:9px; height:9px; background:#e6c229; border-radius:50%;"></span></button>
         </div>
         <div id="chatDmBackBar" style="display:none; margin-bottom:4px; flex-shrink:0;">
             <button onclick="backToDmList()" style="width:auto; padding:6px 12px; font-size:12px;">← Все диалоги</button>
@@ -367,6 +376,7 @@
             <button onclick="openKpkTab('factions')" style="background:#1a1a1a; border:2px solid #333;">🚩 Фракции</button>
             <button onclick="openKpkTab('rating')" style="background:#1a1a1a; border:2px solid #333; grid-column: 1 / -1;">🏅 Рейтинг игроков (поиск, полный профиль)</button>
             <button onclick="openKpkTab('friends')" style="background:#1a1a1a; border:2px solid #333; grid-column: 1 / -1;">🤝 Мои друзья</button>
+            <button onclick="openKpkTab('requests')" style="background:#1a1a1a; border:2px solid #333; grid-column: 1 / -1; position:relative;">📨 Заявки в друзья<span id="friendReqKpkDot" style="display:none; position:absolute; top:8px; right:14px; width:10px; height:10px; background:#e6c229; border-radius:50%;"></span></button>
             <button onclick="changeNickname()" style="background:#8a7a4a; border:2px solid #8a7a4a; grid-column: 1 / -1;">✏️ Сменить ник</button>
         </div>
         <button class="back-btn" onclick="openScreen('main')">Назад</button>
@@ -1590,6 +1600,10 @@
             renderFriendsTab();
             return;
         }
+        if (kpkTab === 'requests') {
+            renderFriendRequestsTab();
+            return;
+        }
 
         content.innerHTML = renderPlayerStatsCard(player, '📋 Инфо о персонаже', getPlayerId());
     }
@@ -1650,7 +1664,8 @@
         const content = document.getElementById('kpkContent');
         content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка профиля...</p>';
         const isOwnProfile = String(playerId) === String(getPlayerId());
-        const addFriendBtn = isOwnProfile ? '' : `<button onclick="sendFriendRequest('${playerId}')" style="background:#27ae60; margin-bottom:10px;">📨 Добавить в друзья</button>`;
+        const addFriendBtn = isOwnProfile ? '' : `<button onclick="sendFriendRequest('${playerId}')" style="background:#27ae60; margin-bottom:10px;">📨 Отправить заявку в друзья</button>
+            <button onclick="messagePlayerFromProfile('${playerId}')" style="background:#2980b9; margin-bottom:10px;">✉️ Написать личное сообщение</button>`;
         fetch(`${SERVER_URL}/api/player/${playerId}`)
             .then(res => res.json())
             .then(data => {
@@ -1728,7 +1743,6 @@
             <input type="text" id="friendsSearchInput" placeholder="Найти игрока по нику или ID, чтобы отправить заявку в друзья..." value="${friendsSearchQuery.replace(/"/g, '&quot;')}"
                 style="width:100%; padding:10px; margin:8px 0; background:#111; border:1px solid #333; color:#fff; border-radius:6px;">
             <div id="friendsSearchResults"></div>
-            <div id="friendsPendingSection"></div>
             <p style="font-weight:bold; color:#8a7a4a; margin:14px 0 6px; border-top:1px solid #333; padding-top:10px;">🤝 Список друзей:</p>
             <div id="friendsListResults"><p style="padding:10px; color:#888;">Загрузка...</p></div>
         `;
@@ -1736,8 +1750,43 @@
         input.oninput = () => { friendsSearchQuery = input.value; renderFriendsSearchResults(); };
         if (friendsSearchQuery) { input.focus(); input.setSelectionRange(input.value.length, input.value.length); }
         renderFriendsSearchResults();
-        loadPendingFriendRequests();
         loadFriendsList();
+    }
+
+    // Отдельный экран со входящими заявками в друзья — прокручиваемый список, на каждой заявке
+    // кнопки "Принять"/"Отклонить". Раньше это было встроено прямо в "Мои друзья", теперь у заявок
+    // своя кнопка в меню КПК с жёлтым индикатором новых заявок
+    function renderFriendRequestsTab() {
+        const content = document.getElementById('kpkContent');
+        content.innerHTML = `
+            <button class="back-btn" onclick="openKpkTab('info')" style="margin-bottom:10px;">← Назад</button>
+            <p style="font-weight:bold; color:#e6c229; margin-bottom:8px;">📨 Входящие заявки в друзья:</p>
+            <div id="friendRequestsList" style="max-height:65vh; overflow-y:auto;"><p style="padding:10px; color:#888;">Загрузка...</p></div>
+            <button class="back-btn" onclick="openKpkTab('info')">Назад</button>
+        `;
+        loadFriendRequestsList();
+    }
+
+    function loadFriendRequestsList() {
+        fetch(`${SERVER_URL}/api/friends/pending`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => {
+            if (kpkTab !== 'requests') return;
+            const el = document.getElementById('friendRequestsList');
+            if (!el) return;
+            if (!list || list.length === 0) { el.innerHTML = '<p style="padding:10px; color:#888;">Заявок пока нет</p>'; return; }
+            el.innerHTML = list.map(p => `
+                <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${escapeHtml(p.username || p.id)}</span>
+                    <div style="display:flex; gap:6px;">
+                        <button onclick="acceptFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#27ae60;">✔ Принять</button>
+                        <button onclick="declineFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#c0392b;">✘ Отклонить</button>
+                    </div>
+                </div>
+            `).join('');
+        }).catch(() => {});
     }
 
     function renderFriendsSearchResults() {
@@ -1772,27 +1821,12 @@
         }).catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
 
-    function loadPendingFriendRequests() {
-        fetch(`${SERVER_URL}/api/friends/pending`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
-        }).then(r => r.json()).then(list => {
-            if (kpkTab !== 'friends') return;
-            const el = document.getElementById('friendsPendingSection');
-            if (!el) return;
-            if (!list || list.length === 0) { el.innerHTML = ''; return; }
-            el.innerHTML = `<p style="font-weight:bold; color:#8ac926; margin:10px 0 6px;">📨 Входящие заявки в друзья:</p>` +
-                list.map(p => `
-                    <div style="background:#1a1a1a; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                        <span>${escapeHtml(p.username || p.id)}</span>
-                        <div style="display:flex; gap:6px;">
-                            <button onclick="acceptFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#27ae60;">✔ Принять</button>
-                            <button onclick="declineFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#c0392b;">✘ Отклонить</button>
-                        </div>
-                    </div>
-                `).join('');
-        }).catch(() => {});
+    // Открыть личный диалог с игроком прямо из его профиля (КПК → рейтинг/поиск) — переключаемся
+    // на главное меню (там живёт чат) и сразу открываем диалог именно с этим игроком
+    function messagePlayerFromProfile(playerId) {
+        chatTab = 'dm';
+        chatDmPartnerId = String(playerId);
+        openScreen('main');
     }
 
     function acceptFriendRequest(fromId) {
@@ -1801,7 +1835,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, fromId })
         }).then(r => r.json()).then(res => {
-            if (res.success) { showGameAlert('Заявка принята!'); loadPendingFriendRequests(); loadFriendsList(); }
+            if (res.success) { showGameAlert('Заявка принята!'); loadFriendRequestsList(); loadFriendsList(); checkForPendingFriendRequests(); }
             else showGameAlert('Ошибка: ' + (res.error || 'не удалось принять заявку'));
         }).catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
@@ -1811,7 +1845,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, fromId })
-        }).then(r => r.json()).then(() => loadPendingFriendRequests()).catch(() => {});
+        }).then(r => r.json()).then(() => { loadFriendRequestsList(); checkForPendingFriendRequests(); }).catch(() => {});
     }
 
     function removeFriend(friendId) {
@@ -1841,25 +1875,71 @@
         }).catch(() => {});
     }
 
+    let giftSelectedItem = null;
+
     function openGiftModal(friendId, friendName) {
         currentGiftFriendId = friendId;
+        giftSelectedItem = null;
         document.getElementById('giftFriendName').textContent = friendName;
         document.getElementById('giftCoins').value = '';
         document.getElementById('giftBreedCredits').value = '';
-        document.getElementById('giftItemName').value = '';
+        document.getElementById('giftItemSlot').textContent = 'Пусто';
+        document.getElementById('giftItemQtyRow').style.display = 'none';
         document.getElementById('giftItemQty').value = '';
         document.getElementById('giftModal').classList.add('active');
     }
     function closeGiftModal() {
         document.getElementById('giftModal').classList.remove('active');
         currentGiftFriendId = null;
+        giftSelectedItem = null;
     }
+
+    // Слот выбора подарка — открывает прокручиваемый список ВСЕГО инвентаря (с иконками, где они
+    // есть), а не требует вписывать точное название предмета текстом вручную
+    function openGiftItemPicker() {
+        const listEl = document.getElementById('giftItemPickerList');
+        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
+        if (items.length === 0) {
+            listEl.innerHTML = '<p style="padding:10px; color:#888;">Инвентарь пуст</p>';
+        } else {
+            listEl.innerHTML = items.map(name => {
+                const fillHtml = itemSlotFillHtml(name, player.inventory[name]);
+                return `
+                <div class="slot" style="aspect-ratio:unset; height:56px; display:flex; flex-direction:row; align-items:center; gap:10px; padding:8px; margin-bottom:6px; justify-content:flex-start;" onclick="pickGiftItem('${name.replace(/'/g, "\\'")}')">
+                    ${fillHtml ? `<div style="position:relative; width:40px; height:40px; flex-shrink:0; border-radius:4px; overflow:hidden;">${fillHtml}</div>` : ''}
+                    <span style="font-size:13px;">${name} ×${player.inventory[name]}</span>
+                </div>
+            `;
+            }).join('');
+        }
+        document.getElementById('giftItemPickerModal').classList.add('active');
+    }
+    function closeGiftItemPicker() {
+        document.getElementById('giftItemPickerModal').classList.remove('active');
+    }
+    function pickGiftItem(name) {
+        giftSelectedItem = name;
+        const slotEl = document.getElementById('giftItemSlot');
+        const fillHtml = itemSlotFillHtml(name, player.inventory[name] || 0);
+        if (fillHtml) {
+            slotEl.style.position = 'relative';
+            slotEl.innerHTML = fillHtml;
+        } else {
+            slotEl.textContent = name;
+        }
+        document.getElementById('giftItemQtyRow').style.display = 'block';
+        const qtyInput = document.getElementById('giftItemQty');
+        qtyInput.max = player.inventory[name] || 1;
+        qtyInput.value = 1;
+        closeGiftItemPicker();
+    }
+
     function sendGift() {
         if (!currentGiftFriendId) return;
         const coins = Math.max(0, parseInt(document.getElementById('giftCoins').value) || 0);
         const breedCredits = Math.max(0, parseInt(document.getElementById('giftBreedCredits').value) || 0);
-        const itemName = document.getElementById('giftItemName').value.trim();
-        const itemQty = Math.max(0, parseInt(document.getElementById('giftItemQty').value) || 0);
+        const itemName = giftSelectedItem || '';
+        const itemQty = giftSelectedItem ? Math.max(0, parseInt(document.getElementById('giftItemQty').value) || 0) : 0;
         fetch(`${SERVER_URL}/api/friends/send`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1950,6 +2030,24 @@
         }).catch(() => {});
     }
     setInterval(checkForNewDms, 20000);
+
+    // Проверка новых заявок в друзья — жёлтый кружок и на кнопке "Заявки в друзья" в КПК, и на
+    // вкладке "Личный" в чате (рядом с красным кружком непрочитанных сообщений)
+    function checkForPendingFriendRequests() {
+        if (!player.nickname) return; // профиль ещё не готов
+        fetch(`${SERVER_URL}/api/friends/pending`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        }).then(r => r.json()).then(list => {
+            const hasPending = (list || []).length > 0;
+            const kpkDot = document.getElementById('friendReqKpkDot');
+            const chatDot = document.getElementById('friendReqUnreadDot');
+            if (kpkDot) kpkDot.style.display = hasPending ? 'block' : 'none';
+            if (chatDot) chatDot.style.display = hasPending ? 'block' : 'none';
+        }).catch(() => {});
+    }
+    setInterval(checkForPendingFriendRequests, 20000);
 
     function setActiveChatTabButton() {
         ['general', 'faction', 'dm'].forEach(t => {
