@@ -4963,66 +4963,61 @@
         el.innerHTML = html;
     }
 
-    function sellBodyPartToScientists(name) {
-        if (!player.inventory[name] || player.inventory[name] <= 0) return;
-        const price = Math.round(getSellPrice(name) * 1.20);
-        player.inventory[name]--;
-        if (player.inventory[name] <= 0) delete player.inventory[name];
-        player.coins += price;
-        openScientistsSellView();
-        updateUI();
-        saveGame();
+    // Продажа Эколог Леонову (артефакты и части тел мутантов) — см. /api/scientists/sell
+    function sellToScientistsServer(name, qty) {
+        return fetch(`${SERVER_URL}/api/scientists/sell`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, name, qty: qty || 1 })
+        }).then(r => r.json()).catch(() => ({ success: false, error: 'Ошибка соединения с сервером' }));
     }
 
-    // Продать ВЕСЬ стек частей тел мутантов Леонову одним нажатием — та же логика, что и
-    // "Продать всё" у Жучары (sellAllFromModal), но с наценкой Леонова (+20%)
+    function sellBodyPartToScientists(name) {
+        sellToScientistsServer(name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.inventory = res.inventory;
+            openScientistsSellView();
+            updateUI();
+        });
+    }
+
+    // Продать ВЕСЬ стек частей тел мутантов Леонову одним нажатием
     function sellAllBodyPartsToScientists(name) {
         const qty = player.inventory[name] || 0;
         if (qty <= 0) return;
-        const unitPrice = Math.round(getSellPrice(name) * 1.20);
-        player.coins = (Number(player.coins) || 0) + unitPrice * qty;
-        delete player.inventory[name];
-        openScientistsSellView();
-        updateUI();
-        saveGame();
+        sellToScientistsServer(name, qty).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.inventory = res.inventory;
+            openScientistsSellView();
+            updateUI();
+        });
     }
 
-    // Продать ВЕСЬ стек обычных (не именных) артефактов Леонову одним нажатием — наценка +35%
+    // Продать ВЕСЬ стек обычных (не именных) артефактов Леонову одним нажатием
     function sellAllArtifactsToScientists(name) {
         const qty = player.inventory[name] || 0;
         if (qty <= 0) return;
-        const artifact = findArtifactDef(name);
-        if (!artifact || artifact.isNamedArtifact) return; // именные — только по одному, через обычную продажу
-        const unitPrice = Math.round(getSellPrice(name) * 1.35);
-        player.coins = (Number(player.coins) || 0) + unitPrice * qty;
-        delete player.inventory[name];
-        openScientistsSellView();
-        updateUI();
-        saveGame();
+        sellToScientistsServer(name, qty).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.inventory = res.inventory;
+            openScientistsSellView();
+            updateUI();
+        });
     }
 
     function sellArtifactToScientists(name) {
-        if (!player.inventory[name] || player.inventory[name] <= 0) return;
-        const artifact = findArtifactDef(name);
-        if (!artifact) return;
-
-        player.inventory[name]--;
-        if (player.inventory[name] <= 0) delete player.inventory[name];
-
-        if (artifact.isNamedArtifact) {
-            // Именные артефакты тира 9 не имеют обычной цены в Байтах (уникальный подарок, не
-            // товар) — продаются Эколог Леонову строго за 50 Жетонов сталкера
-            player.breedCredits = (Number(player.breedCredits) || 0) + 50;
-            showGameAlert(`Продано за 🧬 50 Жетонов сталкера.`);
-        } else {
-            // Артефакты ЛЮБОГО тира, включая последний (8), продаются за Байты (обмен на жетоны сталкера убран ранее)
-            const price = Math.round(getSellPrice(name) * 1.35);
-            player.coins += price;
-        }
-
-        openScientistsSellView();
-        updateUI();
-        saveGame();
+        sellToScientistsServer(name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.breedCredits = res.breedCredits;
+            player.inventory = res.inventory;
+            if (res.earnedTokens) showGameAlert(`Продано за 🧬 ${res.earnedTokens} Жетонов сталкера.`);
+            openScientistsSellView();
+            updateUI();
+        });
     }
 
     // ===== НИК ИГРОКА =====
@@ -5194,9 +5189,16 @@
 
     function sellItemFromModal(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
-        sellToShop(itemName); // уже делает saveGame/updateUI/renderShop
         closeItemActionModal();
-        if (player.inventory[itemName] > 0) openItemActions(itemName, 'shop'); // если ещё осталось — обновить окно
+        sellToServer('zhuchara', itemName, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.intellect = res.intellect;
+            player.inventory = res.inventory;
+            renderShop();
+            updateUI();
+            if (player.inventory[itemName] > 0) openItemActions(itemName, 'shop'); // если ещё осталось — обновить окно
+        });
     }
 
     // Продать ВЕСЬ стак предмета одним нажатием — цена продажи не зависит от интеллекта
@@ -5204,15 +5206,15 @@
     function sellAllFromModal(itemName) {
         const qty = player.inventory[itemName] || 0;
         if (qty <= 0) return;
-        const unitPrice = getSellPrice(itemName);
-        const totalEarned = unitPrice * qty;
-        delete player.inventory[itemName];
-        player.coins = (Number(player.coins) || 0) + totalEarned;
-        for (let i = 0; i < qty; i++) { player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1); } // точно +0.1 за каждую единицу — без общего замедления роста перков
-        renderShop();
-        updateUI();
-        saveGame();
-        closeItemActionModal();
+        sellToServer('zhuchara', itemName, qty).then(res => {
+            closeItemActionModal();
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.intellect = res.intellect;
+            player.inventory = res.inventory;
+            renderShop();
+            updateUI();
+        });
     }
 
     // ===== МОДАЛКА ДЕЙСТВИЙ С ПРЕДМЕТОМ ИЗ ИНВЕНТАРЯ =====
@@ -5770,16 +5772,24 @@
         });
     }
 
+    // Продажа Жучаре/Технику — цену теперь считает и выплачивает сервер (см. /api/shop/sell)
+    function sellToServer(vendor, name, qty) {
+        return fetch(`${SERVER_URL}/api/shop/sell`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, vendor, name, qty: qty || 1 })
+        }).then(r => r.json()).catch(() => ({ success: false, error: 'Ошибка соединения с сервером' }));
+    }
+
     function sellToShop(name) {
-        if (!player.inventory[name] || player.inventory[name] <= 0) return;
-        const price = getSellPrice(name);
-        player.inventory[name]--;
-        if (player.inventory[name] <= 0) delete player.inventory[name];
-        player.coins = (Number(player.coins) || 0) + price;
-        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1); // точно +0.1 за продажу — без общего замедления
-        renderShop();
-        updateUI();
-        saveGame();
+        sellToServer('zhuchara', name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.intellect = res.intellect;
+            player.inventory = res.inventory;
+            renderShop();
+            updateUI();
+        });
     }
 
     // ===== АДМИН: ВЫДАЧА ПРЕДМЕТОВ =====
@@ -6162,18 +6172,14 @@
     }
 
     function sellToTechnician(name) {
-        if (!player.inventory[name] || player.inventory[name] <= 0) return;
-        if (!getEquipSlotType(name)) { showGameAlert('Техник покупает только оружие, броню и детекторы.'); return; }
-        // Детекторы — на 10% выгоднее торговца, оружие/броня — на 2% (совпадает с ценой в списке продажи)
-        const isDetector = getEquipSlotType(name) === 'detector';
-        const price = Math.round(getSellPrice(name) * (isDetector ? 1.10 : 1.02));
-        player.inventory[name]--;
-        if (player.inventory[name] <= 0) delete player.inventory[name];
-        player.coins = (Number(player.coins) || 0) + price;
-        player.intellect = Math.min(100, (Number(player.intellect) || 0) + 0.1); // точно +0.1 за продажу — без общего замедления
-        renderTechnician();
-        updateUI();
-        saveGame();
+        sellToServer('technician', name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось продать: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.intellect = res.intellect;
+            player.inventory = res.inventory;
+            renderTechnician();
+            updateUI();
+        });
     }
 
     // Улучшение у Техника (оружие и броня) — цену, потолок и саму прибавку теперь считает и
