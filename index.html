@@ -13,7 +13,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Pocket Zone</title>
+    <title>The way to the Chernobyl</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
@@ -26,13 +26,6 @@
            нужна прокрутка (магазин, инвентарь и т.д.), уже прокручиваются САМИ внутри себя через
            .screen { overflow-y:auto } — это не затронуто */
         h3 { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 15px; color: #cdbd8f; margin-bottom: 10px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
-        .stat-box { background: linear-gradient(180deg,#141310,#0a0a09); border: 1px solid #4a4230; padding: 7px 4px; color: #aaa; text-align: center; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .stat-label { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; color: #a89a72; }
-        .stat-box .value { display: block; font-family: 'Russo One', sans-serif; font-size: 22px; font-weight: normal; color: #fff; }
-        .stat-box.health .value { color: #ff5e5e; }
-        .stat-box.hunger .value { color: #e6a23c; }
-        .stat-box.thirst .value { color: #3c8de6; }
         .menu {
             position: relative;
             width: calc(100% + 20px);
@@ -48,6 +41,13 @@
             forced-color-adjust: none;
         }
         .menu-abs { position: absolute; box-sizing: border-box; }
+        /* Страховка от Android/Telegram "ночного режима": если он всё же сработает через
+           prefers-color-scheme (в обход color-scheme:only dark), явно повторяем ту же
+           почти-невидимую заливку для чата в главном меню и во время рейда, а не даём
+           автоматике подставить свой сплошной фон */
+        @media (prefers-color-scheme: dark) {
+            #mainMenuChatSlot, #chatMessages, #raidChatSlot { background: rgba(10,9,7,0.01) !important; }
+        }
         .menu-word-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; background: none; border: none; box-shadow: none; padding: 4px 6px; color: #cdbd8f; font-size: 15px; line-height: 1.2; font-weight: normal; cursor: pointer; display: flex; align-items: center; justify-content: center; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
         .menu-word-btn:active { color: #fff; transform: scale(0.96); }
         button { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 14px; background: linear-gradient(180deg,#18160f,#0d0c09); border: 1px solid #5a4f34; border-radius: 6px; color: #cdbd8f; font-weight: normal; cursor: pointer; transition: 0.15s; }
@@ -158,16 +158,37 @@
         <div class="menu-abs" style="top:0%; left:3%; width:94%; height:5.65%; display:flex; align-items:center; justify-content:center;">
             <h1 style="font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1.5px; color:#cdbd8f; font-size:15px; text-align:center; text-shadow:0 1px 3px rgba(0,0,0,0.9); margin:0;">THE WAY TO THE CHERNOBYL</h1>
         </div>
-        <div class="menu-abs" style="top:5.65%; left:3%; width:94%; height:18.2%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-            <div class="stats-grid" style="width:100%; margin-top:0;">
-                <div class="stat-box health" style="background:none; border:none; padding:0;"><span class="stat-label">Здоровье</span><span class="value" id="health">100</span></div>
-                <div class="stat-box hunger" style="background:none; border:none; padding:0;"><span class="stat-label">Сытость</span><span class="value" id="hunger">100</span></div>
-                <div class="stat-box thirst" style="background:none; border:none; padding:0;"><span class="stat-label">Жажда</span><span class="value" id="thirst">100</span></div>
+        <!-- Шкала опыта до следующего уровня — зелёная, сбрасывается и заполняется заново с каждым уровнем -->
+        <div class="menu-abs" style="top:5.65%; left:3%; width:94%; height:2.2%; display:flex; align-items:center;">
+            <div style="position:relative; width:100%; height:10px; background:#0d0d0c; border:1px solid #4a4230; border-radius:5px; overflow:hidden;">
+                <div id="expBarFill" class="expBarFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#4a7c1f,#8ac926); transition:width 0.3s;"></div>
             </div>
-            <div style="margin-top: 4px; font-size: 12px; color: #cdbd8f; line-height:1.6; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.3px; text-align:center; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
-                🪙 Байты: <span id="coins">0</span> | ⭐ Уровень: <span id="level">1</span><br>
-                🧬 Жетоны сталкера: <span id="breedCreditsHeader">0</span> | ✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span><br>
-                📖 Книги знаний: <span id="knowledgeBooksHeader">0</span> <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 8px; font-size:11px; margin-left:4px; font-family:'Russo One',sans-serif;">Использовать</button>
+        </div>
+        <div class="menu-abs" style="top:7.85%; left:3%; width:94%; height:16%; display:flex; justify-content:space-between;">
+            <!-- Левый край: Байты, уровень, жетоны сталкера, жетоны смены ника, книги знаний — столбцом -->
+            <div style="display:flex; flex-direction:column; justify-content:center; gap:3px; font-size:11px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.3px; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
+                <div>🪙 <span id="coins">0</span></div>
+                <div>⭐ Ур. <span id="level">1</span></div>
+                <div>🧬 <span id="breedCreditsHeader">0</span></div>
+                <div>✏️ <span id="nicknameCreditsHeader">0</span></div>
+                <div style="display:flex; align-items:center; gap:4px;">📖 <span id="knowledgeBooksHeader">0</span>
+                    <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 6px; font-size:10px; font-family:'Russo One',sans-serif;">Прочитать</button>
+                </div>
+            </div>
+            <!-- Правый край: здоровье/сытость/жажда — полосами, столбцом (сверху вниз) -->
+            <div style="display:flex; flex-direction:column; justify-content:center; gap:6px; width:45%;">
+                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
+                    <div id="healthBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#c0392b; transition:width 0.3s;"></div>
+                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">❤️</span>
+                </div>
+                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
+                    <div id="hungerBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#8a5a2a; transition:width 0.3s;"></div>
+                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">🍖</span>
+                </div>
+                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
+                    <div id="thirstBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#2a6a8a; transition:width 0.3s;"></div>
+                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">💧</span>
+                </div>
             </div>
         </div>
         <button class="menu-word-btn menu-abs" style="top:23.85%; height:8.29%; left:3%; width:45.8%;" onclick="openScreen('inventory')">Инвентарь</button>
@@ -277,7 +298,7 @@
             <button onclick="openScreen('technician')" style="background:#8a7a4a;">🔧 Техник Дизель</button>
             <button onclick="openScreen('scientists')" style="background:#2980b9;">🧪 Эколог Леонов</button>
         </div>
-        <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Занято ячеек: <span id="warehouseSlotsUsed">0</span> / 50</div>
+        <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Занято ячеек: <span id="warehouseSlotsUsed">0</span> / 500</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="depositAllToWarehouse()">📥 Положить всё</button>
             <button onclick="withdrawAllFromWarehouse()">📤 Забрать всё</button>
@@ -324,6 +345,9 @@
                     <span style="color:#e6a23c;">🍖 <span id="raidHungerMini">100</span></span>
                     <span style="color:#3c8de6;">💧 <span id="raidThirstMini">100</span></span>
                 </div>
+            </div>
+            <div style="position:relative; width:100%; height:8px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden; margin:6px 0;">
+                <div class="expBarFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#4a7c1f,#8ac926); transition:width 0.3s;"></div>
             </div>
             <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
             <div style="margin-bottom:8px;">
@@ -1007,6 +1031,19 @@
         return String(playerId) === ADMIN_ID ? 'Мутант' : 'Одиночка';
     }
 
+    // Цвет ника игрока в чатах: у владельца игры — всегда красный (независимо ни от чего),
+    // дальше — по достигнутому рубежу "убийств" на арене (зелёный/синий/фиолетовый/жёлтый),
+    // у всех остальных — обычный белый
+    const ARENA_KILL_TIER_COLORS = { 1000: '#2ecc40', 10000: '#2980b9', 50000: '#9b59b6', 100000: '#e6c229' };
+    function getNicknameColor(playerId, arenaKillMilestone) {
+        if (String(playerId) === ADMIN_ID) return '#ff3b3b';
+        return ARENA_KILL_TIER_COLORS[Number(arenaKillMilestone) || 0] || '#fff';
+    }
+    // "Легенда арены" — жёлтая приписка к нику у тех, кто взял рубеж 100000 убийств
+    function legendArenaBadgeHtml(arenaKillMilestone) {
+        return Number(arenaKillMilestone) === 100000 ? ' <span style="color:#e6c229;">Легенда арены</span>' : '';
+    }
+
     let saveFailureWarned = false; // чтобы не спамить алертами на каждое действие при повторных сбоях
 
     function saveGame() {
@@ -1250,9 +1287,16 @@
 
     function updateUI() {
         sanitizePlayerNumbers();
-        document.getElementById('health').textContent = Math.round(player.health);
-        document.getElementById('hunger').textContent = Math.round(player.hunger);
-        document.getElementById('thirst').textContent = Math.round(player.thirst);
+        // Полосы здоровья/сытости/жажды в главном меню — ширина в % от максимума, без цифр
+        const healthBarFill = document.getElementById('healthBarFill');
+        const hungerBarFill = document.getElementById('hungerBarFill');
+        const thirstBarFill = document.getElementById('thirstBarFill');
+        if (healthBarFill) healthBarFill.style.width = Math.max(0, Math.min(100, (player.health / (player.maxHealth || 100)) * 100)) + '%';
+        if (hungerBarFill) hungerBarFill.style.width = Math.max(0, Math.min(100, (player.hunger / (player.maxHunger || 100)) * 100)) + '%';
+        if (thirstBarFill) thirstBarFill.style.width = Math.max(0, Math.min(100, (player.thirst / (player.maxThirst || 100)) * 100)) + '%';
+        // Шкала опыта до следующего уровня — в главном меню и в рейде (тот же id используется в обоих местах)
+        const expPct = Math.max(0, Math.min(100, (Number(player.exp) || 0) / expNeededForLevel(player.level) * 100));
+        document.querySelectorAll('.expBarFill').forEach(el => { el.style.width = expPct + '%'; });
         const raidHealthMini = document.getElementById('raidHealthMini');
         const raidHungerMini = document.getElementById('raidHungerMini');
         const raidThirstMini = document.getElementById('raidThirstMini');
@@ -1635,7 +1679,7 @@
                 results.innerHTML = list.map(p => `
                     <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="showPlayerInfo('${p.id}')">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span><strong>${escapeHtml(p.username || p.id)}</strong> <span style="color:#666; font-size:11px;">(ID: ${p.id})</span></span>
+                            <span><strong style="color:${getNicknameColor(p.id, 0)};">${escapeHtml(p.username || p.id)}</strong> <span style="color:#666; font-size:11px;">(ID: ${p.id})</span></span>
                             <span style="color:${p.online ? '#27ae60' : '#666'}; font-size:12px;">${p.online ? '🟢 Онлайн' : '⚫ Офлайн'}</span>
                         </div>
                         <div style="font-size:11px; color:#8a7a4a; margin-top:4px;">
@@ -1837,7 +1881,7 @@
                 if (filtered.length === 0) { el.innerHTML = '<p style="padding:6px; color:#888; font-size:12px;">Никого не найдено</p>'; return; }
                 el.innerHTML = filtered.map(p => `
                     <div style="background:#1a1a1a; padding:8px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                        <span>${onlineDot(p.online)}${escapeHtml(p.username || p.id)} <span style="color:#888; font-size:11px;">Ур.${p.level || 1}</span></span>
+                        <span>${onlineDot(p.online)}${escapeHtml(p.username || p.id)} <span style="color:#fff; font-size:11px;">Ур.${p.level || 1}</span></span>
                         ${friendIds.has(String(p.id))
                             ? '<span style="color:#888; font-size:11px;">🤝 Уже в друзьях</span>'
                             : `<button onclick="sendFriendRequest('${p.id}')" style="width:auto; padding:6px 10px; font-size:12px;">📨 Заявка в друзья</button>`}
@@ -1914,7 +1958,7 @@
             if (!list || list.length === 0) { el.innerHTML = '<p style="padding:10px; color:#888;">Друзей пока нет — найдите кого-нибудь через поиск выше.</p>'; return; }
             el.innerHTML = list.map(f => `
                 <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                    <span onclick="openGiftModal('${f.id}', '${(f.username || f.id).replace(/'/g, "\\'")}')" style="cursor:pointer;">${onlineDot(f.online)}<strong>${escapeHtml(f.username || f.id)}</strong> <span style="color:#888; font-size:11px;">Ур.${f.level || 1}</span></span>
+                    <span onclick="openGiftModal('${f.id}', '${(f.username || f.id).replace(/'/g, "\\'")}')" style="cursor:pointer;">${onlineDot(f.online)}<strong style="color:${getNicknameColor(f.id, 0)};">${escapeHtml(f.username || f.id)}</strong> <span style="color:#fff; font-size:11px;">Ур.${f.level || 1}</span></span>
                     <button onclick="removeFriend('${f.id}')" style="width:auto; padding:6px 10px; font-size:12px; background:#c0392b;">✕</button>
                 </div>
             `).join('');
@@ -2028,11 +2072,11 @@
                 results.innerHTML = sorted.map((p, i) => `
                     <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer; ${String(p.id)===myId ? 'border:1px solid #8a7a4a;' : ''}" onclick="showPlayerInfo('${p.id}')">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="display:flex; align-items:center;">${avatarImgHtml(p.id, 24, p.factionName, p.factionPosition, p.level)}${onlineDot(p.online)}<strong>${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
-                            <span style="color:#8a7a4a; font-size:12px;">Ур. ${p.level || 1}</span>
+                            <span style="display:flex; align-items:center;">${avatarImgHtml(p.id, 24, p.factionName, p.factionPosition, p.level)}${onlineDot(p.online)}<strong style="color:${getNicknameColor(p.id, 0)};">${i + 1}. ${escapeHtml(p.username || p.id)}</strong></span>
+                            <span style="color:#fff; font-size:12px;">Ур. ${p.level || 1}</span>
                         </div>
-                        <div style="font-size:12px; color:#ccc; margin-top:2px;">🏅 ${getRankTitle(p.level || 1)}</div>
-                        <div style="font-size:11px; color:#888; margin-top:2px;">🚩 ${factionLabel(p.factionName, p.id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</div>
+                        <div style="font-size:12px; color:#fff; margin-top:2px;">🏅 ${getRankTitle(p.level || 1)}</div>
+                        <div style="font-size:11px; color:#fff; margin-top:2px;">🚩 ${factionLabel(p.factionName, p.id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</div>
                         <div style="font-size:11px; color:#666; margin-top:2px;">${p.online ? 'В сети' : 'Был(а) в сети: ' + (p.lastSeen ? formatShortTime(p.lastSeen) : '—')}</div>
                     </div>
                 `).join('');
@@ -2269,8 +2313,8 @@
             <div style="margin-bottom:8px; padding:4px 2px; display:flex; align-items:flex-start; background:rgba(10,9,7,0.01) !important;">
                 ${avatarImgHtml(m.senderId, 32, m.factionName, m.factionPosition, m.level)}
                 <div style="flex:1; min-width:0;">
-                    <div style="font-size:12px; color:#e0d4a8; text-shadow:0 1px 2px rgba(0,0,0,0.9);">
-                        ${onlineDot(m.online)}<strong style="cursor:pointer; text-decoration:underline;" onclick="openChatPlayerActions('${m.senderId}', '${escapeHtml(m.username).replace(/'/g, "\\'")}')">${escapeHtml(m.username)}</strong> · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''} · <span style="color:#bbb;">${formatShortTime(m.createdAt)}</span>
+                    <div style="font-size:12px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">
+                        ${onlineDot(m.online)}<strong style="cursor:pointer; text-decoration:underline; color:${getNicknameColor(m.senderId, m.arenaKillMilestone)};" onclick="openChatPlayerActions('${m.senderId}', '${escapeHtml(m.username).replace(/'/g, "\\'")}')">${escapeHtml(m.username)}</strong>${legendArenaBadgeHtml(m.arenaKillMilestone)} · Ур.${m.level} · 🏅 ${getRankTitle(m.level)} · 🚩 ${escapeHtml(factionLabel(m.factionName, m.senderId))}${m.factionName ? ' — ' + escapeHtml(m.factionPosition || 'Рядовой') : ''} · <span style="color:#bbb;">${formatShortTime(m.createdAt)}</span>
                     </div>
                     <div style="margin-top:3px; word-break:break-word; color:#fff; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>
@@ -2371,7 +2415,7 @@
                 resultsEl.innerHTML = `<div style="margin-bottom:8px; font-size:11px; color:#a89a72; text-transform:uppercase;">Результаты поиска:</div>` +
                     list.slice(0, 15).map(p => `
                         <div style="background:#141310; border:1px solid #4a4230; padding:10px; border-radius:8px; margin-bottom:6px; cursor:pointer;" onclick="selectDmPlayer('${p.id}')">
-                            <strong>${escapeHtml(p.username || p.id)}</strong> <span style="color:#888; font-size:12px;">Ур. ${p.level || 1}</span>
+                            <strong style="color:${getNicknameColor(p.id, 0)};">${escapeHtml(p.username || p.id)}</strong> <span style="color:#fff; font-size:12px;">Ур. ${p.level || 1}</span>
                         </div>
                     `).join('');
             })
@@ -2657,7 +2701,7 @@
                 return `
                     <div style="background:#111; padding:8px; border-radius:6px; margin-bottom:6px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span>${escapeHtml(m.username || m.id)}${isSelf ? ' (вы)' : ''} — <span style="color:#8a7a4a;">${m.position}</span> <span style="color:#ccc; font-size:11px;">(Ур. ${m.level || 1}, 🏅 ${getRankTitle(m.level || 1)})</span></span>
+                            <span style="color:${getNicknameColor(m.id, 0)};">${escapeHtml(m.username || m.id)}</span>${isSelf ? ' (вы)' : ''} — <span style="color:#fff;">${m.position}</span> <span style="color:#fff; font-size:11px;">(Ур. ${m.level || 1}, 🏅 ${getRankTitle(m.level || 1)})</span>
                         </div>
                         ${actions ? `<div style="margin-top:6px;">${actions}</div>` : ''}
                     </div>
@@ -2981,10 +3025,10 @@
                 content.innerHTML = arena.map((p, index) => `
                     <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
                         <div>
-                            <p><strong>${index + 1}. ${escapeHtml(p.username || p.player_id)}</strong></p>
-                            <p style="font-size:11px; color:#8a7a4a;">🚩 ${factionLabel(p.factionName, p.player_id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</p>
-                            <p style="font-size:11px; color:#ccc;">Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}</p>
-                            <p style="font-size:12px; color:#aaa;">Рейтинг: ${p.rating} | Победы: ${p.wins}</p>
+                            <p><strong style="color:${getNicknameColor(p.player_id, p.arenaKillMilestone)};">${index + 1}. ${escapeHtml(p.username || p.player_id)}</strong>${legendArenaBadgeHtml(p.arenaKillMilestone)}</p>
+                            <p style="font-size:11px; color:#fff;">🚩 ${factionLabel(p.factionName, p.player_id)}${p.factionName ? ' — ' + (p.factionPosition || 'Рядовой') : ''}</p>
+                            <p style="font-size:11px; color:#fff;">Ур. ${p.level || 1} | 🏅 ${getRankTitle(p.level || 1)}</p>
+                            <p style="font-size:12px; color:#aaa;">Рейтинг: ${p.rating} | Победы: ${p.wins} | Убийства: ${p.arenaKills}</p>
                         </div>
                         ${String(p.player_id) === myId
                             ? '<span style="color:#666; font-size:11px;">Это вы</span>'
@@ -5075,8 +5119,8 @@
 
         const usedSlots = Object.keys(player.warehouse).filter(n => player.warehouse[n] > 0).length;
         const isNewSlot = !(player.warehouse[itemName] > 0);
-        if (isNewSlot && usedSlots >= 50) {
-            showGameAlert('Склад полон (50/50 ячеек). Освободите место.');
+        if (isNewSlot && usedSlots >= 500) {
+            showGameAlert('Склад полон (500/500 ячеек). Освободите место.');
             return;
         }
 
@@ -5431,7 +5475,7 @@
         for (const name of items) {
             const isNewSlot = !(player.warehouse[name] > 0);
             if (isNewSlot) {
-                if (usedSlots >= 50) continue; // склад полон — пропускаем то, что не влезло
+                if (usedSlots >= 500) continue; // склад полон — пропускаем то, что не влезло
                 usedSlots++;
             }
             player.warehouse[name] = (player.warehouse[name] || 0) + player.inventory[name];
@@ -6351,6 +6395,12 @@
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.ready();
         window.Telegram.WebApp.expand();
+        // Явно фиксируем тёмный цвет фона/шапки в самом Telegram-клиенте — иначе при переключении
+        // Telegram в ночной режим клиент может решить, что страницу нужно перекрасить сверху,
+        // и "прозрачные" (на самом деле почти невидимые, см. rgba(10,9,7,0.01) у чата) области
+        // главного меню становятся сплошными
+        try { window.Telegram.WebApp.setBackgroundColor('#0a0a0a'); } catch (e) {}
+        try { window.Telegram.WebApp.setHeaderColor('#0a0a0a'); } catch (e) {}
     }
 
     loadGame();
