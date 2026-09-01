@@ -4898,25 +4898,14 @@
 
     function buyFromScientists(name) {
         const researchSuit = armorItems.find(a => a.isResearchSuit && a.name === name);
-        if (researchSuit) {
-            const price = getBuyPrice(researchSuit.price);
-            if (player.coins < price) { showGameAlert('Недостаточно Байт.'); return; }
-            player.coins -= price;
-            if (!addNonStackingItem(name)) { player.coins += price; return; } // лимит инвентаря — откатываем списание
+        const category = researchSuit ? 'armor' : (detectors.some(d => d.name === name) ? 'detector' : 'consumable');
+        buyFromServer('leonov', category, name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось купить: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.inventory = res.inventory;
             openScientistsBuyView();
             updateUI();
-            saveGame();
-            return;
-        }
-        const item = [...consumables, ...detectors].find(i => i.name === name);
-        if (!item) return;
-        const price = getBuyPrice(item.price);
-        if (player.coins < price) { showGameAlert('Недостаточно Байт.'); return; }
-        player.coins -= price;
-        player.inventory[name] = (player.inventory[name] || 0) + 1;
-        openScientistsBuyView();
-        updateUI();
-        saveGame();
+        });
     }
 
     function openScientistsSellView() {
@@ -5661,29 +5650,28 @@
         saveGame();
     }
 
+    // Автозакупка "до нормы" — вместо расчёта цены и списания на клиенте делаем по одному
+    // серверному запросу на каждый нужный товар по очереди (сервер сам проверяет цену и списывает)
     function doAutoBuy() {
         const targets = player.autoBuyTargets || {};
-        let totalCost = 0;
-        const toBuy = [];
-        consumables.forEach(c => {
-            const target = targets[c.name] || 0;
-            const have = player.inventory[c.name] || 0;
-            const need = Math.max(0, target - have);
-            if (need > 0) {
-                const price = getBuyPrice(c.price);
-                toBuy.push({ item: c, need });
-                totalCost += price * need;
-            }
-        });
+        const toBuy = consumables
+            .map(c => ({ name: c.name, need: Math.max(0, (targets[c.name] || 0) - (player.inventory[c.name] || 0)) }))
+            .filter(x => x.need > 0);
         if (toBuy.length === 0) { showGameAlert('Всё уже в норме, покупать нечего.'); return; }
-        if (player.coins < totalCost) { showGameAlert(`Недостаточно Байт. Нужно 🪙 ${totalCost}, у вас 🪙 ${player.coins}.`); return; }
 
-        toBuy.forEach(({ item, need }) => {
-            player.inventory[item.name] = (player.inventory[item.name] || 0) + need;
+        let boughtCount = 0;
+        let lastError = null;
+        toBuy.reduce((chain, x) => chain.then(() =>
+            buyFromServer('zhuchara', 'consumable', x.name, x.need).then(res => {
+                if (res.success) { player.coins = res.coins; player.inventory = res.inventory; boughtCount++; }
+                else lastError = res.error;
+            })
+        ), Promise.resolve()).then(() => {
+            renderShop(); updateUI();
+            if (boughtCount === 0) showGameAlert('Не удалось купить: ' + (lastError || 'неизвестная ошибка'));
+            else if (lastError) showGameAlert(`Куплена часть товаров. Не хватило на остальное: ${lastError}`);
+            else showGameAlert('Закупка до нормы завершена.');
         });
-        player.coins -= totalCost;
-        renderShop(); updateUI(); saveGame();
-        showGameAlert(`Куплено на 🪙 ${totalCost}.`);
     }
 
     // То же самое "докупить до нормы", но во вкладке покупки у Эколога Леонова — цели по количеству
@@ -5709,29 +5697,26 @@
 
     function doAutoBuyScientists() {
         const targets = player.autoBuyTargets || {};
-        let totalCost = 0;
-        const toBuy = [];
         // Только то, что реально продаётся у Леонова — аптечки и антирад
         const scientistsConsumables = consumables.filter(c => c.type === 'medkit' || c.type === 'antirad');
-        scientistsConsumables.forEach(c => {
-            const target = targets[c.name] || 0;
-            const have = player.inventory[c.name] || 0;
-            const need = Math.max(0, target - have);
-            if (need > 0) {
-                const price = getBuyPrice(c.price);
-                toBuy.push({ item: c, need });
-                totalCost += price * need;
-            }
-        });
+        const toBuy = scientistsConsumables
+            .map(c => ({ name: c.name, need: Math.max(0, (targets[c.name] || 0) - (player.inventory[c.name] || 0)) }))
+            .filter(x => x.need > 0);
         if (toBuy.length === 0) { showGameAlert('Всё уже в норме, покупать нечего.'); return; }
-        if (player.coins < totalCost) { showGameAlert(`Недостаточно Байт. Нужно 🪙 ${totalCost}, у вас 🪙 ${player.coins}.`); return; }
 
-        toBuy.forEach(({ item, need }) => {
-            player.inventory[item.name] = (player.inventory[item.name] || 0) + need;
+        let boughtCount = 0;
+        let lastError = null;
+        toBuy.reduce((chain, x) => chain.then(() =>
+            buyFromServer('leonov', 'consumable', x.name, x.need).then(res => {
+                if (res.success) { player.coins = res.coins; player.inventory = res.inventory; boughtCount++; }
+                else lastError = res.error;
+            })
+        ), Promise.resolve()).then(() => {
+            openScientistsBuyView(); updateUI();
+            if (boughtCount === 0) showGameAlert('Не удалось купить: ' + (lastError || 'неизвестная ошибка'));
+            else if (lastError) showGameAlert(`Куплена часть товаров. Не хватило на остальное: ${lastError}`);
+            else showGameAlert('Закупка до нормы завершена.');
         });
-        player.coins -= totalCost;
-        openScientistsBuyView(); updateUI(); saveGame();
-        showGameAlert(`Куплено на 🪙 ${totalCost}.`);
     }
 
     function renderShop() {
@@ -5765,29 +5750,24 @@
         }).join('');
     }
 
-    function buyShopItem(category, name) {
-        let item;
-        if (category === 'consumable') item = consumables.find(c => c.name === name);
-        else if (category === 'weapon') item = weapons.find(w => w.name === name);
-        else if (category === 'armor') item = armorItems.find(a => a.name === name);
-        else if (category === 'detector') item = detectors.find(d => d.name === name);
-        if (!item) return;
-        // У Торговца Жучары аптечки (включая "Антирад") стоят на 1% дороже базовой цены — та же
-        // надбавка, что и в каталоге для отображения, применяем и здесь при реальном списании
-        const basePrice = (category === 'consumable' && (item.type === 'medkit' || item.type === 'antirad'))
-            ? Math.round(item.price * 1.01) : item.price;
-        const price = getBuyPrice(basePrice);
-        if (player.coins < price) return;
+    // Покупка у Жучары/Леонова — деньги и наличие товара теперь проверяет и списывает СЕРВЕР
+    // (см. /api/shop/buy), а не клиент. Возвращает промис с ответом сервера.
+    function buyFromServer(vendor, category, name, qty) {
+        return fetch(`${SERVER_URL}/api/shop/buy`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, vendor, category, name, qty: qty || 1 })
+        }).then(r => r.json()).catch(() => ({ success: false, error: 'Ошибка соединения с сервером' }));
+    }
 
-        player.coins -= price;
-        if (category === 'weapon' || category === 'armor') {
-            if (!addNonStackingItem(item.name)) { player.coins += price; return; } // лимит достигнут — откатываем списание
-        } else {
-            player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
-        }
-        renderShop();
-        updateUI();
-        saveGame();
+    function buyShopItem(category, name) {
+        buyFromServer('zhuchara', category, name, 1).then(res => {
+            if (!res.success) { showGameAlert('Не удалось купить: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.inventory = res.inventory;
+            renderShop();
+            updateUI();
+        });
     }
 
     function sellToShop(name) {
