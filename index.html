@@ -5303,11 +5303,18 @@
         document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
 
         const equippedGear = document.getElementById('equippedGear');
-        const gearBox = (label, name, slotType, statLine) => `
-            <div class="slot" style="aspect-ratio: unset; padding:8px; flex-direction:column;" onclick="openEquippedItemActions('${slotType}')">
-                ${ITEM_ICONS[name] ? `<img src="${SERVER_URL}/icons/${ITEM_ICONS[name]}" style="width:36px; height:36px; border-radius:4px; object-fit:cover; margin-bottom:4px; border:1px solid #333;" onerror="this.style.display='none'">` : ''}
-                <div style="font-size:9px; text-align:center; line-height:1.3;">${label}<br><b>${name}</b>${statLine ? `<br><span style="color:#8a7a4a;">${statLine}</span>` : ''}</div>
+        const gearBox = (label, name, slotType, statLine) => {
+            const icon = ITEM_ICONS[name];
+            return `
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <div class="slot" style="padding:0;" onclick="openEquippedItemActions('${slotType}')">
+                    ${icon
+                        ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none'">`
+                        : `<div style="font-size:9px; text-align:center; line-height:1.3; padding:6px;">${label}<br><b>${name}</b>${statLine ? `<br><span style="color:#8a7a4a;">${statLine}</span>` : ''}</div>`}
+                </div>
+                ${icon ? `<div style="font-size:9px; text-align:center; line-height:1.3; cursor:pointer;" onclick="openEquippedItemActions('${slotType}')">${label}<br><b>${name}</b>${statLine ? `<br><span style="color:#8a7a4a;">${statLine}</span>` : ''}</div>` : ''}
             </div>`;
+        };
         equippedGear.innerHTML =
             gearBox('⚔️ Оружие', player.weapon.name, 'weapon', `Урон: ${player.weapon.dmg}`) +
             gearBox('🛡️ Броня', player.armor.name, 'armor', `Броня: ${player.armor.armor}`) +
