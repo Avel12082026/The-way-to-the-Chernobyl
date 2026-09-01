@@ -4734,6 +4734,7 @@
         const medkits = consumables.filter(c => c.type === 'medkit' || c.type === 'antirad');
 
         el.innerHTML = `
+            ${renderAutoBuyPanelScientists()}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
             ${medkits.map(item => shopCardHtml(item.name, `
                 <div>${item.name}</div>
@@ -4812,11 +4813,13 @@
             `;
             }
             const price = Math.round(getSellPrice(name) * 1.35);
+            const qty = player.inventory[name];
             return `
                 <div class="shop-item">
-                    <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
+                    <div>${name} ×${qty} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
                     ${getItemInfoHtml(name)}
                     <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
+                    ${qty > 1 ? `<button onclick="sellAllArtifactsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
                 </div>
             `;
         }).join('');
@@ -4824,10 +4827,12 @@
             html += ownedBodyParts.map(name => {
                 const price = Math.round(getSellPrice(name) * 1.20);
                 const esc = name.replace(/'/g, "\\'");
+                const qty = player.inventory[name];
                 return `
                     <div class="shop-item">
-                        <div>${name} ×${player.inventory[name]}</div>
+                        <div>${name} ×${qty}</div>
                         <button onclick="sellBodyPartToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
+                        ${qty > 1 ? `<button onclick="sellAllBodyPartsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
                     </div>
                 `;
             }).join('');
@@ -4841,6 +4846,33 @@
         player.inventory[name]--;
         if (player.inventory[name] <= 0) delete player.inventory[name];
         player.coins += price;
+        openScientistsSellView();
+        updateUI();
+        saveGame();
+    }
+
+    // Продать ВЕСЬ стек частей тел мутантов Леонову одним нажатием — та же логика, что и
+    // "Продать всё" у Жучары (sellAllFromModal), но с наценкой Леонова (+20%)
+    function sellAllBodyPartsToScientists(name) {
+        const qty = player.inventory[name] || 0;
+        if (qty <= 0) return;
+        const unitPrice = Math.round(getSellPrice(name) * 1.20);
+        player.coins = (Number(player.coins) || 0) + unitPrice * qty;
+        delete player.inventory[name];
+        openScientistsSellView();
+        updateUI();
+        saveGame();
+    }
+
+    // Продать ВЕСЬ стек обычных (не именных) артефактов Леонову одним нажатием — наценка +35%
+    function sellAllArtifactsToScientists(name) {
+        const qty = player.inventory[name] || 0;
+        if (qty <= 0) return;
+        const artifact = findArtifactDef(name);
+        if (!artifact || artifact.isNamedArtifact) return; // именные — только по одному, через обычную продажу
+        const unitPrice = Math.round(getSellPrice(name) * 1.35);
+        player.coins = (Number(player.coins) || 0) + unitPrice * qty;
+        delete player.inventory[name];
         openScientistsSellView();
         updateUI();
         saveGame();
@@ -5512,6 +5544,50 @@
         });
         player.coins -= totalCost;
         renderShop(); updateUI(); saveGame();
+        showGameAlert(`Куплено на 🪙 ${totalCost}.`);
+    }
+
+    // То же самое "докупить до нормы", но во вкладке покупки у Эколога Леонова — цели по количеству
+    // (player.autoBuyTargets) общие с панелью у Жучары, это настройка "сколько иметь при себе",
+    // а не привязка к конкретному торговцу
+    function renderAutoBuyPanelScientists() {
+        player.autoBuyTargets = player.autoBuyTargets || {};
+        const targets = player.autoBuyTargets;
+        return `
+        <div style="background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:12px; border:1px solid #8a7a4a;">
+            <p style="font-size:12px; color:#8a7a4a; margin-bottom:8px;">🛒 Автозакупка расходников — укажите, сколько всегда иметь при себе:</p>
+            ${consumables.filter(c => c.name !== 'Антирад').map(c => `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; display:flex; align-items:center;">${itemIconHtml(c.name, 20)} ${c.name} <span style="color:#888; margin-left:4px;">(сейчас: ${player.inventory[c.name] || 0})</span></span>
+                    <input type="number" min="0" value="${targets[c.name] || 0}" style="width:70px; padding:4px;" onchange="setAutoBuyTarget('${c.name}', this.value)">
+                </div>
+            `).join('')}
+            <button onclick="doAutoBuyScientists()" style="margin-top:4px; background:#27ae60;">Купить до нормы</button>
+        </div>`;
+    }
+
+    function doAutoBuyScientists() {
+        const targets = player.autoBuyTargets || {};
+        let totalCost = 0;
+        const toBuy = [];
+        consumables.forEach(c => {
+            const target = targets[c.name] || 0;
+            const have = player.inventory[c.name] || 0;
+            const need = Math.max(0, target - have);
+            if (need > 0) {
+                const price = getBuyPrice(c.price);
+                toBuy.push({ item: c, need });
+                totalCost += price * need;
+            }
+        });
+        if (toBuy.length === 0) { showGameAlert('Всё уже в норме, покупать нечего.'); return; }
+        if (player.coins < totalCost) { showGameAlert(`Недостаточно Байт. Нужно 🪙 ${totalCost}, у вас 🪙 ${player.coins}.`); return; }
+
+        toBuy.forEach(({ item, need }) => {
+            player.inventory[item.name] = (player.inventory[item.name] || 0) + need;
+        });
+        player.coins -= totalCost;
+        openScientistsBuyView(); updateUI(); saveGame();
         showGameAlert(`Куплено на 🪙 ${totalCost}.`);
     }
 
