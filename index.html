@@ -166,28 +166,25 @@
         </div>
         <div class="menu-abs" style="top:7.85%; left:3%; width:94%; height:16%; display:flex; justify-content:space-between;">
             <!-- Левый край: Байты, уровень, жетоны сталкера, жетоны смены ника, книги знаний — столбцом -->
-            <div style="display:flex; flex-direction:column; justify-content:center; gap:3px; font-size:11px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.3px; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
-                <div>🪙 <span id="coins">0</span></div>
-                <div>⭐ Ур. <span id="level">1</span></div>
-                <div>🧬 <span id="breedCreditsHeader">0</span></div>
-                <div>✏️ <span id="nicknameCreditsHeader">0</span></div>
-                <div style="display:flex; align-items:center; gap:4px;">📖 <span id="knowledgeBooksHeader">0</span>
+            <div style="display:flex; flex-direction:column; justify-content:center; gap:3px; font-size:10px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.2px; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
+                <div>🪙 Байты: <span id="coins">0</span></div>
+                <div>⭐ Уровень: <span id="level">1</span></div>
+                <div>🧬 Жетоны сталкера: <span id="breedCreditsHeader">0</span></div>
+                <div>✏️ Жетоны смены ника: <span id="nicknameCreditsHeader">0</span></div>
+                <div style="display:flex; align-items:center; gap:4px;">📖 Книги знаний: <span id="knowledgeBooksHeader">0</span>
                     <button onclick="useKnowledgeBookFromHeader()" style="width:auto; padding:2px 6px; font-size:10px; font-family:'Russo One',sans-serif;">Прочитать</button>
                 </div>
             </div>
-            <!-- Правый край: здоровье/сытость/жажда — полосами, столбцом (сверху вниз) -->
+            <!-- Правый край: здоровье/сытость/жажда — цифрами, столбцом (сверху вниз) -->
             <div style="display:flex; flex-direction:column; justify-content:center; gap:6px; width:45%;">
-                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
-                    <div id="healthBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#c0392b; transition:width 0.3s;"></div>
-                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">❤️</span>
+                <div style="display:flex; align-items:center; justify-content:center; gap:6px; height:24px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px;">
+                    <span style="font-size:16px;">❤️</span><span id="health" style="font-family:'Russo One',sans-serif; font-size:20px; color:#ff5e5e; text-shadow:0 1px 2px rgba(0,0,0,0.9);">100</span>
                 </div>
-                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
-                    <div id="hungerBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#8a5a2a; transition:width 0.3s;"></div>
-                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">🍖</span>
+                <div style="display:flex; align-items:center; justify-content:center; gap:6px; height:24px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px;">
+                    <span style="font-size:16px;">🍖</span><span id="hunger" style="font-family:'Russo One',sans-serif; font-size:20px; color:#e6a23c; text-shadow:0 1px 2px rgba(0,0,0,0.9);">100</span>
                 </div>
-                <div style="position:relative; height:14px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
-                    <div id="thirstBarFill" style="position:absolute; left:0; top:0; bottom:0; width:100%; background:#2a6a8a; transition:width 0.3s;"></div>
-                    <span style="position:relative; z-index:1; display:block; text-align:center; font-size:10px; line-height:14px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.9);">💧</span>
+                <div style="display:flex; align-items:center; justify-content:center; gap:6px; height:24px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px;">
+                    <span style="font-size:16px;">💧</span><span id="thirst" style="font-family:'Russo One',sans-serif; font-size:20px; color:#3c8de6; text-shadow:0 1px 2px rgba(0,0,0,0.9);">100</span>
                 </div>
             </div>
         </div>
@@ -235,7 +232,7 @@
         </div>
         <div style="font-size:12px; color:#888; margin-bottom:10px;">Оплата через Telegram Stars — официальная валюта Telegram для покупок внутри мини-приложений.</div>
         <div id="starsShopItems"></div>
-        <div style="font-size:14px; font-weight:bold; color:#8a7a4a; margin:16px 0 8px; border-top:1px solid #333; padding-top:12px;">🧬 Обмен Жетонов сталкера на Байты (курс: 1 жетон = 1 000 Байт)</div>
+        <div style="font-size:14px; font-weight:bold; color:#8a7a4a; margin:16px 0 8px; border-top:1px solid #333; padding-top:12px;">🧬 Обмен Жетонов сталкера на Байты (курс: 1 жетон = 10 000 Байт)</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
             <button onclick="buyBreedCreditsForBytes()" style="background:#27ae60;">Купить жетоны за Байты</button>
             <button onclick="sellBreedCreditsForBytes()" style="background:#c0392b;">Продать жетоны за Байты</button>
@@ -311,7 +308,14 @@
     </div>
 
     <div id="inventoryScreen" class="screen">
-        <h3>🎒 Инвентарь</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="margin-bottom:0;">🎒 Инвентарь</h3>
+            <div style="display:flex; gap:8px; font-size:12px; font-weight:bold;">
+                <span style="color:#ff5e5e;">❤️ <span id="invHealthMini">100</span></span>
+                <span style="color:#e6a23c;">🍖 <span id="invHungerMini">100</span></span>
+                <span style="color:#3c8de6;">💧 <span id="invThirstMini">100</span></span>
+            </div>
+        </div>
         <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Текущее максимальное здоровье: <span id="maxHealthDisplay">100</span></div>
         <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Надето (нажмите, чтобы снять):</div>
         <div id="equippedGear" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;"></div>
@@ -684,6 +688,32 @@
         { name: "Шустряк", tier: 8, price: 45000, stats: {"anomaly_Плазменная сфера":19,"anomaly_Электра":23,"anomaly_Кислотный туман":19,"anomaly_Мясорубка":27} },
         { name: "Сердце Зоны: Абсолют", tier: 8, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666,"health":666,"hunger":666,"thirst":666} }
     ];
+
+    // Пулестойкость (защита от урона NPC) и Гашение ударов (защита от урона мутантов) — теперь есть
+    // у ВСЕХ артефактов, не только именных тира 9. Значение может быть и положительным (защита), и
+    // отрицательным (уязвимость) — считается один раз детерминированно от названия артефакта, чтобы
+    // у конкретного артефакта бонус был одним и тем же при каждой перезагрузке игры, а не случайным
+    // при каждом заходе. Величина растёт вместе с тиром — как и у остальных характеристик артефактов.
+    // Применяется автоматически: addStats() уже умеет суммировать stats.bulletResist/hitAbsorption
+    // с ЛЮБОГО надетого в пояс артефакта в player.namedArtifactBonus, никаких других правок не нужно
+    function hashStringToSignedInt(str, maxAbs) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) | 0; }
+        const magnitude = (Math.abs(h) % maxAbs) + 1; // от 1 до maxAbs включительно, никогда 0
+        const sign = (h & 1) === 0 ? 1 : -1;
+        return sign * magnitude;
+    }
+    artifacts.forEach(a => {
+        a.stats = a.stats || {};
+        if (a.stats.bulletResist === undefined) {
+            const maxAbs = 2 + a.tier * 3;
+            a.stats.bulletResist = hashStringToSignedInt(a.name + ':bulletResist', maxAbs);
+        }
+        if (a.stats.hitAbsorption === undefined) {
+            const maxAbs = 2 + a.tier * 3;
+            a.stats.hitAbsorption = hashStringToSignedInt(a.name + ':hitAbsorption', maxAbs);
+        }
+    });
 
     // ===== ОРУЖИЕ =====
     const weapons = [
@@ -1287,13 +1317,10 @@
 
     function updateUI() {
         sanitizePlayerNumbers();
-        // Полосы здоровья/сытости/жажды в главном меню — ширина в % от максимума, без цифр
-        const healthBarFill = document.getElementById('healthBarFill');
-        const hungerBarFill = document.getElementById('hungerBarFill');
-        const thirstBarFill = document.getElementById('thirstBarFill');
-        if (healthBarFill) healthBarFill.style.width = Math.max(0, Math.min(100, (player.health / (player.maxHealth || 100)) * 100)) + '%';
-        if (hungerBarFill) hungerBarFill.style.width = Math.max(0, Math.min(100, (player.hunger / (player.maxHunger || 100)) * 100)) + '%';
-        if (thirstBarFill) thirstBarFill.style.width = Math.max(0, Math.min(100, (player.thirst / (player.maxThirst || 100)) * 100)) + '%';
+        // Здоровье/сытость/жажда в главном меню — цифрами
+        document.getElementById('health').textContent = Math.round(player.health);
+        document.getElementById('hunger').textContent = Math.round(player.hunger);
+        document.getElementById('thirst').textContent = Math.round(player.thirst);
         // Шкала опыта до следующего уровня — в главном меню и в рейде (тот же id используется в обоих местах)
         const expPct = Math.max(0, Math.min(100, (Number(player.exp) || 0) / expNeededForLevel(player.level) * 100));
         document.querySelectorAll('.expBarFill').forEach(el => { el.style.width = expPct + '%'; });
@@ -1303,6 +1330,12 @@
         if (raidHealthMini) raidHealthMini.textContent = Math.round(player.health);
         if (raidHungerMini) raidHungerMini.textContent = Math.round(player.hunger);
         if (raidThirstMini) raidThirstMini.textContent = Math.round(player.thirst);
+        const invHealthMini = document.getElementById('invHealthMini');
+        const invHungerMini = document.getElementById('invHungerMini');
+        const invThirstMini = document.getElementById('invThirstMini');
+        if (invHealthMini) invHealthMini.textContent = Math.round(player.health);
+        if (invHungerMini) invHungerMini.textContent = Math.round(player.hunger);
+        if (invThirstMini) invThirstMini.textContent = Math.round(player.thirst);
         const radVal = document.getElementById('radiationValue');
         const radBar = document.getElementById('radiationBar');
         if (radVal) radVal.textContent = Math.round(player.radiation);
@@ -1402,6 +1435,7 @@
         // "зависший" бой мог бы попытаться нанести урон уже свежему после сброса персонажу
         raidActive = false;
         currentEnemy = null;
+        currentAnomaly = null;
         isFriendlyEncounterActive = false;
         battleTurn = 0;
         inventoryOpenedFromRaid = false;
@@ -2181,6 +2215,22 @@
         const mo = String(d.getMonth() + 1).padStart(2, '0');
         return `${dd}.${mo} ${hh}:${mm}`;
     }
+    // Тот же формат, но в UTC — только для сообщений "Погиб сталкер", у которых время уже вписано
+    // текстом (сервер формирует его в UTC, см. formatRealDateTime на сервере). Обычные сообщения
+    // игроков по-прежнему показывают время в часовом поясе устройства — тут нужно точное совпадение
+    // с текстом сообщения, а не удобство чтения
+    function formatShortTimeUTC(ts) {
+        if (!ts) return '';
+        const d = new Date(ts);
+        const now = new Date();
+        const hh = String(d.getUTCHours()).padStart(2, '0');
+        const mm = String(d.getUTCMinutes()).padStart(2, '0');
+        const isToday = d.toDateString() === now.toDateString();
+        if (isToday) return `${hh}:${mm}`;
+        const dd = String(d.getUTCDate()).padStart(2, '0');
+        const mo = String(d.getUTCMonth() + 1).padStart(2, '0');
+        return `${dd}.${mo} ${hh}:${mm}`;
+    }
     // Полная дата с годом — для регистрации и других мест, где сокращённая форма (без года) не подходит
     function formatFullDateTime(ts) {
         if (!ts) return '';
@@ -2303,9 +2353,14 @@
             if (m.isSystem) {
                 const icon = m.isRumor ? '📻' : '☠️';
                 const nameColor = m.isRumor ? '#e0c060' : '#ff6b6b';
+                // Сообщения "Погиб сталкер" уже содержат время текстом (в UTC, см. сервер) — время
+                // рядом с сообщением тоже показываем в UTC, иначе оно разъедется с текстом из-за
+                // часового пояса телефона игрока. У слухов об артефакте времени в тексте нет — там
+                // можно оставить обычное отображение по местному времени
+                const timeDisplay = m.isRumor ? formatShortTime(m.createdAt) : formatShortTimeUTC(m.createdAt);
                 return `
                 <div style="margin-bottom:8px; padding:4px 2px; background:rgba(10,9,7,0.01) !important;">
-                    <div style="font-size:12px; color:${nameColor}; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${icon} ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${formatShortTime(m.createdAt)}</span></div>
+                    <div style="font-size:12px; color:${nameColor}; font-weight:bold; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${icon} ${escapeHtml(m.username)} <span style="color:#bbb; font-weight:normal;">${timeDisplay}</span></div>
                     <div style="margin-top:2px; word-break:break-word; color:#eee; font-family:monospace; font-size:13px; text-shadow:0 1px 2px rgba(0,0,0,0.9);">${escapeHtml(m.text)}</div>
                 </div>`;
             }
@@ -3032,7 +3087,15 @@
                         </div>
                         ${String(p.player_id) === myId
                             ? '<span style="color:#666; font-size:11px;">Это вы</span>'
-                            : `<button onclick="attackArenaPlayer('${p.player_id}')" style="background:#c0392b;">⚔️ Атаковать</button>`}
+                            : `<button id="arenaAttackBtn_${p.player_id}"
+                                    onpointerdown="startHoldToConfirm(this, () => attackArenaPlayer('${p.player_id}'))"
+                                    onpointerup="cancelHoldToConfirm(this)"
+                                    onpointerleave="cancelHoldToConfirm(this)"
+                                    onpointercancel="cancelHoldToConfirm(this)"
+                                    style="background:#c0392b; position:relative; overflow:hidden; user-select:none;">
+                                    <span style="position:relative; z-index:1;">⚔️ Атаковать (удержите)</span>
+                                    <div id="arenaAttackBtn_${p.player_id}Fill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(255,255,255,0.35); transition:width 0.05s linear; pointer-events:none;"></div>
+                                </button>`}
                     </div>
                 `).join('');
             })
@@ -3052,7 +3115,7 @@
         .then(data => {
             if (data.success) {
                 showGameAlert(data.win
-                    ? `🏆 Победа на арене! Рейтинг +${data.ratingChange}, +200 🪙`
+                    ? `🏆 Победа на арене! Рейтинг +${data.ratingChange}, +250 🪙`
                     : `💀 Поражение на арене. Рейтинг ${data.ratingChange}. Лут и снаряжение не пострадали.`);
                 loadGame();
                 renderArena();
@@ -3065,9 +3128,9 @@
 
     // ===== МАГАЗИН МОНЕТ ЗА TELEGRAM STARS =====
     const STAR_PACKAGES = [
-        { id: 'small', stars: 50, coins: 50000, title: 'Малый набор' },
-        { id: 'medium', stars: 125, coins: 125000, title: 'Средний набор' },
-        { id: 'large', stars: 250, coins: 250000, title: 'Большой набор' }
+        { id: 'small', stars: 5, coins: 50000, title: 'Малый набор' },
+        { id: 'medium', stars: 15, coins: 150000, title: 'Средний набор' },
+        { id: 'large', stars: 25, coins: 250000, title: 'Большой набор' }
     ];
 
     // Предметы (не монеты) за Telegram Stars
@@ -3093,10 +3156,10 @@
         saveGame();
     }
 
-    // Обмен Жетонов сталкера на Байты в обе стороны — курс фиксированный: 1 жетон = 1000 Байт
-    const BREED_CREDIT_BYTE_RATE = 1000;
+    // Обмен Жетонов сталкера на Байты в обе стороны — курс фиксированный: 1 жетон = 10 000 Байт
+    const BREED_CREDIT_BYTE_RATE = 10000;
     function buyBreedCreditsForBytes() {
-        const qtyStr = prompt('Сколько Жетонов сталкера купить? (1 жетон = 1 000 Байт)', '1');
+        const qtyStr = prompt('Сколько Жетонов сталкера купить? (1 жетон = 10 000 Байт)', '1');
         if (qtyStr === null) return;
         const qty = parseInt(qtyStr);
         if (!qty || qty <= 0) { showGameAlert('Введите корректное количество (целое число больше нуля).'); return; }
@@ -3110,7 +3173,7 @@
     }
     function sellBreedCreditsForBytes() {
         const have = Number(player.breedCredits) || 0;
-        const qtyStr = prompt(`Сколько Жетонов сталкера продать? (доступно: ${have}, курс 1 жетон = 1 000 Байт)`, String(have));
+        const qtyStr = prompt(`Сколько Жетонов сталкера продать? (доступно: ${have}, курс 1 жетон = 10 000 Байт)`, String(have));
         if (qtyStr === null) return;
         const qty = parseInt(qtyStr);
         if (!qty || qty <= 0) { showGameAlert('Введите корректное количество (целое число больше нуля).'); return; }
@@ -3498,6 +3561,8 @@
         player.quickSlots = [null, null, null, null];
 
         player.health = player.maxHealth; // возрождение на базе с полным здоровьем
+        player.hunger = player.maxHunger || 100;
+        player.thirst = player.maxThirst || 100;
         player.radiation = 0; // радиация тоже сбрасывается при возрождении
 
         raidActive = false;
@@ -3591,8 +3656,10 @@
             triggerEnemyTurn();
         } else if (currentEnemy && isFriendlyEncounterActive) {
             renderFriendlyEncounterButtons(); // мирная встреча — просто восстанавливаем её кнопки, без "хода"
+        } else if (currentAnomaly && !currentAnomaly.resolved) {
+            renderAnomalyButtons(); // аномалия ещё не разрешена — восстанавливаем именно её кнопки (Поиск/Обойти), а не общую навигацию
         } else {
-            clearBattleUiAndRestoreNav(); // боя нет — навигация рейда должна быть на месте
+            clearBattleUiAndRestoreNav(); // боя и аномалии нет — навигация рейда должна быть на месте
         }
         updateRaidLog();
     }
@@ -5224,8 +5291,13 @@
         const idx = parseInt(choiceStr) - 1;
         if (isNaN(idx) || idx < 0 || idx > 3) return;
         player.quickSlots[idx] = itemName;
-        renderQuickSlots();
         closeItemActionModal();
+        // Обновляем и раздел "Быстрые слоты" во время рейда, и экран инвентаря целиком (там свой
+        // отдельный набор элементов — quickSlotsGrid/inventoryGrid, renderQuickSlots() их не трогает)
+        const refreshAfterAssign = () => { renderQuickSlots(); if (typeof renderInventory === 'function') renderInventory(); };
+        refreshAfterAssign();
+        requestAnimationFrame(() => requestAnimationFrame(refreshAfterAssign));
+        setTimeout(refreshAfterAssign, 150);
         saveGame();
         showGameAlert(`«${itemName}» помещён(а) в быстрый слот ${idx + 1}.`);
     }
