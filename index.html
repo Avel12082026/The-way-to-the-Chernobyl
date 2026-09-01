@@ -6176,58 +6176,22 @@
         saveGame();
     }
 
+    // Улучшение у Техника (оружие и броня) — цену, потолок и саму прибавку теперь считает и
+    // проверяет сервер (см. /api/technician/upgrade), клиент только отправляет запрос и обновляет
+    // локальное состояние из ответа
     function upgradeGearItem(itemName, isEquipped) {
-        const parsed = parseGearName(itemName);
-        if (parsed.level >= UPGRADE_MAX_LEVEL) { showGameAlert('Этот предмет уже улучшен до максимума.'); return; }
-
-        // Уровни 1-50 — за Байты (сумма растёт с каждым уровнем), уровни 51-100 — за Жетоны сталкера
-        // (тоже растёт: 1 жетон за первое такое улучшение, 2 за следующее, и так далее до 50)
-        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
-        const tokenCost = usesTokens ? getUpgradeCostTokens(parsed.level) : 0;
-        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(parsed.level);
-
-        if (usesTokens && (Number(player.breedCredits) || 0) < tokenCost) {
-            showGameAlert(`Недостаточно жетонов сталкера. Нужно 🧬 ${tokenCost}.`);
-            return;
-        }
-        if (!usesTokens && player.coins < byteCost) {
-            showGameAlert(`Недостаточно Байт. Нужно 🪙 ${byteCost.toLocaleString('ru-RU')}.`);
-            return;
-        }
-
-        // Эта функция — ТОЛЬКО для оружия (у него одна улучшаемая характеристика — урон).
-        // У брони теперь несколько характеристик, и игрок выбирает, какую именно улучшать —
-        // см. upgradeArmorStat()
-        if (isEquipped) {
-            const slotType = getEquipSlotType(itemName);
-            if (slotType !== 'weapon') return;
-            const currentEquipped = player.weapon;
-            if (currentEquipped.name !== itemName) { renderTechnician(); return; }
-
-            if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
-            const newLevel = parsed.level + 1;
-            const newName = `${parsed.baseName} +${newLevel}`;
-            const base = weapons.find(w => w.name === parsed.baseName);
-            player.weapon = { name: newName, tier: base.tier, dmg: base.dmg + newLevel };
-            renderTechnician(); renderInventory(); updateUI(); saveGame();
-            return;
-        }
-
-        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
-        const slotType = getEquipSlotType(itemName);
-        if (slotType !== 'weapon') return;
-
-        if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
-        player.inventory[itemName]--;
-        if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-
-        const newLevel = parsed.level + 1;
-        const newName = `${parsed.baseName} +${newLevel}`;
-        player.inventory[newName] = (player.inventory[newName] || 0) + 1;
-
-        renderTechnician();
-        updateUI();
-        saveGame();
+        fetch(`${SERVER_URL}/api/technician/upgrade`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, itemName, isEquipped: !!isEquipped })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) { showGameAlert('Не удалось улучшить: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.breedCredits = res.breedCredits;
+            if (res.weapon) player.weapon = res.weapon;
+            player.inventory = res.inventory;
+            renderTechnician(); renderInventory(); updateUI();
+        }).catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
 
     // ===== УЛУЧШЕНИЕ БРОНИ: игрок выбирает, КАКУЮ ИМЕННО характеристику улучшать =====
@@ -6236,80 +6200,20 @@
     // было (тогда она добавляется с нуля, не трогая остальные). Каждое действие — ровно +1 к выбранной
     // характеристике, независимо от того, какая это характеристика
     function upgradeArmorStat(itemName, isEquipped, statKey) {
-        const parsed = parseGearName(itemName);
         if (!statKey) { showGameAlert('Выберите характеристику для улучшения.'); return; }
-
-        // Стоимость и потолок в 100 считаем по тому, сколько раз улучшали ИМЕННО эту характеристику
-        // (statKey) — не по общему числу улучшений предмета. Раньше все характеристики делили один
-        // общий уровень, из-за чего улучшение одной поднимало цену сразу у всех остальных
-        const stableKeyForCost = getStableArmorKey(itemName);
-        const statLevel = Number((player.armorUpgradeData && player.armorUpgradeData[stableKeyForCost] && player.armorUpgradeData[stableKeyForCost][statKey]) || 0);
-        if (statLevel >= UPGRADE_MAX_LEVEL) { showGameAlert('Эта характеристика уже улучшена до максимума.'); return; }
-
-        const usesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
-        const tokenCost = usesTokens ? getUpgradeCostTokens(statLevel) : 0;
-        const byteCost = usesTokens ? 0 : getUpgradeCostBytes(statLevel);
-
-        if (usesTokens && (Number(player.breedCredits) || 0) < tokenCost) {
-            showGameAlert(`Недостаточно жетонов сталкера. Нужно 🧬 ${tokenCost}.`);
-            return;
-        }
-        if (!usesTokens && player.coins < byteCost) {
-            showGameAlert(`Недостаточно Байт. Нужно 🪙 ${byteCost.toLocaleString('ru-RU')}.`);
-            return;
-        }
-
-        const slotType = getEquipSlotType(itemName);
-        if (slotType !== 'armor') return;
-
-        // Защита от несоответствия типа брони и выбранной характеристики (на случай прямого вызова
-        // в обход интерфейса) — исследовательские комбинезоны не улучшают Пулестойкость/Гашение
-        // ударов, обычная броня не улучшает защиту от радиации/аномалий
-        const baseForCheck = armorItems.find(a => a.name === parsed.baseName);
-        const isSuit = baseForCheck && baseForCheck.isResearchSuit;
-        const isCoreStat = statKey === 'armor' || statKey === 'hitAbsorption';
-        if (isSuit && isCoreStat) {
-            showGameAlert('У исследовательских комбинезонов нельзя улучшать Пулестойкость или Гашение ударов — только защиту от радиации/аномалий.');
-            return;
-        }
-        if (!isSuit && !isCoreStat) {
-            showGameAlert('У обычной брони нельзя улучшать защиту от радиации/аномалий — только Пулестойкость или Гашение ударов.');
-            return;
-        }
-
-        if (isEquipped) {
-            if (player.armor.name !== itemName) { renderTechnician(); return; }
-        } else {
-            if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
-        }
-
-        if (usesTokens) player.breedCredits -= tokenCost; else player.coins -= byteCost;
-
-        const stableKey = getStableArmorKey(itemName);
-        player.armorUpgradeData = player.armorUpgradeData || {};
-        player.armorUpgradeData[stableKey] = player.armorUpgradeData[stableKey] || {};
-        player.armorUpgradeData[stableKey][statKey] = (player.armorUpgradeData[stableKey][statKey] || 0) + 1;
-
-        const newLevel = parsed.level + 1;
-        const newName = `${parsed.baseName} +${newLevel}`;
-        // Переносим накопленные данные улучшения под новый видимый ключ (стабильная часть та же,
-        // но подчистим на всякий случай старый ключ, если он вдруг отличался от нового)
-        if (stableKey !== getStableArmorKey(newName)) {
-            player.armorUpgradeData[getStableArmorKey(newName)] = player.armorUpgradeData[stableKey];
-            delete player.armorUpgradeData[stableKey];
-        }
-
-        if (isEquipped) {
-            const eff = getArmorEffectiveStats(newName);
-            const base = armorItems.find(a => a.name === parsed.baseName);
-            player.armor = { name: newName, tier: base.tier, armor: eff.bulletResist, hitAbsorption: eff.hitAbsorption };
-        } else {
-            player.inventory[itemName]--;
-            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.inventory[newName] = (player.inventory[newName] || 0) + 1;
-        }
-
-        renderTechnician(); renderInventory(); updateUI(); saveGame();
+        fetch(`${SERVER_URL}/api/technician/upgrade`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, itemName, isEquipped: !!isEquipped, statKey })
+        }).then(r => r.json()).then(res => {
+            if (!res.success) { showGameAlert('Не удалось улучшить: ' + (res.error || '')); return; }
+            player.coins = res.coins;
+            player.breedCredits = res.breedCredits;
+            if (res.armor) player.armor = res.armor;
+            player.inventory = res.inventory;
+            player.armorUpgradeData = res.armorUpgradeData;
+            renderTechnician(); renderInventory(); updateUI();
+        }).catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
 
     // ===== ПРИНУДИТЕЛЬНАЯ ВИДИМОСТЬ ТЕКСТА В ПОЛЯХ ВВОДА =====
