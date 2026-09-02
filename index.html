@@ -270,13 +270,15 @@
             Скрестите два артефакта — получите новый, с суммой их свойств. Стоимость растёт с каждым уровнем: 1-й уровень — 1 жетон сталкера, 2-й — 2 жетона, и так далее
             (покупается за ⭐ в Магазине Байт). Один и тот же артефакт можно улучшать так до 20 раз подряд.
         </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:14px;">
+        <div style="display:grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap:6px; align-items:center; margin-bottom:14px;">
             <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column;" onclick="openBreedSlotPicker(1)">
                 <div style="font-size:10px; text-align:center;">Слот 1<br><b id="breedSlot1Label">Пусто</b></div>
             </div>
+            <div style="font-size:22px; text-align:center;">♻️</div>
             <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column;" onclick="openBreedSlotPicker(2)">
                 <div style="font-size:10px; text-align:center;">Слот 2<br><b id="breedSlot2Label">Пусто</b></div>
             </div>
+            <div style="font-size:22px; text-align:center;">♻️</div>
             <div class="slot" style="aspect-ratio:unset; padding:10px; flex-direction:column; border-color:#8a7a4a;">
                 <div style="font-size:10px; text-align:center;">Результат<br><b id="breedSlot3Label">Пусто</b></div>
             </div>
@@ -1414,9 +1416,8 @@
             const cap = 100 + adminPerkBonus[perk];
             player[perk] = Math.max(0, Math.min(cap, player[perk]));
         });
-        // maxHealth растёт вместе с живучестью (1:1) — раз живучесть теперь ограничена 100,
-        // maxHealth тоже не может законно превышать 100 (база) + 100 (макс. живучесть)
-        player.maxHealth = Math.min(player.maxHealth, 200);
+        // По просьбе пользователя потолок максимального здоровья убран — maxHealth больше не
+        // урезается принудительно до 200 при каждой синхронизации/загрузке
         player.health = Math.min(player.health, player.maxHealth);
         player.radiation = Math.max(0, Math.min(100, player.radiation));
         recomputeArtifactResistances();
@@ -4831,7 +4832,7 @@
     function openArtifactSlotActions(index) {
         const name = player.artifactSlots[index];
         if (!name) return;
-        document.getElementById('itemActionTitle').textContent = `${name} (надето)`;
+        document.getElementById('itemActionTitle').innerHTML = itemIconHtml(name, 32) + `${name} (надето)`;
         document.getElementById('itemActionButtons').innerHTML =
             getItemInfoHtml(name) +
             `<button onclick="unequipArtifactSlot(${index})">Снять</button>`;
@@ -4857,9 +4858,9 @@
     let lastBreedResult = null;
 
     function renderScientists() {
-        document.getElementById('breedSlot1Label').textContent = breedSlot1 || 'Пусто';
-        document.getElementById('breedSlot2Label').textContent = breedSlot2 || 'Пусто';
-        document.getElementById('breedSlot3Label').textContent = lastBreedResult ? lastBreedResult.name : 'Пусто';
+        document.getElementById('breedSlot1Label').innerHTML = breedSlot1 ? (itemIconHtml(breedSlot1, 24) + breedSlot1) : 'Пусто';
+        document.getElementById('breedSlot2Label').innerHTML = breedSlot2 ? (itemIconHtml(breedSlot2, 24) + breedSlot2) : 'Пусто';
+        document.getElementById('breedSlot3Label').innerHTML = lastBreedResult ? (itemIconHtml(lastBreedResult.name, 24) + lastBreedResult.name) : 'Пусто';
         document.getElementById('breedCreditsCount').textContent = Number(player.breedCredits) || 0;
 
         const infoEl = document.getElementById('breedResultInfo');
@@ -5375,7 +5376,7 @@
     function openItemActions(itemName, context) {
         context = context || 'inventory';
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
-        document.getElementById('itemActionTitle').textContent = `${itemName} ×${player.inventory[itemName]}`;
+        document.getElementById('itemActionTitle').innerHTML = itemIconHtml(itemName, 32) + `${itemName} ×${player.inventory[itemName]}`;
         const btnsEl = document.getElementById('itemActionButtons');
         const esc = itemName.replace(/'/g, "\\'");
         let buttons = '';
@@ -5470,10 +5471,11 @@
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
             const icon = name ? getItemIcon(stripInvisibleSuffix(name)) : null;
             return `
-            <div class="slot" style="aspect-ratio:${icon ? '1' : 'unset'}; padding:${icon ? '0' : '6px'};" onclick="openArtifactSlotActions(${i})">
+            <div class="slot" style="aspect-ratio:1; padding:0; position:relative; overflow:hidden;" onclick="openArtifactSlotActions(${i})">
+                <img src="${SERVER_URL}/icons/artifact_slot_frame.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
                 ${icon
-                    ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">`
-                    : `<div style="font-size:8px; text-align:center; line-height:1.2;">${name || 'Пусто'}</div>`}
+                    ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:1;" onerror="this.style.display='none'">`
+                    : ''}
             </div>
         `;
         }).join('');
