@@ -5333,7 +5333,7 @@
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
             const icon = name ? ITEM_ICONS[stripInvisibleSuffix(name)] : null;
             return `
-            <div class="slot" style="aspect-ratio: unset; padding:${icon ? '0' : '6px'};" onclick="openArtifactSlotActions(${i})">
+            <div class="slot" style="aspect-ratio:${icon ? '1' : 'unset'}; padding:${icon ? '0' : '6px'};" onclick="openArtifactSlotActions(${i})">
                 ${icon
                     ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">`
                     : `<div style="font-size:8px; text-align:center; line-height:1.2;">${name || 'Пусто'}</div>`}
@@ -5757,12 +5757,17 @@
                 shopItems.innerHTML = '<p style="padding:10px; color:#888;">Нечего продать</p>';
                 return;
             }
-            shopItems.innerHTML = items.map(name => shopCardHtml(name, `
-                <div style="cursor:pointer;" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'shop')">
-                    <div>${name} ×${player.inventory[name]}</div>
-                    <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
-                </div>
-            `)).join('');
+            shopItems.innerHTML = items.map(name => {
+                const qty = player.inventory[name];
+                const price = getSellPrice(name);
+                const esc = name.replace(/'/g, "\\'");
+                return shopCardHtml(name, `
+                    <div>${name} ×${qty}</div>
+                    <div class="price">🪙 ${price} за шт.</div>
+                    <button onclick="sellToShop('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
+                    ${qty > 1 ? `<button onclick="sellAllFromModal('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
+                `);
+            }).join('');
             return;
         }
 
@@ -6046,14 +6051,12 @@
                 const isDetector = getEquipSlotType(name) === 'detector';
                 const multiplier = isDetector ? 1.10 : 1.02;
                 const bonusText = isDetector ? 'на 10% выгоднее торговца' : 'на 2% выгоднее торговца';
-                return `
-                <div class="shop-item">
+                return shopCardHtml(name, `
                     <div>${name} ×${player.inventory[name]}</div>
                     ${getItemInfoHtml(name)}
                     <div class="price">🪙 ${Math.round(getSellPrice(name) * multiplier)} за шт. (${bonusText})</div>
                     <button onclick="sellToTechnician('${name.replace(/'/g, "\\'")}')">Продать</button>
-                </div>
-            `;
+                `);
             }).join('');
             return;
         }
