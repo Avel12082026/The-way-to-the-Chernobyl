@@ -998,7 +998,9 @@
     // нет — карточка остаётся как раньше, без левого блока
     function shopCardHtml(name, innerHtml) {
         const file = ITEM_ICONS[name];
-        if (!file) return `<div class="shop-item">${innerHtml}</div>`;
+        if (!file) {
+            return `<div class="shop-item" style="padding:10px; display:flex; flex-direction:column; align-items:flex-end; text-align:right;">${innerHtml}</div>`;
+        }
         return `<div class="shop-item" style="display:flex; align-items:flex-start; padding:0; overflow:hidden;">
             <div style="width:96px; height:96px; min-width:96px; position:relative; background:#0d0d0c;">
                 <img src="${SERVER_URL}/icons/${file}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">
@@ -4586,36 +4588,23 @@
         return `<button onclick="showItemInfoModal('${esc}')" style="background:linear-gradient(180deg,#2d5a7a,#1e3e5c); border:1px solid #3a7a9b;">ℹ️ Инфо о товаре</button>`;
     }
 
-    // Кнопка "Продать" в списке — если предметов больше 1, по нажатию открывает выбор
-    // (продать 1 шт. / продать всё), а не показывает обе кнопки сразу в списке
+    // Кнопки продажи в списке: "Продать" (сразу 1 шт.) и, если предметов больше 1, рядом с ней
+    // "Продать всё ×N" с ценой за весь стек — обе кнопки видны сразу, без промежуточного окна
     const SELL_ACTIONS = {
-        shop: { one: () => sellToShop, all: () => sellAllFromModal },
-        bodypart: { one: () => sellBodyPartToScientists, all: () => sellAllBodyPartsToScientists },
-        artifact: { one: () => sellArtifactToScientists, all: () => sellAllArtifactsToScientists }
+        shop: { one: 'sellToShop', all: 'sellAllFromModal' },
+        bodypart: { one: 'sellBodyPartToScientists', all: 'sellAllBodyPartsToScientists' },
+        artifact: { one: 'sellArtifactToScientists', all: 'sellAllArtifactsToScientists' }
     };
-    function sellButtonHtml(kind, name, qty) {
+    function sellButtonHtml(kind, name, qty, unitPrice) {
         const esc = name.replace(/'/g, "\\'");
+        const actions = SELL_ACTIONS[kind];
+        let html = `<div style="display:flex; gap:6px; justify-content:flex-end; flex-wrap:wrap;">
+            <button onclick="${actions.one}('${esc}')" style="background:#27ae60;">💰 Продать</button>`;
         if (qty > 1) {
-            return `<button onclick="showSellChoiceModal('${kind}', '${esc}', ${qty})" style="background:#27ae60;">💰 Продать</button>`;
+            html += `<button onclick="${actions.all}('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${unitPrice * qty})</button>`;
         }
-        return `<button onclick="SELL_ACTIONS['${kind}'].one()('${esc}')" style="background:#27ae60;">💰 Продать</button>`;
-    }
-    function showSellChoiceModal(kind, name, qty) {
-        document.getElementById('itemActionModal')?.classList.remove('active'); // если открыто поверх - закрываем, чтобы окна не накладывались
-        document.getElementById('itemInfoModalTitle').textContent = name;
-        document.getElementById('itemInfoModalBody').innerHTML = `
-            <button id="sellChoiceOneBtn" style="background:#27ae60; margin-bottom:8px; width:100%;">💰 Продать 1 шт.</button>
-            <button id="sellChoiceAllBtn" style="background:#1e8449; width:100%;">💰 Продать всё ×${qty}</button>
-        `;
-        document.getElementById('sellChoiceOneBtn').onclick = () => {
-            document.getElementById('itemInfoModal').classList.remove('active');
-            SELL_ACTIONS[kind].one()(name);
-        };
-        document.getElementById('sellChoiceAllBtn').onclick = () => {
-            document.getElementById('itemInfoModal').classList.remove('active');
-            SELL_ACTIONS[kind].all()(name);
-        };
-        document.getElementById('itemInfoModal').classList.add('active');
+        html += `</div>`;
+        return html;
     }
 
     function getItemInfoHtml(itemName) {
@@ -5013,7 +5002,7 @@
                 <div>${name} ×${qty} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
                 ${infoButtonHtml(name)}
                 <div class="price">🪙 ${price} за шт.</div>
-                ${sellButtonHtml('artifact', name, qty)}
+                ${sellButtonHtml('artifact', name, qty, price)}
             `);
         }).join('');
         if (ownedBodyParts.length > 0) {
@@ -5024,7 +5013,7 @@
                     <div>${name} ×${qty}</div>
                     ${infoButtonHtml(name)}
                     <div class="price">🪙 ${price} за шт.</div>
-                    ${sellButtonHtml('bodypart', name, qty)}
+                    ${sellButtonHtml('bodypart', name, qty, price)}
                 `);
             }).join('');
         }
@@ -5305,7 +5294,7 @@
             buttons += getItemInfoHtml(itemName);
             buttons += `<button onclick="equipArtifactItem('${esc}')">Одеть</button>`;
             if (context === 'shop' && !artifact.isNamedArtifact) {
-                buttons += sellButtonHtml('shop', itemName, player.inventory[itemName]);
+                buttons += sellButtonHtml('shop', itemName, player.inventory[itemName], getSellPrice(itemName));
             } else if (context === 'shop' && artifact.isNamedArtifact) {
                 buttons += `<p style="font-size:11px; color:#888; margin:6px 0;">Именной артефакт тира 9 продаётся только у «Эколог Леонов» — за 🧬 50 Жетонов сталкера.</p>`;
             }
@@ -5328,7 +5317,7 @@
 
         buttons += `<button onclick="moveItemToWarehouse('${esc}')">📦 Переместить в склад</button>`;
         if (context === 'shop') {
-            buttons += sellButtonHtml('shop', itemName, player.inventory[itemName]);
+            buttons += sellButtonHtml('shop', itemName, player.inventory[itemName], getSellPrice(itemName));
         }
         buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
 
@@ -5816,7 +5805,7 @@
                     <div>${name} ×${qty}</div>
                     ${infoButtonHtml(name)}
                     <div class="price">🪙 ${price} за шт.</div>
-                    ${sellButtonHtml('shop', name, qty)}
+                    ${sellButtonHtml('shop', name, qty, price)}
                 `);
             }).join('');
             return;
