@@ -99,6 +99,16 @@
             <button onclick="document.getElementById('gameAlertModal').classList.remove('active')">OK</button>
         </div>
     </div>
+    <!-- Общее окно "Инфо о товаре" — используется у всех торговцев и на рынке вместо того, чтобы
+         показывать полное описание прямо в списке (раньше карточки товаров становились слишком
+         длинными) -->
+    <div id="itemInfoModal" class="modal">
+        <div class="modal-content" style="max-width:420px;">
+            <h3 id="itemInfoModalTitle" style="color:#8a7a4a;"></h3>
+            <div id="itemInfoModalBody" style="margin-bottom:12px;"></div>
+            <button onclick="document.getElementById('itemInfoModal').classList.remove('active')" style="background:linear-gradient(180deg,#7a2e22,#5a1f17); border:1px solid #a04030;">← Назад</button>
+        </div>
+    </div>
     <div id="giftModal" class="modal">
         <div class="modal-content" style="max-width:400px;">
             <h3>🎁 Отправить подарок другу</h3>
@@ -982,14 +992,15 @@
         return `<img src="${SERVER_URL}/icons/${file}" style="width:${size}px; height:${size}px; min-width:${size}px; border-radius:4px; object-fit:contain; vertical-align:middle; margin-right:6px; background:#0d0d0c; border:1px solid #333;" onerror="this.style.display='none'">`;
     }
 
-    // Карточка товара у торговца: если у предмета есть иконка — она растягивается на всю высоту
-    // карточки слева, а всё остальное (название/характеристики/цена/кнопка) уходит вправо. Если
-    // иконки нет (оружие/броня/детекторы/артефакты) — карточка остаётся как раньше, без левого блока
+    // Карточка товара у торговца: если у предмета есть иконка — квадратная миниатюра слева
+    // фиксированного размера (не растягивается на высоту карточки — раньше из-за этого сверху и
+    // снизу картинки появлялись пустые тёмные поля), а название/цена/кнопки — справа. Если иконки
+    // нет — карточка остаётся как раньше, без левого блока
     function shopCardHtml(name, innerHtml) {
         const file = ITEM_ICONS[name];
         if (!file) return `<div class="shop-item">${innerHtml}</div>`;
-        return `<div class="shop-item" style="display:flex; align-items:stretch; padding:0; overflow:hidden;">
-            <div style="width:96px; min-width:96px; position:relative; background:#0d0d0c;">
+        return `<div class="shop-item" style="display:flex; align-items:flex-start; padding:0; overflow:hidden;">
+            <div style="width:96px; height:96px; min-width:96px; position:relative; background:#0d0d0c;">
                 <img src="${SERVER_URL}/icons/${file}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">
             </div>
             <div style="flex:1; min-width:0; padding:10px; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; text-align:right;">${innerHtml}</div>
@@ -2904,14 +2915,15 @@
                         content.innerHTML = '<p style="padding:10px; color:#888;">Вы ничего не продаёте</p>';
                         return;
                     }
-                    content.innerHTML = myLots.map(lot => `
-                        <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                            <p><strong>${lot.item}</strong></p>
-                            <p>Цена: ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
-                            <p>Количество: ${lot.quantity}</p>
+                    content.innerHTML = myLots.map(lot => shopCardHtml(lot.item, `
+                        <p><strong>${lot.item}</strong></p>
+                        <p>Цена: ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
+                        <p>Количество: ${lot.quantity}</p>
+                        <div style="display:flex; gap:6px; justify-content:flex-end;">
+                            ${infoButtonHtml(lot.item)}
                             <button onclick="cancelMarketLot(${lot.id})" style="background:#c0392b;">Снять с продажи</button>
                         </div>
-                    `).join('');
+                    `)).join('');
                 })
                 .catch(() => { content.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рынок</p>'; });
 
@@ -2947,20 +2959,19 @@
                         return;
                     }
                     list.innerHTML = buyableLots.map(lot => {
-                        const statsHtml = showStatsInList ? getItemInfoHtml(lot.item) : '';
                         const isMine = String(lot.seller_id) === String(getPlayerId());
                         const actionHtml = isMine
                             ? `<span style="display:inline-block; padding:8px 14px; background:#3a3424; color:#a89a72; border-radius:6px; font-weight:bold;">Мой товар</span>`
                             : `<button onclick="buyMarketItem(${lot.id}, '${lot.item.replace(/'/g, "\\'")}')" ${player.coins < lot.price ? 'disabled' : ''}>Купить</button>`;
-                        return `
-                        <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                            <p>${itemIconHtml(lot.item)}<strong>${lot.item}</strong> ×${lot.quantity}</p>
-                            ${statsHtml}
+                        return shopCardHtml(lot.item, `
+                            <p><strong>${lot.item}</strong> ×${lot.quantity}</p>
                             <p style="color:#aaa; font-size:12px;">Продавец: ${escapeHtml(lot.seller_username || lot.seller_id)}</p>
                             <p>Цена: 🪙 ${lot.price} Байт всего (${Math.round(lot.price / lot.quantity)} за шт.)</p>
-                            ${actionHtml}
-                        </div>
-                    `;
+                            <div style="display:flex; gap:6px; justify-content:flex-end;">
+                                ${showStatsInList ? infoButtonHtml(lot.item) : ''}
+                                ${actionHtml}
+                            </div>
+                        `);
                     }).join('');
                 })
                 .catch(() => { const list = document.getElementById('marketBuyList'); if (list) list.innerHTML = '<p style="padding:10px; color:#888;">Не удалось загрузить рынок</p>'; });
@@ -2971,12 +2982,13 @@
                 content.innerHTML = '<p style="padding:10px; color:#888;">Нечего выставить на продажу</p>';
                 return;
             }
-            content.innerHTML = items.map(name => `
-                <div style="background: #1a1a1a; padding: 10px; border-radius: 8px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="display:flex; align-items:center;">${itemIconHtml(name)}${name} ×${player.inventory[name]}</span>
+            content.innerHTML = items.map(name => shopCardHtml(name, `
+                <p><strong>${name}</strong> ×${player.inventory[name]}</p>
+                <div style="display:flex; gap:6px; justify-content:flex-end;">
+                    ${infoButtonHtml(name)}
                     <button onclick="listItemForSale('${name.replace(/'/g, "\\'")}')">Продать</button>
                 </div>
-            `).join('');
+            `)).join('');
         }
     }
 
@@ -4255,7 +4267,7 @@
                 const price = getFriendlyBuyPrice(item.price);
                 return shopCardHtml(item.name, `
                     <div>${item.name}</div>
-                    ${getItemInfoHtml(item.name)}
+                    ${infoButtonHtml(item.name)}
                     <div class="price">🪙 ${price}</div>
                     <button onclick="buyFromFriendly('${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
                 `);
@@ -4268,7 +4280,7 @@
             }
             el.innerHTML = items.map(name => shopCardHtml(name, `
                 <div>${name} ×${player.inventory[name]}</div>
-                ${getItemInfoHtml(name)}
+                ${infoButtonHtml(name)}
                 <div class="price">🪙 ${getSellPrice(name)} за шт.</div>
                 <button onclick="sellToFriendly('${name.replace(/'/g, "\\'")}')">Продать 1 шт.</button>
             `)).join('');
@@ -4559,6 +4571,19 @@
         const named = namedArtifactsList.find(a => a.name === itemName || a.name === clean);
         if (named) return { name: named.name, tier: 9, gen: 0, stats: named.stats, isNamedArtifact: true };
         return null;
+    }
+
+    // Кнопка "Инфо о товаре" — открывает общее окно с полным описанием (см. #itemInfoModal), вместо
+    // того чтобы показывать это прямо в списке товаров
+    function showItemInfoModal(name) {
+        document.getElementById('itemInfoModalTitle').textContent = name;
+        const info = getItemInfoHtml(name);
+        document.getElementById('itemInfoModalBody').innerHTML = info || '<p style="color:#888;">Нет дополнительных характеристик</p>';
+        document.getElementById('itemInfoModal').classList.add('active');
+    }
+    function infoButtonHtml(name) {
+        const esc = name.replace(/'/g, "\\'");
+        return `<button onclick="showItemInfoModal('${esc}')" style="background:linear-gradient(180deg,#2d5a7a,#1e3e5c); border:1px solid #3a7a9b;">ℹ️ Инфо о товаре</button>`;
     }
 
     function getItemInfoHtml(itemName) {
@@ -4893,7 +4918,7 @@
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🎒 Аптечки:</div>
             ${medkits.map(item => shopCardHtml(item.name, `
                 <div>${item.name}</div>
-                ${getItemInfoHtml(item.name)}
+                ${infoButtonHtml(item.name)}
                 <div class="price">🪙 ${getBuyPrice(item.price)}</div>
                 <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
             `)).join('')}
@@ -4904,14 +4929,12 @@
                 <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
             `)).join('')}
             <div style="font-size:12px; color:#8a7a4a; margin:10px 0;">🥼 Исследовательские комбинезоны (защита от радиации и аномалий, брони меньше обычной, дороже — открыты по уровню, сейчас доступен тир ${getResearchSuitUnlockTier(player.level)}):</div>
-            ${armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(item => `
-                <div class="shop-item">
-                    <div>${item.name} (Тир ${item.tier})</div>
-                    ${getItemInfoHtml(item.name)}
-                    <div class="price">🪙 ${getBuyPrice(item.price).toLocaleString('ru-RU')}</div>
-                    <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
-                </div>
-            `).join('')}
+            ${armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(item => shopCardHtml(item.name, `
+                <div>${item.name} (Тир ${item.tier})</div>
+                ${infoButtonHtml(item.name)}
+                <div class="price">🪙 ${getBuyPrice(item.price).toLocaleString('ru-RU')}</div>
+                <button onclick="buyFromScientists('${item.name.replace(/'/g, "\\'")}')" ${player.coins < getBuyPrice(item.price) ? 'disabled' : ''}>Купить</button>
+            `)).join('')}
         `;
     }
 
@@ -4948,7 +4971,7 @@
             if (artifact.isNamedArtifact) {
                 return shopCardHtml(name, `
                     <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier}, именной)</span></div>
-                    ${getItemInfoHtml(name)}
+                    ${infoButtonHtml(name)}
                     <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🧬 50 Жетонов сталкера</button>
                 `);
             }
@@ -4956,7 +4979,7 @@
             const qty = player.inventory[name];
             return shopCardHtml(name, `
                 <div>${name} ×${qty} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
-                ${getItemInfoHtml(name)}
+                ${infoButtonHtml(name)}
                 <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
                 ${qty > 1 ? `<button onclick="sellAllArtifactsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
             `);
@@ -4968,6 +4991,7 @@
                 const qty = player.inventory[name];
                 return shopCardHtml(name, `
                     <div>${name} ×${qty}</div>
+                    ${infoButtonHtml(name)}
                     <button onclick="sellBodyPartToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
                     ${qty > 1 ? `<button onclick="sellAllBodyPartsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
                 `);
@@ -5763,6 +5787,7 @@
                 const esc = name.replace(/'/g, "\\'");
                 return shopCardHtml(name, `
                     <div>${name} ×${qty}</div>
+                    ${infoButtonHtml(name)}
                     <div class="price">🪙 ${price} за шт.</div>
                     <button onclick="sellToShop('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
                     ${qty > 1 ? `<button onclick="sellAllFromModal('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
@@ -5777,7 +5802,7 @@
             const discounted = price < item.price;
             return shopCardHtml(item.name, `
                 <div>${item.name}${item.tier ? ' (Тир ' + item.tier + ')' : ''}</div>
-                ${getItemInfoHtml(item.name)}
+                ${infoButtonHtml(item.name)}
                 <div class="price">🪙 ${price}${discounted ? ` <span style="text-decoration:line-through; color:#666;">${item.price}</span>` : ''}</div>
                 <button onclick="buyShopItem('${item.category}', '${item.name.replace(/'/g, "\\'")}')" ${player.coins < price ? 'disabled' : ''}>Купить</button>
             `);
@@ -6053,7 +6078,7 @@
                 const bonusText = isDetector ? 'на 10% выгоднее торговца' : 'на 2% выгоднее торговца';
                 return shopCardHtml(name, `
                     <div>${name} ×${player.inventory[name]}</div>
-                    ${getItemInfoHtml(name)}
+                    ${infoButtonHtml(name)}
                     <div class="price">🪙 ${Math.round(getSellPrice(name) * multiplier)} за шт. (${bonusText})</div>
                     <button onclick="sellToTechnician('${name.replace(/'/g, "\\'")}')">Продать</button>
                 `);
