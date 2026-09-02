@@ -164,7 +164,13 @@
                 <div id="expBarFill" class="expBarFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#4a7c1f,#8ac926); transition:width 0.3s;"></div>
             </div>
         </div>
-        <div class="menu-abs" style="top:7.85%; left:3%; width:94%; height:16%; display:flex; justify-content:space-between;">
+        <!-- Шкала радиации — от зелёного (0) к красному (100), та же компактная полоса, что и опыт -->
+        <div class="menu-abs" style="top:7.85%; left:3%; width:94%; height:1.8%; display:flex; align-items:center;">
+            <div style="position:relative; width:100%; height:8px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden;">
+                <div class="radiationBarFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#8ac926,#c0392b); transition:width 0.3s;"></div>
+            </div>
+        </div>
+        <div class="menu-abs" style="top:9.65%; left:3%; width:94%; height:14.2%; display:flex; justify-content:space-between;">
             <!-- Левый край: Байты, уровень, жетоны сталкера, жетоны смены ника, книги знаний — столбцом -->
             <div style="display:flex; flex-direction:column; justify-content:center; gap:3px; font-size:10px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:0.2px; text-shadow:0 1px 2px rgba(0,0,0,0.8);">
                 <div>🪙 Байты: <span id="coins">0</span></div>
@@ -355,9 +361,9 @@
             </div>
             <div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
             <div style="margin-bottom:8px;">
-                <div style="font-size:11px; color:#888; margin-bottom:2px;">☢️ Радиация: <span id="radiationValue">0</span> / 100</div>
-                <div style="background:#0d0d0d; border:1px solid #222; border-radius:6px; height:10px; overflow:hidden;">
-                    <div id="radiationBar" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
+                <div style="font-size:12px; color:#ccc; margin-bottom:3px; font-weight:bold;">☢️ Радиация: <span id="radiationValue" style="color:#e67e22;">0</span> / 100</div>
+                <div style="background:#0d0d0c; border:1px solid #4a4230; border-radius:6px; height:14px; overflow:hidden;">
+                    <div class="radiationBarFill" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
                 </div>
             </div>
             <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
@@ -1346,9 +1352,8 @@
         if (invHungerMini) invHungerMini.textContent = Math.round(player.hunger);
         if (invThirstMini) invThirstMini.textContent = Math.round(player.thirst);
         const radVal = document.getElementById('radiationValue');
-        const radBar = document.getElementById('radiationBar');
         if (radVal) radVal.textContent = Math.round(player.radiation);
-        if (radBar) radBar.style.width = Math.round(player.radiation) + '%';
+        document.querySelectorAll('.radiationBarFill').forEach(el => { el.style.width = Math.round(player.radiation) + '%'; });
         document.getElementById('coins').textContent = player.coins;
         document.getElementById('level').textContent = player.level;
         document.getElementById('breedCreditsHeader').textContent = Number(player.breedCredits) || 0;
