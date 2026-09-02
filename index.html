@@ -5333,7 +5333,7 @@
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
             const icon = name ? ITEM_ICONS[stripInvisibleSuffix(name)] : null;
             return `
-            <div class="slot" style="aspect-ratio: unset; padding:6px;" onclick="openArtifactSlotActions(${i})">
+            <div class="slot" style="aspect-ratio: unset; padding:${icon ? '0' : '6px'};" onclick="openArtifactSlotActions(${i})">
                 ${icon
                     ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">`
                     : `<div style="font-size:8px; text-align:center; line-height:1.2;">${name || 'Пусто'}</div>`}
