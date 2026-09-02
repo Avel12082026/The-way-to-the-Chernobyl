@@ -972,7 +972,8 @@
         'Льдинка': 'ldinka.jpg',
         'Уголёк': 'ugolek.jpg',
         'Хрусталик': 'hrustalik.jpg',
-        'Паутинка': 'pautinka.jpg'
+        'Паутинка': 'pautinka.jpg',
+        'Камешек': 'kameshek.jpg'
     };
     function itemIconHtml(name, size) {
         size = size || 28;
@@ -4945,37 +4946,31 @@
             const artifact = findArtifactDef(name);
             const esc = name.replace(/'/g, "\\'");
             if (artifact.isNamedArtifact) {
-                return `
-                <div class="shop-item">
+                return shopCardHtml(name, `
                     <div>${name} ×${player.inventory[name]} <span style="color:#888; font-size:11px;">(тир ${artifact.tier}, именной)</span></div>
                     ${getItemInfoHtml(name)}
                     <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🧬 50 Жетонов сталкера</button>
-                </div>
-            `;
+                `);
             }
             const price = Math.round(getSellPrice(name) * 1.35);
             const qty = player.inventory[name];
-            return `
-                <div class="shop-item">
-                    <div>${name} ×${qty} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
-                    ${getItemInfoHtml(name)}
-                    <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
-                    ${qty > 1 ? `<button onclick="sellAllArtifactsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
-                </div>
-            `;
+            return shopCardHtml(name, `
+                <div>${name} ×${qty} <span style="color:#888; font-size:11px;">(тир ${artifact.tier})</span></div>
+                ${getItemInfoHtml(name)}
+                <button onclick="sellArtifactToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
+                ${qty > 1 ? `<button onclick="sellAllArtifactsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
+            `);
         }).join('');
         if (ownedBodyParts.length > 0) {
             html += ownedBodyParts.map(name => {
                 const price = Math.round(getSellPrice(name) * 1.20);
                 const esc = name.replace(/'/g, "\\'");
                 const qty = player.inventory[name];
-                return `
-                    <div class="shop-item">
-                        <div>${name} ×${qty}</div>
-                        <button onclick="sellBodyPartToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
-                        ${qty > 1 ? `<button onclick="sellAllBodyPartsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
-                    </div>
-                `;
+                return shopCardHtml(name, `
+                    <div>${name} ×${qty}</div>
+                    <button onclick="sellBodyPartToScientists('${esc}')" style="background:#27ae60;">💰 Продать за 🪙 ${price}</button>
+                    ${qty > 1 ? `<button onclick="sellAllBodyPartsToScientists('${esc}')" style="background:#1e8449;">💰 Продать всё ×${qty} (🪙 ${price * qty})</button>` : ''}
+                `);
             }).join('');
         }
         el.innerHTML = html;
