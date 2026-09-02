@@ -1033,11 +1033,57 @@
         'Пепел': 'pepel.jpg',
         'Пламя': 'plamya.jpg',
         'Осколок звезды': 'oskolok_zvezdy.jpg',
-        'Сердце бури': 'serdce_buri.jpg'
+        'Сердце бури': 'serdce_buri.jpg',
+        'Плачущий кристалл': 'plachushiy_kristall.jpg',
+        'Вой пустоты': 'voy_pustoty.jpg',
+        'Живая ртуть': 'zhivaya_rtut.jpg',
+        'Тень зоны': 'ten_zony.jpg',
+        'Ядро': 'yadro.jpg',
+        'Звезда': 'zvezda.jpg',
+        'Антиматерия': 'antimateriya.jpg',
+        'Осколок Монолита': 'oskolok_monolita.jpg',
+        'Слеза Вселенной': 'sleza_vselennoy.jpg',
+        'Дыхание Чернобыля': 'dyhanie_chernobylya.jpg',
+        'Кровь Зоны': 'krov_zony.jpg',
+        'Разум Аномалии': 'razum_anomalii.jpg',
+        'Шустряк': 'shustryak.jpg'
     };
+    // Запасной значок для ЛЮБОГО именного артефакта тира 9 — у них нет фиксированного названия
+    // (каждый игрок называет свой сам), поэтому обычная запись по имени не подходит. getItemIcon
+    // ниже сначала ищет точное совпадение в ITEM_ICONS, а если не находит — проверяет через
+    // findArtifactDef, не именной ли это артефакт, и если да, отдаёт этот общий файл.
+    const NAMED_ARTIFACT_ICON = 'imennoy_artefakt.png';
+    // Запасные значки для гибридов артефактов (скрещенных у Бункера экологов) — у них тоже нет
+    // фиксированного названия (в каждое вписан ник игрока), но есть числовой уровень селекции
+    // (поколение, 1-20). Значки задаются диапазонами уровней — сюда можно дописывать новые строки
+    // по мере того, как будут присылаться иконки для следующих диапазонов (6-10, 11-15 и т.д.)
+    const HYBRID_ICON_TIERS = [
+        { maxGen: 4, file: 'gibrid_1_5.jpg' },
+        { maxGen: 10, file: 'gibrid_5_10.jpg' },
+        { maxGen: 15, file: 'gibrid_11_15.jpg' },
+        { maxGen: 20, file: 'gibrid_16_20.jpg' }
+    ];
+    function getHybridIconFile(gen) {
+        for (const t of HYBRID_ICON_TIERS) {
+            if (gen <= t.maxGen) return t.file;
+        }
+        return null;
+    }
+    function getItemIcon(name) {
+        const direct = ITEM_ICONS[name];
+        if (direct) return direct;
+        const def = (typeof findArtifactDef === 'function') ? findArtifactDef(name) : null;
+        if (def && def.isNamedArtifact) return NAMED_ARTIFACT_ICON;
+        const isHybridName = name.startsWith('Гибрид ') || name.startsWith('Артефакт гибрид');
+        if (def && isHybridName && typeof def.gen === 'number') {
+            const hybridFile = getHybridIconFile(def.gen);
+            if (hybridFile) return hybridFile;
+        }
+        return null;
+    }
     function itemIconHtml(name, size) {
         size = size || 28;
-        const file = ITEM_ICONS[name];
+        const file = getItemIcon(name);
         if (!file) return '';
         return `<img src="${SERVER_URL}/icons/${file}" style="width:${size}px; height:${size}px; min-width:${size}px; border-radius:4px; object-fit:contain; vertical-align:middle; margin-right:6px; background:#0d0d0c; border:1px solid #333;" onerror="this.style.display='none'">`;
     }
@@ -1047,7 +1093,7 @@
     // снизу картинки появлялись пустые тёмные поля), а название/цена/кнопки — справа. Если иконки
     // нет — карточка остаётся как раньше, без левого блока
     function shopCardHtml(name, innerHtml) {
-        const file = ITEM_ICONS[name];
+        const file = getItemIcon(name);
         if (!file) {
             return `<div class="shop-item" style="padding:10px; display:flex; flex-direction:column; align-items:flex-end; text-align:right;">${innerHtml}</div>`;
         }
@@ -1060,7 +1106,7 @@
     }
 
     function itemSlotFillHtml(name, qty) {
-        const file = ITEM_ICONS[name];
+        const file = getItemIcon(name);
         if (!file) return null; // нет иконки для этого предмета — вызывающий код сам покажет текст как раньше
         return `<img src="${SERVER_URL}/icons/${file}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">
                 <span style="position:absolute; top:3px; right:4px; background:rgba(0,0,0,0.7); color:#fff; font-size:11px; font-weight:bold; padding:1px 5px; border-radius:5px; line-height:1.3; font-family:'Russo One',sans-serif;">×${qty}</span>`;
@@ -5422,7 +5468,7 @@
 
         const artifactGrid = document.getElementById('artifactSlotsGrid');
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
-            const icon = name ? ITEM_ICONS[stripInvisibleSuffix(name)] : null;
+            const icon = name ? getItemIcon(stripInvisibleSuffix(name)) : null;
             return `
             <div class="slot" style="aspect-ratio:${icon ? '1' : 'unset'}; padding:${icon ? '0' : '6px'};" onclick="openArtifactSlotActions(${i})">
                 ${icon
