@@ -1417,8 +1417,11 @@
             player[perk] = Math.max(0, Math.min(cap, player[perk]));
         });
         // По просьбе пользователя потолок максимального здоровья убран — maxHealth больше не
-        // урезается принудительно до 200 при каждой синхронизации/загрузке
-        player.health = Math.min(player.health, player.maxHealth);
+        // урезается принудительно до 200 при каждой синхронизации/загрузке. НО нужен нижний пол:
+        // при снятии артефакта с большим бонусом к здоровью баланс мог уйти ниже базовых 100 (а
+        // health — вообще в минус, т.к. раньше здесь не было Math.max(0, ...)) — чиним оба случая
+        player.maxHealth = Math.max(100, player.maxHealth);
+        player.health = Math.max(0, Math.min(player.health, player.maxHealth));
         player.radiation = Math.max(0, Math.min(100, player.radiation));
         recomputeArtifactResistances();
         if (!Array.isArray(player.artifactSlots) || player.artifactSlots.length !== 6) {
