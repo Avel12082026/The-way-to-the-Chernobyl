@@ -5514,8 +5514,7 @@
         const invGrid = document.getElementById('inventoryGrid');
         // "Книга знаний" теперь живёт только в шапке (хаб), а не в общей сетке инвентаря
         const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0 && name !== 'Книга знаний');
-        const TOTAL_INVENTORY_SLOTS = 50; // тот же лимит, что MAX_NONSTACKING_ITEMS — сетка всегда
-        // показывает все 50 ячеек, занятые предметом или пустые (с картинкой-заглушкой)
+        const TOTAL_INVENTORY_SLOTS = 49; // 7×7 — ровная сетка без одинокой ячейки в последней строке
         const filledSlotsHtml = items.map(name => {
             const fillHtml = itemSlotFillHtml(name, player.inventory[name]);
             return `
