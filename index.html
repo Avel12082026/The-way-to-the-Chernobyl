@@ -5514,11 +5514,9 @@
         const invGrid = document.getElementById('inventoryGrid');
         // "Книга знаний" теперь живёт только в шапке (хаб), а не в общей сетке инвентаря
         const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0 && name !== 'Книга знаний');
-        if (items.length === 0) {
-            invGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align:center; color:#666; padding:10px;">Инвентарь пуст</div>';
-            return;
-        }
-        invGrid.innerHTML = items.map(name => {
+        const TOTAL_INVENTORY_SLOTS = 50; // тот же лимит, что MAX_NONSTACKING_ITEMS — сетка всегда
+        // показывает все 50 ячеек, занятые предметом или пустые (с картинкой-заглушкой)
+        const filledSlotsHtml = items.map(name => {
             const fillHtml = itemSlotFillHtml(name, player.inventory[name]);
             return `
             <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')">
@@ -5528,7 +5526,14 @@
                     : `<div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>`}
             </div>
         `;
-        }).join('');
+        });
+        const emptySlotHtml = `
+            <div class="slot">
+                <img src="${SERVER_URL}/icons/empty_slot_inventory.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+            </div>
+        `;
+        const emptySlotsCount = Math.max(0, TOTAL_INVENTORY_SLOTS - filledSlotsHtml.length);
+        invGrid.innerHTML = filledSlotsHtml.join('') + emptySlotHtml.repeat(emptySlotsCount);
     }
 
     function useInventoryQuickSlot(i) {
