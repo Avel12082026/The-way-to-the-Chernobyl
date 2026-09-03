@@ -5500,7 +5500,7 @@
             const fillHtml = item ? itemSlotFillHtml(item, player.inventory[item] || 0) : null;
             return `
             <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">
-                ${!item ? `<img src="${SERVER_URL}/icons/empty_slot_inventory.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
+                ${!item ? `<img src="${SERVER_URL}/icons/empty_slot_quickslot.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
                 ${fillHtml ? fillHtml : (item ? `<span>${item} ×${player.inventory[item] || 0}</span>` : '')}
             </div>
         `;
@@ -5522,6 +5522,7 @@
             const fillHtml = itemSlotFillHtml(name, player.inventory[name]);
             return `
             <div class="slot" title="${name} x${player.inventory[name]}" onclick="openItemActions('${name.replace(/'/g, "\\'")}', 'inventory')">
+                <img src="${SERVER_URL}/icons/empty_slot_inventory.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
                 ${fillHtml
                     ? fillHtml
                     : `<div style="font-size:9px; text-align:center; line-height:1.2;">${name}<br>×${player.inventory[name]}</div>`}
@@ -5564,6 +5565,7 @@
 
     // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
     function renderQuickSlots() {
+        const EMPTY_QUICKSLOT_ICON = `<img src="${SERVER_URL}/icons/empty_slot_quickslot.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">`;
         const slots = document.querySelectorAll('#quickSlots .quick-slot');
         slots.forEach((el, i) => {
             const itemName = player.quickSlots[i];
@@ -5586,7 +5588,7 @@
                 el.style.flexDirection = '';
                 el.style.alignItems = '';
                 el.style.gap = '';
-                el.textContent = 'Пусто';
+                el.innerHTML = EMPTY_QUICKSLOT_ICON;
             }
         });
         const container = document.getElementById('quickSlots');
