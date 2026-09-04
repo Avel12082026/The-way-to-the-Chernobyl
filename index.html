@@ -334,7 +334,6 @@
                 <span style="color:#3c8de6; font-size:20px; font-weight:bold; white-space:nowrap;">💧 <span id="invThirstMini">100</span></span>
             </div>
         </div>
-        <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Текущее максимальное здоровье: <span id="maxHealthDisplay">100</span></div>
         <div style="text-align:center; margin-bottom:10px;">
             <img src="https://213-176-92-184.sslip.io/icons/character_portrait.png" style="max-height:220px; max-width:100%; object-fit:contain;">
         </div>
@@ -5633,7 +5632,6 @@
 
     // ===== ИНВЕНТАРЬ =====
     function renderInventory() {
-        document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
 
         // Иконки-заглушки для пустых слотов экипировки — заполняются по мере того, как пользователь
         // присылает картинки под каждую категорию. Когда для надетого предмета есть своя иконка
