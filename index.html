@@ -335,18 +335,12 @@
             </div>
         </div>
         <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Текущее максимальное здоровье: <span id="maxHealthDisplay">100</span></div>
-        <div style="display:flex; gap:8px; margin-bottom:10px; align-items:stretch;">
-            <div style="width:23%; display:flex; flex-direction:column; gap:6px;">
-                <div style="font-size:10px; color:#888; text-align:center;">Надето (нажмите, чтобы снять)</div>
-                <div id="equippedGear" style="display:flex; flex-direction:column; gap:8px;"></div>
-            </div>
-            <div style="width:23%; display:flex; flex-direction:column; gap:6px;">
-                <div style="font-size:10px; color:#888; text-align:center;">Артефакты</div>
-                <div id="artifactSlotsGrid" style="display:flex; flex-direction:column; gap:6px;"></div>
-            </div>
-            <div id="characterPortraitSpace" style="flex:1;"></div>
+        <div style="text-align:center; margin-bottom:10px;">
+            <img src="https://213-176-92-184.sslip.io/icons/character_portrait.png" style="max-height:220px; max-width:100%; object-fit:contain;">
         </div>
-        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Быстрые слоты (для боя в рейде — нажмите, чтобы назначить/снять предмет):</div>
+        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
+        <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
+        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Экипировка и быстрые слоты (нажмите, чтобы снять/назначить):</div>
         <div class="belt-grid" id="quickSlotsGrid" style="grid-template-columns: repeat(7, 1fr); gap: 4px;"></div>
         <div style="font-size: 12px; color: #888; margin: 12px 0 4px;">Весь инвентарь:</div>
         <div class="grid7" id="inventoryGrid"></div>
@@ -5641,30 +5635,24 @@
     function renderInventory() {
         document.getElementById('maxHealthDisplay').textContent = Math.round(player.maxHealth);
 
-        const equippedGear = document.getElementById('equippedGear');
         // Иконки-заглушки для пустых слотов экипировки — заполняются по мере того, как пользователь
         // присылает картинки под каждую категорию. Когда для надетого предмета есть своя иконка
         // (ITEM_ICONS), она рисуется поверх и полностью закрывает собой эту заглушку
         const EMPTY_SLOT_ICONS = { weapon: 'empty_slot_weapon.png', armor: 'empty_slot_armor.png', detector: 'empty_slot_detector.png' };
-        const gearBox = (category, emoji, name, slotType, statLine) => {
+        // Компактная ячейка экипировки — размером с ячейку инвентаря (та же .belt-slot верстка,
+        // что и у быстрых слотов), без отдельного текста названия (не помещается при таком размере;
+        // полное название/статы по-прежнему видны в модалке по тапу через openEquippedItemActions)
+        const gearBoxSmall = (emoji, name, slotType) => {
             const icon = ITEM_ICONS[name];
             const emptyIcon = EMPTY_SLOT_ICONS[slotType];
             return `
-            <div style="display:flex; flex-direction:column; gap:4px;">
-                <div style="font-size:10px; text-align:center; line-height:1.3; cursor:pointer;" onclick="openEquippedItemActions('${slotType}')">${category.toUpperCase()}: <b>${name}</b></div>
-                <div class="slot" style="padding:0; position:relative; overflow:hidden;" onclick="openEquippedItemActions('${slotType}')">
-                    ${emptyIcon ? `<img src="${SERVER_URL}/icons/${emptyIcon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
-                    ${icon
-                        ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:1;" onerror="this.style.display='none'">`
-                        : (emptyIcon ? '' : `<span style="font-size:28px;">${emoji}</span>`)}
-                </div>
-                ${statLine ? `<div style="font-size:9px; text-align:center; color:#8a7a4a;">${statLine}</div>` : ''}
+            <div class="belt-slot" title="${name}" onclick="openEquippedItemActions('${slotType}')">
+                ${emptyIcon ? `<img src="${SERVER_URL}/icons/${emptyIcon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
+                ${icon
+                    ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:1;" onerror="this.style.display='none'">`
+                    : (emptyIcon ? '' : `<span style="font-size:16px;">${emoji}</span>`)}
             </div>`;
         };
-        equippedGear.innerHTML =
-            gearBox('Детектор', '📡', player.detector.name, 'detector') +
-            gearBox('Броня', '🛡️', player.armor.name, 'armor', `Броня: ${player.armor.armor}`) +
-            gearBox('Оружие', '⚔️', player.weapon.name, 'weapon', `Урон: ${player.weapon.dmg}`);
 
         const artifactGrid = document.getElementById('artifactSlotsGrid');
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
@@ -5679,8 +5667,14 @@
         `;
         }).join('');
 
+        // Экипировка (3 ячейки) + быстрые слоты (4 ячейки) — теперь один общий ряд из 7 маленьких
+        // ячеек одинакового размера с инвентарём, экипировка идёт первой, дальше быстрые слоты
         const quickSlotsGrid = document.getElementById('quickSlotsGrid');
-        quickSlotsGrid.innerHTML = player.quickSlots.map((item, i) => {
+        const equipCellsHtml =
+            gearBoxSmall('⚔️', player.weapon.name, 'weapon') +
+            gearBoxSmall('🛡️', player.armor.name, 'armor') +
+            gearBoxSmall('📡', player.detector.name, 'detector');
+        const quickCellsHtml = player.quickSlots.map((item, i) => {
             const fillHtml = item ? itemSlotFillHtml(item, player.inventory[item] || 0) : null;
             return `
             <div class="belt-slot" onclick="useInventoryQuickSlot(${i})">
@@ -5689,6 +5683,7 @@
             </div>
         `;
         }).join('');
+        quickSlotsGrid.innerHTML = equipCellsHtml + quickCellsHtml;
         // Принудительная перерисовка в 2 шага — offsetHeight форсирует пересчёт раскладки,
         // requestAnimationFrame синхронизируется с реальным циклом отрисовки браузера. По отдельности
         // одного offsetHeight иногда не хватало в некоторых WebView — оставляем оба на всякий случай
