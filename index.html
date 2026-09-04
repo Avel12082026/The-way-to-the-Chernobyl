@@ -335,10 +335,17 @@
             </div>
         </div>
         <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Текущее максимальное здоровье: <span id="maxHealthDisplay">100</span></div>
-        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Надето (нажмите, чтобы снять):</div>
-        <div id="equippedGear" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;"></div>
-        <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
-        <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
+        <div style="display:flex; gap:8px; margin-bottom:10px; align-items:stretch;">
+            <div style="width:23%; display:flex; flex-direction:column; gap:6px;">
+                <div style="font-size:10px; color:#888; text-align:center;">Надето (нажмите, чтобы снять)</div>
+                <div id="equippedGear" style="display:flex; flex-direction:column; gap:8px;"></div>
+            </div>
+            <div style="width:23%; display:flex; flex-direction:column; gap:6px;">
+                <div style="font-size:10px; color:#888; text-align:center;">Артефакты</div>
+                <div id="artifactSlotsGrid" style="display:flex; flex-direction:column; gap:6px;"></div>
+            </div>
+            <div id="characterPortraitSpace" style="flex:1;"></div>
+        </div>
         <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Быстрые слоты (для боя в рейде — нажмите, чтобы назначить/снять предмет):</div>
         <div class="belt-grid" id="quickSlotsGrid" style="grid-template-columns: repeat(7, 1fr); gap: 4px;"></div>
         <div style="font-size: 12px; color: #888; margin: 12px 0 4px;">Весь инвентарь:</div>
@@ -5655,9 +5662,9 @@
             </div>`;
         };
         equippedGear.innerHTML =
-            gearBox('Оружие', '⚔️', player.weapon.name, 'weapon', `Урон: ${player.weapon.dmg}`) +
+            gearBox('Детектор', '📡', player.detector.name, 'detector') +
             gearBox('Броня', '🛡️', player.armor.name, 'armor', `Броня: ${player.armor.armor}`) +
-            gearBox('Детектор', '📡', player.detector.name, 'detector');
+            gearBox('Оружие', '⚔️', player.weapon.name, 'weapon', `Урон: ${player.weapon.dmg}`);
 
         const artifactGrid = document.getElementById('artifactSlotsGrid');
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
