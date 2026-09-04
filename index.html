@@ -59,7 +59,7 @@
         .slot { background: #0d0d0c; border: 1px solid #4a4230; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; border-radius: 4px; position: relative; }
         .slot:hover { border-color: #8a7a4a; }
         .belt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .belt-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 2px solid #8a7a4a; border-radius: 6px; padding: 8px; text-align: center; font-size: 12px; font-weight: normal; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .belt-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #8a7a4a; border-radius: 4px; padding: 2px; text-align: center; font-size: 9px; font-weight: normal; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
         .back-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 15px; width: 100%; padding: 12px; background: linear-gradient(180deg,#7a2e22,#5a1f17); border: 1px solid #a04030; border-radius: 8px; color: #fff; font-weight: normal; cursor: pointer; }
         .log { background: #0c0b09; padding: 10px; border: 1px solid #4a4230; border-radius: 8px; font-family: monospace; font-size: 12px; height: 160px; max-height: 160px; overflow-y: auto; overflow-x: hidden; overflow-wrap: break-word; word-break: break-word; white-space: pre-wrap; box-sizing: border-box; }
         .stats-details { margin-top: 10px; font-size: 12px; }
@@ -80,8 +80,8 @@
         input, select, textarea { color: #fff !important; background: #1a1a1a !important; -webkit-text-fill-color: #fff !important; caret-color: #fff !important; }
         input::placeholder, textarea::placeholder { color: #888 !important; -webkit-text-fill-color: #888 !important; }
         .modal-content button { font-family: 'Russo One', sans-serif; width: 100%; padding: 10px; background: linear-gradient(180deg,#2d7a4e,#1e5c38); border: 1px solid #3a9b64; border-radius: 6px; color: #fff; font-weight: normal; cursor: pointer; }
-        .quick-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-        .quick-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #4a4230; border-radius: 6px; padding: 8px; text-align: center; font-size: 12px; font-weight: normal; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .quick-slots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-top: 10px; }
+        .quick-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #4a4230; border-radius: 4px; padding: 2px; text-align: center; font-size: 9px; font-weight: normal; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
         .quick-slot:hover { border-color: #8a7a4a; }
         .chat-tab-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; padding: 8px 2px; background: linear-gradient(180deg,#151310,#0b0a08); border: 1px solid #4a4230; border-radius: 5px; color: #c9bb8d; }
     </style>
@@ -340,7 +340,7 @@
         <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
         <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
         <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Быстрые слоты (для боя в рейде — нажмите, чтобы назначить/снять предмет):</div>
-        <div class="belt-grid" id="quickSlotsGrid" style="grid-template-columns: repeat(4, 1fr);"></div>
+        <div class="belt-grid" id="quickSlotsGrid" style="grid-template-columns: repeat(7, 1fr); gap: 4px;"></div>
         <div style="font-size: 12px; color: #888; margin: 12px 0 4px;">Весь инвентарь:</div>
         <div class="grid7" id="inventoryGrid"></div>
         <button class="back-btn" onclick="closeInventoryScreen()">Назад</button>
