@@ -273,6 +273,9 @@ input[type='number'] { min-width:0; }
 #warehouseScreen .grid7 { gap:3px; }
 #marketScreen >button:not(.back-btn) { margin-bottom:7px; }
 #starsShopItems .shop-item { padding:10px; }
+.shop-item-coins { display:flex!important; align-items:center; justify-content:space-between; gap:10px; }
+.shop-item-coins-info { flex:1; min-width:0; }
+.shop-item-coins button { margin-top:0!important; flex-shrink:0; }
 .stats-details div { border-color:#605337; }
 ::-webkit-scrollbar { width:5px; height:5px; } ::-webkit-scrollbar-track { background:#090d0a; } ::-webkit-scrollbar-thumb { background:#786343; }
 @media(max-width:380px) {
@@ -518,7 +521,7 @@ input[type='number'] { min-width:0; }
 </div>
 </div>
 <div class="zr-character-stage" style="text-align:center; margin-bottom:10px;">
-<img src="https://213-176-92-184.sslip.io/icons/character_portrait.png" style="max-height:220px; max-width:100%; object-fit:contain;"/>
+<img id="characterPortraitImg" src="https://213-176-92-184.sslip.io/icons/character_portrait.png" style="max-height:220px; max-width:100%; object-fit:contain;"/>
 </div>
 <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
 <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
@@ -570,6 +573,9 @@ input[type='number'] { min-width:0; }
 <div id="battleButtonsContainer"></div>
 <button onclick="openBackpackFromRaid()" style="width:100%; margin-top:8px; background:#8a7a4a;">🎒 Рюкзак</button>
 <div class="quick-slots" id="quickSlots">
+<div class="belt-slot" id="raidEquipWeapon" onclick="openEquippedItemActions('weapon')"></div>
+<div class="belt-slot" id="raidEquipArmor" onclick="openEquippedItemActions('armor')"></div>
+<div class="belt-slot" id="raidEquipDetector" onclick="openEquippedItemActions('detector')"></div>
 <div class="quick-slot" onclick="useQuickSlot(0)">Пусто</div>
 <div class="quick-slot" onclick="useQuickSlot(1)">Пусто</div>
 <div class="quick-slot" onclick="useQuickSlot(2)">Пусто</div>
@@ -1025,90 +1031,90 @@ input[type='number'] { min-width:0; }
 
     // ===== БРОНЯ =====
     const armorItems = [
-        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
-        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, price: 156, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
-        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, price: 156, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1}, hitAbsorption: 3 },
-        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, price: 182, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1}, hitAbsorption: 4 },
-        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, price: 260, stats: {"anomaly_Электра":1,"anomaly_Жарка":1}, hitAbsorption: 4 },
-        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, price: 208, stats: {"anomaly_Карусель":1,"anomaly_Печка":1}, hitAbsorption: 4 },
-        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, price: 650, stats: {"anomaly_Электра":1,"anomaly_Печка":1}, hitAbsorption: 8 },
-        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, price: 650, stats: {"anomaly_Воронка":1,"anomaly_Мясорубка":1}, hitAbsorption: 8 },
-        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, price: 689, stats: {"anomaly_Печка":2,"anomaly_Мясорубка":2}, hitAbsorption: 8 },
-        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, price: 741, stats: {"anomaly_Кислотный туман":2,"anomaly_Карусель":1}, hitAbsorption: 9 },
-        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, price: 819, stats: {"anomaly_Воронка":2,"anomaly_Мясорубка":2}, hitAbsorption: 10 },
-        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, price: 910, stats: {"anomaly_Печка":2,"anomaly_Электра":1}, hitAbsorption: 10 },
-        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, price: 1560, stats: {"anomaly_Электра":2,"anomaly_Печка":3}, hitAbsorption: 15 },
-        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, price: 1612, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2}, hitAbsorption: 16 },
-        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, price: 1716, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2}, hitAbsorption: 17 },
-        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, price: 1768, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3}, hitAbsorption: 17 },
-        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, price: 1872, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2}, hitAbsorption: 18 },
-        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, price: 2600, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2}, hitAbsorption: 20 },
-        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, price: 3250, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2}, hitAbsorption: 23 },
-        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, price: 3393, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3}, hitAbsorption: 24 },
-        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, price: 3471, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3}, hitAbsorption: 24 },
-        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, price: 3757, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3}, hitAbsorption: 26 },
-        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, price: 4186, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 29 },
-        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, price: 5200, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 30 },
-        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, price: 10400, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4}, hitAbsorption: 38 },
-        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, price: 10543, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5}, hitAbsorption: 38 },
-        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, price: 10816, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5}, hitAbsorption: 39 },
-        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, price: 10959, stats: {"anomaly_Карусель":4,"anomaly_Печка":4}, hitAbsorption: 40 },
-        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, price: 11089, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3}, hitAbsorption: 40 },
-        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, price: 11648, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4}, hitAbsorption: 42 },
-        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, price: 15600, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5}, hitAbsorption: 43 },
-        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, price: 15600, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 43 },
-        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, price: 15782, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4}, hitAbsorption: 43 },
-        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, price: 15964, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6}, hitAbsorption: 44 },
-        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, price: 16146, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3}, hitAbsorption: 44 },
-        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, price: 16328, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6}, hitAbsorption: 45 },
-        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3}, hitAbsorption: 45 },
-        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, price: 23400, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6}, hitAbsorption: 45 },
-        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, price: 23660, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 46 },
-        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, price: 23920, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5}, hitAbsorption: 46 },
-        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, price: 24180, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6}, hitAbsorption: 47 },
-        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, price: 24440, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6}, hitAbsorption: 47 },
-        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4}, hitAbsorption: 48 },
-        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4}, hitAbsorption: 48 },
-        { id: 45, name: "Броня Стража", tier: 8, armor: 95, price: 33800, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8}, hitAbsorption: 48 },
-        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, price: 34151, stats: {"anomaly_Воронка":6,"anomaly_Печка":4}, hitAbsorption: 48 },
-        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, price: 34151, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3}, hitAbsorption: 48 },
-        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, price: 34515, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8}, hitAbsorption: 49 },
-        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5}, hitAbsorption: 49 },
-        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4}, hitAbsorption: 49 },
-        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, price: 46800, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4}, hitAbsorption: 49 },
-        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, price: 47281, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4}, hitAbsorption: 50 },
-        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, price: 47281, stats: {"anomaly_Электра":5,"anomaly_Карусель":7}, hitAbsorption: 50 },
-        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, price: 47749, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6}, hitAbsorption: 50 },
-        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5}, hitAbsorption: 50 },
-        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8}, hitAbsorption: 50 },
-        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, price: 65000, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4}, hitAbsorption: 50 },
-        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, price: 65650, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7}, hitAbsorption: 51 },
-        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, price: 66300, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6}, hitAbsorption: 51 },
-        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, price: 66950, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6}, hitAbsorption: 52 },
-        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, price: 91000, stats: {"anomaly_Электра":8,"anomaly_Жарка":5}, hitAbsorption: 58 },
-        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, price: 91000, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7}, hitAbsorption: 58 },
-        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, price: 91793, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10}, hitAbsorption: 58 },
-        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, price: 92586, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9}, hitAbsorption: 59 },
-        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, price: 93379, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8}, hitAbsorption: 59 },
-        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, price: 94159, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7}, hitAbsorption: 60 },
-        { id: 67, name: "Броня Легион", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11}, hitAbsorption: 65 },
-        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10}, hitAbsorption: 65 },
-        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, price: 123500, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6}, hitAbsorption: 65 },
-        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, price: 124449, stats: {"anomaly_Печка":11,"anomaly_Воронка":11}, hitAbsorption: 66 },
-        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, price: 125398, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6}, hitAbsorption: 66 },
-        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, price: 126347, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5}, hitAbsorption: 67 },
-        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12}, hitAbsorption: 75 },
-        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8}, hitAbsorption: 75 },
-        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, price: 169000, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8}, hitAbsorption: 75 },
-        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, price: 170131, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11}, hitAbsorption: 76 },
-        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, price: 171249, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10}, hitAbsorption: 76 },
-        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, price: 172380, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10}, hitAbsorption: 77 },
-        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11}, hitAbsorption: 90 },
-        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8}, hitAbsorption: 90 },
-        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, price: 234000, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10}, hitAbsorption: 90 },
-        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, price: 235300, stats: {"anomaly_Печка":13,"anomaly_Карусель":11}, hitAbsorption: 91 },
-        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, price: 236600, stats: {"anomaly_Печка":12,"anomaly_Жарка":11}, hitAbsorption: 91 },
-        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, price: 237900, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8}, hitAbsorption: 92 },
+        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, unlockLevel: 5, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
+        { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, price: 156, unlockLevel: 10, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
+        { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, price: 156, unlockLevel: 15, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1}, hitAbsorption: 3 },
+        { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, price: 182, unlockLevel: 20, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1}, hitAbsorption: 4 },
+        { id: 5, name: "Комбинезон Комбат", tier: 1, armor: 8, price: 260, unlockLevel: 25, stats: {"anomaly_Электра":1,"anomaly_Жарка":1}, hitAbsorption: 4 },
+        { id: 6, name: "Роба сталкера", tier: 1, armor: 8, price: 208, unlockLevel: 30, stats: {"anomaly_Карусель":1,"anomaly_Печка":1}, hitAbsorption: 4 },
+        { id: 7, name: "Бронежилет Барьер", tier: 2, armor: 15, price: 650, unlockLevel: 35, stats: {"anomaly_Электра":1,"anomaly_Печка":1}, hitAbsorption: 8 },
+        { id: 8, name: "Разгрузка тактическая с бронепанелями", tier: 2, armor: 15, price: 650, unlockLevel: 40, stats: {"anomaly_Воронка":1,"anomaly_Мясорубка":1}, hitAbsorption: 8 },
+        { id: 9, name: "Бронежилет 6Б23", tier: 2, armor: 16, price: 689, unlockLevel: 45, stats: {"anomaly_Печка":2,"anomaly_Мясорубка":2}, hitAbsorption: 8 },
+        { id: 10, name: "Костюм Беркут", tier: 2, armor: 17, price: 741, unlockLevel: 50, stats: {"anomaly_Кислотный туман":2,"anomaly_Карусель":1}, hitAbsorption: 9 },
+        { id: 11, name: "Комбинезон Свобода-Новобранец", tier: 2, armor: 19, price: 819, unlockLevel: 55, stats: {"anomaly_Воронка":2,"anomaly_Мясорубка":2}, hitAbsorption: 10 },
+        { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, price: 910, unlockLevel: 60, stats: {"anomaly_Печка":2,"anomaly_Электра":1}, hitAbsorption: 10 },
+        { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, price: 1560, unlockLevel: 65, stats: {"anomaly_Электра":2,"anomaly_Печка":3}, hitAbsorption: 15 },
+        { id: 14, name: "Костюм Скат", tier: 3, armor: 31, price: 1612, unlockLevel: 70, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2}, hitAbsorption: 16 },
+        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, price: 1716, unlockLevel: 305, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2}, hitAbsorption: 17 },
+        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, price: 1768, unlockLevel: 75, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3}, hitAbsorption: 17 },
+        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, price: 1872, unlockLevel: 80, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2}, hitAbsorption: 18 },
+        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, price: 2600, unlockLevel: 85, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2}, hitAbsorption: 20 },
+        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, price: 3250, unlockLevel: 90, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2}, hitAbsorption: 23 },
+        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, price: 3393, unlockLevel: 95, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3}, hitAbsorption: 24 },
+        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, price: 3471, unlockLevel: 100, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3}, hitAbsorption: 24 },
+        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, price: 3757, unlockLevel: 105, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3}, hitAbsorption: 26 },
+        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, price: 4186, unlockLevel: 310, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 29 },
+        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, price: 5200, unlockLevel: 110, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 30 },
+        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, price: 10400, unlockLevel: 115, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4}, hitAbsorption: 38 },
+        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, price: 10543, unlockLevel: 120, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5}, hitAbsorption: 38 },
+        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, price: 10816, unlockLevel: 125, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5}, hitAbsorption: 39 },
+        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, price: 10959, unlockLevel: 315, stats: {"anomaly_Карусель":4,"anomaly_Печка":4}, hitAbsorption: 40 },
+        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, price: 11089, unlockLevel: 130, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3}, hitAbsorption: 40 },
+        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, price: 11648, unlockLevel: 135, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4}, hitAbsorption: 42 },
+        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, price: 15600, unlockLevel: 140, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5}, hitAbsorption: 43 },
+        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, price: 15600, unlockLevel: 145, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 43 },
+        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, price: 15782, unlockLevel: 150, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4}, hitAbsorption: 43 },
+        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, price: 15964, unlockLevel: 155, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6}, hitAbsorption: 44 },
+        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, price: 16146, unlockLevel: 320, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3}, hitAbsorption: 44 },
+        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, price: 16328, unlockLevel: 160, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6}, hitAbsorption: 45 },
+        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, price: 23400, unlockLevel: 165, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3}, hitAbsorption: 45 },
+        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, price: 23400, unlockLevel: 170, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6}, hitAbsorption: 45 },
+        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, price: 23660, unlockLevel: 175, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 46 },
+        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, price: 23920, unlockLevel: 180, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5}, hitAbsorption: 46 },
+        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, price: 24180, unlockLevel: 325, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6}, hitAbsorption: 47 },
+        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, price: 24440, unlockLevel: 185, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6}, hitAbsorption: 47 },
+        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, price: 33800, unlockLevel: 190, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4}, hitAbsorption: 48 },
+        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, price: 33800, unlockLevel: 195, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4}, hitAbsorption: 48 },
+        { id: 45, name: "Броня Стража", tier: 8, armor: 95, price: 33800, unlockLevel: 200, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8}, hitAbsorption: 48 },
+        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, price: 34151, unlockLevel: 205, stats: {"anomaly_Воронка":6,"anomaly_Печка":4}, hitAbsorption: 48 },
+        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, price: 34151, unlockLevel: 210, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3}, hitAbsorption: 48 },
+        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, price: 34515, unlockLevel: 330, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8}, hitAbsorption: 49 },
+        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, price: 46800, unlockLevel: 215, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5}, hitAbsorption: 49 },
+        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, price: 46800, unlockLevel: 220, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4}, hitAbsorption: 49 },
+        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, price: 46800, unlockLevel: 225, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4}, hitAbsorption: 49 },
+        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, price: 47281, unlockLevel: 230, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4}, hitAbsorption: 50 },
+        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, price: 47281, unlockLevel: 235, stats: {"anomaly_Электра":5,"anomaly_Карусель":7}, hitAbsorption: 50 },
+        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, price: 47749, unlockLevel: 335, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6}, hitAbsorption: 50 },
+        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, price: 65000, unlockLevel: 240, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5}, hitAbsorption: 50 },
+        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, price: 65000, unlockLevel: 245, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8}, hitAbsorption: 50 },
+        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, price: 65000, unlockLevel: 250, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4}, hitAbsorption: 50 },
+        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, price: 65650, unlockLevel: 255, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7}, hitAbsorption: 51 },
+        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, price: 66300, unlockLevel: 260, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6}, hitAbsorption: 51 },
+        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, price: 66950, unlockLevel: 340, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6}, hitAbsorption: 52 },
+        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, price: 91000, unlockLevel: 345, stats: {"anomaly_Электра":8,"anomaly_Жарка":5}, hitAbsorption: 58 },
+        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, price: 91000, unlockLevel: 350, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7}, hitAbsorption: 58 },
+        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, price: 91793, unlockLevel: 355, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10}, hitAbsorption: 58 },
+        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, price: 92586, unlockLevel: 265, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9}, hitAbsorption: 59 },
+        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, price: 93379, unlockLevel: 270, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8}, hitAbsorption: 59 },
+        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, price: 94159, unlockLevel: 360, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7}, hitAbsorption: 60 },
+        { id: 67, name: "Броня Легион", tier: 12, armor: 130, price: 123500, unlockLevel: 275, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11}, hitAbsorption: 65 },
+        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, price: 123500, unlockLevel: 365, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10}, hitAbsorption: 65 },
+        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, price: 123500, unlockLevel: 280, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6}, hitAbsorption: 65 },
+        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, price: 124449, unlockLevel: 370, stats: {"anomaly_Печка":11,"anomaly_Воронка":11}, hitAbsorption: 66 },
+        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, price: 125398, unlockLevel: 375, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6}, hitAbsorption: 66 },
+        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, price: 126347, unlockLevel: 380, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5}, hitAbsorption: 67 },
+        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, price: 169000, unlockLevel: 285, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12}, hitAbsorption: 75 },
+        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, price: 169000, unlockLevel: 385, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8}, hitAbsorption: 75 },
+        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, price: 169000, unlockLevel: 290, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8}, hitAbsorption: 75 },
+        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, price: 170131, unlockLevel: 390, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11}, hitAbsorption: 76 },
+        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, price: 171249, unlockLevel: 395, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10}, hitAbsorption: 76 },
+        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, price: 172380, unlockLevel: 400, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10}, hitAbsorption: 77 },
+        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, price: 234000, unlockLevel: 295, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11}, hitAbsorption: 90 },
+        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, price: 234000, unlockLevel: 405, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8}, hitAbsorption: 90 },
+        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, price: 234000, unlockLevel: 300, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10}, hitAbsorption: 90 },
+        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, price: 235300, unlockLevel: 410, stats: {"anomaly_Печка":13,"anomaly_Карусель":11}, hitAbsorption: 91 },
+        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, price: 236600, unlockLevel: 415, stats: {"anomaly_Печка":12,"anomaly_Жарка":11}, hitAbsorption: 91 },
+        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, price: 237900, unlockLevel: 420, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8}, hitAbsorption: 92 },
         { id: 85, name: "Плащ тёмного сталкера", tier: 14, armor: 666, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666}, hitAbsorption: 333 },
         { id: 86, name: "Исследовательский комбинезон A", tier: 4, armor: 25, price: 9360, isResearchSuit: true, stats: {"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9}, hitAbsorption: 13 },
         { id: 87, name: "Исследовательский комбинезон B", tier: 5, armor: 41, price: 20966, isResearchSuit: true, stats: {"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17}, hitAbsorption: 21 },
@@ -1161,6 +1167,99 @@ input[type='number'] { min-width:0; }
     // Иконки расходников (еда/вода/аптечки) — по названию предмета. Пока только эти 7, для
     // остального снаряжения (оружие/броня/артефакты) своих иконок нет, показываем как раньше
     const ITEM_ICONS = {
+        // Иконки брони (92 из 96 — у id 81-84 картинок пока нет)
+        'Комбинезон Юность': 'armor_icon_1.webp',
+        'Куртка кожаная армейская': 'armor_icon_2.webp',
+        'Ватник утеплённый': 'armor_icon_3.webp',
+        'Плащ-палатка ОЗК': 'armor_icon_4.webp',
+        'Комбинезон Комбат': 'armor_icon_5.webp',
+        'Роба сталкера': 'armor_icon_6.webp',
+        'Бронежилет Барьер': 'armor_icon_7.webp',
+        'Разгрузка тактическая с бронепанелями': 'armor_icon_8.webp',
+        'Бронежилет 6Б23': 'armor_icon_9.webp',
+        'Костюм Беркут': 'armor_icon_10.webp',
+        'Комбинезон Свобода-Новобранец': 'armor_icon_11.webp',
+        'Комбинезон Долг': 'armor_icon_12.webp',
+        'Комбинезон Ветер': 'armor_icon_13.webp',
+        'Костюм Скат': 'armor_icon_14.webp',
+        'Экзокостюм СЭВ': 'armor_icon_15.webp',
+        'Бронежилет 6Б43 Ратник': 'armor_icon_16.webp',
+        'Бронежилет Долга «Скала»': 'armor_icon_17.webp',
+        'Комбинезон Заря': 'armor_icon_18.webp',
+        'Бронежилет Выход': 'armor_icon_19.webp',
+        'Бронежилет 6Б45 Ратник-2': 'armor_icon_20.webp',
+        'Бронекостюм Монолит-Патрульный': 'armor_icon_21.webp',
+        'Костюм СИРИУС': 'armor_icon_22.webp',
+        'Экзокостюм Чистое небо': 'armor_icon_23.webp',
+        'Костюм Стража-Финал': 'armor_icon_24.webp',
+        'Броня Монолит': 'armor_icon_25.webp',
+        'Бронекостюм СКАТ-9М': 'armor_icon_26.webp',
+        'Бронежилет 6Б47 Ратник-3': 'armor_icon_27.webp',
+        'Экзокостюм Периметр-1': 'armor_icon_28.webp',
+        'Бронежилет 6Б57 Ратник-Элит': 'armor_icon_29.webp',
+        'Костюм Штурмовик': 'armor_icon_30.webp',
+        'Бронекостюм СЕВА': 'armor_icon_31.webp',
+        'Бронекостюм Долг-Элит': 'armor_icon_32.webp',
+        'Бронежилет 6Б13 Модерн': 'armor_icon_33.webp',
+        'Костюм Абсолют-2': 'armor_icon_34.webp',
+        'Экзокостюм Титан-Лайт': 'armor_icon_35.webp',
+        'Костюм Гроза': 'armor_icon_36.webp',
+        'Бронежилет 6Б59 Элит': 'armor_icon_37.webp',
+        'Бронежилет 6Б49 Ратник-4': 'armor_icon_38.webp',
+        'Костюм Ветер-Штурм': 'armor_icon_39.webp',
+        'Бронекостюм Титан-Про': 'armor_icon_40.webp',
+        'Экзокостюм Периметр-3': 'armor_icon_41.webp',
+        'Броня Монолит-Элит': 'armor_icon_42.webp',
+        'Бронекостюм Титан': 'armor_icon_43.webp',
+        'Костюм Аванпост': 'armor_icon_44.webp',
+        'Броня Стража': 'armor_icon_45.webp',
+        'Костюм Затвор-Броня': 'armor_icon_46.webp',
+        'Бронежилет 6Б51 Ратник-5': 'armor_icon_47.webp',
+        'Экзокостюм Периметр-4': 'armor_icon_48.webp',
+        'Защитный костюм Периметр': 'armor_icon_49.webp',
+        'Костюм Форпост': 'armor_icon_50.webp',
+        'Броня Стража-Элит': 'armor_icon_51.webp',
+        'Бронежилет 6Б61 Легенда': 'armor_icon_52.webp',
+        'Бронежилет 6Б53 Ратник-6': 'armor_icon_53.webp',
+        'Экзокостюм Бастион': 'armor_icon_54.webp',
+        'Костюм Последний Рубеж': 'armor_icon_55.webp',
+        'Костюм Абсолют': 'armor_icon_56.webp',
+        'Броня Периметр-Финал': 'armor_icon_57.webp',
+        'Бронежилет 6Б55 Ратник-Финал': 'armor_icon_58.webp',
+        'Бронежилет 6Б63 Легенда-Финал': 'armor_icon_59.webp',
+        'Экзокостюм Бастион-2': 'armor_icon_60.webp',
+        'Экзоскелет Монолит-11': 'armor_icon_61.webp',
+        'Экзоскелет Свобода': 'armor_icon_62.webp',
+        'Экзоскелет Атлант': 'armor_icon_63.webp',
+        'Бронекостюм Периметр-5': 'armor_icon_64.webp',
+        'Броня Легион-Лайт': 'armor_icon_65.webp',
+        'Экзоскелет Титан-Экстрим': 'armor_icon_66.webp',
+        'Броня Легион': 'armor_icon_67.webp',
+        'Экзоскелет Периметр-2': 'armor_icon_68.webp',
+        'Броня Стража-Легенда': 'armor_icon_69.webp',
+        'Экзоскелет Штурмовой': 'armor_icon_70.webp',
+        'Экзоскелет Периметр-Финал': 'armor_icon_71.webp',
+        'Экзокостюм Бастион-Финал': 'armor_icon_72.webp',
+        'Прототип Брони X-17': 'armor_icon_73.webp',
+        'Экзоскелет Крепость': 'armor_icon_74.webp',
+        'Броня Раскат': 'armor_icon_75.webp',
+        'Экзоскелет Крепость-2': 'armor_icon_76.webp',
+        'Экзоскелет Реликт': 'armor_icon_77.webp',
+        'Экзокостюм Возмездие': 'armor_icon_78.webp',
+        'Броня Стрелка': 'armor_icon_79.webp',
+        'Экзоскелет': 'armor_icon_80.webp',
+        'Плащ тёмного сталкера': 'armor_icon_85.webp',
+        'Исследовательский комбинезон A': 'armor_icon_86.webp',
+        'Исследовательский комбинезон B': 'armor_icon_87.webp',
+        'Исследовательский комбинезон C': 'armor_icon_88.webp',
+        'Исследовательский комбинезон D': 'armor_icon_89.webp',
+        'Исследовательский комбинезон E': 'armor_icon_90.webp',
+        'Исследовательский комбинезон F': 'armor_icon_91.webp',
+        'Исследовательский комбинезон G': 'armor_icon_92.webp',
+        'Исследовательский комбинезон H': 'armor_icon_93.webp',
+        'Исследовательский комбинезон I': 'armor_icon_94.webp',
+        'Исследовательский комбинезон J': 'armor_icon_95.webp',
+        'Исследовательский комбинезон K': 'armor_icon_96.webp',
         'Хлеб': 'hleb.jpg',
         'Тушенка': 'tushenka.jpg',
         'Вода': 'voda.jpg',
@@ -1394,6 +1493,111 @@ input[type='number'] { min-width:0; }
         'Glock 22': 'pistol_glock22.png',
         'SIG Sauer P229': 'pistol_sig_p229.png'
     };
+    // Картинка персонажа в надетой броне (для СНАРЯЖЕНИЕ-портрета в инвентаре) — 92 из 96
+    // (у id 81-84 картинок пока нет, для них используется портрет по умолчанию)
+    const ARMOR_CHAR_IMAGES = {
+        'Комбинезон Юность': 'armor_char_1.webp',
+        'Куртка кожаная армейская': 'armor_char_2.webp',
+        'Ватник утеплённый': 'armor_char_3.webp',
+        'Плащ-палатка ОЗК': 'armor_char_4.webp',
+        'Комбинезон Комбат': 'armor_char_5.webp',
+        'Роба сталкера': 'armor_char_6.webp',
+        'Бронежилет Барьер': 'armor_char_7.webp',
+        'Разгрузка тактическая с бронепанелями': 'armor_char_8.webp',
+        'Бронежилет 6Б23': 'armor_char_9.webp',
+        'Костюм Беркут': 'armor_char_10.webp',
+        'Комбинезон Свобода-Новобранец': 'armor_char_11.webp',
+        'Комбинезон Долг': 'armor_char_12.webp',
+        'Комбинезон Ветер': 'armor_char_13.webp',
+        'Костюм Скат': 'armor_char_14.webp',
+        'Экзокостюм СЭВ': 'armor_char_15.webp',
+        'Бронежилет 6Б43 Ратник': 'armor_char_16.webp',
+        'Бронежилет Долга «Скала»': 'armor_char_17.webp',
+        'Комбинезон Заря': 'armor_char_18.webp',
+        'Бронежилет Выход': 'armor_char_19.webp',
+        'Бронежилет 6Б45 Ратник-2': 'armor_char_20.webp',
+        'Бронекостюм Монолит-Патрульный': 'armor_char_21.webp',
+        'Костюм СИРИУС': 'armor_char_22.webp',
+        'Экзокостюм Чистое небо': 'armor_char_23.webp',
+        'Костюм Стража-Финал': 'armor_char_24.webp',
+        'Броня Монолит': 'armor_char_25.webp',
+        'Бронекостюм СКАТ-9М': 'armor_char_26.webp',
+        'Бронежилет 6Б47 Ратник-3': 'armor_char_27.webp',
+        'Экзокостюм Периметр-1': 'armor_char_28.webp',
+        'Бронежилет 6Б57 Ратник-Элит': 'armor_char_29.webp',
+        'Костюм Штурмовик': 'armor_char_30.webp',
+        'Бронекостюм СЕВА': 'armor_char_31.webp',
+        'Бронекостюм Долг-Элит': 'armor_char_32.webp',
+        'Бронежилет 6Б13 Модерн': 'armor_char_33.webp',
+        'Костюм Абсолют-2': 'armor_char_34.webp',
+        'Экзокостюм Титан-Лайт': 'armor_char_35.webp',
+        'Костюм Гроза': 'armor_char_36.webp',
+        'Бронежилет 6Б59 Элит': 'armor_char_37.webp',
+        'Бронежилет 6Б49 Ратник-4': 'armor_char_38.webp',
+        'Костюм Ветер-Штурм': 'armor_char_39.webp',
+        'Бронекостюм Титан-Про': 'armor_char_40.webp',
+        'Экзокостюм Периметр-3': 'armor_char_41.webp',
+        'Броня Монолит-Элит': 'armor_char_42.webp',
+        'Бронекостюм Титан': 'armor_char_43.webp',
+        'Костюм Аванпост': 'armor_char_44.webp',
+        'Броня Стража': 'armor_char_45.webp',
+        'Костюм Затвор-Броня': 'armor_char_46.webp',
+        'Бронежилет 6Б51 Ратник-5': 'armor_char_47.webp',
+        'Экзокостюм Периметр-4': 'armor_char_48.webp',
+        'Защитный костюм Периметр': 'armor_char_49.webp',
+        'Костюм Форпост': 'armor_char_50.webp',
+        'Броня Стража-Элит': 'armor_char_51.webp',
+        'Бронежилет 6Б61 Легенда': 'armor_char_52.webp',
+        'Бронежилет 6Б53 Ратник-6': 'armor_char_53.webp',
+        'Экзокостюм Бастион': 'armor_char_54.webp',
+        'Костюм Последний Рубеж': 'armor_char_55.webp',
+        'Костюм Абсолют': 'armor_char_56.webp',
+        'Броня Периметр-Финал': 'armor_char_57.webp',
+        'Бронежилет 6Б55 Ратник-Финал': 'armor_char_58.webp',
+        'Бронежилет 6Б63 Легенда-Финал': 'armor_char_59.webp',
+        'Экзокостюм Бастион-2': 'armor_char_60.webp',
+        'Экзоскелет Монолит-11': 'armor_char_61.webp',
+        'Экзоскелет Свобода': 'armor_char_62.webp',
+        'Экзоскелет Атлант': 'armor_char_63.webp',
+        'Бронекостюм Периметр-5': 'armor_char_64.webp',
+        'Броня Легион-Лайт': 'armor_char_65.webp',
+        'Экзоскелет Титан-Экстрим': 'armor_char_66.webp',
+        'Броня Легион': 'armor_char_67.webp',
+        'Экзоскелет Периметр-2': 'armor_char_68.webp',
+        'Броня Стража-Легенда': 'armor_char_69.webp',
+        'Экзоскелет Штурмовой': 'armor_char_70.webp',
+        'Экзоскелет Периметр-Финал': 'armor_char_71.webp',
+        'Экзокостюм Бастион-Финал': 'armor_char_72.webp',
+        'Прототип Брони X-17': 'armor_char_73.webp',
+        'Экзоскелет Крепость': 'armor_char_74.webp',
+        'Броня Раскат': 'armor_char_75.webp',
+        'Экзоскелет Крепость-2': 'armor_char_76.webp',
+        'Экзоскелет Реликт': 'armor_char_77.webp',
+        'Экзокостюм Возмездие': 'armor_char_78.webp',
+        'Броня Стрелка': 'armor_char_79.webp',
+        'Экзоскелет': 'armor_char_80.webp',
+        'Плащ тёмного сталкера': 'armor_char_85.webp',
+        'Исследовательский комбинезон A': 'armor_char_86.webp',
+        'Исследовательский комбинезон B': 'armor_char_87.webp',
+        'Исследовательский комбинезон C': 'armor_char_88.webp',
+        'Исследовательский комбинезон D': 'armor_char_89.webp',
+        'Исследовательский комбинезон E': 'armor_char_90.webp',
+        'Исследовательский комбинезон F': 'armor_char_91.webp',
+        'Исследовательский комбинезон G': 'armor_char_92.webp',
+        'Исследовательский комбинезон H': 'armor_char_93.webp',
+        'Исследовательский комбинезон I': 'armor_char_94.webp',
+        'Исследовательский комбинезон J': 'armor_char_95.webp',
+        'Исследовательский комбинезон K': 'armor_char_96.webp',
+    };
+    const DEFAULT_CHARACTER_PORTRAIT = 'character_portrait.png';
+    function updateCharacterPortrait() {
+        const img = document.getElementById('characterPortraitImg');
+        if (!img) return;
+        const parsed = parseGearName(player.armor.name);
+        const file = ARMOR_CHAR_IMAGES[parsed.baseName] || DEFAULT_CHARACTER_PORTRAIT;
+        const newSrc = `${SERVER_URL}/icons/${file}`;
+        if (img.getAttribute('src') !== newSrc) img.src = newSrc;
+    }
     // Запасной значок для ЛЮБОГО именного артефакта тира 9 — у них нет фиксированного названия
     // (каждый игрок называет свой сам), поэтому обычная запись по имени не подходит. getItemIcon
     // ниже сначала ищет точное совпадение в ITEM_ICONS, а если не находит — проверяет через
@@ -2119,7 +2323,9 @@ input[type='number'] { min-width:0; }
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
                 <h4>${titleText}</h4>
                 ${avatarSrc ? `<div style="text-align:center; margin-bottom:10px;">
-                    <img src="${avatarSrc}" style="width:140px; height:140px; border-radius:50%; object-fit:cover; background:#222; border:3px solid #8a7a4a;" onerror="this.style.display='none'">
+                    <div style="display:inline-block; width:146px; height:146px; border-radius:50%; overflow:hidden;">
+                        <img src="${avatarSrc}" style="width:100%; height:100%; border-radius:50%; object-fit:cover; background:#222; border:3px solid #8a7a4a;" onerror="this.style.display='none'">
+                    </div>
                     ${isAdminProfile && isOwnProfile ? `<br><button onclick="pickAndUploadAvatar()" style="width:auto; padding:6px 14px; margin-top:8px; font-size:12px;">📷 Сменить аватарку</button>` : ''}
                 </div>` : ''}
                 ${(data.nickname || data.username) ? `<p>Имя: ${escapeHtml(data.nickname || data.username)}</p>` : ''}
@@ -3670,9 +3876,11 @@ input[type='number'] { min-width:0; }
     function renderStarsShop() {
         const el = document.getElementById('starsShopItems');
         const coinsHtml = STAR_PACKAGES.map(p => `
-            <div class="shop-item">
-                <div>${p.title} — 🪙 ${p.coins.toLocaleString('ru-RU')}</div>
-                <div class="price">⭐ ${p.stars}</div>
+            <div class="shop-item shop-item-coins">
+                <div class="shop-item-coins-info">
+                    <div>${p.title} — 🪙 ${p.coins.toLocaleString('ru-RU')}</div>
+                    <div class="price">⭐ ${p.stars}</div>
+                </div>
                 <button onclick="buyStarsPackage('${p.id}')">Купить</button>
             </div>
         `).join('');
@@ -4886,6 +5094,10 @@ input[type='number'] { min-width:0; }
         const parsed = parseGearName(itemName);
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
+            if (!weapon.adminOnly && player.level < (weapon.unlockLevel || 0)) {
+                showGameAlert(`Это оружие откроется на ${weapon.unlockLevel} уровне.`);
+                return false;
+            }
             const old = player.weapon.name;
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
@@ -4897,6 +5109,17 @@ input[type='number'] { min-width:0; }
         }
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
+            if (!armor.adminOnly) {
+                if (armor.isResearchSuit) {
+                    if (armor.tier > getResearchSuitUnlockTier(player.level)) {
+                        showGameAlert(`Этот комбинезон вам ещё не доступен по уровню.`);
+                        return false;
+                    }
+                } else if (player.level < (armor.unlockLevel || 0)) {
+                    showGameAlert(`Эта броня откроется на ${armor.unlockLevel} уровне.`);
+                    return false;
+                }
+            }
             const old = player.armor.name;
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
@@ -5376,7 +5599,9 @@ input[type='number'] { min-width:0; }
     // Исследовательские комбинезоны начинаются с тира 4 (а не 1) и идут до 14 — 11 тиров,
     // раскрываются по уровню с тем же шагом плотности, что и детекторы
     function getResearchSuitUnlockTier(level) {
-        return Math.min(14, 4 + Math.floor((Number(level) || 1) / 15));
+        // Исследовательские комбинезоны открываются каждые 25 уровней игрока: A (тир 4) доступен
+        // с самого начала, B — с 25 уровня, C — с 50, ..., K (тир 14, самый мощный) — с 250 уровня.
+        return Math.min(14, 4 + Math.floor((Number(level) || 1) / 25));
     }
 
     function openScientistsBuyView() {
@@ -5800,26 +6025,30 @@ input[type='number'] { min-width:0; }
     }
 
     // ===== ИНВЕНТАРЬ =====
-    function renderInventory() {
-
-        // Иконки-заглушки для пустых слотов экипировки — заполняются по мере того, как пользователь
-        // присылает картинки под каждую категорию. Когда для надетого предмета есть своя иконка
-        // (ITEM_ICONS), она рисуется поверх и полностью закрывает собой эту заглушку
-        const EMPTY_SLOT_ICONS = { weapon: 'empty_slot_weapon.png', armor: 'empty_slot_armor.png', detector: 'empty_slot_detector.png' };
-        // Компактная ячейка экипировки — размером с ячейку инвентаря (та же .belt-slot верстка,
-        // что и у быстрых слотов), без отдельного текста названия (не помещается при таком размере;
-        // полное название/статы по-прежнему видны в модалке по тапу через openEquippedItemActions)
-        const gearBoxSmall = (emoji, name, slotType) => {
-            const icon = ITEM_ICONS[name];
-            const emptyIcon = EMPTY_SLOT_ICONS[slotType];
-            return `
-            <div class="belt-slot" title="${name}" onclick="openEquippedItemActions('${slotType}')">
+    // Иконки-заглушки для пустых слотов экипировки — заполняются по мере того, как пользователь
+    // присылает картинки под каждую категорию. Когда для надетого предмета есть своя иконка
+    // (ITEM_ICONS), она рисуется поверх и полностью закрывает собой эту заглушку. Общие функции —
+    // используются и в инвентаре (обёрнуты в .belt-slot), и в рейде (ячейки рядом с быстрыми слотами,
+    // там .belt-slot уже есть в разметке — сюда идёт только содержимое)
+    const EMPTY_SLOT_ICONS = { weapon: 'empty_slot_weapon.png', armor: 'empty_slot_armor.png', detector: 'empty_slot_detector.png' };
+    const gearCellInnerHtml = (emoji, name, slotType) => {
+        const emptyIcon = EMPTY_SLOT_ICONS[slotType];
+        const icon = ITEM_ICONS[name];
+        return `
                 ${emptyIcon ? `<img src="${SERVER_URL}/icons/${emptyIcon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
                 ${icon
                     ? `<img src="${SERVER_URL}/icons/${icon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:1;" onerror="this.style.display='none'">`
-                    : (emptyIcon ? '' : `<span style="font-size:16px;">${emoji}</span>`)}
+                    : (emptyIcon ? '' : `<span style="font-size:16px;">${emoji}</span>`)}`;
+    };
+    // Компактная ячейка экипировки — размером с ячейку инвентаря (та же .belt-slot верстка,
+    // что и у быстрых слотов), без отдельного текста названия (не помещается при таком размере;
+    // полное название/статы по-прежнему видны в модалке по тапу через openEquippedItemActions)
+    const gearBoxSmall = (emoji, name, slotType) => `
+            <div class="belt-slot" title="${name}" onclick="openEquippedItemActions('${slotType}')">${gearCellInnerHtml(emoji, name, slotType)}
             </div>`;
-        };
+
+    function renderInventory() {
+        updateCharacterPortrait();
 
         const artifactGrid = document.getElementById('artifactSlotsGrid');
         artifactGrid.innerHTML = player.artifactSlots.map((name, i) => {
@@ -5915,6 +6144,15 @@ input[type='number'] { min-width:0; }
 
     // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
     function renderQuickSlots() {
+        // Ячейки надетых оружия/брони/детектора рядом с быстрыми слотами — те же иконки,
+        // что и в инвентаре (gearCellInnerHtml), только без клика "Одеть" — тут только просмотр
+        const weaponEl = document.getElementById('raidEquipWeapon');
+        if (weaponEl) { weaponEl.title = player.weapon.name; weaponEl.innerHTML = gearCellInnerHtml('⚔️', player.weapon.name, 'weapon'); }
+        const armorEl = document.getElementById('raidEquipArmor');
+        if (armorEl) { armorEl.title = player.armor.name; armorEl.innerHTML = gearCellInnerHtml('🛡️', player.armor.name, 'armor'); }
+        const detectorEl = document.getElementById('raidEquipDetector');
+        if (detectorEl) { detectorEl.title = player.detector.name; detectorEl.innerHTML = gearCellInnerHtml('📡', player.detector.name, 'detector'); }
+
         const EMPTY_QUICKSLOT_ICON = `<img src="${SERVER_URL}/icons/empty_slot_quickslot.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">`;
         const slots = document.querySelectorAll('#quickSlots .quick-slot');
         slots.forEach((el, i) => {
@@ -6097,18 +6335,13 @@ input[type='number'] { min-width:0; }
     // ===== ТОРГОВЕЦ =====
     // Общий каталог для покупки — расходники, оружие, броня и детекторы (детекторы теперь тут, не отдельным экраном)
     function getShopCatalog() {
-        const playerTier = getPlayerTier();
-        // Броня по-прежнему открывается по тиру снаряжения игрока (как раньше) — тут ничего не менялось.
-        // Внутри каждого доступного по тиру блока сначала открыты только 3 из 6 видов (самые слабые
-        // по статам в тире, они первые в массиве) — остальные 3 открываются по достижении уровня tier*10
-        const unlockByTierAndLevel = (list) => list.filter(item => {
-            if (item.adminOnly) return false; // спецпредметы админа никогда не продаются обычным способом
-            if (item.isResearchSuit) return false; // исследовательские комбинезоны — только в Бункере экологов
-            if (item.tier > playerTier) return false;
-            const tierItems = list.filter(x => x.tier === item.tier);
-            const indexInTier = tierItems.indexOf(item);
-            if (indexInTier < 3) return true;
-            return player.level >= item.tier * 10;
+        // Броня теперь открывается СТРОГО по уровню игрока (unlockLevel), как и оружие —
+        // каждые 5 уровней открывается ровно 1 новый предмет брони (от слабой защиты к сильной,
+        // экзокостюмы и экзоскелеты — в самом конце). Исследовательские комбинезоны сюда не входят —
+        // они продаются только в Бункере экологов.
+        const unlockArmorByLevel = () => armorItems.filter(a => {
+            if (a.adminOnly || a.isResearchSuit) return false;
+            return player.level >= (a.unlockLevel || 0);
         });
 
         // Оружие теперь открывается СТРОГО по уровню игрока (unlockLevel), не по тиру снаряжения —
@@ -6129,7 +6362,7 @@ input[type='number'] { min-width:0; }
                 price: (c.type === 'medkit' || c.type === 'antirad') ? Math.round(c.price * 1.01) : c.price
             })),
             ...unlockWeaponsByLevel().map(w => ({ ...w, category: 'weapon' })),
-            ...unlockByTierAndLevel(armorItems).map(a => ({ ...a, category: 'armor' }))
+            ...unlockArmorByLevel().map(a => ({ ...a, category: 'armor' }))
             // Детекторы у Торговца больше не продаются — только у Бункера экологов, и выдаются по уровню игрока
         ];
     }
