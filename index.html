@@ -1645,11 +1645,16 @@ input[type='number'] { min-width:0; }
         return null;
     }
     function getItemIcon(name) {
-        const direct = ITEM_ICONS[name];
+        // Снимаем суффикс улучшения ("+N") и невидимый суффикс уникальности (у второго и
+        // последующих экземпляров непарного предмета) ПЕРЕД поиском иконки — иначе у любого
+        // улучшенного оружия/брони или у второго экземпляра одного и того же предмета иконка не
+        // находилась (ключа с суффиксом в словаре нет) и вместо картинки показывался голый текст
+        const cleanName = (typeof parseGearName === 'function') ? parseGearName(name).baseName : name;
+        const direct = ITEM_ICONS[cleanName] || ITEM_ICONS[name];
         if (direct) return direct;
         const def = (typeof findArtifactDef === 'function') ? findArtifactDef(name) : null;
         if (def && def.isNamedArtifact) return NAMED_ARTIFACT_ICON;
-        const isHybridName = name.startsWith('Гибрид ') || name.startsWith('Артефакт гибрид');
+        const isHybridName = cleanName.startsWith('Гибрид ') || cleanName.startsWith('Артефакт гибрид');
         if (def && isHybridName && typeof def.gen === 'number') {
             const hybridFile = getHybridIconFile(def.gen);
             if (hybridFile) return hybridFile;
