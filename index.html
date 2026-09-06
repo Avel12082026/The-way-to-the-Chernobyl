@@ -6119,7 +6119,7 @@ input[type='number'] { min-width:0; }
     const EMPTY_SLOT_ICONS = { weapon: 'empty_slot_weapon.png', armor: 'empty_slot_armor.png', detector: 'empty_slot_detector.png' };
     const gearCellInnerHtml = (emoji, name, slotType) => {
         const emptyIcon = EMPTY_SLOT_ICONS[slotType];
-        const icon = ITEM_ICONS[name];
+        const icon = getItemIcon(name);
         return `
                 ${emptyIcon ? `<img src="${SERVER_URL}/icons/${emptyIcon}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">` : ''}
                 ${icon
