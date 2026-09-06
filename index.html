@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- AUDIT_HARDENED_BUILD_2026_09 -->
 
 <html lang="ru">
 <head>
@@ -705,8 +706,8 @@ input[type='number'] { min-width:0; }
         radiation: 0, // 0-100, растёт от поиска артефактов в аномалиях; снимается спецаптечками
         radiationResist: 0, // от надетых артефактов — снижает получаемую радиацию при поиске
         anomalyResist: {}, // от надетых артефактов/брони — {имя аномалии: число} снижает риск при поиске именно в этой аномалии
-        weapon: { name: 'Пистолет Макарова', tier: 1, dmg: 10 },
-        armor: { name: 'Комбинезон Юность', tier: 1, armor: 5 },
+        weapon: { name: 'Beretta 21A Bobcat', tier: 1, dmg: 80 },
+        armor: { name: 'Комбинезон Юность', tier: 1, armor: 5, hitAbsorption: 3 },
         detector: { name: 'РИПЕР', tier: 1 },
         maxHealth: 100,
         inventory: {},
@@ -1855,42 +1856,87 @@ input[type='number'] { min-width:0; }
         return Number(arenaKillMilestone) === 100000 ? ' <span style="color:#e6c229;">Легенда арены</span>' : '';
     }
 
-    let saveFailureWarned = false; // чтобы не спамить алертами на каждое действие при повторных сбоях
+    let saveFailureWarned = false;
+    let playerStateVersion = 0;
+    let saveInFlight = false;
+    let savePending = false;
 
     function saveGame() {
-        const initData = window.Telegram?.WebApp?.initData;
-        if (!initData) return; // вне Telegram сохранение недоступно — так и должно быть
+        if (!window.Telegram?.WebApp?.initData) return;
+        savePending = true;
+        if (!saveInFlight) flushSaveQueue();
+    }
 
-        fetch(`${SERVER_URL}/api/player`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData, data: player })
-        })
-        .then(res => res.json())
-        .then(result => {
-            if (!result.success) {
-                console.error('Сохранение не удалось:', result.error);
-                if (!saveFailureWarned) {
-                    saveFailureWarned = true;
-                    showGameAlert('⚠️ Прогресс НЕ сохраняется! Ошибка: ' + (result.error || 'неизвестная') + '\nЗакройте игру и откройте заново через бота. Если ошибка повторится — сообщите об этом.');
-                }
-            } else {
-                saveFailureWarned = false; // сохранение снова работает — сбрасываем флаг
-            }
-        })
-        .catch((err) => {
-            console.error('Ошибка сети при сохранении:', err);
+    async function reloadPrivatePlayerState() {
+        const initData=window.Telegram?.WebApp?.initData;
+        if(!initData) return null;
+        const res=await fetch(`${SERVER_URL}/api/player/private`,{
+            method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({initData})
         });
+        const data=await res.json();
+        if(data){
+            playerStateVersion=Number(data._stateVersion)||0;
+            delete data._stateVersion;
+            Object.keys(player).forEach(k=>delete player[k]);
+            Object.assign(player,data);
+            sanitizePlayerNumbers();
+            reinjectCraftedArtifacts();
+            updateUI();
+        }
+        return data;
+    }
+
+    async function flushSaveQueue() {
+        if(saveInFlight) return;
+        const initData=window.Telegram?.WebApp?.initData;
+        if(!initData) return;
+        saveInFlight=true;
+        try{
+            while(savePending){
+                savePending=false;
+                const snapshot=JSON.parse(JSON.stringify(player));
+                let result;
+                try{
+                    const r=await fetch(`${SERVER_URL}/api/player`,{
+                        method:'POST',headers:{'Content-Type':'application/json'},
+                        body:JSON.stringify({initData,data:snapshot,stateVersion:playerStateVersion})
+                    });
+                    result=await r.json();
+                }catch(e){ console.error('Ошибка сети при сохранении:',e); savePending=true; break; }
+                if(result?.success){
+                    playerStateVersion=Number(result.stateVersion)||playerStateVersion;
+                    saveFailureWarned=false;
+                }else if(result?.conflict){
+                    await reloadPrivatePlayerState();
+                    savePending=false;
+                }else{
+                    console.error('Сохранение не удалось:',result?.error);
+                    if(!saveFailureWarned){
+                        saveFailureWarned=true;
+                        showGameAlert('⚠️ Прогресс НЕ сохраняется! Ошибка: '+(result?.error||'неизвестная'));
+                    }
+                }
+            }
+        } finally {
+            saveInFlight=false;
+            if(savePending) setTimeout(flushSaveQueue,250);
+        }
     }
 
     function loadGame() {
         const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
         const userId = tgUser ? tgUser.id : 'guest';
         
-        fetch(`${SERVER_URL}/api/player/${userId}`)
+        fetch(`${SERVER_URL}/api/player/private`, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
+        })
             .then(res => res.json())
             .then(data => {
                 if (data) {
+                    playerStateVersion = Number(data._stateVersion) || 0;
+                    delete data._stateVersion;
                     Object.assign(player, data);
                 } else {
                     // Данных на сервере нет вообще — это самый первый вход нового игрока в игру.
@@ -4123,14 +4169,7 @@ input[type='number'] { min-width:0; }
                 const best = availableMedkits.sort((a, b) => b.restore - a.restore)[0]; // используем самую сильную доступную
                 player.inventory[best.name]--;
                 if (player.inventory[best.name] <= 0) delete player.inventory[best.name];
-                battleMedkitsUsed++;
-                player.health = Math.min(player.maxHealth, player.health + best.restore);
-                // Живучесть: точно +0.1 за каждое использование медикамента (без общего замедления
-                // роста перков — здесь пользователь явно указал точное число, как раньше для удачи),
-                // и ровно на столько же растёт maxHealth — бонус к здоровью всегда равен значению перка
-                const prevVitality = Number(player.vitality) || 0;
-                player.vitality = Math.min(100, prevVitality + 0.1);
-                player.maxHealth += (player.vitality - prevVitality);
+                applyConsumableEffect(best, true);
                 raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP. (Аптечек на этот бой: ${BATTLE_MEDKIT_LIMIT - battleMedkitsUsed}/${BATTLE_MEDKIT_LIMIT})`);
                 updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
             } else {
@@ -4183,11 +4222,15 @@ input[type='number'] { min-width:0; }
             player.coins += coinsReward;
             player.exp += currentEnemy.exp;
             if (!isNpc && currentEnemy.loot) {
-                // Фракция "Долг" — с мутантов падает на 1 часть тела больше (итого 2 вместо 1)
-                // "Экзокостюм Апокалипсис" — ещё +2 части тела сверху (не считая фракционного бонуса)
-                let bodyPartQty = 1 + getFactionBonuses(null).mutantBonusBodyParts;
-                if (isEquippedArmor('Экзокостюм Апокалипсис')) bodyPartQty += 2;
-                player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + bodyPartQty;
+                // lootChance теперь реально определяет выпадение основной части тела.
+                if (Math.random() < Math.max(0, Math.min(1, Number(currentEnemy.lootChance) || 0))) {
+                    let bodyPartQty = 1 + getFactionBonuses(null).mutantBonusBodyParts;
+                    if (isEquippedArmor('Экзокостюм Апокалипсис')) bodyPartQty += 2;
+                    player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + bodyPartQty;
+                    raidLogs.push(`🥩 Получен трофей: ${currentEnemy.loot} ×${bodyPartQty}`);
+                } else {
+                    raidLogs.push('🥩 Трофей с мутанта не выпал.');
+                }
             }
             // Некоторые мутанты (Излом, Лось, Электро химера) дополнительно роняют случайный артефакт в заданном диапазоне тиров
             if (!isNpc && currentEnemy.bonusArtifactTierRange) {
@@ -4195,7 +4238,7 @@ input[type='number'] { min-width:0; }
                 // ВАЖНО: пул только из БАЗОВЫХ артефактов — гибриды (в т.ч. чужие, оказавшиеся в этом же
                 // рантайм-массиве после подгрузки) исключаются, иначе мутант мог "уронить" чей-то
                 // персональный гибрид под чужим именем
-                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
+                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT && !a.adminOnly && !a.isNamedArtifact && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
                 if (pool.length > 0) {
                     const art = pool[Math.floor(Math.random() * pool.length)];
                     addNonStackingItem(art.name);
@@ -4276,8 +4319,9 @@ input[type='number'] { min-width:0; }
                 player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
                 player.stats.mutantsByTier = player.stats.mutantsByTier || {};
                 player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
-                // Мутант последнего (14) тира — особо ценная добыча: 2 жетона сталкера для Бункера экологов
-                if (currentEnemy.tier === 14) {
+                // Жетоны выдаются только за реально максимальный тир текущего каталога мутантов.
+                const maxMutantTier = Math.max(...mutants.map(m => Number(m.tier) || 0));
+                if (currentEnemy.tier === maxMutantTier) {
                     player.breedCredits = (Number(player.breedCredits) || 0) + 2;
                     raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона сталкера.');
                 }
@@ -4940,8 +4984,9 @@ input[type='number'] { min-width:0; }
         const randomIndex = Math.floor(Math.random() * pool.length);
         const npc = pool[randomIndex];
         // Случайное оружие и броня из 6 вариантов данного тира — при каждой встрече своё сочетание
-        const tierWeapons = weapons.filter(w => w.tier === npc.tier);
-        const tierArmors = armorItems.filter(a => a.tier === npc.tier);
+        // Админские и платные предметы никогда не являются обычным NPC-лутом.
+        const tierWeapons = weapons.filter(w => w.tier === npc.tier && !w.adminOnly && !w.isPremiumWeapon);
+        const tierArmors = armorItems.filter(a => a.tier === npc.tier && !a.adminOnly && !a.isPremiumArmor);
         const weapon = tierWeapons[Math.floor(Math.random() * tierWeapons.length)] || weapons[0];
         const armor = tierArmors[Math.floor(Math.random() * tierArmors.length)] || armorItems[0];
         return { ...npc, weapon, armor };
@@ -5237,8 +5282,10 @@ input[type='number'] { min-width:0; }
         // экземпляр из пары одинаковых предметов бесследно исчезает (можно было исчезнуть только в этом случае,
         // поскольку это единственная ситуация, когда старое и новое имя совпадают)
         const parsed = parseGearName(itemName);
+        const isGameAdmin = String(window.Telegram?.WebApp?.initDataUnsafe?.user?.id || '') === String(typeof ADMIN_ID !== 'undefined' ? ADMIN_ID : '');
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
+            if (weapon.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
             if (!weapon.adminOnly && player.level < (weapon.unlockLevel || 0)) {
                 showGameAlert(`Это оружие откроется на ${weapon.unlockLevel} уровне.`);
                 return false;
@@ -5254,6 +5301,7 @@ input[type='number'] { min-width:0; }
         }
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
+            if (armor.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
             if (!armor.adminOnly) {
                 if (armor.isResearchSuit) {
                     if (armor.tier > getResearchSuitUnlockTier(player.level)) {
@@ -5652,105 +5700,42 @@ input[type='number'] { min-width:0; }
         renderScientists();
     }
 
-    function doBreedArtifacts() {
+    async function doBreedArtifacts() {
         if (!breedSlot1 || !breedSlot2) { showGameAlert('Заполните оба слота артефактами.'); return; }
-        const a1 = findArtifactDef(breedSlot1);
-        const a2 = findArtifactDef(breedSlot2);
-        if (!a1 || !a2) { showGameAlert('Один из выбранных артефактов не найден.'); return; }
-        if (a1.isNamedArtifact || a2.isNamedArtifact) {
-            showGameAlert('Именные артефакты тира 9 нельзя скрещивать — это уникальные подарки первым 100 игрокам.');
+        // Быстрая клиентская проверка UX; окончательная проверка и списание выполняются сервером.
+        if (breedSlot1 === breedSlot2 && (Number(player.inventory[breedSlot1]) || 0) < 2) {
+            showGameAlert('Для двух одинаковых родителей нужны два отдельных экземпляра.');
             return;
         }
-        if (!player.inventory[breedSlot1] || !player.inventory[breedSlot2]) {
-            showGameAlert('Одного из выбранных артефактов уже нет в инвентаре.');
-            breedSlot1 = null; breedSlot2 = null; renderScientists();
-            return;
-        }
-        const gen1 = a1.gen || 0;
-        if (gen1 >= BREED_MAX_GEN) {
-            showGameAlert(`Артефакт в слоте 1 уже достиг максимума улучшений (${BREED_MAX_GEN}).`);
-            return;
-        }
-
-        // Стоимость селекции растёт с каждым уровнем: на 1-й уровень нужен 1 жетон сталкера,
-        // на 2-й — 2 жетона, и так далее (стоимость = номер получаемого поколения)
-        const tokenCost = gen1 + 1;
-        if ((Number(player.breedCredits) || 0) < tokenCost) {
-            showGameAlert(`Нужно 🧬 ${tokenCost} Жетон(ов) сталкера для селекции ${tokenCost} уровня (сейчас: ${Number(player.breedCredits) || 0}).`);
-            return;
-        }
-
-        // Списываем жетоны и оба артефакта
-        player.breedCredits = (Number(player.breedCredits) || 0) - tokenCost;
-        player.inventory[breedSlot1]--;
-        if (player.inventory[breedSlot1] <= 0) delete player.inventory[breedSlot1];
-        player.inventory[breedSlot2]--;
-        if (player.inventory[breedSlot2] <= 0) delete player.inventory[breedSlot2];
-
-        // Новый артефакт — сумма характеристик родителей, но с ограничением по КАЖДОМУ стату отдельно,
-        // растущим ЛИНЕЙНО вместе с поколением результата. Без этого повторное скрещивание уже
-        // скрещенных гибридов друг с другом давало ЭКСПОНЕНЦИАЛЬНЫЙ рост (удвоение за поколение) —
-        // абсурдные значения статов. Фиксированный (не растущий) потолок тоже не годился: рост упирался
-        // в него уже к 2-3 поколению и дальше не двигался. Потолок, растущий с поколением, даёт плавный
-        // продолжающийся рост вплоть до 20-го поколения, но кратно медленнее исходной формулы
-        const resultTier = Math.max(a1.tier, a2.tier);
-        const resultGen = gen1 + 1;
-        const perStatCap = resultTier * 10 * Math.min(resultGen, BREED_MAX_GEN); // растёт с каждым поколением
-
-        // Собираем ВСЕ ключи статов, встречающиеся хотя бы у одного из родителей
-        const allKeys = new Set([...Object.keys(a1.stats), ...Object.keys(a2.stats)]);
-        const mergedStats = {};
-        allKeys.forEach(key => {
-            const v1 = a1.stats[key] || 0;
-            const v2 = a2.stats[key] || 0;
-            if (v1 < 0 || v2 < 0) {
-                // НЕГАТИВНОЕ свойство: не складываем родителей — берём худшее (более отрицательное)
-                // значение и улучшаем его на 1 за это скрещивание. По достижении -1 следующий шаг
-                // сразу даёт +1 (ноль пропускается) — с этого момента свойство становится обычным
-                // позитивным и дальше растёт как всегда (суммированием и потолком по поколению)
-                const worse = Math.min(v1, v2);
-                mergedStats[key] = worse >= -1 ? 1 : worse + 1;
-            } else {
-                // Обычное позитивное свойство — как и раньше: сумма родителей, с потолком по поколению
-                mergedStats[key] = Math.min(Math.round(v1 + v2), perStatCap);
+        try {
+            const res = await fetch(`${SERVER_URL}/api/artifacts/breed`, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    initData:window.Telegram?.WebApp?.initData,
+                    parent1:breedSlot1,
+                    parent2:breedSlot2
+                })
+            });
+            const result=await res.json();
+            if(!result.success){ showGameAlert(result.error||'Селекция не удалась'); return; }
+            player.inventory=result.inventory||player.inventory;
+            player.breedCredits=Number(result.breedCredits)||0;
+            const a=result.artifact;
+            if(a){
+                artifacts.push(a);
+                player.craftedArtifacts=player.craftedArtifacts||{};
+                player.craftedArtifacts[a.name]=a;
+                lastBreedResult=a;
             }
-        });
-
-        player.hybridCounter = (Number(player.hybridCounter) || 0) + 1;
-        // Название гибрида: "Артефакт гибрид (N) сделал сталкер: НИК" — уникальность между разными
-        // гибридами того же поколения обеспечивается невидимыми символами в конце имени.
-        // Гибриды, выпадающие из мутантов/аномалий (без привязки к игроку), называются просто
-        // "Артефакт гибрид (N)" — без части про создателя
-        const uniqueSuffix = Math.random().toString(36).slice(2, 8);
-        const creatorNick = player.nickname || 'Неизвестный';
-        const newArtifact = {
-            name: `Артефакт гибрид (${gen1 + 1}) сделал сталкер: ${creatorNick}${encodeInvisibleSuffix(uniqueSuffix)}`,
-            tier: resultTier,
-            price: a1.price + a2.price,
-            stats: mergedStats,
-            gen: gen1 + 1,
-            createdBy: creatorNick
-        };
-
-        artifacts.push(newArtifact); // чтобы equip/sell/info сразу узнавали новый артефакт
-        player.craftedArtifacts = player.craftedArtifacts || {};
-        player.craftedArtifacts[newArtifact.name] = newArtifact;
-        player.inventory[newArtifact.name] = (player.inventory[newArtifact.name] || 0) + 1;
-
-        // Регистрируем гибрид в общем реестре на сервере — иначе другие игроки не увидят его характеристики
-        fetch(`${SERVER_URL}/api/artifacts`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, ...newArtifact })
-        }).catch(() => {});
-
-        breedSlot1 = null;
-        breedSlot2 = null;
-        lastBreedResult = newArtifact;
-
-        renderScientists();
-        updateUI();
-        saveGame();
+            breedSlot1=null; breedSlot2=null;
+            renderScientists(); updateUI();
+            // Не делаем старое локальное списание/создание: сервер уже применил операцию атомарно.
+            await reloadPrivatePlayerState();
+        } catch(e) {
+            console.error('[breed]',e);
+            showGameAlert('Ошибка соединения при селекции. Предметы не списаны локально.');
+        }
     }
 
     function exitScientists() {
@@ -6049,20 +6034,7 @@ input[type='number'] { min-width:0; }
                 return;
             }
             player.inventory[itemName]--;
-            if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
-            if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
-            if (consumable.type === 'medkit') {
-                player.health = Math.min(player.maxHealth, player.health + consumable.restore);
-                if (isInBattle) battleMedkitsUsed++;
-            }
-            if (consumable.type === 'antirad') {
-                // "Антирад" не лечит — только снимает радиацию, забирая взамен еду и воду
-                player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
-                player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
-            }
-            if (consumable.radiationRemove) {
-                player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
-            }
+            applyConsumableEffect(consumable, isInBattle);
             renderQuickSlots(); // остаток в быстром слоте (если этот же предмет туда назначен) должен обновиться
             closeItemActionModal();
             renderInventory(); updateUI(); saveGame();
@@ -6369,6 +6341,27 @@ input[type='number'] { min-width:0; }
         }
     }
 
+    function applyConsumableEffect(consumable, isInBattle) {
+        if (!consumable) return;
+        if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
+        if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
+        if (consumable.type === 'medkit') {
+            player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            if (isInBattle) battleMedkitsUsed++;
+            // Одинаковый рост живучести независимо от того, какой кнопкой использована аптечка.
+            const prevVitality = Number(player.vitality) || 0;
+            player.vitality = Math.min(100, prevVitality + 0.1);
+            player.maxHealth += (player.vitality - prevVitality);
+        }
+        if (consumable.type === 'antirad') {
+            player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
+            player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
+        }
+        if (consumable.radiationRemove) {
+            player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
+        }
+    }
+
     function useQuickSlot(index) {
         const itemName = player.quickSlots[index];
         if (!itemName) {
@@ -6397,19 +6390,7 @@ input[type='number'] { min-width:0; }
         }
 
         player.inventory[itemName]--;
-        if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
-        if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
-        if (consumable.type === 'medkit') {
-            player.health = Math.min(player.maxHealth, player.health + consumable.restore);
-            if (isInBattle) battleMedkitsUsed++;
-        }
-        if (consumable.type === 'antirad') {
-            player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
-            player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
-        }
-        if (consumable.radiationRemove) {
-            player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
-        }
+        applyConsumableEffect(consumable, isInBattle);
         if (player.inventory[itemName] <= 0) player.quickSlots[index] = null;
 
         raidLogs.push(`Использован(а) ${itemName}!`);
@@ -6959,8 +6940,10 @@ input[type='number'] { min-width:0; }
     // прокачка всегда остаётся ощутимой, но никогда не обгоняет прогресс по тирам на много шагов вперёд
     const UPGRADE_MAX_BONUS_PCT = 0.5;
     function getUpgradedStat(baseStat, level, ceiling) {
-        const pct = Math.min(UPGRADE_MAX_BONUS_PCT, (Number(level) || 0) * (UPGRADE_MAX_BONUS_PCT / UPGRADE_MAX_LEVEL));
-        const raw = Math.round(baseStat * (1 + pct));
+        const lvl = Math.max(0, Number(level) || 0);
+        const base = Number(baseStat) || 0;
+        const pct = Math.min(UPGRADE_MAX_BONUS_PCT, lvl * (UPGRADE_MAX_BONUS_PCT / UPGRADE_MAX_LEVEL));
+        const raw = base === 0 ? Math.round(lvl) : Math.round(base * (1 + pct));
         return (typeof ceiling === 'number') ? Math.min(raw, ceiling) : raw;
     }
     // Жёсткий потолок апгрейда: улучшенная характеристика НИКОГДА не должна превышать
@@ -7051,7 +7034,7 @@ input[type='number'] { min-width:0; }
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
             const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
-            const nextStat = currentStat + 1;
+            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'));
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
@@ -7115,17 +7098,23 @@ input[type='number'] { min-width:0; }
             // дороже, чем у оружия (там всегда 1 характеристика — урон). Делим цену за уровень на
             // число характеристик, чтобы "полная прокачка предмета" стоила примерно одинаково
             // независимо от того, сколько у него характеристик
-            const statCostDivisor = Math.max(1, rows.length);
+            const statCostDivisor = isSuit ? 9 : 2;
             const rowsHtml = rows.map(r => {
                 const statLevel = Number(upgradeData[r.key]) || 0;
                 const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;
                 const rowUsesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
                 const rowCost = Math.max(1, Math.round((rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel)) / statCostDivisor));
                 const rowCanAfford = rowUsesTokens ? (Number(player.breedCredits) || 0) >= rowCost : player.coins >= rowCost;
+                const baseStatValue = r.key === 'armor' ? (Number(base.armor)||0)
+                    : r.key === 'hitAbsorption' ? (Number(base.hitAbsorption)||0)
+                    : Number((base.stats||{})[r.key]) || 0;
+                const ceiling = r.key === 'armor' ? getNextItemCeiling(armorItems, base, 'armor')
+                    : r.key === 'hitAbsorption' ? getNextItemCeiling(armorItems, base, 'hitAbsorption') : undefined;
+                const nextValue = getUpgradedStat(baseStatValue, statLevel + 1, ceiling);
                 return `
                 <div class="shop-item">
                     <div>${r.label}${r.isNew ? ' <span style="color:#8ac926;">(новая характеристика)</span>' : ''}</div>
-                    <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${r.current + 1}</b></div>
+                    <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${nextValue}</b></div>
                     <div style="font-size:11px; color:#888;">Уровень этой характеристики: ${statLevel} / ${UPGRADE_MAX_LEVEL}${statLevel < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}</div>
                     ${rowMaxed
                         ? `<button disabled>Эта характеристика улучшена до максимума</button>`
@@ -7165,7 +7154,7 @@ input[type='number'] { min-width:0; }
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
             const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
-            const nextStat = currentStat + 1;
+            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'));
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
