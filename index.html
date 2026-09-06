@@ -126,6 +126,9 @@ button [id$='Fill'] { z-index:1; mix-blend-mode:screen; }
  scrollbar-width:thin; scrollbar-color:#746449 #0c0d0b; }
 .screen { height:calc(100vh - 16px); height:calc(100dvh - 16px); min-height:0; max-height:calc(100vh - 16px); max-height:calc(100dvh - 16px); margin:0; overflow-y:auto; overflow-x:hidden; }
 .modal { padding:16px; background:#040605d9; }
+/* "Инфо о товаре" должно быть видно даже поверх открытой торговли с NPC — иначе окно открывается,
+   но остаётся не видно за модалкой торговли (баг: кнопка "Инфо" как будто ничего не делает) */
+#itemInfoModal { z-index: 1001; }
 .modal-content { width:100%; padding:15px; max-height:90vh; max-height:90dvh; }
 .zr-topbar { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:42px; margin:-3px 0 8px; padding:2px 0 8px; border-bottom:1px solid #80633e88; }
 .zr-topbar .back-btn { width:82px!important; flex:0 0 82px; margin:0!important; min-height:34px; padding:7px; font-size:11px; }
@@ -748,35 +751,35 @@ input[type='number'] { min-width:0; }
 
     // ===== МУТАНТЫ =====
     const mutants = [
-        { tier: 0, name: "Тушкан", hp: 10, dmg: 10, loot: "Хвост тушкана", lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1, runChance: 1, runSkill: 0.1, hitChance: 1, hitSkill: 0.1 },
-        { tier: 1, name: "Слепая собака", hp: 48, dmg: 57, loot: "Ухо слепого пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: "Чернобыльский пёс", hp: 48, dmg: 57, loot: "Клык чернобыльского пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: "Кракозябра", hp: 48, dmg: 57, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1,1] },
-        { tier: 2, name: "Плоть", hp: 74, dmg: 59, loot: "Глаз плоти", lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
-        { tier: 3, name: "Боров", hp: 117, dmg: 63, loot: "Клык борова", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 3, name: "Изотоп", hp: 117, dmg: 63, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3,3] },
-        { tier: 3, name: "Шарнир", hp: 117, dmg: 63, loot: "Непонятный металл", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 4, name: "Зомби", hp: 155, dmg: 68, loot: "Ухо зомби", lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
-        { tier: 5, name: "Псевдо собака", hp: 191, dmg: 76, loot: "Ухо псевдо пса", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: "Рысь", hp: 191, dmg: 76, loot: "Ухо рыси", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: "Чупакабра", hp: 191, dmg: 76, loot: "Хвост чупакабры", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 6, name: "Пси собака", hp: 273, dmg: 79, loot: "Ухо пси пса", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 6, name: "Кот Баюн", hp: 273, dmg: 79, loot: "Хвост баюна", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 7, name: "Снорк", hp: 323, dmg: 80, loot: "Ухо снорка", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: "Стрегун", hp: 323, dmg: 80, loot: "Хитин стрегуна", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: "Филин", hp: 323, dmg: 80, loot: "Рука покрытая перьями", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 8, name: "Кровосос", hp: 313, dmg: 81, loot: "Щупальца кровососа", lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
-        { tier: 9, name: "Полтергейст", hp: 304, dmg: 82, loot: "Ухо полтергейста", lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1, hitChance: 0.55, hitSkill: 1 },
-        { tier: 10, name: "Огненный полтергейст", hp: 288, dmg: 83, loot: "Ухо огненного полтергейста", lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
-        { tier: 10, name: "Излом", hp: 288, dmg: 83, loot: "Ухо излома", lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1,5] },
-        { tier: 11, name: "Бюрер", hp: 457, dmg: 87, loot: "Ухо бюрера", lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
-        { tier: 11, name: "Лось", hp: 457, dmg: 87, loot: "Рог лося", lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7,8] },
-        { tier: 12, name: "Контролёр", hp: 522, dmg: 91, loot: "Ухо контролёра", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 12, name: "Стронглав", hp: 522, dmg: 91, loot: "Щупальца стронглава", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 13, name: "Химера", hp: 569, dmg: 96, loot: "Коготь химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
-        { tier: 13, name: "Электро химера", hp: 569, dmg: 96, loot: "Коготь электро химеры", lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8,8] },
-        { tier: 13, name: "Наблюдатель", hp: 569, dmg: 96, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
-        { tier: 14, name: "Псевдогигант", hp: 1000, dmg: 105, loot: "Ухо гиганта", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
+        { tier: 0, name: "Тушкан", hp: 100, dmg: 100, loot: "Хвост тушкана", lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1, runChance: 1, runSkill: 0.1, hitChance: 1, hitSkill: 0.1 },
+        { tier: 1, name: "Слепая собака", hp: 324, dmg: 385, loot: "Ухо слепого пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Чернобыльский пёс", hp: 324, dmg: 385, loot: "Клык чернобыльского пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Кракозябра", hp: 324, dmg: 385, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1,1] },
+        { tier: 2, name: "Плоть", hp: 491, dmg: 392, loot: "Глаз плоти", lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
+        { tier: 3, name: "Боров", hp: 777, dmg: 418, loot: "Клык борова", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 3, name: "Изотоп", hp: 777, dmg: 418, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3,3] },
+        { tier: 3, name: "Шарнир", hp: 777, dmg: 418, loot: "Непонятный металл", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 4, name: "Зомби", hp: 846, dmg: 371, loot: "Ухо зомби", lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
+        { tier: 5, name: "Псевдо собака", hp: 1050, dmg: 418, loot: "Ухо псевдо пса", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: "Рысь", hp: 1050, dmg: 418, loot: "Ухо рыси", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 5, name: "Чупакабра", hp: 1050, dmg: 418, loot: "Хвост чупакабры", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 6, name: "Пси собака", hp: 1739, dmg: 503, loot: "Ухо пси пса", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 6, name: "Кот Баюн", hp: 1739, dmg: 503, loot: "Хвост баюна", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 7, name: "Снорк", hp: 2655, dmg: 658, loot: "Ухо снорка", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: "Стрегун", hp: 2655, dmg: 658, loot: "Хитин стрегуна", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 7, name: "Филин", hp: 2655, dmg: 658, loot: "Рука покрытая перьями", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 8, name: "Кровосос", hp: 3506, dmg: 907, loot: "Щупальца кровососа", lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
+        { tier: 9, name: "Полтергейст", hp: 4691, dmg: 1265, loot: "Ухо полтергейста", lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1, hitChance: 0.55, hitSkill: 1 },
+        { tier: 10, name: "Огненный полтергейст", hp: 6178, dmg: 1780, loot: "Ухо огненного полтергейста", lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
+        { tier: 10, name: "Излом", hp: 6178, dmg: 1780, loot: "Ухо излома", lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1,5] },
+        { tier: 11, name: "Бюрер", hp: 13189, dmg: 2511, loot: "Ухо бюрера", lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
+        { tier: 11, name: "Лось", hp: 13189, dmg: 2511, loot: "Рог лося", lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7,8] },
+        { tier: 12, name: "Контролёр", hp: 19189, dmg: 3345, loot: "Ухо контролёра", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 12, name: "Стронглав", hp: 19189, dmg: 3345, loot: "Щупальца стронглава", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 13, name: "Химера", hp: 26999, dmg: 4555, loot: "Коготь химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
+        { tier: 13, name: "Электро химера", hp: 26999, dmg: 4555, loot: "Коготь электро химеры", lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8,8] },
+        { tier: 13, name: "Наблюдатель", hp: 26999, dmg: 4555, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
+        { tier: 14, name: "Псевдогигант", hp: 58610, dmg: 6154, loot: "Ухо гиганта", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
     ];
 
     // ===== АНОМАЛИИ =====
@@ -910,123 +913,123 @@ input[type='number'] { min-width:0; }
 
     // ===== ОРУЖИЕ =====
     const weapons = [
-        { id: 11, name: "Автомат АКС-74У", tier: 1, dmg: 8, price: 150, unlockLevel: 295 },
-        { id: 12, name: "Автомат АК-74", tier: 1, dmg: 16, price: 350, unlockLevel: 300 },
-        { id: 37, name: "Автомат АК-107", tier: 3, dmg: 25, price: 800, unlockLevel: 315 },
-        { id: 21, name: "Автомат АК-12", tier: 2, dmg: 17, price: 400, unlockLevel: 305 },
-        { id: 26, name: "Автомат АН-94 «Абакан»", tier: 2, dmg: 24, price: 700, unlockLevel: 310 },
-        { id: 17, name: "Пулемёт РПК-74", tier: 3, dmg: 35, price: 1500, unlockLevel: 320 },
-        { id: 38, name: "Автомат ADAR 2-15", tier: 4, dmg: 36, price: 1800, unlockLevel: 325 },
-        { id: 45, name: "Автомат АК-19", tier: 5, dmg: 63, price: 4000, unlockLevel: 335 },
-        { id: 57, name: "Автомат HK416", tier: 4, dmg: 62, price: 3500, unlockLevel: 330 },
-        { id: 69, name: "Автомат CZ Bren 2", tier: 5, dmg: 76, price: 6000, unlockLevel: 340 },
-        { id: 67, name: "Пулемёт Minimi Mk3", tier: 5, dmg: 90, price: 8000, unlockLevel: 345 },
-        { id: 43, name: "Автомат ОЦ-14 «Гроза»", tier: 7, dmg: 113, price: 17000, unlockLevel: 360 },
-        { id: 16, name: "Карабин «Вепрь»", tier: 7, dmg: 125, price: 24000, unlockLevel: 365 },
-        { id: 15, name: "Автомат АК-103", tier: 6, dmg: 91, price: 9000, unlockLevel: 350 },
-        { id: 25, name: "Пулемёт РПД", tier: 6, dmg: 112, price: 16000, unlockLevel: 355 },
-        { id: 18, name: "Автомат АС «Вал»", tier: 8, dmg: 132, price: 34000, unlockLevel: 375 },
-        { id: 10, name: "Карабин Сайга-12", tier: 8, dmg: 126, price: 25000, unlockLevel: 370 },
-        { id: 63, name: "Автомат АК-308", tier: 9, dmg: 138, price: 41000, unlockLevel: 385 },
-        { id: 51, name: "Автомат ЛР-308", tier: 9, dmg: 133, price: 35000, unlockLevel: 380 },
-        { id: 75, name: "Автомат SCAR-H", tier: 9, dmg: 142, price: 47000, unlockLevel: 390 },
-        { id: 61, name: "Пулемёт M60E6", tier: 10, dmg: 143, price: 48000, unlockLevel: 395 },
-        { id: 59, name: "Пулемёт M240", tier: 10, dmg: 152, price: 65000, unlockLevel: 400 },
-        { id: 71, name: "Пулемёт FN MAG", tier: 11, dmg: 153, price: 66000, unlockLevel: 405 },
-        { id: 77, name: "Пулемёт Negev NG7", tier: 11, dmg: 172, price: 91000, unlockLevel: 410 },
-        { id: 22, name: "Пулемёт ПКМ", tier: 12, dmg: 173, price: 92000, unlockLevel: 415 },
-        { id: 29, name: "Пулемёт «Печенег»", tier: 12, dmg: 192, price: 124000, unlockLevel: 420 },
-        { id: 53, name: "Пулемёт «Печенег-СП»", tier: 13, dmg: 193, price: 125000, unlockLevel: 425 },
-        { id: 47, name: "Автомат АК-АН «Абакан-100»", tier: 13, dmg: 209, price: 147500, unlockLevel: 430 },
-        { id: 65, name: "Пулемёт «Утёс-М»", tier: 13, dmg: 225, price: 170000, unlockLevel: 435 },
-        { id: 14, name: "Винтовка СКС", tier: 1, dmg: 8, price: 150, unlockLevel: 440 },
-        { id: 46, name: "Винтовка SSG 08", tier: 4, dmg: 62, price: 3500, unlockLevel: 475 },
-        { id: 42, name: "Винтовка SR-25", tier: 4, dmg: 36, price: 1800, unlockLevel: 470 },
-        { id: 13, name: "Винтовка СВД", tier: 1, dmg: 16, price: 350, unlockLevel: 445 },
-        { id: 24, name: "Винтовка СВДС", tier: 2, dmg: 17, price: 400, unlockLevel: 450 },
-        { id: 23, name: "Винтовка Т-5000", tier: 2, dmg: 24, price: 700, unlockLevel: 455 },
-        { id: 28, name: "Винтовка СВ-98", tier: 3, dmg: 25, price: 800, unlockLevel: 460 },
-        { id: 36, name: "Винтовка СВК", tier: 3, dmg: 35, price: 1500, unlockLevel: 465 },
-        { id: 30, name: "Винтовка ВСС «Винторез»", tier: 5, dmg: 63, price: 4000, unlockLevel: 480 },
-        { id: 40, name: "Винтовка ВСК-94", tier: 5, dmg: 76, price: 6000, unlockLevel: 485 },
-        { id: 31, name: "Винтовка СВ-338", tier: 5, dmg: 90, price: 8000, unlockLevel: 490 },
-        { id: 27, name: "Винтовка ОРСИС T-5000M", tier: 6, dmg: 91, price: 9000, unlockLevel: 495 },
-        { id: 70, name: "Винтовка Sako TRG-42", tier: 6, dmg: 112, price: 16000, unlockLevel: 500 },
-        { id: 76, name: "Винтовка Blaser R93 Tactical 2", tier: 7, dmg: 113, price: 17000, unlockLevel: 505 },
-        { id: 39, name: "Винтовка ORSIS T-5000 Sniper Pro", tier: 7, dmg: 125, price: 24000, unlockLevel: 510 },
-        { id: 60, name: "Винтовка Accuracy International AXMC", tier: 8, dmg: 132, price: 34000, unlockLevel: 520 },
-        { id: 48, name: "Винтовка Barrett M98B", tier: 8, dmg: 126, price: 25000, unlockLevel: 515 },
-        { id: 64, name: "Винтовка ORSIS T-5000 Elite", tier: 9, dmg: 133, price: 35000, unlockLevel: 525 },
-        { id: 33, name: "Винтовка «Выхлоп»", tier: 9, dmg: 138, price: 41000, unlockLevel: 530 },
-        { id: 35, name: "Винтовка ОСВ-96", tier: 10, dmg: 152, price: 65000, unlockLevel: 545 },
-        { id: 66, name: "Винтовка Zastava M93 Black Arrow", tier: 9, dmg: 142, price: 47000, unlockLevel: 535 },
-        { id: 52, name: "Винтовка АСВК «Корд»", tier: 11, dmg: 153, price: 66000, unlockLevel: 550 },
-        { id: 58, name: "Винтовка Steyr HS .50", tier: 10, dmg: 143, price: 48000, unlockLevel: 540 },
-        { id: 49, name: "Винтовка Barrett M82", tier: 11, dmg: 172, price: 91000, unlockLevel: 555 },
-        { id: 54, name: "Винтовка McMillan TAC-50", tier: 12, dmg: 173, price: 92000, unlockLevel: 560 },
-        { id: 72, name: "Винтовка Desert Tech HTI", tier: 12, dmg: 192, price: 124000, unlockLevel: 565 },
-        { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 193, price: 125000, unlockLevel: 570 },
-        { id: 73, name: "Прототип X-17", tier: 13, dmg: 209, price: 147500, unlockLevel: 575 },
-        { id: 55, name: "Гаусс-пушка", tier: 13, dmg: 225, price: 170000, unlockLevel: 580 },
-        { id: 86, name: "Beretta 21A Bobcat", tier: 1, dmg: 8, price: 150, unlockLevel: 5 },
-        { id: 2, name: "Пистолет ПСМ", tier: 1, dmg: 16, price: 350, unlockLevel: 10 },
-        { id: 87, name: "Walther PPK", tier: 2, dmg: 17, price: 400, unlockLevel: 15 },
-        { id: 1, name: "Пистолет Макарова", tier: 2, dmg: 24, price: 700, unlockLevel: 20 },
-        { id: 3, name: "Пистолет ИЖ-71", tier: 3, dmg: 25, price: 800, unlockLevel: 25 },
-        { id: 88, name: "Glock 25", tier: 3, dmg: 35, price: 1500, unlockLevel: 30 },
-        { id: 5, name: "Пистолет ОЦ-33 «Пернач»", tier: 4, dmg: 36, price: 1800, unlockLevel: 35 },
-        { id: 6, name: "Револьвер Наган", tier: 4, dmg: 62, price: 3500, unlockLevel: 40 },
-        { id: 89, name: "Walther P99", tier: 5, dmg: 63, price: 4000, unlockLevel: 45 },
-        { id: 90, name: "CZ 75", tier: 5, dmg: 76, price: 6000, unlockLevel: 50 },
-        { id: 91, name: "Glock 17", tier: 5, dmg: 90, price: 8000, unlockLevel: 55 },
-        { id: 92, name: "Beretta 92FS", tier: 6, dmg: 91, price: 9000, unlockLevel: 60 },
-        { id: 93, name: "SIG Sauer P226", tier: 6, dmg: 112, price: 16000, unlockLevel: 65 },
-        { id: 7, name: "Пистолет ТТ", tier: 7, dmg: 113, price: 17000, unlockLevel: 70 },
-        { id: 94, name: "HK USP", tier: 7, dmg: 125, price: 24000, unlockLevel: 75 },
-        { id: 95, name: "Glock 22", tier: 8, dmg: 126, price: 25000, unlockLevel: 80 },
-        { id: 96, name: "SIG Sauer P229", tier: 8, dmg: 132, price: 34000, unlockLevel: 85 },
-        { id: 4, name: "Обрез охотничьего ружья", tier: 9, dmg: 133, price: 35000, unlockLevel: 90 },
-        { id: 97, name: "Glock 20", tier: 9, dmg: 138, price: 41000, unlockLevel: 95 },
-        { id: 98, name: "Colt 1911", tier: 9, dmg: 142, price: 47000, unlockLevel: 100 },
-        { id: 99, name: "Glock 21", tier: 10, dmg: 143, price: 48000, unlockLevel: 105 },
-        { id: 100, name: "CZ 97B", tier: 10, dmg: 152, price: 65000, unlockLevel: 110 },
-        { id: 8, name: "ПП «Кедр»", tier: 11, dmg: 153, price: 66000, unlockLevel: 115 },
-        { id: 101, name: "HK Mark 23", tier: 11, dmg: 172, price: 91000, unlockLevel: 120 },
-        { id: 9, name: "ПП-19 «Бизон»", tier: 12, dmg: 173, price: 92000, unlockLevel: 125 },
-        { id: 102, name: "Taurus Judge", tier: 12, dmg: 192, price: 124000, unlockLevel: 130 },
-        { id: 103, name: "Smith & Wesson Model 29", tier: 13, dmg: 193, price: 125000, unlockLevel: 135 },
-        { id: 104, name: "Taurus Raging Bull", tier: 13, dmg: 209, price: 147500, unlockLevel: 140 },
-        { id: 105, name: "Desert Eagle Mark XIX", tier: 13, dmg: 225, price: 170000, unlockLevel: 145 },
-        { id: 20, name: "Дробовик Сайга-410", tier: 1, dmg: 8, price: 150, unlockLevel: 150 },
-        { id: 106, name: "Дробовик Mossberg 500", tier: 1, dmg: 16, price: 350, unlockLevel: 155 },
-        { id: 107, name: "Дробовик Stoeger P3000", tier: 2, dmg: 17, price: 400, unlockLevel: 160 },
-        { id: 108, name: "Дробовик Remington 870", tier: 2, dmg: 24, price: 700, unlockLevel: 165 },
-        { id: 109, name: "Дробовик Winchester Model 1300", tier: 3, dmg: 25, price: 800, unlockLevel: 170 },
-        { id: 110, name: "Дробовик Ithaca 37", tier: 3, dmg: 35, price: 1500, unlockLevel: 175 },
-        { id: 111, name: "Дробовик Browning BPS", tier: 4, dmg: 36, price: 1800, unlockLevel: 180 },
-        { id: 19, name: "Дробовик СПАС-12", tier: 4, dmg: 62, price: 3500, unlockLevel: 185 },
-        { id: 112, name: "Дробовик Winchester SXP Defender", tier: 5, dmg: 63, price: 4000, unlockLevel: 190 },
-        { id: 113, name: "Дробовик Mossberg 590A1", tier: 5, dmg: 76, price: 6000, unlockLevel: 195 },
-        { id: 114, name: "Дробовик Remington 870 MCS", tier: 5, dmg: 90, price: 8000, unlockLevel: 200 },
-        { id: 32, name: "Дробовик Сайга-12К", tier: 6, dmg: 91, price: 9000, unlockLevel: 205 },
-        { id: 115, name: "Дробовик Benelli Nova", tier: 6, dmg: 112, price: 16000, unlockLevel: 210 },
-        { id: 116, name: "Дробовик TOZ-194", tier: 7, dmg: 113, price: 17000, unlockLevel: 215 },
-        { id: 44, name: "Дробовик «Вепрь-12»", tier: 7, dmg: 125, price: 24000, unlockLevel: 220 },
-        { id: 117, name: "Дробовик Remington 1100", tier: 8, dmg: 126, price: 25000, unlockLevel: 225 },
-        { id: 62, name: "Дробовик Kel-Tec KSG", tier: 8, dmg: 132, price: 34000, unlockLevel: 230 },
-        { id: 118, name: "Дробовик Beretta 1301 Tactical", tier: 9, dmg: 133, price: 35000, unlockLevel: 235 },
-        { id: 50, name: "Дробовик Benelli M4", tier: 9, dmg: 138, price: 41000, unlockLevel: 240 },
-        { id: 119, name: "Дробовик Fabarm STF/12", tier: 9, dmg: 142, price: 47000, unlockLevel: 245 },
-        { id: 56, name: "Дробовик AA-12", tier: 10, dmg: 143, price: 48000, unlockLevel: 250 },
-        { id: 120, name: "Дробовик Winchester SX4", tier: 10, dmg: 152, price: 65000, unlockLevel: 255 },
-        { id: 121, name: "Дробовик Browning A5", tier: 11, dmg: 153, price: 66000, unlockLevel: 260 },
-        { id: 68, name: "Дробовик Franchi SPAS-15", tier: 11, dmg: 172, price: 91000, unlockLevel: 265 },
-        { id: 122, name: "Дробовик Remington 870 Magnum", tier: 12, dmg: 173, price: 92000, unlockLevel: 270 },
-        { id: 123, name: "Дробовик Benelli Vinci", tier: 12, dmg: 192, price: 124000, unlockLevel: 275 },
-        { id: 74, name: "Дробовик USAS-12", tier: 13, dmg: 193, price: 125000, unlockLevel: 280 },
-        { id: 124, name: "Дробовик Ithaca Mag-10", tier: 13, dmg: 209, price: 147500, unlockLevel: 285 },
-        { id: 125, name: "Дробовик Remington SP-10", tier: 13, dmg: 225, price: 170000, unlockLevel: 290 },
-        { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 666, price: 666000, adminOnly: true }
+        { id: 11, name: "Автомат АКС-74У", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
+        { id: 12, name: "Автомат АК-74", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
+        { id: 37, name: "Автомат АК-107", tier: 3, dmg: 166, price: 800, unlockLevel: 50 },
+        { id: 21, name: "Автомат АК-12", tier: 2, dmg: 115, price: 400, unlockLevel: 30 },
+        { id: 26, name: "Автомат АН-94 «Абакан»", tier: 2, dmg: 138, price: 700, unlockLevel: 40 },
+        { id: 17, name: "Пулемёт РПК-74", tier: 3, dmg: 199, price: 1500, unlockLevel: 60 },
+        { id: 38, name: "Автомат ADAR 2-15", tier: 4, dmg: 239, price: 1800, unlockLevel: 70 },
+        { id: 45, name: "Автомат АК-19", tier: 5, dmg: 344, price: 4000, unlockLevel: 90 },
+        { id: 57, name: "Автомат HK416", tier: 4, dmg: 287, price: 3500, unlockLevel: 80 },
+        { id: 69, name: "Автомат CZ Bren 2", tier: 5, dmg: 413, price: 6000, unlockLevel: 100 },
+        { id: 67, name: "Пулемёт Minimi Mk3", tier: 5, dmg: 495, price: 8000, unlockLevel: 110 },
+        { id: 43, name: "Автомат ОЦ-14 «Гроза»", tier: 7, dmg: 856, price: 17000, unlockLevel: 140 },
+        { id: 16, name: "Карабин «Вепрь»", tier: 7, dmg: 1027, price: 24000, unlockLevel: 150 },
+        { id: 15, name: "Автомат АК-103", tier: 6, dmg: 594, price: 9000, unlockLevel: 120 },
+        { id: 25, name: "Пулемёт РПД", tier: 6, dmg: 713, price: 16000, unlockLevel: 130 },
+        { id: 18, name: "Автомат АС «Вал»", tier: 8, dmg: 1479, price: 34000, unlockLevel: 170 },
+        { id: 10, name: "Карабин Сайга-12", tier: 8, dmg: 1233, price: 25000, unlockLevel: 160 },
+        { id: 63, name: "Автомат АК-308", tier: 9, dmg: 2130, price: 41000, unlockLevel: 190 },
+        { id: 51, name: "Автомат ЛР-308", tier: 9, dmg: 1775, price: 35000, unlockLevel: 180 },
+        { id: 75, name: "Автомат SCAR-H", tier: 9, dmg: 2556, price: 47000, unlockLevel: 200 },
+        { id: 61, name: "Пулемёт M60E6", tier: 10, dmg: 3067, price: 48000, unlockLevel: 210 },
+        { id: 59, name: "Пулемёт M240", tier: 10, dmg: 3680, price: 65000, unlockLevel: 220 },
+        { id: 71, name: "Пулемёт FN MAG", tier: 11, dmg: 4416, price: 66000, unlockLevel: 230 },
+        { id: 77, name: "Пулемёт Negev NG7", tier: 11, dmg: 5300, price: 91000, unlockLevel: 240 },
+        { id: 22, name: "Пулемёт ПКМ", tier: 12, dmg: 6360, price: 92000, unlockLevel: 250 },
+        { id: 29, name: "Пулемёт «Печенег»", tier: 12, dmg: 7632, price: 124000, unlockLevel: 260 },
+        { id: 53, name: "Пулемёт «Печенег-СП»", tier: 13, dmg: 9158, price: 125000, unlockLevel: 270 },
+        { id: 47, name: "Автомат АК-АН «Абакан-100»", tier: 13, dmg: 10990, price: 147500, unlockLevel: 280 },
+        { id: 65, name: "Пулемёт «Утёс-М»", tier: 13, dmg: 13188, price: 170000, unlockLevel: 290 },
+        { id: 14, name: "Винтовка СКС", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
+        { id: 46, name: "Винтовка SSG 08", tier: 4, dmg: 287, price: 3500, unlockLevel: 80 },
+        { id: 42, name: "Винтовка SR-25", tier: 4, dmg: 239, price: 1800, unlockLevel: 70 },
+        { id: 13, name: "Винтовка СВД", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
+        { id: 24, name: "Винтовка СВДС", tier: 2, dmg: 115, price: 400, unlockLevel: 30 },
+        { id: 23, name: "Винтовка Т-5000", tier: 2, dmg: 138, price: 700, unlockLevel: 40 },
+        { id: 28, name: "Винтовка СВ-98", tier: 3, dmg: 166, price: 800, unlockLevel: 50 },
+        { id: 36, name: "Винтовка СВК", tier: 3, dmg: 199, price: 1500, unlockLevel: 60 },
+        { id: 30, name: "Винтовка ВСС «Винторез»", tier: 5, dmg: 344, price: 4000, unlockLevel: 90 },
+        { id: 40, name: "Винтовка ВСК-94", tier: 5, dmg: 413, price: 6000, unlockLevel: 100 },
+        { id: 31, name: "Винтовка СВ-338", tier: 5, dmg: 495, price: 8000, unlockLevel: 110 },
+        { id: 27, name: "Винтовка ОРСИС T-5000M", tier: 6, dmg: 594, price: 9000, unlockLevel: 120 },
+        { id: 70, name: "Винтовка Sako TRG-42", tier: 6, dmg: 713, price: 16000, unlockLevel: 130 },
+        { id: 76, name: "Винтовка Blaser R93 Tactical 2", tier: 7, dmg: 856, price: 17000, unlockLevel: 140 },
+        { id: 39, name: "Винтовка ORSIS T-5000 Sniper Pro", tier: 7, dmg: 1027, price: 24000, unlockLevel: 150 },
+        { id: 60, name: "Винтовка Accuracy International AXMC", tier: 8, dmg: 1479, price: 34000, unlockLevel: 170 },
+        { id: 48, name: "Винтовка Barrett M98B", tier: 8, dmg: 1233, price: 25000, unlockLevel: 160 },
+        { id: 64, name: "Винтовка ORSIS T-5000 Elite", tier: 9, dmg: 1775, price: 35000, unlockLevel: 180 },
+        { id: 33, name: "Винтовка «Выхлоп»", tier: 9, dmg: 2130, price: 41000, unlockLevel: 190 },
+        { id: 35, name: "Винтовка ОСВ-96", tier: 10, dmg: 3680, price: 65000, unlockLevel: 220 },
+        { id: 66, name: "Винтовка Zastava M93 Black Arrow", tier: 9, dmg: 2556, price: 47000, unlockLevel: 200 },
+        { id: 52, name: "Винтовка АСВК «Корд»", tier: 11, dmg: 4416, price: 66000, unlockLevel: 230 },
+        { id: 58, name: "Винтовка Steyr HS .50", tier: 10, dmg: 3067, price: 48000, unlockLevel: 210 },
+        { id: 49, name: "Винтовка Barrett M82", tier: 11, dmg: 5300, price: 91000, unlockLevel: 240 },
+        { id: 54, name: "Винтовка McMillan TAC-50", tier: 12, dmg: 6360, price: 92000, unlockLevel: 250 },
+        { id: 72, name: "Винтовка Desert Tech HTI", tier: 12, dmg: 7632, price: 124000, unlockLevel: 260 },
+        { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 9158, price: 125000, unlockLevel: 270 },
+        { id: 73, name: "Прототип X-17", tier: 13, dmg: 10990, price: 147500, unlockLevel: 280 },
+        { id: 55, name: "Гаусс-пушка", tier: 13, dmg: 13188, price: 170000, unlockLevel: 290 },
+        { id: 86, name: "Beretta 21A Bobcat", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
+        { id: 2, name: "Пистолет ПСМ", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
+        { id: 87, name: "Walther PPK", tier: 2, dmg: 115, price: 400, unlockLevel: 30 },
+        { id: 1, name: "Пистолет Макарова", tier: 2, dmg: 138, price: 700, unlockLevel: 40 },
+        { id: 3, name: "Пистолет ИЖ-71", tier: 3, dmg: 166, price: 800, unlockLevel: 50 },
+        { id: 88, name: "Glock 25", tier: 3, dmg: 199, price: 1500, unlockLevel: 60 },
+        { id: 5, name: "Пистолет ОЦ-33 «Пернач»", tier: 4, dmg: 239, price: 1800, unlockLevel: 70 },
+        { id: 6, name: "Револьвер Наган", tier: 4, dmg: 287, price: 3500, unlockLevel: 80 },
+        { id: 89, name: "Walther P99", tier: 5, dmg: 344, price: 4000, unlockLevel: 90 },
+        { id: 90, name: "CZ 75", tier: 5, dmg: 413, price: 6000, unlockLevel: 100 },
+        { id: 91, name: "Glock 17", tier: 5, dmg: 495, price: 8000, unlockLevel: 110 },
+        { id: 92, name: "Beretta 92FS", tier: 6, dmg: 594, price: 9000, unlockLevel: 120 },
+        { id: 93, name: "SIG Sauer P226", tier: 6, dmg: 713, price: 16000, unlockLevel: 130 },
+        { id: 7, name: "Пистолет ТТ", tier: 7, dmg: 856, price: 17000, unlockLevel: 140 },
+        { id: 94, name: "HK USP", tier: 7, dmg: 1027, price: 24000, unlockLevel: 150 },
+        { id: 95, name: "Glock 22", tier: 8, dmg: 1233, price: 25000, unlockLevel: 160 },
+        { id: 96, name: "SIG Sauer P229", tier: 8, dmg: 1479, price: 34000, unlockLevel: 170 },
+        { id: 4, name: "Обрез охотничьего ружья", tier: 9, dmg: 1775, price: 35000, unlockLevel: 180 },
+        { id: 97, name: "Glock 20", tier: 9, dmg: 2130, price: 41000, unlockLevel: 190 },
+        { id: 98, name: "Colt 1911", tier: 9, dmg: 2556, price: 47000, unlockLevel: 200 },
+        { id: 99, name: "Glock 21", tier: 10, dmg: 3067, price: 48000, unlockLevel: 210 },
+        { id: 100, name: "CZ 97B", tier: 10, dmg: 3680, price: 65000, unlockLevel: 220 },
+        { id: 8, name: "ПП «Кедр»", tier: 11, dmg: 4416, price: 66000, unlockLevel: 230 },
+        { id: 101, name: "HK Mark 23", tier: 11, dmg: 5300, price: 91000, unlockLevel: 240 },
+        { id: 9, name: "ПП-19 «Бизон»", tier: 12, dmg: 6360, price: 92000, unlockLevel: 250 },
+        { id: 102, name: "Taurus Judge", tier: 12, dmg: 7632, price: 124000, unlockLevel: 260 },
+        { id: 103, name: "Smith & Wesson Model 29", tier: 13, dmg: 9158, price: 125000, unlockLevel: 270 },
+        { id: 104, name: "Taurus Raging Bull", tier: 13, dmg: 10990, price: 147500, unlockLevel: 280 },
+        { id: 105, name: "Desert Eagle Mark XIX", tier: 13, dmg: 13188, price: 170000, unlockLevel: 290 },
+        { id: 20, name: "Дробовик Сайга-410", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
+        { id: 106, name: "Дробовик Mossberg 500", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
+        { id: 107, name: "Дробовик Stoeger P3000", tier: 2, dmg: 115, price: 400, unlockLevel: 30 },
+        { id: 108, name: "Дробовик Remington 870", tier: 2, dmg: 138, price: 700, unlockLevel: 40 },
+        { id: 109, name: "Дробовик Winchester Model 1300", tier: 3, dmg: 166, price: 800, unlockLevel: 50 },
+        { id: 110, name: "Дробовик Ithaca 37", tier: 3, dmg: 199, price: 1500, unlockLevel: 60 },
+        { id: 111, name: "Дробовик Browning BPS", tier: 4, dmg: 239, price: 1800, unlockLevel: 70 },
+        { id: 19, name: "Дробовик СПАС-12", tier: 4, dmg: 287, price: 3500, unlockLevel: 80 },
+        { id: 112, name: "Дробовик Winchester SXP Defender", tier: 5, dmg: 344, price: 4000, unlockLevel: 90 },
+        { id: 113, name: "Дробовик Mossberg 590A1", tier: 5, dmg: 413, price: 6000, unlockLevel: 100 },
+        { id: 114, name: "Дробовик Remington 870 MCS", tier: 5, dmg: 495, price: 8000, unlockLevel: 110 },
+        { id: 32, name: "Дробовик Сайга-12К", tier: 6, dmg: 594, price: 9000, unlockLevel: 120 },
+        { id: 115, name: "Дробовик Benelli Nova", tier: 6, dmg: 713, price: 16000, unlockLevel: 130 },
+        { id: 116, name: "Дробовик TOZ-194", tier: 7, dmg: 856, price: 17000, unlockLevel: 140 },
+        { id: 44, name: "Дробовик «Вепрь-12»", tier: 7, dmg: 1027, price: 24000, unlockLevel: 150 },
+        { id: 117, name: "Дробовик Remington 1100", tier: 8, dmg: 1233, price: 25000, unlockLevel: 160 },
+        { id: 62, name: "Дробовик Kel-Tec KSG", tier: 8, dmg: 1479, price: 34000, unlockLevel: 170 },
+        { id: 118, name: "Дробовик Beretta 1301 Tactical", tier: 9, dmg: 1775, price: 35000, unlockLevel: 180 },
+        { id: 50, name: "Дробовик Benelli M4", tier: 9, dmg: 2130, price: 41000, unlockLevel: 190 },
+        { id: 119, name: "Дробовик Fabarm STF/12", tier: 9, dmg: 2556, price: 47000, unlockLevel: 200 },
+        { id: 56, name: "Дробовик AA-12", tier: 10, dmg: 3067, price: 48000, unlockLevel: 210 },
+        { id: 120, name: "Дробовик Winchester SX4", tier: 10, dmg: 3680, price: 65000, unlockLevel: 220 },
+        { id: 121, name: "Дробовик Browning A5", tier: 11, dmg: 4416, price: 66000, unlockLevel: 230 },
+        { id: 68, name: "Дробовик Franchi SPAS-15", tier: 11, dmg: 5300, price: 91000, unlockLevel: 240 },
+        { id: 122, name: "Дробовик Remington 870 Magnum", tier: 12, dmg: 6360, price: 92000, unlockLevel: 250 },
+        { id: 123, name: "Дробовик Benelli Vinci", tier: 12, dmg: 7632, price: 124000, unlockLevel: 260 },
+        { id: 74, name: "Дробовик USAS-12", tier: 13, dmg: 9158, price: 125000, unlockLevel: 270 },
+        { id: 124, name: "Дробовик Ithaca Mag-10", tier: 13, dmg: 10990, price: 147500, unlockLevel: 280 },
+        { id: 125, name: "Дробовик Remington SP-10", tier: 13, dmg: 13188, price: 170000, unlockLevel: 290 },
+        { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 6660, price: 666000, adminOnly: true }
     ];
 
     // ===== БРОНЯ =====
@@ -1045,76 +1048,76 @@ input[type='number'] { min-width:0; }
         { id: 12, name: "Комбинезон Долг", tier: 2, armor: 20, price: 910, unlockLevel: 60, stats: {"anomaly_Печка":2,"anomaly_Электра":1}, hitAbsorption: 10 },
         { id: 13, name: "Комбинезон Ветер", tier: 3, armor: 30, price: 1560, unlockLevel: 65, stats: {"anomaly_Электра":2,"anomaly_Печка":3}, hitAbsorption: 15 },
         { id: 14, name: "Костюм Скат", tier: 3, armor: 31, price: 1612, unlockLevel: 70, stats: {"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2}, hitAbsorption: 16 },
-        { id: 15, name: "Экзокостюм СЭВ", tier: 3, armor: 33, price: 1716, unlockLevel: 305, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2}, hitAbsorption: 17 },
-        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, price: 1768, unlockLevel: 75, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3}, hitAbsorption: 17 },
-        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, price: 1872, unlockLevel: 80, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2}, hitAbsorption: 18 },
-        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, price: 2600, unlockLevel: 85, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2}, hitAbsorption: 20 },
-        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, price: 3250, unlockLevel: 90, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2}, hitAbsorption: 23 },
-        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, price: 3393, unlockLevel: 95, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3}, hitAbsorption: 24 },
-        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, price: 3471, unlockLevel: 100, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3}, hitAbsorption: 24 },
-        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, price: 3757, unlockLevel: 105, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3}, hitAbsorption: 26 },
-        { id: 23, name: "Экзокостюм Чистое небо", tier: 4, armor: 58, price: 4186, unlockLevel: 310, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 29 },
-        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, price: 5200, unlockLevel: 110, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 30 },
-        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, price: 10400, unlockLevel: 115, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4}, hitAbsorption: 38 },
-        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, price: 10543, unlockLevel: 120, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5}, hitAbsorption: 38 },
-        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, price: 10816, unlockLevel: 125, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5}, hitAbsorption: 39 },
-        { id: 28, name: "Экзокостюм Периметр-1", tier: 5, armor: 79, price: 10959, unlockLevel: 315, stats: {"anomaly_Карусель":4,"anomaly_Печка":4}, hitAbsorption: 40 },
-        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, price: 11089, unlockLevel: 130, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3}, hitAbsorption: 40 },
-        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, price: 11648, unlockLevel: 135, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4}, hitAbsorption: 42 },
-        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, price: 15600, unlockLevel: 140, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5}, hitAbsorption: 43 },
-        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, price: 15600, unlockLevel: 145, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 43 },
-        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, price: 15782, unlockLevel: 150, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4}, hitAbsorption: 43 },
-        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, price: 15964, unlockLevel: 155, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6}, hitAbsorption: 44 },
-        { id: 35, name: "Экзокостюм Титан-Лайт", tier: 6, armor: 88, price: 16146, unlockLevel: 320, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3}, hitAbsorption: 44 },
-        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, price: 16328, unlockLevel: 160, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6}, hitAbsorption: 45 },
-        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, price: 23400, unlockLevel: 165, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3}, hitAbsorption: 45 },
-        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, price: 23400, unlockLevel: 170, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6}, hitAbsorption: 45 },
-        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, price: 23660, unlockLevel: 175, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 46 },
-        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, price: 23920, unlockLevel: 180, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5}, hitAbsorption: 46 },
-        { id: 41, name: "Экзокостюм Периметр-3", tier: 7, armor: 93, price: 24180, unlockLevel: 325, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6}, hitAbsorption: 47 },
-        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, price: 24440, unlockLevel: 185, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6}, hitAbsorption: 47 },
-        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, price: 33800, unlockLevel: 190, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4}, hitAbsorption: 48 },
-        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, price: 33800, unlockLevel: 195, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4}, hitAbsorption: 48 },
-        { id: 45, name: "Броня Стража", tier: 8, armor: 95, price: 33800, unlockLevel: 200, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8}, hitAbsorption: 48 },
-        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, price: 34151, unlockLevel: 205, stats: {"anomaly_Воронка":6,"anomaly_Печка":4}, hitAbsorption: 48 },
-        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, price: 34151, unlockLevel: 210, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3}, hitAbsorption: 48 },
-        { id: 48, name: "Экзокостюм Периметр-4", tier: 8, armor: 97, price: 34515, unlockLevel: 330, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8}, hitAbsorption: 49 },
-        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, price: 46800, unlockLevel: 215, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5}, hitAbsorption: 49 },
-        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, price: 46800, unlockLevel: 220, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4}, hitAbsorption: 49 },
-        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, price: 46800, unlockLevel: 225, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4}, hitAbsorption: 49 },
-        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, price: 47281, unlockLevel: 230, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4}, hitAbsorption: 50 },
-        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, price: 47281, unlockLevel: 235, stats: {"anomaly_Электра":5,"anomaly_Карусель":7}, hitAbsorption: 50 },
-        { id: 54, name: "Экзокостюм Бастион", tier: 9, armor: 100, price: 47749, unlockLevel: 335, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6}, hitAbsorption: 50 },
-        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, price: 65000, unlockLevel: 240, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5}, hitAbsorption: 50 },
-        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, price: 65000, unlockLevel: 245, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8}, hitAbsorption: 50 },
-        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, price: 65000, unlockLevel: 250, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4}, hitAbsorption: 50 },
-        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, price: 65650, unlockLevel: 255, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7}, hitAbsorption: 51 },
-        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, price: 66300, unlockLevel: 260, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6}, hitAbsorption: 51 },
-        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, price: 66950, unlockLevel: 340, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6}, hitAbsorption: 52 },
-        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, price: 91000, unlockLevel: 345, stats: {"anomaly_Электра":8,"anomaly_Жарка":5}, hitAbsorption: 58 },
-        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, price: 91000, unlockLevel: 350, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7}, hitAbsorption: 58 },
-        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, price: 91793, unlockLevel: 355, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10}, hitAbsorption: 58 },
-        { id: 64, name: "Бронекостюм Периметр-5", tier: 11, armor: 117, price: 92586, unlockLevel: 265, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9}, hitAbsorption: 59 },
-        { id: 65, name: "Броня Легион-Лайт", tier: 11, armor: 118, price: 93379, unlockLevel: 270, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8}, hitAbsorption: 59 },
-        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, price: 94159, unlockLevel: 360, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7}, hitAbsorption: 60 },
-        { id: 67, name: "Броня Легион", tier: 12, armor: 130, price: 123500, unlockLevel: 275, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11}, hitAbsorption: 65 },
-        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, price: 123500, unlockLevel: 365, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10}, hitAbsorption: 65 },
-        { id: 69, name: "Броня Стража-Легенда", tier: 12, armor: 130, price: 123500, unlockLevel: 280, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6}, hitAbsorption: 65 },
-        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, price: 124449, unlockLevel: 370, stats: {"anomaly_Печка":11,"anomaly_Воронка":11}, hitAbsorption: 66 },
-        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, price: 125398, unlockLevel: 375, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6}, hitAbsorption: 66 },
-        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, price: 126347, unlockLevel: 380, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5}, hitAbsorption: 67 },
-        { id: 73, name: "Прототип Брони X-17", tier: 13, armor: 150, price: 169000, unlockLevel: 285, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12}, hitAbsorption: 75 },
-        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, price: 169000, unlockLevel: 385, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8}, hitAbsorption: 75 },
-        { id: 75, name: "Броня Раскат", tier: 13, armor: 150, price: 169000, unlockLevel: 290, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8}, hitAbsorption: 75 },
-        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, price: 170131, unlockLevel: 390, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11}, hitAbsorption: 76 },
-        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, price: 171249, unlockLevel: 395, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10}, hitAbsorption: 76 },
-        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, price: 172380, unlockLevel: 400, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10}, hitAbsorption: 77 },
-        { id: 79, name: "Броня Стрелка", tier: 14, armor: 180, price: 234000, unlockLevel: 295, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11}, hitAbsorption: 90 },
-        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, price: 234000, unlockLevel: 405, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8}, hitAbsorption: 90 },
-        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, price: 234000, unlockLevel: 300, stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10}, hitAbsorption: 90 },
-        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, price: 235300, unlockLevel: 410, stats: {"anomaly_Печка":13,"anomaly_Карусель":11}, hitAbsorption: 91 },
-        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, price: 236600, unlockLevel: 415, stats: {"anomaly_Печка":12,"anomaly_Жарка":11}, hitAbsorption: 91 },
-        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, price: 237900, unlockLevel: 420, stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8}, hitAbsorption: 92 },
+        { id: 15, name: "Бронекостюм Периметр-5", tier: 3, armor: 33, price: 1716, unlockLevel: 75, stats: {"anomaly_Воронка":2,"anomaly_Карусель":2}, hitAbsorption: 17 },
+        { id: 16, name: "Бронежилет 6Б43 Ратник", tier: 3, armor: 34, price: 1768, unlockLevel: 80, stats: {"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3}, hitAbsorption: 17 },
+        { id: 17, name: "Бронежилет Долга «Скала»", tier: 3, armor: 36, price: 1872, unlockLevel: 85, stats: {"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2}, hitAbsorption: 18 },
+        { id: 18, name: "Комбинезон Заря", tier: 3, armor: 40, price: 2600, unlockLevel: 90, stats: {"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2}, hitAbsorption: 20 },
+        { id: 19, name: "Бронежилет Выход", tier: 4, armor: 45, price: 3250, unlockLevel: 95, stats: {"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2}, hitAbsorption: 23 },
+        { id: 20, name: "Бронежилет 6Б45 Ратник-2", tier: 4, armor: 47, price: 3393, unlockLevel: 100, stats: {"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3}, hitAbsorption: 24 },
+        { id: 21, name: "Бронекостюм Монолит-Патрульный", tier: 4, armor: 48, price: 3471, unlockLevel: 105, stats: {"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3}, hitAbsorption: 24 },
+        { id: 22, name: "Костюм СИРИУС", tier: 4, armor: 52, price: 3757, unlockLevel: 110, stats: {"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3}, hitAbsorption: 26 },
+        { id: 23, name: "Броня Легион-Лайт", tier: 4, armor: 58, price: 4186, unlockLevel: 115, stats: {"anomaly_Печка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 29 },
+        { id: 24, name: "Костюм Стража-Финал", tier: 4, armor: 60, price: 5200, unlockLevel: 120, stats: {"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2}, hitAbsorption: 30 },
+        { id: 25, name: "Броня Монолит", tier: 5, armor: 75, price: 10400, unlockLevel: 125, stats: {"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4}, hitAbsorption: 38 },
+        { id: 26, name: "Бронекостюм СКАТ-9М", tier: 5, armor: 76, price: 10543, unlockLevel: 130, stats: {"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5}, hitAbsorption: 38 },
+        { id: 27, name: "Бронежилет 6Б47 Ратник-3", tier: 5, armor: 78, price: 10816, unlockLevel: 135, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5}, hitAbsorption: 39 },
+        { id: 28, name: "Броня Легион", tier: 5, armor: 79, price: 10959, unlockLevel: 140, stats: {"anomaly_Карусель":4,"anomaly_Печка":4}, hitAbsorption: 40 },
+        { id: 29, name: "Бронежилет 6Б57 Ратник-Элит", tier: 5, armor: 80, price: 11089, unlockLevel: 145, stats: {"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3}, hitAbsorption: 40 },
+        { id: 30, name: "Костюм Штурмовик", tier: 5, armor: 84, price: 11648, unlockLevel: 150, stats: {"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4}, hitAbsorption: 42 },
+        { id: 31, name: "Бронекостюм СЕВА", tier: 6, armor: 85, price: 15600, unlockLevel: 155, stats: {"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5}, hitAbsorption: 43 },
+        { id: 32, name: "Бронекостюм Долг-Элит", tier: 6, armor: 85, price: 15600, unlockLevel: 160, stats: {"anomaly_Воронка":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 43 },
+        { id: 33, name: "Бронежилет 6Б13 Модерн", tier: 6, armor: 86, price: 15782, unlockLevel: 165, stats: {"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4}, hitAbsorption: 43 },
+        { id: 34, name: "Костюм Абсолют-2", tier: 6, armor: 87, price: 15964, unlockLevel: 170, stats: {"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6}, hitAbsorption: 44 },
+        { id: 35, name: "Броня Стража-Легенда", tier: 6, armor: 88, price: 16146, unlockLevel: 175, stats: {"anomaly_Кислотный туман":5,"anomaly_Печка":3}, hitAbsorption: 44 },
+        { id: 36, name: "Костюм Гроза", tier: 6, armor: 89, price: 16328, unlockLevel: 180, stats: {"anomaly_Плазменная сфера":4,"anomaly_Воронка":6}, hitAbsorption: 45 },
+        { id: 37, name: "Бронежилет 6Б59 Элит", tier: 7, armor: 90, price: 23400, unlockLevel: 185, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3}, hitAbsorption: 45 },
+        { id: 38, name: "Бронежилет 6Б49 Ратник-4", tier: 7, armor: 90, price: 23400, unlockLevel: 190, stats: {"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6}, hitAbsorption: 45 },
+        { id: 39, name: "Костюм Ветер-Штурм", tier: 7, armor: 91, price: 23660, unlockLevel: 195, stats: {"anomaly_Карусель":4,"anomaly_Плазменная сфера":5}, hitAbsorption: 46 },
+        { id: 40, name: "Бронекостюм Титан-Про", tier: 7, armor: 92, price: 23920, unlockLevel: 200, stats: {"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5}, hitAbsorption: 46 },
+        { id: 41, name: "Прототип Брони X-17", tier: 7, armor: 93, price: 24180, unlockLevel: 205, stats: {"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6}, hitAbsorption: 47 },
+        { id: 42, name: "Броня Монолит-Элит", tier: 7, armor: 94, price: 24440, unlockLevel: 210, stats: {"anomaly_Печка":3,"anomaly_Кислотный туман":6}, hitAbsorption: 47 },
+        { id: 43, name: "Бронекостюм Титан", tier: 8, armor: 95, price: 33800, unlockLevel: 215, stats: {"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4}, hitAbsorption: 48 },
+        { id: 44, name: "Костюм Аванпост", tier: 8, armor: 95, price: 33800, unlockLevel: 220, stats: {"anomaly_Плазменная сфера":7,"anomaly_Карусель":4}, hitAbsorption: 48 },
+        { id: 45, name: "Броня Стража", tier: 8, armor: 95, price: 33800, unlockLevel: 225, stats: {"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8}, hitAbsorption: 48 },
+        { id: 46, name: "Костюм Затвор-Броня", tier: 8, armor: 96, price: 34151, unlockLevel: 230, stats: {"anomaly_Воронка":6,"anomaly_Печка":4}, hitAbsorption: 48 },
+        { id: 47, name: "Бронежилет 6Б51 Ратник-5", tier: 8, armor: 96, price: 34151, unlockLevel: 235, stats: {"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3}, hitAbsorption: 48 },
+        { id: 48, name: "Броня Раскат", tier: 8, armor: 97, price: 34515, unlockLevel: 240, stats: {"anomaly_Мясорубка":8,"anomaly_Карусель":8}, hitAbsorption: 49 },
+        { id: 49, name: "Защитный костюм Периметр", tier: 9, armor: 98, price: 46800, unlockLevel: 245, stats: {"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5}, hitAbsorption: 49 },
+        { id: 50, name: "Костюм Форпост", tier: 9, armor: 98, price: 46800, unlockLevel: 250, stats: {"anomaly_Мясорубка":7,"anomaly_Жарка":4}, hitAbsorption: 49 },
+        { id: 51, name: "Броня Стража-Элит", tier: 9, armor: 98, price: 46800, unlockLevel: 255, stats: {"anomaly_Кислотный туман":8,"anomaly_Электра":4}, hitAbsorption: 49 },
+        { id: 52, name: "Бронежилет 6Б61 Легенда", tier: 9, armor: 99, price: 47281, unlockLevel: 260, stats: {"anomaly_Плазменная сфера":5,"anomaly_Печка":4}, hitAbsorption: 50 },
+        { id: 53, name: "Бронежилет 6Б53 Ратник-6", tier: 9, armor: 99, price: 47281, unlockLevel: 265, stats: {"anomaly_Электра":5,"anomaly_Карусель":7}, hitAbsorption: 50 },
+        { id: 54, name: "Броня Стрелка", tier: 9, armor: 100, price: 47749, unlockLevel: 270, stats: {"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6}, hitAbsorption: 50 },
+        { id: 55, name: "Костюм Последний Рубеж", tier: 10, armor: 100, price: 65000, unlockLevel: 275, stats: {"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5}, hitAbsorption: 50 },
+        { id: 56, name: "Костюм Абсолют", tier: 10, armor: 100, price: 65000, unlockLevel: 280, stats: {"anomaly_Воронка":4,"anomaly_Кислотный туман":8}, hitAbsorption: 50 },
+        { id: 57, name: "Броня Периметр-Финал", tier: 10, armor: 100, price: 65000, unlockLevel: 285, stats: {"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4}, hitAbsorption: 50 },
+        { id: 58, name: "Бронежилет 6Б55 Ратник-Финал", tier: 10, armor: 101, price: 65650, unlockLevel: 290, stats: {"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7}, hitAbsorption: 51 },
+        { id: 59, name: "Бронежилет 6Б63 Легенда-Финал", tier: 10, armor: 102, price: 66300, unlockLevel: 295, stats: {"anomaly_Жарка":10,"anomaly_Воронка":6}, hitAbsorption: 51 },
+        { id: 60, name: "Экзокостюм Бастион-2", tier: 10, armor: 103, price: 66950, unlockLevel: 300, stats: {"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6}, hitAbsorption: 52 },
+        { id: 61, name: "Экзоскелет Монолит-11", tier: 11, armor: 115, price: 91000, unlockLevel: 305, stats: {"anomaly_Электра":8,"anomaly_Жарка":5}, hitAbsorption: 58 },
+        { id: 62, name: "Экзоскелет Свобода", tier: 11, armor: 115, price: 91000, unlockLevel: 310, stats: {"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7}, hitAbsorption: 58 },
+        { id: 63, name: "Экзоскелет Атлант", tier: 11, armor: 116, price: 91793, unlockLevel: 315, stats: {"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10}, hitAbsorption: 58 },
+        { id: 64, name: "Экзокостюм СЭВ", tier: 11, armor: 117, price: 92586, unlockLevel: 320, stats: {"anomaly_Электра":7,"anomaly_Мясорубка":9}, hitAbsorption: 59 },
+        { id: 65, name: "Экзокостюм Чистое небо", tier: 11, armor: 118, price: 93379, unlockLevel: 325, stats: {"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8}, hitAbsorption: 59 },
+        { id: 66, name: "Экзоскелет Титан-Экстрим", tier: 11, armor: 119, price: 94159, unlockLevel: 330, stats: {"anomaly_Карусель":9,"anomaly_Мясорубка":7}, hitAbsorption: 60 },
+        { id: 67, name: "Экзокостюм Периметр-1", tier: 12, armor: 130, price: 123500, unlockLevel: 335, stats: {"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11}, hitAbsorption: 65 },
+        { id: 68, name: "Экзоскелет Периметр-2", tier: 12, armor: 130, price: 123500, unlockLevel: 340, stats: {"anomaly_Кислотный туман":8,"anomaly_Карусель":10}, hitAbsorption: 65 },
+        { id: 69, name: "Экзокостюм Титан-Лайт", tier: 12, armor: 130, price: 123500, unlockLevel: 345, stats: {"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6}, hitAbsorption: 65 },
+        { id: 70, name: "Экзоскелет Штурмовой", tier: 12, armor: 131, price: 124449, unlockLevel: 350, stats: {"anomaly_Печка":11,"anomaly_Воронка":11}, hitAbsorption: 66 },
+        { id: 71, name: "Экзоскелет Периметр-Финал", tier: 12, armor: 132, price: 125398, unlockLevel: 355, stats: {"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6}, hitAbsorption: 66 },
+        { id: 72, name: "Экзокостюм Бастион-Финал", tier: 12, armor: 133, price: 126347, unlockLevel: 360, stats: {"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5}, hitAbsorption: 67 },
+        { id: 73, name: "Экзокостюм Периметр-3", tier: 13, armor: 150, price: 169000, unlockLevel: 365, stats: {"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12}, hitAbsorption: 75 },
+        { id: 74, name: "Экзоскелет Крепость", tier: 13, armor: 150, price: 169000, unlockLevel: 370, stats: {"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8}, hitAbsorption: 75 },
+        { id: 75, name: "Экзокостюм Периметр-4", tier: 13, armor: 150, price: 169000, unlockLevel: 375, stats: {"anomaly_Плазменная сфера":8,"anomaly_Печка":8}, hitAbsorption: 75 },
+        { id: 76, name: "Экзоскелет Крепость-2", tier: 13, armor: 151, price: 170131, unlockLevel: 380, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11}, hitAbsorption: 76 },
+        { id: 77, name: "Экзоскелет Реликт", tier: 13, armor: 152, price: 171249, unlockLevel: 385, stats: {"anomaly_Воронка":9,"anomaly_Мясорубка":10}, hitAbsorption: 76 },
+        { id: 78, name: "Экзокостюм Возмездие", tier: 13, armor: 153, price: 172380, unlockLevel: 390, stats: {"anomaly_Печка":11,"anomaly_Плазменная сфера":10}, hitAbsorption: 77 },
+        { id: 79, name: "Экзокостюм Бастион", tier: 14, armor: 180, price: 234000, unlockLevel: 395, stats: {"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11}, hitAbsorption: 90 },
+        { id: 80, name: "Экзоскелет", tier: 14, armor: 180, price: 234000, unlockLevel: 400, stats: {"anomaly_Плазменная сфера":12,"anomaly_Электра":8}, hitAbsorption: 90 },
+        { id: 81, name: "Броня Зоны", tier: 14, armor: 180, price: 234000, isPremiumArmor: true, specialAbility: 'zone_double_artifact', stats: {"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10}, hitAbsorption: 90 },
+        { id: 82, name: "Экзоскелет Титан-Финал", tier: 14, armor: 181, price: 235300, isPremiumArmor: true, specialAbility: 'titan_npc_dmg_loot', stats: {"anomaly_Печка":13,"anomaly_Карусель":11}, hitAbsorption: 91 },
+        { id: 83, name: "Экзоскелет Абсолют-Финал", tier: 14, armor: 182, price: 236600, isPremiumArmor: true, specialAbility: 'absolute_arena_dmg_kill', stats: {"anomaly_Печка":12,"anomaly_Жарка":11}, hitAbsorption: 91 },
+        { id: 84, name: "Экзокостюм Апокалипсис", tier: 14, armor: 183, price: 237900, isPremiumArmor: true, specialAbility: 'apocalypse_mutant_dmg_loot', stats: {"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8}, hitAbsorption: 92 },
         { id: 85, name: "Плащ тёмного сталкера", tier: 14, armor: 666, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666}, hitAbsorption: 333 },
         { id: 86, name: "Исследовательский комбинезон A", tier: 4, armor: 25, price: 9360, isResearchSuit: true, stats: {"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9}, hitAbsorption: 13 },
         { id: 87, name: "Исследовательский комбинезон B", tier: 5, armor: 41, price: 20966, isResearchSuit: true, stats: {"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17}, hitAbsorption: 21 },
@@ -1148,6 +1151,21 @@ input[type='number'] { min-width:0; }
     // Базовое снаряжение "без ничего" — используется при действии "Снять"
     const DEFAULT_WEAPON = { name: 'Кулаки', tier: 0, dmg: 5 };
     const DEFAULT_ARMOR = { name: 'Без брони', tier: 0, armor: 0 };
+
+    // Премиальная броня даёт +20 к соответствующему перку ТОЛЬКО пока надета (временный бонус,
+    // не растит сам сохранённый перк) — используются везде, где перк реально влияет на расчёт.
+    // ВАЖНО: сравниваем по "чистому" базовому имени (без суффикса "+N" от улучшений и невидимых
+    // суффиксов уникальности) — иначе после первого же улучшения брони сравнение с полным именем
+    // (player.armor.name === 'Экзокостюм Апокалипсис') перестаёт совпадать, и способность "отваливается"
+    function isEquippedArmor(baseName) {
+        return parseGearName(player.armor.name).baseName === baseName;
+    }
+    function getEffectiveIntellect() {
+        return (Number(player.intellect) || 0) + (isEquippedArmor('Экзоскелет Титан-Финал') ? 20 : 0);
+    }
+    function getEffectiveLuck() {
+        return (Number(player.luck) || 0) + (isEquippedArmor('Броня Зоны') ? 20 : 0);
+    }
     const DEFAULT_DETECTOR = { name: 'Без детектора', tier: 0 };
 
     // ===== ЕДА, ВОДА, МЕДИКАМЕНТЫ =====
@@ -1167,7 +1185,11 @@ input[type='number'] { min-width:0; }
     // Иконки расходников (еда/вода/аптечки) — по названию предмета. Пока только эти 7, для
     // остального снаряжения (оружие/броня/артефакты) своих иконок нет, показываем как раньше
     const ITEM_ICONS = {
-        // Иконки брони (92 из 96 — у id 81-84 картинок пока нет)
+        // Иконки брони (96 из 96)
+        'Броня Зоны': 'armor_icon_81.webp',
+        'Экзоскелет Титан-Финал': 'armor_icon_82.webp',
+        'Экзоскелет Абсолют-Финал': 'armor_icon_83.webp',
+        'Экзокостюм Апокалипсис': 'armor_icon_84.webp',
         'Комбинезон Юность': 'armor_icon_1.webp',
         'Куртка кожаная армейская': 'armor_icon_2.webp',
         'Ватник утеплённый': 'armor_icon_3.webp',
@@ -1493,9 +1515,12 @@ input[type='number'] { min-width:0; }
         'Glock 22': 'pistol_glock22.png',
         'SIG Sauer P229': 'pistol_sig_p229.png'
     };
-    // Картинка персонажа в надетой броне (для СНАРЯЖЕНИЕ-портрета в инвентаре) — 92 из 96
-    // (у id 81-84 картинок пока нет, для них используется портрет по умолчанию)
+    // Картинка персонажа в надетой броне (для СНАРЯЖЕНИЕ-портрета в инвентаре) — 96 из 96
     const ARMOR_CHAR_IMAGES = {
+        'Броня Зоны': 'armor_char_81.webp',
+        'Экзоскелет Титан-Финал': 'armor_char_82.webp',
+        'Экзоскелет Абсолют-Финал': 'armor_char_83.webp',
+        'Экзокостюм Апокалипсис': 'armor_char_84.webp',
         'Комбинезон Юность': 'armor_char_1.webp',
         'Куртка кожаная армейская': 'armor_char_2.webp',
         'Ватник утеплённый': 'armor_char_3.webp',
@@ -1712,10 +1737,14 @@ input[type='number'] { min-width:0; }
     }
 
     const NPC_TIER_MULT = {"1":1.37,"2":0.97,"3":1.05,"4":1.08,"5":1.14,"6":1.05,"7":0.97,"8":0.86,"9":0.86,"10":0.72,"11":0.76,"12":0.87,"13":0.78,"14":0.84};
+    // Коэффициент допол. масштабирования по тиру — та же кривая, что у mutants, чтобы NPC той
+    // же силы, что мутанты этого тира, оставались сопоставимы после пересчёта кривой урона оружия
+    const NPC_TIER_DMG_SCALE = {1:0.676,2:0.664,3:0.664,4:0.546,5:0.55,6:0.637,7:0.822,8:1.12,9:1.543,10:2.145,11:2.886,12:3.676,13:4.745,14:5.861};
     const npcs = [];
     for (let i = 0; i < factions.length; i++) {
         for (let tier = 1; tier <= 14; tier++) {
             const mult = NPC_TIER_MULT[tier];
+            const dmgScale = NPC_TIER_DMG_SCALE[tier] || 1;
             npcs.push({
                 id: `${factions[i].name}_${tier}`,
                 faction: factions[i],
@@ -1723,8 +1752,8 @@ input[type='number'] { min-width:0; }
                 name: pickNpcName(factions[i].name, tier, i),
                 coins: tier * 500,
                 exp: tier * 50,
-                hp: Math.round(tier * 100 * mult),
-                dmg: Math.round(tier * 12 * mult),
+                hp: Math.max(1, Math.round(tier * 1000 * mult * dmgScale)),
+                dmg: Math.max(1, Math.round(tier * 120 * mult * dmgScale)),
                 hitChance: 0.9,
                 runChance: 0.5,
                 runSkill: 0
@@ -2270,7 +2299,7 @@ input[type='number'] { min-width:0; }
         if (data.weapon && data.weapon.name && data.weapon.name !== DEFAULT_WEAPON.name) {
             const parsed = parseGearName(data.weapon.name);
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentDmg = base ? base.dmg + parsed.level : data.weapon.dmg;
+            const currentDmg = base ? getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg')) : data.weapon.dmg;
             html += `<p>⚔️ Оружие: ${escapeHtml(data.weapon.name)}<br>
                 <span style="color:#aaa; font-size:11px;">Урон: ${currentDmg}${parsed.level > 0 ? ` (базовый ${base ? base.dmg : '?'} +${parsed.level} от улучшений)` : ''}</span></p>`;
         }
@@ -3801,9 +3830,10 @@ input[type='number'] { min-width:0; }
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                showGameAlert(data.win
+                const dropMsg = data.premiumArmorDrop ? `\n🎁 Выпала премиальная броня: ${data.premiumArmorDrop}!` : '';
+                showGameAlert((data.win
                     ? `🏆 Победа на арене! Рейтинг +${data.ratingChange}, +250 🪙`
-                    : `💀 Поражение на арене. Рейтинг ${data.ratingChange}. Лут и снаряжение не пострадали.`);
+                    : `💀 Поражение на арене. Рейтинг ${data.ratingChange}. Лут и снаряжение не пострадали.`) + dropMsg);
                 loadGame();
                 renderArena();
             } else {
@@ -3825,7 +3855,13 @@ input[type='number'] { min-width:0; }
         { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование сразу поднимает уровень персонажа на 5' },
         { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Бункера экологов' },
         { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' },
-        { id: 'detector_t9', stars: 100, itemName: 'ВИЗИРЬ', title: 'ВИЗИРЬ', desc: 'Открывает доступ к 10 особым аномалиям тира 9 с именными артефактами первых 100 игроков' }
+        { id: 'detector_t9', stars: 100, itemName: 'ВИЗИРЬ', title: 'ВИЗИРЬ', desc: 'Открывает доступ к 10 особым аномалиям тира 9 с именными артефактами первых 100 игроков' },
+        // Премиальная броня — не продаётся в обычном магазине ни у кого, только тут за Stars
+        // (или выпадает случайно с арены каждые 5000 убитых игроков)
+        { id: 'armor_81', stars: 200, itemName: 'Броня Зоны', title: 'Броня Зоны', desc: 'При поиске артефактов — 50% шанс двойного выпадения из аномалии. +20 к перку «Удача»' },
+        { id: 'armor_82', stars: 200, itemName: 'Экзоскелет Титан-Финал', title: 'Экзоскелет Титан-Финал', desc: 'Урон по NPC +20, двойной лут с убитого NPC. +20 к перку «Интеллект»' },
+        { id: 'armor_83', stars: 200, itemName: 'Экзоскелет Абсолют-Финал', title: 'Экзоскелет Абсолют-Финал', desc: 'Урон по игрокам на арене +20, успешная атака сразу отнимает у соперника 2 смерти. +20 к перку «Меткость»' },
+        { id: 'armor_84', stars: 200, itemName: 'Экзокостюм Апокалипсис', title: 'Экзокостюм Апокалипсис', desc: 'Урон по мутантам +20, +2 части тела с убитого мутанта. +20 к перку «Живучесть»' }
     ];
 
     // "ВИЗИРЬ" (детектор тира 9) можно купить и за Жетоны сталкера (100 штук), не только за Stars
@@ -3981,7 +4017,8 @@ input[type='number'] { min-width:0; }
         
         if (action === 'attack') {
             const namedBonus = player.namedArtifactBonus || {};
-            const effAccuracy = (Number(player.accuracy) || 0) + (namedBonus.accuracy || 0);
+            const premiumAccuracyBonus = isEquippedArmor('Экзоскелет Абсолют-Финал') ? 20 : 0;
+            const effAccuracy = (Number(player.accuracy) || 0) + (namedBonus.accuracy || 0) + premiumAccuracyBonus;
             const effStrength = (Number(player.strength) || 0) + (namedBonus.strength || 0);
             const critChance = effAccuracy * 0.005; // до 50% шанса крита при меткости 100
             const isCrit = Math.random() < critChance;
@@ -3989,6 +4026,10 @@ input[type='number'] { min-width:0; }
             let dmg = player.weapon.dmg + effStrength + effAccuracy;
             // Бонус/штраф фракции к урону — отдельно против мутантов и против NPC
             const isNpcEnemy = !!currentEnemy.faction;
+            // Премиальная броня: "Экзокостюм Апокалипсис" +20 урона по мутантам,
+            // "Экзоскелет Титан-Финал" +20 урона по NPC
+            if (!isNpcEnemy && isEquippedArmor('Экзокостюм Апокалипсис')) dmg += 20;
+            if (isNpcEnemy && isEquippedArmor('Экзоскелет Титан-Финал')) dmg += 20;
             const bonuses = getFactionBonuses(isNpcEnemy ? currentEnemy.faction.name : null);
             const dmgBonusPct = isNpcEnemy ? bonuses.dmgVsNpcPct : bonuses.dmgVsMutantsPct;
             dmg = dmg * (1 + dmgBonusPct / 100);
@@ -4061,7 +4102,9 @@ input[type='number'] { min-width:0; }
             player.exp += currentEnemy.exp;
             if (!isNpc && currentEnemy.loot) {
                 // Фракция "Долг" — с мутантов падает на 1 часть тела больше (итого 2 вместо 1)
-                const bodyPartQty = 1 + getFactionBonuses(null).mutantBonusBodyParts;
+                // "Экзокостюм Апокалипсис" — ещё +2 части тела сверху (не считая фракционного бонуса)
+                let bodyPartQty = 1 + getFactionBonuses(null).mutantBonusBodyParts;
+                if (isEquippedArmor('Экзокостюм Апокалипсис')) bodyPartQty += 2;
                 player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + bodyPartQty;
             }
             // Некоторые мутанты (Излом, Лось, Электро химера) дополнительно роняют случайный артефакт в заданном диапазоне тиров
@@ -4094,11 +4137,13 @@ input[type='number'] { min-width:0; }
                 addNonStackingItem(currentEnemy.weapon.name);
                 addNonStackingItem(currentEnemy.armor.name);
 
-                // Медикамент — чем выше тир NPC, тем дороже/лучше выпадающая аптечка
+                // Медикамент — чем выше тир NPC, тем дороже/лучше выпадающая аптечка.
+                // "Экзоскелет Титан-Финал" — двойной лут с NPC (в т.ч. вторая аптечка)
+                const isTitanFinal = isEquippedArmor('Экзоскелет Титан-Финал');
                 const npcTier = currentEnemy.tier;
                 const medkitName = npcTier <= 4 ? 'Аптечка гражданская' : (npcTier <= 9 ? 'Аптечка армейская' : 'Аптечка научная');
-                player.inventory[medkitName] = (player.inventory[medkitName] || 0) + 1;
-                raidLogs.push(`💊 С тела выпал(а): ${medkitName}`);
+                player.inventory[medkitName] = (player.inventory[medkitName] || 0) + (isTitanFinal ? 2 : 1);
+                raidLogs.push(`💊 С тела выпал(а): ${medkitName}${isTitanFinal ? ' ×2' : ''}`);
 
                 // Фракционный лут — у каждой "мирной/нейтральной" фракции свой особый дроп,
                 // масштабируется тиром самого NPC
@@ -4107,31 +4152,33 @@ input[type='number'] { min-width:0; }
                     // 2 части тела случайных мутантов, тир лута растёт вместе с тиром NPC (диапазон 1-8)
                     const lootTier = Math.max(1, Math.min(8, Math.round(npcTier * 8 / 14)));
                     const mutantsWithLoot = mutants.filter(m => m.loot && m.tier <= lootTier);
-                    for (let i = 0; i < 2; i++) {
+                    const dolgQty = isTitanFinal ? 4 : 2;
+                    for (let i = 0; i < dolgQty; i++) {
                         if (mutantsWithLoot.length === 0) break;
                         const pick = mutantsWithLoot[Math.floor(Math.random() * mutantsWithLoot.length)];
                         player.inventory[pick.loot] = (player.inventory[pick.loot] || 0) + 1;
                     }
-                    raidLogs.push(`🥩 Бойцы "Долга" носят с собой трофеи охоты на мутантов — найдено 2 части тела.`);
+                    raidLogs.push(`🥩 Бойцы "Долга" носят с собой трофеи охоты на мутантов — найдено ${dolgQty} части тела.`);
                 } else if (npcFaction === 'Экологи') {
-                    // 1 детектор, тир растёт вместе с тиром NPC (диапазон 1-6)
+                    // 1 детектор (2 при Титан-Финал), тир растёт вместе с тиром NPC (диапазон 1-6)
                     const lootTier = Math.max(1, Math.min(6, Math.round(npcTier * 6 / 14)));
                     const detectorPool = detectors.filter(d => d.tier <= lootTier);
                     if (detectorPool.length > 0) {
                         const pick = detectorPool[detectorPool.length - 1]; // самый близкий к разрешённому тиру
-                        player.inventory[pick.name] = (player.inventory[pick.name] || 0) + 1;
-                        raidLogs.push(`📡 У эколога был при себе детектор: ${pick.name}`);
+                        player.inventory[pick.name] = (player.inventory[pick.name] || 0) + (isTitanFinal ? 2 : 1);
+                        raidLogs.push(`📡 У эколога был при себе детектор: ${pick.name}${isTitanFinal ? ' ×2' : ''}`);
                     }
                 } else if (npcFaction === 'Монолит') {
-                    // 2 случайных артефакта, тир растёт вместе с тиром NPC (диапазон 1-6)
+                    // 2 случайных артефакта (4 при Титан-Финал), тир растёт вместе с тиром NPC (диапазон 1-6)
                     const lootTier = Math.max(1, Math.min(6, Math.round(npcTier * 6 / 14)));
                     const artifactPool = artifacts.filter(a => a.tier <= lootTier && !a.adminOnly && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
-                    for (let i = 0; i < 2; i++) {
+                    const monolitQty = isTitanFinal ? 4 : 2;
+                    for (let i = 0; i < monolitQty; i++) {
                         if (artifactPool.length === 0) break;
                         const pick = artifactPool[Math.floor(Math.random() * artifactPool.length)];
                         addNonStackingItem(pick.name);
                     }
-                    raidLogs.push(`💎 Фанатики "Монолита" носили при себе найденные артефакты — забрано 2 шт.`);
+                    raidLogs.push(`💎 Фанатики "Монолита" носили при себе найденные артефакты — забрано ${monolitQty} шт.`);
                 }
             }
             // Сила и Меткость: точно +0.1 за каждое убийство (npc или мутанта, независимо от тира) —
@@ -4648,7 +4695,7 @@ input[type='number'] { min-width:0; }
             const ranges = { 1: [5, 10], 2: [10, 20], 3: [20, 30] };
             const [minC, maxC] = ranges[attempt] || [20, 30];
             chance = minC + Math.random() * (maxC - minC);
-            chance += (Number(player.luck) || 0) * 0.1; // удача: +0.1% за каждый пункт удачи
+            chance += getEffectiveLuck() * 0.1; // удача: +0.1% за каждый пункт удачи
             chance += (player.detector.tier || 0) * 1; // детектор: +1% за тир
             if (player.detector.name === 'ВИЗИРЬ') chance += 10; // спец-детектор — доп. бонус в обычных (не тир-9) аномалиях
             if (currentAnomaly.tier === 8) chance += 5; // аномалии последнего обычного тира — бонус к шансу
@@ -4665,7 +4712,7 @@ input[type='number'] { min-width:0; }
         player.radiation = Math.min(100, player.radiation + radiationAdded);
 
         // ВАЖНО: урон здоровью — это ВЫЧИТАНИЕ из текущего здоровья, а не установка нового значения!
-        const luckMitigation = (Number(player.luck) || 0) * 0.5;
+        const luckMitigation = getEffectiveLuck() * 0.5;
         const anomalySpecificResist = Math.max(0, (player.anomalyResist && player.anomalyResist[currentAnomaly.name]) || 0);
         const searchDmg = Math.max(0, radiationAdded - luckMitigation - anomalySpecificResist);
         player.health = Math.round(Math.max(0, player.health - searchDmg) * 10) / 10;
@@ -4717,6 +4764,12 @@ input[type='number'] { min-width:0; }
         if (!isT9) {
             const artifactName = currentAnomaly.artifacts[Math.floor(Math.random() * currentAnomaly.artifacts.length)];
             addNonStackingItem(artifactName);
+            // "Броня Зоны" — 50% шанс, что аномалия отдаст сразу второй артефакт впридачу
+            if (isEquippedArmor('Броня Зоны') && Math.random() < 0.5) {
+                const secondArtifactName = currentAnomaly.artifacts[Math.floor(Math.random() * currentAnomaly.artifacts.length)];
+                addNonStackingItem(secondArtifactName);
+                raidLogs.push(`🍀 Броня Зоны сработала — аномалия отдала ещё один артефакт: ${secondArtifactName}!`);
+            }
             finishAttempt(artifactName);
             return;
         }
@@ -4908,7 +4961,7 @@ input[type='number'] { min-width:0; }
     // Расходники у фракции стоят на 10% дороже, чем у обычного торговца (с учётом скидки за интеллект)
     function getFriendlyBuyPrice(basePrice) {
         const markedUp = basePrice * 1.1;
-        const discount = (Number(player.intellect) || 0) * 0.1;
+        const discount = getEffectiveIntellect() * 0.1;
         return Math.max(1, Math.round(markedUp - discount));
     }
 
@@ -5029,19 +5082,19 @@ input[type='number'] { min-width:0; }
         const stored = playerData.armorUpgradeData && playerData.armorUpgradeData[stableKey];
         if (!stored && parsed.level > 0) {
             return {
-                bulletResist: base.armor + parsed.level,
+                bulletResist: getUpgradedStat(base.armor, parsed.level, getNextItemCeiling(armorItems, base, 'armor')),
                 hitAbsorption: base.hitAbsorption || 0,
                 stats: { ...(base.stats || {}) },
                 totalUpgrades: parsed.level
             };
         }
         const u = stored || {};
-        const bulletResist = base.armor + (u.armor || 0);
-        const hitAbsorption = (base.hitAbsorption || 0) + (u.hitAbsorption || 0);
+        const bulletResist = getUpgradedStat(base.armor, u.armor || 0, getNextItemCeiling(armorItems, base, 'armor'));
+        const hitAbsorption = getUpgradedStat(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeiling(armorItems, base, 'hitAbsorption'));
         const stats = { ...(base.stats || {}) };
         Object.keys(u).forEach(key => {
             if (key === 'armor' || key === 'hitAbsorption') return;
-            stats[key] = (stats[key] || 0) + u[key];
+            stats[key] = getUpgradedStat(stats[key] || 0, u[key]);
         });
         return { bulletResist, hitAbsorption, stats, totalUpgrades: parsed.level };
     }
@@ -5101,7 +5154,7 @@ input[type='number'] { min-width:0; }
             const old = player.weapon.name;
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.weapon = { name: itemName, tier: weapon.tier, dmg: weapon.dmg + parsed.level };
+            player.weapon = { name: itemName, tier: weapon.tier, dmg: getUpgradedStat(weapon.dmg, parsed.level, getNextItemCeiling(weapons, weapon, 'dmg')) };
             if (old && old !== DEFAULT_WEAPON.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
             closeItemActionModal();
             renderInventory(); renderShop(); updateUI(); saveGame();
@@ -5121,6 +5174,12 @@ input[type='number'] { min-width:0; }
                 }
             }
             const old = player.armor.name;
+            // "Экзокостюм Апокалипсис" даёт +20 к максимальному здоровью, ПОКА надет — снимается,
+            // если меняем на другую броню, добавляется, если надеваем именно его
+            const oldIsApocalypse = parseGearName(old).baseName === 'Экзокостюм Апокалипсис';
+            const newIsApocalypse = parseGearName(itemName).baseName === 'Экзокостюм Апокалипсис';
+            if (oldIsApocalypse && !newIsApocalypse) player.maxHealth = Math.max(1, player.maxHealth - 20);
+            if (newIsApocalypse && !oldIsApocalypse) player.maxHealth += 20;
             player.inventory[itemName]--;
             if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
             const eff = getArmorEffectiveStats(itemName);
@@ -5171,6 +5230,7 @@ input[type='number'] { min-width:0; }
             player.weapon = { ...DEFAULT_WEAPON };
         } else if (slotType === 'armor') {
             if (player.armor.name === DEFAULT_ARMOR.name) return;
+            if (isEquippedArmor('Экзокостюм Апокалипсис')) player.maxHealth = Math.max(1, player.maxHealth - 20);
             player.inventory[player.armor.name] = (player.inventory[player.armor.name] || 0) + 1;
             player.armor = { ...DEFAULT_ARMOR };
         } else if (slotType === 'detector') {
@@ -5282,7 +5342,19 @@ input[type='number'] { min-width:0; }
         return html;
     }
 
+    function getItemIconHeaderHtml(itemName) {
+        const icon = ITEM_ICONS[parseGearName(itemName).baseName] || ITEM_ICONS[itemName];
+        if (!icon) return '';
+        return `<div style="text-align:center; margin-bottom:8px;">
+            <img src="${SERVER_URL}/icons/${icon}" style="max-width:120px; max-height:120px; object-fit:contain;" onerror="this.style.display='none'">
+        </div>`;
+    }
+
     function getItemInfoHtml(itemName) {
+        return getItemIconHeaderHtml(itemName) + getItemInfoHtmlInner(itemName);
+    }
+
+    function getItemInfoHtmlInner(itemName) {
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
             if (consumable.type === 'antirad') {
@@ -5306,11 +5378,11 @@ input[type='number'] { min-width:0; }
         const parsed = parseGearName(itemName);
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
-            const currentDmg = weapon.dmg + parsed.level;
+            const currentDmg = getUpgradedStat(weapon.dmg, parsed.level, getNextItemCeiling(weapons, weapon, 'dmg'));
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${weapon.tier}<br>
                 Базовый урон: ${weapon.dmg}<br>
-                Текущий урон: <b style="color:#fff;">${currentDmg}</b>${parsed.level > 0 ? ` (+${parsed.level} от улучшений)` : ''}<br>
+                Текущий урон: <b style="color:#fff;">${currentDmg}</b>${parsed.level > 0 ? ` (+${currentDmg - weapon.dmg} от улучшений)` : ''}<br>
                 Улучшений: ${parsed.level} / 100
             </div>`;
         }
@@ -5323,12 +5395,21 @@ input[type='number'] { min-width:0; }
                 const color = val >= 0 ? '#8ac926' : '#c0392b';
                 return `${getStatLabel(stat)}: <b style="color:${color};">${sign}${val}</b>`;
             }).join('<br>');
+            const PREMIUM_ARMOR_ABILITY_DESC = {
+                'Броня Зоны': '🍀 При поиске артефактов — 50% шанс получить сразу 2. +20 к перку «Удача»',
+                'Экзоскелет Титан-Финал': '🧠 Урон по NPC +20, двойной лут с убитого NPC. +20 к перку «Интеллект»',
+                'Экзоскелет Абсолют-Финал': '🎯 Урон по игрокам на арене +20, успешная атака сразу отнимает у соперника 2 смерти. +20 к перку «Меткость»',
+                'Экзокостюм Апокалипсис': '❤️ Урон по мутантам +20, +2 части тела с убитого мутанта. +20 к перку «Живучесть»'
+            };
+            const abilityLine = PREMIUM_ARMOR_ABILITY_DESC[armor.name]
+                ? `<br><span style="color:#e6c229;">${PREMIUM_ARMOR_ABILITY_DESC[armor.name]}</span>`
+                : '';
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${armor.tier}<br>
                 Пулестойкость (защита от NPC): <b style="color:#fff;">${eff.bulletResist}</b><br>
                 Гашение ударов (защита от мутантов): <b style="color:#fff;">${eff.hitAbsorption}</b><br>
                 Улучшений: ${parsed.level} / 100
-                ${resistLines ? '<br>' + resistLines + (armor.isResearchSuit ? ' <span style="color:#888;">(не растёт при улучшении)</span>' : '') : ''}
+                ${resistLines ? '<br>' + resistLines + (armor.isResearchSuit ? ' <span style="color:#888;">(не растёт при улучшении)</span>' : '') : ''}${abilityLine}
             </div>`;
         }
         const detector = detectors.find(d => d.name === itemName);
@@ -6340,7 +6421,7 @@ input[type='number'] { min-width:0; }
         // экзокостюмы и экзоскелеты — в самом конце). Исследовательские комбинезоны сюда не входят —
         // они продаются только в Бункере экологов.
         const unlockArmorByLevel = () => armorItems.filter(a => {
-            if (a.adminOnly || a.isResearchSuit) return false;
+            if (a.adminOnly || a.isResearchSuit || a.isPremiumArmor) return false;
             return player.level >= (a.unlockLevel || 0);
         });
 
@@ -6369,7 +6450,7 @@ input[type='number'] { min-width:0; }
 
     // Цена покупки с учётом скидки от перка "Интеллект" (0.1 монеты за каждый пункт интеллекта)
     function getBuyPrice(basePrice) {
-        const discount = (player.intellect || 0) * 0.1;
+        const discount = getEffectiveIntellect() * 0.1;
         return Math.max(1, Math.round(basePrice - discount));
     }
 
@@ -6758,6 +6839,42 @@ input[type='number'] { min-width:0; }
 
     // ===== ТЕХНИК: улучшение и продажа снаряжения =====
     const UPGRADE_MAX_LEVEL = 100;
+
+    // Раньше каждый уровень улучшения давал ПЛОСКИЙ +1 к характеристике (максимум +100 при полной
+    // прокачке) — а разница между соседними по силе видами оружия/брони часто всего +1..+30.
+    // Из-за этого полностью прокачанный слабый стартовый предмет мог перепрыгнуть через десятки
+    // тиров вперёд, и покупать что-то новее становилось бессмысленно. Теперь бонус — ПРОЦЕНТ от
+    // БАЗОВОЙ характеристики самого предмета, с потолком +50% на 100 уровне улучшения — так
+    // прокачка всегда остаётся ощутимой, но никогда не обгоняет прогресс по тирам на много шагов вперёд
+    const UPGRADE_MAX_BONUS_PCT = 0.5;
+    function getUpgradedStat(baseStat, level, ceiling) {
+        const pct = Math.min(UPGRADE_MAX_BONUS_PCT, (Number(level) || 0) * (UPGRADE_MAX_BONUS_PCT / UPGRADE_MAX_LEVEL));
+        const raw = Math.round(baseStat * (1 + pct));
+        return (typeof ceiling === 'number') ? Math.min(raw, ceiling) : raw;
+    }
+    // Жёсткий потолок апгрейда: улучшенная характеристика НИКОГДА не должна превышать
+    // ХАРАКТЕРИСТИКУ СЛЕДУЮЩЕГО по уровню открытия предмета (даже на 1 очко) — иначе полностью
+    // прокачанный слабый предмет мог обогнать ещё не открытый более сильный (жалоба игроков:
+    // "улучшенный Макаров обгоняет по урону десяток ещё не открытых стволов"). Работает для
+    // оружия (dmg) и базовой брони (armor/hitAbsorption) — у них есть unlockLevel, поэтому
+    // понятие "следующий предмет" однозначно определено
+    // Потолок апгрейда: полностью прокачанный (100/100) предмет никогда не должен быть мощнее
+    // СЛЕДУЮЩЕГО по уровню открытия предмета, улучшенного всего на 20 из 100 — а не просто
+    // "следующего предмета без улучшений". Считается рекурсивно с конца цепочки: потолок каждого
+    // предмета зависит от потолка следующего, который зависит от следующего за ним, и т.д.
+    function getNextItemCeiling(list, item, statKey) {
+        if (!item || item.unlockLevel === undefined) return Infinity;
+        const candidates = list.filter(o => !o.adminOnly && !o.isPremiumArmor && !o.isResearchSuit &&
+            o.unlockLevel !== undefined && o.unlockLevel > item.unlockLevel);
+        if (candidates.length === 0) return Infinity;
+        const minUnlock = Math.min(...candidates.map(o => o.unlockLevel));
+        const nextTier = candidates.filter(o => o.unlockLevel === minUnlock);
+        nextTier.sort((a, b) => (Number(a[statKey]) || 0) - (Number(b[statKey]) || 0));
+        const nextItem = nextTier[0];
+        const nextCeiling = getNextItemCeiling(list, nextItem, statKey);
+        const nextValueAt20 = getUpgradedStat(Number(nextItem[statKey]) || 0, 20, nextCeiling);
+        return Math.max((Number(item[statKey]) || 0), nextValueAt20);
+    }
     const UPGRADE_BYTE_THRESHOLD = 50; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
 
     // Стоимость улучшения В БАЙТАХ для перехода С уровня currentLevel на currentLevel+1 (только 0-49) —
@@ -6822,7 +6939,7 @@ input[type='number'] { min-width:0; }
             const parsed = parseGearName(current.name);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentStat = base.dmg + parsed.level;
+            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
             const nextStat = currentStat + 1;
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
@@ -6881,12 +6998,18 @@ input[type='number'] { min-width:0; }
             // ВАЖНО: стоимость, порог "Байты/Жетоны" и потолок в 100 улучшений считаются ОТДЕЛЬНО
             // для каждой характеристики — по тому, сколько раз улучшали именно её (а не по общему
             // числу улучшений предмета). Раньше все строки делили один и тот же уровень предмета,
-            // из-за чего улучшение одной характеристики поднимало цену сразу у всех остальных
+            // из-за чего улучшение одной характеристики поднимало цену сразу у всех остальных.
+            // statCostDivisor: у обычной брони 2 характеристики, у исследовательского комбинезона
+            // их 9 — без деления полная прокачка всего предмета обходилась бы в rows.length раз
+            // дороже, чем у оружия (там всегда 1 характеристика — урон). Делим цену за уровень на
+            // число характеристик, чтобы "полная прокачка предмета" стоила примерно одинаково
+            // независимо от того, сколько у него характеристик
+            const statCostDivisor = Math.max(1, rows.length);
             const rowsHtml = rows.map(r => {
                 const statLevel = Number(upgradeData[r.key]) || 0;
                 const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;
                 const rowUsesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
-                const rowCost = rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel);
+                const rowCost = Math.max(1, Math.round((rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel)) / statCostDivisor));
                 const rowCanAfford = rowUsesTokens ? (Number(player.breedCredits) || 0) >= rowCost : player.coins >= rowCost;
                 return `
                 <div class="shop-item">
@@ -6930,7 +7053,7 @@ input[type='number'] { min-width:0; }
             const parsed = parseGearName(name);
             const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentStat = base.dmg + parsed.level;
+            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
             const nextStat = currentStat + 1;
             const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
