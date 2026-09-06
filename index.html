@@ -743,6 +743,11 @@ input[type='number'] { min-width:0; }
     let isFriendlyEncounterActive = false; // отличает мирную встречу с NPC от настоящего боя (currentEnemy общий для обоих)
     let currentAnomaly = null; // { ...anomalyDef, attemptsUsed, resolved } — интерактивная встреча с аномалией
     let battleTurn = 0;
+    // Лимит аптечек ЗА ОДИН БОЙ — максимум 3 (любого вида), даже если в инвентаре их больше.
+    // Сбрасывается в startBattle(). Ограничивает только применение В БОЮ — вне боя (обычный
+    // расходник в рейде без противника) лимита нет вообще
+    const BATTLE_MEDKIT_LIMIT = 3;
+    let battleMedkitsUsed = 0;
     let adminClickCount = 0;
     let kpkTab = 'info';
     let shopTab = 'buy';
@@ -751,35 +756,64 @@ input[type='number'] { min-width:0; }
 
     // ===== МУТАНТЫ =====
     const mutants = [
-        { tier: 0, name: "Тушкан", hp: 100, dmg: 100, loot: "Хвост тушкана", lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1, runChance: 1, runSkill: 0.1, hitChance: 1, hitSkill: 0.1 },
-        { tier: 1, name: "Слепая собака", hp: 324, dmg: 385, loot: "Ухо слепого пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: "Чернобыльский пёс", hp: 324, dmg: 385, loot: "Клык чернобыльского пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
-        { tier: 1, name: "Кракозябра", hp: 324, dmg: 385, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1,1] },
-        { tier: 2, name: "Плоть", hp: 491, dmg: 392, loot: "Глаз плоти", lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
-        { tier: 3, name: "Боров", hp: 777, dmg: 418, loot: "Клык борова", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 3, name: "Изотоп", hp: 777, dmg: 418, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3,3] },
-        { tier: 3, name: "Шарнир", hp: 777, dmg: 418, loot: "Непонятный металл", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
-        { tier: 4, name: "Зомби", hp: 846, dmg: 371, loot: "Ухо зомби", lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
-        { tier: 5, name: "Псевдо собака", hp: 1050, dmg: 418, loot: "Ухо псевдо пса", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: "Рысь", hp: 1050, dmg: 418, loot: "Ухо рыси", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 5, name: "Чупакабра", hp: 1050, dmg: 418, loot: "Хвост чупакабры", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
-        { tier: 6, name: "Пси собака", hp: 1739, dmg: 503, loot: "Ухо пси пса", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 6, name: "Кот Баюн", hp: 1739, dmg: 503, loot: "Хвост баюна", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
-        { tier: 7, name: "Снорк", hp: 2655, dmg: 658, loot: "Ухо снорка", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: "Стрегун", hp: 2655, dmg: 658, loot: "Хитин стрегуна", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 7, name: "Филин", hp: 2655, dmg: 658, loot: "Рука покрытая перьями", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
-        { tier: 8, name: "Кровосос", hp: 3506, dmg: 907, loot: "Щупальца кровососа", lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
-        { tier: 9, name: "Полтергейст", hp: 4691, dmg: 1265, loot: "Ухо полтергейста", lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1, hitChance: 0.55, hitSkill: 1 },
-        { tier: 10, name: "Огненный полтергейст", hp: 6178, dmg: 1780, loot: "Ухо огненного полтергейста", lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
-        { tier: 10, name: "Излом", hp: 6178, dmg: 1780, loot: "Ухо излома", lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1,5] },
-        { tier: 11, name: "Бюрер", hp: 13189, dmg: 2511, loot: "Ухо бюрера", lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
-        { tier: 11, name: "Лось", hp: 13189, dmg: 2511, loot: "Рог лося", lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7,8] },
-        { tier: 12, name: "Контролёр", hp: 19189, dmg: 3345, loot: "Ухо контролёра", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 12, name: "Стронглав", hp: 19189, dmg: 3345, loot: "Щупальца стронглава", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
-        { tier: 13, name: "Химера", hp: 26999, dmg: 4555, loot: "Коготь химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
-        { tier: 13, name: "Электро химера", hp: 26999, dmg: 4555, loot: "Коготь электро химеры", lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8,8] },
-        { tier: 13, name: "Наблюдатель", hp: 26999, dmg: 4555, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
-        { tier: 14, name: "Псевдогигант", hp: 58610, dmg: 6154, loot: "Ухо гиганта", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 }
+        { tier: 0, name: "Тушкан", hp: 16, dmg: 38, loot: "Хвост тушкана", lootPrice: 50, exp: 10, chance: 0.9, lootChance: 1, runChance: 1, runSkill: 0.1, hitChance: 1, hitSkill: 0.1 },
+        { tier: 1, name: "Слепая собака", hp: 24, dmg: 38, loot: "Ухо слепого пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Чернобыльский пёс", hp: 24, dmg: 38, loot: "Клык чернобыльского пса", lootPrice: 300, exp: 15, chance: 0.8, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2 },
+        { tier: 1, name: "Кракозябра", hp: 24, dmg: 38, exp: 15, chance: 0.4, lootChance: 0.95, runChance: 0.95, runSkill: 0.2, hitChance: 0.95, hitSkill: 0.2, bonusArtifactTierRange: [1,1] },
+        { tier: 3, name: "Плоть", hp: 461, dmg: 39, loot: "Глаз плоти", lootPrice: 600, exp: 20, chance: 0.7, lootChance: 0.9, runChance: 0.9, runSkill: 0.3, hitChance: 0.9, hitSkill: 0.3 },
+        { tier: 5, name: "Боров", hp: 662, dmg: 40, loot: "Клык борова", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 5, name: "Изотоп", hp: 662, dmg: 40, exp: 25, chance: 0.3, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4, bonusArtifactTierRange: [3,3] },
+        { tier: 5, name: "Шарнир", hp: 662, dmg: 40, loot: "Непонятный металл", lootPrice: 1000, exp: 25, chance: 0.6, lootChance: 0.85, runChance: 0.85, runSkill: 0.4, hitChance: 0.85, hitSkill: 0.4 },
+        { tier: 7, name: "Зомби", hp: 1045, dmg: 41, loot: "Ухо зомби", lootPrice: 1500, exp: 30, chance: 0.5, lootChance: 0.8, runChance: 0.8, runSkill: 0.5, hitChance: 0.8, hitSkill: 0.5 },
+        { tier: 9, name: "Псевдо собака", hp: 1650, dmg: 44, loot: "Ухо псевдо пса", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 9, name: "Рысь", hp: 1650, dmg: 44, loot: "Ухо рыси", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 9, name: "Чупакабра", hp: 1650, dmg: 44, loot: "Хвост чупакабры", lootPrice: 4000, exp: 35, chance: 0.4, lootChance: 0.75, runChance: 0.75, runSkill: 0.6, hitChance: 0.75, hitSkill: 0.6 },
+        { tier: 11, name: "Пси собака", hp: 2580, dmg: 46, loot: "Ухо пси пса", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 11, name: "Кот Баюн", hp: 2580, dmg: 46, loot: "Хвост баюна", lootPrice: 6000, exp: 40, chance: 0.3, lootChance: 0.7, runChance: 0.7, runSkill: 0.7, hitChance: 0.7, hitSkill: 0.7 },
+        { tier: 13, name: "Снорк", hp: 4010, dmg: 49, loot: "Ухо снорка", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 13, name: "Стрегун", hp: 4010, dmg: 49, loot: "Хитин стрегуна", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 13, name: "Филин", hp: 4010, dmg: 49, loot: "Рука покрытая перьями", lootPrice: 8000, exp: 45, chance: 0.2, lootChance: 0.65, runChance: 0.65, runSkill: 0.8, hitChance: 0.65, hitSkill: 0.8 },
+        { tier: 15, name: "Кровосос", hp: 6205, dmg: 52, loot: "Щупальца кровососа", lootPrice: 10000, exp: 50, chance: 0.2, lootChance: 0.6, runChance: 0.6, runSkill: 0.9, hitChance: 0.6, hitSkill: 0.9 },
+        { tier: 17, name: "Полтергейст", hp: 9250, dmg: 71, loot: "Ухо полтергейста", lootPrice: 12000, exp: 55, chance: 0.2, lootChance: 0.55, runChance: 0.55, runSkill: 1, hitChance: 0.55, hitSkill: 1 },
+        { tier: 19, name: "Огненный полтергейст", hp: 13310, dmg: 82, loot: "Ухо огненного полтергейста", lootPrice: 14000, exp: 60, chance: 0.2, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1 },
+        { tier: 19, name: "Излом", hp: 13310, dmg: 82, loot: "Ухо излома", lootPrice: 14000, exp: 60, chance: 0.1, lootChance: 0.5, runChance: 0.5, runSkill: 1.1, hitChance: 0.5, hitSkill: 1.1, bonusArtifactTierRange: [1,5] },
+        { tier: 21, name: "Бюрер", hp: 19170, dmg: 92, loot: "Ухо бюрера", lootPrice: 20000, exp: 65, chance: 0.2, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2 },
+        { tier: 21, name: "Лось", hp: 19170, dmg: 92, loot: "Рог лося", lootPrice: 20000, exp: 65, chance: 0.1, lootChance: 0.45, runChance: 0.45, runSkill: 1.2, hitChance: 0.45, hitSkill: 1.2, bonusArtifactTierRange: [7,8] },
+        { tier: 23, name: "Контролёр", hp: 27600, dmg: 103, loot: "Ухо контролёра", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 23, name: "Стронглав", hp: 27600, dmg: 103, loot: "Щупальца стронглава", lootPrice: 25000, exp: 70, chance: 0.15, lootChance: 0.4, runChance: 0.4, runSkill: 1.3, hitChance: 0.4, hitSkill: 1.3 },
+        { tier: 25, name: "Химера", hp: 39750, dmg: 113, loot: "Коготь химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4 },
+        { tier: 25, name: "Электро химера", hp: 39750, dmg: 113, loot: "Коготь электро химеры", lootPrice: 100000, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusArtifactTierRange: [8,8] },
+        { tier: 25, name: "Наблюдатель", hp: 39750, dmg: 113, exp: 80, chance: 0.05, lootChance: 0.35, runChance: 0.05, runSkill: 1.4, hitChance: 0.35, hitSkill: 1.4, bonusLevel: 10, bonusBreedCredits: 2 },
+        { tier: 27, name: "Псевдогигант", hp: 57240, dmg: 123, loot: "Ухо гиганта", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.5, hitChance: 0.5, hitSkill: 1.5 },
+        { tier: 2, name: "Самка слепой собаки", hp: 384, dmg: 38, loot: "Ухо самки слепого пса", lootPrice: 424, exp: 18, chance: 0.75, lootChance: 0.93, runChance: 0.93, runSkill: 0.25, hitChance: 0.93, hitSkill: 0.25 },
+        { tier: 2, name: "Самка чернобыльского пса", hp: 384, dmg: 38, loot: "Клык самки чернобыльского пса", lootPrice: 424, exp: 18, chance: 0.75, lootChance: 0.93, runChance: 0.93, runSkill: 0.25, hitChance: 0.93, hitSkill: 0.25 },
+        { tier: 4, name: "Самка кракозябры", hp: 552, dmg: 40, exp: 22, chance: 0.65, lootChance: 0.88, runChance: 0.88, runSkill: 0.35, hitChance: 0.88, hitSkill: 0.35, bonusArtifactTierRange: [1,1] },
+        { tier: 4, name: "Самка плоти", hp: 552, dmg: 40, loot: "Глаз самки плоти", lootPrice: 775, exp: 22, chance: 0.65, lootChance: 0.88, runChance: 0.88, runSkill: 0.35, hitChance: 0.88, hitSkill: 0.35 },
+        { tier: 6, name: "Самка борова", hp: 797, dmg: 40, loot: "Клык самки борова", lootPrice: 1225, exp: 28, chance: 0.55, lootChance: 0.82, runChance: 0.82, runSkill: 0.45, hitChance: 0.82, hitSkill: 0.45 },
+        { tier: 6, name: "Самка изотопа", hp: 797, dmg: 40, exp: 28, chance: 0.55, lootChance: 0.82, runChance: 0.82, runSkill: 0.45, hitChance: 0.82, hitSkill: 0.45, bonusArtifactTierRange: [3,3] },
+        { tier: 8, name: "Самка шарнира", hp: 1315, dmg: 42, loot: "Непонятный металл самки шарнира", lootPrice: 2449, exp: 32, chance: 0.45, lootChance: 0.78, runChance: 0.78, runSkill: 0.55, hitChance: 0.78, hitSkill: 0.55 },
+        { tier: 8, name: "Самка зомби", hp: 1315, dmg: 42, loot: "Ухо самки зомби", lootPrice: 2449, exp: 32, chance: 0.45, lootChance: 0.78, runChance: 0.78, runSkill: 0.55, hitChance: 0.78, hitSkill: 0.55 },
+        { tier: 10, name: "Самка псевдо собаки", hp: 2065, dmg: 45, loot: "Ухо самки псевдо пса", lootPrice: 4899, exp: 38, chance: 0.35, lootChance: 0.72, runChance: 0.72, runSkill: 0.65, hitChance: 0.72, hitSkill: 0.65 },
+        { tier: 10, name: "Самка рыси", hp: 2065, dmg: 45, loot: "Ухо самки рыси", lootPrice: 4899, exp: 38, chance: 0.35, lootChance: 0.72, runChance: 0.72, runSkill: 0.65, hitChance: 0.72, hitSkill: 0.65 },
+        { tier: 12, name: "Самка чупакабры", hp: 3220, dmg: 48, loot: "Хвост самки чупакабры", lootPrice: 6928, exp: 42, chance: 0.25, lootChance: 0.68, runChance: 0.68, runSkill: 0.75, hitChance: 0.68, hitSkill: 0.75 },
+        { tier: 12, name: "Самка пси собаки", hp: 3220, dmg: 48, loot: "Ухо самки пси пса", lootPrice: 6928, exp: 42, chance: 0.25, lootChance: 0.68, runChance: 0.68, runSkill: 0.75, hitChance: 0.68, hitSkill: 0.75 },
+        { tier: 14, name: "Самка кота баюна", hp: 4990, dmg: 50, loot: "Хвост самки баюна", lootPrice: 8944, exp: 48, chance: 0.2, lootChance: 0.62, runChance: 0.62, runSkill: 0.85, hitChance: 0.62, hitSkill: 0.85 },
+        { tier: 14, name: "Самка снорка", hp: 4990, dmg: 50, loot: "Ухо самки снорка", lootPrice: 8944, exp: 48, chance: 0.2, lootChance: 0.62, runChance: 0.62, runSkill: 0.85, hitChance: 0.62, hitSkill: 0.85 },
+        { tier: 16, name: "Самка стрегуна", hp: 7700, dmg: 66, loot: "Хитин самки стрегуна", lootPrice: 10954, exp: 52, chance: 0.2, lootChance: 0.57, runChance: 0.57, runSkill: 0.95, hitChance: 0.57, hitSkill: 0.95 },
+        { tier: 16, name: "Самка филина", hp: 7700, dmg: 66, loot: "Рука самки филина, покрытая перьями", lootPrice: 10954, exp: 52, chance: 0.2, lootChance: 0.57, runChance: 0.57, runSkill: 0.95, hitChance: 0.57, hitSkill: 0.95 },
+        { tier: 18, name: "Самка кровососа", hp: 11090, dmg: 77, loot: "Щупальца самки кровососа", lootPrice: 12961, exp: 58, chance: 0.2, lootChance: 0.53, runChance: 0.53, runSkill: 1.05, hitChance: 0.54, hitSkill: 1.05 },
+        { tier: 18, name: "Самка полтергейста", hp: 11090, dmg: 77, loot: "Ухо самки полтергейста", lootPrice: 12961, exp: 58, chance: 0.2, lootChance: 0.53, runChance: 0.53, runSkill: 1.05, hitChance: 0.54, hitSkill: 1.05 },
+        { tier: 20, name: "Самка огненного полтергейста", hp: 15975, dmg: 87, loot: "Ухо самки огненного полтергейста", lootPrice: 23664, exp: 62, chance: 0.17, lootChance: 0.47, runChance: 0.47, runSkill: 1.15, hitChance: 0.51, hitSkill: 1.15 },
+        { tier: 20, name: "Самка излома", hp: 15975, dmg: 87, loot: "Ухо самки излома", lootPrice: 23664, exp: 62, chance: 0.17, lootChance: 0.47, runChance: 0.47, runSkill: 1.15, hitChance: 0.51, hitSkill: 1.15, bonusArtifactTierRange: [1,5] },
+        { tier: 22, name: "Самка бюрера", hp: 23000, dmg: 98, loot: "Ухо самки бюрера", lootPrice: 48990, exp: 68, chance: 0.15, lootChance: 0.43, runChance: 0.43, runSkill: 1.25, hitChance: 0.47, hitSkill: 1.25 },
+        { tier: 22, name: "Самка лося", hp: 23000, dmg: 98, loot: "Рог самки лося", lootPrice: 48990, exp: 68, chance: 0.15, lootChance: 0.43, runChance: 0.43, runSkill: 1.25, hitChance: 0.47, hitSkill: 1.25, bonusArtifactTierRange: [7,8] },
+        { tier: 24, name: "Самка контролёра", hp: 33120, dmg: 108, loot: "Ухо самки контролёра", lootPrice: 77460, exp: 75, chance: 0.12, lootChance: 0.38, runChance: 0.23, runSkill: 1.35, hitChance: 0.4, hitSkill: 1.35 },
+        { tier: 24, name: "Самка стронглава", hp: 33120, dmg: 108, loot: "Щупальца самки стронглава", lootPrice: 77460, exp: 75, chance: 0.12, lootChance: 0.38, runChance: 0.23, runSkill: 1.35, hitChance: 0.4, hitSkill: 1.35 },
+        { tier: 26, name: "Самка химеры", hp: 47700, dmg: 118, loot: "Коготь самки химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.32, runChance: 0.17, runSkill: 1.45, hitChance: 0.42, hitSkill: 1.45 },
+        { tier: 26, name: "Самка электро химеры", hp: 47700, dmg: 118, loot: "Коготь самки электро химеры", lootPrice: 100000, exp: 80, chance: 0.1, lootChance: 0.32, runChance: 0.17, runSkill: 1.45, hitChance: 0.42, hitSkill: 1.45, bonusArtifactTierRange: [8,8] },
+        { tier: 28, name: "Самка наблюдателя", hp: 68685, dmg: 129, exp: 85, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.6, hitChance: 0.5, hitSkill: 1.6, bonusLevel: 10, bonusBreedCredits: 2 },
+        { tier: 28, name: "Самка псевдогиганта", hp: 68685, dmg: 129, loot: "Ухо самки гиганта", lootPrice: 130000, exp: 85, chance: 0.1, lootChance: 0.3, runChance: 0.3, runSkill: 1.6, hitChance: 0.5, hitSkill: 1.6 },
+    
     ];
 
     // ===== АНОМАЛИИ =====
@@ -809,79 +843,79 @@ input[type='number'] { min-width:0; }
 
     // ===== АРТЕФАКТЫ =====
     const artifacts = [
-        { name: "Медуза", tier: 1, price: 200, stats: {"anomaly_Мясорубка":-3,"health":-3,"anomaly_Плазменная сфера":-2,"anomaly_Жарка":2} },
-        { name: "Жемчужина", tier: 1, price: 250, stats: {"anomaly_Печка":-2,"thirst":-3,"anomaly_Плазменная сфера":4,"radiationLeak":-3} },
-        { name: "Искра", tier: 1, price: 300, stats: {"anomaly_Мясорубка":-4,"anomaly_Кислотный туман":-3,"anomaly_Воронка":-3,"thirst":3} },
-        { name: "Пружина", tier: 1, price: 220, stats: {"anomaly_Электра":-3,"hunger":-3,"anomaly_Печка":-2,"anomaly_Плазменная сфера":3} },
-        { name: "Льдинка", tier: 1, price: 260, stats: {"anomaly_Жарка":-3,"anomaly_Мясорубка":-3,"anomaly_Печка":-3,"anomaly_Воронка":4} },
-        { name: "Уголёк", tier: 1, price: 280, stats: {"hunger":-2,"anomaly_Воронка":-2,"health":3,"radiationLeak":-2} },
-        { name: "Хрусталик", tier: 1, price: 320, stats: {"health":-2,"thirst":-2,"hunger":-3,"radiation":3} },
-        { name: "Паутинка", tier: 1, price: 240, stats: {"anomaly_Плазменная сфера":-4,"thirst":-2,"anomaly_Электра":-2,"hunger":2} },
-        { name: "Камешек", tier: 1, price: 210, stats: {"thirst":-2,"hunger":-3,"anomaly_Печка":-3,"anomaly_Карусель":4} },
-        { name: "Вспышка", tier: 2, price: 500, stats: {"thirst":-5,"anomaly_Электра":-5,"anomaly_Жарка":8,"radiationLeak":-4} },
-        { name: "Батарейка", tier: 2, price: 600, stats: {"anomaly_Кислотный туман":-4,"anomaly_Электра":-5,"anomaly_Мясорубка":-4,"anomaly_Плазменная сфера":6} },
-        { name: "Молния", tier: 2, price: 700, stats: {"anomaly_Жарка":-3,"thirst":-5,"health":8,"radiationLeak":-5} },
-        { name: "Стеклярус", tier: 2, price: 550, stats: {"anomaly_Электра":-4,"hunger":-5,"anomaly_Мясорубка":6,"radiationLeak":-4} },
-        { name: "Смола", tier: 2, price: 620, stats: {"anomaly_Кислотный туман":-3,"hunger":-3,"anomaly_Электра":5,"radiationLeak":-4} },
-        { name: "Раковина", tier: 2, price: 580, stats: {"anomaly_Карусель":-4,"anomaly_Печка":-4,"anomaly_Воронка":-5,"anomaly_Жарка":5} },
-        { name: "Осколок", tier: 2, price: 650, stats: {"hunger":-4,"thirst":-3,"anomaly_Кислотный туман":7,"radiationLeak":-3} },
-        { name: "Заноза", tier: 2, price: 530, stats: {"anomaly_Мясорубка":-4,"anomaly_Воронка":-3,"anomaly_Кислотный туман":-4,"hunger":8} },
-        { name: "Пыльца", tier: 2, price: 510, stats: {"anomaly_Печка":-5,"health":-5,"anomaly_Плазменная сфера":-4,"anomaly_Жарка":7} },
-        { name: "Камень крови", tier: 3, price: 1200, stats: {"anomaly_Кислотный туман":-6,"health":-4,"thirst":10} },
-        { name: "Гравитационный шар", tier: 3, price: 1400, stats: {"anomaly_Печка":-5,"anomaly_Мясорубка":-6,"anomaly_Жарка":9} },
-        { name: "Вихрь", tier: 3, price: 1600, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-6,"radiation":12} },
-        { name: "Слюда", tier: 3, price: 1300, stats: {"thirst":-4,"hunger":-4,"anomaly_Жарка":9} },
-        { name: "Ракушка", tier: 3, price: 1450, stats: {"anomaly_Плазменная сфера":-5,"anomaly_Мясорубка":-6,"radiation":7} },
-        { name: "Пыльный кристалл", tier: 3, price: 1500, stats: {"health":-5,"anomaly_Мясорубка":-6,"anomaly_Карусель":10} },
-        { name: "Обломок", tier: 3, price: 1550, stats: {"anomaly_Печка":-5,"anomaly_Электра":-4,"anomaly_Воронка":9} },
-        { name: "Игла", tier: 3, price: 1250, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Воронка":-6,"health":9} },
-        { name: "Чешуйка", tier: 3, price: 1350, stats: {"health":-6,"anomaly_Печка":-6,"anomaly_Жарка":10} },
-        { name: "Огненный шар", tier: 4, price: 2500, stats: {"hunger":-6,"anomaly_Воронка":13,"anomaly_Жарка":15,"radiationLeak":-8} },
-        { name: "Слеза", tier: 4, price: 2800, stats: {"anomaly_Печка":-5,"anomaly_Карусель":-8,"anomaly_Плазменная сфера":8,"radiation":14} },
-        { name: "Глаз", tier: 4, price: 3200, stats: {"anomaly_Кислотный туман":-5,"health":14,"anomaly_Мясорубка":8,"radiationLeak":-5} },
-        { name: "Гарпун", tier: 4, price: 2700, stats: {"thirst":-5,"anomaly_Воронка":-7,"health":15,"anomaly_Электра":16} },
-        { name: "Клык", tier: 4, price: 2900, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-5,"hunger":9,"health":11} },
-        { name: "Шип", tier: 4, price: 2600, stats: {"anomaly_Мясорубка":-6,"anomaly_Воронка":14,"anomaly_Карусель":11,"radiationLeak":-7} },
-        { name: "Капля ртути", tier: 4, price: 3000, stats: {"anomaly_Печка":-6,"anomaly_Мясорубка":-6,"health":9,"hunger":15} },
-        { name: "Осколок кости", tier: 4, price: 3100, stats: {"anomaly_Мясорубка":-5,"anomaly_Жарка":13,"anomaly_Карусель":11,"radiationLeak":-5} },
-        { name: "Жёлудь", tier: 4, price: 2650, stats: {"anomaly_Жарка":-6,"anomaly_Воронка":-7,"anomaly_Печка":8,"anomaly_Мясорубка":14} },
-        { name: "Стеклянный шарик", tier: 5, price: 4000, stats: {"anomaly_Электра":-8,"anomaly_Карусель":13,"hunger":13} },
-        { name: "Магнит", tier: 5, price: 4500, stats: {"anomaly_Кислотный туман":-8,"anomaly_Плазменная сфера":13,"anomaly_Карусель":12} },
-        { name: "Пузырь", tier: 5, price: 5000, stats: {"anomaly_Печка":-8,"thirst":13,"hunger":15} },
-        { name: "Кварц", tier: 5, price: 4300, stats: {"thirst":-5,"health":11,"anomaly_Печка":11} },
-        { name: "Спираль", tier: 5, price: 4400, stats: {"anomaly_Печка":-8,"health":14,"radiation":13} },
-        { name: "Обсидиан", tier: 5, price: 4200, stats: {"anomaly_Жарка":-9,"anomaly_Электра":17,"health":15} },
-        { name: "Лунный камень", tier: 5, price: 4800, stats: {"anomaly_Жарка":-6,"anomaly_Электра":19,"thirst":18} },
-        { name: "Игольчатый кристалл", tier: 5, price: 4100, stats: {"anomaly_Мясорубка":11,"anomaly_Плазменная сфера":18,"radiationLeak":-7} },
-        { name: "Вихревой шар", tier: 5, price: 4600, stats: {"anomaly_Воронка":17,"anomaly_Печка":18,"radiationLeak":-7} },
-        { name: "Кусок мяса", tier: 6, price: 7000, stats: {"anomaly_Карусель":-9,"anomaly_Кислотный туман":17,"anomaly_Плазменная сфера":23} },
-        { name: "Коготь", tier: 6, price: 7500, stats: {"anomaly_Воронка":14,"anomaly_Карусель":19,"radiationLeak":-9} },
-        { name: "Зуб", tier: 6, price: 8000, stats: {"anomaly_Кислотный туман":17,"anomaly_Воронка":15,"radiationLeak":-8} },
-        { name: "Ржавый механизм", tier: 6, price: 7800, stats: {"anomaly_Кислотный туман":-6,"hunger":21,"radiation":23} },
-        { name: "Кристалл разума", tier: 6, price: 8200, stats: {"hunger":-7,"anomaly_Кислотный туман":15,"anomaly_Карусель":19} },
-        { name: "Тлеющий уголь", tier: 6, price: 7600, stats: {"anomaly_Карусель":-9,"health":20,"anomaly_Кислотный туман":19} },
-        { name: "Ледяная слеза", tier: 6, price: 7900, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Печка":18,"anomaly_Воронка":14} },
-        { name: "Шёпот бездны", tier: 6, price: 8400, stats: {"anomaly_Жарка":-6,"radiation":23,"anomaly_Электра":22} },
-        { name: "Стальное перо", tier: 6, price: 8100, stats: {"anomaly_Жарка":-10,"anomaly_Воронка":17,"anomaly_Печка":13} },
-        { name: "Кровь земли", tier: 7, price: 12000, stats: {"health":16,"anomaly_Кислотный туман":23,"anomaly_Электра":18} },
-        { name: "Пепел", tier: 7, price: 14000, stats: {"anomaly_Электра":21,"thirst":20,"anomaly_Кислотный туман":21} },
-        { name: "Пламя", tier: 7, price: 16000, stats: {"anomaly_Печка":21,"anomaly_Воронка":27,"anomaly_Карусель":24} },
-        { name: "Осколок звезды", tier: 7, price: 13500, stats: {"radiation":24,"hunger":21,"anomaly_Кислотный туман":23} },
-        { name: "Сердце бури", tier: 7, price: 14500, stats: {"anomaly_Электра":22,"hunger":25,"anomaly_Воронка":24} },
-        { name: "Плачущий кристалл", tier: 7, price: 13800, stats: {"anomaly_Электра":22,"anomaly_Мясорубка":26,"health":22} },
-        { name: "Вой пустоты", tier: 7, price: 15000, stats: {"anomaly_Кислотный туман":21,"radiation":26,"anomaly_Электра":16} },
-        { name: "Живая ртуть", tier: 7, price: 14200, stats: {"anomaly_Жарка":16,"anomaly_Электра":23,"anomaly_Печка":27} },
-        { name: "Тень зоны", tier: 7, price: 15500, stats: {"anomaly_Воронка":20,"anomaly_Кислотный туман":18,"anomaly_Плазменная сфера":15} },
-        { name: "Ядро", tier: 8, price: 30000, stats: {"anomaly_Печка":19,"anomaly_Плазменная сфера":19,"anomaly_Кислотный туман":19,"anomaly_Электра":21} },
-        { name: "Звезда", tier: 8, price: 35000, stats: {"anomaly_Печка":29,"radiation":19,"anomaly_Электра":30,"hunger":30} },
-        { name: "Антиматерия", tier: 8, price: 50000, stats: {"hunger":24,"anomaly_Кислотный туман":24,"anomaly_Электра":20,"anomaly_Печка":29} },
-        { name: "Сердце Зоны", tier: 8, price: 38000, stats: {"anomaly_Плазменная сфера":28,"anomaly_Электра":29,"anomaly_Карусель":23,"anomaly_Кислотный туман":27} },
-        { name: "Осколок Монолита", tier: 8, price: 40000, stats: {"radiation":23,"anomaly_Жарка":29,"anomaly_Печка":25,"anomaly_Карусель":27} },
-        { name: "Слеза Вселенной", tier: 8, price: 42000, stats: {"anomaly_Печка":29,"anomaly_Воронка":26,"hunger":19,"health":29} },
-        { name: "Дыхание Чернобыля", tier: 8, price: 39000, stats: {"health":29,"radiation":25,"anomaly_Воронка":29,"anomaly_Жарка":19} },
-        { name: "Кровь Зоны", tier: 8, price: 41000, stats: {"anomaly_Воронка":17,"health":19,"radiation":25,"thirst":24} },
-        { name: "Разум Аномалии", tier: 8, price: 43000, stats: {"anomaly_Мясорубка":31,"anomaly_Плазменная сфера":19,"anomaly_Печка":18,"anomaly_Электра":21} },
-        { name: "Шустряк", tier: 8, price: 45000, stats: {"anomaly_Плазменная сфера":19,"anomaly_Электра":23,"anomaly_Кислотный туман":19,"anomaly_Мясорубка":27} },
+        { name: "Медуза", tier: 1, price: 200, stats: {"anomaly_Мясорубка":-3,"health":-3,"anomaly_Плазменная сфера":-2,"anomaly_Жарка":2, "bulletResist":4, "hitAbsorption":-2} },
+        { name: "Жемчужина", tier: 1, price: 250, stats: {"anomaly_Печка":-2,"thirst":-3,"anomaly_Плазменная сфера":4,"radiationLeak":-3, "hitAbsorption":4, "bulletResist":-2} },
+        { name: "Искра", tier: 1, price: 300, stats: {"anomaly_Мясорубка":-4,"anomaly_Кислотный туман":-3,"anomaly_Воронка":-3,"thirst":3, "bulletResist":4, "hitAbsorption":-2} },
+        { name: "Пружина", tier: 1, price: 220, stats: {"anomaly_Электра":-3,"hunger":-3,"anomaly_Печка":-2,"anomaly_Плазменная сфера":3, "hitAbsorption":4, "bulletResist":-2} },
+        { name: "Льдинка", tier: 1, price: 260, stats: {"anomaly_Жарка":-3,"anomaly_Мясорубка":-3,"anomaly_Печка":-3,"anomaly_Воронка":4, "bulletResist":4, "hitAbsorption":-2} },
+        { name: "Уголёк", tier: 1, price: 280, stats: {"hunger":-2,"anomaly_Воронка":-2,"health":3,"radiationLeak":-2, "hitAbsorption":4, "bulletResist":-2} },
+        { name: "Хрусталик", tier: 1, price: 320, stats: {"health":-2,"thirst":-2,"hunger":-3,"radiation":3, "bulletResist":4, "hitAbsorption":-2} },
+        { name: "Паутинка", tier: 1, price: 240, stats: {"anomaly_Плазменная сфера":-4,"thirst":-2,"anomaly_Электра":-2,"hunger":2, "hitAbsorption":4, "bulletResist":-2} },
+        { name: "Камешек", tier: 1, price: 210, stats: {"thirst":-2,"hunger":-3,"anomaly_Печка":-3,"anomaly_Карусель":4, "bulletResist":4, "hitAbsorption":-2} },
+        { name: "Вспышка", tier: 2, price: 500, stats: {"thirst":-5,"anomaly_Электра":-5,"anomaly_Жарка":8,"radiationLeak":-4, "hitAbsorption":8, "bulletResist":-4} },
+        { name: "Батарейка", tier: 2, price: 600, stats: {"anomaly_Кислотный туман":-4,"anomaly_Электра":-5,"anomaly_Мясорубка":-4,"anomaly_Плазменная сфера":6, "bulletResist":8, "hitAbsorption":-4} },
+        { name: "Молния", tier: 2, price: 700, stats: {"anomaly_Жарка":-3,"thirst":-5,"health":8,"radiationLeak":-5, "hitAbsorption":8, "bulletResist":-4} },
+        { name: "Стеклярус", tier: 2, price: 550, stats: {"anomaly_Электра":-4,"hunger":-5,"anomaly_Мясорубка":6,"radiationLeak":-4, "bulletResist":8, "hitAbsorption":-4} },
+        { name: "Смола", tier: 2, price: 620, stats: {"anomaly_Кислотный туман":-3,"hunger":-3,"anomaly_Электра":5,"radiationLeak":-4, "hitAbsorption":8, "bulletResist":-4} },
+        { name: "Раковина", tier: 2, price: 580, stats: {"anomaly_Карусель":-4,"anomaly_Печка":-4,"anomaly_Воронка":-5,"anomaly_Жарка":5, "bulletResist":8, "hitAbsorption":-4} },
+        { name: "Осколок", tier: 2, price: 650, stats: {"hunger":-4,"thirst":-3,"anomaly_Кислотный туман":7,"radiationLeak":-3, "hitAbsorption":8, "bulletResist":-4} },
+        { name: "Заноза", tier: 2, price: 530, stats: {"anomaly_Мясорубка":-4,"anomaly_Воронка":-3,"anomaly_Кислотный туман":-4,"hunger":8, "bulletResist":8, "hitAbsorption":-4} },
+        { name: "Пыльца", tier: 2, price: 510, stats: {"anomaly_Печка":-5,"health":-5,"anomaly_Плазменная сфера":-4,"anomaly_Жарка":7, "hitAbsorption":8, "bulletResist":-4} },
+        { name: "Камень крови", tier: 3, price: 1200, stats: {"anomaly_Кислотный туман":-6,"health":-4,"thirst":10, "bulletResist":12, "hitAbsorption":-6} },
+        { name: "Гравитационный шар", tier: 3, price: 1400, stats: {"anomaly_Печка":-5,"anomaly_Мясорубка":-6,"anomaly_Жарка":9, "hitAbsorption":12, "bulletResist":-6} },
+        { name: "Вихрь", tier: 3, price: 1600, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-6,"radiation":12, "bulletResist":12, "hitAbsorption":-6} },
+        { name: "Слюда", tier: 3, price: 1300, stats: {"thirst":-4,"hunger":-4,"anomaly_Жарка":9, "hitAbsorption":12, "bulletResist":-6} },
+        { name: "Ракушка", tier: 3, price: 1450, stats: {"anomaly_Плазменная сфера":-5,"anomaly_Мясорубка":-6,"radiation":7, "bulletResist":12, "hitAbsorption":-6} },
+        { name: "Пыльный кристалл", tier: 3, price: 1500, stats: {"health":-5,"anomaly_Мясорубка":-6,"anomaly_Карусель":10, "hitAbsorption":12, "bulletResist":-6} },
+        { name: "Обломок", tier: 3, price: 1550, stats: {"anomaly_Печка":-5,"anomaly_Электра":-4,"anomaly_Воронка":9, "bulletResist":12, "hitAbsorption":-6} },
+        { name: "Игла", tier: 3, price: 1250, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Воронка":-6,"health":9, "hitAbsorption":12, "bulletResist":-6} },
+        { name: "Чешуйка", tier: 3, price: 1350, stats: {"health":-6,"anomaly_Печка":-6,"anomaly_Жарка":10, "bulletResist":12, "hitAbsorption":-6} },
+        { name: "Огненный шар", tier: 4, price: 2500, stats: {"hunger":-6,"anomaly_Воронка":13,"anomaly_Жарка":15,"radiationLeak":-8, "hitAbsorption":16, "bulletResist":-8} },
+        { name: "Слеза", tier: 4, price: 2800, stats: {"anomaly_Печка":-5,"anomaly_Карусель":-8,"anomaly_Плазменная сфера":8,"radiation":14, "bulletResist":16, "hitAbsorption":-8} },
+        { name: "Глаз", tier: 4, price: 3200, stats: {"anomaly_Кислотный туман":-5,"health":14,"anomaly_Мясорубка":8,"radiationLeak":-5, "hitAbsorption":16, "bulletResist":-8} },
+        { name: "Гарпун", tier: 4, price: 2700, stats: {"thirst":-5,"anomaly_Воронка":-7,"health":15,"anomaly_Электра":16, "bulletResist":16, "hitAbsorption":-8} },
+        { name: "Клык", tier: 4, price: 2900, stats: {"anomaly_Печка":-5,"anomaly_Жарка":-5,"hunger":9,"health":11, "hitAbsorption":16, "bulletResist":-8} },
+        { name: "Шип", tier: 4, price: 2600, stats: {"anomaly_Мясорубка":-6,"anomaly_Воронка":14,"anomaly_Карусель":11,"radiationLeak":-7, "bulletResist":16, "hitAbsorption":-8} },
+        { name: "Капля ртути", tier: 4, price: 3000, stats: {"anomaly_Печка":-6,"anomaly_Мясорубка":-6,"health":9,"hunger":15, "hitAbsorption":16, "bulletResist":-8} },
+        { name: "Осколок кости", tier: 4, price: 3100, stats: {"anomaly_Мясорубка":-5,"anomaly_Жарка":13,"anomaly_Карусель":11,"radiationLeak":-5, "bulletResist":16, "hitAbsorption":-8} },
+        { name: "Жёлудь", tier: 4, price: 2650, stats: {"anomaly_Жарка":-6,"anomaly_Воронка":-7,"anomaly_Печка":8,"anomaly_Мясорубка":14, "hitAbsorption":16, "bulletResist":-8} },
+        { name: "Стеклянный шарик", tier: 5, price: 4000, stats: {"anomaly_Электра":-8,"anomaly_Карусель":13,"hunger":13, "bulletResist":20, "hitAbsorption":-10} },
+        { name: "Магнит", tier: 5, price: 4500, stats: {"anomaly_Кислотный туман":-8,"anomaly_Плазменная сфера":13,"anomaly_Карусель":12, "hitAbsorption":20, "bulletResist":-10} },
+        { name: "Пузырь", tier: 5, price: 5000, stats: {"anomaly_Печка":-8,"thirst":13,"hunger":15, "bulletResist":20, "hitAbsorption":-10} },
+        { name: "Кварц", tier: 5, price: 4300, stats: {"thirst":-5,"health":11,"anomaly_Печка":11, "hitAbsorption":20, "bulletResist":-10} },
+        { name: "Спираль", tier: 5, price: 4400, stats: {"anomaly_Печка":-8,"health":14,"radiation":13, "bulletResist":20, "hitAbsorption":-10} },
+        { name: "Обсидиан", tier: 5, price: 4200, stats: {"anomaly_Жарка":-9,"anomaly_Электра":17,"health":15, "hitAbsorption":20, "bulletResist":-10} },
+        { name: "Лунный камень", tier: 5, price: 4800, stats: {"anomaly_Жарка":-6,"anomaly_Электра":19,"thirst":18, "bulletResist":20, "hitAbsorption":-10} },
+        { name: "Игольчатый кристалл", tier: 5, price: 4100, stats: {"anomaly_Мясорубка":11,"anomaly_Плазменная сфера":18,"radiationLeak":-7, "hitAbsorption":20, "bulletResist":-10} },
+        { name: "Вихревой шар", tier: 5, price: 4600, stats: {"anomaly_Воронка":17,"anomaly_Печка":18,"radiationLeak":-7, "bulletResist":20, "hitAbsorption":-10} },
+        { name: "Кусок мяса", tier: 6, price: 7000, stats: {"anomaly_Карусель":-9,"anomaly_Кислотный туман":17,"anomaly_Плазменная сфера":23, "hitAbsorption":24, "bulletResist":-12} },
+        { name: "Коготь", tier: 6, price: 7500, stats: {"anomaly_Воронка":14,"anomaly_Карусель":19,"radiationLeak":-9, "bulletResist":24, "hitAbsorption":-12} },
+        { name: "Зуб", tier: 6, price: 8000, stats: {"anomaly_Кислотный туман":17,"anomaly_Воронка":15,"radiationLeak":-8, "hitAbsorption":24, "bulletResist":-12} },
+        { name: "Ржавый механизм", tier: 6, price: 7800, stats: {"anomaly_Кислотный туман":-6,"hunger":21,"radiation":23, "bulletResist":24, "hitAbsorption":-12} },
+        { name: "Кристалл разума", tier: 6, price: 8200, stats: {"hunger":-7,"anomaly_Кислотный туман":15,"anomaly_Карусель":19, "hitAbsorption":24, "bulletResist":-12} },
+        { name: "Тлеющий уголь", tier: 6, price: 7600, stats: {"anomaly_Карусель":-9,"health":20,"anomaly_Кислотный туман":19, "bulletResist":24, "hitAbsorption":-12} },
+        { name: "Ледяная слеза", tier: 6, price: 7900, stats: {"anomaly_Плазменная сфера":-6,"anomaly_Печка":18,"anomaly_Воронка":14, "hitAbsorption":24, "bulletResist":-12} },
+        { name: "Шёпот бездны", tier: 6, price: 8400, stats: {"anomaly_Жарка":-6,"radiation":23,"anomaly_Электра":22, "bulletResist":24, "hitAbsorption":-12} },
+        { name: "Стальное перо", tier: 6, price: 8100, stats: {"anomaly_Жарка":-10,"anomaly_Воронка":17,"anomaly_Печка":13, "hitAbsorption":24, "bulletResist":-12} },
+        { name: "Кровь земли", tier: 7, price: 12000, stats: {"health":16,"anomaly_Кислотный туман":23,"anomaly_Электра":18, "bulletResist":28, "hitAbsorption":-14} },
+        { name: "Пепел", tier: 7, price: 14000, stats: {"anomaly_Электра":21,"thirst":20,"anomaly_Кислотный туман":21, "hitAbsorption":28, "bulletResist":-14} },
+        { name: "Пламя", tier: 7, price: 16000, stats: {"anomaly_Печка":21,"anomaly_Воронка":27,"anomaly_Карусель":24, "bulletResist":28, "hitAbsorption":-14} },
+        { name: "Осколок звезды", tier: 7, price: 13500, stats: {"radiation":24,"hunger":21,"anomaly_Кислотный туман":23, "hitAbsorption":28, "bulletResist":-14} },
+        { name: "Сердце бури", tier: 7, price: 14500, stats: {"anomaly_Электра":22,"hunger":25,"anomaly_Воронка":24, "bulletResist":28, "hitAbsorption":-14} },
+        { name: "Плачущий кристалл", tier: 7, price: 13800, stats: {"anomaly_Электра":22,"anomaly_Мясорубка":26,"health":22, "hitAbsorption":28, "bulletResist":-14} },
+        { name: "Вой пустоты", tier: 7, price: 15000, stats: {"anomaly_Кислотный туман":21,"radiation":26,"anomaly_Электра":16, "bulletResist":28, "hitAbsorption":-14} },
+        { name: "Живая ртуть", tier: 7, price: 14200, stats: {"anomaly_Жарка":16,"anomaly_Электра":23,"anomaly_Печка":27, "hitAbsorption":28, "bulletResist":-14} },
+        { name: "Тень зоны", tier: 7, price: 15500, stats: {"anomaly_Воронка":20,"anomaly_Кислотный туман":18,"anomaly_Плазменная сфера":15, "bulletResist":28, "hitAbsorption":-14} },
+        { name: "Ядро", tier: 8, price: 30000, stats: {"anomaly_Печка":19,"anomaly_Плазменная сфера":19,"anomaly_Кислотный туман":19,"anomaly_Электра":21, "hitAbsorption":32, "bulletResist":-16} },
+        { name: "Звезда", tier: 8, price: 35000, stats: {"anomaly_Печка":29,"radiation":19,"anomaly_Электра":30,"hunger":30, "bulletResist":32, "hitAbsorption":-16} },
+        { name: "Антиматерия", tier: 8, price: 50000, stats: {"hunger":24,"anomaly_Кислотный туман":24,"anomaly_Электра":20,"anomaly_Печка":29, "hitAbsorption":32, "bulletResist":-16} },
+        { name: "Сердце Зоны", tier: 8, price: 38000, stats: {"anomaly_Плазменная сфера":28,"anomaly_Электра":29,"anomaly_Карусель":23,"anomaly_Кислотный туман":27, "bulletResist":32, "hitAbsorption":-16} },
+        { name: "Осколок Монолита", tier: 8, price: 40000, stats: {"radiation":23,"anomaly_Жарка":29,"anomaly_Печка":25,"anomaly_Карусель":27, "hitAbsorption":32, "bulletResist":-16} },
+        { name: "Слеза Вселенной", tier: 8, price: 42000, stats: {"anomaly_Печка":29,"anomaly_Воронка":26,"hunger":19,"health":29, "bulletResist":32, "hitAbsorption":-16} },
+        { name: "Дыхание Чернобыля", tier: 8, price: 39000, stats: {"health":29,"radiation":25,"anomaly_Воронка":29,"anomaly_Жарка":19, "hitAbsorption":32, "bulletResist":-16} },
+        { name: "Кровь Зоны", tier: 8, price: 41000, stats: {"anomaly_Воронка":17,"health":19,"radiation":25,"thirst":24, "bulletResist":32, "hitAbsorption":-16} },
+        { name: "Разум Аномалии", tier: 8, price: 43000, stats: {"anomaly_Мясорубка":31,"anomaly_Плазменная сфера":19,"anomaly_Печка":18,"anomaly_Электра":21, "hitAbsorption":32, "bulletResist":-16} },
+        { name: "Шустряк", tier: 8, price: 45000, stats: {"anomaly_Плазменная сфера":19,"anomaly_Электра":23,"anomaly_Кислотный туман":19,"anomaly_Мясорубка":27, "bulletResist":32, "hitAbsorption":-16} },
         { name: "Сердце Зоны: Абсолют", tier: 8, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666,"health":666,"hunger":666,"thirst":666} }
     ];
 
@@ -1514,6 +1548,33 @@ input[type='number'] { min-width:0; }
         'HK USP': 'pistol_hk_usp.png',
         'Glock 22': 'pistol_glock22.png',
         'SIG Sauer P229': 'pistol_sig_p229.png'
+        // Части тел самок мутантов — те же иконки, что у самцов (внешне одно и то же)
+        'Ухо самки слепого пса': 'uho_slepogo_psa.jpg',
+        'Клык самки чернобыльского пса': 'klyk_chernobylskogo_psa.jpg',
+        'Глаз самки плоти': 'glaz_ploti.jpg',
+        'Клык самки борова': 'klyk_borova.jpg',
+        'Непонятный металл самки шарнира': 'neponyatny_metall.jpg',
+        'Ухо самки зомби': 'uho_zombi.jpg',
+        'Ухо самки псевдо пса': 'uho_psevdo_psa.jpg',
+        'Ухо самки рыси': 'uho_rysi.jpg',
+        'Хвост самки чупакабры': 'hvost_chupakabry.jpg',
+        'Ухо самки пси пса': 'uho_psi_psa.jpg',
+        'Хвост самки баюна': 'hvost_bayuna.jpg',
+        'Ухо самки снорка': 'uho_snorka.jpg',
+        'Хитин самки стрегуна': 'hitin_streguna.jpg',
+        'Рука самки филина, покрытая перьями': 'ruka_pokrytaya_peryami.jpg',
+        'Щупальца самки кровососа': 'shupaltsa_krovososa.jpg',
+        'Ухо самки полтергейста': 'uho_poltergeysta.jpg',
+        'Ухо самки огненного полтергейста': 'uho_ognennogo_poltergeysta.jpg',
+        'Ухо самки излома': 'uho_izloma.jpg',
+        'Ухо самки бюрера': 'uho_byurera.jpg',
+        'Рог самки лося': 'rog_losya.jpg',
+        'Ухо самки контролёра': 'uho_kontrolyora.jpg',
+        'Щупальца самки стронглава': 'shupaltsa_stronglava.jpg',
+        'Коготь самки химеры': 'kogot_himery.jpg',
+        'Коготь самки электро химеры': 'kogot_elektro_himery.jpg',
+        'Ухо самки гиганта': 'uho_giganta.jpg',
+
     };
     // Картинка персонажа в надетой броне (для СНАРЯЖЕНИЕ-портрета в инвентаре) — 96 из 96
     const ARMOR_CHAR_IMAGES = {
@@ -1742,14 +1803,17 @@ input[type='number'] { min-width:0; }
     }
 
     const NPC_TIER_MULT = {"1":1.37,"2":0.97,"3":1.05,"4":1.08,"5":1.14,"6":1.05,"7":0.97,"8":0.86,"9":0.86,"10":0.72,"11":0.76,"12":0.87,"13":0.78,"14":0.84};
-    // Коэффициент допол. масштабирования по тиру — та же кривая, что у mutants, чтобы NPC той
-    // же силы, что мутанты этого тира, оставались сопоставимы после пересчёта кривой урона оружия
-    const NPC_TIER_DMG_SCALE = {1:0.676,2:0.664,3:0.664,4:0.546,5:0.55,6:0.637,7:0.822,8:1.12,9:1.543,10:2.145,11:2.886,12:3.676,13:4.745,14:5.861};
+    // УРОН NPC ПО ИГРОКУ — та же цель "N ударов на смерть", что и у мутантов, под новую сведённую
+    // с оружием/бронёй шкалу тиров (шаг 20 уровней вместо 44)
+    const NPC_TIER_DMG_TO_PLAYER = {1:43,2:45,3:46,4:47,5:50,6:53,7:56,8:60,9:72,10:84,11:95,12:106,13:117,14:129};
+    // Здоровье NPC — цель "N ударов БАЗОВЫМ / M ударов ПОЛНОСТЬЮ ПРОКАЧАННЫМ оружием СВОЕГО тира",
+    // растёт по тиру так, что оружие/броня предыдущего тира (даже максимально прокачанные) уже
+    // не годятся — нужно покупать новое снаряжение на каждом тире, а не только качать старое
+    const NPC_TIER_HP_TARGET = {1:25,2:480,3:690,4:1095,5:1720,6:2685,7:4160,8:6420,9:9250,10:13310,11:19170,12:27600,13:39750,14:57240};
     const npcs = [];
     for (let i = 0; i < factions.length; i++) {
         for (let tier = 1; tier <= 14; tier++) {
             const mult = NPC_TIER_MULT[tier];
-            const dmgScale = NPC_TIER_DMG_SCALE[tier] || 1;
             npcs.push({
                 id: `${factions[i].name}_${tier}`,
                 faction: factions[i],
@@ -1757,8 +1821,8 @@ input[type='number'] { min-width:0; }
                 name: pickNpcName(factions[i].name, tier, i),
                 coins: tier * 500,
                 exp: tier * 50,
-                hp: Math.max(1, Math.round(tier * 1000 * mult * dmgScale)),
-                dmg: Math.max(1, Math.round(tier * 120 * mult * dmgScale)),
+                hp: Math.max(1, Math.round(NPC_TIER_HP_TARGET[tier] || (tier * 1000 * mult))),
+                dmg: Math.max(1, Math.round(NPC_TIER_DMG_TO_PLAYER[tier] * mult)),
                 hitChance: 0.9,
                 runChance: 0.5,
                 runSkill: 0
@@ -1958,6 +2022,12 @@ input[type='number'] { min-width:0; }
             const artifact = findArtifactDef(name);
             if (artifact) addStats(artifact.stats);
         });
+        // Потолок на суммарный боевой бонус от ОБЫЧНЫХ артефактов (без учёта именных тира 9,
+        // которые считаются отдельно и не должны страдать от этого потолка) — иначе скрещивание
+        // одного и того же артефакта до 20 раз подряд могло бы разогнать бонус до небес
+        const ARTIFACT_COMBAT_STAT_CAP = 150;
+        player.namedArtifactBonus.bulletResist = Math.max(-ARTIFACT_COMBAT_STAT_CAP, Math.min(ARTIFACT_COMBAT_STAT_CAP, player.namedArtifactBonus.bulletResist));
+        player.namedArtifactBonus.hitAbsorption = Math.max(-ARTIFACT_COMBAT_STAT_CAP, Math.min(ARTIFACT_COMBAT_STAT_CAP, player.namedArtifactBonus.hitAbsorption));
         if (player.armor && player.armor.name) {
             const eff = getArmorEffectiveStats(player.armor.name);
             if (eff) addStats(eff.stats);
@@ -3969,6 +4039,7 @@ input[type='number'] { min-width:0; }
     function startBattle(enemy) {
         currentEnemy = { ...enemy }; // клон — иначе бой портит hp в общем шаблоне mutants/npcs навсегда
         battleTurn = 0;
+        battleMedkitsUsed = 0; // лимит на аптечки — новый бой, новый лимит
         raidLogs = [];
         const nameWithFaction = enemy.faction ? `${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})` : enemy.name;
         raidLogs.push(`⚔️ Бой с ${nameWithFaction} (Тир ${enemy.tier})! Ваш ход.`);
@@ -4042,11 +4113,17 @@ input[type='number'] { min-width:0; }
             currentEnemy.hp -= dmg;
             raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, Math.round(currentEnemy.hp * 10) / 10)} HP.`);
         } else if (action === 'medkit') {
+            if (battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
+                raidLogs.push(`❌ Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
+                updateRaidLog();
+                return;
+            }
             const availableMedkits = consumables.filter(c => c.type === 'medkit' && (player.inventory[c.name] || 0) > 0);
             if (availableMedkits.length > 0) {
                 const best = availableMedkits.sort((a, b) => b.restore - a.restore)[0]; // используем самую сильную доступную
                 player.inventory[best.name]--;
                 if (player.inventory[best.name] <= 0) delete player.inventory[best.name];
+                battleMedkitsUsed++;
                 player.health = Math.min(player.maxHealth, player.health + best.restore);
                 // Живучесть: точно +0.1 за каждое использование медикамента (без общего замедления
                 // роста перков — здесь пользователь явно указал точное число, как раньше для удачи),
@@ -4054,7 +4131,7 @@ input[type='number'] { min-width:0; }
                 const prevVitality = Number(player.vitality) || 0;
                 player.vitality = Math.min(100, prevVitality + 0.1);
                 player.maxHealth += (player.vitality - prevVitality);
-                raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP.`);
+                raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP. (Аптечек на этот бой: ${BATTLE_MEDKIT_LIMIT - battleMedkitsUsed}/${BATTLE_MEDKIT_LIMIT})`);
                 updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
             } else {
                 raidLogs.push('У вас нет аптечек!');
@@ -4842,12 +4919,22 @@ input[type='number'] { min-width:0; }
     // у Торговца — это разные вещи
     function getEncounterTier() {
         const level = Number(player.level) || 1;
-        return Math.min(14, 1 + Math.floor(level / 44));
+        // Тир МУТАНТОВ — 28 тиров с шагом 10 уровней (сведено со шкалой открытия оружия/брони,
+        // которая тоже шагает по 10). NPC используют ОТДЕЛЬНУЮ функцию (getNpcEncounterTier) —
+        // их 14 тиров с шагом 20 не трогаем, чтобы не расширять NPC-контент
+        return Math.min(28, 1 + Math.floor(level / 10));
+    }
+
+    // Тир NPC — прежняя формула (14 тиров, шаг 20 уровней), НЕ связана с getEncounterTier
+    // (та теперь про мутантов и растёт вдвое быстрее) — используется только в findRandomNPC
+    function getNpcEncounterTier() {
+        const level = Number(player.level) || 1;
+        return Math.min(14, 1 + Math.floor(level / 20));
     }
 
     // ===== НАЙТИ СЛУЧАЙНЫЙ NPC (ограничено тиром снаряжения игрока — иначе новичка сразу убивает топовый NPC) =====
     function findRandomNPC() {
-        const playerTier = getEncounterTier();
+        const playerTier = getNpcEncounterTier();
         // Враги теперь строго равны тиру игрока (не ниже), а не любой тир до playerTier включительно
         const pool = npcs.filter(n => n.tier === playerTier);
         const randomIndex = Math.floor(Math.random() * pool.length);
@@ -5954,10 +6041,20 @@ input[type='number'] { min-width:0; }
 
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
+            // Лимит аптечек за бой (3 шт., любого вида) — действует ТОЛЬКО если сейчас идёт бой;
+            // вне боя (обычная еда/вода/аптечка в рейде без противника) лимита нет
+            const isInBattle = currentEnemy && !isFriendlyEncounterActive;
+            if (isInBattle && consumable.type === 'medkit' && battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
+                showGameAlert(`Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
+                return;
+            }
             player.inventory[itemName]--;
             if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
             if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
-            if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            if (consumable.type === 'medkit') {
+                player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+                if (isInBattle) battleMedkitsUsed++;
+            }
             if (consumable.type === 'antirad') {
                 // "Антирад" не лечит — только снимает радиацию, забирая взамен еду и воду
                 player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
@@ -6293,10 +6390,19 @@ input[type='number'] { min-width:0; }
             return;
         }
 
+        const isInBattle = currentEnemy && !isFriendlyEncounterActive;
+        if (isInBattle && consumable.type === 'medkit' && battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
+            showGameAlert(`Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
+            return;
+        }
+
         player.inventory[itemName]--;
         if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
         if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
-        if (consumable.type === 'medkit') player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+        if (consumable.type === 'medkit') {
+            player.health = Math.min(player.maxHealth, player.health + consumable.restore);
+            if (isInBattle) battleMedkitsUsed++;
+        }
         if (consumable.type === 'antirad') {
             player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
             player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
