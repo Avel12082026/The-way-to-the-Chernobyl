@@ -2261,12 +2261,10 @@ input[type='number'] { min-width:0; }
         .catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
 
-    function resetMyOwnProgress() {
+    async function resetMyOwnProgress() {
         if (!confirm('Сбросить ВЕСЬ ваш прогресс до начального состояния? Это необратимо — деньги, уровень, снаряжение, инвентарь, артефакты будут потеряны.')) return;
         if (!confirm('Точно? Это последнее предупреждение — отменить сброс будет нельзя.')) return;
 
-        // На случай сброса прямо во время боя/рейда — обнуляем и это состояние тоже, иначе
-        // "зависший" бой мог бы попытаться нанести урон уже свежему после сброса персонажу
         raidActive = false;
         currentEnemy = null;
         currentAnomaly = null;
@@ -2275,21 +2273,41 @@ input[type='number'] { min-width:0; }
         inventoryOpenedFromRaid = false;
         clearBattleUiAndRestoreNav();
 
-        // Членство во фракции хранится ОТДЕЛЬНО на сервере (не в самом объекте player) — без
-        // явного выхода игрок оставался бы во фракции даже после полного сброса всего остального
-        fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData })
-        }).catch(() => {});
+        const initData = window.Telegram?.WebApp?.initData;
+        const freshData = JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS));
 
-        Object.keys(player).forEach(key => delete player[key]);
-        Object.assign(player, JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS)));
+        try {
+            // Сначала завершаем отдельное серверное членство во фракции.
+            try {
+                await fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData })
+                });
+            } catch (_) {}
 
-        closeAdminPanel();
-        renderInventory(); updateUI(); saveGame();
-        showGameAlert('Прогресс сброшен.');
-        openScreen('main');
+            // Затем атомарно сохраняем именно чистое состояние и обязательно получаем
+            // новую stateVersion ДО показа окна нового ника.
+            await saveExplicitPlayerSnapshot(freshData);
+
+            Object.keys(player).forEach(key => delete player[key]);
+            Object.assign(player, JSON.parse(JSON.stringify(freshData)));
+            savePending = false;
+
+            closeAdminPanel();
+            renderInventory();
+            updateUI();
+            showGameAlert('Прогресс сброшен.');
+            openScreen('main');
+
+            // Теперь версия уже актуальна — окно ника не конфликтует со сбросом.
+            setTimeout(() => promptForNickname(true), 150);
+        } catch (e) {
+            console.error('[resetMyOwnProgress]', e);
+            try { await reloadPrivatePlayerState(); } catch (_) {}
+            showGameAlert('Не удалось сбросить прогресс: ' +
+                ((e && e.message === 'SAVE_QUEUE_TIMEOUT') ? 'не завершилось предыдущее сохранение' : (e?.message || 'ошибка сервера')));
+        }
     }
 
     // ===== АДМИН: ПОИСК И БЛОКИРОВКА ИГРОКОВ =====
@@ -5915,39 +5933,124 @@ input[type='number'] { min-width:0; }
     // ===== НИК ИГРОКА =====
     // Первая смена (включая самое первое придумывание ника) — бесплатна.
     // Каждая следующая смена требует оплаченный жетон (20 ⭐, покупается в Магазине монет).
-    function promptForNickname(isFirstTime) {
+    // Ждём завершения очереди saveGame(), чтобы операции, которым нужна точная
+    // stateVersion (ник/сброс), не гонялись с фоновым сохранением.
+    async function waitForSaveQueue(timeoutMs = 12000) {
+        const started = Date.now();
+        while (saveInFlight || savePending) {
+            if (savePending && !saveInFlight) flushSaveQueue();
+            if (Date.now() - started > timeoutMs) throw new Error('SAVE_QUEUE_TIMEOUT');
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+    }
+
+    // Сохранение намеренно заданного снимка (используется для полного сброса).
+    // При конфликте версии перечитываем серверную версию и повторяем тот же осознанный сброс.
+    async function saveExplicitPlayerSnapshot(snapshot, maxAttempts = 2) {
+        const initData = window.Telegram?.WebApp?.initData;
+        if (!initData) throw new Error('NO_INIT_DATA');
+        await waitForSaveQueue();
+
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const res = await fetch(`${SERVER_URL}/api/player`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    initData,
+                    data: snapshot,
+                    stateVersion: playerStateVersion
+                })
+            });
+            const result = await res.json();
+
+            if (result && result.success) {
+                playerStateVersion = Number(result.stateVersion) || playerStateVersion;
+                return result;
+            }
+            if (result && result.conflict && attempt + 1 < maxAttempts) {
+                await reloadPrivatePlayerState();
+                continue;
+            }
+            throw new Error((result && result.error) || 'SAVE_FAILED');
+        }
+        throw new Error('SAVE_FAILED');
+    }
+
+    // Ник меняется поверх СВЕЖЕГО серверного состояния. При конфликте не отправляем
+    // старый профиль заново: перечитываем профиль, снова накладываем только смену ника
+    // и повторяем запрос один раз.
+    async function saveNicknameSafely(nick, options = {}) {
+        const initData = window.Telegram?.WebApp?.initData;
+        if (!initData) throw new Error('NO_INIT_DATA');
+        await waitForSaveQueue();
+
+        const applyNicknameChange = () => {
+            player.nickname = nick;
+            if (options.consumeFree) player.freeNicknameChangeUsed = true;
+            if (options.consumeCredit) {
+                player.nicknameChangeCredits = Math.max(0, (Number(player.nicknameChangeCredits) || 0) - 1);
+            }
+        };
+
+        for (let attempt = 0; attempt < 2; attempt++) {
+            applyNicknameChange();
+            const snapshot = JSON.parse(JSON.stringify(player));
+            const res = await fetch(`${SERVER_URL}/api/player`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    initData,
+                    data: snapshot,
+                    stateVersion: playerStateVersion
+                })
+            });
+            const result = await res.json();
+
+            if (result && result.success) {
+                playerStateVersion = Number(result.stateVersion) || playerStateVersion;
+                return result;
+            }
+            if (result && result.conflict && attempt === 0) {
+                await reloadPrivatePlayerState();
+                continue;
+            }
+            throw new Error((result && result.error) || 'NICKNAME_SAVE_FAILED');
+        }
+        throw new Error('NICKNAME_SAVE_FAILED');
+    }
+
+    async function promptForNickname(isFirstTime) {
         const raw = prompt(isFirstTime
             ? 'Добро пожаловать в Зону! Придумайте ник вашего персонажа (2-20 символов):'
             : 'Введите новый ник (2-20 символов):', player.nickname || '');
-        if (raw === null) return; // отмена
+        if (raw === null) return;
         const nick = raw.trim().replace(/[<>]/g, '').slice(0, 20);
-        if (nick.length < 2) { showGameAlert('Ник должен быть не короче 2 символов.'); return; }
+        if (nick.length < 2) {
+            showGameAlert('Ник должен быть не короче 2 символов.');
+            return;
+        }
 
         const oldNickname = player.nickname;
-        player.nickname = nick;
-        const initData = window.Telegram?.WebApp?.initData;
-        fetch(`${SERVER_URL}/api/player`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData, data: player })
-        })
-        .then(res => res.json())
-        .then(result => {
-            if (result.success) {
-                updateUI();
-                showGameAlert(`Ник установлен: ${nick}`);
-            } else {
-                player.nickname = oldNickname; // сервер отклонил (например, ник уже занят) — откатываем
-                showGameAlert('Не удалось установить ник: ' + (result.error || 'неизвестная ошибка'));
-                if (!oldNickname) promptForNickname(isFirstTime); // ника всё ещё нет вообще — просим попробовать снова
-            }
-        })
-        .catch(() => showGameAlert('Ошибка соединения с сервером — попробуйте ещё раз'));
+        try {
+            await saveNicknameSafely(nick);
+            updateUI();
+            showGameAlert(`Ник установлен: ${nick}`);
+        } catch (e) {
+            // Если сервер отклонил ник (например, он занят), возвращаем свежее
+            // серверное состояние, а не старый локальный снимок.
+            try { await reloadPrivatePlayerState(); } catch (_) {}
+            if (!player.nickname) player.nickname = oldNickname || '';
+            updateUI();
+            const msg = (e && e.message && !['NICKNAME_SAVE_FAILED','SAVE_QUEUE_TIMEOUT'].includes(e.message))
+                ? e.message : 'не удалось сохранить ник';
+            showGameAlert('Не удалось установить ник: ' + msg);
+            if (!player.nickname) setTimeout(() => promptForNickname(isFirstTime), 150);
+        }
     }
 
-    function changeNickname() {
-        const isVeryFirstTime = !player.nickname; // ещё ни разу не задавали ник — это просто первичная настройка, бесплатно всегда
-        if (isVeryFirstTime) { promptForNickname(true); return; }
+    async function changeNickname() {
+        const isVeryFirstTime = !player.nickname;
+        if (isVeryFirstTime) { await promptForNickname(true); return; }
 
         const freeAvailable = !player.freeNicknameChangeUsed;
         const hasCredit = (Number(player.nicknameChangeCredits) || 0) >= 1;
@@ -5957,46 +6060,27 @@ input[type='number'] { min-width:0; }
         }
 
         const raw = prompt('Введите новый ник (2-20 символов):', player.nickname || '');
-        if (raw === null) return; // отмена
+        if (raw === null) return;
         const nick = raw.trim().replace(/[<>]/g, '').slice(0, 20);
         if (nick.length < 2) { showGameAlert('Ник должен быть не короче 2 символов.'); return; }
-        if (nick === player.nickname) return; // без изменений — не тратим смену
+        if (nick === player.nickname) return;
 
-        // ВАЖНО: жетон/бесплатную смену списываем ТОЛЬКО после подтверждения сервера — иначе при отказе
-        // (например, ник уже занят) игрок терял бы смену впустую
-        const oldNickname = player.nickname;
-        const wasFree = freeAvailable;
-        player.nickname = nick;
-        if (wasFree) player.freeNicknameChangeUsed = true;
-        else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) - 1;
-
-        const initData = window.Telegram?.WebApp?.initData;
-        fetch(`${SERVER_URL}/api/player`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData, data: player })
-        })
-        .then(res => res.json())
-        .then(result => {
-            if (result.success) {
-                updateUI();
-                showGameAlert(`Ник изменён на: ${nick}`);
-            } else {
-                // Откатываем и ник, и списание смены — попытка не удалась
-                player.nickname = oldNickname;
-                if (wasFree) player.freeNicknameChangeUsed = false;
-                else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) + 1;
-                updateUI();
-                showGameAlert('Не удалось сменить ник: ' + (result.error || 'неизвестная ошибка'));
-            }
-        })
-        .catch(() => {
-            player.nickname = oldNickname;
-            if (wasFree) player.freeNicknameChangeUsed = false;
-            else player.nicknameChangeCredits = (Number(player.nicknameChangeCredits) || 0) + 1;
+        try {
+            await saveNicknameSafely(nick, {
+                consumeFree: freeAvailable,
+                consumeCredit: !freeAvailable
+            });
             updateUI();
-            showGameAlert('Ошибка соединения с сервером — попробуйте ещё раз');
-        });
+            showGameAlert(`Ник изменён на: ${nick}`);
+        } catch (e) {
+            // При отказе сервера перечитываем истинное состояние; жетон/бесплатная
+            // смена не должны оставаться локально списанными.
+            try { await reloadPrivatePlayerState(); } catch (_) {}
+            updateUI();
+            const msg = (e && e.message && !['NICKNAME_SAVE_FAILED','SAVE_QUEUE_TIMEOUT'].includes(e.message))
+                ? e.message : 'не удалось сохранить изменения';
+            showGameAlert('Не удалось сменить ник: ' + msg);
+        }
     }
 
     // Использовать книгу знаний прямо из шапки (хаба) — книги больше не отображаются в общей сетке инвентаря
