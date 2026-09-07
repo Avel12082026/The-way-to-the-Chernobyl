@@ -1006,7 +1006,7 @@ input[type='number'] { min-width:0; }
         { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 9158, price: 125000, unlockLevel: 270 },
         { id: 73, name: "Прототип X-17", tier: 13, dmg: 10990, price: 147500, unlockLevel: 280 },
         { id: 55, name: "Гаусс-пушка", tier: 13, dmg: 13188, price: 170000, unlockLevel: 290 },
-        { id: 86, name: "Beretta 21A Bobcat", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
+        { id: 86, name: "Beretta 21A Bobcat", tier: 1, dmg: 80, price: 150, unlockLevel: 1, starterGear: true },
         { id: 2, name: "Пистолет ПСМ", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
         { id: 87, name: "Walther PPK", tier: 2, dmg: 115, price: 400, unlockLevel: 30 },
         { id: 1, name: "Пистолет Макарова", tier: 2, dmg: 138, price: 700, unlockLevel: 40 },
@@ -1069,7 +1069,7 @@ input[type='number'] { min-width:0; }
 
     // ===== БРОНЯ =====
     const armorItems = [
-        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, unlockLevel: 5, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
+        { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, unlockLevel: 1, starterGear: true, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
         { id: 2, name: "Куртка кожаная армейская", tier: 1, armor: 6, price: 156, unlockLevel: 10, stats: {"anomaly_Жарка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
         { id: 3, name: "Ватник утеплённый", tier: 1, armor: 6, price: 156, unlockLevel: 15, stats: {"anomaly_Кислотный туман":1,"anomaly_Воронка":1}, hitAbsorption: 3 },
         { id: 4, name: "Плащ-палатка ОЗК", tier: 1, armor: 7, price: 182, unlockLevel: 20, stats: {"anomaly_Кислотный туман":1,"anomaly_Печка":1}, hitAbsorption: 4 },
@@ -5286,7 +5286,7 @@ input[type='number'] { min-width:0; }
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
             if (weapon.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
-            if (!weapon.adminOnly && player.level < (weapon.unlockLevel || 0)) {
+            if (!weapon.adminOnly && !weapon.starterGear && player.level < (weapon.unlockLevel || 0)) {
                 showGameAlert(`Это оружие откроется на ${weapon.unlockLevel} уровне.`);
                 return false;
             }
@@ -5302,7 +5302,7 @@ input[type='number'] { min-width:0; }
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
             if (armor.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
-            if (!armor.adminOnly) {
+            if (!armor.adminOnly && !armor.starterGear) {
                 if (armor.isResearchSuit) {
                     if (armor.tier > getResearchSuitUnlockTier(player.level)) {
                         showGameAlert(`Этот комбинезон вам ещё не доступен по уровню.`);
