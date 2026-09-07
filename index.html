@@ -6889,19 +6889,17 @@ input[type='number'] { min-width:0; }
         }
     }
 
-    function giveAdminItem() {
+    async function giveAdminItem() {
         const targetId = document.getElementById('targetUserId').value.trim();
         const giveType = document.getElementById('giveType').value;
         let amount = parseInt(document.getElementById('giveAmount').value) || 0;
-        amount = Math.max(-1000000, Math.min(1000000, amount)); // защита от опечаток/абсурдных значений; отрицательное — значит ОТНЯТЬ, а не выдать
+        amount = Math.max(-1000000, Math.min(1000000, amount));
         let tier = parseInt(document.getElementById('giveTier').value) || 1;
         tier = Math.max(0, Math.min(14, tier));
         const selectedItem = document.getElementById('giveItemSelect').value.trim();
         const itemNameFilter = selectedItem || document.getElementById('giveItemName').value.trim();
         const gearLevel = Math.max(0, Math.min(100, parseInt(document.getElementById('giveGearLevel').value) || 0));
 
-        // Если указано точное название — ищем именно его (в пределах указанного тира, если совпадает),
-        // иначе берём первый предмет данного тира (из 6 возможных)
         const pickItem = (list) => {
             if (itemNameFilter) {
                 const exact = list.find(x => x.name === itemNameFilter);
@@ -6914,11 +6912,11 @@ input[type='number'] { min-width:0; }
             targetPlayer.inventory = targetPlayer.inventory || {};
             targetPlayer.warehouse = targetPlayer.warehouse || {};
 
-            // Прямые числовые статы — поддерживают и выдачу (положительное), и изъятие (отрицательное)
             if (giveType === 'level') {
-                targetPlayer.level = Math.max(1, (targetPlayer.level || 1) + (amount || 1));
+                targetPlayer.level = Math.max(1, Math.min(MAX_LEVEL, (Number(targetPlayer.level) || 1) + (amount || 1)));
+                if (targetPlayer.level >= MAX_LEVEL) targetPlayer.exp = 0;
             } else if (giveType === 'coins') {
-                targetPlayer.coins = Math.max(0, (targetPlayer.coins || 0) + (amount || 0));
+                targetPlayer.coins = Math.max(0, (Number(targetPlayer.coins) || 0) + (amount || 0));
             } else if (giveType === 'health') {
                 targetPlayer.health = Math.max(0, Math.min(Number(targetPlayer.maxHealth) || 100, (Number(targetPlayer.health) || 0) + amount));
             } else if (giveType === 'hunger') {
@@ -6934,82 +6932,117 @@ input[type='number'] { min-width:0; }
                 if (perkKey && PERK_INFO[perkKey]) {
                     targetPlayer[perkKey] = Math.max(0, Math.min(100, (Number(targetPlayer[perkKey]) || 0) + (amount || 1)));
                 }
-            }
-            // Предметы — при ПОЛОЖИТЕЛЬНОМ количестве выдаём (случайный подходящего тира, если имя
-            // не указано точно), при ОТРИЦАТЕЛЬНОМ — изымаем ровно указанное точное название из
-            // инвентаря/склада (для изъятия имя должно быть указано точно, иначе действие пропускается)
-            else if (giveType === 'artifact') {
-                if (amount < 0) { removeExactItem(targetPlayer, itemNameFilter, -amount); }
+            } else if (giveType === 'artifact') {
+                if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else { const item = pickItem(artifacts); addNonStackingItemTo(targetPlayer.inventory, item.name, amount || 1); }
             } else if (giveType === 'weapon') {
-                if (amount < 0) { removeExactItem(targetPlayer, itemNameFilter, -amount); }
+                if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else { const item = pickItem(weapons); const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name; addNonStackingItemTo(targetPlayer.inventory, name, amount || 1); }
             } else if (giveType === 'armor') {
-                if (amount < 0) { removeExactItem(targetPlayer, itemNameFilter, -amount); }
+                if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else { const item = pickItem(armorItems); const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name; addNonStackingItemTo(targetPlayer.inventory, name, amount || 1); }
             } else if (giveType === 'detector') {
-                if (amount < 0) { removeExactItem(targetPlayer, itemNameFilter, -amount); }
+                if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else { const item = pickItem(detectors); targetPlayer.inventory[item.name] = (targetPlayer.inventory[item.name] || 0) + (amount || 1); }
             } else if (giveType === 'bodypart') {
-                if (amount < 0) { removeExactItem(targetPlayer, itemNameFilter, -amount); }
+                if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else {
-                    // Некоторые мутанты (Кракозябра, Изотоп, Наблюдатель) не роняют часть тела вообще —
-                    // только бонусный артефакт. Без фильтра поиск мог случайно выбрать именно такого
-                    // мутанта, и в инвентарь попал бы мусорный ключ "undefined"
                     const mutantsWithLoot = mutants.filter(m => m.loot);
                     const mutant = mutantsWithLoot.find(m => m.tier === tier) || mutantsWithLoot[0];
                     targetPlayer.inventory[mutant.loot] = (targetPlayer.inventory[mutant.loot] || 0) + (amount || 1);
                 }
             } else if (giveType === 'knowledgebook') {
-                if (amount < 0) { removeExactItem(targetPlayer, 'Книга знаний', -amount); }
-                else { targetPlayer.inventory['Книга знаний'] = (targetPlayer.inventory['Книга знаний'] || 0) + (amount || 1); }
+                if (amount < 0) removeExactItem(targetPlayer, 'Книга знаний', -amount);
+                else targetPlayer.inventory['Книга знаний'] = (targetPlayer.inventory['Книга знаний'] || 0) + (amount || 1);
             }
             return targetPlayer;
         };
 
+        const initData = window.Telegram?.WebApp?.initData;
+
+        // Выдача СЕБЕ: сначала дожидаемся фоновых сохранений и перечитываем истинное
+        // состояние сервера. Если версия поменялась ещё раз — повторяем мутацию поверх свежего состояния.
         if (!targetId) {
-            applyGive(player);
-            renderInventory();
-            updateUI();
-            saveGame();
-            showGameAlert('Выдано самому себе!');
+            try {
+                await waitForSaveQueue();
+                for (let attempt = 0; attempt < 2; attempt++) {
+                    await reloadPrivatePlayerState();
+                    const targetPlayer = applyGive(player);
+                    const snapshot = JSON.parse(JSON.stringify(targetPlayer));
+
+                    const res = await fetch(`${SERVER_URL}/api/player`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            initData,
+                            data: snapshot,
+                            stateVersion: playerStateVersion
+                        })
+                    });
+                    const result = await res.json();
+
+                    if (result && result.success) {
+                        playerStateVersion = Number(result.stateVersion) || playerStateVersion;
+                        Object.keys(player).forEach(k => delete player[k]);
+                        Object.assign(player, snapshot);
+                        renderInventory();
+                        updateUI();
+                        showGameAlert('Выдано самому себе!');
+                        return;
+                    }
+                    if (!(result && result.conflict) || attempt === 1) {
+                        throw new Error((result && result.error) || 'Не удалось сохранить админское изменение');
+                    }
+                }
+            } catch (e) {
+                console.error('[admin self give]', e);
+                try { await reloadPrivatePlayerState(); } catch (_) {}
+                showGameAlert('Ошибка админ-выдачи: ' + (e?.message || 'не удалось обновить профиль'));
+            }
             return;
         }
 
-        // ВАЖНО: если targetId — это ник (не число), нужно СНАЧАЛА найти реальный числовой ID игрока
-        // и забрать ЕГО данные. Раньше при выдаче по нику GET /api/player/<ник> не находил запись
-        // (эндпоинт понимает только числовой ID), и выдача сохраняла ПУСТЫЕ данные поверх настоящих —
-        // стирая весь остальной прогресс цели, оставляя только выданный предмет
-        const giveToResolvedId = (resolvedId) => {
-            fetch(`${SERVER_URL}/api/player/${resolvedId}`)
-                .then(res => res.json())
-                .then(data => {
-                    const targetPlayer = applyGive(data || {});
-                    return fetch(`${SERVER_URL}/api/player`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, targetId: resolvedId, data: targetPlayer })
-                    });
-                })
-                .then(res => res.json())
-                .then(result => {
-                    if (result.success) showGameAlert(`Выдано игроку ${resolvedId}!`);
-                    else showGameAlert('Ошибка: ' + (result.error || 'нет прав или не удалось обновить'));
-                })
-                .catch(() => showGameAlert('Ошибка: не удалось найти/обновить игрока'));
+        // Выдача ДРУГОМУ игроку: публичный /api/player/:id теперь намеренно урезан.
+        // Полное состояние цели администратор получает только через защищённый endpoint.
+        const giveToResolvedId = async (resolvedId) => {
+            try {
+                const readRes = await fetch(`${SERVER_URL}/api/player/private`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData, targetId: resolvedId })
+                });
+                const data = await readRes.json();
+                if (!data || data.success === false) throw new Error(data?.error || 'Не удалось получить профиль игрока');
+
+                delete data._stateVersion;
+                const targetPlayer = applyGive(data);
+
+                const writeRes = await fetch(`${SERVER_URL}/api/player`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ initData, targetId: resolvedId, data: targetPlayer })
+                });
+                const result = await writeRes.json();
+                if (!result.success) throw new Error(result.error || 'Не удалось обновить профиль');
+                showGameAlert(`Выдано игроку ${resolvedId}!`);
+            } catch (e) {
+                console.error('[admin target give]', e);
+                showGameAlert('Ошибка: ' + (e?.message || 'не удалось найти/обновить игрока'));
+            }
         };
 
         if (/^\d+$/.test(targetId)) {
-            giveToResolvedId(targetId);
+            await giveToResolvedId(targetId);
         } else {
-            fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(targetId)}`)
-                .then(r => r.json())
-                .then(list => {
-                    const exact = (list || []).find(p => (p.username || '').toLowerCase() === targetId.toLowerCase());
-                    if (!exact) { showGameAlert('Игрок с таким ником не найден.'); return; }
-                    giveToResolvedId(exact.id);
-                })
-                .catch(() => showGameAlert('Ошибка поиска игрока по нику'));
+            try {
+                const r = await fetch(`${SERVER_URL}/api/players?search=${encodeURIComponent(targetId)}`);
+                const list = await r.json();
+                const exact = (list || []).find(p => (p.username || '').toLowerCase() === targetId.toLowerCase());
+                if (!exact) { showGameAlert('Игрок с таким ником не найден.'); return; }
+                await giveToResolvedId(exact.id);
+            } catch (e) {
+                showGameAlert('Ошибка поиска игрока по нику');
+            }
         }
     }
 
