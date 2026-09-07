@@ -6913,8 +6913,9 @@ input[type='number'] { min-width:0; }
             targetPlayer.warehouse = targetPlayer.warehouse || {};
 
             if (giveType === 'level') {
-                targetPlayer.level = Math.max(1, Math.min(MAX_LEVEL, (Number(targetPlayer.level) || 1) + (amount || 1)));
-                if (targetPlayer.level >= MAX_LEVEL) targetPlayer.exp = 0;
+                // Уровень в этой версии игры не ограничиваем несуществующей глобальной MAX_LEVEL.
+                // Минимум — 1; верхнюю границу оставляем самой системе прогрессии.
+                targetPlayer.level = Math.max(1, (Number(targetPlayer.level) || 1) + (amount || 1));
             } else if (giveType === 'coins') {
                 targetPlayer.coins = Math.max(0, (Number(targetPlayer.coins) || 0) + (amount || 0));
             } else if (giveType === 'health') {
