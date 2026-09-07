@@ -2310,6 +2310,14 @@ input[type='number'] { min-width:0; }
         }
     }
 
+    function clampGameLevel(value) {
+        const lvl = Math.max(1, Math.floor(Number(value) || 1));
+        const cap = (typeof GAME_MAX_LEVEL !== 'undefined' && Number.isFinite(Number(GAME_MAX_LEVEL)))
+            ? Number(GAME_MAX_LEVEL)
+            : null;
+        return cap ? Math.min(cap, lvl) : lvl;
+    }
+
     // ===== АДМИН: ПОИСК И БЛОКИРОВКА ИГРОКОВ =====
     function searchAdminPlayers() {
         const query = document.getElementById('adminPlayerSearch').value.trim();
@@ -6913,9 +6921,9 @@ input[type='number'] { min-width:0; }
             targetPlayer.warehouse = targetPlayer.warehouse || {};
 
             if (giveType === 'level') {
-                // Уровень в этой версии игры не ограничиваем несуществующей глобальной MAX_LEVEL.
+                // Уровень в этой версии игры не ограничиваем несуществующей глобальной Number.MAX_SAFE_INTEGER.
                 // Минимум — 1; верхнюю границу оставляем самой системе прогрессии.
-                targetPlayer.level = Math.max(1, (Number(targetPlayer.level) || 1) + (amount || 1));
+                targetPlayer.level = clampGameLevel((Number(targetPlayer.level) || 1) + (amount || 1));
             } else if (giveType === 'coins') {
                 targetPlayer.coins = Math.max(0, (Number(targetPlayer.coins) || 0) + (amount || 0));
             } else if (giveType === 'health') {
