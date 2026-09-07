@@ -735,9 +735,9 @@ input[type='number'] { min-width:0; }
         }
     };
     // Снимок изначального состояния игрока "с нуля" — нужен для кнопки сброса прогресса в админ-панели
-    const PRISTINE_PLAYER_DEFAULTS = JSON.parse(JSON.stringify(player));
 
     let raidActive = false;
+    let raidSessionToken = null;
     let inventoryOpenedFromRaid = false; // рюкзак открыт прямо из рейда — "Назад" должен вернуть в рейд, а не в главное меню
     let raidLogs = [];
     let currentEnemy = null;
@@ -748,6 +748,7 @@ input[type='number'] { min-width:0; }
     // Сбрасывается в startBattle(). Ограничивает только применение В БОЮ — вне боя (обычный
     // расходник в рейде без противника) лимита нет вообще
     const BATTLE_MEDKIT_LIMIT = 3;
+    const PVE_BATTLE_MEDKIT_LIMIT_CLIENT = 3;
     let battleMedkitsUsed = 0;
     let adminClickCount = 0;
     let kpkTab = 'info';
@@ -1861,11 +1862,26 @@ input[type='number'] { min-width:0; }
     let saveInFlight = false;
     let savePending = false;
 
-    function saveGame() {
-        if (!window.Telegram?.WebApp?.initData) return;
-        savePending = true;
-        if (!saveInFlight) flushSaveQueue();
-    }
+    // AUDIT V2: принимаем новую версию профиля из любого ответа API до следующего saveGame().
+    const _nativeFetch = window.fetch.bind(window);
+    window.fetch = async function(...args) {
+        const response = await _nativeFetch(...args);
+        try {
+            const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url) || '';
+            if (url && url.startsWith(SERVER_URL)) {
+                const data = await response.clone().json();
+                const ver = Number(data && (data.stateVersion ?? data._stateVersion));
+                if (Number.isInteger(ver) && ver >= 0) playerStateVersion = ver;
+            }
+        } catch (_) {}
+        return response;
+    };
+
+
+    // Полное клиентское сохранение отключено: экономика/бой/инвентарь теперь меняются
+    // конкретными серверными действиями. Оставляем функцию как совместимый no-op для старых UI-вызовов.
+    function saveGame() { savePending = false; }
+    async function flushSaveQueue() { savePending = false; saveInFlight = false; }
 
     async function reloadPrivatePlayerState() {
         const initData=window.Telegram?.WebApp?.initData;
@@ -1886,43 +1902,6 @@ input[type='number'] { min-width:0; }
         return data;
     }
 
-    async function flushSaveQueue() {
-        if(saveInFlight) return;
-        const initData=window.Telegram?.WebApp?.initData;
-        if(!initData) return;
-        saveInFlight=true;
-        try{
-            while(savePending){
-                savePending=false;
-                const snapshot=JSON.parse(JSON.stringify(player));
-                let result;
-                try{
-                    const r=await fetch(`${SERVER_URL}/api/player`,{
-                        method:'POST',headers:{'Content-Type':'application/json'},
-                        body:JSON.stringify({initData,data:snapshot,stateVersion:playerStateVersion})
-                    });
-                    result=await r.json();
-                }catch(e){ console.error('Ошибка сети при сохранении:',e); savePending=true; break; }
-                if(result?.success){
-                    playerStateVersion=Number(result.stateVersion)||playerStateVersion;
-                    saveFailureWarned=false;
-                }else if(result?.conflict){
-                    await reloadPrivatePlayerState();
-                    savePending=false;
-                }else{
-                    console.error('Сохранение не удалось:',result?.error);
-                    if(!saveFailureWarned){
-                        saveFailureWarned=true;
-                        showGameAlert('⚠️ Прогресс НЕ сохраняется! Ошибка: '+(result?.error||'неизвестная'));
-                    }
-                }
-            }
-        } finally {
-            saveInFlight=false;
-            if(savePending) setTimeout(flushSaveQueue,250);
-        }
-    }
-
     function loadGame() {
         const tgUser = window.Telegram.WebApp.initDataUnsafe?.user;
         const userId = tgUser ? tgUser.id : 'guest';
@@ -1939,11 +1918,7 @@ input[type='number'] { min-width:0; }
                     delete data._stateVersion;
                     Object.assign(player, data);
                 } else {
-                    // Данных на сервере нет вообще — это самый первый вход нового игрока в игру.
-                    // Сразу же сохраняем — иначе повторный вызов loadGame() до первого сохранения
-                    // (например, случайная перезагрузка страницы) выдал бы бонус повторно
-                    player.coins = (Number(player.coins) || 0) + 5000;
-                    saveGame();
+                    throw new Error('Сервер не вернул профиль игрока');
                 }
                 sanitizePlayerNumbers();
                 reinjectCraftedArtifacts();
@@ -1976,22 +1951,7 @@ input[type='number'] { min-width:0; }
     // Подстраховка: разбивает любой случайно слипшийся стек оружия/брони/артефактов (например,
     // после покупки на рынке — эта операция идёт через сервер, у которого нет доступа к данным
     // игры, чтобы знать заранее, что стакать нельзя) на отдельные ячейки по 1 штуке
-    function deStackNonStackingItems() {
-        const toSplit = Object.keys(player.inventory).filter(name => {
-            const qty = player.inventory[name];
-            if (!qty || qty <= 1) return false;
-            const clean = stripInvisibleSuffix(name);
-            const baseName = parseGearName(clean).baseName;
-            return weapons.some(w => w.name === baseName) || armorItems.some(a => a.name === baseName) || artifacts.some(a => a.name === clean);
-        });
-        toSplit.forEach(name => {
-            const qty = player.inventory[name];
-            player.inventory[name] = 1;
-            for (let i = 1; i < qty; i++) {
-                player.inventory[name + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8))] = 1;
-            }
-        });
-    }
+
 
     // Пересчитывает radiationResist/anomalyResist "с нуля" из РЕАЛЬНО надетых сейчас артефактов
     // И брони (включая исследовательские комбинезоны) — не накапливаем их инкрементально (риск
@@ -2005,32 +1965,10 @@ input[type='number'] { min-width:0; }
     // - отрицательная "radiation" — это буквально "радиоактивность" артефакта: полоса радиации
     //   растёт на эту величину, и ровно столько же здоровья отнимается сразу же (отдельно от общего
     //   урона накопленной радиацией, который бьёт при КАЖДОМ действии в рейде — см. applyRadiationPoisoningDamage)
-    function applyNegativeArtifactPerTurnEffects() {
-        let extraHunger = 0, extraThirst = 0;
-        (player.artifactSlots || []).forEach(name => {
-            if (!name) return;
-            const artifact = findArtifactDef(name);
-            if (!artifact || !artifact.stats) return;
-            if (artifact.stats.hunger < 0) extraHunger += -artifact.stats.hunger;
-            if (artifact.stats.thirst < 0) extraThirst += -artifact.stats.thirst;
-        });
-        if (extraHunger > 0) player.hunger = Math.max(0, player.hunger - extraHunger);
-        if (extraThirst > 0) player.thirst = Math.max(0, player.thirst - extraThirst);
 
-        // "Радиация" от фонящих артефактов (player.radiationLeakTotal — уже посчитана в
-        // recomputeArtifactResistances) — смягчается "Защитой от радиации" от ДРУГИХ надетых
-        // артефактов/брони (player.radiationResist), может нейтрализоваться полностью
-        const netLeak = Math.max(0, (Number(player.radiationLeakTotal) || 0) - (Number(player.radiationResist) || 0));
-        if (netLeak > 0) {
-            player.radiation = Math.min(100, player.radiation + netLeak);
-            player.health = Math.round(Math.max(0, player.health - netLeak) * 10) / 10;
-            if (player.radiation >= 100) player.health = 0;
-            raidLogs.push(`☢️ Артефакт(ы) фонят: радиация +${netLeak}, здоровье -${netLeak}`);
-        }
-    }
 
-    // Урон от УЖЕ НАКОПЛЕННОЙ радиации — бьёт при КАЖДОМ действии в рейде (не только шаг вперёд, но
-    // и вход/выход из рюкзака и т.д.), пока радиация не вылечена. Величина урона равна ТЕКУЩЕМУ
+    // Урон от УЖЕ НАКОПЛЕННОЙ радиации применяется к игровым действиям рейда/боя,
+    // но простой просмотр рюкзака не считается отдельным ходом. Величина урона равна ТЕКУЩЕМУ
     // значению полосы радиации — чем дольше не лечиться, тем разрушительнее становится каждое действие
     function applyRadiationPoisoningDamage() {
         if (player.radiation <= 0) return;
@@ -2135,7 +2073,6 @@ input[type='number'] { min-width:0; }
             player.hybridCounter = 0;
         }
         if (player.inventory && typeof player.inventory === 'object') {
-            deStackNonStackingItems();
         }
     }
 
@@ -2234,80 +2171,44 @@ input[type='number'] { min-width:0; }
     }
 
     // Полный сброс прогресса ДРУГОГО игрока (по нику/ID) — необратимо, поэтому двойное подтверждение
-    function resetOtherPlayerProgress() {
-        const target = document.getElementById('resetTargetInput').value.trim();
-        if (!target) { showGameAlert('Введите ник или ID игрока.'); return; }
-        if (!confirm(`Сбросить ВЕСЬ прогресс игрока «${target}»? Это необратимо.`)) return;
-        if (!confirm('Точно? Это последнее предупреждение — отменить будет нельзя.')) return;
+    async function resetOtherPlayerProgress() {
+        const target = prompt('Введите ID или точный ник игрока, которому нужно полностью сбросить прогресс:');
+        if (!target) return;
+        if (!confirm(`Полностью сбросить прогресс игрока «${target}»?`)) return;
 
-        const initData = window.Telegram?.WebApp?.initData;
-        fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData, targetId: target })
-        }).catch(() => {});
-
-        const freshData = JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS));
-        fetch(`${SERVER_URL}/api/player`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData, targetId: target, data: freshData })
-        })
-        .then(res => res.json())
-        .then(result => {
-            if (result.success) showGameAlert(`Прогресс игрока «${target}» сброшен.`);
-            else showGameAlert('Ошибка: ' + (result.error || 'не удалось сбросить'));
-        })
-        .catch(() => showGameAlert('Ошибка соединения с сервером'));
+        try {
+            const r=await fetch(`${SERVER_URL}/api/admin/reset-player`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    initData:window.Telegram?.WebApp?.initData,
+                    targetId:target
+                })
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Сброс не выполнен');return;}
+            showGameAlert(`Прогресс игрока «${target}» полностью сброшен.`);
+        } catch(e) {
+            console.error('[admin reset player]',e);
+            showGameAlert('Ошибка соединения при сбросе игрока.');
+        }
     }
 
     async function resetMyOwnProgress() {
-        if (!confirm('Сбросить ВЕСЬ ваш прогресс до начального состояния? Это необратимо — деньги, уровень, снаряжение, инвентарь, артефакты будут потеряны.')) return;
-        if (!confirm('Точно? Это последнее предупреждение — отменить сброс будет нельзя.')) return;
-
-        raidActive = false;
-        currentEnemy = null;
-        currentAnomaly = null;
-        isFriendlyEncounterActive = false;
-        battleTurn = 0;
-        inventoryOpenedFromRaid = false;
-        clearBattleUiAndRestoreNav();
-
-        const initData = window.Telegram?.WebApp?.initData;
-        const freshData = JSON.parse(JSON.stringify(PRISTINE_PLAYER_DEFAULTS));
-
-        try {
-            // Сначала завершаем отдельное серверное членство во фракции.
-            try {
-                await fetch(`${SERVER_URL}/api/player/force-leave-faction`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData })
-                });
-            } catch (_) {}
-
-            // Затем атомарно сохраняем именно чистое состояние и обязательно получаем
-            // новую stateVersion ДО показа окна нового ника.
-            await saveExplicitPlayerSnapshot(freshData);
-
-            Object.keys(player).forEach(key => delete player[key]);
-            Object.assign(player, JSON.parse(JSON.stringify(freshData)));
-            savePending = false;
-
-            closeAdminPanel();
-            renderInventory();
-            updateUI();
+        if(!confirm('Сбросить ВЕСЬ ваш прогресс до начального состояния? Это необратимо.'))return;
+        if(!confirm('Точно? Это последнее предупреждение.'))return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/player/reset-self`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Сброс не выполнен');return;}
+            Object.keys(player).forEach(k=>delete player[k]);Object.assign(player,x.state);
+            raidActive=false;raidSessionToken=null;currentEnemy=null;currentAnomaly=null;currentLuckyFind=null;isFriendlyEncounterActive=false;battleTurn=0;
+            clearBattleUiAndRestoreNav();closeAdminPanel();renderInventory();updateUI();openScreen('main');
             showGameAlert('Прогресс сброшен.');
-            openScreen('main');
-
-            // Теперь версия уже актуальна — окно ника не конфликтует со сбросом.
-            setTimeout(() => promptForNickname(true), 150);
-        } catch (e) {
-            console.error('[resetMyOwnProgress]', e);
-            try { await reloadPrivatePlayerState(); } catch (_) {}
-            showGameAlert('Не удалось сбросить прогресс: ' +
-                ((e && e.message === 'SAVE_QUEUE_TIMEOUT') ? 'не завершилось предыдущее сохранение' : (e?.message || 'ошибка сервера')));
-        }
+            setTimeout(()=>promptForNickname(true),150);
+        }catch(e){console.error('[resetMyOwnProgress]',e);showGameAlert('Ошибка соединения при сбросе.');}
     }
 
     function clampGameLevel(value) {
@@ -3849,27 +3750,10 @@ input[type='number'] { min-width:0; }
                 return;
             }
             showGameAlert('Покупка успешна!');
-            // Если купили гибрид артефакта — подтягиваем его характеристики с сервера и СРАЗУ сохраняем
-            // в своих данных (до loadGame), иначе последующая перезагрузка сотрёт только что добавленное
-            const needsHybridDef = itemName && (itemName.startsWith('Гибрид ') || itemName.startsWith('Артефакт гибрид')) && !artifacts.some(a => a.name === itemName);
-            const fetchDef = needsHybridDef
-                ? fetch(`${SERVER_URL}/api/artifacts/${encodeURIComponent(itemName)}`).then(r => r.json()).catch(() => null)
-                : Promise.resolve(null);
-
-            fetchDef.then(def => {
-                if (!def) { loadGame(); renderMarket(); return; }
-                artifacts.push(def);
-                player.craftedArtifacts = player.craftedArtifacts || {};
-                player.craftedArtifacts[def.name] = def;
-                const initData = window.Telegram?.WebApp?.initData;
-                fetch(`${SERVER_URL}/api/player`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ initData, data: player })
-                })
-                .catch(() => {})
-                .finally(() => { loadGame(); renderMarket(); });
-            });
+            // Сервер сам добавляет описание купленного гибрида в craftedArtifacts покупателя.
+            // Просто перечитываем подтверждённое состояние.
+            loadGame();
+            renderMarket();
         })
         .catch(() => showGameAlert('Ошибка соединения с сервером'));
     }
@@ -3896,6 +3780,14 @@ input[type='number'] { min-width:0; }
 
     function listItemForSale(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
+        const def=findArtifactDef(itemName);
+        const parsed=parseGearName(itemName);
+        const w=weapons.find(x=>x.name===parsed.baseName);
+        const a=armorItems.find(x=>x.name===parsed.baseName);
+        if((def&&def.isNamedArtifact)||(def&&def.adminOnly)||(w&&w.adminOnly)||(a&&a.adminOnly)){
+            showGameAlert('Этот уникальный/административный предмет нельзя выставлять на рынок.');
+            return;
+        }
         const maxQty = player.inventory[itemName];
 
         const qtyStr = prompt(`Сколько шт. "${itemName}" продать? (доступно: ${maxQty})`, String(maxQty));
@@ -4012,48 +3904,60 @@ input[type='number'] { min-width:0; }
     ];
 
     // "ВИЗИРЬ" (детектор тира 9) можно купить и за Жетоны сталкера (100 штук), не только за Stars
-    function buyDetectorT9ForBreedCredits() {
-        const cost = 100;
-        if ((Number(player.breedCredits) || 0) < cost) {
-            showGameAlert(`Недостаточно жетонов сталкера. Нужно 🧬 ${cost}.`);
-            return;
-        }
-        if (!confirm(`Купить "ВИЗИРЬ" за 🧬 ${cost} Жетонов сталкера?`)) return;
-        player.breedCredits -= cost;
-        player.inventory['ВИЗИРЬ'] = (player.inventory['ВИЗИРЬ'] || 0) + 1;
-        showGameAlert('Куплено! Наденьте детектор, чтобы получить доступ к аномалиям тира 9.');
-        updateUI();
-        saveGame();
+    async function buyDetectorT9ForBreedCredits() {
+        if(!confirm('Купить "ВИЗИРЬ" за 🧬 100 Жетонов сталкера?')) return;
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/economy/buy-visir`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Покупка не выполнена');return;}
+            player.breedCredits=x.breedCredits; player.inventory=x.inventory;
+            updateUI(); renderInventory();
+            showGameAlert('Куплено! Наденьте детектор, чтобы получить доступ к аномалиям тира 9.');
+        }catch(e){showGameAlert('Ошибка соединения при покупке.');}
     }
 
     // Обмен Жетонов сталкера на Байты в обе стороны — курс фиксированный: 1 жетон = 10 000 Байт
     const BREED_CREDIT_BYTE_RATE = 10000;
-    function buyBreedCreditsForBytes() {
-        const qtyStr = prompt('Сколько Жетонов сталкера купить? (1 жетон = 10 000 Байт)', '1');
-        if (qtyStr === null) return;
-        const qty = parseInt(qtyStr);
-        if (!qty || qty <= 0) { showGameAlert('Введите корректное количество (целое число больше нуля).'); return; }
-        const cost = qty * BREED_CREDIT_BYTE_RATE;
-        if (player.coins < cost) { showGameAlert(`Недостаточно Байт. Нужно 🪙 ${cost.toLocaleString('ru-RU')}.`); return; }
-        player.coins -= cost;
-        player.breedCredits = (Number(player.breedCredits) || 0) + qty;
-        showGameAlert(`Куплено 🧬 ${qty} Жетон(ов) сталкера за 🪙 ${cost.toLocaleString('ru-RU')} Байт.`);
-        updateUI();
-        saveGame();
+    async function buyBreedCreditsForBytes() {
+        const qtyStr=prompt('Сколько Жетонов сталкера купить? (1 жетон = 10 000 Байт)','1');
+        if(qtyStr===null) return;
+        const qty=parseInt(qtyStr,10);
+        if(!qty||qty<=0){showGameAlert('Введите корректное количество.');return;}
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/economy/breed-credits`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,direction:'buy',qty})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Обмен не выполнен');return;}
+            player.coins=x.coins; player.breedCredits=x.breedCredits;
+            updateUI();
+            showGameAlert(`Куплено 🧬 ${qty} Жетон(ов) сталкера.`);
+        }catch(e){showGameAlert('Ошибка соединения при обмене.');}
     }
-    function sellBreedCreditsForBytes() {
-        const have = Number(player.breedCredits) || 0;
-        const qtyStr = prompt(`Сколько Жетонов сталкера продать? (доступно: ${have}, курс 1 жетон = 10 000 Байт)`, String(have));
-        if (qtyStr === null) return;
-        const qty = parseInt(qtyStr);
-        if (!qty || qty <= 0) { showGameAlert('Введите корректное количество (целое число больше нуля).'); return; }
-        if (qty > have) { showGameAlert(`У вас есть только ${have} жетон(ов).`); return; }
-        const reward = qty * BREED_CREDIT_BYTE_RATE;
-        player.breedCredits = have - qty;
-        player.coins += reward;
-        showGameAlert(`Продано 🧬 ${qty} Жетон(ов) сталкера за 🪙 ${reward.toLocaleString('ru-RU')} Байт.`);
-        updateUI();
-        saveGame();
+    async function sellBreedCreditsForBytes() {
+        const have=Number(player.breedCredits)||0;
+        const qtyStr=prompt(`Сколько Жетонов сталкера продать? (доступно: ${have}, курс 1 жетон = 10 000 Байт)`,String(have));
+        if(qtyStr===null) return;
+        const qty=parseInt(qtyStr,10);
+        if(!qty||qty<=0){showGameAlert('Введите корректное количество.');return;}
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/economy/breed-credits`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,direction:'sell',qty})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Обмен не выполнен');return;}
+            player.coins=x.coins; player.breedCredits=x.breedCredits;
+            updateUI();
+            showGameAlert(`Продано 🧬 ${qty} Жетон(ов) сталкера.`);
+        }catch(e){showGameAlert('Ошибка соединения при обмене.');}
     }
 
     function renderStarsShop() {
@@ -4108,15 +4012,79 @@ input[type='number'] { min-width:0; }
     }
 
     // ===== БОЙ =====
-    function startBattle(enemy) {
-        currentEnemy = { ...enemy }; // клон — иначе бой портит hp в общем шаблоне mutants/npcs навсегда
-        battleTurn = 0;
-        battleMedkitsUsed = 0; // лимит на аптечки — новый бой, новый лимит
-        raidLogs = [];
-        const nameWithFaction = enemy.faction ? `${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})` : enemy.name;
-        raidLogs.push(`⚔️ Бой с ${nameWithFaction} (Тир ${enemy.tier})! Ваш ход.`);
-        updateRaidLog();
-        renderBattleButtons();
+    
+    function applyPveServerState(state) {
+        if (!state) return;
+        const keys=['coins','exp','level','breedCredits','strength','accuracy','inventory','quickSlots',
+                    'health','maxHealth','hunger','thirst','radiation','stats'];
+        for(const key of keys) if(state[key] !== undefined) player[key]=state[key];
+        renderInventory();
+        renderQuickSlots();
+        updateUI();
+    }
+
+    async function claimPveVictory(enemy) {
+        try {
+            if(!enemy || !enemy.battleToken){
+                showGameAlert('Бой не был зарегистрирован сервером. Награда не выдана.');
+                await reloadPrivatePlayerState();
+                raidLogs.push('Бой сохранён на сервере — попробуйте действие ещё раз или перезайдите в рейд.');
+                updateRaidLog();
+                battleTurn=0;
+                renderBattleButtons();
+                return;
+            }
+            battleTurn=1;
+            renderBattleButtons();
+            const r=await fetch(`${SERVER_URL}/api/pve/victory`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,battleToken:enemy.battleToken})
+            });
+            const x=await r.json();
+            if(!x.success){
+                raidLogs.push('❌ Сервер не выдал награду: '+(x.error||'неизвестная ошибка'));
+                updateRaidLog();
+                await reloadPrivatePlayerState();
+                raidLogs.push('Бой сохранён на сервере — попробуйте действие ещё раз или перезайдите в рейд.');
+                updateRaidLog();
+                battleTurn=0;
+                renderBattleButtons();
+                return;
+            }
+            applyPveServerState(x.state);
+            if(Array.isArray(x.rewards) && x.rewards.length){
+                raidLogs.push('🏆 Сервер подтвердил награду: '+x.rewards.join(', '));
+            }else{
+                raidLogs.push('🏆 Победа подтверждена сервером.');
+            }
+            updateRaidLog();
+            endBattle(true);
+        } catch(e){
+            console.error('[claimPveVictory]',e);
+            raidLogs.push('❌ Ошибка соединения при выдаче награды.');
+            updateRaidLog();
+            battleTurn=0;
+            renderBattleButtons();
+        }
+    }
+
+function startBattle(enemy) {
+        currentEnemy={...enemy};
+        battleMedkitsUsed=0;
+        raidLogs=raidLogs||[];
+        const nameWithFaction=enemy.faction?`${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})`:enemy.name;
+        if(enemy.battleToken){
+            battleTurn=0;
+            raidLogs.push(`⚔️ Бой с ${nameWithFaction} (Тир ${enemy.tier})! Ваш ход.`);
+            updateRaidLog();renderBattleButtons();return;
+        }
+        // В финальном клиенте обычный игрок не создаёт PvE-бой сам — сервер выдаёт battleToken
+        // вместе с событием рейда.
+        battleTurn=1;
+        raidLogs.push('❌ Сервер не выдал токен боя. Встреча отменена.');
+        updateRaidLog();renderBattleButtons();
+        currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();
     }
 
     function renderBattleButtons() {
@@ -4154,266 +4122,167 @@ input[type='number'] { min-width:0; }
         battleDiv.scrollIntoView({ block: 'nearest' });
     }
 
-    function battleAction(action) {
-        if (!currentEnemy) return;
-        // Утечку радиации от "фонящих" артефактов НЕ применяем именно при использовании медикамента —
-        // иначе попытка вылечиться (особенно от самой радиации через Антирад/Аптечку научную)
-        // одновременно откатывалась бы назад той же самой утечкой в тот же ход, сводя лечение на нет
-        if (action !== 'medkit') applyNegativeArtifactPerTurnEffects(); // фонящие артефакты бьют при остальных боевых действиях
-        applyRadiationPoisoningDamage(); // любое боевое действие тоже "действие в рейде" — накопленная радиация бьёт и здесь
-        if (player.health <= 0) { handlePlayerDeath(); return; }
-        
-        if (action === 'attack') {
-            const namedBonus = player.namedArtifactBonus || {};
-            const premiumAccuracyBonus = isEquippedArmor('Экзоскелет Абсолют-Финал') ? 20 : 0;
-            const effAccuracy = (Number(player.accuracy) || 0) + (namedBonus.accuracy || 0) + premiumAccuracyBonus;
-            const effStrength = (Number(player.strength) || 0) + (namedBonus.strength || 0);
-            const critChance = effAccuracy * 0.005; // до 50% шанса крита при меткости 100
-            const isCrit = Math.random() < critChance;
-            // Меткость (как и Сила) напрямую увеличивает урон — не только даёт шанс крита
-            let dmg = player.weapon.dmg + effStrength + effAccuracy;
-            // Бонус/штраф фракции к урону — отдельно против мутантов и против NPC
-            const isNpcEnemy = !!currentEnemy.faction;
-            // Премиальная броня: "Экзокостюм Апокалипсис" +20 урона по мутантам,
-            // "Экзоскелет Титан-Финал" +20 урона по NPC
-            if (!isNpcEnemy && isEquippedArmor('Экзокостюм Апокалипсис')) dmg += 20;
-            if (isNpcEnemy && isEquippedArmor('Экзоскелет Титан-Финал')) dmg += 20;
-            const bonuses = getFactionBonuses(isNpcEnemy ? currentEnemy.faction.name : null);
-            const dmgBonusPct = isNpcEnemy ? bonuses.dmgVsNpcPct : bonuses.dmgVsMutantsPct;
-            dmg = dmg * (1 + dmgBonusPct / 100);
-            if (isCrit) dmg *= 2;
-            currentEnemy.hp -= dmg;
-            raidLogs.push(`Вы атаковали!${isCrit ? ' 💥 КРИТ!' : ''} Урон: ${Math.round(dmg * 10) / 10}. У врага ${Math.max(0, Math.round(currentEnemy.hp * 10) / 10)} HP.`);
-        } else if (action === 'medkit') {
-            if (battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
-                raidLogs.push(`❌ Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
-                updateRaidLog();
-                return;
-            }
-            const availableMedkits = consumables.filter(c => c.type === 'medkit' && (player.inventory[c.name] || 0) > 0);
-            if (availableMedkits.length > 0) {
-                const best = availableMedkits.sort((a, b) => b.restore - a.restore)[0]; // используем самую сильную доступную
-                player.inventory[best.name]--;
-                if (player.inventory[best.name] <= 0) delete player.inventory[best.name];
-                applyConsumableEffect(best, true);
-                raidLogs.push(`Вы использовали «${best.name}»! +${best.restore} HP. (Аптечек на этот бой: ${BATTLE_MEDKIT_LIMIT - battleMedkitsUsed}/${BATTLE_MEDKIT_LIMIT})`);
-                updateUI(); // здоровье в шапке (❤️/🍖/💧) должно обновляться сразу, а не только по итогам боя
-            } else {
-                raidLogs.push('У вас нет аптечек!');
-                updateRaidLog();
-                return;
-            }
-        } else if (action === 'escape') {
-            const isNpcEnemy = !!currentEnemy.faction;
-            const bonuses = getFactionBonuses(isNpcEnemy ? currentEnemy.faction.name : null);
-            const effAgility = (Number(player.agility) || 0) + ((player.namedArtifactBonus && player.namedArtifactBonus.agility) || 0);
-            const escapeChance = Math.min(1.0, currentEnemy.runChance + effAgility * 0.01 + bonuses.escapeChancePct / 100);
-            if (Math.random() < escapeChance) {
-                raidLogs.push('Вы успешно сбежали!');
-                player.agility = Math.min(100, (Number(player.agility) || 0) + 0.1);
-                // Фракция "Бандиты" — при удачном побеге есть шанс украсть деньги, но только у NPC
-                if (isNpcEnemy && bonuses.stealMoneyOnEscapePct > 0 && Math.random() * 100 < bonuses.stealMoneyOnEscapePct) {
-                    const stolen = Math.round((Number(currentEnemy.coins) || 0) * 0.3);
-                    if (stolen > 0) {
-                        player.coins += stolen;
-                        raidLogs.push(`💰 Заодно украли ${stolen} Байт у убегающего противника!`);
-                    }
-                }
-                updateRaidLog();
-                endBattle(false);
-                return;
-            } else {
-                raidLogs.push('Побег не удался!');
-            }
-        }
-        
-        if (currentEnemy.hp <= 0) {
-            const isNpc = !!currentEnemy.faction;
-            const npcLootText = isNpc ? `, ${currentEnemy.weapon.name}, ${currentEnemy.armor.name}` : '';
-            const lootText = isNpc ? npcLootText : (currentEnemy.loot ? `, ${currentEnemy.loot}` : '');
-            // Мутанты деньги больше не роняют — только NPC. У NPC награда по тиру (у мутантов
-            // отдельного поля coins нет вообще)
-            let coinsReward = isNpc ? (Number(currentEnemy.coins) || Math.round(((currentEnemy.tier || 0) + 1) * 200)) : 0;
-            // Фракция "Наёмники" (лут с ИХ бойцов) — награда деньгами на 10% выше
-            if (isNpc && currentEnemy.faction.name === 'Наёмники') {
-                coinsReward = Math.round(coinsReward * 1.10);
-            }
-            // Фракция ИГРОКА "Наёмники" (свой собственный бонус, не зависит от того, кого убили) —
-            // +5% Байт с любых NPC
-            if (isNpc) {
-                const npcBytesBonus = getFactionBonuses(currentEnemy.faction.name).bytesFromNpcPct;
-                if (npcBytesBonus !== 0) coinsReward = Math.round(coinsReward * (1 + npcBytesBonus / 100));
-            }
-            raidLogs.push(`🏆 Победа! Вы получили: ${coinsReward} Байт, ${currentEnemy.exp} EXP${lootText}`);
-            player.coins += coinsReward;
-            player.exp += currentEnemy.exp;
-            if (!isNpc && currentEnemy.loot) {
-                // lootChance теперь реально определяет выпадение основной части тела.
-                if (Math.random() < Math.max(0, Math.min(1, Number(currentEnemy.lootChance) || 0))) {
-                    let bodyPartQty = 1 + getFactionBonuses(null).mutantBonusBodyParts;
-                    if (isEquippedArmor('Экзокостюм Апокалипсис')) bodyPartQty += 2;
-                    player.inventory[currentEnemy.loot] = (player.inventory[currentEnemy.loot] || 0) + bodyPartQty;
-                    raidLogs.push(`🥩 Получен трофей: ${currentEnemy.loot} ×${bodyPartQty}`);
-                } else {
-                    raidLogs.push('🥩 Трофей с мутанта не выпал.');
-                }
-            }
-            // Некоторые мутанты (Излом, Лось, Электро химера) дополнительно роняют случайный артефакт в заданном диапазоне тиров
-            if (!isNpc && currentEnemy.bonusArtifactTierRange) {
-                const [minT, maxT] = currentEnemy.bonusArtifactTierRange;
-                // ВАЖНО: пул только из БАЗОВЫХ артефактов — гибриды (в т.ч. чужие, оказавшиеся в этом же
-                // рантайм-массиве после подгрузки) исключаются, иначе мутант мог "уронить" чей-то
-                // персональный гибрид под чужим именем
-                const pool = artifacts.filter(a => a.tier >= minT && a.tier <= maxT && !a.adminOnly && !a.isNamedArtifact && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
-                if (pool.length > 0) {
-                    const art = pool[Math.floor(Math.random() * pool.length)];
-                    addNonStackingItem(art.name);
-                    player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
-                    player.stats.artifactsByTier = player.stats.artifactsByTier || {};
-                    player.stats.artifactsByTier[art.tier] = (player.stats.artifactsByTier[art.tier] || 0) + 1;
-                    raidLogs.push(`✨ Дополнительно найден артефакт: ${art.name}!`);
-                }
-            }
-            // Наблюдатель: не роняет обычный лут, зато сразу поднимает уровень и даёт жетоны сталкера
-            if (!isNpc && currentEnemy.bonusLevel) {
-                player.level = (Number(player.level) || 1) + currentEnemy.bonusLevel;
-                raidLogs.push(`⭐ Уровень повышен на ${currentEnemy.bonusLevel}!`);
-            }
-            if (!isNpc && currentEnemy.bonusBreedCredits) {
-                player.breedCredits = (Number(player.breedCredits) || 0) + currentEnemy.bonusBreedCredits;
-                raidLogs.push(`🧬 Получено жетонов сталкера: ${currentEnemy.bonusBreedCredits}!`);
-            }
-            if (isNpc) {
-                // с побеждённого NPC падает его же экипировка (оружие и броня)
-                addNonStackingItem(currentEnemy.weapon.name);
-                addNonStackingItem(currentEnemy.armor.name);
-
-                // Медикамент — чем выше тир NPC, тем дороже/лучше выпадающая аптечка.
-                // "Экзоскелет Титан-Финал" — двойной лут с NPC (в т.ч. вторая аптечка)
-                const isTitanFinal = isEquippedArmor('Экзоскелет Титан-Финал');
-                const npcTier = currentEnemy.tier;
-                const medkitName = npcTier <= 4 ? 'Аптечка гражданская' : (npcTier <= 9 ? 'Аптечка армейская' : 'Аптечка научная');
-                player.inventory[medkitName] = (player.inventory[medkitName] || 0) + (isTitanFinal ? 2 : 1);
-                raidLogs.push(`💊 С тела выпал(а): ${medkitName}${isTitanFinal ? ' ×2' : ''}`);
-
-                // Фракционный лут — у каждой "мирной/нейтральной" фракции свой особый дроп,
-                // масштабируется тиром самого NPC
-                const npcFaction = currentEnemy.faction.name;
-                if (npcFaction === 'Долг') {
-                    // 2 части тела случайных мутантов, тир лута растёт вместе с тиром NPC (диапазон 1-8)
-                    const lootTier = Math.max(1, Math.min(8, Math.round(npcTier * 8 / 14)));
-                    const mutantsWithLoot = mutants.filter(m => m.loot && m.tier <= lootTier);
-                    const dolgQty = isTitanFinal ? 4 : 2;
-                    for (let i = 0; i < dolgQty; i++) {
-                        if (mutantsWithLoot.length === 0) break;
-                        const pick = mutantsWithLoot[Math.floor(Math.random() * mutantsWithLoot.length)];
-                        player.inventory[pick.loot] = (player.inventory[pick.loot] || 0) + 1;
-                    }
-                    raidLogs.push(`🥩 Бойцы "Долга" носят с собой трофеи охоты на мутантов — найдено ${dolgQty} части тела.`);
-                } else if (npcFaction === 'Экологи') {
-                    // 1 детектор (2 при Титан-Финал), тир растёт вместе с тиром NPC (диапазон 1-6)
-                    const lootTier = Math.max(1, Math.min(6, Math.round(npcTier * 6 / 14)));
-                    const detectorPool = detectors.filter(d => d.tier <= lootTier);
-                    if (detectorPool.length > 0) {
-                        const pick = detectorPool[detectorPool.length - 1]; // самый близкий к разрешённому тиру
-                        player.inventory[pick.name] = (player.inventory[pick.name] || 0) + (isTitanFinal ? 2 : 1);
-                        raidLogs.push(`📡 У эколога был при себе детектор: ${pick.name}${isTitanFinal ? ' ×2' : ''}`);
-                    }
-                } else if (npcFaction === 'Монолит') {
-                    // 2 случайных артефакта (4 при Титан-Финал), тир растёт вместе с тиром NPC (диапазон 1-6)
-                    const lootTier = Math.max(1, Math.min(6, Math.round(npcTier * 6 / 14)));
-                    const artifactPool = artifacts.filter(a => a.tier <= lootTier && !a.adminOnly && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид '));
-                    const monolitQty = isTitanFinal ? 4 : 2;
-                    for (let i = 0; i < monolitQty; i++) {
-                        if (artifactPool.length === 0) break;
-                        const pick = artifactPool[Math.floor(Math.random() * artifactPool.length)];
-                        addNonStackingItem(pick.name);
-                    }
-                    raidLogs.push(`💎 Фанатики "Монолита" носили при себе найденные артефакты — забрано ${monolitQty} шт.`);
-                }
-            }
-            // Сила и Меткость: точно +0.1 за каждое убийство (npc или мутанта, независимо от тира) —
-            // без общего замедления роста перков, пользователь явно указал точное число
-            player.strength = Math.min(100, (Number(player.strength) || 0) + 0.1);
-            player.accuracy = Math.min(100, (Number(player.accuracy) || 0) + 0.1);
-
-            if (isNpc) {
-                player.stats.npcsKilled = (player.stats.npcsKilled || 0) + 1;
-                player.stats.npcsByTier = player.stats.npcsByTier || {};
-                player.stats.npcsByTier[currentEnemy.tier] = (player.stats.npcsByTier[currentEnemy.tier] || 0) + 1;
-            } else {
-                player.stats.mutantsKilled = (player.stats.mutantsKilled || 0) + 1;
-                player.stats.mutantsByTier = player.stats.mutantsByTier || {};
-                player.stats.mutantsByTier[currentEnemy.tier] = (player.stats.mutantsByTier[currentEnemy.tier] || 0) + 1;
-                // Жетоны выдаются только за реально максимальный тир текущего каталога мутантов.
-                const maxMutantTier = Math.max(...mutants.map(m => Number(m.tier) || 0));
-                if (currentEnemy.tier === maxMutantTier) {
-                    player.breedCredits = (Number(player.breedCredits) || 0) + 2;
-                    raidLogs.push('🧬 Мутант высшего тира! Получено 2 жетона сталкера.');
-                }
-            }
-
+    async function battleAction(action) {
+        if (!currentEnemy || battleTurn !== 0) return;
+        const enemyAtAction = currentEnemy;
+        if (!enemyAtAction.battleToken) {
+            raidLogs.push('❌ Бой ещё не подтверждён сервером.');
             updateRaidLog();
-            endBattle(true);
             return;
         }
-        
-        triggerEnemyTurn();
+
+        if (action === 'escape') {
+            battleTurn = 1;
+            renderBattleButtons();
+            try {
+                const r=await fetch(`${SERVER_URL}/api/pve/escape`,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        initData:window.Telegram?.WebApp?.initData,
+                        battleToken:enemyAtAction.battleToken
+                    })
+                });
+                const x=await r.json();
+                if(!x.success){
+                    raidLogs.push('❌ Ошибка побега: '+(x.error||'сервер отказал'));
+                    battleTurn=0; updateRaidLog(); renderBattleButtons(); return;
+                }
+                if(x.state) applyPveServerState(x.state);
+                if(Number(x.radiationDamage)>0) raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+                if(x.died){
+                    raidLogs.push('💀 Вы погибли во время попытки побега.');
+                    updateRaidLog();
+                    raidActive=false;raidSessionToken=null;currentEnemy=null;battleTurn=0;
+                    clearBattleUiAndRestoreNav();openScreen('main');updateUI();
+                    return;
+                }
+                if(x.escaped){
+                    if(Number.isFinite(Number(x.agility))) player.agility=Number(x.agility);
+                    if(Number.isFinite(Number(x.coins))) player.coins=Number(x.coins);
+                    raidLogs.push('Вы успешно сбежали!');
+                    if(Number(x.stolen)>0) raidLogs.push(`💰 Во время побега украдено ${x.stolen} Байт.`);
+                    updateRaidLog();
+                    endBattle(true);
+                    return;
+                }
+                raidLogs.push('Побег не удался!');
+                if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)
+                    raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
+                else if(x.enemyTurn) raidLogs.push(`${currentEnemy.name} промахнулся!`);
+                battleTurn=0;
+                updateRaidLog();
+                renderBattleButtons();
+                updateUI();
+                return;
+            } catch(e) {
+                console.error('[pve escape]',e);
+                raidLogs.push('❌ Ошибка соединения при попытке побега.');
+                battleTurn=0; updateRaidLog(); renderBattleButtons();
+                return;
+            }
+        }
+
+        if (!['attack','medkit'].includes(action)) return;
+        battleTurn=1;
+        renderBattleButtons();
+
+        try {
+            const r=await fetch(`${SERVER_URL}/api/pve/action`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    initData:window.Telegram?.WebApp?.initData,
+                    battleToken:enemyAtAction.battleToken,
+                    action
+                })
+            });
+            const x=await r.json();
+            if(!x.success){
+                raidLogs.push('❌ Действие отклонено сервером: '+(x.error||'ошибка'));
+                battleTurn=0; updateRaidLog(); renderBattleButtons(); return;
+            }
+
+            if(x.state) applyPveServerState(x.state);
+
+            if(Number(x.radiationDamage)>0)
+                raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+            if(x.turnEffects && Number(x.turnEffects.netLeak)>0)
+                raidLogs.push(`☢️ Артефакт(ы) фонят: +${Number(x.turnEffects.netLeak)} радиации`);
+
+            if(action==='attack'){
+                if(currentEnemy) currentEnemy.hp=Math.max(0,Number(x.enemyHp)||0);
+                raidLogs.push(`Вы атаковали!${x.crit?' 💥 КРИТ!':''} Урон: ${Number(x.playerDamage)||0}. У врага ${Math.max(0,Number(x.enemyHp)||0)} HP.`);
+            }else if(x.usedMedkit){
+                battleMedkitsUsed=PVE_BATTLE_MEDKIT_LIMIT_CLIENT-(Number(x.usedMedkit.remaining)||0);
+                raidLogs.push(`Вы использовали «${x.usedMedkit.name}»! +${Number(x.usedMedkit.restore)||0} HP. Осталось аптечек в бою: ${Number(x.usedMedkit.remaining)||0}.`);
+            }
+
+            if(x.enemyTurn && Number(x.enemyTurn.damage)>0){
+                raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}. Ваше HP: ${Math.max(0,Number(player.health)||0)}`);
+            }else if(x.enemyTurn && !x.victoryReady){
+                raidLogs.push(`${currentEnemy?.name||'Враг'} промахнулся!`);
+            }
+
+            updateUI();
+            updateRaidLog();
+
+            if(x.died){
+                raidActive=false;
+                currentEnemy=null;
+                battleTurn=0;
+                clearBattleUiAndRestoreNav();
+                showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь. Надетое снаряжение, поясные и именные артефакты, деньги и жетоны сохранены.');
+                openScreen('main');
+                updateUI();
+                return;
+            }
+
+            if(x.victoryReady){
+                const defeatedEnemy={...enemyAtAction,hp:0};
+                raidLogs.push('🏆 Победа! Сервер проверяет и выдаёт награду...');
+                updateRaidLog();
+                await claimPveVictory(defeatedEnemy);
+                return;
+            }
+
+            battleTurn=0;
+            renderBattleButtons();
+        } catch(e) {
+            console.error('[pve action]',e);
+            raidLogs.push('❌ Ошибка соединения во время боя.');
+            battleTurn=0; updateRaidLog(); renderBattleButtons();
+        }
     }
 
     // Единая логика ответного хода врага — вызывается после ЛЮБОГО действия игрока во время боя
     // (атака, аптечка в бою, использование расходника из рюкзака или быстрого слота), чтобы враг
     // не мог оставаться безнаказанным, пока игрок бесплатно лечится в обход боевых кнопок
-    function triggerEnemyTurn() {
-        if (!currentEnemy) return;
-
-        battleTurn = 1;
-        renderBattleButtons();
-        updateRaidLog();
-        
-        setTimeout(() => {
-            if (!currentEnemy) return; // бой уже завершён/прерван другим путём — не трогаем состояние
-            const enemyHitChance = currentEnemy.hitChance;
-            if (Math.random() < enemyHitChance) {
-                // Процентное снижение урона (падающая отдача) вместо прямого вычитания — броня даёт
-                // сильную защиту, но никогда не даёт полный иммунитет. Разные типы врагов пробивают
-                // РАЗНЫЕ защитные характеристики: NPC (у них есть .faction) — «Пулестойкость»
-                // (бывшая «Броня»), мутанты — «Гашение ударов» (обычно вдвое меньше «Пулестойкости»)
-                const isNpc = !!currentEnemy.faction;
-                const namedBonus = player.namedArtifactBonus || {};
-                const relevantDefense = isNpc
-                    ? (player.armor.armor || 0) + (namedBonus.bulletResist || 0)
-                    : (player.armor.hitAbsorption || 0) + (namedBonus.hitAbsorption || 0);
-                const armorReduction = relevantDefense / (relevantDefense + 100);
-                const finalDmg = Math.round(currentEnemy.dmg * (1 - armorReduction) * 10) / 10;
-                player.health = Math.round((player.health - finalDmg) * 10) / 10; // округляем сразу и хранимое значение, не только вывод в лог
-                raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${finalDmg}. Ваше HP: ${Math.max(0, player.health)}`);
-            } else {
-                raidLogs.push(`${currentEnemy.name} промахнулся!`);
+    async function triggerEnemyTurn() {
+        if(!currentEnemy||!currentEnemy.battleToken)return;
+        battleTurn=1;renderBattleButtons();updateRaidLog();
+        try{
+            const r=await fetch(`${SERVER_URL}/api/pve/action`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,battleToken:currentEnemy.battleToken,action:'wait'})
+            });
+            const x=await r.json();if(!x.success){raidLogs.push('❌ '+(x.error||'Ход не выполнен'));battleTurn=0;renderBattleButtons();updateRaidLog();return;}
+            if(x.state)applyPveServerState(x.state);
+            if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+            if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
+            else if(x.enemyTurn)raidLogs.push(`${currentEnemy.name} промахнулся!`);
+            if(x.died){
+                raidActive=false;raidSessionToken=null;currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();
+                showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь.');openScreen('main');updateUI();return;
             }
-            updateUI(); // здоровье в шапке должно отражать урон сразу после хода врага
-            
-            if (player.health <= 0) {
-                raidLogs.push('💀 Вы мертвы...');
-                updateRaidLog();
-                handlePlayerDeath();
-                return;
-            }
-            
-            battleTurn = 0;
-            renderBattleButtons();
-            updateRaidLog();
-            saveGame();
-        }, 1000);
+            battleTurn=0;renderBattleButtons();updateRaidLog();updateUI();
+        }catch(e){console.error('[triggerEnemyTurn]',e);battleTurn=0;renderBattleButtons();raidLogs.push('❌ Ошибка соединения.');updateRaidLog();}
     }
 
     function endBattle(win) {
-        currentEnemy = null;
-        battleTurn = 0;
-        document.getElementById('battleButtonsContainer').innerHTML = '';
-        const navButtons = document.getElementById('raidNavButtons');
-        if (navButtons) navButtons.style.display = 'grid'; // бой закончен — возвращаем "Идти дальше"/"Вернуться с рейда"
-        saveGame();
+        currentEnemy=null;battleTurn=0;
+        document.getElementById('battleButtonsContainer').innerHTML='';
+        const nav=document.getElementById('raidNavButtons');if(nav)nav.style.display='grid';
         updateUI();
     }
 
@@ -4431,37 +4300,40 @@ input[type='number'] { min-width:0; }
 
     // Смерть игрока: сброс здоровья, потеря лута (кроме одетого снаряжения и артефактов), выход в главное меню
     function handlePlayerDeath() {
-        player.stats.deaths = (player.stats.deaths || 0) + 1;
-
-        // При смерти теряется ВЕСЬ инвентарь, включая артефакты, которые просто лежали в инвентаре
-        // (не были надеты). Не теряются: надетое оружие/броня/детектор, артефакты в слотах пояса
-        // (хранятся отдельно от player.inventory), деньги и жетоны сталкера (отдельные числовые поля).
-        // ИСКЛЮЧЕНИЕ: именные артефакты тира 9 не теряются НИКОГДА, даже если просто лежали в
-        // инвентаре, не надетые — это уникальный неотчуждаемый подарок первым 100 игрокам
-        const preservedNamedArtifacts = {};
-        Object.keys(player.inventory).forEach(name => {
-            const def = findArtifactDef(name);
-            if (def && def.isNamedArtifact) preservedNamedArtifacts[name] = player.inventory[name];
-        });
-        player.inventory = { ...preservedNamedArtifacts };
-        player.quickSlots = [null, null, null, null];
-
-        player.health = player.maxHealth; // возрождение на базе с полным здоровьем
-        player.hunger = player.maxHunger || 100;
-        player.thirst = player.maxThirst || 100;
-        player.radiation = 0; // радиация тоже сбрасывается при возрождении
-
         raidActive = false;
+        const deadEnemy = currentEnemy ? { ...currentEnemy } : null;
         currentEnemy = null;
         isFriendlyEncounterActive = false;
         currentAnomaly = null;
-        battleTurn = 0;
+        battleTurn = 1;
         clearBattleUiAndRestoreNav();
 
-        showGameAlert('💀 Вы погибли и потеряли весь инвентарь. Сохранились: надетые оружие/броня/детектор, артефакты в слотах пояса, именные артефакты тира 9, деньги, ник и все жетоны. Возвращение на базу.');
-        openScreen('main');
-        updateUI();
-        saveGame();
+        (async () => {
+            try {
+                await waitForSaveQueue();
+                const r=await fetch(`${SERVER_URL}/api/pve/death`,{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        initData:window.Telegram?.WebApp?.initData,
+                        battleToken:deadEnemy?.battleToken||null
+                    })
+                });
+                const x=await r.json();
+                if(!x.success) throw new Error(x.error||'сервер отказал');
+                applyPveServerState(x.state);
+                battleTurn=0;
+                showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь. Надетое снаряжение, поясные и именные артефакты, деньги и жетоны сохранены.');
+                openScreen('main');
+                updateUI();
+            } catch(e) {
+                console.error('[handlePlayerDeath]',e);
+                showGameAlert('Ошибка сохранения смерти. Выполняется пересинхронизация с сервером.');
+                try { await reloadPrivatePlayerState(); } catch(_) {}
+                battleTurn=0;
+                openScreen('main');
+            }
+        })();
     }
 
     function updateRaidLog() {
@@ -4471,43 +4343,72 @@ input[type='number'] { min-width:0; }
     }
 
     // ===== РЕЙД =====
-    function startRaid() {
-        raidActive = true;
-        raidLogs = [];
-        document.getElementById('mainMenu').style.display = 'none';
-        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-        document.getElementById('raidScreen').classList.add('active');
-        document.getElementById('raidLog').textContent = 'Вы входите в Зону...';
-        clearBattleUiAndRestoreNav();
-        document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
-        document.getElementById('embeddedChatWidget').style.display = 'flex'; // чат доступен и во время рейда, под кнопками навигации
-        openChatTab(chatTab);
-        saveGame();
+    function applyRaidServerState(st) {
+        if(!st)return;
+        applyEquipmentServerState(st);
+        ['coins','exp','level','breedCredits','luck','vitality','agility','strength','accuracy','intellect','stats','hostileFactions']
+            .forEach(k=>{if(st[k]!==undefined)player[k]=st[k];});
+        updateUI();
     }
 
-    function endRaid() {
-        if (currentEnemy) {
-            showGameAlert('Нельзя покинуть рейд, пока не разрешена текущая встреча! Сначала завершите бой или разойдитесь с фракцией.');
-            return;
+    async function startRaid() {
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/raid/start`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Не удалось начать рейд');return;}
+
+            raidSessionToken=x.raidToken;
+            applyRaidServerState(x.state);
+            raidActive=true;
+            raidLogs=[];
+            currentEnemy=null;
+            currentAnomaly=null;
+            currentLuckyFind=null;
+            isFriendlyEncounterActive=false;
+            battleTurn=0;
+
+            document.getElementById('mainMenu').style.display='none';
+            document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+            document.getElementById('raidScreen').classList.add('active');
+            document.getElementById('raidLog').textContent=x.resumed?'Возвращение в незавершённый рейд...':'Вы входите в Зону...';
+            clearBattleUiAndRestoreNav();
+            document.getElementById('raidChatSlot').appendChild(document.getElementById('embeddedChatWidget'));
+            document.getElementById('embeddedChatWidget').style.display='flex';
+            openChatTab(chatTab);
+
+            const ev=x.event||{type:'none'};
+            if(ev.type==='battle'){raidLogs.push('⚠️ Незавершённый бой восстановлен.');startBattle(ev.enemy);return;}
+            if(ev.type==='friendly'){raidLogs.push('⚠️ Незавершённая встреча восстановлена.');startFriendlyEncounter(ev.npc);return;}
+            if(ev.type==='anomaly'){raidLogs.push('⚠️ Незавершённая аномалия восстановлена.');startAnomalyEncounter(ev.anomaly);return;}
+            if(ev.type==='lucky'){raidLogs.push('⚠️ Незабранный хабар всё ещё здесь.');startLuckyFind(ev.text);return;}
+            updateRaidLog();
+        }catch(e){
+            console.error('[startRaid]',e);
+            showGameAlert('Ошибка соединения при входе в рейд.');
         }
-        if (currentAnomaly && !currentAnomaly.resolved) {
-            showGameAlert('Нельзя покинуть рейд, пока не разрешена аномалия! Найдите артефакт, исчерпайте попытки или обойдите её стороной.');
-            return;
-        }
-        raidActive = false;
-        currentEnemy = null;
-        isFriendlyEncounterActive = false;
-        currentAnomaly = null;
-        battleTurn = 0;
-        clearBattleUiAndRestoreNav();
-        openScreen('main');
-        saveGame();
+    }
+
+    async function endRaid() {
+        if(currentEnemy){showGameAlert('Сначала завершите текущую встречу.');return;}
+        if(currentAnomaly&&!currentAnomaly.resolved){showGameAlert('Сначала завершите аномалию.');return;}
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/end`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Нельзя завершить рейд');return;}
+            raidActive=false;raidSessionToken=null;currentEnemy=null;isFriendlyEncounterActive=false;currentAnomaly=null;currentLuckyFind=null;battleTurn=0;
+            clearBattleUiAndRestoreNav();openScreen('main');
+        }catch(e){showGameAlert('Ошибка соединения при завершении рейда.');}
     }
 
     // Открыть рюкзак прямо во время рейда (в том числе во время боя) — не прерывает и не завершает рейд
     function openBackpackFromRaid() {
         inventoryOpenedFromRaid = true;
-        applyRadiationPoisoningDamage(); // вход в рюкзак — тоже действие в рейде, накопленная радиация бьёт и здесь
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('inventoryScreen').classList.add('active');
         document.getElementById('embeddedChatWidget').style.display = 'none'; // на экране инвентаря места для чата нет
@@ -4527,7 +4428,6 @@ input[type='number'] { min-width:0; }
     }
 
     function returnToRaid() {
-        applyRadiationPoisoningDamage(); // выход из рюкзака — тоже действие в рейде
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById('raidScreen').classList.add('active');
@@ -4583,219 +4483,72 @@ input[type='number'] { min-width:0; }
         if (fill) fill.style.width = '0%';
     }
 
-    function raidStep() {
-        if (!raidActive) return;
-        if (currentEnemy) return;
-        if (currentAnomaly && !currentAnomaly.resolved) return;
-        if (player.health <= 0) { handlePlayerDeath(); return; }
-
-        player.hunger = Math.max(0, Math.min(player.maxHunger, player.hunger - 5));
-        player.thirst = Math.max(0, Math.min(player.maxThirst, player.thirst - 5));
-        applyNegativeArtifactPerTurnEffects(); // доп. расход голода/жажды и радиации от надетых артефактов с негативными свойствами
-        applyRadiationPoisoningDamage(); // урон от уже накопленной радиации — бьёт при каждом действии в рейде
-        if (player.health <= 0) { handlePlayerDeath(); return; }
-
-        // Истощение: голод/жажда на нуле начинают отнимать здоровье каждый шаг рейда
-        let starvationDmg = 0;
-        if (player.hunger <= 0) starvationDmg += 3;
-        if (player.thirst <= 0) starvationDmg += 3;
-        if (starvationDmg > 0) {
-            player.health -= starvationDmg;
-            raidLogs.push(`🥴 Истощение (голод/жажда на нуле): -${starvationDmg} HP`);
-        }
-        if (player.health <= 0) {
-            updateRaidLog();
-            handlePlayerDeath();
-            return;
-        }
-        
-        const npcChance = Math.random();
-        if (npcChance < 0.3) {
-            const npc = findRandomNPC();
-            if (isFactionHostile(npc.faction)) {
-                startBattle(npc);
-            } else {
-                startFriendlyEncounter(npc);
-                updateUI();
-                saveGame();
-                return; // ждём решения игрока — не продолжаем шаг рейда дальше
+    async function raidStep() {
+        if(!raidActive||!raidSessionToken||currentEnemy||(currentAnomaly&&!currentAnomaly.resolved)||currentLuckyFind)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/step`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Шаг рейда не выполнен');return;}
+            applyRaidServerState(x.state);
+            if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+            if(Number(x.starvationDamage)>0)raidLogs.push(`🥴 Истощение: -${Number(x.starvationDamage)} HP`);
+            if(x.turnEffects&&Number(x.turnEffects.netLeak)>0)raidLogs.push(`☢️ Артефакты фонят: +${Number(x.turnEffects.netLeak)} радиации`);
+            if(x.died){
+                raidActive=false;raidSessionToken=null;clearBattleUiAndRestoreNav();
+                showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь.');openScreen('main');return;
             }
-        } else if (npcChance < 0.6) {
-            // Аномалия теперь ИНТЕРАКТИВНА: вместо мгновенного урона/находки — игрок сам решает,
-            // рисковать ли поиском артефакта (до 3 попыток, каждая опасна радиацией) или обойти
-            // её стороной без всякого риска. Останавливаем здесь и ждём решения игрока
-            document.getElementById('friendlyTradeModal')?.classList.remove('active');
-            clearBattleUiAndRestoreNav();
-            const encounterTier = getEncounterTier();
-            // Тир-9 аномалии (именные артефакты) попадают в пул ТОЛЬКО если надет спец-детектор —
-            // без него игрок никогда их не встретит, даже если тир по уровню уже позволяет
-            const hasT9Detector = player.detector && player.detector.name === 'ВИЗИРЬ';
-            const anomalyPool = anomalies.filter(a => a.tier <= encounterTier && (!a.isNamedArtifactAnomaly || hasT9Detector));
-            const anomaly = anomalyPool[Math.floor(Math.random() * anomalyPool.length)];
-            startAnomalyEncounter(anomaly);
-            updateUI();
-            saveGame();
-            return; // ждём решения игрока — не продолжаем шаг рейда дальше
-        } else if (npcChance < 0.8) {
-            startBattle(pickWeightedMutant());
-        } else if (npcChance < 0.85) {
-            // Редкая случайная находка хабара — останавливаем шаг, ждём, пока игрок сам поднимет находку
-            startLuckyFind();
-            updateUI();
-            saveGame();
-            return;
-        } else {
+            const ev=x.event||{type:'none'};
+            if(ev.type==='battle'){startBattle(ev.enemy);return;}
+            if(ev.type==='friendly'){startFriendlyEncounter(ev.npc);return;}
+            if(ev.type==='anomaly'){startAnomalyEncounter(ev.anomaly);return;}
+            if(ev.type==='lucky'){startLuckyFind(ev.text);return;}
             raidLogs.push('🌫️ Вы ничего не нашли. Тишина...');
-        }
-        
-        finishRaidStep();
+            updateRaidLog();updateUI();
+        }catch(e){console.error('[raidStep]',e);showGameAlert('Ошибка соединения во время рейда.');}
     }
 
     // ===== СЛУЧАЙНАЯ НАХОДКА ХАБАРА =====
     let currentLuckyFind = null; // { text, apply: () => void } — ждёт нажатия "Поднять хабар"
 
-    function startLuckyFind() {
-        const encounterTier = getEncounterTier();
-
-        // Весовой пул: медикаменты встречаются заметно чаще снаряжения, а снаряжение — тем реже,
-        // чем выше его тир. Каждая запись: { weight, text, apply }
-        const pool = [];
-        const medkitTexts = {
-            'Аптечка гражданская': 'Мне повезло, я нашёл аптечку гражданскую!',
-            'Аптечка армейская': 'Мне повезло, я нашёл аптечку армейскую!',
-            'Аптечка научная': 'Мне повезло, я нашёл аптечку научную!',
-            'Антирад': 'Мне повезло, я нашёл антирад!'
-        };
-        Object.keys(medkitTexts).forEach(name => {
-            pool.push({
-                weight: 25,
-                text: medkitTexts[name],
-                apply: () => { player.inventory[name] = (player.inventory[name] || 0) + 1; }
-            });
-        });
-
-        const tierRanges = [
-            { min: 1, max: Math.min(4, encounterTier), weight: 6 },
-            { min: 4, max: Math.min(8, encounterTier), weight: 3 },
-            { min: 8, max: Math.min(13, encounterTier), weight: 1 }
-        ];
-        tierRanges.forEach(range => {
-            const bodyParts = mutants.filter(m => m.loot && m.tier >= range.min && m.tier <= range.max);
-            if (bodyParts.length > 0) {
-                pool.push({
-                    weight: range.weight,
-                    text: `Мне повезло, я нашёл часть тела мутанта!`,
-                    apply: () => {
-                        const pick = bodyParts[Math.floor(Math.random() * bodyParts.length)];
-                        player.inventory[pick.loot] = (player.inventory[pick.loot] || 0) + 1;
-                    }
-                });
-            }
-            const armorPool = armorItems.filter(a => !a.adminOnly && !a.isResearchSuit && a.tier >= range.min && a.tier <= range.max);
-            if (armorPool.length > 0) {
-                pool.push({
-                    weight: range.weight,
-                    text: `Мне повезло, я нашёл броню!`,
-                    apply: () => {
-                        const pick = armorPool[Math.floor(Math.random() * armorPool.length)];
-                        addNonStackingItem(pick.name);
-                    }
-                });
-            }
-            const weaponPool = weapons.filter(w => !w.adminOnly && w.tier >= range.min && w.tier <= range.max);
-            if (weaponPool.length > 0) {
-                pool.push({
-                    weight: range.weight,
-                    text: `Мне повезло, я нашёл оружие!`,
-                    apply: () => {
-                        const pick = weaponPool[Math.floor(Math.random() * weaponPool.length)];
-                        addNonStackingItem(pick.name);
-                    }
-                });
-            }
-        });
-
-        const artifactRanges = [{ min: 1, max: 4, weight: 2 }, { min: 4, max: 6, weight: 1 }];
-        artifactRanges.forEach(range => {
-            const artPool = artifacts.filter(a => !a.adminOnly && !a.name.startsWith('Артефакт гибрид') && !a.name.startsWith('Гибрид ') && a.tier >= range.min && a.tier <= range.max);
-            if (artPool.length > 0) {
-                pool.push({
-                    weight: range.weight,
-                    text: `Мне повезло, я нашёл артефакт!`,
-                    apply: () => {
-                        const pick = artPool[Math.floor(Math.random() * artPool.length)];
-                        addNonStackingItem(pick.name);
-                    }
-                });
-            }
-        });
-
-        const totalWeight = pool.reduce((sum, x) => sum + x.weight, 0);
-        let roll = Math.random() * totalWeight;
-        let chosen = pool[0];
-        for (const entry of pool) {
-            if (roll < entry.weight) { chosen = entry; break; }
-            roll -= entry.weight;
-        }
-
-        currentLuckyFind = chosen;
-        raidLogs.push(`🍀 ${chosen.text}`);
-        updateRaidLog();
-
-        const container = document.getElementById('battleButtonsContainer');
-        container.innerHTML = '';
-        const navButtons = document.getElementById('raidNavButtons');
-        if (navButtons) navButtons.style.display = 'none';
-        const div = document.createElement('div');
-        div.innerHTML = `<button onclick="collectLuckyFind()" style="background:#8ac926; border:none; padding:12px; color:#111; font-weight:bold; border-radius:8px; width:100%;">🎒 Поднять хабар</button>`;
+    function startLuckyFind(text) {
+        currentLuckyFind={server:true,text:text||'Мне повезло, я нашёл хабар!'};
+        raidLogs.push(`🍀 ${currentLuckyFind.text}`);updateRaidLog();
+        const container=document.getElementById('battleButtonsContainer');container.innerHTML='';
+        const nav=document.getElementById('raidNavButtons');if(nav)nav.style.display='none';
+        const div=document.createElement('div');
+        div.innerHTML='<button onclick="collectLuckyFind()" style="background:#8ac926; border:none; padding:12px; color:#111; font-weight:bold; border-radius:8px; width:100%;">🎒 Поднять хабар</button>';
         container.appendChild(div);
     }
 
-    function collectLuckyFind() {
-        if (!currentLuckyFind) return;
-        currentLuckyFind.apply();
-        raidLogs.push('✅ Находка добавлена в инвентарь.');
-        currentLuckyFind = null;
-        clearBattleUiAndRestoreNav();
-        updateRaidLog();
-        finishRaidStep();
+    async function collectLuckyFind() {
+        if(!currentLuckyFind||!raidSessionToken)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/lucky/collect`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось поднять хабар');return;}
+            applyRaidServerState(x.state);raidLogs.push(`✅ Находка добавлена в инвентарь: ${x.item}.`);
+            currentLuckyFind=null;clearBattleUiAndRestoreNav();updateRaidLog();
+        }catch(e){showGameAlert('Ошибка соединения при получении хабара.');}
     }
 
     // Общий "хвост" шага рейда (проверка смерти, округление здоровья, опыт/уровень, обновление
     // экрана и сохранение) — вынесен отдельно, чтобы его можно было переиспользовать после
     // разрешения интерактивной встречи с аномалией (обход или завершение поиска артефакта)
     function finishRaidStep() {
-        if (raidLogs.length > 3) raidLogs.shift();
-
-        if (player.health <= 0) {
-            updateRaidLog();
-            handlePlayerDeath();
-            return;
-        }
-        player.health = Math.round(Math.max(0, Math.min(player.maxHealth, player.health)) * 10) / 10;
-        
-        // Стоимость следующего уровня растёт вместе с текущим уровнем — раньше была фиксированной
-        // (150 опыта всегда), из-за чего прогресс ничем не замедлялся и уровень мог улетать в тысячи
-        // за считанные часы игры
-        while (player.exp >= expNeededForLevel(player.level)) {
-            player.exp -= expNeededForLevel(player.level);
-            player.level += 1;
-            // Байты за новый уровень: 2 уровень = 200, 3 уровень = 300 и т.д. (номер уровня × 100)
-            const levelUpReward = player.level * 100;
-            player.coins += levelUpReward;
-            raidLogs.push(`⭐ Новый уровень (${player.level})! Получено ${levelUpReward} Байт.`);
-        }
-        
-        updateRaidLog();
-        updateUI();
-        saveGame();
+        if(raidLogs.length>3)raidLogs.shift();
+        if(player.health<=0){updateRaidLog();handlePlayerDeath();return;}
+        updateRaidLog();updateUI();
     }
 
     // ===== ИНТЕРАКТИВНАЯ ВСТРЕЧА С АНОМАЛИЕЙ =====
     function startAnomalyEncounter(anomaly) {
-        currentAnomaly = { ...anomaly, attemptsUsed: 0, resolved: false };
-        raidLogs.push(`☢️ Аномалия «${anomaly.name}»!\n«Надеюсь на твою щедрость, Тёмный сталкер. У меня есть всего 3 попытки узнать есть ли артефакт в этой аномалии, 4 попытка убьёт меня в любом случае.»`);
-        renderAnomalyButtons();
+        currentAnomaly={...anomaly};
+        raidLogs.push(`☢️ Аномалия «${anomaly.name}»!`);
+        renderAnomalyButtons();updateRaidLog();
     }
 
     function renderAnomalyButtons() {
@@ -4831,142 +4584,54 @@ input[type='number'] { min-width:0; }
         div.scrollIntoView({ block: 'nearest' });
     }
 
-    function searchForArtifact() {
-        if (!currentAnomaly || currentAnomaly.resolved) return;
-        currentAnomaly.attemptsUsed++;
-        const attempt = currentAnomaly.attemptsUsed;
-        const isT9 = !!currentAnomaly.isNamedArtifactAnomaly;
-        const maxAttempts = isT9 ? 1 : 3; // тир-9 аномалию можно обыскать только 1 раз
-
-        // Базовый шанс — случайное число в диапазоне, зависящем от номера попытки. У тир-9 аномалий
-        // шанс всегда строго фиксированный 5%, без всех обычных бонусов (удача/детектор/фракция)
-        let chance;
-        if (isT9) {
-            chance = 5;
-        } else {
-            const ranges = { 1: [5, 10], 2: [10, 20], 3: [20, 30] };
-            const [minC, maxC] = ranges[attempt] || [20, 30];
-            chance = minC + Math.random() * (maxC - minC);
-            chance += getEffectiveLuck() * 0.1; // удача: +0.1% за каждый пункт удачи
-            chance += (player.detector.tier || 0) * 1; // детектор: +1% за тир
-            if (player.detector.name === 'ВИЗИРЬ') chance += 10; // спец-детектор — доп. бонус в обычных (не тир-9) аномалиях
-            if (currentAnomaly.tier === 8) chance += 5; // аномалии последнего обычного тира — бонус к шансу
-            chance += getFactionBonuses(null).artifactFindChancePct; // бонус фракции (Сталкеры/Свобода/Одиночка по уровню)
-        }
-
-        // Радиация: КАЖДОЕ нажатие добавляет 86-93 из 100 в полосу — крайне рискованно (снижено на 5
-        // от изначальных 91-98 по просьбе — было слишком жёстко).
-        // "Защита от радиации" (всегда ПОЛОЖИТЕЛЬНОЕ значение) снижает добавляемую радиацию —
-        // без искусственного минимума, при достаточно высокой защите радиация может почти не расти
-        const rawRadiationAdded = 86 + Math.floor(Math.random() * 8); // 86-93, "сырое" значение до защиты
-        const radiationResist = Math.max(0, Number(player.radiationResist) || 0);
-        const radiationAdded = Math.max(0, rawRadiationAdded - radiationResist);
-        player.radiation = Math.min(100, player.radiation + radiationAdded);
-
-        // ВАЖНО: урон здоровью — это ВЫЧИТАНИЕ из текущего здоровья, а не установка нового значения!
-        const luckMitigation = getEffectiveLuck() * 0.5;
-        const anomalySpecificResist = Math.max(0, (player.anomalyResist && player.anomalyResist[currentAnomaly.name]) || 0);
-        const searchDmg = Math.max(0, radiationAdded - luckMitigation - anomalySpecificResist);
-        player.health = Math.round(Math.max(0, player.health - searchDmg) * 10) / 10;
-        if (player.radiation >= 100) player.health = 0;
-
-        const anomalyBaseDmg = currentAnomaly.tier * 4;
-        const anomalyResistRaw = (player.anomalyResist && player.anomalyResist[currentAnomaly.name]) || 0;
-        const anomalyDmg = Math.max(0, anomalyBaseDmg - anomalyResistRaw);
-        if (anomalyDmg > 0) {
-            player.health = Math.round(Math.max(0, player.health - anomalyDmg) * 10) / 10;
-            raidLogs.push(`💥 Аномалия «${currentAnomaly.name}» нанесла урон: -${anomalyDmg} HP${anomalyResistRaw < 0 ? ' (артефакт усиливает уязвимость!)' : ''}`);
-        }
-        if (player.health <= 0) player.health = 0;
-
-        applyNegativeArtifactPerTurnEffects();
-        if (player.radiation >= 100) player.health = 0;
-
-        const success = Math.random() * 100 < chance;
-
-        const finishAttempt = (foundArtifactName) => {
-            if (foundArtifactName) {
-                player.luck = Math.min(100, (Number(player.luck) || 0) + 0.1);
-                player.stats.artifactsFound = (player.stats.artifactsFound || 0) + 1;
-                player.stats.artifactsByTier = player.stats.artifactsByTier || {};
-                player.stats.artifactsByTier[currentAnomaly.tier] = (player.stats.artifactsByTier[currentAnomaly.tier] || 0) + 1;
-                raidLogs.push(`✨ Вы нашли артефакт: ${foundArtifactName}!\n«Благодарю тебя Тёмный сталкер за твой щедрый дар для меня.»`);
-                currentAnomaly.resolved = true;
-            } else if (attempt >= maxAttempts) {
-                raidLogs.push(`«Спасибо что не дал мне загнуться в этой аномалии, Тёмный сталкер.»`);
-                currentAnomaly.resolved = true;
-            } else {
-                raidLogs.push(`Попытка ${attempt}/${maxAttempts} неудачна. Осталось попыток: ${maxAttempts - attempt}.`);
-            }
-
-            if (player.health <= 0) {
-                updateRaidLog();
-                updateUI();
-                handlePlayerDeath();
-                return;
-            }
-            renderAnomalyButtons();
-            updateRaidLog();
-            updateUI();
-            saveGame();
-        };
-
-        if (!success) { finishAttempt(null); return; }
-
-        if (!isT9) {
-            const artifactName = currentAnomaly.artifacts[Math.floor(Math.random() * currentAnomaly.artifacts.length)];
-            addNonStackingItem(artifactName);
-            // "Броня Зоны" — 50% шанс, что аномалия отдаст сразу второй артефакт впридачу
-            if (isEquippedArmor('Броня Зоны') && Math.random() < 0.5) {
-                const secondArtifactName = currentAnomaly.artifacts[Math.floor(Math.random() * currentAnomaly.artifacts.length)];
-                addNonStackingItem(secondArtifactName);
-                raidLogs.push(`🍀 Броня Зоны сработала — аномалия отдала ещё один артефакт: ${secondArtifactName}!`);
-            }
-            finishAttempt(artifactName);
-            return;
-        }
-
-        // Тир-9: именной артефакт — атомарный "забор" через сервер (первый успевший забирает)
-        const anomalyIndex = anomalies.filter(a => a.isNamedArtifactAnomaly).findIndex(a => a.name === currentAnomaly.name);
-        const available = namedArtifactsList.filter(a => a.anomalyIndex === anomalyIndex && !a.claimed);
-        if (available.length === 0) {
-            raidLogs.push('Здесь уже ничего не осталось — все именные артефакты этой аномалии кем-то найдены.');
-            finishAttempt(null);
-            return;
-        }
-        const pick = available[Math.floor(Math.random() * available.length)];
-        fetch(`${SERVER_URL}/api/named-artifacts/claim`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: window.Telegram?.WebApp?.initData, artifactId: pick.id })
-        }).then(r => r.json()).then(res => {
-            if (res.success) {
-                addNonStackingItem(res.name);
-                loadNamedArtifacts(); // обновляем локальный список — этот теперь занят
-                finishAttempt(res.name);
-            } else {
-                // Кто-то забрал буквально на секунду раньше — попытка всё равно потрачена, но без находки
-                raidLogs.push(`Увы — «${res.error}». Кто-то оказался быстрее.`);
+    async function searchForArtifact() {
+        if(!currentAnomaly||currentAnomaly.resolved||!raidSessionToken)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/anomaly/search`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Поиск не выполнен');return;}
+            applyRaidServerState(x.state);
+            currentAnomaly.attemptsUsed=Number(x.attempt)||0;currentAnomaly.resolved=!!x.resolved;
+            if(Number(x.radiationAdded)>0)raidLogs.push(`☢️ Радиация +${Math.round(Number(x.radiationAdded)*10)/10}.`);
+            if(Number(x.searchDmg)>0)raidLogs.push(`☢️ Поиск отнял ${Math.round(Number(x.searchDmg)*10)/10} HP.`);
+            if(Number(x.anomalyDmg)>0)raidLogs.push(`💥 Аномалия нанесла ${Math.round(Number(x.anomalyDmg)*10)/10} HP.`);
+            if(Array.isArray(x.found)&&x.found.length){
+                raidLogs.push(`✨ Найдено: ${x.found.join(', ')}.`);
                 loadNamedArtifacts();
-                finishAttempt(null);
+            }else if(x.resolved)raidLogs.push('Поиск завершён без находки.');
+            else raidLogs.push(`Попытка ${x.attempt} неудачна.`);
+            if(x.died){
+                raidActive=false;raidSessionToken=null;currentAnomaly=null;clearBattleUiAndRestoreNav();
+                showGameAlert('💀 Вы погибли в аномалии.');openScreen('main');return;
             }
-        }).catch(() => {
-            raidLogs.push('Ошибка соединения с сервером — не удалось забрать находку.');
-            finishAttempt(null);
-        });
+            renderAnomalyButtons();updateRaidLog();updateUI();
+        }catch(e){console.error('[searchForArtifact]',e);showGameAlert('Ошибка соединения при поиске.');}
     }
 
-    function bypassAnomaly() {
-        raidLogs.push('Вы обошли аномалию стороной, не рискуя.');
-        currentAnomaly = null;
-        clearBattleUiAndRestoreNav();
-        finishRaidStep();
+    async function bypassAnomaly() {
+        if(!currentAnomaly||!raidSessionToken)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/anomaly/bypass`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось обойти аномалию');return;}
+            raidLogs.push('Вы обошли аномалию стороной.');currentAnomaly=null;clearBattleUiAndRestoreNav();updateRaidLog();
+        }catch(e){showGameAlert('Ошибка соединения.');}
     }
 
-    function continueAfterAnomaly() {
-        currentAnomaly = null;
-        clearBattleUiAndRestoreNav();
-        finishRaidStep();
+    async function continueAfterAnomaly() {
+        if(!currentAnomaly||!currentAnomaly.resolved||!raidSessionToken)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/anomaly/finish`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось завершить аномалию');return;}
+            currentAnomaly=null;clearBattleUiAndRestoreNav();updateRaidLog();
+        }catch(e){showGameAlert('Ошибка соединения.');}
     }
 
     // ===== ЕДИНЫЙ РАСЧЁТ "БОЕВОГО ТИРА" ИГРОКА =====
@@ -4997,26 +4662,10 @@ input[type='number'] { min-width:0; }
 
     // Тир NPC — прежняя формула (14 тиров, шаг 20 уровней), НЕ связана с getEncounterTier
     // (та теперь про мутантов и растёт вдвое быстрее) — используется только в findRandomNPC
-    function getNpcEncounterTier() {
-        const level = Number(player.level) || 1;
-        return Math.min(14, 1 + Math.floor(level / 20));
-    }
+
 
     // ===== НАЙТИ СЛУЧАЙНЫЙ NPC (ограничено тиром снаряжения игрока — иначе новичка сразу убивает топовый NPC) =====
-    function findRandomNPC() {
-        const playerTier = getNpcEncounterTier();
-        // Враги теперь строго равны тиру игрока (не ниже), а не любой тир до playerTier включительно
-        const pool = npcs.filter(n => n.tier === playerTier);
-        const randomIndex = Math.floor(Math.random() * pool.length);
-        const npc = pool[randomIndex];
-        // Случайное оружие и броня из 6 вариантов данного тира — при каждой встрече своё сочетание
-        // Админские и платные предметы никогда не являются обычным NPC-лутом.
-        const tierWeapons = weapons.filter(w => w.tier === npc.tier && !w.adminOnly && !w.isPremiumWeapon);
-        const tierArmors = armorItems.filter(a => a.tier === npc.tier && !a.adminOnly && !a.isPremiumArmor);
-        const weapon = tierWeapons[Math.floor(Math.random() * tierWeapons.length)] || weapons[0];
-        const armor = tierArmors[Math.floor(Math.random() * tierArmors.length)] || armorItems[0];
-        return { ...npc, weapon, armor };
-    }
+
 
     // ===== ДРУЖЕСТВЕННЫЕ ФРАКЦИИ (Долг, Свобода, Сталкеры, Экологи) =====
     // Враждебна ли фракция по отношению к игроку: изначально враждебны только 'enemy'-фракции,
@@ -5072,27 +4721,31 @@ input[type='number'] { min-width:0; }
         container.appendChild(div);
     }
 
-    function leaveFriendlyPeacefully() {
-        raidLogs.push('Вы разошлись с ними мирно.');
-        currentEnemy = null;
-        isFriendlyEncounterActive = false;
-        clearBattleUiAndRestoreNav();
-        updateRaidLog();
-        saveGame();
+    async function leaveFriendlyPeacefully() {
+        if(!raidSessionToken)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/raid/friendly/leave`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось завершить встречу');return;}
+            raidLogs.push('Вы разошлись мирно.');currentEnemy=null;isFriendlyEncounterActive=false;clearBattleUiAndRestoreNav();updateRaidLog();
+        }catch(e){showGameAlert('Ошибка соединения.');}
     }
 
-    function attackFriendlyNpc() {
-        const npc = currentEnemy;
-        if (!npc) return;
-        isFriendlyEncounterActive = false; // с этого момента это уже настоящий бой, не мирная встреча
-        player.hostileFactions = player.hostileFactions || [];
-        if (!player.hostileFactions.includes(npc.faction.name)) {
-            player.hostileFactions.push(npc.faction.name);
-        }
-        clearBattleUiAndRestoreNav();
-        raidLogs.push(`⚔️ Вы напали на "${npc.faction.name}"! Теперь эта фракция враждебна к вам, торговля с ней недоступна.`);
-        updateRaidLog();
-        startBattle(npc);
+    async function attackFriendlyNpc() {
+        if(!currentEnemy||!raidSessionToken)return;
+        try{
+            const faction=currentEnemy.faction?.name;
+            const r=await fetch(`${SERVER_URL}/api/raid/friendly/attack`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Нападение не выполнено');return;}
+            applyRaidServerState(x.state);isFriendlyEncounterActive=false;clearBattleUiAndRestoreNav();
+            raidLogs.push(`⚔️ Вы напали на «${faction}». Фракция стала враждебной.`);
+            startBattle(x.enemy);
+        }catch(e){showGameAlert('Ошибка соединения при нападении.');}
     }
 
     // ===== ТОРГОВЛЯ С ДРУЖЕСТВЕННОЙ ФРАКЦИЕЙ =====
@@ -5106,14 +4759,9 @@ input[type='number'] { min-width:0; }
         renderFriendlyTrade();
     }
 
-    function closeFriendlyTrade() {
+    async function closeFriendlyTrade() {
         document.getElementById('friendlyTradeModal').classList.remove('active');
-        raidLogs.push('Вы завершили торговлю и разошлись мирно.');
-        currentEnemy = null;
-        isFriendlyEncounterActive = false;
-        clearBattleUiAndRestoreNav();
-        updateRaidLog();
-        saveGame();
+        await leaveFriendlyPeacefully();
     }
 
     function openFriendlyTradeTab(tab) {
@@ -5159,16 +4807,18 @@ input[type='number'] { min-width:0; }
         }
     }
 
-    function buyFromFriendly(name) {
-        const item = consumables.find(c => c.name === name);
-        if (!item) return;
-        const price = getFriendlyBuyPrice(item.price);
-        if (player.coins < price) return;
-        player.coins -= price;
-        player.inventory[item.name] = (player.inventory[item.name] || 0) + 1;
-        renderFriendlyTrade();
-        updateUI();
-        saveGame();
+    async function buyFromFriendly(name) {
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/friendly/buy`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,name})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Покупка не выполнена');return;}
+            player.coins=x.coins; player.inventory=x.inventory;
+            renderFriendlyTrade(); updateUI();
+        }catch(e){showGameAlert('Ошибка соединения при покупке.');}
     }
 
     function sellToFriendly(name) {
@@ -5190,22 +4840,7 @@ input[type='number'] { min-width:0; }
     // ===== ВЗВЕШЕННЫЙ ВЫБОР МУТАНТА =====
     // Пул ограничен тиром снаряжения игрока (та же логика, что и для NPC) — иначе свежего
     // игрока мог случайно убить мутант топового тира (например Химера/Псевдогигант)
-    function pickWeightedMutant() {
-        const playerTier = getEncounterTier();
-        // Мутант тира 0 (Тушкан) иначе был бы недостижим в принципе — тир встреч никогда не равен 0.
-        // Добавляем его в пул СПЕЦИАЛЬНО только на самом старте (пока встречи ещё тира 1, то есть
-        // уровень 1-4) — для тира 2 и выше пул остаётся ровно таким же, как был, без изменений
-        const pool = playerTier === 1
-            ? mutants.filter(m => m.tier === 1 || m.tier === 0)
-            : mutants.filter(m => m.tier === playerTier);
-        const totalWeight = pool.reduce((sum, m) => sum + m.chance, 0);
-        let roll = Math.random() * totalWeight;
-        for (const m of pool) {
-            if (roll < m.chance) return m;
-            roll -= m.chance;
-        }
-        return pool[pool.length - 1];
-    }
+
 
     // ===== ЭКИПИРОВКА ПРЕДМЕТА (оружие/броня/детектор) =====
     // Разбирает имя вида "Пистолет Макарова +3" на базовое имя и уровень улучшения
@@ -5269,24 +4904,7 @@ input[type='number'] { min-width:0; }
     // гибридов) — визуально ничем не отличаются. Также ограничивает общее число РАЗНЫХ ячеек
     // такого снаряжения 50 штуками (расходники и части тел мутантов в этот лимит не входят,
     // так как они стакаются как обычно)
-    function addNonStackingItem(baseName, qty) {
-        qty = qty || 1;
-        for (let i = 0; i < qty; i++) {
-            const nonStackingCount = Object.keys(player.inventory).filter(n => {
-                const clean = stripInvisibleSuffix(n);
-                return weapons.some(w => w.name === parseGearName(clean).baseName) ||
-                       armorItems.some(a => a.name === parseGearName(clean).baseName) ||
-                       artifacts.some(a => a.name === clean);
-            }).length;
-            if (nonStackingCount >= MAX_NONSTACKING_ITEMS) {
-                showGameAlert(`Достигнут предел в ${MAX_NONSTACKING_ITEMS} разных единиц оружия/брони/артефактов в инвентаре. Продайте или выбросьте что-нибудь, чтобы освободить место.`);
-                return false;
-            }
-            const finalName = player.inventory[baseName] ? baseName + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8)) : baseName;
-            player.inventory[finalName] = 1;
-        }
-        return true;
-    }
+
 
     // Версия для выдачи ЧУЖОМУ игроку через админку (работает с любым объектом инвентаря,
     // не только с глобальным player) — без проверки лимита в 50 (админ-выдача её не ограничивает)
@@ -5298,114 +4916,45 @@ input[type='number'] { min-width:0; }
         }
     }
 
-    function equipItem(itemName) {
-        // Защита от повторного клика "Одеть" по уже надетому/использованному предмету — без этого
-        // количество в инвентаре могло бы уйти в минус, если модалка не успела закрыться/обновиться
-        if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return false;
+    function applyEquipmentServerState(st) {
+        if(!st) return;
+        const keys=['inventory','weapon','armor','detector','artifactSlots','quickSlots','armorUpgradeData',
+            'health','maxHealth','hunger','maxHunger','thirst','maxThirst','radiation',
+            'radiationResist','radiationLeakTotal','anomalyResist','namedArtifactBonus'];
+        keys.forEach(k=>{if(st[k]!==undefined) player[k]=st[k];});
+        sanitizePlayerNumbers();
+        renderInventory(); renderQuickSlots(); updateUI();
+        if(document.getElementById('shopScreen').classList.contains('active'))renderShop();
+    }
 
-        // ВАЖНО: старое надетое снаряжение всегда возвращается в инвентарь, ДАЖЕ если его имя совпадает
-        // с новым (например, надеваем второй такой же детектор поверх такого же надетого) — иначе один
-        // экземпляр из пары одинаковых предметов бесследно исчезает (можно было исчезнуть только в этом случае,
-        // поскольку это единственная ситуация, когда старое и новое имя совпадают)
-        const parsed = parseGearName(itemName);
-        const isGameAdmin = String(window.Telegram?.WebApp?.initDataUnsafe?.user?.id || '') === String(typeof ADMIN_ID !== 'undefined' ? ADMIN_ID : '');
-        const weapon = weapons.find(w => w.name === parsed.baseName);
-        if (weapon) {
-            if (weapon.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
-            if (!weapon.adminOnly && !weapon.starterGear && player.level < (weapon.unlockLevel || 0)) {
-                showGameAlert(`Это оружие откроется на ${weapon.unlockLevel} уровне.`);
-                return false;
-            }
-            const old = player.weapon.name;
-            player.inventory[itemName]--;
-            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.weapon = { name: itemName, tier: weapon.tier, dmg: getUpgradedStat(weapon.dmg, parsed.level, getNextItemCeiling(weapons, weapon, 'dmg')) };
-            if (old && old !== DEFAULT_WEAPON.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
+    async function equipItem(itemName) {
+        if(!player.inventory[itemName]) return false;
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/equipment/equip`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,itemName})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Не удалось надеть предмет');return false;}
+            applyEquipmentServerState(x.state);
             closeItemActionModal();
-            renderInventory(); renderShop(); updateUI(); saveGame();
             return true;
-        }
-        const armor = armorItems.find(a => a.name === parsed.baseName);
-        if (armor) {
-            if (armor.adminOnly && !isGameAdmin) { showGameAlert('Этот предмет доступен только администратору.'); return false; }
-            if (!armor.adminOnly && !armor.starterGear) {
-                if (armor.isResearchSuit) {
-                    if (armor.tier > getResearchSuitUnlockTier(player.level)) {
-                        showGameAlert(`Этот комбинезон вам ещё не доступен по уровню.`);
-                        return false;
-                    }
-                } else if (player.level < (armor.unlockLevel || 0)) {
-                    showGameAlert(`Эта броня откроется на ${armor.unlockLevel} уровне.`);
-                    return false;
-                }
-            }
-            const old = player.armor.name;
-            // "Экзокостюм Апокалипсис" даёт +20 к максимальному здоровью, ПОКА надет — снимается,
-            // если меняем на другую броню, добавляется, если надеваем именно его
-            const oldIsApocalypse = parseGearName(old).baseName === 'Экзокостюм Апокалипсис';
-            const newIsApocalypse = parseGearName(itemName).baseName === 'Экзокостюм Апокалипсис';
-            if (oldIsApocalypse && !newIsApocalypse) player.maxHealth = Math.max(1, player.maxHealth - 20);
-            if (newIsApocalypse && !oldIsApocalypse) player.maxHealth += 20;
-            player.inventory[itemName]--;
-            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            const eff = getArmorEffectiveStats(itemName);
-            player.armor = { name: itemName, tier: armor.tier, armor: eff.bulletResist, hitAbsorption: eff.hitAbsorption };
-            if (old && old !== DEFAULT_ARMOR.name) {
-                let returnName = old;
-                if (player.inventory[old]) {
-                    // В инвентаре уже есть предмет с ТОЧНО таким же именем (например, подобрали
-                    // такую же неулучшенную броню, пока эта была надета) — снимаемая броня физически
-                    // другая и может иметь свою историю улучшений, даём ей новый невидимый суффикс,
-                    // чтобы не слиться с уже лежащей в одну ячейку и не перепутать данные улучшений
-                    returnName = old + encodeInvisibleSuffix(Math.random().toString(36).slice(2, 8));
-                    const oldStableKey = getStableArmorKey(old);
-                    const newStableKey = getStableArmorKey(returnName);
-                    if (player.armorUpgradeData && player.armorUpgradeData[oldStableKey]) {
-                        player.armorUpgradeData[newStableKey] = player.armorUpgradeData[oldStableKey];
-                        // Обязательно удаляем старый ключ — иначе он остался бы привязан к ЧИСТОМУ
-                        // имени, которое теперь принадлежит другому (свежему) предмету, и тот
-                        // ошибочно унаследовал бы чужие улучшения
-                        delete player.armorUpgradeData[oldStableKey];
-                    }
-                }
-                player.inventory[returnName] = (player.inventory[returnName] || 0) + 1;
-            }
-            closeItemActionModal();
-            renderInventory(); renderShop(); updateUI(); saveGame();
-            return true;
-        }
-        const detector = detectors.find(d => d.name === parsed.baseName);
-        if (detector) {
-            const old = player.detector.name;
-            player.inventory[itemName]--;
-            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.detector = { name: itemName, tier: detector.tier };
-            if (old && old !== DEFAULT_DETECTOR.name) player.inventory[old] = (player.inventory[old] || 0) + 1;
-            closeItemActionModal();
-            renderInventory(); renderShop(); updateUI(); saveGame();
-            return true;
-        }
-        return false;
+        }catch(e){console.error('[equipItem]',e);showGameAlert('Ошибка соединения при экипировке.');return false;}
     }
 
     // Снять текущее снаряжение обратно в инвентарь, надеть "по умолчанию"
-    function unequipSlot(slotType) {
-        if (slotType === 'weapon') {
-            if (player.weapon.name === DEFAULT_WEAPON.name) return;
-            player.inventory[player.weapon.name] = (player.inventory[player.weapon.name] || 0) + 1;
-            player.weapon = { ...DEFAULT_WEAPON };
-        } else if (slotType === 'armor') {
-            if (player.armor.name === DEFAULT_ARMOR.name) return;
-            if (isEquippedArmor('Экзокостюм Апокалипсис')) player.maxHealth = Math.max(1, player.maxHealth - 20);
-            player.inventory[player.armor.name] = (player.inventory[player.armor.name] || 0) + 1;
-            player.armor = { ...DEFAULT_ARMOR };
-        } else if (slotType === 'detector') {
-            if (player.detector.name === DEFAULT_DETECTOR.name) return;
-            player.inventory[player.detector.name] = (player.inventory[player.detector.name] || 0) + 1;
-            player.detector = { ...DEFAULT_DETECTOR };
-        }
-        closeItemActionModal();
-        renderInventory(); updateUI(); saveGame();
+    async function unequipSlot(slotType) {
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/equipment/unequip`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,slot:slotType})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Не удалось снять предмет');return;}
+            applyEquipmentServerState(x.state); closeItemActionModal();
+        }catch(e){console.error('[unequipSlot]',e);showGameAlert('Ошибка соединения при снятии предмета.');}
     }
 
     function getEquipSlotType(itemName) {
@@ -5615,43 +5164,19 @@ input[type='number'] { min-width:0; }
     }
 
     // ===== АРТЕФАКТЫ: 6 слотов экипировки (бонусы действуют, пока артефакт надет) =====
-    function applyArtifactStats(artifact, sign) {
-        Object.keys(artifact.stats).forEach(stat => {
-            const val = sign * artifact.stats[stat];
-            if (stat === 'health') {
-                player.maxHealth += val;
-            } else if (stat === 'hunger') {
-                // Сытость от артефакта поднимает (или опускает, если стат негативный) сам ПОТОЛОК —
-                // так же, как здоровье поднимает maxHealth, а не мгновенно "телепортирует" текущее
-                // значение. +3 сытости от артефакта -> максимум становится 103, а не мгновенный "+3 к текущей"
-                player.maxHunger = Math.max(1, player.maxHunger + val);
-                player.hunger = Math.min(player.hunger, player.maxHunger);
-            } else if (stat === 'thirst') {
-                player.maxThirst = Math.max(1, player.maxThirst + val);
-                player.thirst = Math.min(player.thirst, player.maxThirst);
-            }
-            // radiation/anomaly_* НЕ обрабатываем здесь инкрементально — radiationResist и
-            // anomalyResist всегда пересчитываются "с нуля" из реально надетых артефактов в
-            // recomputeArtifactResistances() (вызывается из sanitizePlayerNumbers на каждое
-            // обновление интерфейса), это надёжнее накопительного счётчика
-            // Артефакты БОЛЬШЕ НЕ влияют на перки (живучесть/ловкость/сила/меткость/интеллект/удача) —
-            // перки теперь растут только от действий самого игрока
-        });
-    }
 
-    function equipArtifactItem(itemName) {
-        const artifact = findArtifactDef(itemName);
-        if (!artifact || !player.inventory[itemName]) return;
-        const freeIndex = player.artifactSlots.findIndex(s => !s);
-        if (freeIndex === -1) { showGameAlert('Все 6 слотов артефактов заняты. Сначала снимите один.'); return; }
 
-        player.inventory[itemName]--;
-        if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-        player.artifactSlots[freeIndex] = itemName;
-        applyArtifactStats(artifact, 1);
-
-        closeItemActionModal();
-        renderInventory(); updateUI(); saveGame();
+    async function equipArtifactItem(itemName) {
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/artifact-slots/equip`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,itemName})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Не удалось надеть артефакт');return;}
+            applyEquipmentServerState(x.state);closeItemActionModal();
+        }catch(e){console.error('[equipArtifactItem]',e);showGameAlert('Ошибка соединения при надевании артефакта.');}
     }
 
     function openArtifactSlotActions(index) {
@@ -5664,16 +5189,17 @@ input[type='number'] { min-width:0; }
         document.getElementById('itemActionModal').classList.add('active');
     }
 
-    function unequipArtifactSlot(index) {
-        const name = player.artifactSlots[index];
-        if (!name) return;
-        const artifact = findArtifactDef(name);
-        if (artifact) applyArtifactStats(artifact, -1);
-        player.inventory[name] = (player.inventory[name] || 0) + 1;
-        player.artifactSlots[index] = null;
-
-        closeItemActionModal();
-        renderInventory(); updateUI(); saveGame();
+    async function unequipArtifactSlot(index) {
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/artifact-slots/unequip`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index})
+            });
+            const x=await r.json();
+            if(!x.success){showGameAlert(x.error||'Не удалось снять артефакт');return;}
+            applyEquipmentServerState(x.state);closeItemActionModal();
+        }catch(e){console.error('[unequipArtifactSlot]',e);showGameAlert('Ошибка соединения при снятии артефакта.');}
     }
 
     // ===== УЧЁНЫЕ: СКРЕЩИВАНИЕ АРТЕФАКТОВ =====
@@ -5954,77 +5480,23 @@ input[type='number'] { min-width:0; }
 
     // Сохранение намеренно заданного снимка (используется для полного сброса).
     // При конфликте версии перечитываем серверную версию и повторяем тот же осознанный сброс.
-    async function saveExplicitPlayerSnapshot(snapshot, maxAttempts = 2) {
-        const initData = window.Telegram?.WebApp?.initData;
-        if (!initData) throw new Error('NO_INIT_DATA');
-        await waitForSaveQueue();
 
-        for (let attempt = 0; attempt < maxAttempts; attempt++) {
-            const res = await fetch(`${SERVER_URL}/api/player`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    initData,
-                    data: snapshot,
-                    stateVersion: playerStateVersion
-                })
-            });
-            const result = await res.json();
-
-            if (result && result.success) {
-                playerStateVersion = Number(result.stateVersion) || playerStateVersion;
-                return result;
-            }
-            if (result && result.conflict && attempt + 1 < maxAttempts) {
-                await reloadPrivatePlayerState();
-                continue;
-            }
-            throw new Error((result && result.error) || 'SAVE_FAILED');
-        }
-        throw new Error('SAVE_FAILED');
-    }
 
     // Ник меняется поверх СВЕЖЕГО серверного состояния. При конфликте не отправляем
     // старый профиль заново: перечитываем профиль, снова накладываем только смену ника
     // и повторяем запрос один раз.
-    async function saveNicknameSafely(nick, options = {}) {
-        const initData = window.Telegram?.WebApp?.initData;
-        if (!initData) throw new Error('NO_INIT_DATA');
-        await waitForSaveQueue();
-
-        const applyNicknameChange = () => {
-            player.nickname = nick;
-            if (options.consumeFree) player.freeNicknameChangeUsed = true;
-            if (options.consumeCredit) {
-                player.nicknameChangeCredits = Math.max(0, (Number(player.nicknameChangeCredits) || 0) - 1);
-            }
-        };
-
-        for (let attempt = 0; attempt < 2; attempt++) {
-            applyNicknameChange();
-            const snapshot = JSON.parse(JSON.stringify(player));
-            const res = await fetch(`${SERVER_URL}/api/player`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    initData,
-                    data: snapshot,
-                    stateVersion: playerStateVersion
-                })
-            });
-            const result = await res.json();
-
-            if (result && result.success) {
-                playerStateVersion = Number(result.stateVersion) || playerStateVersion;
-                return result;
-            }
-            if (result && result.conflict && attempt === 0) {
-                await reloadPrivatePlayerState();
-                continue;
-            }
-            throw new Error((result && result.error) || 'NICKNAME_SAVE_FAILED');
-        }
-        throw new Error('NICKNAME_SAVE_FAILED');
+    async function saveNicknameSafely(nick) {
+        const r=await fetch(`${SERVER_URL}/api/nickname/set`,{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,nickname:nick})
+        });
+        const x=await r.json();
+        if(!x.success)throw new Error(x.error||'NICKNAME_SAVE_FAILED');
+        player.nickname=x.nickname;
+        player.freeNicknameChangeUsed=!!x.freeNicknameChangeUsed;
+        player.nicknameChangeCredits=Number(x.nicknameChangeCredits)||0;
+        if(x.inventory)player.inventory=x.inventory;
+        return x;
     }
 
     async function promptForNickname(isFirstTime) {
@@ -6074,10 +5546,7 @@ input[type='number'] { min-width:0; }
         if (nick === player.nickname) return;
 
         try {
-            await saveNicknameSafely(nick, {
-                consumeFree: freeAvailable,
-                consumeCredit: !freeAvailable
-            });
+            await saveNicknameSafely(nick);
             updateUI();
             showGameAlert(`Ник изменён на: ${nick}`);
         } catch (e) {
@@ -6103,69 +5572,113 @@ input[type='number'] { min-width:0; }
     // ===== ПРИМЕНЕНИЕ / ВЫБРОС / ПЕРЕМЕЩЕНИЕ ПРЕДМЕТА =====
     function applyInventoryItem(itemName) {
         if (!player.inventory[itemName] || player.inventory[itemName] <= 0) return;
-
-        if (itemName === 'Книга знаний') {
-            player.inventory[itemName]--;
-            if (player.inventory[itemName] <= 0) delete player.inventory[itemName];
-            player.level = (Number(player.level) || 1) + 5;
+        if(itemName==='Книга знаний'){
             closeItemActionModal();
-            renderInventory(); updateUI(); saveGame();
-            // Использование любого предмета во время боя (даже из рюкзака, не только боевыми кнопками)
-            // считается ходом — враг сразу атакует в ответ
-            if (currentEnemy && !isFriendlyEncounterActive) { raidLogs.push(`Использован(а) ${itemName}!`); triggerEnemyTurn(); }
+            (async()=>{
+                try{
+                    await waitForSaveQueue();
+                    const r=await fetch(`${SERVER_URL}/api/items/use-knowledge-book`,{
+                        method:'POST',headers:{'Content-Type':'application/json'},
+                        body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+                    });
+                    const x=await r.json();if(!x.success){showGameAlert(x.error||'Книга не использована');return;}
+                    player.level=x.level;player.inventory=x.inventory;renderInventory();updateUI();
+                }catch(e){showGameAlert('Ошибка соединения при использовании книги.');}
+            })();
             return;
         }
+        const consumable=consumables.find(c=>c.name===itemName);
+        if(!consumable) return;
+        closeItemActionModal();
+        (async()=>{
+            try{
+                await waitForSaveQueue();
+                const battleToken=(currentEnemy&&!isFriendlyEncounterActive)?currentEnemy.battleToken:null;
+                const r=await fetch(`${SERVER_URL}/api/items/use-consumable`,{
+                    method:'POST',headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,itemName,battleToken})
+                });
+                const x=await r.json();if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
+                if(x.state)applyEquipmentServerState(x.state);
+                if(battleToken){
+                    if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+                    if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
+                    else if(x.enemyTurn)raidLogs.push(`${currentEnemy?.name||'Враг'} промахнулся!`);
+                    if(x.died){
+                        raidActive=false;currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();
+                        showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь.');openScreen('main');
+                    }
+                    updateRaidLog();
+                }
+            }catch(e){console.error('[applyInventoryItem]',e);showGameAlert('Ошибка соединения при использовании предмета.');}
+        })();
+    }
 
-        const consumable = consumables.find(c => c.name === itemName);
-        if (consumable) {
-            // Лимит аптечек за бой (3 шт., любого вида) — действует ТОЛЬКО если сейчас идёт бой;
-            // вне боя (обычная еда/вода/аптечка в рейде без противника) лимита нет
-            const isInBattle = currentEnemy && !isFriendlyEncounterActive;
-            if (isInBattle && consumable.type === 'medkit' && battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
-                showGameAlert(`Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
-                return;
-            }
-            player.inventory[itemName]--;
-            applyConsumableEffect(consumable, isInBattle);
-            renderQuickSlots(); // остаток в быстром слоте (если этот же предмет туда назначен) должен обновиться
-            closeItemActionModal();
-            renderInventory(); updateUI(); saveGame();
-            if (currentEnemy && !isFriendlyEncounterActive) { raidLogs.push(`Использован(а) ${itemName}!`); triggerEnemyTurn(); }
-            return;
+    async function dropInventoryItem(itemName) {
+        if(!player.inventory[itemName])return;
+        if(!confirm(`Выкинуть "${itemName}" (×${player.inventory[itemName]})? Предмет будет утерян безвозвратно.`))return;
+        try{
+            await waitForSaveQueue();
+            const r=await fetch(`${SERVER_URL}/api/items/drop`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,itemName})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось выкинуть предмет');return;}
+            player.inventory=x.inventory;player.quickSlots=x.quickSlots;
+            closeItemActionModal();renderInventory();renderQuickSlots();updateUI();
+            if(document.getElementById('shopScreen').classList.contains('active'))renderShop();
+        }catch(e){showGameAlert('Ошибка соединения при удалении предмета.');}
+    }
+
+    let warehouseBusy = false;
+
+    async function applyWarehouseServerResult(result) {
+        if (!result || !result.success) {
+            showGameAlert((result && result.error) || 'Операция со складом не выполнена.');
+            return false;
+        }
+        player.inventory = result.inventory || {};
+        player.warehouse = result.warehouse || {};
+        if (Array.isArray(result.quickSlots)) player.quickSlots = result.quickSlots;
+        renderInventory();
+        renderWarehouse();
+        renderQuickSlots();
+        updateUI();
+        if (document.getElementById('shopScreen').classList.contains('active')) renderShop();
+        return true;
+    }
+
+    async function warehouseTransfer(direction, itemName, qty) {
+        if (warehouseBusy) return false;
+        warehouseBusy = true;
+        try {
+            await waitForSaveQueue();
+            const res = await fetch(`${SERVER_URL}/api/warehouse/transfer`, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    initData:window.Telegram?.WebApp?.initData,
+                    direction,
+                    item:itemName,
+                    qty
+                })
+            });
+            return await applyWarehouseServerResult(await res.json());
+        } catch (e) {
+            console.error('[warehouseTransfer]', e);
+            showGameAlert('Не удалось выполнить операцию со складом.');
+            return false;
+        } finally {
+            warehouseBusy = false;
         }
     }
 
-    function dropInventoryItem(itemName) {
-        if (!player.inventory[itemName]) return;
-        if (!confirm(`Выкинуть "${itemName}" (×${player.inventory[itemName]})? Предмет будет утерян безвозвратно.`)) return;
-        delete player.inventory[itemName];
-        player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
+    async function moveItemToWarehouse(itemName, qty) {
+        const available = Number(player.inventory[itemName]) || 0;
+        if (available <= 0) return;
+        qty = Math.max(1, Math.min(Math.floor(Number(qty) || available), available));
         closeItemActionModal();
-        renderInventory(); updateUI(); saveGame();
-        if (document.getElementById('shopScreen').classList.contains('active')) renderShop();
-    }
-
-    function moveItemToWarehouse(itemName, qty) {
-        qty = qty || player.inventory[itemName];
-        if (!player.inventory[itemName] || qty <= 0) return;
-
-        const usedSlots = Object.keys(player.warehouse).filter(n => player.warehouse[n] > 0).length;
-        const isNewSlot = !(player.warehouse[itemName] > 0);
-        if (isNewSlot && usedSlots >= 500) {
-            showGameAlert('Склад полон (500/500 ячеек). Освободите место.');
-            return;
-        }
-
-        qty = Math.min(qty, player.inventory[itemName]);
-        player.inventory[itemName] -= qty;
-        if (player.inventory[itemName] <= 0) {
-            delete player.inventory[itemName];
-            player.quickSlots = player.quickSlots.map(n => n === itemName ? null : n);
-        }
-        player.warehouse[itemName] = (player.warehouse[itemName] || 0) + qty;
-        closeItemActionModal();
-        renderInventory(); updateUI(); saveGame();
-        if (document.getElementById('shopScreen').classList.contains('active')) renderShop();
+        await warehouseTransfer('deposit', itemName, qty);
     }
 
     function sellItemFromModal(itemName) {
@@ -6254,21 +5767,19 @@ input[type='number'] { min-width:0; }
     }
 
     // Назначить расходник (аптечка/еда/вода) в один из 4 быстрых слотов, видимых во время рейда/боя
-    function assignToQuickSlot(itemName) {
-        const list = player.quickSlots.map((n, i) => `${i + 1}. ${n || 'Пусто'}`).join('\n');
-        const choiceStr = prompt(`В какой быстрый слот поместить "${itemName}"? Введите номер:\n${list}`);
-        const idx = parseInt(choiceStr) - 1;
-        if (isNaN(idx) || idx < 0 || idx > 3) return;
-        player.quickSlots[idx] = itemName;
-        closeItemActionModal();
-        // Обновляем и раздел "Быстрые слоты" во время рейда, и экран инвентаря целиком (там свой
-        // отдельный набор элементов — quickSlotsGrid/inventoryGrid, renderQuickSlots() их не трогает)
-        const refreshAfterAssign = () => { renderQuickSlots(); if (typeof renderInventory === 'function') renderInventory(); };
-        refreshAfterAssign();
-        requestAnimationFrame(() => requestAnimationFrame(refreshAfterAssign));
-        setTimeout(refreshAfterAssign, 150);
-        saveGame();
-        showGameAlert(`«${itemName}» помещён(а) в быстрый слот ${idx + 1}.`);
+    async function assignToQuickSlot(itemName) {
+        const list=player.quickSlots.map((n,i)=>`${i+1}. ${n||'Пусто'}`).join('\n');
+        const idx=parseInt(prompt(`В какой быстрый слот поместить "${itemName}"? Введите номер:\n${list}`),10)-1;
+        if(!Number.isInteger(idx)||idx<0||idx>3)return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/quickslots/set`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index:idx,itemName})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось назначить слот');return;}
+            player.quickSlots=x.quickSlots;closeItemActionModal();renderQuickSlots();renderInventory();
+            showGameAlert(`«${itemName}» помещён(а) в быстрый слот ${idx+1}.`);
+        }catch(e){showGameAlert('Ошибка соединения.');}
     }
 
     // ===== ИНВЕНТАРЬ =====
@@ -6357,36 +5868,32 @@ input[type='number'] { min-width:0; }
         invGrid.innerHTML = filledSlotsHtml.join('') + emptySlotHtml.repeat(emptySlotsCount);
     }
 
-    function useInventoryQuickSlot(i) {
-        const itemName = player.quickSlots[i];
-        if (!itemName) {
-            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0 && consumables.some(c => c.name === n));
-            if (available.length === 0) { showGameAlert('Нет расходников (еда/вода/аптечки) для быстрого слота!'); return; }
-            const list = available.map((n, idx) => `${idx + 1}. ${n} ×${player.inventory[n]}`).join('\n');
-            const choice = prompt(`Выберите предмет для слота ${i + 1} (номер):\n${list}`);
-            const idx = parseInt(choice) - 1;
-            if (idx >= 0 && idx < available.length) {
-                player.quickSlots[i] = available[idx];
-                // Один вызов ненадёжен — WebView не всегда успевает вернуть управление отрисовке
-                // сразу же после закрытия нативного диалога prompt(), из-за чего немедленный
-                // renderInventory() визуально "не долетал" (виден только после полной перезагрузки
-                // экрана). Пробуем несколько раз с разной задержкой — так гарантированно долетает
-                const refreshQuickSlot = () => { renderInventory(); renderQuickSlots(); };
-                refreshQuickSlot();
-                requestAnimationFrame(() => requestAnimationFrame(refreshQuickSlot));
-                setTimeout(refreshQuickSlot, 100);
-                setTimeout(refreshQuickSlot, 300);
-                setTimeout(refreshQuickSlot, 600);
-                saveGame();
-            }
+    async function useInventoryQuickSlot(i) {
+        const itemName=player.quickSlots[i];
+        if(!itemName){
+            const available=Object.keys(player.inventory).filter(n=>(player.inventory[n]||0)>0&&consumables.some(c=>c.name===n));
+            if(!available.length){showGameAlert('Нет расходников для быстрого слота!');return;}
+            const list=available.map((n,idx)=>`${idx+1}. ${n} ×${player.inventory[n]}`).join('\n');
+            const idx=parseInt(prompt(`Выберите предмет для слота ${i+1} (номер):\n${list}`),10)-1;
+            if(idx<0||idx>=available.length)return;
+            try{
+                const r=await fetch(`${SERVER_URL}/api/quickslots/set`,{
+                    method:'POST',headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index:i,itemName:available[idx]})
+                });
+                const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось назначить слот');return;}
+                player.quickSlots=x.quickSlots;renderInventory();renderQuickSlots();
+            }catch(e){showGameAlert('Ошибка соединения.');}
             return;
         }
-        if (confirm(`Убрать «${itemName}» из быстрого слота ${i + 1}?`)) {
-            player.quickSlots[i] = null;
-            renderInventory();
-            renderQuickSlots();
-            saveGame();
-        }
+        if(!confirm(`Убрать «${itemName}» из быстрого слота ${i+1}?`))return;
+        try{
+            const r=await fetch(`${SERVER_URL}/api/quickslots/set`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index:i,itemName:null})
+            });
+            const x=await r.json();if(x.success){player.quickSlots=x.quickSlots;renderInventory();renderQuickSlots();}
+        }catch(e){showGameAlert('Ошибка соединения.');}
     }
 
     // ===== БЫСТРЫЕ СЛОТЫ (РЕЙД) =====
@@ -6433,70 +5940,53 @@ input[type='number'] { min-width:0; }
         }
     }
 
-    function applyConsumableEffect(consumable, isInBattle) {
-        if (!consumable) return;
-        if (consumable.type === 'food') player.hunger = Math.min(player.maxHunger, player.hunger + consumable.restore);
-        if (consumable.type === 'water') player.thirst = Math.min(player.maxThirst, player.thirst + consumable.restore);
-        if (consumable.type === 'medkit') {
-            player.health = Math.min(player.maxHealth, player.health + consumable.restore);
-            if (isInBattle) battleMedkitsUsed++;
-            // Одинаковый рост живучести независимо от того, какой кнопкой использована аптечка.
-            const prevVitality = Number(player.vitality) || 0;
-            player.vitality = Math.min(100, prevVitality + 0.1);
-            player.maxHealth += (player.vitality - prevVitality);
-        }
-        if (consumable.type === 'antirad') {
-            player.hunger = Math.max(0, player.hunger - (consumable.foodCost || 0));
-            player.thirst = Math.max(0, player.thirst - (consumable.waterCost || 0));
-        }
-        if (consumable.radiationRemove) {
-            player.radiation = Math.max(0, player.radiation - consumable.radiationRemove);
-        }
-    }
 
-    function useQuickSlot(index) {
-        const itemName = player.quickSlots[index];
-        if (!itemName) {
-            const available = Object.keys(player.inventory).filter(n => (player.inventory[n] || 0) > 0 && consumables.some(c => c.name === n));
-            if (available.length === 0) { showGameAlert('Нет расходников для быстрого слота!'); return; }
-            const choice = prompt('Введите точное название предмета для слота:\n' + available.join(', '));
-            if (choice && available.includes(choice)) {
-                player.quickSlots[index] = choice;
-                renderQuickSlots();
-                saveGame();
-            }
+
+    async function useQuickSlot(index) {
+        const itemName=player.quickSlots[index];
+        if(!itemName){
+            const available=Object.keys(player.inventory).filter(n=>(player.inventory[n]||0)>0&&consumables.some(c=>c.name===n));
+            if(!available.length){showGameAlert('Нет расходников для быстрого слота!');return;}
+            const choice=prompt('Введите точное название предмета для слота:\n'+available.join(', '));
+            if(!choice||!available.includes(choice))return;
+            try{
+                const r=await fetch(`${SERVER_URL}/api/quickslots/set`,{
+                    method:'POST',headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index,itemName:choice})
+                });
+                const x=await r.json();if(!x.success){showGameAlert(x.error||'Не удалось назначить слот');return;}
+                player.quickSlots=x.quickSlots;renderQuickSlots();
+            }catch(e){showGameAlert('Ошибка соединения.');}
             return;
         }
-
-        const consumable = consumables.find(c => c.name === itemName);
-        if (!consumable || !player.inventory[itemName] || player.inventory[itemName] <= 0) {
-            player.quickSlots[index] = null;
-            renderQuickSlots();
+        if(!player.inventory[itemName]){
+            try{
+                const r=await fetch(`${SERVER_URL}/api/quickslots/set`,{
+                    method:'POST',headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,index,itemName:null})
+                });
+                const x=await r.json();if(x.success)player.quickSlots=x.quickSlots;renderQuickSlots();
+            }catch(_){}
             return;
         }
-
-        const isInBattle = currentEnemy && !isFriendlyEncounterActive;
-        if (isInBattle && consumable.type === 'medkit' && battleMedkitsUsed >= BATTLE_MEDKIT_LIMIT) {
-            showGameAlert(`Лимит аптечек на этот бой исчерпан (максимум ${BATTLE_MEDKIT_LIMIT} за бой)!`);
-            return;
-        }
-
-        player.inventory[itemName]--;
-        applyConsumableEffect(consumable, isInBattle);
-        if (player.inventory[itemName] <= 0) player.quickSlots[index] = null;
-
-        raidLogs.push(`Использован(а) ${itemName}!`);
-        renderQuickSlots();
-        updateUI();
-        saveGame();
-
-        // Если игрок сейчас в бою — использование предмета через быстрый слот тоже считается
-        // ходом: враг сразу же атакует в ответ, как и после любого другого действия в бою
-        if (currentEnemy && !isFriendlyEncounterActive) {
-            triggerEnemyTurn();
-        } else {
-            updateRaidLog();
-        }
+        try{
+            await waitForSaveQueue();
+            const battleToken=(currentEnemy&&!isFriendlyEncounterActive)?currentEnemy.battleToken:null;
+            const r=await fetch(`${SERVER_URL}/api/items/use-consumable`,{
+                method:'POST',headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,itemName,battleToken})
+            });
+            const x=await r.json();if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
+            if(x.state)applyEquipmentServerState(x.state);
+            if(battleToken){
+                raidLogs.push(`Использован(а) ${itemName}!`);
+                if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
+                if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
+                else if(x.enemyTurn)raidLogs.push(`${currentEnemy?.name||'Враг'} промахнулся!`);
+                if(x.died){raidActive=false;currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();showGameAlert('💀 Вы погибли и потеряли весь обычный инвентарь.');openScreen('main');}
+                updateRaidLog();
+            }else updateRaidLog();
+        }catch(e){console.error('[useQuickSlot]',e);showGameAlert('Ошибка соединения при использовании предмета.');}
     }
 
     // ===== СКЛАД (50 ячеек) =====
@@ -6539,66 +6029,59 @@ input[type='number'] { min-width:0; }
     }
 
     // Перенос конкретного количества предмета из инвентаря на склад (с экрана склада)
-    function depositFromWarehouseScreen(name) {
-        const maxQty = player.inventory[name] || 0;
+    async function depositFromWarehouseScreen(name) {
+        const maxQty = Number(player.inventory[name]) || 0;
         if (maxQty <= 0) return;
         const qtyStr = prompt(`Сколько шт. "${name}" положить на склад? (доступно: ${maxQty})`, String(maxQty));
-        const qty = parseInt(qtyStr);
+        const qty = parseInt(qtyStr, 10);
         if (!qty || qty <= 0) return;
-        moveItemToWarehouse(name, Math.min(qty, maxQty));
-        renderWarehouse();
+        await warehouseTransfer('deposit', name, Math.min(qty, maxQty));
     }
 
-    function withdrawFromWarehouse(name) {
-        if (!player.warehouse[name] || player.warehouse[name] <= 0) return;
-        const clean = stripInvisibleSuffix(name);
-        const baseName = parseGearName(clean).baseName;
-        const isNonStacking = weapons.some(w => w.name === baseName) || armorItems.some(a => a.name === baseName) || artifacts.some(a => a.name === clean);
-        if (isNonStacking) {
-            // addNonStackingItem сама разрулит совпадение имени (даст новый невидимый суффикс,
-            // если в инвентаре уже есть предмет с таким же именем) — вызываем с точным ключом склада
-            if (!addNonStackingItem(name)) return; // достигнут лимит 50 — не снимаем со склада
-        } else {
-            player.inventory[name] = (player.inventory[name] || 0) + 1;
+    async function withdrawFromWarehouse(name) {
+        const available = Number(player.warehouse[name]) || 0;
+        if (available <= 0) return;
+        await warehouseTransfer('withdraw', name, 1);
+    }
+
+    async function depositAllToWarehouse() {
+        if (warehouseBusy) return;
+        warehouseBusy = true;
+        try {
+            await waitForSaveQueue();
+            const res = await fetch(`${SERVER_URL}/api/warehouse/all`, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({ initData:window.Telegram?.WebApp?.initData, direction:'deposit' })
+            });
+            await applyWarehouseServerResult(await res.json());
+        } catch (e) {
+            console.error('[depositAllToWarehouse]', e);
+            showGameAlert('Не удалось поместить предметы на склад.');
+        } finally {
+            warehouseBusy = false;
         }
-        player.warehouse[name]--;
-        if (player.warehouse[name] <= 0) delete player.warehouse[name];
-        renderWarehouse();
-        saveGame();
     }
 
-    function depositAllToWarehouse() {
-        const items = Object.keys(player.inventory).filter(name => player.inventory[name] > 0);
-        if (items.length === 0) { showGameAlert('Инвентарь пуст.'); return; }
-        let usedSlots = Object.keys(player.warehouse).filter(n => player.warehouse[n] > 0).length;
-        let movedAny = false;
-        for (const name of items) {
-            const isNewSlot = !(player.warehouse[name] > 0);
-            if (isNewSlot) {
-                if (usedSlots >= 500) continue; // склад полон — пропускаем то, что не влезло
-                usedSlots++;
-            }
-            player.warehouse[name] = (player.warehouse[name] || 0) + player.inventory[name];
-            delete player.inventory[name];
-            movedAny = true;
+    async function withdrawAllFromWarehouse() {
+        if (warehouseBusy) return;
+        warehouseBusy = true;
+        try {
+            await waitForSaveQueue();
+            const res = await fetch(`${SERVER_URL}/api/warehouse/all`, {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({ initData:window.Telegram?.WebApp?.initData, direction:'withdraw' })
+            });
+            await applyWarehouseServerResult(await res.json());
+        } catch (e) {
+            console.error('[withdrawAllFromWarehouse]', e);
+            showGameAlert('Не удалось забрать предметы со склада.');
+        } finally {
+            warehouseBusy = false;
         }
-        player.quickSlots = player.quickSlots.map(n => (n && player.inventory[n] > 0) ? n : null);
-        if (!movedAny) showGameAlert('Склад полон (50/50 ячеек) — ничего не поместилось.');
-        renderInventory(); renderWarehouse(); updateUI(); saveGame();
     }
 
-    function withdrawAllFromWarehouse() {
-        const items = Object.keys(player.warehouse).filter(name => player.warehouse[name] > 0);
-        if (items.length === 0) { showGameAlert('Склад пуст.'); return; }
-        items.forEach(name => {
-            player.inventory[name] = (player.inventory[name] || 0) + player.warehouse[name];
-            delete player.warehouse[name];
-        });
-        renderInventory(); renderWarehouse(); updateUI(); saveGame();
-    }
-
-    // ===== ТОРГОВЕЦ =====
-    // Общий каталог для покупки — расходники, оружие, броня и детекторы (детекторы теперь тут, не отдельным экраном)
     function getShopCatalog() {
         // Броня теперь открывается СТРОГО по уровню игрока (unlockLevel), как и оружие —
         // каждые 5 уровней открывается ровно 1 новый предмет брони (от слабой защиты к сильной,
@@ -6639,7 +6122,7 @@ input[type='number'] { min-width:0; }
     }
 
     // Цена продажи любого предмета торговцу (лут мутантов/фракций, артефакты, снаряжение) — 50% от базовой стоимости
-    // Улучшенное снаряжение (+N) даёт +10% базовой цены за каждый уровень улучшения
+    // Улучшения не повышают цену выкупа: это предотвращает цикл генерации Байт.
     function getSellPrice(name) {
         // ВАЖНО: ищем по ПОЛНЫМ спискам (weapons/armorItems/detectors/consumables), а НЕ по
         // getShopCatalog() — тот отфильтрован по тиру/уровню игрока (что можно купить прямо
@@ -6647,9 +6130,9 @@ input[type='number'] { min-width:0; }
         // поиск проваливался и цена продажи падала на заглушку в 5 Байт
         const parsed = parseGearName(name);
         const weapon = weapons.find(w => w.name === parsed.baseName);
-        if (weapon) return Math.max(1, Math.round(weapon.price * (1 + parsed.level * 0.1) * 0.5));
+        if (weapon) return Math.max(1, Math.round(weapon.price * 0.5));
         const armor = armorItems.find(a => a.name === parsed.baseName);
-        if (armor) return Math.max(1, Math.round(armor.price * (1 + parsed.level * 0.1) * 0.5));
+        if (armor) return Math.max(1, Math.round(armor.price * 0.5));
         const detector = detectors.find(d => d.name === parsed.baseName);
         if (detector) return Math.max(1, Math.round(detector.price * 0.5));
         const consumable = consumables.find(c => c.name === name);
@@ -6688,10 +6171,16 @@ input[type='number'] { min-width:0; }
         </div>`;
     }
 
-    function setAutoBuyTarget(name, value) {
-        player.autoBuyTargets = player.autoBuyTargets || {};
-        player.autoBuyTargets[name] = Math.max(0, parseInt(value) || 0);
-        saveGame();
+    function setAutoBuyTarget(name,value) {
+        player.autoBuyTargets=player.autoBuyTargets||{};
+        player.autoBuyTargets[name]=Math.max(0,parseInt(value)||0);
+        fetch(`${SERVER_URL}/api/player/preferences`,{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,autoBuyTargets:player.autoBuyTargets})
+        }).then(r=>r.json()).then(x=>{
+            if(x.success)player.autoBuyTargets=x.autoBuyTargets||player.autoBuyTargets;
+            else showGameAlert(x.error||'Не удалось сохранить настройку автозакупки');
+        }).catch(()=>showGameAlert('Ошибка сохранения настройки автозакупки.'));
     }
 
     // Автозакупка "до нормы" — вместо расчёта цены и списания на клиенте делаем по одному
