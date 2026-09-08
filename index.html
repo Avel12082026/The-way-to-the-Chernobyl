@@ -588,37 +588,93 @@ button:active {filter:brightness(1.18);}
 </style>
 
 
-<style id="safe-avatar-books-fix">
+
+
+
+<style id="avatar-books-layout-fix">
+/* Аватар: не двигаем картинку transform-ом. Центрируем её строго внутри круга. */
+#mainMenu .zr-avatar{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-radius:50%!important;
+}
 #mainMenu #zrPlayerAvatar{
-  object-position:center center!important;
-  transform:translateY(-4px) scale(1.02)!important;
-  transform-origin:center center!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:cover!important;
+  object-position:50% 50%!important;
+  transform:none!important;
+  border-radius:50%!important;
+}
+
+/* Ресурсы: подпись слева, количество строго в правой колонке. */
+#mainMenu .zr-resource{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 48px!important;
+  column-gap:8px!important;
+  align-items:start!important;
+  overflow:visible!important;
+}
+#mainMenu .zr-resource > span:last-child{
+  justify-self:end!important;
+  text-align:right!important;
+  min-width:36px!important;
+}
+
+/* Книги: надпись сверху, маленькая кнопка ниже с гарантированным зазором. */
+#mainMenu .zr-book{
+  min-height:31px!important;
+  overflow:visible!important;
+  align-items:start!important;
 }
 #mainMenu .zr-book-stack{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:2px;
-  min-width:0;
+  display:grid!important;
+  grid-template-rows:13px 14px!important;
+  row-gap:3px!important;
+  align-content:start!important;
+  overflow:visible!important;
+  min-width:0!important;
+}
+#mainMenu .zr-book-stack > span:first-child{
+  display:block!important;
+  height:13px!important;
+  line-height:13px!important;
+  white-space:nowrap!important;
 }
 #mainMenu .zr-book-read{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  box-sizing:border-box;
-  width:58px;
-  height:15px;
-  padding:0 4px;
-  margin:0;
-  border:1px solid #78633f;
-  background:linear-gradient(#40311f,#1f1811);
-  color:#e3d2a9;
-  font-size:7px;
-  line-height:1;
-  cursor:pointer;
-  user-select:none;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:64px!important;
+  height:14px!important;
+  min-height:14px!important;
+  max-height:14px!important;
+  margin:0!important;
+  padding:0 4px!important;
+  border:1px solid #78633f!important;
+  background:linear-gradient(#40311f,#1f1811)!important;
+  color:#e3d2a9!important;
+  font-size:7px!important;
+  line-height:12px!important;
+  position:static!important;
+  transform:none!important;
+  overflow:hidden!important;
 }
-#mainMenu .zr-book-read:active{ transform:translateY(1px); }
+
+/* Даём нижней строке карточки место под кнопку, не меняя весь хаб. */
+#mainMenu .zr-main-status{
+  min-height:124px!important;
+  height:124px!important;
+}
+#mainMenu .zr-main-data{
+  overflow:visible!important;
+}
 </style>
 
 </head>
