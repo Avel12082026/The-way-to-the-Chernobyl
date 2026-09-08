@@ -496,17 +496,20 @@ button:active {filter:brightness(1.18);}
 #mainMenu .zr-main-data{
   display:grid!important;
   grid-template-columns:minmax(0,1fr)!important;
-  align-content:center!important;
+  align-content:start!important;
   gap:1px!important;
   min-width:0!important;
   overflow:hidden!important;
 }
 #mainMenu .zr-player-name{
   font-size:14px!important;
-  line-height:18px!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
+  line-height:20px!important;
+  min-height:20px;
+  min-width:0;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
+  overflow:visible!important;
+  text-overflow:clip!important;
 }
 #mainMenu .zr-player-meta{font-size:11px!important;line-height:14px!important}
 #mainMenu .zr-resource{
@@ -675,7 +678,8 @@ button:active {filter:brightness(1.18);}
   grid-template-rows:auto!important;
 }
 #mainMenu .zr-main-data{
-  grid-template-rows:auto auto repeat(3,minmax(14px,auto)) minmax(31px,auto)!important;
+  grid-template-rows:minmax(20px,max-content) minmax(14px,max-content) repeat(3,minmax(14px,max-content)) minmax(31px,max-content)!important;
+  min-height:min-content!important;
   overflow:visible!important;
 }
 </style>
