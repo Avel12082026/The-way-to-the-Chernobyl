@@ -587,50 +587,6 @@ button:active {filter:brightness(1.18);}
 }
 </style>
 
-
-<style id="main-menu-avatar-books-microfix">
-/* Рамка аватара остаётся на месте; выравниваем только изображение внутри круга. */
-#mainMenu .zr-avatar img{
-  position:absolute!important;
-  inset:0!important;
-  margin:auto!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;
-  object-position:center center!important;
-  transform:none!important;
-}
-
-/* Кнопка применения книг всегда занимает своё место справа. */
-#mainMenu .zr-book{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  align-items:center!important;
-  gap:8px!important;
-  overflow:visible!important;
-}
-#mainMenu .zr-book button{
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:auto!important;
-  min-width:76px!important;
-  height:22px!important;
-  min-height:22px!important;
-  padding:2px 8px!important;
-  font-size:8px!important;
-  line-height:1!important;
-  position:static!important;
-  transform:none!important;
-}
-#mainMenu .zr-book button:disabled{
-  opacity:.45!important;
-  filter:grayscale(.45)!important;
-}
-</style>
-
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
