@@ -677,6 +677,30 @@ button:active {filter:brightness(1.18);}
 }
 </style>
 
+
+<style id="avatar-center-only-fix">
+/* Меняем ТОЛЬКО положение картинки внутри уже существующей круглой рамки. */
+#mainMenu .zr-avatar{
+  position:relative!important;
+  overflow:hidden!important;
+  border-radius:50%!important;
+}
+#mainMenu .zr-avatar > #zrPlayerAvatar{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  transform:translate(-50%,-50%)!important;
+  transform-origin:center center!important;
+  border-radius:50%!important;
+}
+</style>
+
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
