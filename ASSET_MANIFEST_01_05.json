@@ -1,0 +1,356 @@
+{
+  "collection": "CHERNOBYL_TRANSPARENT_ASSETS_CURRENT.zip",
+  "character_canvas": [
+    512,
+    768
+  ],
+  "icon_canvas": [
+    384,
+    384
+  ],
+  "webp_color_quality": 90,
+  "webp_alpha_lossless": true,
+  "total_bytes": 566702,
+  "assets": [
+    {
+      "id": 1,
+      "name": "Комбинезон Юность",
+      "kind": "character",
+      "source": "characters/character_01_yunost.png",
+      "source_sha256": "6e048c349c9f90617b1e02fcc397a8f37ebc659bde550e3b71d02500b0e1f56d",
+      "file": "icons/armor_char_1.webp",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "195c8766b2fc1e8987e90a2223d37ddbca0a2245db1a7afdd234cc1a317db835",
+      "bytes": 67270,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        220,
+        57,
+        804,
+        1422
+      ],
+      "clipped_max_alpha": 1,
+      "fitted_size": [
+        289,
+        676
+      ],
+      "position": [
+        111,
+        46
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Комбинезон Юность",
+      "kind": "icon",
+      "source": "icons/icon_01_yunost.png",
+      "source_sha256": "decfbce9c883e49a4ca447f0bb946db552dc1382a9f9a5466608b78566afdc48",
+      "file": "icons/armor_icon_1.webp",
+      "size": [
+        384,
+        384
+      ],
+      "sha256": "2ad6dc88281d4156fd5960705421a757e5060de436796d2a5c448901c6933e2a",
+      "bytes": 46746,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        20,
+        48,
+        1239,
+        1189
+      ],
+      "clipped_max_alpha": 1,
+      "fitted_size": [
+        352,
+        329
+      ],
+      "position": [
+        16,
+        27
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Куртка кожаная армейская",
+      "kind": "character",
+      "source": "characters/character_02_army_leather_jacket.png",
+      "source_sha256": "30661c26fa96a5233257ac962d237d13f37ed44fd7042d108878acf221c34cc3",
+      "file": "icons/armor_char_2.webp",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "a2b607b011c355c5d87ba48491351ba03291f89d07e104fd4eee5708fa72f92e",
+      "bytes": 73752,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        201,
+        34,
+        828,
+        1452
+      ],
+      "clipped_max_alpha": 0,
+      "fitted_size": [
+        299,
+        676
+      ],
+      "position": [
+        106,
+        46
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Куртка кожаная армейская",
+      "kind": "icon",
+      "source": "icons/icon_02_army_leather_jacket.png",
+      "source_sha256": "11310e745de00e1f6948d93a32bedcef73dc315af17f47f96478aa8360417384",
+      "file": "icons/armor_icon_2.webp",
+      "size": [
+        384,
+        384
+      ],
+      "sha256": "183a39d78df19321ca8439a24a367a2fb6cd9a22815820044d30b7ad5ff9584d",
+      "bytes": 50362,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        4,
+        35,
+        1250,
+        1187
+      ],
+      "clipped_max_alpha": 0,
+      "fitted_size": [
+        352,
+        325
+      ],
+      "position": [
+        16,
+        29
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ватник утеплённый",
+      "kind": "character",
+      "source": "characters/character_03_padded_jacket.png",
+      "source_sha256": "3d769d1e32bd68a297e7f7e890ceb75f9274b24520dd3a6c8146654f4e5e74c9",
+      "file": "icons/armor_char_3.webp",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "c7bd714c9316f628062be6edbe8e6f3b2f4358c20466ca0742cff25a677333bd",
+      "bytes": 66894,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        221,
+        63,
+        805,
+        1405
+      ],
+      "clipped_max_alpha": 2,
+      "fitted_size": [
+        294,
+        676
+      ],
+      "position": [
+        109,
+        46
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ватник утеплённый",
+      "kind": "icon",
+      "source": "icons/icon_03_padded_jacket.png",
+      "source_sha256": "c44c0d8012ffe0b247d35eb6523482b4b7c18f7e03b983578c66843f030a4745",
+      "file": "icons/armor_icon_3.webp",
+      "size": [
+        384,
+        384
+      ],
+      "sha256": "7523e99a27a73920c4270bc8c3106bd83b4963f25ee1b1dad7f0e85eb42f072b",
+      "bytes": 44584,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        32,
+        22,
+        1229,
+        1184
+      ],
+      "clipped_max_alpha": 0,
+      "fitted_size": [
+        352,
+        342
+      ],
+      "position": [
+        16,
+        21
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Плащ-палатка ОЗК",
+      "kind": "character",
+      "source": "characters/character_04_ozk_cloak.png",
+      "source_sha256": "818d0d53a7f2de6f2de77ff457195c4208b39eb7b6a5f70060cee57934e160eb",
+      "file": "icons/armor_char_4.webp",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "568288d0f1ffe5f467447d00cdbc7fd2d5a640d9c51623d33bcaacff1c07a524",
+      "bytes": 62636,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        222,
+        83,
+        800,
+        1413
+      ],
+      "clipped_max_alpha": 0,
+      "fitted_size": [
+        294,
+        676
+      ],
+      "position": [
+        109,
+        46
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Плащ-палатка ОЗК",
+      "kind": "icon",
+      "source": "icons/icon_04_ozk_cloak.png",
+      "source_sha256": "8c8f9eb385c839d1b0d8db70c5924b6497e7bd7b57c696d7f940002a3afd1335",
+      "file": "icons/armor_icon_4.webp",
+      "size": [
+        384,
+        384
+      ],
+      "sha256": "241a42d3e4b29a56063c7d133238d4cd0e48e592bc0990da477c14e5956fc8cb",
+      "bytes": 32972,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        238,
+        12,
+        1020,
+        1225
+      ],
+      "clipped_max_alpha": 1,
+      "fitted_size": [
+        227,
+        352
+      ],
+      "position": [
+        78,
+        16
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Комбинезон Комбат",
+      "kind": "character",
+      "source": "characters/character_05_kombat.png",
+      "source_sha256": "615295586f17b971b946206a84a0ddb278d50eb3afdb5346a9991fc730046d5e",
+      "file": "icons/armor_char_5.webp",
+      "size": [
+        512,
+        768
+      ],
+      "sha256": "fa031746124ff88718657495319a4807e0ce889eaa101c4ff8e27d3451d4083d",
+      "bytes": 74144,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        220,
+        47,
+        807,
+        1390
+      ],
+      "clipped_max_alpha": 1,
+      "fitted_size": [
+        295,
+        676
+      ],
+      "position": [
+        108,
+        46
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Комбинезон Комбат",
+      "kind": "icon",
+      "source": "icons/icon_05_kombat.png",
+      "source_sha256": "ee017b41ef8ae382cedb90399328b51dfc1ccf4e97c8becf856b9bb66d59cb32",
+      "file": "icons/armor_icon_5.webp",
+      "size": [
+        384,
+        384
+      ],
+      "sha256": "9ae8d09c2e03a7cd08abef48144613b43901c4958c44ba78242d9b9ac8d74c97",
+      "bytes": 47342,
+      "alpha_range": [
+        0,
+        255
+      ],
+      "webp_alpha_lossless": true,
+      "source_frame": [
+        5,
+        19,
+        1247,
+        1195
+      ],
+      "clipped_max_alpha": 0,
+      "fitted_size": [
+        352,
+        333
+      ],
+      "position": [
+        16,
+        25
+      ]
+    }
+  ]
+}
