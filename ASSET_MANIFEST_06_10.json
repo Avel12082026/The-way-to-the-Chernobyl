@@ -1,0 +1,227 @@
+{
+  "collection": "CHERNOBYL_ARMOR_06-10_REVIEW.zip",
+  "collection_sha256": "36d233102491ca5ac4c26c924ea0003e1fff3aa61940f88ec1e9264de7070294",
+  "armor_ids": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "native_alpha_generation": false,
+  "alpha_preparation": "Reviewed local processing of new drawings; enclosed arm, sleeve and shoulder-strap gaps inspected.",
+  "installation": "Copy approved game WebP bytes unchanged; register content hashes in CLIENT_ICON_VERSIONS.",
+  "total_bytes": 610346,
+  "assets": [
+    {
+      "id": 6,
+      "name": "Роба сталкера",
+      "kind": "character",
+      "file": "icons/armor_char_6.webp",
+      "sha256": "cbe2b2b866a52c5a46eb97422dea94976aebcd8883c045cf5e8860a43028d2ab",
+      "version": "cbe2b2b866a5",
+      "bytes": 78270,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_06_stalker_robe.png",
+      "source_sha256": "78b4e2e320d6bee35112f4618d39aa8f1db2ab455fdebffbb46f81122c84bffb"
+    },
+    {
+      "id": 6,
+      "name": "Роба сталкера",
+      "kind": "icon",
+      "file": "icons/armor_icon_6.webp",
+      "sha256": "50a3b01ae8628a0a64dc5eb04aa420ad14836cc327fddd88fe2af8880681c20a",
+      "version": "50a3b01ae862",
+      "bytes": 47388,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_06_stalker_robe.png",
+      "source_sha256": "f258bf5b4a42c2f17b1f287bd4bdcc46899fad277ca034d4b01736669c74c6da"
+    },
+    {
+      "id": 7,
+      "name": "Бронежилет Барьер",
+      "kind": "character",
+      "file": "icons/armor_char_7.webp",
+      "sha256": "790c04ae7e1e7521da485df6fc819938d51706a6445b5318f90fa603695ad962",
+      "version": "790c04ae7e1e",
+      "bytes": 76042,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_07_barrier.png",
+      "source_sha256": "ff9ce767399d5cc9ac64bdf72d6a500cd290e2d52a8cc2c1ab96f14b3f5c0b6d"
+    },
+    {
+      "id": 7,
+      "name": "Бронежилет Барьер",
+      "kind": "icon",
+      "file": "icons/armor_icon_7.webp",
+      "sha256": "7398a045adfbaf948927f56deccad51a34a4b76e8a995df513026bdd1552f59c",
+      "version": "7398a045adfb",
+      "bytes": 45586,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_07_barrier.png",
+      "source_sha256": "179efe1422b826c93722abf8ff0f0262dd417d1e7105b0c5229a6f7a932ddb42"
+    },
+    {
+      "id": 8,
+      "name": "Разгрузка тактическая с бронепанелями",
+      "kind": "character",
+      "file": "icons/armor_char_8.webp",
+      "sha256": "5ccdf4a4ad42f507c905063525c292cf41f320634fef3df5461c78ca8b504421",
+      "version": "5ccdf4a4ad42",
+      "bytes": 76510,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_08_tactical_rig.png",
+      "source_sha256": "13cc24d5a010dd51a8038d16e0726b6d5340c57c15f3eacb64bdbf51f34e5688"
+    },
+    {
+      "id": 8,
+      "name": "Разгрузка тактическая с бронепанелями",
+      "kind": "icon",
+      "file": "icons/armor_icon_8.webp",
+      "sha256": "2d0d769b69cce972156819c69ec0b801d729cd048966e1e3dfd169fecfe81585",
+      "version": "2d0d769b69cc",
+      "bytes": 43838,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_08_tactical_rig.png",
+      "source_sha256": "a67fcce290ba6a851bb7c2c247b1f6095c735e0eaa1a99607b27327bcfd8d30f"
+    },
+    {
+      "id": 9,
+      "name": "Бронежилет 6Б23",
+      "kind": "character",
+      "file": "icons/armor_char_9.webp",
+      "sha256": "facda02d5fdf1ee88ac65c9a3a0512d817d3cd1287324492c8934b6e78079832",
+      "version": "facda02d5fdf",
+      "bytes": 77450,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_09_vest_6b23.png",
+      "source_sha256": "458a881eb8e5f96385bd1b2093acf2ba36df38f5a6ac8a600de76767d8144ed7"
+    },
+    {
+      "id": 9,
+      "name": "Бронежилет 6Б23",
+      "kind": "icon",
+      "file": "icons/armor_icon_9.webp",
+      "sha256": "78b7f62e2d6b311aa1721f0e809276a0535de8a1aa3333fcc7ddcf2589586195",
+      "version": "78b7f62e2d6b",
+      "bytes": 46932,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_09_vest_6b23.png",
+      "source_sha256": "419f420f740e2026e80bf6919e636c2acde0b28deaf37973388b79c0082d968f"
+    },
+    {
+      "id": 10,
+      "name": "Костюм Беркут",
+      "kind": "character",
+      "file": "icons/armor_char_10.webp",
+      "sha256": "478e179336b4328c09e48d3ee1726574ce1d39ef975d09fba6a71d564f426af0",
+      "version": "478e179336b4",
+      "bytes": 73806,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_10_berkut.png",
+      "source_sha256": "8f222d948801d21bd322362f495270d1a287acd5f5cad2e5f63710d491b8ad24"
+    },
+    {
+      "id": 10,
+      "name": "Костюм Беркут",
+      "kind": "icon",
+      "file": "icons/armor_icon_10.webp",
+      "sha256": "47f5e1ac63370aa761ce47e31822e23a362d7b3d52868967b693579a24237a76",
+      "version": "47f5e1ac6337",
+      "bytes": 44524,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_10_berkut.png",
+      "source_sha256": "5a37a03b6d9890034321e71819d788c53ea301fe6efde15d7787f2faae9920cb"
+    }
+  ]
+}
