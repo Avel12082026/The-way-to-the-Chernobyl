@@ -1,0 +1,245 @@
+{
+  "collection": "CHERNOBYL_ARMOR_11-15_REVIEW.zip",
+  "collection_sha256": "0bf94f60707f6fcb006517dc23d7e0b7d0d4167d1b75eadc5e0e056e2e1a385c",
+  "armor_ids": [
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "runtime_asset_ids": [
+    11,
+    12,
+    13,
+    14,
+    64
+  ],
+  "mapping_note": "Catalog 15 Perimeter-5 uses files 64; catalog 64 SEV uses files 15. Existing client mappings are preserved.",
+  "native_alpha_generation": false,
+  "alpha_preparation": "Reviewed local processing of new drawings; enclosed arm and sleeve gaps inspected. Approved corrected Perimeter-5 icon includes belt and two side pouches.",
+  "installation": "Copy approved game WebP bytes unchanged; register content hashes in CLIENT_ICON_VERSIONS.",
+  "total_bytes": 609290,
+  "assets": [
+    {
+      "id": 11,
+      "name": "Комбинезон Свобода-Новобранец",
+      "runtime_asset_id": 11,
+      "kind": "character",
+      "file": "icons/armor_char_11.webp",
+      "sha256": "55b8f6e6096cb5e418e47c56084662d525b4484960182d48b03e298a7eea9f9b",
+      "version": "55b8f6e6096c",
+      "bytes": 77192,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_11_freedom_recruit.png",
+      "source_sha256": "50a84957f50ff001b536e66aa3334c96519dcaea9bb57459e13a608b06bcae35"
+    },
+    {
+      "id": 11,
+      "name": "Комбинезон Свобода-Новобранец",
+      "runtime_asset_id": 11,
+      "kind": "icon",
+      "file": "icons/armor_icon_11.webp",
+      "sha256": "bd4ae71037cfb3435a23c209054c7daeffc9008535660927ec73489d86e4cbf4",
+      "version": "bd4ae71037cf",
+      "bytes": 45882,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_11_freedom_recruit.png",
+      "source_sha256": "4c48297fd726edec4d53ae5df29717b485abebf13cd79b92c556419effa8a7c6"
+    },
+    {
+      "id": 12,
+      "name": "Комбинезон Долг",
+      "runtime_asset_id": 12,
+      "kind": "character",
+      "file": "icons/armor_char_12.webp",
+      "sha256": "f94ad4772ad41c37a397075dc83741ba830b7d5b6bb4ae40172ba9026d4107fa",
+      "version": "f94ad4772ad4",
+      "bytes": 73062,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_12_duty.png",
+      "source_sha256": "d757d181bdfbca37eb4329bdf9f1cd67ef00d0cd10363179d3e151d275178ef0"
+    },
+    {
+      "id": 12,
+      "name": "Комбинезон Долг",
+      "runtime_asset_id": 12,
+      "kind": "icon",
+      "file": "icons/armor_icon_12.webp",
+      "sha256": "23321ec1a96812879962015f4a864d799701ee6f9a797ceff3755ce20fbc5bd1",
+      "version": "23321ec1a968",
+      "bytes": 43632,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_12_duty.png",
+      "source_sha256": "2cdff5556412772623b4405bb5b8cc85269aa4ee6dd4bdac2c3d7ff322a0b8a4"
+    },
+    {
+      "id": 13,
+      "name": "Комбинезон Ветер",
+      "runtime_asset_id": 13,
+      "kind": "character",
+      "file": "icons/armor_char_13.webp",
+      "sha256": "931191b8f26f873b9335cf02a1665e4c0f2966056f19abc812313e20f9a2b994",
+      "version": "931191b8f26f",
+      "bytes": 78438,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_13_wind.png",
+      "source_sha256": "c4dc0fd350985e67315862268972afe5cd708d8586bb1e3ca035d95107517f05"
+    },
+    {
+      "id": 13,
+      "name": "Комбинезон Ветер",
+      "runtime_asset_id": 13,
+      "kind": "icon",
+      "file": "icons/armor_icon_13.webp",
+      "sha256": "d260575178bc3bb990c42c6510d8c3795a32657c14d9ed1689184b473da9dc1a",
+      "version": "d260575178bc",
+      "bytes": 47664,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_13_wind.png",
+      "source_sha256": "0b3a04280629c616e317566adc246a976a9359d34d7845183a26405cce4890fa"
+    },
+    {
+      "id": 14,
+      "name": "Костюм Скат",
+      "runtime_asset_id": 14,
+      "kind": "character",
+      "file": "icons/armor_char_14.webp",
+      "sha256": "25b88b67c8f288609e99bbb09dfea963624a90088e25e28314c8cb6a493c6e4e",
+      "version": "25b88b67c8f2",
+      "bytes": 76972,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_14_skat.png",
+      "source_sha256": "3f13a80676e05d133036f45ebde42c39289de67a68bc4b9253b2cb973219e937"
+    },
+    {
+      "id": 14,
+      "name": "Костюм Скат",
+      "runtime_asset_id": 14,
+      "kind": "icon",
+      "file": "icons/armor_icon_14.webp",
+      "sha256": "0f9e6f6a67b5b13f70815d10c0c74047ad36614b7ee196d95738ab219f907a86",
+      "version": "0f9e6f6a67b5",
+      "bytes": 45980,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_14_skat.png",
+      "source_sha256": "54f465f3a1e2fd3e194b3a6c5818a241b752e13d0efb05cb6f6ab0a669ac7c34"
+    },
+    {
+      "id": 15,
+      "name": "Бронекостюм Периметр-5",
+      "runtime_asset_id": 64,
+      "kind": "character",
+      "file": "icons/armor_char_64.webp",
+      "sha256": "283c8951fa39546932d1b2d581d5368dad9569439fbb9a2c4fbeee4d8c7e814c",
+      "version": "283c8951fa39",
+      "bytes": 73910,
+      "size": [
+        512,
+        768
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "characters/character_15_perimeter_5.png",
+      "source_sha256": "0aac2c3080d7339ae54fe649b3367548b162e7aa5d9ec4a630e7df3f10cda7c6"
+    },
+    {
+      "id": 15,
+      "name": "Бронекостюм Периметр-5",
+      "runtime_asset_id": 64,
+      "kind": "icon",
+      "file": "icons/armor_icon_64.webp",
+      "sha256": "8d314e9986dc6bae08742591ba3281560dc29e177289ea5363c83f803de17d0d",
+      "version": "8d314e9986dc",
+      "bytes": 46558,
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "alpha_matches_reviewed_png_resize": true,
+      "source": "icons/icon_15_perimeter_5.png",
+      "source_sha256": "c4faff3bf7ff83e7a224582904d940a338d0d006d057b31e1364a5ed370862d0"
+    }
+  ]
+}
