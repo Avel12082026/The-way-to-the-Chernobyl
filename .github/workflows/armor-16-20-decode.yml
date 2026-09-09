@@ -1,0 +1,65 @@
+name: Decode armor 16-20
+on:
+  push:
+    branches: [chatgpt-write-check]
+    paths: ['.github/workflows/armor-16-20-decode.yml']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-write-check
+          fetch-depth: 0
+      - name: Reconstruct payload
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, tarfile
+          parts=sorted(Path('.armor16_20_payload').glob('part*.txt'))
+          if len(parts)!=42:
+              raise SystemExit(f'expected 42 chunks, got {len(parts)}')
+          raw=base64.b85decode(''.join(p.read_text() for p in parts).encode())
+          if hashlib.sha256(raw).hexdigest()!='3efb526f8572614998df0025896de8a9a0f453ec66f6dca6c115770d86bd138d':
+              raise SystemExit('payload sha mismatch')
+          p=Path('/tmp/armor16_20_payload.tar.gz'); p.write_bytes(raw)
+          with tarfile.open(p,'r:gz') as tf: tf.extractall('.')
+          expected={
+          'armor_char_16.webp':'9a14c3a60b47477ce602988ffa352eec5861cfd9fb04c2bb5d37a981016b5b45','armor_icon_16.webp':'4d1dd4154f0758dd6f39715472f6e5fa935ce4e743b134162333d99a6e46359f','armor_char_17.webp':'bafa5f238755a3f035aa8a21a11cdaccefa05b1e4663f146a95f842be912785f','armor_icon_17.webp':'da67f87c58e226b4bee597e63c28d5a2071a4c423f9afc418b68a377033e7513','armor_char_18.webp':'d1fc091c906e280dfc7d6a926ace3bdd5d754646b53fbff531a8dd6bdad622bb','armor_icon_18.webp':'338baf4626fc215b31b8129b3f3d089b7096eafa1b43d79661c753317d0c782b','armor_char_19.webp':'833895307a9ddc3f708f03393f33395b07bda67e5cee881aa4962c6a652afc83','armor_icon_19.webp':'3f1d1f9cc2272c031a0bc96c3841b668b55e9c8f742d4dc2c7c25bae2c2eda36','armor_char_20.webp':'4a83cc618ccc4a3eea4cbcbc62fe733ed90070ca705403c41aea37088a64c764','armor_icon_20.webp':'f346863b5291f34aa164137b0160c9600f70776a02037e4441c393b3d34da2c0'}
+          for n,h in expected.items():
+              q=Path('icons')/n
+              g=hashlib.sha256(q.read_bytes()).hexdigest()
+              if g!=h: raise SystemExit(f'{n} sha mismatch {g}')
+          idx=Path('index.html'); t=idx.read_text(encoding='utf-8')
+          marker="        ['armor_char_64.webp', '283c8951fa39'],"
+          if marker not in t: raise SystemExit('cache marker missing')
+          rows=[]
+          for i in range(16,21):
+              rows.append(f"        ['armor_char_{i}.webp', '{expected[f'armor_char_{i}.webp'][:12]}'],")
+              rows.append(f"        ['armor_icon_{i}.webp', '{expected[f'armor_icon_{i}.webp'][:12]}'],")
+          for row in rows:
+              if row not in t: t=t.replace(marker,row+'\n'+marker,1)
+          idx.write_text(t,encoding='utf-8')
+          s=Path('ASSET_STATUS.md'); x=s.read_text(encoding='utf-8')
+          if '## Четвёртая пятёрка' not in x:
+              a='## Игровой формат и подготовка первой пятёрки'
+              sec='''## Четвёртая пятёрка\n\nПодключён проверенный набор комплектов №16–20: пять персонажей в броне и пять соответствующих иконок пустой брони с настоящим альфа-каналом. Перед публикацией номера сверены одновременно с ITEM_ICONS и ARMOR_CHAR_IMAGES; для этой пятёрки каталожные и файловые номера совпадают.\n\n| № в каталоге | Броня | Номер файлов персонажа и иконки |\n|---|---|---|\n| 16 | Бронежилет 6Б43 Ратник | 16 |\n| 17 | Бронежилет Долга «Скала» | 17 |\n| 18 | Комбинезон Заря | 18 |\n| 19 | Бронежилет Выход | 19 |\n| 20 | Бронежилет 6Б45 Ратник-2 | 20 |\n\nИгровые WebP опубликованы в формате RGBA: персонажи 512 × 768, иконки 384 × 384. Иконки содержат только пустую броню/снаряжение без человека и нарисованной рамки. ASSET_MANIFEST_16_20.json фиксирует SHA-256 и версии кеша. Привязка Периметр-5 ↔ файлы 64 и СЭВ ↔ файлы 15 не изменялась.\n\n'''
+              if a not in x: raise SystemExit('status anchor missing')
+              x=x.replace(a,sec+a,1)
+          x=x.replace('Следующая работа с графикой — комплекты №16–96 с индивидуальной проверкой персонажа и соответствующей ему пустой брони на иконке.','Следующая работа с графикой — комплекты №21–96 с индивидуальной проверкой персонажа и соответствующей ему пустой брони на иконке.',1)
+          old='Клиент GitHub Pages загружает icons/armor_icon_1.webp — icons/armor_icon_14.webp, icons/armor_char_1.webp — icons/armor_char_14.webp, icons/armor_icon_64.webp и icons/armor_char_64.webp через getIconUrl(). Это комплекты №1–15 по каталогу с учётом отдельной привязки Периметра-5 к файлам №64. Для каждого из 30 файлов в CLIENT_ICON_VERSIONS записаны первые 12 символов SHA-256.'
+          new='Клиент GitHub Pages загружает проверенные комплекты №1–20 через getIconUrl(): icons/armor_icon_1.webp — icons/armor_icon_14.webp, icons/armor_char_1.webp — icons/armor_char_14.webp, icons/armor_icon_16.webp — icons/armor_icon_20.webp, icons/armor_char_16.webp — icons/armor_char_20.webp, а также icons/armor_icon_64.webp и icons/armor_char_64.webp для Периметра-5. Для каждого опубликованного файла в CLIENT_ICON_VERSIONS записаны первые 12 символов SHA-256.'
+          if old in x: x=x.replace(old,new,1)
+          s.write_text(x,encoding='utf-8')
+          PY
+      - name: Commit publication
+        run: |
+          rm -rf .armor16_20_payload
+          rm -f .github/workflows/armor-16-20-decode.yml
+          git config user.name 'ChatGPT Codex Connector'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Publish approved transparent armor pairs 16-20'
+          git push origin HEAD:chatgpt-write-check
