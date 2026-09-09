@@ -1,0 +1,90 @@
+name: Publish armor 16-20
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/publish-armor-16-20.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Publish armor 16-20 into client routing and manifest
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+
+          root = Path('.')
+          ids = range(16, 21)
+          files = []
+          versions = {}
+          for i in ids:
+              for kind in ('char', 'icon'):
+                  p = root / 'icons' / f'armor_{kind}_{i}.webp'
+                  if not p.exists():
+                      raise SystemExit(f'Missing required asset: {p}')
+                  data = p.read_bytes()
+                  sha = hashlib.sha256(data).hexdigest()
+                  versions[p.name] = sha[:12]
+                  files.append({
+                      'id': i,
+                      'kind': 'character' if kind == 'char' else 'icon',
+                      'file': p.as_posix(),
+                      'sha256': sha,
+                      'version': sha[:12],
+                      'bytes': len(data),
+                  })
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          if "['armor_char_16.webp'" not in text:
+              anchor = "        ['armor_icon_64.webp', '8d314e9986dc'],"
+              if anchor not in text:
+                  raise SystemExit('CLIENT_ICON_VERSIONS anchor not found')
+              block = '\n'.join(
+                  f"        ['armor_{kind}_{i}.webp', '{versions[f'armor_{kind}_{i}.webp']}'],"
+                  for i in ids for kind in ('char', 'icon')
+              )
+              text = text.replace(anchor, anchor + '\n' + block, 1)
+              index.write_text(text, encoding='utf-8')
+
+          manifest = {
+              'collection': 'ARMOR_16_20_PUBLISHED_FROM_REPOSITORY',
+              'armor_ids': list(ids),
+              'runtime_asset_ids': list(ids),
+              'installation': 'Existing repository WebP assets registered in CLIENT_ICON_VERSIONS using their current SHA-256 prefixes.',
+              'assets': files,
+          }
+          Path('ASSET_MANIFEST_16_20.json').write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8'
+          )
+
+          status = Path('ASSET_STATUS.md')
+          s = status.read_text(encoding='utf-8')
+          marker = '## Опубликовано: комплекты брони №16–20'
+          if marker not in s:
+              s += f"\n\n{marker}\n\nКомплекты №16–20 опубликованы в клиенте: `armor_char_16.webp`–`armor_char_20.webp` и `armor_icon_16.webp`–`armor_icon_20.webp` зарегистрированы в `CLIENT_ICON_VERSIONS` по первым 12 символам фактического SHA-256 каждого файла. Манифест: `ASSET_MANIFEST_16_20.json`. Следующая партия: №21–25 с индивидуальной проверкой персонажа, пустой иконки и сверкой файловых номеров с клиентскими словарями.\n"
+              status.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit publication
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html ASSET_STATUS.md ASSET_MANIFEST_16_20.json
+          if git diff --cached --quiet; then
+            echo "No publication changes needed"
+            exit 0
+          fi
+          git commit -m "Publish armor sets 16-20 in game client"
+          git push origin HEAD:main
