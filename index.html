@@ -778,6 +778,12 @@ button:active {filter:brightness(1.18);}
 #kpkContent .pda-profile-armor-warning { display:block; margin-top:4px; color:#aaa; font-size:10px; }
 #kpkContent .pda-profile-armor-warning[hidden] { display:none; }
 </style>
+<style id="character-portrait-recovery">
+#characterPortraitStatus { position:absolute; z-index:2; left:8px; right:8px; bottom:24px;
+  padding:6px; background:#0c100ee8; color:#cdbd8f; font-size:11px; line-height:1.35; text-align:center; }
+#characterPortraitStatus[hidden], #characterPortraitStatus button[hidden] { display:none!important; }
+#characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
+</style>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -975,7 +981,8 @@ button:active {filter:brightness(1.18);}
 </div>
 </div>
 <div class="zr-character-stage" style="text-align:center; margin-bottom:10px;">
-<img id="characterPortraitImg" src="https://213-176-92-184.sslip.io/icons/character_portrait.png" style="max-height:220px; max-width:100%; object-fit:contain;"/>
+<img id="characterPortraitImg" alt="Персонаж в надетой броне" style="max-height:220px; max-width:100%; object-fit:contain;"/>
+<div id="characterPortraitStatus" role="status" aria-live="polite" hidden><span></span><button type="button" onclick="updateCharacterPortrait(true)" hidden>Повторить загрузку</button></div>
 </div>
 <div style="font-size: 12px; color: #888; margin-bottom: 4px;">Слоты под артефакты:</div>
 <div id="artifactSlotsGrid" style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-bottom:12px;"></div>
@@ -2183,14 +2190,87 @@ button:active {filter:brightness(1.18);}
     }
 
     const DEFAULT_CHARACTER_PORTRAIT = 'character_portrait.png';
-    function updateCharacterPortrait() {
+    // A failed <img> keeps the same src: comparing URLs alone never retries it.
+    // One automatic retry, then one explicit fallback; reopening/online can retry again.
+    let characterPortraitRequest = null;
+    function setCharacterPortraitStatus(text, canRetry = false) {
+        const status = document.getElementById('characterPortraitStatus');
+        if (!status) return;
+        status.hidden = !text;
+        status.querySelector('span').textContent = text;
+        status.querySelector('button').hidden = !canRetry;
+    }
+
+    function updateCharacterPortrait(retryFailed = true) {
         const img = document.getElementById('characterPortraitImg');
         if (!img) return;
-        const parsed = parseGearName(player.armor.name);
-        const file = ARMOR_CHAR_IMAGES[parsed.baseName] || DEFAULT_CHARACTER_PORTRAIT;
-        const newSrc = getIconUrl(file);
-        if (img.getAttribute('src') !== newSrc) img.src = newSrc;
+        const visual = getProfileArmorVisual(player);
+        const previous = characterPortraitRequest;
+        if (previous && previous.img === img && previous.primary === visual.src) {
+            if (previous.status === 'loading') return;
+            if (previous.status === 'loaded' && img.complete && img.naturalWidth > 0) {
+                img.style.visibility = '';
+                img.style.display = '';
+                return;
+            }
+            // Frequent stat updates must not restart failed requests indefinitely.
+            if (!retryFailed) return;
+        }
+        if (previous) clearTimeout(previous.timer);
+        const state = { img, primary: visual.src, current: '', status: 'loading',
+            attempt: 0, timer: null, usingFallback: false };
+        characterPortraitRequest = state;
+        img.alt = 'Персонаж: ' + visual.label;
+        img.style.display = '';
+        const active = () => characterPortraitRequest === state && img.isConnected;
+        const fail = () => {
+            if (!active() || state.status !== 'loading') return;
+            clearTimeout(state.timer);
+            if (state.attempt === 0) {
+                state.status = 'loading';
+                setCharacterPortraitStatus('Повторная загрузка персонажа…');
+                state.timer = setTimeout(() => {
+                    if (!active()) return;
+                    const join = state.primary.includes('?') ? '&' : '?';
+                    load(state.primary + join + 'portrait_retry=' + Date.now(), 1);
+                }, 750);
+            } else if (!state.usingFallback && visual.fallbackSrc !== state.primary) {
+                state.usingFallback = true;
+                load(visual.fallbackSrc, 2);
+            } else {
+                state.status = 'failed';
+                img.onload = img.onerror = null;
+                img.style.visibility = 'hidden';
+                setCharacterPortraitStatus('Не удалось загрузить персонажа. Экипировка не изменена.', true);
+            }
+        };
+        const load = (src, attempt) => {
+            if (!active()) return;
+            clearTimeout(state.timer);
+            state.attempt = attempt;
+            state.current = src;
+            state.status = 'loading';
+            img.onload = () => {
+                if (!active() || img.getAttribute('src') !== src || !img.complete || !img.naturalWidth) return;
+                clearTimeout(state.timer);
+                state.status = state.usingFallback ? 'fallback' : 'loaded';
+                img.style.visibility = '';
+                img.style.display = '';
+                setCharacterPortraitStatus(state.usingFallback
+                    ? 'Временно показан запасной портрет: изображение надетой брони недоступно.' : '', state.usingFallback);
+            };
+            img.onerror = () => {
+                if (active() && img.getAttribute('src') === src && img.complete && !img.naturalWidth) fail();
+            };
+            // A stalled request also has a bounded recovery path, not an endless empty stage.
+            state.timer = setTimeout(fail, 8000);
+            img.src = src;
+        };
+        if (!img.complete || !img.naturalWidth) img.style.visibility = 'hidden';
+        setCharacterPortraitStatus('Загрузка персонажа…');
+        load(state.primary, 0);
     }
+    window.addEventListener('online', () => updateCharacterPortrait(true));
     // Запасной значок для ЛЮБОГО именного артефакта тира 9 — у них нет фиксированного названия
     // (каждый игрок называет свой сам), поэтому обычная запись по имени не подходит. getItemIcon
     // ниже сначала ищет точное совпадение в ITEM_ICONS, а если не находит — проверяет через
@@ -2594,6 +2674,7 @@ button:active {filter:brightness(1.18);}
 
     function updateUI() {
         sanitizePlayerNumbers();
+        updateCharacterPortrait(false); // Sync armor after server refresh, without retry loops.
         // Здоровье/сытость/жажда в главном меню — цифрами
         document.getElementById('health').textContent = Math.round(player.health);
         document.getElementById('hunger').textContent = Math.round(player.hunger);
