@@ -708,6 +708,45 @@ button:active {filter:brightness(1.18);}
 }
 </style>
 
+<style id="pda-profile-layout">
+/* PDA only: avatar on the left, the viewed player's equipped armor on the right. */
+#kpkContent .pda-profile-visuals {
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:12px; align-items:start; width:100%; margin:0 0 14px;
+}
+#kpkContent .pda-profile-avatar {
+  min-width:0; width:100%; max-width:146px; justify-self:start;
+  display:flex; flex-direction:column; align-items:flex-start; gap:10px;
+}
+#kpkContent .pda-profile-avatar-frame {
+  width:100%; aspect-ratio:1; border:3px solid #8a7a4a;
+  border-radius:50%; overflow:hidden; background:#141711;
+}
+#kpkContent .pda-profile-avatar-frame img {
+  display:block; width:100%; height:100%; border:0!important;
+  border-radius:50%!important; object-fit:cover!important; box-shadow:none!important;
+}
+#kpkContent .pda-profile-avatar button {
+  width:100%; min-width:0; padding:7px 5px; margin:0;
+  font-size:11px; line-height:1.3; white-space:normal; overflow-wrap:anywhere;
+}
+#kpkContent .pda-profile-armor {
+  min-width:0; width:100%; max-width:220px; margin:0; justify-self:end;
+  text-align:center; background:transparent;
+}
+#kpkContent .pda-profile-armor img {
+  display:block; width:100%; height:clamp(190px,58vw,310px); max-width:100%;
+  object-fit:contain!important; object-position:center!important;
+  background:transparent!important; border:0!important; border-radius:0!important;
+  opacity:1!important; filter:none!important; box-shadow:none!important;
+}
+#kpkContent .pda-profile-armor figcaption {
+  margin-top:6px; color:#cdbd8f; font-size:12px; line-height:1.35; overflow-wrap:anywhere;
+}
+#kpkContent .pda-profile-armor-label { display:block; margin-bottom:3px; color:#99947f; font-size:10px; }
+#kpkContent .pda-profile-armor-warning { display:block; margin-top:4px; color:#aaa; font-size:10px; }
+#kpkContent .pda-profile-armor-warning[hidden] { display:none; }
+</style>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -1136,6 +1175,7 @@ button:active {filter:brightness(1.18);}
     let battleMedkitsUsed = 0;
     let adminClickCount = 0;
     let kpkTab = 'info';
+    let kpkProfileRequestId = 0;
     let shopTab = 'buy';
     let technicianTab = 'upgrade';
     let marketTab = 'my';
@@ -2835,6 +2875,56 @@ button:active {filter:brightness(1.18);}
         return html;
     }
 
+    // Always use the viewed profile, never the local player's armor.
+    function getProfileArmorVisual(data) {
+        const armor = data && data.armor;
+        const rawName = typeof armor === 'string' ? armor : (armor && armor.name);
+        const name = typeof rawName === 'string' ? rawName.trim() : '';
+        const parsed = parseGearName(name || DEFAULT_ARMOR.name);
+        const hasImage = Object.prototype.hasOwnProperty.call(ARMOR_CHAR_IMAGES, parsed.baseName);
+        const file = hasImage ? ARMOR_CHAR_IMAGES[parsed.baseName] : DEFAULT_CHARACTER_PORTRAIT;
+        return {
+            src: getIconUrl(file),
+            fallbackSrc: getIconUrl(DEFAULT_CHARACTER_PORTRAIT),
+            label: name ? stripInvisibleSuffix(name) : 'Броня не указана',
+            unavailable: Boolean(name && parsed.baseName !== DEFAULT_ARMOR.name && !hasImage)
+        };
+    }
+
+    function handleProfileArmorError(img) {
+        // One fallback only; a failed default image must not cause an error loop.
+        const figure = img.closest('.pda-profile-armor');
+        const warning = figure && figure.querySelector('.pda-profile-armor-warning');
+        if (warning) { warning.hidden = false; warning.textContent = 'Изображение брони недоступно'; }
+        const fallback = img.dataset.fallbackSrc;
+        if (fallback && img.getAttribute('src') !== fallback && !img.dataset.fallbackTried) {
+            img.dataset.fallbackTried = '1';
+            img.src = fallback;
+        } else {
+            img.onerror = null;
+            img.style.display = 'none';
+        }
+    }
+
+    function renderProfileAppearance(data, avatarSrc, canChangeAvatar) {
+        const visual = getProfileArmorVisual(data);
+        const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
+        return `<div class="pda-profile-visuals">
+            <div class="pda-profile-avatar">
+                ${avatarSrc ? `<div class="pda-profile-avatar-frame">
+                    <img src="${attr(avatarSrc)}" alt="Аватар игрока" data-player-avatar onerror="this.style.display='none'">
+                </div>` : ''}
+                ${canChangeAvatar ? `<button type="button" onclick="pickAndUploadAvatar()">📷 Сменить аватарку</button>` : ''}
+            </div>
+            <figure class="pda-profile-armor">
+                <img src="${attr(visual.src)}" data-fallback-src="${attr(visual.fallbackSrc)}"
+                    alt="Персонаж: ${attr(visual.label)}" decoding="async" onerror="handleProfileArmorError(this)">
+                <figcaption><span class="pda-profile-armor-label">Надетая броня</span>${escapeHtml(visual.label)}</figcaption>
+                <span class="pda-profile-armor-warning"${visual.unavailable ? '' : ' hidden'}>Визуал этой брони пока недоступен</span>
+            </figure>
+        </div>`;
+    }
+
     function renderPlayerStatsCard(data, titleText, playerId) {
         const stats = data.stats || {};
         const factionName = factionLabel(data.factionName, playerId);
@@ -2849,12 +2939,7 @@ button:active {filter:brightness(1.18);}
         return `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;">
                 <h4>${titleText}</h4>
-                ${avatarSrc ? `<div style="text-align:center; margin-bottom:10px;">
-                    <div style="display:inline-block; width:146px; height:146px; border-radius:50%; overflow:hidden;">
-                        <img src="${avatarSrc}" style="width:100%; height:100%; border-radius:50%; object-fit:cover; background:#222; border:3px solid #8a7a4a;" onerror="this.style.display='none'">
-                    </div>
-                    ${isAdminProfile && isOwnProfile ? `<br><button onclick="pickAndUploadAvatar()" style="width:auto; padding:6px 14px; margin-top:8px; font-size:12px;">📷 Сменить аватарку</button>` : ''}
-                </div>` : ''}
+                ${renderProfileAppearance(data, avatarSrc, isAdminProfile && isOwnProfile)}
                 ${(data.nickname || data.username) ? `<p>Имя: ${escapeHtml(data.nickname || data.username)}</p>` : ''}
                 ${data.registrationNumber ? `<p>🎖️ Игрок №${data.registrationNumber} в игре, зарегистрирован: ${data.registrationDate ? formatFullDateTime(data.registrationDate) : '—'}</p>` : ''}
                 <p>Фракция: ${factionName}</p>
@@ -2945,6 +3030,7 @@ button:active {filter:brightness(1.18);}
     }
 
     function openKpkTab(tab) {
+        kpkProfileRequestId++;
         kpkTab = tab;
         renderKpk();
     }
@@ -2954,14 +3040,16 @@ button:active {filter:brightness(1.18);}
         // открыта другая вкладка КПК (например, «Фракции»), её ещё не завершившийся фоновый запрос
         // не должен перезаписать этот экран, когда придёт с опозданием (см. проверки kpkTab !== ... ниже)
         kpkTab = 'profile';
+        const requestId = ++kpkProfileRequestId;
         const content = document.getElementById('kpkContent');
         content.innerHTML = '<p style="padding:10px; color:#888;">Загрузка профиля...</p>';
         const isOwnProfile = String(playerId) === String(getPlayerId());
         Promise.all([
-            fetch(`${SERVER_URL}/api/player/${playerId}`).then(res => res.json()).catch(() => null),
+            fetch(`${SERVER_URL}/api/player/${encodeURIComponent(String(playerId))}`, { cache: 'no-store' })
+                .then(res => res.ok ? res.json() : null).catch(() => null),
             isOwnProfile ? Promise.resolve(new Set()) : fetchMyFriendIds()
         ]).then(([data, friendIds]) => {
-            if (kpkTab !== 'profile') return; // пользователь уже ушёл на другую вкладку — не перезаписываем её
+            if (kpkTab !== 'profile' || requestId !== kpkProfileRequestId) return;
             if (data === null) {
                 content.innerHTML = `<button class="back-btn" onclick="openKpkTab('rating')" style="margin-bottom:10px;">← К рейтингу</button>` +
                     '<p style="padding:10px; color:#888;">Не удалось загрузить профиль</p>' +
