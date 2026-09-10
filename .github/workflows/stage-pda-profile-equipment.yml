@@ -1,0 +1,38 @@
+name: Validate PDA weapon and detector icons
+on:
+  push:
+    branches: [pda-profile-equipment]
+    paths:
+      - '.github/workflows/stage-pda-profile-equipment.yml'
+      - 'tools/apply_pda_equipment.py'
+      - 'tests/pda_profile.test.js'
+      - 'tests/pda_equipment_live.test.js'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply PDA-only equipment patch
+        run: python3 tools/apply_pda_equipment.py
+      - name: Verify exact tested client and profile regression tests
+        run: |
+          echo '3c1489522a65b4a828c74dd0c9828ac1011f484a710726d62234303437e04dbf  index.html' | sha256sum --check
+          node tests/pda_profile.test.js index.html
+      - name: Check live public profile and item image URLs (read only)
+        run: node tests/pda_equipment_live.test.js .validation/pda
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pda-equipment-validation
+          path: .validation/pda
+          retention-days: 3
+      - name: Commit validated client to staging branch only
+        run: |
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Show equipped weapon and detector below the PDA avatar button'
+          git push origin HEAD:refs/heads/pda-profile-equipment

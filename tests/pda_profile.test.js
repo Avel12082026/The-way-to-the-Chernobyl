@@ -21,7 +21,8 @@ const context = vm.createContext({
     document: {getElementById: () => content},
     SERVER_URL: 'https://test.invalid', ADMIN_ID: 'owner',
     DEFAULT_ARMOR: {name:'Без брони'}, DEFAULT_CHARACTER_PORTRAIT:'character_portrait.png',
-    player: {armor:{name:'Комбинезон Юность'}},
+    DEFAULT_WEAPON: {name:'Кулаки'}, DEFAULT_DETECTOR: {name:'Без детектора'},
+    player: {armor:{name:'Комбинезон Юность'}, weapon:{name:'Пистолет Макарова'}, detector:{name:'РИПЕР'}},
     getPlayerId: () => 'owner', factionLabel: () => 'Одиночка',
     getRankTitle: () => 'Новичок', formatByTier: () => 'нет данных',
     formatFullDateTime: () => '', renderPerksBlock: () => '', renderEquipmentDetails: () => '',
@@ -34,10 +35,15 @@ const context = vm.createContext({
     }
 });
 vm.runInContext([
+    getBlock(/    const ITEM_ICONS = \{[\s\S]*?\n    \};/),
+    getBlock(/    const EMPTY_SLOT_ICONS = \{[^\n]+;/),
+    getBlock(/    const weapons = \[[\s\S]*?\n    \];/),
+    getBlock(/    const detectors = \[[\s\S]*?\n    \];/),
     getBlock(/    const ARMOR_CHAR_IMAGES = \{[\s\S]*?\n    \};/),
     getBlock(/    const CLIENT_ICON_VERSIONS = new Map\(\[[\s\S]*?\n    \]\);/),
     "let kpkTab = 'info'; let kpkProfileRequestId = 0;",
     ...['stripInvisibleSuffix','parseGearName','getIconUrl','getProfileArmorVisual','handleProfileArmorError',
+        'getProfileEquipmentVisual','handleProfileEquipmentImageError','renderProfileEquipment',
         'renderProfileAppearance','renderPlayerStatsCard','openKpkTab','showPlayerInfo'].map(getFunction)
 ].join('\n'), context);
 function run(code) {return vm.runInContext(code,context);}
@@ -85,20 +91,89 @@ assert.equal(img.style.display,'none');
 assert.equal(img.onerror,null);
 assert.ok(html.includes('object-fit:contain!important'));
 assert.ok(html.includes('id="pda-profile-layout"'));
-async function resolveProfile(id, armor) {
+
+// Equipment must be taken from the viewed profile, including upgraded/duplicate items.
+let equipmentCases = 0;
+const catalogues = JSON.parse(run('JSON.stringify({weapon: weapons, detector: detectors})'));
+for (const [slotType, catalogue] of Object.entries(catalogues)) {
+    for (const def of catalogue) {
+        context.baseName = def.name;
+        const expectedFile = run('ITEM_ICONS[baseName]');
+        assert.equal(typeof expectedFile, 'string', `missing icon for ${def.name}`);
+        for (const suffix of ['', ' +9', ' +9\u200B\u200C']) {
+            for (const asString of [false, true]) {
+                context.sample = {[slotType]: asString ? def.name+suffix : {name:def.name+suffix}};
+                context.slotType = slotType;
+                const visual = run('getProfileEquipmentVisual(sample, slotType)');
+                assert.equal(visual.src.split('?')[0].split('/').pop(), expectedFile);
+                assert.equal(visual.isEmpty, false);
+                assert.equal(visual.missingIcon, false);
+                assert.ok(!visual.label.includes('\u200B'));
+                equipmentCases++;
+            }
+        }
+    }
+}
+assert.ok(equipmentCases >= 564);
+assert.equal(run("getProfileEquipmentVisual({}, 'armor')"),null);
+for (const slotType of ['weapon','detector']) {
+    context.slotType = slotType;
+    for (const sample of [null, {}, {[slotType]:null}, {[slotType]:{}}, {[slotType]:{name:4}},
+        {[slotType]:''}, {[slotType]:'\u200B\u200C'}, {[slotType]:slotType==='weapon'?'Кулаки':'Без детектора'}]) {
+        context.sample = sample;
+        const visual = run('getProfileEquipmentVisual(sample, slotType)');
+        assert.equal(visual.isEmpty, true);
+        assert.match(visual.src, new RegExp(`empty_slot_${slotType}\\.png$`));
+    }
+    for (const name of ['Неизвестный предмет', 'toString', '__proto__', 'constructor']) {
+        context.sample = {[slotType]:{name}};
+        const visual = run('getProfileEquipmentVisual(sample, slotType)');
+        assert.equal(visual.src, '');
+        assert.equal(visual.missingIcon,true);
+        assert.equal(visual.label,name);
+    }
+}
+context.sample={weapon:{name:'Автомат АК-74 +3\u200B'}, detector:{name:'ВИЗИРЬ'}, armor:{name:'Комбинезон Долг'}};
+const equippedOther = run("renderPlayerStatsCard(sample,'Профиль','other')");
+assert.match(equippedOther,/avtomat_ak74\.png/);
+assert.match(equippedOther,/vizir\.jpg/);
+assert.doesNotMatch(equippedOther,/pistolet_makarova\.png|riper\.jpg/);
+assert.doesNotMatch(equippedOther,/openEquippedItemActions|pickAndUploadAvatar/);
+assert.equal((equippedOther.match(/data-slot-type=/g)||[]).length,2);
+assert.ok(equippedOther.indexOf('data-slot-type="weapon"') < equippedOther.indexOf('data-slot-type="detector"'));
+assert.ok(ownCard.indexOf('pickAndUploadAvatar') < ownCard.indexOf('data-slot-type="weapon"'));
+assert.match(ownCard,/pistolet_makarova\.png/);
+assert.match(ownCard,/riper\.jpg/);
+context.sample={weapon:{name:'<img src=x onerror=alert(1)> " test'},detector:{name:'<script>alert(1)</script>'}};
+const escapedEquipment = run('renderProfileEquipment(sample)');
+assert.doesNotMatch(escapedEquipment,/<img src=x|<script>/);
+assert.match(escapedEquipment,/&quot;/);
+assert.match(escapedEquipment,/&lt;script&gt;/);
+const fallbackText={hidden:true};
+const failedItemImage={hidden:false,onerror:()=>{},closest:()=>({querySelector:()=>fallbackText})};
+context.failedItemImage=failedItemImage;
+run('handleProfileEquipmentImageError(failedItemImage)');
+assert.equal(failedItemImage.hidden,true);
+assert.equal(failedItemImage.onerror,null);
+assert.equal(fallbackText.hidden,false);
+
+async function resolveProfile(id, armor, weapon, detector) {
     assert.ok(pending.has(id));
-    pending.get(id)({ok:true,json:()=>Promise.resolve({nickname:id,armor:{name:armor}})});
+    pending.get(id)({ok:true,json:()=>Promise.resolve({nickname:id,armor:{name:armor},weapon:{name:weapon},detector:{name:detector}})});
     await new Promise(resolve=>setImmediate(resolve));
 }
 (async()=>{
     run("showPlayerInfo('slow'); showPlayerInfo('fast');");
-    await resolveProfile('fast','Комбинезон Долг');
+    await resolveProfile('fast','Комбинезон Долг','Автомат АК-74','ВИЗИРЬ');
     assert.match(content.innerHTML,/armor_char_12\.webp/);
-    await resolveProfile('slow','Комбинезон Юность');
+    await resolveProfile('slow','Комбинезон Юность','Пистолет Макарова','РИПЕР');
+    assert.match(content.innerHTML,/avtomat_ak74\.png/);
+    assert.match(content.innerHTML,/vizir\.jpg/);
+    assert.doesNotMatch(content.innerHTML,/pistolet_makarova\.png|riper\.jpg/);
     assert.match(content.innerHTML,/armor_char_12\.webp/);
     run("showPlayerInfo('late'); openKpkTab('info');");
     await resolveProfile('late','Комбинезон Юность');
     assert.equal(content.innerHTML,'own-card');
     assert.ok(requests.every(r=>r.opts.cache==='no-store'));
-    console.log(`PASS: all inline scripts compile; ${cases} armor mapping cases; own/other profiles; missing armor; escaping; image fallback; request races.`);
+    console.log(`PASS: all inline scripts compile; ${cases} armor and ${equipmentCases} weapon/detector mapping cases; own/other profiles; missing armor; escaping; image fallback; request races.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});
