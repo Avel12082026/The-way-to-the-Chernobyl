@@ -1,0 +1,45 @@
+name: Validate PDA avatar and armor layout
+on:
+  push:
+    branches: [pda-avatar-armor-layout]
+    paths:
+      - '.github/workflows/stage-pda-profile-layout.yml'
+      - 'tools/apply_pda_profile_layout.py'
+      - 'tests/pda_profile.test.js'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply reviewed PDA-only patch
+        run: python3 tools/apply_pda_profile_layout.py
+      - name: Verify exact reviewed client and test profile routing
+        run: |
+          echo '46379f7c206f93cd8587dc3273c5aefef36702574243f3d6b8fdf0a103b0c507  index.html' | sha256sum --check
+          node tests/pda_profile.test.js index.html
+      - name: Check public profile armor contract (read only)
+        run: |
+          python3 - <<'PY'
+          import json, re, urllib.request
+          from pathlib import Path
+          s = Path('index.html').read_text()
+          server = re.search(r"const SERVER_URL = '([^']+)'", s).group(1)
+          player_id = re.search(r"const ADMIN_ID = '([^']+)'", s).group(1)
+          request = urllib.request.Request(server + '/api/player/' + player_id, headers={'User-Agent':'PDA-layout-contract-check'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              profile = json.load(response)
+          armor = profile.get('armor') if isinstance(profile, dict) else None
+          assert isinstance(armor, dict) and isinstance(armor.get('name'), str), 'Public profile does not expose equipped armor name'
+          print('PASS: live public profile exposes equipped armor.name; no private endpoint used, no player data changed.')
+          PY
+      - name: Commit validated client on staging branch only
+        run: |
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Show avatar left and equipped armor right in all PDA profiles'
+          git push origin HEAD:refs/heads/pda-avatar-armor-layout
