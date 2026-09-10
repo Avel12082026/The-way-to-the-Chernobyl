@@ -1,0 +1,46 @@
+name: Validate character portrait recovery
+on:
+  push:
+    branches: [fix-character-portrait-recovery]
+    paths:
+      - '.github/workflows/stage-character-portrait-recovery.yml'
+      - 'tools/apply_character_portrait_recovery.py'
+      - 'tests/character_portrait.test.js'
+      - 'tests/character_portrait.browser.py'
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply portrait-only patch to verified base
+        run: python3 tools/apply_character_portrait_recovery.py
+      - name: Verify exact reviewed client and regression tests
+        run: |
+          echo '78b8091ea332bae96b62f79b0e42b1baade639a8313b4ef4e6e2504a5e497760  index.html' | sha256sum --check
+          node tests/pda_profile.test.js index.html
+          node tests/character_portrait.test.js index.html
+      - name: Install isolated browser test dependencies
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Test navigation and simulated image failures without live API calls
+        run: python3 tests/character_portrait.browser.py index.html icons .validation/portraits
+      - uses: actions/upload-artifact@v4
+        with:
+          name: character-portrait-validation
+          path: .validation/portraits
+          retention-days: 3
+      - name: Commit validated client to staging only
+        run: |
+          git diff --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Recover the equipped character portrait after transient image failures'
+          git push origin HEAD:refs/heads/fix-character-portrait-recovery
