@@ -1,0 +1,981 @@
+{
+  "base_url": "https://avel12082026.github.io/The-way-to-the-Chernobyl/",
+  "checked": 162,
+  "passed": 162,
+  "results": [
+    {
+      "file": "icons/armor_char_16.webp",
+      "expected": "020568840449a55f5b9c92c786ab7285e3e745265a5990002019dbf21d5d7178",
+      "actual": "020568840449a55f5b9c92c786ab7285e3e745265a5990002019dbf21d5d7178",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_16.webp",
+      "expected": "088cf4f44fcc4fc4114e0039a01c03844c901db01af991699378edc37b8c4f98",
+      "actual": "088cf4f44fcc4fc4114e0039a01c03844c901db01af991699378edc37b8c4f98",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_17.webp",
+      "expected": "914b36ebc91238012488a0835475f6f18991f3f7f57f8de41e8568a4c66daaa3",
+      "actual": "914b36ebc91238012488a0835475f6f18991f3f7f57f8de41e8568a4c66daaa3",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_17.webp",
+      "expected": "a7bf9b2b8028bb9b5bb6b0d14d777bbb76ebf08cdb0599a3f52a5dcf6010ccee",
+      "actual": "a7bf9b2b8028bb9b5bb6b0d14d777bbb76ebf08cdb0599a3f52a5dcf6010ccee",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_18.webp",
+      "expected": "780eeeb9a924688604cd8d9cc58644d2b89d4ce2636b5030980bbfb2b2549d10",
+      "actual": "780eeeb9a924688604cd8d9cc58644d2b89d4ce2636b5030980bbfb2b2549d10",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_18.webp",
+      "expected": "9eae88d1abcb36a5496a0f23a7fcf7c1671c4c3756b32a8ff3e2682d40541350",
+      "actual": "9eae88d1abcb36a5496a0f23a7fcf7c1671c4c3756b32a8ff3e2682d40541350",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_19.webp",
+      "expected": "1a0ebd705c4c5c5a5612518a670142c6856bf98f8a115f5e8d32385828bc6e7f",
+      "actual": "1a0ebd705c4c5c5a5612518a670142c6856bf98f8a115f5e8d32385828bc6e7f",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_19.webp",
+      "expected": "59be58cdf66aceccfff81cace38f56cd4e3f9cefbf3181e162640b0cccc71c46",
+      "actual": "59be58cdf66aceccfff81cace38f56cd4e3f9cefbf3181e162640b0cccc71c46",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_20.webp",
+      "expected": "bf1b8ae7fda332e5c84f5c80a71fd6a47467ab79c90e3fe68f73d1a47490b8b4",
+      "actual": "bf1b8ae7fda332e5c84f5c80a71fd6a47467ab79c90e3fe68f73d1a47490b8b4",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_20.webp",
+      "expected": "f6186a6bffc52991a6e714bd189dd31cdecd0fd07e6027fcd32620c3ee6184c7",
+      "actual": "f6186a6bffc52991a6e714bd189dd31cdecd0fd07e6027fcd32620c3ee6184c7",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_21.webp",
+      "expected": "936abeeacf3ff02b5f79a77d8edb75d25b5fae48481d2f3a94f06e7b1c4b7b2c",
+      "actual": "936abeeacf3ff02b5f79a77d8edb75d25b5fae48481d2f3a94f06e7b1c4b7b2c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_21.webp",
+      "expected": "60afc813f1937a6638fc1b07452c2b2e97cf2f1fb19a17b85d165a36838236a2",
+      "actual": "60afc813f1937a6638fc1b07452c2b2e97cf2f1fb19a17b85d165a36838236a2",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_22.webp",
+      "expected": "2feaba3f3b27542dfe75a57d48cde16ef57073e3896a2084c88430e57fbfe15d",
+      "actual": "2feaba3f3b27542dfe75a57d48cde16ef57073e3896a2084c88430e57fbfe15d",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_22.webp",
+      "expected": "56d5b4350b7687fe2628da57940b2a111964d9d0c69acbebbdb8b9b90e0130ec",
+      "actual": "56d5b4350b7687fe2628da57940b2a111964d9d0c69acbebbdb8b9b90e0130ec",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_65.webp",
+      "expected": "a74987dd4ca7406cc685f5cffa89933ced514751a705fd610eedeb207fa96ff7",
+      "actual": "a74987dd4ca7406cc685f5cffa89933ced514751a705fd610eedeb207fa96ff7",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_65.webp",
+      "expected": "20fc7cd1aba7c407c281e864b7968ecff1e4dc1e04351a886109e6bd7fa4a541",
+      "actual": "20fc7cd1aba7c407c281e864b7968ecff1e4dc1e04351a886109e6bd7fa4a541",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_24.webp",
+      "expected": "c360fafe61cf61f5eab2c6affc0a07de5cef6aa38b2e9956a46cc35a975c8ef6",
+      "actual": "c360fafe61cf61f5eab2c6affc0a07de5cef6aa38b2e9956a46cc35a975c8ef6",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_24.webp",
+      "expected": "3e20525f6fb569379fff6d23801c79a528268147affbf3e5e2d51800616d21bd",
+      "actual": "3e20525f6fb569379fff6d23801c79a528268147affbf3e5e2d51800616d21bd",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_25.webp",
+      "expected": "506163a39bb1c5c52f430a79e548351a7b99b6ec5fb38c3e5cbcda49aac1863b",
+      "actual": "506163a39bb1c5c52f430a79e548351a7b99b6ec5fb38c3e5cbcda49aac1863b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_25.webp",
+      "expected": "fd87569ae3c0995dc0fee2b4ccf3de9c6278be6aac1748682c4b36370e75d2a2",
+      "actual": "fd87569ae3c0995dc0fee2b4ccf3de9c6278be6aac1748682c4b36370e75d2a2",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_26.webp",
+      "expected": "cdbed3a9d9f90bca4292c7b4e7146e463a7160587838c4fea86c67c7f787857b",
+      "actual": "cdbed3a9d9f90bca4292c7b4e7146e463a7160587838c4fea86c67c7f787857b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_26.webp",
+      "expected": "e82146a3e8d1c70a79ea1a513a8368aeee2b67a170dbc4e86b19618738111c8e",
+      "actual": "e82146a3e8d1c70a79ea1a513a8368aeee2b67a170dbc4e86b19618738111c8e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_27.webp",
+      "expected": "c050c8293fadb3208a09cb1f573c483804bae4d49c6af20e45c3cf34814cea9b",
+      "actual": "c050c8293fadb3208a09cb1f573c483804bae4d49c6af20e45c3cf34814cea9b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_27.webp",
+      "expected": "e44eea413f0ed729423aeaff246eb19627fd463f2cd89b913342b263e63628a1",
+      "actual": "e44eea413f0ed729423aeaff246eb19627fd463f2cd89b913342b263e63628a1",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_67.webp",
+      "expected": "73d2b3c997b70213dcfd827a65faf4ba95859ef874c049d5ca8ae97e2918abfe",
+      "actual": "73d2b3c997b70213dcfd827a65faf4ba95859ef874c049d5ca8ae97e2918abfe",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_67.webp",
+      "expected": "460305bbae81c231a017e6c688645b98210f553adbd88a624dd3551e248b2755",
+      "actual": "460305bbae81c231a017e6c688645b98210f553adbd88a624dd3551e248b2755",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_29.webp",
+      "expected": "9cc9b918237f57474576020ed86aab4a066ea5a4a266caa74cf1f843ae4f9da7",
+      "actual": "9cc9b918237f57474576020ed86aab4a066ea5a4a266caa74cf1f843ae4f9da7",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_29.webp",
+      "expected": "73ccf7b7e7d37737f10440cc64aca10f53890009077e444e325a405b2ae43ec5",
+      "actual": "73ccf7b7e7d37737f10440cc64aca10f53890009077e444e325a405b2ae43ec5",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_30.webp",
+      "expected": "1028f5506500d6540506ebaab7400d4538a8f09e8984983a2a6f64054a5e0729",
+      "actual": "1028f5506500d6540506ebaab7400d4538a8f09e8984983a2a6f64054a5e0729",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_30.webp",
+      "expected": "d10ed91c11cf528bbb982d6b1fb9e31d25d8de6e8f752c97ba68a063002c231c",
+      "actual": "d10ed91c11cf528bbb982d6b1fb9e31d25d8de6e8f752c97ba68a063002c231c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_31.webp",
+      "expected": "52dc59a98aff9d69126f1d5c6b9ecacdd171a4e8b6999b1f22fff51d5a47a848",
+      "actual": "52dc59a98aff9d69126f1d5c6b9ecacdd171a4e8b6999b1f22fff51d5a47a848",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_31.webp",
+      "expected": "e19f839e355b621a4c91df3f45bae3607b87c9acc781a29eb7f6304e55881077",
+      "actual": "e19f839e355b621a4c91df3f45bae3607b87c9acc781a29eb7f6304e55881077",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_32.webp",
+      "expected": "ed1efd80efa59e397968406ba239e646c02857766a2a95ce4b95219e8103904b",
+      "actual": "ed1efd80efa59e397968406ba239e646c02857766a2a95ce4b95219e8103904b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_32.webp",
+      "expected": "1cf81308602702586a747a3beb6a5aa617880d54cd64fd480871e91f3c291abb",
+      "actual": "1cf81308602702586a747a3beb6a5aa617880d54cd64fd480871e91f3c291abb",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_33.webp",
+      "expected": "86026b2bd175586451ef2925f6c08e45a3bec9d527fb49e6eeb902b350dd1dda",
+      "actual": "86026b2bd175586451ef2925f6c08e45a3bec9d527fb49e6eeb902b350dd1dda",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_33.webp",
+      "expected": "6c5e1128fa99bec5f8f4e95a6c347654a5426f5d6c691acc0d47355ab1108a59",
+      "actual": "6c5e1128fa99bec5f8f4e95a6c347654a5426f5d6c691acc0d47355ab1108a59",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_34.webp",
+      "expected": "6f7a4e8789f3b06558df6f803e209626d1e6fac1d387598f21994252be5ae2e6",
+      "actual": "6f7a4e8789f3b06558df6f803e209626d1e6fac1d387598f21994252be5ae2e6",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_34.webp",
+      "expected": "99d4bd87ecbf9308422d6a70dce92582e2f5ccad96f793df66b5ce70cac6372b",
+      "actual": "99d4bd87ecbf9308422d6a70dce92582e2f5ccad96f793df66b5ce70cac6372b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_69.webp",
+      "expected": "0e9a580734231bdbd8fbeaa0468f84644476ba28caac5d12d06a8f19cfbace62",
+      "actual": "0e9a580734231bdbd8fbeaa0468f84644476ba28caac5d12d06a8f19cfbace62",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_69.webp",
+      "expected": "f9400bb93a0ebe51ffaf44fecfa91084be7ca311ca06108cd0bc925f03d1bd7d",
+      "actual": "f9400bb93a0ebe51ffaf44fecfa91084be7ca311ca06108cd0bc925f03d1bd7d",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_36.webp",
+      "expected": "c644d00f9861b8057ea3825a36674e7299a10887d0025413d5ad4d4664d3435e",
+      "actual": "c644d00f9861b8057ea3825a36674e7299a10887d0025413d5ad4d4664d3435e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_36.webp",
+      "expected": "31888997451f594a2ff95e9065cca597067f423c130cab0cd7e946608509cecd",
+      "actual": "31888997451f594a2ff95e9065cca597067f423c130cab0cd7e946608509cecd",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_37.webp",
+      "expected": "cbd1e5e558eda6461cd8c7c7f7b7ca4d1f8de21e513e7c98d4cc971de785fad0",
+      "actual": "cbd1e5e558eda6461cd8c7c7f7b7ca4d1f8de21e513e7c98d4cc971de785fad0",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_37.webp",
+      "expected": "6161093766a6b30fd4a9aa834b727b24673bdb932717bc2fbadde63754fd9111",
+      "actual": "6161093766a6b30fd4a9aa834b727b24673bdb932717bc2fbadde63754fd9111",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_38.webp",
+      "expected": "70e3dba015dd4227f5e3cd4ecf7a76124ceeab652ab5bd341c4cd530aed0a4a5",
+      "actual": "70e3dba015dd4227f5e3cd4ecf7a76124ceeab652ab5bd341c4cd530aed0a4a5",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_38.webp",
+      "expected": "f414b2e4c1dfc31a830aad1e57475c12d7eb9e43e1a97e8b772a2b08259785c4",
+      "actual": "f414b2e4c1dfc31a830aad1e57475c12d7eb9e43e1a97e8b772a2b08259785c4",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_39.webp",
+      "expected": "9464719545bfed7bc386cec4200f8865010b3ab0569088bd77f8c102ecec7c3c",
+      "actual": "9464719545bfed7bc386cec4200f8865010b3ab0569088bd77f8c102ecec7c3c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_39.webp",
+      "expected": "39a988054b1965a94d572138343a23ec0ea9fba38ba8467d49ab2851e19bb38b",
+      "actual": "39a988054b1965a94d572138343a23ec0ea9fba38ba8467d49ab2851e19bb38b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_40.webp",
+      "expected": "711ac4d7401ad915d31a839f236e123f4a44cc171fe7125519d723794b7cc59a",
+      "actual": "711ac4d7401ad915d31a839f236e123f4a44cc171fe7125519d723794b7cc59a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_40.webp",
+      "expected": "cc76d110893d02fd41432f23fcc04f44ee114cab628e364b37044768da68af65",
+      "actual": "cc76d110893d02fd41432f23fcc04f44ee114cab628e364b37044768da68af65",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_73.webp",
+      "expected": "0996d759ac4d079c3883298ce7ca3b30eabd5458385eabb854e7aa5643b01e22",
+      "actual": "0996d759ac4d079c3883298ce7ca3b30eabd5458385eabb854e7aa5643b01e22",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_73.webp",
+      "expected": "540620980b63aacbc7434aa3afe49a4e84540c7cd7862c747f01a87508196389",
+      "actual": "540620980b63aacbc7434aa3afe49a4e84540c7cd7862c747f01a87508196389",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_42.webp",
+      "expected": "aeb48859681111d990dc5db3df81b945bdad58bb93e3410166446623945f072e",
+      "actual": "aeb48859681111d990dc5db3df81b945bdad58bb93e3410166446623945f072e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_42.webp",
+      "expected": "6c4d8d59aeab33a793781a8b71cf4f4cf2417255d6d6f35684a949e51ff19667",
+      "actual": "6c4d8d59aeab33a793781a8b71cf4f4cf2417255d6d6f35684a949e51ff19667",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_43.webp",
+      "expected": "3a4935ab1b256367570530d125122e47308cc7afbfee52769ec6eb22798c18a9",
+      "actual": "3a4935ab1b256367570530d125122e47308cc7afbfee52769ec6eb22798c18a9",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_43.webp",
+      "expected": "928fe4311fb19355e5e3fe3eda1d3aceab94d86e42296665dc41938b597b338c",
+      "actual": "928fe4311fb19355e5e3fe3eda1d3aceab94d86e42296665dc41938b597b338c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_44.webp",
+      "expected": "5c7e7fd70a84a5869d330f35c414e03124743edbb02abf9f59988d5a12f816f0",
+      "actual": "5c7e7fd70a84a5869d330f35c414e03124743edbb02abf9f59988d5a12f816f0",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_44.webp",
+      "expected": "4273cf9855f9938eab8dcaeda708832ba1b231dc8180d075d1aa8c8de5d255b8",
+      "actual": "4273cf9855f9938eab8dcaeda708832ba1b231dc8180d075d1aa8c8de5d255b8",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_45.webp",
+      "expected": "af8bcd3cf59ec959c03f1ed7f3a5a19142d928aad132a99918cdd5be90d07f6d",
+      "actual": "af8bcd3cf59ec959c03f1ed7f3a5a19142d928aad132a99918cdd5be90d07f6d",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_45.webp",
+      "expected": "d47fb0993f828b839166b9151d1aec60eb84bfe7f49cc9f51fae7749027d6db3",
+      "actual": "d47fb0993f828b839166b9151d1aec60eb84bfe7f49cc9f51fae7749027d6db3",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_46.webp",
+      "expected": "d63b23e21770a72595259e90c2fbd7f37fe353a42b7fc6d753c2abecee88f190",
+      "actual": "d63b23e21770a72595259e90c2fbd7f37fe353a42b7fc6d753c2abecee88f190",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_46.webp",
+      "expected": "16354681b832fdfe8f41c7a1c396b1bb6ea79a3dba3c0dabbe542ed5a303cec9",
+      "actual": "16354681b832fdfe8f41c7a1c396b1bb6ea79a3dba3c0dabbe542ed5a303cec9",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_47.webp",
+      "expected": "bbe6e0990e4c643814595ba4adbb563d65454868f358d06b7abefe26de664a0e",
+      "actual": "bbe6e0990e4c643814595ba4adbb563d65454868f358d06b7abefe26de664a0e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_47.webp",
+      "expected": "2ca3df29a0604f1948d1ba13b02083c23b0fab1b25e0ccd80f42cc91fd74215c",
+      "actual": "2ca3df29a0604f1948d1ba13b02083c23b0fab1b25e0ccd80f42cc91fd74215c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_75.webp",
+      "expected": "d3c199435632135a3e8b65e14e8bc1314c6ad598ea1a5dad03bc880212727a9b",
+      "actual": "d3c199435632135a3e8b65e14e8bc1314c6ad598ea1a5dad03bc880212727a9b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_75.webp",
+      "expected": "e25706e77c70434b9a4792a8a124d1fe61e32d2ee1737cbbc9e4d2ed4036817e",
+      "actual": "e25706e77c70434b9a4792a8a124d1fe61e32d2ee1737cbbc9e4d2ed4036817e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_49.webp",
+      "expected": "e12bea07dc1090ae147c52d72343ba6a4818bc0da09225068df7b537ea871852",
+      "actual": "e12bea07dc1090ae147c52d72343ba6a4818bc0da09225068df7b537ea871852",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_49.webp",
+      "expected": "932ac66ae94a5b7cf3b37fbb98bf1ba9096337bf7206dd69982badb031c82d5f",
+      "actual": "932ac66ae94a5b7cf3b37fbb98bf1ba9096337bf7206dd69982badb031c82d5f",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_50.webp",
+      "expected": "6ce3be4328895390c78b5c90fe42f362d53f2732717880a9e31ba6c2284c5e08",
+      "actual": "6ce3be4328895390c78b5c90fe42f362d53f2732717880a9e31ba6c2284c5e08",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_50.webp",
+      "expected": "f0990585ee06b31d33ae2deb636ea2636b64e32c209d86670140e03e7e00de60",
+      "actual": "f0990585ee06b31d33ae2deb636ea2636b64e32c209d86670140e03e7e00de60",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_51.webp",
+      "expected": "295374b38f1e0e99820f5e122d77725558f05ddf234a714427f2282f0c234f76",
+      "actual": "295374b38f1e0e99820f5e122d77725558f05ddf234a714427f2282f0c234f76",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_51.webp",
+      "expected": "3a54d8e19a3da8ac722b554b4dbed0f79b5c1edef32192b583a39fb9461ea558",
+      "actual": "3a54d8e19a3da8ac722b554b4dbed0f79b5c1edef32192b583a39fb9461ea558",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_52.webp",
+      "expected": "71c8809c6abcf8ac876462451d37afae9027161121ebd37186b513fc3bfeecc9",
+      "actual": "71c8809c6abcf8ac876462451d37afae9027161121ebd37186b513fc3bfeecc9",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_52.webp",
+      "expected": "1b673e80632973a0d57bcc05f76cd5f0b68ff53e0a2ff217574975fe22d5a008",
+      "actual": "1b673e80632973a0d57bcc05f76cd5f0b68ff53e0a2ff217574975fe22d5a008",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_53.webp",
+      "expected": "2745d6ac481ab67be8c5e71800c17d114b61d5f5d6690a3a9bbf875ba90705bc",
+      "actual": "2745d6ac481ab67be8c5e71800c17d114b61d5f5d6690a3a9bbf875ba90705bc",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_53.webp",
+      "expected": "b1c349329661361d556a5a144b43fc196ea981430050ca5c5762392c77a03f1f",
+      "actual": "b1c349329661361d556a5a144b43fc196ea981430050ca5c5762392c77a03f1f",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_79.webp",
+      "expected": "ebd2c9ee81f621ebf33b5451b50ec150b4f7b67b8b9408c9dc3810ae43ca0bde",
+      "actual": "ebd2c9ee81f621ebf33b5451b50ec150b4f7b67b8b9408c9dc3810ae43ca0bde",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_79.webp",
+      "expected": "64f17f7282d1d6049ff0cc691b8c8bfb6741076edb1f71f835f087e0d00a26e3",
+      "actual": "64f17f7282d1d6049ff0cc691b8c8bfb6741076edb1f71f835f087e0d00a26e3",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_55.webp",
+      "expected": "11f34a0e8c460ab5ee8111fe9070c5549cff3bffdd3f622b062a12c3ae4e4d14",
+      "actual": "11f34a0e8c460ab5ee8111fe9070c5549cff3bffdd3f622b062a12c3ae4e4d14",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_55.webp",
+      "expected": "8cc7de50b0a78b5709bb78be485b7b3b15d32616e2369c426b27dfc91705d16a",
+      "actual": "8cc7de50b0a78b5709bb78be485b7b3b15d32616e2369c426b27dfc91705d16a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_56.webp",
+      "expected": "791bc68e04986a28ae188fcde37a45a70b1571f523c3facb91ba11eb44f66d38",
+      "actual": "791bc68e04986a28ae188fcde37a45a70b1571f523c3facb91ba11eb44f66d38",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_56.webp",
+      "expected": "0169bf03f17ecaa55e713c6a54f2cb6253c5eb5fc11907b2bfefcf88c6359826",
+      "actual": "0169bf03f17ecaa55e713c6a54f2cb6253c5eb5fc11907b2bfefcf88c6359826",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_57.webp",
+      "expected": "145ed83d09d58c016184a4cf0ec7e89d804ecdf8b450d8764854a28a55e22126",
+      "actual": "145ed83d09d58c016184a4cf0ec7e89d804ecdf8b450d8764854a28a55e22126",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_57.webp",
+      "expected": "561ffc1c22f3d0972dcfaf4f3df2f4d8465a4b150b99db4f303c86fd2234da74",
+      "actual": "561ffc1c22f3d0972dcfaf4f3df2f4d8465a4b150b99db4f303c86fd2234da74",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_58.webp",
+      "expected": "67d28ca4753827eed2c6b6c4750d7da8280e8c27dba7498ff1a189090fc05143",
+      "actual": "67d28ca4753827eed2c6b6c4750d7da8280e8c27dba7498ff1a189090fc05143",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_58.webp",
+      "expected": "465b394374be8f5c385fd82caf36bcb36403888eab76d5943c5b707ccb6f34bb",
+      "actual": "465b394374be8f5c385fd82caf36bcb36403888eab76d5943c5b707ccb6f34bb",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_59.webp",
+      "expected": "c004af13a84c71927f9d24691f946b7f5241e51e3033c5db1a9e374bfb4b0244",
+      "actual": "c004af13a84c71927f9d24691f946b7f5241e51e3033c5db1a9e374bfb4b0244",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_59.webp",
+      "expected": "786840b03b8cfd3210e7f6599fc3078c5255aeebdd2488d379e2f9b4c6472947",
+      "actual": "786840b03b8cfd3210e7f6599fc3078c5255aeebdd2488d379e2f9b4c6472947",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_60.webp",
+      "expected": "a82e92ec4e67bd5826b1a3d263f286e7e7e35eb041788ce5ef6cdf5b9c950e90",
+      "actual": "a82e92ec4e67bd5826b1a3d263f286e7e7e35eb041788ce5ef6cdf5b9c950e90",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_60.webp",
+      "expected": "981a15360099d7e2e56bf63ebca95d27a272d7cb43092fa247161639163fbf19",
+      "actual": "981a15360099d7e2e56bf63ebca95d27a272d7cb43092fa247161639163fbf19",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_61.webp",
+      "expected": "019096416ea1dc9e5907626fe3e0a34c665b78068794c7c2c9d340640822c7b2",
+      "actual": "019096416ea1dc9e5907626fe3e0a34c665b78068794c7c2c9d340640822c7b2",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_61.webp",
+      "expected": "efd9799e1af5c99ba69577f3fd154400d186b67e93c4835978a94dcf9d8da438",
+      "actual": "efd9799e1af5c99ba69577f3fd154400d186b67e93c4835978a94dcf9d8da438",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_62.webp",
+      "expected": "f600eff3334d2dd5029ce8e7e05fd2ba2aa2e5cedb315fa5669a9af8df2142cf",
+      "actual": "f600eff3334d2dd5029ce8e7e05fd2ba2aa2e5cedb315fa5669a9af8df2142cf",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_62.webp",
+      "expected": "cc6a36c26f0573bc6c5339ff70e7a39ef9866fa1953db5d644f223d95f403e45",
+      "actual": "cc6a36c26f0573bc6c5339ff70e7a39ef9866fa1953db5d644f223d95f403e45",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_63.webp",
+      "expected": "0aa676e0e3960dbbbcacd6ce240875a8cdab88dfbcbf9880b1559f997b403863",
+      "actual": "0aa676e0e3960dbbbcacd6ce240875a8cdab88dfbcbf9880b1559f997b403863",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_63.webp",
+      "expected": "5eb939001deabda04c66011d3d1747ddff23a3d5da567ae959ea8eac43741818",
+      "actual": "5eb939001deabda04c66011d3d1747ddff23a3d5da567ae959ea8eac43741818",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_15.webp",
+      "expected": "9350a649575ed6c51a59abe6da97266619c46d221b311582242023fee9c4031e",
+      "actual": "9350a649575ed6c51a59abe6da97266619c46d221b311582242023fee9c4031e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_15.webp",
+      "expected": "2e9fa92f2ca0de555f9f74e004fefb5bd3e26abd3d010a4bcb88c38b757eb2dd",
+      "actual": "2e9fa92f2ca0de555f9f74e004fefb5bd3e26abd3d010a4bcb88c38b757eb2dd",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_23.webp",
+      "expected": "8e4ba540c077e62d4c560c08901d0db530151dbf22f5730fa9834196ba682d06",
+      "actual": "8e4ba540c077e62d4c560c08901d0db530151dbf22f5730fa9834196ba682d06",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_23.webp",
+      "expected": "a963fd022dacf313f62e72f0250fc2f99ea2e09b48f2eb3f5089efa4f51eb707",
+      "actual": "a963fd022dacf313f62e72f0250fc2f99ea2e09b48f2eb3f5089efa4f51eb707",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_66.webp",
+      "expected": "0250560ad4b9e8f42df66ba618a1d8758f9a31705810f71e50c1fb35c8c79bec",
+      "actual": "0250560ad4b9e8f42df66ba618a1d8758f9a31705810f71e50c1fb35c8c79bec",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_66.webp",
+      "expected": "edbef4ec795c151b6418e3d22e07bf622b1b33eec28bb10262b3630c32d5a064",
+      "actual": "edbef4ec795c151b6418e3d22e07bf622b1b33eec28bb10262b3630c32d5a064",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_28.webp",
+      "expected": "187a6551a87d374481dca0eddd1c12dfbbbc673ddd6903161d8bb45eaaefe650",
+      "actual": "187a6551a87d374481dca0eddd1c12dfbbbc673ddd6903161d8bb45eaaefe650",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_28.webp",
+      "expected": "c92db90a0e7ef733af0b693427647a11a23da50b4831abaf3f05af952251d144",
+      "actual": "c92db90a0e7ef733af0b693427647a11a23da50b4831abaf3f05af952251d144",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_68.webp",
+      "expected": "1a36771abf442865d67d2ee5a88fec0004059a63650774c31b81d0deac8a58f1",
+      "actual": "1a36771abf442865d67d2ee5a88fec0004059a63650774c31b81d0deac8a58f1",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_68.webp",
+      "expected": "8e86504f446b438a1736c6e9b9fc79a3ce21fb65209a2cfccf055a4c3973d5ed",
+      "actual": "8e86504f446b438a1736c6e9b9fc79a3ce21fb65209a2cfccf055a4c3973d5ed",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_35.webp",
+      "expected": "8e5301ab73a309e19576463c3a1338e58ae4644fbdb4dc0481a62f998b7600a6",
+      "actual": "8e5301ab73a309e19576463c3a1338e58ae4644fbdb4dc0481a62f998b7600a6",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_35.webp",
+      "expected": "274ebbf844725f2b41d007315508ed994c4f5dd2602b23f7ba5975f9857cff8a",
+      "actual": "274ebbf844725f2b41d007315508ed994c4f5dd2602b23f7ba5975f9857cff8a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_70.webp",
+      "expected": "27f5a9d4eeeae0d28753b796362cde66d2d627c49dd3e03bd0a2687ae1fb1b93",
+      "actual": "27f5a9d4eeeae0d28753b796362cde66d2d627c49dd3e03bd0a2687ae1fb1b93",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_70.webp",
+      "expected": "1cfd8db64e288202ac8e710ae724abc0f106647e662d66072f63d82f66b8775e",
+      "actual": "1cfd8db64e288202ac8e710ae724abc0f106647e662d66072f63d82f66b8775e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_71.webp",
+      "expected": "01271447cd0c61f7dca8de744519680d7aa7754e0a6a8fad48258861626c11c8",
+      "actual": "01271447cd0c61f7dca8de744519680d7aa7754e0a6a8fad48258861626c11c8",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_71.webp",
+      "expected": "9bb8fadedf70f1d27ec8489d32698a309b628a0e15791e4aa8059bf4bb0c09e6",
+      "actual": "9bb8fadedf70f1d27ec8489d32698a309b628a0e15791e4aa8059bf4bb0c09e6",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_72.webp",
+      "expected": "8c548888f66f48a6df12c3b2a6c651f29c225f7e9d61af86310a3c62e62c7f09",
+      "actual": "8c548888f66f48a6df12c3b2a6c651f29c225f7e9d61af86310a3c62e62c7f09",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_72.webp",
+      "expected": "4baafe06a7b4b2c39bbcc333ad89aa0b910052a83c3657bc0e20d00255208f1b",
+      "actual": "4baafe06a7b4b2c39bbcc333ad89aa0b910052a83c3657bc0e20d00255208f1b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_41.webp",
+      "expected": "05f0fc1e5f26f6228f957772a6fd203d08479129eb456c8ade8874d0fa014b77",
+      "actual": "05f0fc1e5f26f6228f957772a6fd203d08479129eb456c8ade8874d0fa014b77",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_41.webp",
+      "expected": "a1bb832ab32928cd5231954e46344b37ee1114063322f7c72587b6961aaa76a6",
+      "actual": "a1bb832ab32928cd5231954e46344b37ee1114063322f7c72587b6961aaa76a6",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_74.webp",
+      "expected": "2ec3280b2bd1dd27f7c967d8635ff889e22d25a82d3f6428caa2a336d84ad44e",
+      "actual": "2ec3280b2bd1dd27f7c967d8635ff889e22d25a82d3f6428caa2a336d84ad44e",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_74.webp",
+      "expected": "5ea637f93a339446ebd8021a984ca5637ddf52e101d82337a832728d20c1ec07",
+      "actual": "5ea637f93a339446ebd8021a984ca5637ddf52e101d82337a832728d20c1ec07",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_48.webp",
+      "expected": "9406c444b359caac4091d3aa6483efb17290fbda157888cd9293649c660177b1",
+      "actual": "9406c444b359caac4091d3aa6483efb17290fbda157888cd9293649c660177b1",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_48.webp",
+      "expected": "e537651634198f763cfe79a0b3ffc7bcc6b53a62769656b79519a1c90f4d30b8",
+      "actual": "e537651634198f763cfe79a0b3ffc7bcc6b53a62769656b79519a1c90f4d30b8",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_76.webp",
+      "expected": "14ef06034aa00eba45d19e28f6172b7146e91bb17be3c22275aca50af7fdd739",
+      "actual": "14ef06034aa00eba45d19e28f6172b7146e91bb17be3c22275aca50af7fdd739",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_76.webp",
+      "expected": "e8158676dfdb9d7b7c7870b0d5f6a87298bef57adb50db33ddc485cec8a9b9f5",
+      "actual": "e8158676dfdb9d7b7c7870b0d5f6a87298bef57adb50db33ddc485cec8a9b9f5",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_77.webp",
+      "expected": "f0ed47c27fe346e84ae7f19e8154e81e08aaa6add832d38a7c7bfc63ea592e19",
+      "actual": "f0ed47c27fe346e84ae7f19e8154e81e08aaa6add832d38a7c7bfc63ea592e19",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_77.webp",
+      "expected": "496a6172d009d6a0367ebbcf8ac67b9e379ad2e51e7ee9cf7db1cc4c2567d903",
+      "actual": "496a6172d009d6a0367ebbcf8ac67b9e379ad2e51e7ee9cf7db1cc4c2567d903",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_78.webp",
+      "expected": "fb17c202ae6e4e452d38b53cff65868614b3b8aca79f7d3d226232b702c9551a",
+      "actual": "fb17c202ae6e4e452d38b53cff65868614b3b8aca79f7d3d226232b702c9551a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_78.webp",
+      "expected": "c870d002c25503b61a8d745fa1f40a110d6947476f13487476a01d61b225d079",
+      "actual": "c870d002c25503b61a8d745fa1f40a110d6947476f13487476a01d61b225d079",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_54.webp",
+      "expected": "25ca652c9402a24c304ab6e50eca1fa5a83eaa0b121197961ffb8a9d06e4cc64",
+      "actual": "25ca652c9402a24c304ab6e50eca1fa5a83eaa0b121197961ffb8a9d06e4cc64",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_54.webp",
+      "expected": "05c99c3a3d6d34bf6fdc3f73de08550d73d7a0cf61e68b66f4e209331135ec4c",
+      "actual": "05c99c3a3d6d34bf6fdc3f73de08550d73d7a0cf61e68b66f4e209331135ec4c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_80.webp",
+      "expected": "4b4f09e8597011b87468503102ce8e9063363cebd7c8dc1fd925e2d68b6ebd4a",
+      "actual": "4b4f09e8597011b87468503102ce8e9063363cebd7c8dc1fd925e2d68b6ebd4a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_80.webp",
+      "expected": "5ec517179adca2e2db2934d63dfd78cc7f81338d4ba17e0f241b6cc58d9acf79",
+      "actual": "5ec517179adca2e2db2934d63dfd78cc7f81338d4ba17e0f241b6cc58d9acf79",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_81.webp",
+      "expected": "af5b933b1c6d10818d2eaf3ec689cc07285d050faf1fe4578ea491b20fae5f16",
+      "actual": "af5b933b1c6d10818d2eaf3ec689cc07285d050faf1fe4578ea491b20fae5f16",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_81.webp",
+      "expected": "a4e97ef126129dfa06f9dd8a3a00d4aa6f7ab62e326326f74670bc3fea00d862",
+      "actual": "a4e97ef126129dfa06f9dd8a3a00d4aa6f7ab62e326326f74670bc3fea00d862",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_82.webp",
+      "expected": "4163f9ebc544e697caa46d51ee814678ebebf5d904fd8bf569a55f4b4bcbc9af",
+      "actual": "4163f9ebc544e697caa46d51ee814678ebebf5d904fd8bf569a55f4b4bcbc9af",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_82.webp",
+      "expected": "094f5eed2acf79f5210a10c5e8fc97b5faa7a26cda2119e8c8da65bddf6b691c",
+      "actual": "094f5eed2acf79f5210a10c5e8fc97b5faa7a26cda2119e8c8da65bddf6b691c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_83.webp",
+      "expected": "8f6c57e3cd3e0b534fb2742b2489c55ce47368fa5620deb155844728b34741ab",
+      "actual": "8f6c57e3cd3e0b534fb2742b2489c55ce47368fa5620deb155844728b34741ab",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_83.webp",
+      "expected": "0bda281e771b9a6430cc2aeb3861c70af75c4156c88646467bd7941d637695fc",
+      "actual": "0bda281e771b9a6430cc2aeb3861c70af75c4156c88646467bd7941d637695fc",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_84.webp",
+      "expected": "b004313d77fd491e35523ff45397b1bdd1d09c775f9c915b96e93ebaf4657492",
+      "actual": "b004313d77fd491e35523ff45397b1bdd1d09c775f9c915b96e93ebaf4657492",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_84.webp",
+      "expected": "29a0fbdd156377923ec85e7f162e6d58267c495d823044354cf4a6dcb795be3d",
+      "actual": "29a0fbdd156377923ec85e7f162e6d58267c495d823044354cf4a6dcb795be3d",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_85.webp",
+      "expected": "5014808fe38cd828a14749277ab3ad670bb4adf6c88c35ab907bf5e39c495552",
+      "actual": "5014808fe38cd828a14749277ab3ad670bb4adf6c88c35ab907bf5e39c495552",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_85.webp",
+      "expected": "b40b0519233667aaffdfe8521f20e1981bc720218b23a9eb2bc2f9bda77d3424",
+      "actual": "b40b0519233667aaffdfe8521f20e1981bc720218b23a9eb2bc2f9bda77d3424",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_86.webp",
+      "expected": "9dd6fc56251c4b0b878900575d9ac135ec080711d2dde13acb7c0e0db47022e4",
+      "actual": "9dd6fc56251c4b0b878900575d9ac135ec080711d2dde13acb7c0e0db47022e4",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_86.webp",
+      "expected": "99e62f3c1e71a1fc264d4e1bc9e3fd197db8958a23785ef28b83fd4734187634",
+      "actual": "99e62f3c1e71a1fc264d4e1bc9e3fd197db8958a23785ef28b83fd4734187634",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_87.webp",
+      "expected": "bfbaae0ee02ea967e7ac52a41e0b4893f2d15eb6fd662d9c67ca90ed204c2586",
+      "actual": "bfbaae0ee02ea967e7ac52a41e0b4893f2d15eb6fd662d9c67ca90ed204c2586",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_87.webp",
+      "expected": "e04802763ccadae02eb96adaa1eb30b55857cd36f1619c0e32afb8a3f4b92360",
+      "actual": "e04802763ccadae02eb96adaa1eb30b55857cd36f1619c0e32afb8a3f4b92360",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_88.webp",
+      "expected": "708d35a0769ba3126df0e07d6ce5f48a2b07033bfc2541ad6179ea2082951388",
+      "actual": "708d35a0769ba3126df0e07d6ce5f48a2b07033bfc2541ad6179ea2082951388",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_88.webp",
+      "expected": "f8c755ae04295ad072dbad656e977b5501bbd21b4707a9b55c498396e4ae311c",
+      "actual": "f8c755ae04295ad072dbad656e977b5501bbd21b4707a9b55c498396e4ae311c",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_89.webp",
+      "expected": "4b91b20ac846c726ca3130ad37007f159316df8b7722cadae269f7be8e338ad3",
+      "actual": "4b91b20ac846c726ca3130ad37007f159316df8b7722cadae269f7be8e338ad3",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_89.webp",
+      "expected": "4f6db3482d375664f4ecfd89a31ecb7b54d61402a746481ef0ddf71ea59989a9",
+      "actual": "4f6db3482d375664f4ecfd89a31ecb7b54d61402a746481ef0ddf71ea59989a9",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_90.webp",
+      "expected": "fd63f9e2ee6fd0756a036e0564e4985756011b5c632df38f0b9d4e512927002b",
+      "actual": "fd63f9e2ee6fd0756a036e0564e4985756011b5c632df38f0b9d4e512927002b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_90.webp",
+      "expected": "a0853b1e232bf7a85542d6cd91a70773f4c910640751dbdc847695d66fd92c96",
+      "actual": "a0853b1e232bf7a85542d6cd91a70773f4c910640751dbdc847695d66fd92c96",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_91.webp",
+      "expected": "42593098f5eb4dce9cc01ea3242083875c66e0e8d72d7dead2bb3fc527ea9046",
+      "actual": "42593098f5eb4dce9cc01ea3242083875c66e0e8d72d7dead2bb3fc527ea9046",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_91.webp",
+      "expected": "5df7dedafc952fcdd1555f64d4b888f58e2666e5adbe37a979e6b7acb1d2df89",
+      "actual": "5df7dedafc952fcdd1555f64d4b888f58e2666e5adbe37a979e6b7acb1d2df89",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_92.webp",
+      "expected": "c54e094ff8db15cc3d4295e6a943b8ae4e1aa134c3562faf1d6f860d62d2708b",
+      "actual": "c54e094ff8db15cc3d4295e6a943b8ae4e1aa134c3562faf1d6f860d62d2708b",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_92.webp",
+      "expected": "afa5f00560ac20888d023dcb45dfb15cd8b64b50d220e9f70bdcd6995337e2a0",
+      "actual": "afa5f00560ac20888d023dcb45dfb15cd8b64b50d220e9f70bdcd6995337e2a0",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_93.webp",
+      "expected": "0a35949ef8a495fbe68e2e82193a783d9211f94c63efa158c5c8cf38bd077c49",
+      "actual": "0a35949ef8a495fbe68e2e82193a783d9211f94c63efa158c5c8cf38bd077c49",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_93.webp",
+      "expected": "142a3c8b5e052d11a25a4ca96a2169a29508b4701887642d66f739b53c08dc05",
+      "actual": "142a3c8b5e052d11a25a4ca96a2169a29508b4701887642d66f739b53c08dc05",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_94.webp",
+      "expected": "5f0a9961aae386df402e48be9c9a12da7f0dd483439ef42fdccd92fcee9b12cb",
+      "actual": "5f0a9961aae386df402e48be9c9a12da7f0dd483439ef42fdccd92fcee9b12cb",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_94.webp",
+      "expected": "9c8900fe3da60060f6fb3d8587fb0d4eb3310ba27103b4335e1fa80ffe67e96a",
+      "actual": "9c8900fe3da60060f6fb3d8587fb0d4eb3310ba27103b4335e1fa80ffe67e96a",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_95.webp",
+      "expected": "6fb838554cc2cbb741f164edb2b3ab48768c9d403a312feb91217a6e760a6381",
+      "actual": "6fb838554cc2cbb741f164edb2b3ab48768c9d403a312feb91217a6e760a6381",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_95.webp",
+      "expected": "545e0e9b87aa5d7732636a0f4a7780bea628348fa7670dfd05691fc116e7682f",
+      "actual": "545e0e9b87aa5d7732636a0f4a7780bea628348fa7670dfd05691fc116e7682f",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_char_96.webp",
+      "expected": "a2e1bceb39071d2c5623b01acd65617dead240064c6a19f09470c3feeb4cb662",
+      "actual": "a2e1bceb39071d2c5623b01acd65617dead240064c6a19f09470c3feeb4cb662",
+      "passed": true
+    },
+    {
+      "file": "icons/armor_icon_96.webp",
+      "expected": "31517db5c8da082aa4ee72a6d280865aab9a88d4dea4a7504b5dc5195d705fe1",
+      "actual": "31517db5c8da082aa4ee72a6d280865aab9a88d4dea4a7504b5dc5195d705fe1",
+      "passed": true
+    }
+  ],
+  "commit": "b0643f768f8c54a49adcc0ddaef5a2a06bae3987",
+  "note": "First 24 requests repeated after Pages deployment completed."
+}

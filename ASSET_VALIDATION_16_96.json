@@ -6,5 +6,14 @@
   "client_dictionaries_unchanged": true,
   "first_15_pairs_unchanged": true,
   "browser_check": "blocked: Chromium download timeout",
-  "telegram_check": "not performed"
+  "telegram_check": "not performed",
+  "git_main_assets_byte_exact": 162,
+  "git_main_commit": "b0643f768f8c54a49adcc0ddaef5a2a06bae3987",
+  "pages_index_sha256": "97a9ac36813937a3a8f4720597519d5126e9e329a63887be094031e78454c0bc",
+  "pages_index_matches": true,
+  "client_tests": [
+    "character_portrait.test.js",
+    "pda_profile.test.js",
+    "pda_equipment_live.test.js"
+  ]
 }
