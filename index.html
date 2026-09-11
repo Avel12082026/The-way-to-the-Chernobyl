@@ -711,11 +711,11 @@ button:active {filter:brightness(1.18);}
 <style id="pda-profile-layout">
 /* PDA only: avatar on the left, the viewed player's equipped armor on the right. */
 #kpkContent .pda-profile-visuals {
-  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:12px; align-items:start; width:100%; margin:0 0 14px;
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px; align-items:start; width:100%; margin:0 0 14px;
 }
 #kpkContent .pda-profile-avatar {
-  min-width:0; width:100%; max-width:146px; justify-self:start;
+  grid-column:1 / 3; min-width:0; width:100%; justify-self:start;
   display:flex; flex-direction:column; align-items:flex-start; gap:10px;
 }
 #kpkContent .pda-profile-avatar-frame {
@@ -762,11 +762,11 @@ button:active {filter:brightness(1.18);}
 #kpkContent .pda-profile-equipment-type { display:block; margin-bottom:2px; color:#99947f; }
 #kpkContent .pda-profile-equipment-name { display:block; }
 #kpkContent .pda-profile-armor {
-  min-width:0; width:100%; max-width:220px; margin:0; justify-self:end;
+  min-width:0; width:100%; margin:-8px 0 0; justify-self:end;
   text-align:center; background:transparent;
 }
 #kpkContent .pda-profile-armor img {
-  display:block; width:100%; height:clamp(190px,58vw,310px); max-width:100%;
+  display:block; width:100%; height:clamp(190px,52vw,280px); max-width:100%;
   object-fit:contain!important; object-position:center!important;
   background:transparent!important; border:0!important; border-radius:0!important;
   opacity:1!important; filter:none!important; box-shadow:none!important;
@@ -777,6 +777,14 @@ button:active {filter:brightness(1.18);}
 #kpkContent .pda-profile-armor-label { display:block; margin-bottom:3px; color:#99947f; font-size:10px; }
 #kpkContent .pda-profile-armor-warning { display:block; margin-top:4px; color:#aaa; font-size:10px; }
 #kpkContent .pda-profile-armor-warning[hidden] { display:none; }
+#kpkContent .pda-profile-loadout { grid-column:3 / 6; min-width:0; }
+#kpkContent .pda-profile-artifacts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:6px; }
+#kpkContent button.pda-profile-equipment-image { padding:0!important; margin:0!important; min-height:0!important; cursor:pointer; border:1px solid #665b3b!important; border-image:none!important; background:#10140ecc!important; box-shadow:none!important; }
+#kpkContent .pda-profile-armor-button { display:block; padding:0; margin:0; width:100%; border:0!important; border-image:none!important; border-radius:0!important; background:transparent!important; box-shadow:none!important; cursor:pointer; }
+#kpkContent .pda-profile-artifact-frame { background-image:url('https://213-176-92-184.sslip.io/icons/artifact_slot_frame.png')!important; background-size:100% 100%!important; }
+#kpkContent .pda-profile-equipment-image:focus-visible, #kpkContent .pda-profile-armor-button:focus-visible { outline:2px solid #cdbd8f; outline-offset:2px; }
+#profileItemModal { z-index:1002; }
+#profileItemModal .modal-content { max-height:85vh; overflow:auto; }
 </style>
 <style id="character-portrait-recovery">
 #characterPortraitStatus { position:absolute; z-index:2; left:8px; right:8px; bottom:24px;
@@ -798,6 +806,10 @@ button:active {filter:brightness(1.18);}
 <!-- Общее окно "Инфо о товаре" — используется у всех торговцев и на рынке вместо того, чтобы
          показывать полное описание прямо в списке (раньше карточки товаров становились слишком
          длинными) -->
+<div class="modal" id="profileItemModal" role="dialog" aria-modal="true" aria-labelledby="profileItemTitle">
+<div class="modal-content"><h3 id="profileItemTitle"></h3><div id="profileItemBody"></div>
+<button type="button" id="profileItemClose" onclick="closeProfileItemInfo()">← Выход</button></div>
+</div>
 <div class="modal" id="itemInfoModal">
 <div class="modal-content" style="max-width:420px;">
 <h3 id="itemInfoModalTitle" style="color:#8a7a4a;"></h3>
@@ -3200,20 +3212,79 @@ button:active {filter:brightness(1.18);}
         if (fallback) fallback.hidden = false;
     }
 
+    function profileItemAttributes(data, slotType, index) {
+        const raw = slotType === 'artifact' ? (Array.isArray(data.artifactSlots) ? data.artifactSlots[index] : null) : data[slotType];
+        const item = typeof raw === 'string' ? {name:raw} : raw;
+        const payload = {slotType, index, item: item || null, unavailable: slotType === 'artifact' && !Array.isArray(data.artifactSlots)};
+        if (slotType === 'armor') payload.armorUpgradeData = data.armorUpgradeData || {};
+        if (slotType === 'armor') payload.upgradesUnavailable = !data.armorUpgradeData;
+        const encoded = encodeURIComponent(JSON.stringify(payload)).replace(/'/g, '%27');
+        return `data-profile-item="${encoded}" onclick="showProfileItemInfo(this)"`;
+    }
+
     function renderProfileEquipment(data) {
         const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
         const slots = ['weapon', 'detector'].map(slotType => {
             const item = getProfileEquipmentVisual(data, slotType);
-            return `<figure class="pda-profile-equipment-slot" data-slot-type="${slotType}" title="${attr(item.title + ': ' + item.label)}">
-                <div class="pda-profile-equipment-image">
-                    ${item.src ? `<img src="${attr(item.src)}" alt="${attr(item.title + ': ' + item.label)}"
-                        decoding="async" onerror="handleProfileEquipmentImageError(this)">` : ''}
+            return `<figure class="pda-profile-equipment-slot" data-slot-type="${slotType}">
+                <button type="button" class="pda-profile-equipment-image" ${profileItemAttributes(data, slotType)} aria-label="${attr(item.title + ': ' + item.label)}">
+                    ${item.src ? `<img src="${attr(item.src)}" alt="${attr(item.label)}" decoding="async" onerror="handleProfileEquipmentImageError(this)">` : ''}
                     <span class="pda-profile-equipment-fallback"${item.missingIcon ? '' : ' hidden'}>Нет иконки</span>
-                </div>
-                <figcaption><span class="pda-profile-equipment-type">${item.title}</span><span class="pda-profile-equipment-name">${escapeHtml(item.label)}</span></figcaption>
+                </button>
             </figure>`;
         }).join('');
         return `<div class="pda-profile-equipment" role="group" aria-label="Экипированное оружие и детектор">${slots}</div>`;
+    }
+
+    function renderProfileArtifacts(data) {
+        const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
+        return `<div class="pda-profile-artifacts" role="group" aria-label="Шесть слотов артефактов">${Array.from({length:6}, (_, index) => {
+            const raw = Array.isArray(data.artifactSlots) ? data.artifactSlots[index] : null;
+            const name = typeof raw === 'string' ? raw : (raw && typeof raw.name === 'string' ? raw.name : '');
+            const icon = name ? getItemIcon(name) : null;
+            const src = typeof icon === 'string' ? getIconUrl(icon) : '';
+            const unavailable = !Array.isArray(data.artifactSlots);
+            const label = `Артефакт ${index + 1}: ${unavailable ? 'Нет данных' : name ? stripInvisibleSuffix(name) : 'Пустой слот'}`;
+            return `<figure class="pda-profile-equipment-slot" data-slot-type="artifact" data-slot-index="${index}">
+                <button type="button" class="pda-profile-equipment-image pda-profile-artifact-frame" ${profileItemAttributes(data, 'artifact', index)} aria-label="${attr(label)}">
+                    ${src ? `<img src="${attr(src)}" alt="${attr(label)}" decoding="async" onerror="handleProfileEquipmentImageError(this)">` : ''}
+                    <span class="pda-profile-equipment-fallback"${unavailable || (name && !src) ? '' : ' hidden'}>${unavailable ? 'Нет данных' : 'Нет иконки'}</span>
+                </button></figure>`;
+        }).join('')}</div>`;
+    }
+
+    function showProfileItemInfo(button) {
+        let payload;
+        try { payload = JSON.parse(decodeURIComponent(button.dataset.profileItem)); } catch (_) { return; }
+        const defaults = {weapon:DEFAULT_WEAPON.name, armor:DEFAULT_ARMOR.name, detector:DEFAULT_DETECTOR.name};
+        const name = payload.item && typeof payload.item.name === 'string' ? payload.item.name : '';
+        const empty = !name || name === defaults[payload.slotType];
+        document.getElementById('profileItemTitle').textContent = payload.unavailable ? 'Артефакты недоступны' : empty ? 'Пустой слот' : stripInvisibleSuffix(name);
+        const viewed = {armorUpgradeData:payload.armorUpgradeData || {}};
+        let info = '';
+        if (!empty) {
+            info = getItemInfoHtmlInner(name, viewed);
+            if (!info && payload.item.stats && payload.slotType === 'artifact') {
+                info = Object.entries(payload.item.stats).map(([stat, value]) => formatStatEffect(stat, Number(value) || 0)).join('<br>');
+            }
+        }
+        if (payload.slotType === 'armor' && payload.upgradesUnavailable && parseGearName(name).level > 0) info = '<p>Точное распределение улучшений брони недоступно в этом профиле.</p>';
+        document.getElementById('profileItemBody').innerHTML = payload.unavailable ? '<p>Данные об артефактах этого игрока пока не получены.</p>' : empty ? '<p>В этом слоте ничего не надето.</p>' : (info || '<p>Подробные характеристики этого предмета недоступны.</p>');
+        const modal = document.getElementById('profileItemModal');
+        modal._returnFocus = button;
+        modal.classList.add('active');
+        modal.onkeydown = event => {
+            if (event.key === 'Escape') { event.preventDefault(); closeProfileItemInfo(); }
+            if (event.key === 'Tab') { event.preventDefault(); document.getElementById('profileItemClose').focus(); }
+        };
+        document.getElementById('profileItemClose').focus();
+    }
+
+    function closeProfileItemInfo() {
+        const modal = document.getElementById('profileItemModal');
+        modal.classList.remove('active');
+        if (modal._returnFocus && modal._returnFocus.isConnected) modal._returnFocus.focus();
+        modal._returnFocus = null;
     }
 
     function renderProfileAppearance(data, avatarSrc, canChangeAvatar) {
@@ -3221,18 +3292,19 @@ button:active {filter:brightness(1.18);}
         const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
         return `<div class="pda-profile-visuals">
             <div class="pda-profile-avatar">
-                ${avatarSrc ? `<div class="pda-profile-avatar-frame">
-                    <img src="${attr(avatarSrc)}" alt="Аватар игрока" data-player-avatar onerror="this.style.display='none'">
-                </div>` : ''}
+                ${avatarSrc ? `<div class="pda-profile-avatar-frame"><img src="${attr(avatarSrc)}" alt="Аватар игрока" data-player-avatar onerror="this.style.display='none'"></div>` : ''}
                 ${canChangeAvatar ? `<button type="button" onclick="pickAndUploadAvatar()">📷 Сменить аватарку</button>` : ''}
                 ${renderProfileEquipment(data)}
             </div>
-            <figure class="pda-profile-armor">
-                <img src="${attr(visual.src)}" data-fallback-src="${attr(visual.fallbackSrc)}"
-                    alt="Персонаж: ${attr(visual.label)}" decoding="async" onerror="handleProfileArmorError(this)">
-                <figcaption><span class="pda-profile-armor-label">Надетая броня</span>${escapeHtml(visual.label)}</figcaption>
-                <span class="pda-profile-armor-warning"${visual.unavailable ? '' : ' hidden'}>Визуал этой брони пока недоступен</span>
-            </figure>
+            <div class="pda-profile-loadout">
+                <figure class="pda-profile-armor">
+                    <button type="button" class="pda-profile-armor-button" ${profileItemAttributes(data, 'armor')} aria-label="Броня: ${attr(visual.label)}">
+                        <img src="${attr(visual.src)}" data-fallback-src="${attr(visual.fallbackSrc)}" alt="Персонаж: ${attr(visual.label)}" decoding="async" onerror="handleProfileArmorError(this)">
+                    </button>
+                    <span class="pda-profile-armor-warning"${visual.unavailable ? '' : ' hidden'}>Визуал этой брони пока недоступен</span>
+                </figure>
+                ${renderProfileArtifacts(data)}
+            </div>
         </div>`;
     }
 
@@ -3265,8 +3337,6 @@ button:active {filter:brightness(1.18);}
                    <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.npcsByTier)}</span></p>
                 <p>Артефактов найдено: ${stats.artifactsFound ?? 0}<br>
                    <span style="color:#aaa; font-size:11px;">По тирам: ${formatByTier(stats.artifactsByTier)}</span></p>
-                <p style="margin-top:10px; border-top:1px solid #333; padding-top:8px;"><b>Экипировка:</b></p>
-                ${renderEquipmentDetails(data)}
                 <p style="margin-top:10px; border-top:1px solid #333; padding-top:8px;"><b>Перки:</b></p>
                 ${renderPerksBlock(data)}
             </div>
@@ -5918,7 +5988,7 @@ function startBattle(enemy) {
         return getItemIconHeaderHtml(itemName) + getItemInfoHtmlInner(itemName);
     }
 
-    function getItemInfoHtmlInner(itemName) {
+    function getItemInfoHtmlInner(itemName, playerData = player) {
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
             if (consumable.type === 'antirad') {
@@ -5952,7 +6022,7 @@ function startBattle(enemy) {
         }
         const armor = armorItems.find(a => a.name === parsed.baseName);
         if (armor) {
-            const eff = getArmorEffectiveStats(itemName);
+            const eff = getArmorEffectiveStats(itemName, playerData);
             const resistLines = Object.keys(eff.stats).map(stat => {
                 const val = eff.stats[stat];
                 const sign = val >= 0 ? '+' : '';
@@ -5976,7 +6046,7 @@ function startBattle(enemy) {
                 ${resistLines ? '<br>' + resistLines + (armor.isResearchSuit ? ' <span style="color:#888;">(не растёт при улучшении)</span>' : '') : ''}${abilityLine}
             </div>`;
         }
-        const detector = detectors.find(d => d.name === itemName);
+        const detector = detectors.find(d => d.name === parsed.baseName);
         if (detector) {
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${detector.tier}<br>

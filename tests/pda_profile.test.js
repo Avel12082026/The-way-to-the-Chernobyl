@@ -18,6 +18,7 @@ const pending = new Map();
 const requests = [];
 const context = vm.createContext({
     console, Set, Object, Boolean, String, encodeURIComponent,
+    getItemIcon: name => name === 'Тестовый артефакт' ? 'test_artifact.png' : null,
     document: {getElementById: () => content},
     SERVER_URL: 'https://test.invalid', ADMIN_ID: 'owner',
     DEFAULT_ARMOR: {name:'Без брони'}, DEFAULT_CHARACTER_PORTRAIT:'character_portrait.png',
@@ -43,7 +44,7 @@ vm.runInContext([
     getBlock(/    const CLIENT_ICON_VERSIONS = new Map\(\[[\s\S]*?\n    \]\);/),
     "let kpkTab = 'info'; let kpkProfileRequestId = 0;",
     ...['stripInvisibleSuffix','parseGearName','getIconUrl','getProfileArmorVisual','handleProfileArmorError',
-        'getProfileEquipmentVisual','handleProfileEquipmentImageError','renderProfileEquipment',
+        'getProfileEquipmentVisual','handleProfileEquipmentImageError','profileItemAttributes','renderProfileArtifacts','renderProfileEquipment',
         'renderProfileAppearance','renderPlayerStatsCard','openKpkTab','showPlayerInfo'].map(getFunction)
 ].join('\n'), context);
 function run(code) {return vm.runInContext(code,context);}
@@ -139,7 +140,7 @@ assert.match(equippedOther,/avtomat_ak74\.png/);
 assert.match(equippedOther,/vizir\.jpg/);
 assert.doesNotMatch(equippedOther,/pistolet_makarova\.png|riper\.jpg/);
 assert.doesNotMatch(equippedOther,/openEquippedItemActions|pickAndUploadAvatar/);
-assert.equal((equippedOther.match(/data-slot-type=/g)||[]).length,2);
+assert.equal((equippedOther.match(/data-slot-type=/g)||[]).length,8);
 assert.ok(equippedOther.indexOf('data-slot-type="weapon"') < equippedOther.indexOf('data-slot-type="detector"'));
 assert.ok(ownCard.indexOf('pickAndUploadAvatar') < ownCard.indexOf('data-slot-type="weapon"'));
 assert.match(ownCard,/pistolet_makarova\.png/);
