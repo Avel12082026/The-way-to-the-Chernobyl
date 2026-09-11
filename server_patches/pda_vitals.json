@@ -1,0 +1,10 @@
+{
+  "source_sha256": "dd06101e9cc1f282cd1eacfd35a7f26648277e4f270d486d3d70b4c76c39b921",
+  "target_sha256": "2035e77deff0cfe80475daa0f8cd4f331887d23322afa18504b2c4d13b53b320",
+  "replacements": [
+    {
+      "old": "    return {artifactSlots, equippedArtifactDetails, armorUpgradeData};",
+      "new": "    const vitals = {};\n    for (const key of ['health','maxHealth','hunger','maxHunger','thirst','maxThirst']) {\n        const value = full[key];\n        vitals[key] = typeof value === 'number' && Number.isFinite(value) ? Math.max(0,value) : null;\n    }\n    return {...vitals, artifactSlots, equippedArtifactDetails, armorUpgradeData};"
+    }
+  ]
+}

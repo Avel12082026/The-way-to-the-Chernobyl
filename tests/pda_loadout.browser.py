@@ -26,11 +26,13 @@ async def main():
    await page.evaluate('''() => {
     document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
     document.getElementById('kpkScreen').classList.add('active');
-    window.fixture={armor:{name:'Плащ тёмного сталкера'},weapon:weapons[20],detector:detectors[3],armorUpgradeData:{},artifactSlots:[artifacts[0].name,null,artifacts[1].name,null,null,artifacts[2].name]};
+    window.fixture={health:125,maxHealth:150,hunger:80,maxHunger:100,thirst:60,maxThirst:100,armor:{name:'Плащ тёмного сталкера'},weapon:weapons[20],detector:detectors[3],armorUpgradeData:{},artifactSlots:[artifacts[0].name,null,artifacts[1].name,null,null,artifacts[2].name]};
     document.getElementById('kpkContent').innerHTML=renderPlayerStatsCard(fixture,'Инфо о персонаже','other');
    }''')
    await page.wait_for_timeout(300)
    slots=page.locator('#kpkContent .pda-profile-equipment-image');assert await slots.count()==8
+   assert await page.locator('[data-vital]').count()==3
+   assert '125 / 150' in await page.locator('[data-vital=health]').inner_text()
    rects=await slots.evaluate_all('(xs)=>xs.map(x=>{let r=x.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})')
    assert max(x['w'] for x in rects)-min(x['w'] for x in rects)<1,rects
    assert all(abs(x['w']-x['h'])<1 for x in rects),rects

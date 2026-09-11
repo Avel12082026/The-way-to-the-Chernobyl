@@ -45,7 +45,7 @@ vm.runInContext([
     "let kpkTab = 'info'; let kpkProfileRequestId = 0;",
     ...['stripInvisibleSuffix','parseGearName','getIconUrl','getProfileArmorVisual','handleProfileArmorError',
         'getProfileEquipmentVisual','handleProfileEquipmentImageError','getProfileArtifactDefinition','profileItemAttributes','renderProfileArtifacts','renderProfileEquipment',
-        'renderProfileAppearance','renderPlayerStatsCard','openKpkTab','showPlayerInfo'].map(getFunction)
+        'renderProfileVitals','renderProfileAppearance','renderPlayerStatsCard','openKpkTab','showPlayerInfo'].map(getFunction)
 ].join('\n'), context);
 function run(code) {return vm.runInContext(code,context);}
 const mapping = JSON.parse(run('JSON.stringify(ARMOR_CHAR_IMAGES)'));

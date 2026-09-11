@@ -762,7 +762,7 @@ button:active {filter:brightness(1.18);}
 #kpkContent .pda-profile-equipment-type { display:block; margin-bottom:2px; color:#99947f; }
 #kpkContent .pda-profile-equipment-name { display:block; }
 #kpkContent .pda-profile-armor {
-  min-width:0; width:100%; margin:-8px 0 0; justify-self:end;
+  min-width:0; width:100%; margin:0; justify-self:end;
   text-align:center; background:transparent;
 }
 #kpkContent .pda-profile-armor img {
@@ -771,6 +771,11 @@ button:active {filter:brightness(1.18);}
   background:transparent!important; border:0!important; border-radius:0!important;
   opacity:1!important; filter:none!important; box-shadow:none!important;
 }
+#kpkContent .pda-profile-armor img { transform:scale(1.08); transform-origin:center; }
+#kpkContent .pda-profile-vitals { width:100%; display:grid; gap:9px; margin-top:4px; }
+#kpkContent .pda-profile-vital-label { display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 5px; font-size:11px; line-height:1.3; color:#cdbd8f; }
+#kpkContent .pda-profile-vital-track { height:6px; margin-top:4px; border:1px solid #665b3b; background:#090d08; border-radius:3px; overflow:hidden; }
+#kpkContent .pda-profile-vital-fill { display:block; height:100%; background:var(--vital-color); }
 #kpkContent .pda-profile-armor figcaption {
   margin-top:6px; color:#cdbd8f; font-size:12px; line-height:1.35; overflow-wrap:anywhere;
 }
@@ -3298,6 +3303,17 @@ button:active {filter:brightness(1.18);}
         modal._returnFocus = null;
     }
 
+    function renderProfileVitals(data) {
+        const fields = [['health','maxHealth','Здоровье','#bd5750'], ['hunger','maxHunger','Сытость','#b69b4c'], ['thirst','maxThirst','Жажда','#5598ba']];
+        return `<div class="pda-profile-vitals" role="group" aria-label="Состояние игрока">${fields.map(([key,maxKey,label,color]) => {
+            const value = typeof data[key] === 'number' && Number.isFinite(data[key]) ? Math.max(0,data[key]) : null;
+            const max = typeof data[maxKey] === 'number' && Number.isFinite(data[maxKey]) && data[maxKey] > 0 ? data[maxKey] : null;
+            const text = value === null ? '—' : Math.round(value) + (max === null ? '' : ' / ' + Math.round(max));
+            const percent = value !== null && max !== null ? Math.min(100,value/max*100) : 0;
+            return `<div data-vital="${key}" aria-label="${label}: ${value === null ? 'нет данных' : text}"><div class="pda-profile-vital-label"><span>${label}</span><span>${text}</span></div><div class="pda-profile-vital-track" aria-hidden="true"><span class="pda-profile-vital-fill" style="--vital-color:${color};width:${percent}%"></span></div></div>`;
+        }).join('')}</div>`;
+    }
+
     function renderProfileAppearance(data, avatarSrc, canChangeAvatar) {
         const visual = getProfileArmorVisual(data);
         const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
@@ -3306,6 +3322,7 @@ button:active {filter:brightness(1.18);}
                 ${avatarSrc ? `<div class="pda-profile-avatar-frame"><img src="${attr(avatarSrc)}" alt="Аватар игрока" data-player-avatar onerror="this.style.display='none'"></div>` : ''}
                 ${canChangeAvatar ? `<button type="button" onclick="pickAndUploadAvatar()">📷 Сменить аватарку</button>` : ''}
                 ${renderProfileEquipment(data)}
+                ${renderProfileVitals(data)}
             </div>
             <div class="pda-profile-loadout">
                 <figure class="pda-profile-armor">
