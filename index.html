@@ -3216,6 +3216,7 @@ button:active {filter:brightness(1.18);}
         const raw = slotType === 'artifact' ? (Array.isArray(data.artifactSlots) ? data.artifactSlots[index] : null) : data[slotType];
         const item = typeof raw === 'string' ? {name:raw} : raw;
         const payload = {slotType, index, item: item || null, unavailable: slotType === 'artifact' && !Array.isArray(data.artifactSlots)};
+        if (slotType === 'artifact') payload.definition = getProfileArtifactDefinition(data, index, item && item.name);
         if (slotType === 'armor') payload.armorUpgradeData = data.armorUpgradeData || {};
         if (slotType === 'armor') payload.upgradesUnavailable = !data.armorUpgradeData;
         const encoded = encodeURIComponent(JSON.stringify(payload)).replace(/'/g, '%27');
@@ -3236,12 +3237,18 @@ button:active {filter:brightness(1.18);}
         return `<div class="pda-profile-equipment" role="group" aria-label="Экипированное оружие и детектор">${slots}</div>`;
     }
 
+    function getProfileArtifactDefinition(data, index, name) {
+        const def = Array.isArray(data.equippedArtifactDetails) ? data.equippedArtifactDetails[index] : null;
+        return def && def.name === name ? def : null;
+    }
+
     function renderProfileArtifacts(data) {
         const attr = value => escapeHtml(value).replace(/"/g, '&quot;');
         return `<div class="pda-profile-artifacts" role="group" aria-label="Шесть слотов артефактов">${Array.from({length:6}, (_, index) => {
             const raw = Array.isArray(data.artifactSlots) ? data.artifactSlots[index] : null;
             const name = typeof raw === 'string' ? raw : (raw && typeof raw.name === 'string' ? raw.name : '');
-            const icon = name ? getItemIcon(name) : null;
+            const def = getProfileArtifactDefinition(data, index, name);
+            const icon = def && def.isNamedArtifact ? NAMED_ARTIFACT_ICON : def && def.gen > 0 ? getHybridIconFile(def.gen) : name ? getItemIcon(name) : null;
             const src = typeof icon === 'string' ? getIconUrl(icon) : '';
             const unavailable = !Array.isArray(data.artifactSlots);
             const label = `Артефакт ${index + 1}: ${unavailable ? 'Нет данных' : name ? stripInvisibleSuffix(name) : 'Пустой слот'}`;
@@ -3263,7 +3270,11 @@ button:active {filter:brightness(1.18);}
         const viewed = {armorUpgradeData:payload.armorUpgradeData || {}};
         let info = '';
         if (!empty) {
-            info = getItemInfoHtmlInner(name, viewed);
+            if (payload.slotType === 'artifact' && payload.definition) {
+                const def = payload.definition;
+                const effects = Object.entries(def.stats || {}).filter(([, value]) => typeof value === 'number' && Number.isFinite(value)).map(([stat, value]) => formatStatEffect(escapeHtml(stat), value)).join('<br>');
+                info = `<p>Тир: ${Number(def.tier) || 1}${def.gen > 0 ? '<br>Модификаций: ' + Number(def.gen) + ' / 20' : ''}</p><p>Пассивный эффект (пока артефакт надет):<br>${effects || 'Нет эффектов'}</p>`;
+            } else info = getItemInfoHtmlInner(name, viewed);
             if (!info && payload.item.stats && payload.slotType === 'artifact') {
                 info = Object.entries(payload.item.stats).map(([stat, value]) => formatStatEffect(stat, Number(value) || 0)).join('<br>');
             }

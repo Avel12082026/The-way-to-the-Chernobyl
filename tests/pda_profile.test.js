@@ -44,7 +44,7 @@ vm.runInContext([
     getBlock(/    const CLIENT_ICON_VERSIONS = new Map\(\[[\s\S]*?\n    \]\);/),
     "let kpkTab = 'info'; let kpkProfileRequestId = 0;",
     ...['stripInvisibleSuffix','parseGearName','getIconUrl','getProfileArmorVisual','handleProfileArmorError',
-        'getProfileEquipmentVisual','handleProfileEquipmentImageError','profileItemAttributes','renderProfileArtifacts','renderProfileEquipment',
+        'getProfileEquipmentVisual','handleProfileEquipmentImageError','getProfileArtifactDefinition','profileItemAttributes','renderProfileArtifacts','renderProfileEquipment',
         'renderProfileAppearance','renderPlayerStatsCard','openKpkTab','showPlayerInfo'].map(getFunction)
 ].join('\n'), context);
 function run(code) {return vm.runInContext(code,context);}

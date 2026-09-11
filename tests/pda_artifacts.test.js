@@ -12,7 +12,7 @@ const ctx=vm.createContext({console,encodeURIComponent,decodeURIComponent,
  parseGearName:n=>({level:n.includes('+3')?3:0}),
  getItemInfoHtmlInner:(name,data)=>{received={name,data};return '<p>Описание</p>';},
  document:{getElementById:id=>nodes[id]},player:{artifactSlots:['Мой артефакт'],armorUpgradeData:{private:99}}});
-vm.runInContext(['profileItemAttributes','renderProfileArtifacts','showProfileItemInfo','closeProfileItemInfo'].map(fn).join('\n'),ctx);
+vm.runInContext(['getProfileArtifactDefinition','profileItemAttributes','renderProfileArtifacts','showProfileItemInfo','closeProfileItemInfo'].map(fn).join('\n'),ctx);
 const run=s=>vm.runInContext(s,ctx);
 ctx.sample={artifactSlots:[null,'Артефакт другого',null,null,null,null]};
 let rendered=run('renderProfileArtifacts(sample)');
@@ -35,3 +35,8 @@ assert.doesNotMatch(fn('renderPlayerStatsCard'),/renderEquipmentDetails|<b>Эк�
 assert.doesNotMatch(fn('renderProfileEquipment'),/<figcaption/);
 assert.doesNotMatch(fn('renderProfileAppearance'),/<figcaption/);
 console.log('PASS: six ordered slots, empty vs unavailable, viewed-player isolation, escaped names, armor upgrade context, modal close/focus, no equipment prose');
+ctx.NAMED_ARTIFACT_ICON='named.webp';ctx.getHybridIconFile=gen=>'hybrid_'+gen+'.webp';ctx.formatStatEffect=(stat,v)=>stat+': '+v;
+ctx.sample={artifactSlots:['Named',null,'Гибрид X'],equippedArtifactDetails:[{name:'Named',tier:9,isNamedArtifact:true,stats:{luck:17}},null,{name:'Гибрид X',tier:8,gen:7,stats:{health:42}}]};
+rendered=run('renderProfileArtifacts(sample)');assert.match(rendered,/named.webp/);assert.match(rendered,/hybrid_7.webp/);
+ctx.button.dataset.profileItem=run("profileItemAttributes(sample,'artifact',0)").match(/data-profile-item="([^"]+)"/)[1];run('showProfileItemInfo(button)');assert.match(nodes.profileItemBody.innerHTML,/luck: 17/);
+console.log('PASS: named/hybrid icons and descriptions use viewed player metadata');
