@@ -1,100 +1,116 @@
 {
-  "collection": "ARMOR_16_20_PUBLISHED_FROM_REPOSITORY",
-  "armor_ids": [
-    16,
-    17,
-    18,
-    19,
-    20
-  ],
-  "runtime_asset_ids": [
-    16,
-    17,
-    18,
-    19,
-    20
-  ],
-  "installation": "Existing repository WebP assets registered in CLIENT_ICON_VERSIONS using their current SHA-256 prefixes.",
+  "collection": "REVISED_TRANSPARENT_16_20",
+  "status": "locally validated, not yet published",
   "assets": [
     {
-      "id": 16,
-      "kind": "character",
+      "catalog_id": 16,
+      "runtime_id": 16,
+      "kind": "char",
       "file": "icons/armor_char_16.webp",
-      "sha256": "6063f6d19bbc7407944c7c2e6aea2c58b172e7c2828422ccdce8bd61a6aaa31a",
-      "version": "6063f6d19bbc",
-      "bytes": 62886
+      "sha256": "020568840449a55f5b9c92c786ab7285e3e745265a5990002019dbf21d5d7178",
+      "version": "020568840449",
+      "bytes": 77984,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 16,
+      "catalog_id": 16,
+      "runtime_id": 16,
       "kind": "icon",
       "file": "icons/armor_icon_16.webp",
-      "sha256": "904de02068a5243a2cf8e0c60f7504d8bf7081eb74e82dc2292af98ac6aea7fe",
-      "version": "904de02068a5",
-      "bytes": 59938
+      "sha256": "088cf4f44fcc4fc4114e0039a01c03844c901db01af991699378edc37b8c4f98",
+      "version": "088cf4f44fcc",
+      "bytes": 48734,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 17,
-      "kind": "character",
+      "catalog_id": 17,
+      "runtime_id": 17,
+      "kind": "char",
       "file": "icons/armor_char_17.webp",
-      "sha256": "11e1b480f20309ac2c665a8aa9f2b40baf2cf9d8538815dcd33a6e8945a5333b",
-      "version": "11e1b480f203",
-      "bytes": 58860
+      "sha256": "914b36ebc91238012488a0835475f6f18991f3f7f57f8de41e8568a4c66daaa3",
+      "version": "914b36ebc912",
+      "bytes": 74986,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 17,
+      "catalog_id": 17,
+      "runtime_id": 17,
       "kind": "icon",
       "file": "icons/armor_icon_17.webp",
-      "sha256": "ef871492e6c67be97b5afb10c9907a03913bac12063041fbfecaf3f2cefb4905",
-      "version": "ef871492e6c6",
-      "bytes": 58310
+      "sha256": "a7bf9b2b8028bb9b5bb6b0d14d777bbb76ebf08cdb0599a3f52a5dcf6010ccee",
+      "version": "a7bf9b2b8028",
+      "bytes": 51698,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 18,
-      "kind": "character",
+      "catalog_id": 18,
+      "runtime_id": 18,
+      "kind": "char",
       "file": "icons/armor_char_18.webp",
-      "sha256": "98d18057b48397b0500d80b4f6ac9a0799d25d76b153c6de0ccf83841a4b3c22",
-      "version": "98d18057b483",
-      "bytes": 64588
+      "sha256": "780eeeb9a924688604cd8d9cc58644d2b89d4ce2636b5030980bbfb2b2549d10",
+      "version": "780eeeb9a924",
+      "bytes": 71472,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 18,
+      "catalog_id": 18,
+      "runtime_id": 18,
       "kind": "icon",
       "file": "icons/armor_icon_18.webp",
-      "sha256": "ad67bcf678b170b762a6c65c65de8fd6f9dfbf3e575ace8cf95c6650c26b5384",
-      "version": "ad67bcf678b1",
-      "bytes": 60820
+      "sha256": "9eae88d1abcb36a5496a0f23a7fcf7c1671c4c3756b32a8ff3e2682d40541350",
+      "version": "9eae88d1abcb",
+      "bytes": 47290,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 19,
-      "kind": "character",
+      "catalog_id": 19,
+      "runtime_id": 19,
+      "kind": "char",
       "file": "icons/armor_char_19.webp",
-      "sha256": "39b4b88f3e32a73d94cb6598ab717e67f1441eba77f755f452b324daf3a5b65b",
-      "version": "39b4b88f3e32",
-      "bytes": 62774
+      "sha256": "1a0ebd705c4c5c5a5612518a670142c6856bf98f8a115f5e8d32385828bc6e7f",
+      "version": "1a0ebd705c4c",
+      "bytes": 75150,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 19,
+      "catalog_id": 19,
+      "runtime_id": 19,
       "kind": "icon",
       "file": "icons/armor_icon_19.webp",
-      "sha256": "3ca48612c813170768f7bb9d05f1703ef95fd81733257069f6e93625d4b7c245",
-      "version": "3ca48612c813",
-      "bytes": 60188
+      "sha256": "59be58cdf66aceccfff81cace38f56cd4e3f9cefbf3181e162640b0cccc71c46",
+      "version": "59be58cdf66a",
+      "bytes": 48338,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 20,
-      "kind": "character",
+      "catalog_id": 20,
+      "runtime_id": 20,
+      "kind": "char",
       "file": "icons/armor_char_20.webp",
-      "sha256": "e8d4b7660dbb763f6e9b01e131ed66bd20712c441ab294a4f2b141a0638e96e9",
-      "version": "e8d4b7660dbb",
-      "bytes": 65634
+      "sha256": "bf1b8ae7fda332e5c84f5c80a71fd6a47467ab79c90e3fe68f73d1a47490b8b4",
+      "version": "bf1b8ae7fda3",
+      "bytes": 73308,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     },
     {
-      "id": 20,
+      "catalog_id": 20,
+      "runtime_id": 20,
       "kind": "icon",
       "file": "icons/armor_icon_20.webp",
-      "sha256": "3033ea83f81a083b7f318b5903ae5b224b865ecb9109f7ac94d2cee908604b80",
-      "version": "3033ea83f81a",
-      "bytes": 61618
+      "sha256": "f6186a6bffc52991a6e714bd189dd31cdecd0fd07e6027fcd32620c3ee6184c7",
+      "version": "f6186a6bffc5",
+      "bytes": 52894,
+      "alpha_lossless": true,
+      "visual_review": "approved light/dark backgrounds; empty icon and matching equipment"
     }
   ]
 }

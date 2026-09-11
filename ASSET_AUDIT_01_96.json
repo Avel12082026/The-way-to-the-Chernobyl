@@ -1,0 +1,3654 @@
+{
+  "note": "Format checks do not prove empty icons, clean transparency or matching artwork.",
+  "catalog_count": 96,
+  "records": [
+    {
+      "catalog_id": 1,
+      "name": "Комбинезон Юность",
+      "assets": {
+        "char": {
+          "file": "armor_char_1.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "195c8766b2fc1e8987e90a2223d37ddbca0a2245db1a7afdd234cc1a317db835"
+        },
+        "icon": {
+          "file": "armor_icon_1.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2ad6dc88281d4156fd5960705421a757e5060de436796d2a5c448901c6933e2a"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 2,
+      "name": "Куртка кожаная армейская",
+      "assets": {
+        "char": {
+          "file": "armor_char_2.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a2b607b011c355c5d87ba48491351ba03291f89d07e104fd4eee5708fa72f92e"
+        },
+        "icon": {
+          "file": "armor_icon_2.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "183a39d78df19321ca8439a24a367a2fb6cd9a22815820044d30b7ad5ff9584d"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 3,
+      "name": "Ватник утеплённый",
+      "assets": {
+        "char": {
+          "file": "armor_char_3.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c7bd714c9316f628062be6edbe8e6f3b2f4358c20466ca0742cff25a677333bd"
+        },
+        "icon": {
+          "file": "armor_icon_3.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7523e99a27a73920c4270bc8c3106bd83b4963f25ee1b1dad7f0e85eb42f072b"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 4,
+      "name": "Плащ-палатка ОЗК",
+      "assets": {
+        "char": {
+          "file": "armor_char_4.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "568288d0f1ffe5f467447d00cdbc7fd2d5a640d9c51623d33bcaacff1c07a524"
+        },
+        "icon": {
+          "file": "armor_icon_4.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "241a42d3e4b29a56063c7d133238d4cd0e48e592bc0990da477c14e5956fc8cb"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 5,
+      "name": "Комбинезон Комбат",
+      "assets": {
+        "char": {
+          "file": "armor_char_5.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fa031746124ff88718657495319a4807e0ce889eaa101c4ff8e27d3451d4083d"
+        },
+        "icon": {
+          "file": "armor_icon_5.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "9ae8d09c2e03a7cd08abef48144613b43901c4958c44ba78242d9b9ac8d74c97"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 6,
+      "name": "Роба сталкера",
+      "assets": {
+        "char": {
+          "file": "armor_char_6.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "cbe2b2b866a52c5a46eb97422dea94976aebcd8883c045cf5e8860a43028d2ab"
+        },
+        "icon": {
+          "file": "armor_icon_6.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "50a3b01ae8628a0a64dc5eb04aa420ad14836cc327fddd88fe2af8880681c20a"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 7,
+      "name": "Бронежилет Барьер",
+      "assets": {
+        "char": {
+          "file": "armor_char_7.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "790c04ae7e1e7521da485df6fc819938d51706a6445b5318f90fa603695ad962"
+        },
+        "icon": {
+          "file": "armor_icon_7.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7398a045adfbaf948927f56deccad51a34a4b76e8a995df513026bdd1552f59c"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 8,
+      "name": "Разгрузка тактическая с бронепанелями",
+      "assets": {
+        "char": {
+          "file": "armor_char_8.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5ccdf4a4ad42f507c905063525c292cf41f320634fef3df5461c78ca8b504421"
+        },
+        "icon": {
+          "file": "armor_icon_8.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2d0d769b69cce972156819c69ec0b801d729cd048966e1e3dfd169fecfe81585"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 9,
+      "name": "Бронежилет 6Б23",
+      "assets": {
+        "char": {
+          "file": "armor_char_9.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "facda02d5fdf1ee88ac65c9a3a0512d817d3cd1287324492c8934b6e78079832"
+        },
+        "icon": {
+          "file": "armor_icon_9.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "78b7f62e2d6b311aa1721f0e809276a0535de8a1aa3333fcc7ddcf2589586195"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 10,
+      "name": "Костюм Беркут",
+      "assets": {
+        "char": {
+          "file": "armor_char_10.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "478e179336b4328c09e48d3ee1726574ce1d39ef975d09fba6a71d564f426af0"
+        },
+        "icon": {
+          "file": "armor_icon_10.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "47f5e1ac63370aa761ce47e31822e23a362d7b3d52868967b693579a24237a76"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 11,
+      "name": "Комбинезон Свобода-Новобранец",
+      "assets": {
+        "char": {
+          "file": "armor_char_11.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "55b8f6e6096cb5e418e47c56084662d525b4484960182d48b03e298a7eea9f9b"
+        },
+        "icon": {
+          "file": "armor_icon_11.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "bd4ae71037cfb3435a23c209054c7daeffc9008535660927ec73489d86e4cbf4"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 12,
+      "name": "Комбинезон Долг",
+      "assets": {
+        "char": {
+          "file": "armor_char_12.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f94ad4772ad41c37a397075dc83741ba830b7d5b6bb4ae40172ba9026d4107fa"
+        },
+        "icon": {
+          "file": "armor_icon_12.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "23321ec1a96812879962015f4a864d799701ee6f9a797ceff3755ce20fbc5bd1"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 13,
+      "name": "Комбинезон Ветер",
+      "assets": {
+        "char": {
+          "file": "armor_char_13.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "931191b8f26f873b9335cf02a1665e4c0f2966056f19abc812313e20f9a2b994"
+        },
+        "icon": {
+          "file": "armor_icon_13.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d260575178bc3bb990c42c6510d8c3795a32657c14d9ed1689184b473da9dc1a"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 14,
+      "name": "Костюм Скат",
+      "assets": {
+        "char": {
+          "file": "armor_char_14.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "25b88b67c8f288609e99bbb09dfea963624a90088e25e28314c8cb6a493c6e4e"
+        },
+        "icon": {
+          "file": "armor_icon_14.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0f9e6f6a67b5b13f70815d10c0c74047ad36614b7ee196d95738ab219f907a86"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 15,
+      "name": "Бронекостюм Периметр-5",
+      "assets": {
+        "char": {
+          "file": "armor_char_64.webp",
+          "size": [
+            512,
+            768
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "283c8951fa39546932d1b2d581d5368dad9569439fbb9a2c4fbeee4d8c7e814c"
+        },
+        "icon": {
+          "file": "armor_icon_64.webp",
+          "size": [
+            384,
+            384
+          ],
+          "mode": "RGBA",
+          "size_ok": true,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "8d314e9986dc6bae08742591ba3281560dc29e177289ea5363c83f803de17d0d"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 16,
+      "name": "Бронежилет 6Б43 Ратник",
+      "assets": {
+        "char": {
+          "file": "armor_char_16.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "6063f6d19bbc7407944c7c2e6aea2c58b172e7c2828422ccdce8bd61a6aaa31a"
+        },
+        "icon": {
+          "file": "armor_icon_16.webp",
+          "size": [
+            236,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "904de02068a5243a2cf8e0c60f7504d8bf7081eb74e82dc2292af98ac6aea7fe"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 17,
+      "name": "Бронежилет Долга «Скала»",
+      "assets": {
+        "char": {
+          "file": "armor_char_17.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "11e1b480f20309ac2c665a8aa9f2b40baf2cf9d8538815dcd33a6e8945a5333b"
+        },
+        "icon": {
+          "file": "armor_icon_17.webp",
+          "size": [
+            239,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ef871492e6c67be97b5afb10c9907a03913bac12063041fbfecaf3f2cefb4905"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 18,
+      "name": "Комбинезон Заря",
+      "assets": {
+        "char": {
+          "file": "armor_char_18.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "98d18057b48397b0500d80b4f6ac9a0799d25d76b153c6de0ccf83841a4b3c22"
+        },
+        "icon": {
+          "file": "armor_icon_18.webp",
+          "size": [
+            251,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ad67bcf678b170b762a6c65c65de8fd6f9dfbf3e575ace8cf95c6650c26b5384"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 19,
+      "name": "Бронежилет Выход",
+      "assets": {
+        "char": {
+          "file": "armor_char_19.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "39b4b88f3e32a73d94cb6598ab717e67f1441eba77f755f452b324daf3a5b65b"
+        },
+        "icon": {
+          "file": "armor_icon_19.webp",
+          "size": [
+            257,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "3ca48612c813170768f7bb9d05f1703ef95fd81733257069f6e93625d4b7c245"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 20,
+      "name": "Бронежилет 6Б45 Ратник-2",
+      "assets": {
+        "char": {
+          "file": "armor_char_20.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "e8d4b7660dbb763f6e9b01e131ed66bd20712c441ab294a4f2b141a0638e96e9"
+        },
+        "icon": {
+          "file": "armor_icon_20.webp",
+          "size": [
+            252,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "3033ea83f81a083b7f318b5903ae5b224b865ecb9109f7ac94d2cee908604b80"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 21,
+      "name": "Бронекостюм Монолит-Патрульный",
+      "assets": {
+        "char": {
+          "file": "armor_char_21.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "6b1c9c7adb6463a2a2ed162f8984e86bb8397720f7008fc6a79c008ac22d4ae2"
+        },
+        "icon": {
+          "file": "armor_icon_21.webp",
+          "size": [
+            241,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "abdaf1ff7341ff2dc13a6c8a41d96c639e2e69b67759a00cd89fb4325323d232"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 22,
+      "name": "Костюм СИРИУС",
+      "assets": {
+        "char": {
+          "file": "armor_char_22.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "683407f91eb98d66c43c5fb983697b402210633a84e5f4f83bbf5995453d448a"
+        },
+        "icon": {
+          "file": "armor_icon_22.webp",
+          "size": [
+            238,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ea08e6cecd90aa78b921c993c4cfa4212147f1e6f529eda5f7dfa84fb8e5ac57"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 23,
+      "name": "Броня Легион-Лайт",
+      "assets": {
+        "char": {
+          "file": "armor_char_65.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "914b084c28df12e6241b4af5317caa03838c4126a04be8811e37b8b908814528"
+        },
+        "icon": {
+          "file": "armor_icon_65.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5d2a3fb9546a05390ac3ad8fd1dd1d4c82ef2c7b7cb0acddaeffbd77b531929c"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 24,
+      "name": "Костюм Стража-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_24.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4007abbade4eebf440273acf989e899a11e477ea8e4938265274b2066f7f0760"
+        },
+        "icon": {
+          "file": "armor_icon_24.webp",
+          "size": [
+            259,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "1a2d4518f146681067fd7387e415d5a3db706d52b390d5b66072ef901d05c767"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 25,
+      "name": "Броня Монолит",
+      "assets": {
+        "char": {
+          "file": "armor_char_25.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "730f82f0d74351515b1f5092b9522709ffe110613d015de4bbce5e70942e14d9"
+        },
+        "icon": {
+          "file": "armor_icon_25.webp",
+          "size": [
+            250,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c881cffc52f4c558127249cf0fd7dc2d22ff6d08e1f6707a05cfe0b3a965f61d"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 26,
+      "name": "Бронекостюм СКАТ-9М",
+      "assets": {
+        "char": {
+          "file": "armor_char_26.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "b472a542cf2898b11070d8635d96b0c837ff12d38395b90cbc14ad6dec911add"
+        },
+        "icon": {
+          "file": "armor_icon_26.webp",
+          "size": [
+            270,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2c20a1e8029949d6874e28c0427212314758cd446254ee443862c09d7ea49173"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 27,
+      "name": "Бронежилет 6Б47 Ратник-3",
+      "assets": {
+        "char": {
+          "file": "armor_char_27.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5e5f4a66e67ed5ccfcede56a7243edce1f8e3a70a884a692457c08db33777e63"
+        },
+        "icon": {
+          "file": "armor_icon_27.webp",
+          "size": [
+            260,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "327449edb7a8786dd803d23222cafa7b4d68c1861e2fb04667f20af42fc24ed4"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 28,
+      "name": "Броня Легион",
+      "assets": {
+        "char": {
+          "file": "armor_char_67.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4333a2cddeab5a89645c10d29e0e7ff6c53afa18d222c9c9eb5467ffa06ba565"
+        },
+        "icon": {
+          "file": "armor_icon_67.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5c35067c81da3acb58c846be5d77293bf259ed05d63184fb4eff3dd0d8174940"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 29,
+      "name": "Бронежилет 6Б57 Ратник-Элит",
+      "assets": {
+        "char": {
+          "file": "armor_char_29.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fc4671e89e18567c92aa56d8c9859cb14fbbc24a7e27d285a4bc400cd66ea560"
+        },
+        "icon": {
+          "file": "armor_icon_29.webp",
+          "size": [
+            271,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "cb74ee8ca992dd3bb4afd3e1619bb654d08c969b03123c7229f42e75996777a1"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 30,
+      "name": "Костюм Штурмовик",
+      "assets": {
+        "char": {
+          "file": "armor_char_30.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "bf0b0b29e695b86c0a1e328f4361f617fba18f22f21075fca9690130adb2c458"
+        },
+        "icon": {
+          "file": "armor_icon_30.webp",
+          "size": [
+            271,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "8c1f54b0fa31e59ead9958161d21003ccbdecc956ac46eb33cec1ac0aaa48b11"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 31,
+      "name": "Бронекостюм СЕВА",
+      "assets": {
+        "char": {
+          "file": "armor_char_31.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d79b34137c1f987a04fd0e1970634da0ddf90f3b4b4ba9c28a92c6aef8c18df8"
+        },
+        "icon": {
+          "file": "armor_icon_31.webp",
+          "size": [
+            266,
+            231
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0e186eaf22c33500dd663911aa6102ff5597ea094fb1aac0979099eb6a42c762"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 32,
+      "name": "Бронекостюм Долг-Элит",
+      "assets": {
+        "char": {
+          "file": "armor_char_32.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "18512cf1d9c17df0c7ee3aabb59d7200b3108de21cb3698f0f23d08982b212d8"
+        },
+        "icon": {
+          "file": "armor_icon_32.webp",
+          "size": [
+            253,
+            231
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "03dbc4c1072443c8fe487c706d82b2cd76d391156945b9b7445670b6edf13f53"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 33,
+      "name": "Бронежилет 6Б13 Модерн",
+      "assets": {
+        "char": {
+          "file": "armor_char_33.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c2535fbaba1135d7f37cf68b2d408136f2db30b9449fceb047f608e94f5fc447"
+        },
+        "icon": {
+          "file": "armor_icon_33.webp",
+          "size": [
+            258,
+            231
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c3a417cf0cffe5b55b71d24cdfb1f091559f340edab93ac14cc21099952197e9"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 34,
+      "name": "Костюм Абсолют-2",
+      "assets": {
+        "char": {
+          "file": "armor_char_34.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7c5ffa7bb551f3fa5660c1758ad8acec05e06993a427f95a4d571ac9b06a2ad2"
+        },
+        "icon": {
+          "file": "armor_icon_34.webp",
+          "size": [
+            271,
+            231
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0a179154e8df484308ded76bb3563edd29f56965e0a9585067593df91debacee"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 35,
+      "name": "Броня Стража-Легенда",
+      "assets": {
+        "char": {
+          "file": "armor_char_69.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "64170de8964c35a1815bba0392e726ea1b07e62a4423c0ec2bfcdda7a7e0d309"
+        },
+        "icon": {
+          "file": "armor_icon_69.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "59f44d1eafd1c18e6fc713b046f65e338fdb4cbbb4e5ecb13e2ac4843c5d99a0"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 36,
+      "name": "Костюм Гроза",
+      "assets": {
+        "char": {
+          "file": "armor_char_36.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0c91d523054047118ecda789b1ac7a22dffd24132cfec4834685483abf0b05d9"
+        },
+        "icon": {
+          "file": "armor_icon_36.webp",
+          "size": [
+            259,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "205db47216d9240e764a248a30089a4c796d2d6bafe1f87db127a9641264a5ef"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 37,
+      "name": "Бронежилет 6Б59 Элит",
+      "assets": {
+        "char": {
+          "file": "armor_char_37.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "34844271e2f2fd11da7ee55a4b04fcdc2bb0b022a225a152a2d8728b9df9a553"
+        },
+        "icon": {
+          "file": "armor_icon_37.webp",
+          "size": [
+            246,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f0f77748dcc9a49476b45b07805685a7fc180c678c649f2a9654bc540a2b2dab"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 38,
+      "name": "Бронежилет 6Б49 Ратник-4",
+      "assets": {
+        "char": {
+          "file": "armor_char_38.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f3a6d8648baedcdf6935bc1232719a68403d589576bd06c18a74ef57759fbb01"
+        },
+        "icon": {
+          "file": "armor_icon_38.webp",
+          "size": [
+            272,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "05737ba1d2f77c18c4cea78286ff292a66d2c1b033eb384673b2bab483c1a804"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 39,
+      "name": "Костюм Ветер-Штурм",
+      "assets": {
+        "char": {
+          "file": "armor_char_39.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ec7961e61ed785202b25fe1dcde78a38c5e84a94479d4a79e91400f278778e6c"
+        },
+        "icon": {
+          "file": "armor_icon_39.webp",
+          "size": [
+            265,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "b795c5d102a0cb9acde1d4688c8eb5cd2efb4c54babd5edffe7679dd4ad60afb"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 40,
+      "name": "Бронекостюм Титан-Про",
+      "assets": {
+        "char": {
+          "file": "armor_char_40.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a49de59814afb21e84ffd1e3042b0a08337bb9fc090593b93936903387f7553f"
+        },
+        "icon": {
+          "file": "armor_icon_40.webp",
+          "size": [
+            271,
+            228
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f3debf0344b6ee607364bd885b4805a3832a9c68a225c805b4c30ba8b7c637dd"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 41,
+      "name": "Прототип Брони X-17",
+      "assets": {
+        "char": {
+          "file": "armor_char_73.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c9e101023018627fb2798954b52a4a090718e4c4576fe1149d88e4daa62b03dd"
+        },
+        "icon": {
+          "file": "armor_icon_73.webp",
+          "size": [
+            272,
+            272
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "bef2342b89e5412617de2358903a812defc781cdc78a3a9c39f4d1bd28dc2027"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 42,
+      "name": "Броня Монолит-Элит",
+      "assets": {
+        "char": {
+          "file": "armor_char_42.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ea80759aaecff1b9ccc5fab56d6d91267b0c17a782c6ce65771a1f229c6cb989"
+        },
+        "icon": {
+          "file": "armor_icon_42.webp",
+          "size": [
+            271,
+            233
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "11069dedd9a25963e09991ccfa959db806292c274d2fd08bd54e1dbbf813c084"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 43,
+      "name": "Бронекостюм Титан",
+      "assets": {
+        "char": {
+          "file": "armor_char_43.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d7d18ce23f495b8b82133043897deedb4cef9f7821f4c5e3b2281dab27845eb8"
+        },
+        "icon": {
+          "file": "armor_icon_43.webp",
+          "size": [
+            272,
+            233
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "30d0f9660ef75759cff5952ce0c41481a7ad99347e08e3144dc66453d407ebaa"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 44,
+      "name": "Костюм Аванпост",
+      "assets": {
+        "char": {
+          "file": "armor_char_44.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "403f880a327cfa168bbedcc2863c1420484dd9b594fc901b1e469ad626ed53b1"
+        },
+        "icon": {
+          "file": "armor_icon_44.webp",
+          "size": [
+            265,
+            233
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d00f4d257b9c429ee42dcfc10143954283b3a70cde987d7a9dd171f981e7d4eb"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 45,
+      "name": "Броня Стража",
+      "assets": {
+        "char": {
+          "file": "armor_char_45.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "880b99798d7639b9ad5444b0d7edc716b5b77279218d5da8de8f61b5edc9bb5f"
+        },
+        "icon": {
+          "file": "armor_icon_45.webp",
+          "size": [
+            271,
+            232
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fdc7bb340a2f5116c152755f7c00bd3990d9babd418126206c1ef5a54715fcfb"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 46,
+      "name": "Костюм Затвор-Броня",
+      "assets": {
+        "char": {
+          "file": "armor_char_46.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a72c22b4be7be4e93cf722b9a7a879b25f5ca510f97a2f82f882ab5ff6d83fb3"
+        },
+        "icon": {
+          "file": "armor_icon_46.webp",
+          "size": [
+            269,
+            238
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f048f2785b6c0035e8bf74541a4a14d9f36392161244c6a78cf582873be5c9de"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 47,
+      "name": "Бронежилет 6Б51 Ратник-5",
+      "assets": {
+        "char": {
+          "file": "armor_char_47.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fda110eb6ea6212fe651781fb42c306f948c06b7bc7ee2652a750812f020c8f7"
+        },
+        "icon": {
+          "file": "armor_icon_47.webp",
+          "size": [
+            250,
+            238
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c7f21fc1b5a7460fe89a889e452798bd6d0fbd96d5bb573a643f332545f451ca"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 48,
+      "name": "Броня Раскат",
+      "assets": {
+        "char": {
+          "file": "armor_char_75.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "031663a1f4407b3c118298eb72660a8b7b43e37a53f4c4f2cf5b1c54010b88c0"
+        },
+        "icon": {
+          "file": "armor_icon_75.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fe55c4e2c9311b90622ce8497aaef5451446c3fe195c099e23fc9e0a44277dae"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 49,
+      "name": "Защитный костюм Периметр",
+      "assets": {
+        "char": {
+          "file": "armor_char_49.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4dff1e1cb07dc1c02d905ea5dabede1ce561b1208d2725e3d3a9490ff9b3d74e"
+        },
+        "icon": {
+          "file": "armor_icon_49.webp",
+          "size": [
+            252,
+            238
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "74a88d438b9ba171db4320fa1ee5e944dda771f56f4ebaae0fd5952f20ef851e"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 50,
+      "name": "Костюм Форпост",
+      "assets": {
+        "char": {
+          "file": "armor_char_50.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d37db707961df3b1866eb3e5012e51121ef097cb6661797f9c534e61937e26bf"
+        },
+        "icon": {
+          "file": "armor_icon_50.webp",
+          "size": [
+            271,
+            237
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4e175cd57aefa127ff7a1a675b818b2a2daa617564f4476b9c829a249adb3f0d"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 51,
+      "name": "Броня Стража-Элит",
+      "assets": {
+        "char": {
+          "file": "armor_char_51.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "19801d14ad2ff3d575b1e827241fe4e24ebd078e7bed479c13496a9607d92806"
+        },
+        "icon": {
+          "file": "armor_icon_51.webp",
+          "size": [
+            271,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "78642e475799e57738893e6007ec4fe0f9426aa9cfe1648794fc73237eb83b8c"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 52,
+      "name": "Бронежилет 6Б61 Легенда",
+      "assets": {
+        "char": {
+          "file": "armor_char_52.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "fe205fbbc24a51db852cf55d8bda92ef6f13fba6adf625ffe297b8ccc1256d40"
+        },
+        "icon": {
+          "file": "armor_icon_52.webp",
+          "size": [
+            264,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d0ba2a66ba5c9b3cce47fa52b65bd5dcd33a56dba573d5468716d829513b13b9"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 53,
+      "name": "Бронежилет 6Б53 Ратник-6",
+      "assets": {
+        "char": {
+          "file": "armor_char_53.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "988f9effe636856428b389fc0b89d890fe93aaf300a6c321a12ff33103906c45"
+        },
+        "icon": {
+          "file": "armor_icon_53.webp",
+          "size": [
+            266,
+            246
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "6b7a726d8926d7df611452beedacd27b6de7fe50ee50025e92a35a2a21f40771"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 54,
+      "name": "Броня Стрелка",
+      "assets": {
+        "char": {
+          "file": "armor_char_79.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2ae65cfc5e4edf1649d55538ad36c999eb93f593b7857034ec66ff832e6c5b5d"
+        },
+        "icon": {
+          "file": "armor_icon_79.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7cd4b7ffc8e06d90c37dff274e600b4e1e46dd0e4c166ebe33bd334b62e6e100"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 55,
+      "name": "Костюм Последний Рубеж",
+      "assets": {
+        "char": {
+          "file": "armor_char_55.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "6e61a511e10d4cb78605b34767edd89564d0ace872019ccdcccb17497e0d2a72"
+        },
+        "icon": {
+          "file": "armor_icon_55.webp",
+          "size": [
+            271,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d2db9d7c14aac9544d18e2e1e63d1afeae8b8f24daa7b675061eef785ba7f854"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 56,
+      "name": "Костюм Абсолют",
+      "assets": {
+        "char": {
+          "file": "armor_char_56.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c5d7f817d5363212b8d5fdfb72b1b404644830abcc3f78d6ebffa0e170d44dc4"
+        },
+        "icon": {
+          "file": "armor_icon_56.webp",
+          "size": [
+            271,
+            246
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "e22b247d5e6fa82882b55eae283faf08af4fc28a73423c98108f292e5daaae71"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 57,
+      "name": "Броня Периметр-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_57.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "25cc25b9e0c481c50e43b5f8b195afa855ebfb809acbee7130be7e4ef9f82fc6"
+        },
+        "icon": {
+          "file": "armor_icon_57.webp",
+          "size": [
+            268,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4e597395d643633f4df1789e7420ebb1c5f53789bcbcd12df2093503e642da6b"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 58,
+      "name": "Бронежилет 6Б55 Ратник-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_58.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4722327348dbb2472ee4fdbb0055bc8807f155192927ce18cdb6c0c5c45ff73a"
+        },
+        "icon": {
+          "file": "armor_icon_58.webp",
+          "size": [
+            272,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "840390b260a7ce0fb086dbbd9d58fbcc4acbde11670b4537da7b6efe4d68cac4"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 59,
+      "name": "Бронежилет 6Б63 Легенда-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_59.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "6f0e702ac385ea963e17de5e57e7c16f8fc192922ce521dabb31d00939e529f5"
+        },
+        "icon": {
+          "file": "armor_icon_59.webp",
+          "size": [
+            271,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "002396883705ed5864099494d981d8a45972eba1511a24ec1ac6382bf8efb5c8"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 60,
+      "name": "Экзокостюм Бастион-2",
+      "assets": {
+        "char": {
+          "file": "armor_char_60.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d0d05939b38b697c657aabcd46707125fca1eebed81b3d174af724bb5f3d3dbc"
+        },
+        "icon": {
+          "file": "armor_icon_60.webp",
+          "size": [
+            271,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "92099a5f543bb1c79b6764fe6790fc1cbc3cbdbb166e2b7195766f54b5e0a5df"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 61,
+      "name": "Экзоскелет Монолит-11",
+      "assets": {
+        "char": {
+          "file": "armor_char_61.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c50a96ba45af6d11549b183edcd5adf169238ca08570cb7f0a7b914bf63cca76"
+        },
+        "icon": {
+          "file": "armor_icon_61.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5d7cc094611b4026864911bd209fb4f21f43e097f507ce888262ebcddc6e8e14"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 62,
+      "name": "Экзоскелет Свобода",
+      "assets": {
+        "char": {
+          "file": "armor_char_62.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "70e60fc15d9a892bae1db41acc63624d30d46f6003cd7a11f631d95cece9fa6b"
+        },
+        "icon": {
+          "file": "armor_icon_62.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4fc82981ad2dc5a23a0ae264e76a66cd37b0c9dc9a07fd2cca800716c443d2d3"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 63,
+      "name": "Экзоскелет Атлант",
+      "assets": {
+        "char": {
+          "file": "armor_char_63.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "348cbb95569a0ba00bea3f760a678657d0cc831965662eb265991130f0498c08"
+        },
+        "icon": {
+          "file": "armor_icon_63.webp",
+          "size": [
+            272,
+            272
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7f1c16e16cf65e8402b28310cef80dbf472b0f2c768a52c41aa1763b904c6977"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 64,
+      "name": "Экзокостюм СЭВ",
+      "assets": {
+        "char": {
+          "file": "armor_char_15.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "804529bc7e6c3afd965da4fee681f3db238013d151b0a863f96e4fc355611489"
+        },
+        "icon": {
+          "file": "armor_icon_15.webp",
+          "size": [
+            271,
+            236
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "aa2a710a5603477a123de9829bc792d8b2f1ea5f48de908c3d8aa9556560817e"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 65,
+      "name": "Экзокостюм Чистое небо",
+      "assets": {
+        "char": {
+          "file": "armor_char_23.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c4d68e79591937b4572a2b9e45474e559a4eb41306eb59d6cad35701074cfbdf"
+        },
+        "icon": {
+          "file": "armor_icon_23.webp",
+          "size": [
+            255,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "91c259f353879ea4f9d8da64d1f978cf97d943da34c2568d7faeb9e3e92d9cc6"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 66,
+      "name": "Экзоскелет Титан-Экстрим",
+      "assets": {
+        "char": {
+          "file": "armor_char_66.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f90eccb2cd3b70951815ae09306b8c30a79b24b7fec890e7a4de814b49a3f6e9"
+        },
+        "icon": {
+          "file": "armor_icon_66.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "19a2f003d4b4f21d4e3db36e1f70266fa7aa6386e63945af43a036d07ccddc2a"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 67,
+      "name": "Экзокостюм Периметр-1",
+      "assets": {
+        "char": {
+          "file": "armor_char_28.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5c80ac1aa15268b6292d015ecb7a608b0eea1595a10e7aec6a629f8ef7a71f3f"
+        },
+        "icon": {
+          "file": "armor_icon_28.webp",
+          "size": [
+            272,
+            229
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a8445fb783e2f52626dd5d2f3353c790f20c7ca421ce78f93eabae6a7d766349"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 68,
+      "name": "Экзоскелет Периметр-2",
+      "assets": {
+        "char": {
+          "file": "armor_char_68.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "218e202e4539bb6c976c3b94208615ae4b0d76f0358be82565541a8a51705bbb"
+        },
+        "icon": {
+          "file": "armor_icon_68.webp",
+          "size": [
+            272,
+            272
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4324539b2d560d343102dd89e1b7313853538ddc0ce748c0b432b1564b496cf6"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 69,
+      "name": "Экзокостюм Титан-Лайт",
+      "assets": {
+        "char": {
+          "file": "armor_char_35.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4565c146c1f95aa0aabd5728526ed9246dfe91f58689564776ef6c6e42e82dbd"
+        },
+        "icon": {
+          "file": "armor_icon_35.webp",
+          "size": [
+            271,
+            231
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2fa2824ed974eab0b7a357f748e429650a32fcf57531910a53c808ca7a5a52c6"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 70,
+      "name": "Экзоскелет Штурмовой",
+      "assets": {
+        "char": {
+          "file": "armor_char_70.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4e0d74e5cc28c5692394a927b220c4e8b4827d8af2d204513bd6a1a70ab96596"
+        },
+        "icon": {
+          "file": "armor_icon_70.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5c5716ed752cc3d2683e91142d0255bcb473cb3274ad8143002af948426ab714"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 71,
+      "name": "Экзоскелет Периметр-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_71.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5e0c5fb7dd07dd227df21c14811d295b01f3cdb9683379f792c1e9606cf97dd6"
+        },
+        "icon": {
+          "file": "armor_icon_71.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "3b3611cdea42cb8d656e0e06bf0527da1a22a3e77ee321544415c0c499ad50d5"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 72,
+      "name": "Экзокостюм Бастион-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_72.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "9575015bb553c822af1bf8886f80ac28df66a02a76e42ee8386fd3a8f1daa058"
+        },
+        "icon": {
+          "file": "armor_icon_72.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "34232e18da779839347096e402c7a10a56dafd4f8c1dcfd9568bb673064ad640"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 73,
+      "name": "Экзокостюм Периметр-3",
+      "assets": {
+        "char": {
+          "file": "armor_char_41.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4f5acc5930141d264b389ad43a4674e22e92dbbcb68cec34f47955ce328aa9fa"
+        },
+        "icon": {
+          "file": "armor_icon_41.webp",
+          "size": [
+            263,
+            233
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c45709749b3799fb1e5b8c6b6e4eaa890ef771667f89787ab756429c53aa25ef"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 74,
+      "name": "Экзоскелет Крепость",
+      "assets": {
+        "char": {
+          "file": "armor_char_74.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "1853cdbef998e64b6f15a802ef912765b9a52eb34a175ea52087a6451a39fc18"
+        },
+        "icon": {
+          "file": "armor_icon_74.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ac3c71bc6b98d87fa8b6ae86a4ef385db2f4084babbbbc1d491e69b63e51ae97"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 75,
+      "name": "Экзокостюм Периметр-4",
+      "assets": {
+        "char": {
+          "file": "armor_char_48.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ef4e695d0c5237ae77fec82b104177746aa8d235c44ffeaf0270adb50a1322cd"
+        },
+        "icon": {
+          "file": "armor_icon_48.webp",
+          "size": [
+            258,
+            238
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d44013641de88d34efaf4d09c3cb367bcc1fd17a6c8ab7248ea29e447bd2acec"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 76,
+      "name": "Экзоскелет Крепость-2",
+      "assets": {
+        "char": {
+          "file": "armor_char_76.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "929105ebe8129431200a772600f9307798fe04234fae01c1bcec6f49b0dc2b7b"
+        },
+        "icon": {
+          "file": "armor_icon_76.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "70ffbecc92933b8983fcbed78b00d8dc03945c63174390c34b0107539e0ed90d"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 77,
+      "name": "Экзоскелет Реликт",
+      "assets": {
+        "char": {
+          "file": "armor_char_77.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "31c3a1e5f2ffec0bf430cf9bced20f0195699a48e4baf03c35711004562f8f91"
+        },
+        "icon": {
+          "file": "armor_icon_77.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "89cf0bc8b20753904a6922ec00248401ee43fb49140ae4cff0a031c1947c34f7"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 78,
+      "name": "Экзокостюм Возмездие",
+      "assets": {
+        "char": {
+          "file": "armor_char_78.webp",
+          "size": [
+            304,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "730a0cafba9e26159f7f88f403ccc9192bb830b3e94ab49a9ef6c66e932f0288"
+        },
+        "icon": {
+          "file": "armor_icon_78.webp",
+          "size": [
+            272,
+            272
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "b1ba4e5f7d579a2b7e9ee25991103e06e62e5c249ab9320d07f405d6ccdb20a1"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 79,
+      "name": "Экзокостюм Бастион",
+      "assets": {
+        "char": {
+          "file": "armor_char_54.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a1d56aed626c615ce0c3fefa551244effd48aef8aff5d1d1a1899fa4d11a1099"
+        },
+        "icon": {
+          "file": "armor_icon_54.webp",
+          "size": [
+            268,
+            244
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "b4205d496122747d4e34617cb57057ee892325dd37957cabd7315a67b2cb4cab"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 80,
+      "name": "Экзоскелет",
+      "assets": {
+        "char": {
+          "file": "armor_char_80.webp",
+          "size": [
+            303,
+            682
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2f630369832acac8362ac143efed4bcd001642e21f794b5e66556a59ceb9a4ff"
+        },
+        "icon": {
+          "file": "armor_icon_80.webp",
+          "size": [
+            271,
+            271
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ff96f287922d279b9a73a132a742b35f62ab0a7b0a6e3714e4147604ea912a14"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 81,
+      "name": "Броня Зоны",
+      "assets": {
+        "char": {
+          "file": "armor_char_81.webp",
+          "size": [
+            354,
+            715
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f635129b8a9f99504658c448d38b6e6b85aa517ae1be9c592d49654083c6c0c8"
+        },
+        "icon": {
+          "file": "armor_icon_81.webp",
+          "size": [
+            261,
+            222
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c314ba282f0c52302b14bf464d2e813d7debcd7994712265c0e91eecf9d3dbb8"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 82,
+      "name": "Экзоскелет Титан-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_82.webp",
+          "size": [
+            364,
+            717
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "57b25e3499761ebe9b1869d1bff2e34cf76d53a0ae9fbcaf9f44cf7f707c0bce"
+        },
+        "icon": {
+          "file": "armor_icon_82.webp",
+          "size": [
+            262,
+            223
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "005092939fcc83f3d41d7b3d1ba2da8b1571d121e0ae764765f37d3ecc827383"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 83,
+      "name": "Экзоскелет Абсолют-Финал",
+      "assets": {
+        "char": {
+          "file": "armor_char_83.webp",
+          "size": [
+            388,
+            716
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "c73065cadc5c470fa2c41893e41e49b550f502cb986e5d410da322bdf1c6230f"
+        },
+        "icon": {
+          "file": "armor_icon_83.webp",
+          "size": [
+            267,
+            225
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5ccd5bfafb15409a159985ec64ba3da097b450ed09ec9c1b65ab58e151e626af"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 84,
+      "name": "Экзокостюм Апокалипсис",
+      "assets": {
+        "char": {
+          "file": "armor_char_84.webp",
+          "size": [
+            385,
+            719
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7644ce2c0e4864c792ecc2a3fbfc28a9b0e697ff2b4c11df00d01c7b8398e975"
+        },
+        "icon": {
+          "file": "armor_icon_84.webp",
+          "size": [
+            275,
+            222
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d4ad031a2b61406fef724579f6ae4e000fcfb2de6f9bbafe40571d92ed86b5f6"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 85,
+      "name": "Плащ тёмного сталкера",
+      "assets": {
+        "char": {
+          "file": "armor_char_85.webp",
+          "size": [
+            440,
+            650
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "99a4ac4492880306decbc637f356a2e4290dabaea05bbd28c6dd2479dc97c9bb"
+        },
+        "icon": {
+          "file": "armor_icon_85.webp",
+          "size": [
+            360,
+            360
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "7bdfbea1b3ad7105ca51bf86844f07048c20c2c9d6e168627656240e0eb5f2ee"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 86,
+      "name": "Исследовательский комбинезон A",
+      "assets": {
+        "char": {
+          "file": "armor_char_86.webp",
+          "size": [
+            304,
+            725
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0b98066e156d18c5808b3a0d2d0c3c60dfa95a3d3a5eadbe74d0778761e4f933"
+        },
+        "icon": {
+          "file": "armor_icon_86.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5235e9f408e589c1e5c5dd49c1694c7c7ed5d83c4e6fc535f22083876031b874"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 87,
+      "name": "Исследовательский комбинезон B",
+      "assets": {
+        "char": {
+          "file": "armor_char_87.webp",
+          "size": [
+            313,
+            725
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "bc3dc76786986ad0c2d415df346f3c19acdcfd4eadd6b90e056b0cc5a3f6f3f6"
+        },
+        "icon": {
+          "file": "armor_icon_87.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "4965acddbb561c85e996421f149c34c279d10ba84053ef92b0b274ffb899906c"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 88,
+      "name": "Исследовательский комбинезон C",
+      "assets": {
+        "char": {
+          "file": "armor_char_88.webp",
+          "size": [
+            316,
+            728
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2e881d4be0e929ba0367d8238b2a8a22825074bf19adb1b5c16492a912f6473a"
+        },
+        "icon": {
+          "file": "armor_icon_88.webp",
+          "size": [
+            258,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "0cfea376c9160ed87135e29e6146addc8460f3d3df62b96cdbb7d60eea08d5d7"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 89,
+      "name": "Исследовательский комбинезон D",
+      "assets": {
+        "char": {
+          "file": "armor_char_89.webp",
+          "size": [
+            313,
+            726
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "f739a1e8cc7bb9f377048ac967652b3d2588f90e172699147a1ddcdc50f7c4c1"
+        },
+        "icon": {
+          "file": "armor_icon_89.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "e51618eef0b79bb50514aec00f2d074b858e59d6fde2c4556d6ef7e56b283095"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 90,
+      "name": "Исследовательский комбинезон E",
+      "assets": {
+        "char": {
+          "file": "armor_char_90.webp",
+          "size": [
+            308,
+            726
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ff5bc1ac234604ab73bd24a35d6f8bd03a1c2f4f0c73d01f0aad104e8a7688a5"
+        },
+        "icon": {
+          "file": "armor_icon_90.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "a4165c3ba411612def29c84be0436877a22117c4083aed858efa7daaf3238b59"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 91,
+      "name": "Исследовательский комбинезон F",
+      "assets": {
+        "char": {
+          "file": "armor_char_91.webp",
+          "size": [
+            309,
+            725
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "8f4cd74faec127d17f716abf4d3abf55fdc5da81477ccb15cb5ce66124dba6d5"
+        },
+        "icon": {
+          "file": "armor_icon_91.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "8ee961e3e3cbb38f63c6262b046b1a8d7a013fd12c259ca6e8a5f7998c0be930"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 92,
+      "name": "Исследовательский комбинезон G",
+      "assets": {
+        "char": {
+          "file": "armor_char_92.webp",
+          "size": [
+            313,
+            723
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "338c368c34749b966a1b53715f170a4dcd9e2f49baf54ae1a019dbbd5a9c14df"
+        },
+        "icon": {
+          "file": "armor_icon_92.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "2db375f620eb77f872ae72323ff5fc68f08fed6aef9f2edd718be2c535c4672e"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 93,
+      "name": "Исследовательский комбинезон H",
+      "assets": {
+        "char": {
+          "file": "armor_char_93.webp",
+          "size": [
+            316,
+            728
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "969a2aa1bda3732ce91d32759a8515b2d6ec4ec1d5f1dafa46bcba9a1580aaf8"
+        },
+        "icon": {
+          "file": "armor_icon_93.webp",
+          "size": [
+            258,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "d2bfb52398e1a6ad1e9407f164886ed7f03f33b602081e96912c6129c5d0e0ac"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 94,
+      "name": "Исследовательский комбинезон I",
+      "assets": {
+        "char": {
+          "file": "armor_char_94.webp",
+          "size": [
+            309,
+            726
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5a820c0d2fb2e6b94b8cb037b1407e8ddc6da179479a8ca1880d75a95e0e487b"
+        },
+        "icon": {
+          "file": "armor_icon_94.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "36097757061a54e5027a775e820555011a52d40db62dba0f480366d6aa3ef8a8"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 95,
+      "name": "Исследовательский комбинезон J",
+      "assets": {
+        "char": {
+          "file": "armor_char_95.webp",
+          "size": [
+            313,
+            723
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "463b79b00aa14282240b1bc9bfe30e5a6d3ebbedc7065cfe6278242e3c0da336"
+        },
+        "icon": {
+          "file": "armor_icon_95.webp",
+          "size": [
+            257,
+            218
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "304fed6707f693773949ed68396534435aa083d58f9e7e62d0f820e546e7d7ce"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    },
+    {
+      "catalog_id": 96,
+      "name": "Исследовательский комбинезон K",
+      "assets": {
+        "char": {
+          "file": "armor_char_96.webp",
+          "size": [
+            323,
+            776
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "ac41645dc6a934a1dcc9706c445ede46eed0efadb7903d00f27b940107e10bb7"
+        },
+        "icon": {
+          "file": "armor_icon_96.webp",
+          "size": [
+            278,
+            260
+          ],
+          "mode": "RGBA",
+          "size_ok": false,
+          "alpha_extrema": [
+            0,
+            255
+          ],
+          "has_transparent_pixels": true,
+          "sha256": "5e78552124143eaac2933e6132442114d6e109d0b932f501e731d31194d9d758"
+        }
+      },
+      "visual_review": "pending",
+      "pair_file_numbers_match": true
+    }
+  ]
+}

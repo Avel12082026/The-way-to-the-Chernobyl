@@ -1,0 +1,10 @@
+{
+  "assets": 162,
+  "individual_pairs_reviewed": 81,
+  "alpha_exact": true,
+  "cache_hashes_match": true,
+  "client_dictionaries_unchanged": true,
+  "first_15_pairs_unchanged": true,
+  "browser_check": "blocked: Chromium download timeout",
+  "telegram_check": "not performed"
+}

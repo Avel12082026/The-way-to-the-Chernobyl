@@ -1,0 +1,2276 @@
+{
+  "collection": "ARMOR_16_96",
+  "status": "locally reviewed; publication tracked separately",
+  "catalog_count": 81,
+  "asset_count": 162,
+  "assets": [
+    {
+      "catalog_id": 16,
+      "name": "Бронежилет 6Б43 Ратник",
+      "kind": "char",
+      "file": "icons/armor_char_16.webp",
+      "sha256": "020568840449a55f5b9c92c786ab7285e3e745265a5990002019dbf21d5d7178",
+      "version": "020568840449",
+      "bytes": 77984,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 16,
+      "name": "Бронежилет 6Б43 Ратник",
+      "kind": "icon",
+      "file": "icons/armor_icon_16.webp",
+      "sha256": "088cf4f44fcc4fc4114e0039a01c03844c901db01af991699378edc37b8c4f98",
+      "version": "088cf4f44fcc",
+      "bytes": 48734,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 17,
+      "name": "Бронежилет Долга «Скала»",
+      "kind": "char",
+      "file": "icons/armor_char_17.webp",
+      "sha256": "914b36ebc91238012488a0835475f6f18991f3f7f57f8de41e8568a4c66daaa3",
+      "version": "914b36ebc912",
+      "bytes": 74986,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 17,
+      "name": "Бронежилет Долга «Скала»",
+      "kind": "icon",
+      "file": "icons/armor_icon_17.webp",
+      "sha256": "a7bf9b2b8028bb9b5bb6b0d14d777bbb76ebf08cdb0599a3f52a5dcf6010ccee",
+      "version": "a7bf9b2b8028",
+      "bytes": 51698,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 18,
+      "name": "Комбинезон Заря",
+      "kind": "char",
+      "file": "icons/armor_char_18.webp",
+      "sha256": "780eeeb9a924688604cd8d9cc58644d2b89d4ce2636b5030980bbfb2b2549d10",
+      "version": "780eeeb9a924",
+      "bytes": 71472,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 18,
+      "name": "Комбинезон Заря",
+      "kind": "icon",
+      "file": "icons/armor_icon_18.webp",
+      "sha256": "9eae88d1abcb36a5496a0f23a7fcf7c1671c4c3756b32a8ff3e2682d40541350",
+      "version": "9eae88d1abcb",
+      "bytes": 47290,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 19,
+      "name": "Бронежилет Выход",
+      "kind": "char",
+      "file": "icons/armor_char_19.webp",
+      "sha256": "1a0ebd705c4c5c5a5612518a670142c6856bf98f8a115f5e8d32385828bc6e7f",
+      "version": "1a0ebd705c4c",
+      "bytes": 75150,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 19,
+      "name": "Бронежилет Выход",
+      "kind": "icon",
+      "file": "icons/armor_icon_19.webp",
+      "sha256": "59be58cdf66aceccfff81cace38f56cd4e3f9cefbf3181e162640b0cccc71c46",
+      "version": "59be58cdf66a",
+      "bytes": 48338,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 20,
+      "name": "Бронежилет 6Б45 Ратник-2",
+      "kind": "char",
+      "file": "icons/armor_char_20.webp",
+      "sha256": "bf1b8ae7fda332e5c84f5c80a71fd6a47467ab79c90e3fe68f73d1a47490b8b4",
+      "version": "bf1b8ae7fda3",
+      "bytes": 73308,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 20,
+      "name": "Бронежилет 6Б45 Ратник-2",
+      "kind": "icon",
+      "file": "icons/armor_icon_20.webp",
+      "sha256": "f6186a6bffc52991a6e714bd189dd31cdecd0fd07e6027fcd32620c3ee6184c7",
+      "version": "f6186a6bffc5",
+      "bytes": 52894,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 21,
+      "name": "Бронекостюм Монолит-Патрульный",
+      "kind": "char",
+      "file": "icons/armor_char_21.webp",
+      "sha256": "936abeeacf3ff02b5f79a77d8edb75d25b5fae48481d2f3a94f06e7b1c4b7b2c",
+      "version": "936abeeacf3f",
+      "bytes": 74530,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 21,
+      "name": "Бронекостюм Монолит-Патрульный",
+      "kind": "icon",
+      "file": "icons/armor_icon_21.webp",
+      "sha256": "60afc813f1937a6638fc1b07452c2b2e97cf2f1fb19a17b85d165a36838236a2",
+      "version": "60afc813f193",
+      "bytes": 48082,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 22,
+      "name": "Костюм СИРИУС",
+      "kind": "char",
+      "file": "icons/armor_char_22.webp",
+      "sha256": "2feaba3f3b27542dfe75a57d48cde16ef57073e3896a2084c88430e57fbfe15d",
+      "version": "2feaba3f3b27",
+      "bytes": 72212,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 22,
+      "name": "Костюм СИРИУС",
+      "kind": "icon",
+      "file": "icons/armor_icon_22.webp",
+      "sha256": "56d5b4350b7687fe2628da57940b2a111964d9d0c69acbebbdb8b9b90e0130ec",
+      "version": "56d5b4350b76",
+      "bytes": 44134,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 23,
+      "name": "Броня Легион-Лайт",
+      "kind": "char",
+      "file": "icons/armor_char_65.webp",
+      "sha256": "a74987dd4ca7406cc685f5cffa89933ced514751a705fd610eedeb207fa96ff7",
+      "version": "a74987dd4ca7",
+      "bytes": 87876,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 23,
+      "name": "Броня Легион-Лайт",
+      "kind": "icon",
+      "file": "icons/armor_icon_65.webp",
+      "sha256": "20fc7cd1aba7c407c281e864b7968ecff1e4dc1e04351a886109e6bd7fa4a541",
+      "version": "20fc7cd1aba7",
+      "bytes": 52854,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 24,
+      "name": "Костюм Стража-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_24.webp",
+      "sha256": "c360fafe61cf61f5eab2c6affc0a07de5cef6aa38b2e9956a46cc35a975c8ef6",
+      "version": "c360fafe61cf",
+      "bytes": 71006,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 24,
+      "name": "Костюм Стража-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_24.webp",
+      "sha256": "3e20525f6fb569379fff6d23801c79a528268147affbf3e5e2d51800616d21bd",
+      "version": "3e20525f6fb5",
+      "bytes": 44672,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 25,
+      "name": "Броня Монолит",
+      "kind": "char",
+      "file": "icons/armor_char_25.webp",
+      "sha256": "506163a39bb1c5c52f430a79e548351a7b99b6ec5fb38c3e5cbcda49aac1863b",
+      "version": "506163a39bb1",
+      "bytes": 76374,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 25,
+      "name": "Броня Монолит",
+      "kind": "icon",
+      "file": "icons/armor_icon_25.webp",
+      "sha256": "fd87569ae3c0995dc0fee2b4ccf3de9c6278be6aac1748682c4b36370e75d2a2",
+      "version": "fd87569ae3c0",
+      "bytes": 46176,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 26,
+      "name": "Бронекостюм СКАТ-9М",
+      "kind": "char",
+      "file": "icons/armor_char_26.webp",
+      "sha256": "cdbed3a9d9f90bca4292c7b4e7146e463a7160587838c4fea86c67c7f787857b",
+      "version": "cdbed3a9d9f9",
+      "bytes": 79104,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 26,
+      "name": "Бронекостюм СКАТ-9М",
+      "kind": "icon",
+      "file": "icons/armor_icon_26.webp",
+      "sha256": "e82146a3e8d1c70a79ea1a513a8368aeee2b67a170dbc4e86b19618738111c8e",
+      "version": "e82146a3e8d1",
+      "bytes": 52600,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 27,
+      "name": "Бронежилет 6Б47 Ратник-3",
+      "kind": "char",
+      "file": "icons/armor_char_27.webp",
+      "sha256": "c050c8293fadb3208a09cb1f573c483804bae4d49c6af20e45c3cf34814cea9b",
+      "version": "c050c8293fad",
+      "bytes": 71960,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 27,
+      "name": "Бронежилет 6Б47 Ратник-3",
+      "kind": "icon",
+      "file": "icons/armor_icon_27.webp",
+      "sha256": "e44eea413f0ed729423aeaff246eb19627fd463f2cd89b913342b263e63628a1",
+      "version": "e44eea413f0e",
+      "bytes": 45138,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 28,
+      "name": "Броня Легион",
+      "kind": "char",
+      "file": "icons/armor_char_67.webp",
+      "sha256": "73d2b3c997b70213dcfd827a65faf4ba95859ef874c049d5ca8ae97e2918abfe",
+      "version": "73d2b3c997b7",
+      "bytes": 72982,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 28,
+      "name": "Броня Легион",
+      "kind": "icon",
+      "file": "icons/armor_icon_67.webp",
+      "sha256": "460305bbae81c231a017e6c688645b98210f553adbd88a624dd3551e248b2755",
+      "version": "460305bbae81",
+      "bytes": 51082,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 29,
+      "name": "Бронежилет 6Б57 Ратник-Элит",
+      "kind": "char",
+      "file": "icons/armor_char_29.webp",
+      "sha256": "9cc9b918237f57474576020ed86aab4a066ea5a4a266caa74cf1f843ae4f9da7",
+      "version": "9cc9b918237f",
+      "bytes": 75826,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 29,
+      "name": "Бронежилет 6Б57 Ратник-Элит",
+      "kind": "icon",
+      "file": "icons/armor_icon_29.webp",
+      "sha256": "73ccf7b7e7d37737f10440cc64aca10f53890009077e444e325a405b2ae43ec5",
+      "version": "73ccf7b7e7d3",
+      "bytes": 51186,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 30,
+      "name": "Костюм Штурмовик",
+      "kind": "char",
+      "file": "icons/armor_char_30.webp",
+      "sha256": "1028f5506500d6540506ebaab7400d4538a8f09e8984983a2a6f64054a5e0729",
+      "version": "1028f5506500",
+      "bytes": 71420,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 30,
+      "name": "Костюм Штурмовик",
+      "kind": "icon",
+      "file": "icons/armor_icon_30.webp",
+      "sha256": "d10ed91c11cf528bbb982d6b1fb9e31d25d8de6e8f752c97ba68a063002c231c",
+      "version": "d10ed91c11cf",
+      "bytes": 44222,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 31,
+      "name": "Бронекостюм СЕВА",
+      "kind": "char",
+      "file": "icons/armor_char_31.webp",
+      "sha256": "52dc59a98aff9d69126f1d5c6b9ecacdd171a4e8b6999b1f22fff51d5a47a848",
+      "version": "52dc59a98aff",
+      "bytes": 78670,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 31,
+      "name": "Бронекостюм СЕВА",
+      "kind": "icon",
+      "file": "icons/armor_icon_31.webp",
+      "sha256": "e19f839e355b621a4c91df3f45bae3607b87c9acc781a29eb7f6304e55881077",
+      "version": "e19f839e355b",
+      "bytes": 47322,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 32,
+      "name": "Бронекостюм Долг-Элит",
+      "kind": "char",
+      "file": "icons/armor_char_32.webp",
+      "sha256": "ed1efd80efa59e397968406ba239e646c02857766a2a95ce4b95219e8103904b",
+      "version": "ed1efd80efa5",
+      "bytes": 72242,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 32,
+      "name": "Бронекостюм Долг-Элит",
+      "kind": "icon",
+      "file": "icons/armor_icon_32.webp",
+      "sha256": "1cf81308602702586a747a3beb6a5aa617880d54cd64fd480871e91f3c291abb",
+      "version": "1cf813086027",
+      "bytes": 47016,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 33,
+      "name": "Бронежилет 6Б13 Модерн",
+      "kind": "char",
+      "file": "icons/armor_char_33.webp",
+      "sha256": "86026b2bd175586451ef2925f6c08e45a3bec9d527fb49e6eeb902b350dd1dda",
+      "version": "86026b2bd175",
+      "bytes": 73296,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 33,
+      "name": "Бронежилет 6Б13 Модерн",
+      "kind": "icon",
+      "file": "icons/armor_icon_33.webp",
+      "sha256": "6c5e1128fa99bec5f8f4e95a6c347654a5426f5d6c691acc0d47355ab1108a59",
+      "version": "6c5e1128fa99",
+      "bytes": 44022,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 34,
+      "name": "Костюм Абсолют-2",
+      "kind": "char",
+      "file": "icons/armor_char_34.webp",
+      "sha256": "6f7a4e8789f3b06558df6f803e209626d1e6fac1d387598f21994252be5ae2e6",
+      "version": "6f7a4e8789f3",
+      "bytes": 71968,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 34,
+      "name": "Костюм Абсолют-2",
+      "kind": "icon",
+      "file": "icons/armor_icon_34.webp",
+      "sha256": "99d4bd87ecbf9308422d6a70dce92582e2f5ccad96f793df66b5ce70cac6372b",
+      "version": "99d4bd87ecbf",
+      "bytes": 47562,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 35,
+      "name": "Броня Стража-Легенда",
+      "kind": "char",
+      "file": "icons/armor_char_69.webp",
+      "sha256": "0e9a580734231bdbd8fbeaa0468f84644476ba28caac5d12d06a8f19cfbace62",
+      "version": "0e9a58073423",
+      "bytes": 78372,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 35,
+      "name": "Броня Стража-Легенда",
+      "kind": "icon",
+      "file": "icons/armor_icon_69.webp",
+      "sha256": "f9400bb93a0ebe51ffaf44fecfa91084be7ca311ca06108cd0bc925f03d1bd7d",
+      "version": "f9400bb93a0e",
+      "bytes": 48502,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 36,
+      "name": "Костюм Гроза",
+      "kind": "char",
+      "file": "icons/armor_char_36.webp",
+      "sha256": "c644d00f9861b8057ea3825a36674e7299a10887d0025413d5ad4d4664d3435e",
+      "version": "c644d00f9861",
+      "bytes": 78342,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 36,
+      "name": "Костюм Гроза",
+      "kind": "icon",
+      "file": "icons/armor_icon_36.webp",
+      "sha256": "31888997451f594a2ff95e9065cca597067f423c130cab0cd7e946608509cecd",
+      "version": "31888997451f",
+      "bytes": 50412,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 37,
+      "name": "Бронежилет 6Б59 Элит",
+      "kind": "char",
+      "file": "icons/armor_char_37.webp",
+      "sha256": "cbd1e5e558eda6461cd8c7c7f7b7ca4d1f8de21e513e7c98d4cc971de785fad0",
+      "version": "cbd1e5e558ed",
+      "bytes": 69960,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 37,
+      "name": "Бронежилет 6Б59 Элит",
+      "kind": "icon",
+      "file": "icons/armor_icon_37.webp",
+      "sha256": "6161093766a6b30fd4a9aa834b727b24673bdb932717bc2fbadde63754fd9111",
+      "version": "6161093766a6",
+      "bytes": 43420,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 38,
+      "name": "Бронежилет 6Б49 Ратник-4",
+      "kind": "char",
+      "file": "icons/armor_char_38.webp",
+      "sha256": "70e3dba015dd4227f5e3cd4ecf7a76124ceeab652ab5bd341c4cd530aed0a4a5",
+      "version": "70e3dba015dd",
+      "bytes": 74752,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 38,
+      "name": "Бронежилет 6Б49 Ратник-4",
+      "kind": "icon",
+      "file": "icons/armor_icon_38.webp",
+      "sha256": "f414b2e4c1dfc31a830aad1e57475c12d7eb9e43e1a97e8b772a2b08259785c4",
+      "version": "f414b2e4c1df",
+      "bytes": 54128,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 39,
+      "name": "Костюм Ветер-Штурм",
+      "kind": "char",
+      "file": "icons/armor_char_39.webp",
+      "sha256": "9464719545bfed7bc386cec4200f8865010b3ab0569088bd77f8c102ecec7c3c",
+      "version": "9464719545bf",
+      "bytes": 82334,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 39,
+      "name": "Костюм Ветер-Штурм",
+      "kind": "icon",
+      "file": "icons/armor_icon_39.webp",
+      "sha256": "39a988054b1965a94d572138343a23ec0ea9fba38ba8467d49ab2851e19bb38b",
+      "version": "39a988054b19",
+      "bytes": 51868,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 40,
+      "name": "Бронекостюм Титан-Про",
+      "kind": "char",
+      "file": "icons/armor_char_40.webp",
+      "sha256": "711ac4d7401ad915d31a839f236e123f4a44cc171fe7125519d723794b7cc59a",
+      "version": "711ac4d7401a",
+      "bytes": 81558,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 40,
+      "name": "Бронекостюм Титан-Про",
+      "kind": "icon",
+      "file": "icons/armor_icon_40.webp",
+      "sha256": "cc76d110893d02fd41432f23fcc04f44ee114cab628e364b37044768da68af65",
+      "version": "cc76d110893d",
+      "bytes": 47434,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 41,
+      "name": "Прототип Брони X-17",
+      "kind": "char",
+      "file": "icons/armor_char_73.webp",
+      "sha256": "0996d759ac4d079c3883298ce7ca3b30eabd5458385eabb854e7aa5643b01e22",
+      "version": "0996d759ac4d",
+      "bytes": 76594,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 41,
+      "name": "Прототип Брони X-17",
+      "kind": "icon",
+      "file": "icons/armor_icon_73.webp",
+      "sha256": "540620980b63aacbc7434aa3afe49a4e84540c7cd7862c747f01a87508196389",
+      "version": "540620980b63",
+      "bytes": 39650,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 42,
+      "name": "Броня Монолит-Элит",
+      "kind": "char",
+      "file": "icons/armor_char_42.webp",
+      "sha256": "aeb48859681111d990dc5db3df81b945bdad58bb93e3410166446623945f072e",
+      "version": "aeb488596811",
+      "bytes": 70850,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 42,
+      "name": "Броня Монолит-Элит",
+      "kind": "icon",
+      "file": "icons/armor_icon_42.webp",
+      "sha256": "6c4d8d59aeab33a793781a8b71cf4f4cf2417255d6d6f35684a949e51ff19667",
+      "version": "6c4d8d59aeab",
+      "bytes": 47634,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 43,
+      "name": "Бронекостюм Титан",
+      "kind": "char",
+      "file": "icons/armor_char_43.webp",
+      "sha256": "3a4935ab1b256367570530d125122e47308cc7afbfee52769ec6eb22798c18a9",
+      "version": "3a4935ab1b25",
+      "bytes": 78290,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 43,
+      "name": "Бронекостюм Титан",
+      "kind": "icon",
+      "file": "icons/armor_icon_43.webp",
+      "sha256": "928fe4311fb19355e5e3fe3eda1d3aceab94d86e42296665dc41938b597b338c",
+      "version": "928fe4311fb1",
+      "bytes": 49462,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 44,
+      "name": "Костюм Аванпост",
+      "kind": "char",
+      "file": "icons/armor_char_44.webp",
+      "sha256": "5c7e7fd70a84a5869d330f35c414e03124743edbb02abf9f59988d5a12f816f0",
+      "version": "5c7e7fd70a84",
+      "bytes": 68198,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 44,
+      "name": "Костюм Аванпост",
+      "kind": "icon",
+      "file": "icons/armor_icon_44.webp",
+      "sha256": "4273cf9855f9938eab8dcaeda708832ba1b231dc8180d075d1aa8c8de5d255b8",
+      "version": "4273cf9855f9",
+      "bytes": 46504,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 45,
+      "name": "Броня Стража",
+      "kind": "char",
+      "file": "icons/armor_char_45.webp",
+      "sha256": "af8bcd3cf59ec959c03f1ed7f3a5a19142d928aad132a99918cdd5be90d07f6d",
+      "version": "af8bcd3cf59e",
+      "bytes": 73244,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 45,
+      "name": "Броня Стража",
+      "kind": "icon",
+      "file": "icons/armor_icon_45.webp",
+      "sha256": "d47fb0993f828b839166b9151d1aec60eb84bfe7f49cc9f51fae7749027d6db3",
+      "version": "d47fb0993f82",
+      "bytes": 47212,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 46,
+      "name": "Костюм Затвор-Броня",
+      "kind": "char",
+      "file": "icons/armor_char_46.webp",
+      "sha256": "d63b23e21770a72595259e90c2fbd7f37fe353a42b7fc6d753c2abecee88f190",
+      "version": "d63b23e21770",
+      "bytes": 84398,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 46,
+      "name": "Костюм Затвор-Броня",
+      "kind": "icon",
+      "file": "icons/armor_icon_46.webp",
+      "sha256": "16354681b832fdfe8f41c7a1c396b1bb6ea79a3dba3c0dabbe542ed5a303cec9",
+      "version": "16354681b832",
+      "bytes": 51458,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 47,
+      "name": "Бронежилет 6Б51 Ратник-5",
+      "kind": "char",
+      "file": "icons/armor_char_47.webp",
+      "sha256": "bbe6e0990e4c643814595ba4adbb563d65454868f358d06b7abefe26de664a0e",
+      "version": "bbe6e0990e4c",
+      "bytes": 71498,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 47,
+      "name": "Бронежилет 6Б51 Ратник-5",
+      "kind": "icon",
+      "file": "icons/armor_icon_47.webp",
+      "sha256": "2ca3df29a0604f1948d1ba13b02083c23b0fab1b25e0ccd80f42cc91fd74215c",
+      "version": "2ca3df29a060",
+      "bytes": 48664,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 48,
+      "name": "Броня Раскат",
+      "kind": "char",
+      "file": "icons/armor_char_75.webp",
+      "sha256": "d3c199435632135a3e8b65e14e8bc1314c6ad598ea1a5dad03bc880212727a9b",
+      "version": "d3c199435632",
+      "bytes": 77228,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 48,
+      "name": "Броня Раскат",
+      "kind": "icon",
+      "file": "icons/armor_icon_75.webp",
+      "sha256": "e25706e77c70434b9a4792a8a124d1fe61e32d2ee1737cbbc9e4d2ed4036817e",
+      "version": "e25706e77c70",
+      "bytes": 53744,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 49,
+      "name": "Защитный костюм Периметр",
+      "kind": "char",
+      "file": "icons/armor_char_49.webp",
+      "sha256": "e12bea07dc1090ae147c52d72343ba6a4818bc0da09225068df7b537ea871852",
+      "version": "e12bea07dc10",
+      "bytes": 71260,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 49,
+      "name": "Защитный костюм Периметр",
+      "kind": "icon",
+      "file": "icons/armor_icon_49.webp",
+      "sha256": "932ac66ae94a5b7cf3b37fbb98bf1ba9096337bf7206dd69982badb031c82d5f",
+      "version": "932ac66ae94a",
+      "bytes": 46338,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 50,
+      "name": "Костюм Форпост",
+      "kind": "char",
+      "file": "icons/armor_char_50.webp",
+      "sha256": "6ce3be4328895390c78b5c90fe42f362d53f2732717880a9e31ba6c2284c5e08",
+      "version": "6ce3be432889",
+      "bytes": 70184,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 50,
+      "name": "Костюм Форпост",
+      "kind": "icon",
+      "file": "icons/armor_icon_50.webp",
+      "sha256": "f0990585ee06b31d33ae2deb636ea2636b64e32c209d86670140e03e7e00de60",
+      "version": "f0990585ee06",
+      "bytes": 46732,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 51,
+      "name": "Броня Стража-Элит",
+      "kind": "char",
+      "file": "icons/armor_char_51.webp",
+      "sha256": "295374b38f1e0e99820f5e122d77725558f05ddf234a714427f2282f0c234f76",
+      "version": "295374b38f1e",
+      "bytes": 77320,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 51,
+      "name": "Броня Стража-Элит",
+      "kind": "icon",
+      "file": "icons/armor_icon_51.webp",
+      "sha256": "3a54d8e19a3da8ac722b554b4dbed0f79b5c1edef32192b583a39fb9461ea558",
+      "version": "3a54d8e19a3d",
+      "bytes": 46908,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 52,
+      "name": "Бронежилет 6Б61 Легенда",
+      "kind": "char",
+      "file": "icons/armor_char_52.webp",
+      "sha256": "71c8809c6abcf8ac876462451d37afae9027161121ebd37186b513fc3bfeecc9",
+      "version": "71c8809c6abc",
+      "bytes": 73988,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 52,
+      "name": "Бронежилет 6Б61 Легенда",
+      "kind": "icon",
+      "file": "icons/armor_icon_52.webp",
+      "sha256": "1b673e80632973a0d57bcc05f76cd5f0b68ff53e0a2ff217574975fe22d5a008",
+      "version": "1b673e806329",
+      "bytes": 49098,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 53,
+      "name": "Бронежилет 6Б53 Ратник-6",
+      "kind": "char",
+      "file": "icons/armor_char_53.webp",
+      "sha256": "2745d6ac481ab67be8c5e71800c17d114b61d5f5d6690a3a9bbf875ba90705bc",
+      "version": "2745d6ac481a",
+      "bytes": 76694,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 53,
+      "name": "Бронежилет 6Б53 Ратник-6",
+      "kind": "icon",
+      "file": "icons/armor_icon_53.webp",
+      "sha256": "b1c349329661361d556a5a144b43fc196ea981430050ca5c5762392c77a03f1f",
+      "version": "b1c349329661",
+      "bytes": 51326,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 54,
+      "name": "Броня Стрелка",
+      "kind": "char",
+      "file": "icons/armor_char_79.webp",
+      "sha256": "ebd2c9ee81f621ebf33b5451b50ec150b4f7b67b8b9408c9dc3810ae43ca0bde",
+      "version": "ebd2c9ee81f6",
+      "bytes": 72874,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 54,
+      "name": "Броня Стрелка",
+      "kind": "icon",
+      "file": "icons/armor_icon_79.webp",
+      "sha256": "64f17f7282d1d6049ff0cc691b8c8bfb6741076edb1f71f835f087e0d00a26e3",
+      "version": "64f17f7282d1",
+      "bytes": 49958,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 55,
+      "name": "Костюм Последний Рубеж",
+      "kind": "char",
+      "file": "icons/armor_char_55.webp",
+      "sha256": "11f34a0e8c460ab5ee8111fe9070c5549cff3bffdd3f622b062a12c3ae4e4d14",
+      "version": "11f34a0e8c46",
+      "bytes": 74500,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 55,
+      "name": "Костюм Последний Рубеж",
+      "kind": "icon",
+      "file": "icons/armor_icon_55.webp",
+      "sha256": "8cc7de50b0a78b5709bb78be485b7b3b15d32616e2369c426b27dfc91705d16a",
+      "version": "8cc7de50b0a7",
+      "bytes": 48660,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 56,
+      "name": "Костюм Абсолют",
+      "kind": "char",
+      "file": "icons/armor_char_56.webp",
+      "sha256": "791bc68e04986a28ae188fcde37a45a70b1571f523c3facb91ba11eb44f66d38",
+      "version": "791bc68e0498",
+      "bytes": 71564,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 56,
+      "name": "Костюм Абсолют",
+      "kind": "icon",
+      "file": "icons/armor_icon_56.webp",
+      "sha256": "0169bf03f17ecaa55e713c6a54f2cb6253c5eb5fc11907b2bfefcf88c6359826",
+      "version": "0169bf03f17e",
+      "bytes": 48338,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 57,
+      "name": "Броня Периметр-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_57.webp",
+      "sha256": "145ed83d09d58c016184a4cf0ec7e89d804ecdf8b450d8764854a28a55e22126",
+      "version": "145ed83d09d5",
+      "bytes": 72878,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 57,
+      "name": "Броня Периметр-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_57.webp",
+      "sha256": "561ffc1c22f3d0972dcfaf4f3df2f4d8465a4b150b99db4f303c86fd2234da74",
+      "version": "561ffc1c22f3",
+      "bytes": 47656,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 58,
+      "name": "Бронежилет 6Б55 Ратник-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_58.webp",
+      "sha256": "67d28ca4753827eed2c6b6c4750d7da8280e8c27dba7498ff1a189090fc05143",
+      "version": "67d28ca47538",
+      "bytes": 71548,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 58,
+      "name": "Бронежилет 6Б55 Ратник-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_58.webp",
+      "sha256": "465b394374be8f5c385fd82caf36bcb36403888eab76d5943c5b707ccb6f34bb",
+      "version": "465b394374be",
+      "bytes": 48572,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 59,
+      "name": "Бронежилет 6Б63 Легенда-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_59.webp",
+      "sha256": "c004af13a84c71927f9d24691f946b7f5241e51e3033c5db1a9e374bfb4b0244",
+      "version": "c004af13a84c",
+      "bytes": 67040,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 59,
+      "name": "Бронежилет 6Б63 Легенда-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_59.webp",
+      "sha256": "786840b03b8cfd3210e7f6599fc3078c5255aeebdd2488d379e2f9b4c6472947",
+      "version": "786840b03b8c",
+      "bytes": 42222,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 60,
+      "name": "Экзокостюм Бастион-2",
+      "kind": "char",
+      "file": "icons/armor_char_60.webp",
+      "sha256": "a82e92ec4e67bd5826b1a3d263f286e7e7e35eb041788ce5ef6cdf5b9c950e90",
+      "version": "a82e92ec4e67",
+      "bytes": 81238,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 60,
+      "name": "Экзокостюм Бастион-2",
+      "kind": "icon",
+      "file": "icons/armor_icon_60.webp",
+      "sha256": "981a15360099d7e2e56bf63ebca95d27a272d7cb43092fa247161639163fbf19",
+      "version": "981a15360099",
+      "bytes": 53518,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 61,
+      "name": "Экзоскелет Монолит-11",
+      "kind": "char",
+      "file": "icons/armor_char_61.webp",
+      "sha256": "019096416ea1dc9e5907626fe3e0a34c665b78068794c7c2c9d340640822c7b2",
+      "version": "019096416ea1",
+      "bytes": 90468,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 61,
+      "name": "Экзоскелет Монолит-11",
+      "kind": "icon",
+      "file": "icons/armor_icon_61.webp",
+      "sha256": "efd9799e1af5c99ba69577f3fd154400d186b67e93c4835978a94dcf9d8da438",
+      "version": "efd9799e1af5",
+      "bytes": 53788,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 62,
+      "name": "Экзоскелет Свобода",
+      "kind": "char",
+      "file": "icons/armor_char_62.webp",
+      "sha256": "f600eff3334d2dd5029ce8e7e05fd2ba2aa2e5cedb315fa5669a9af8df2142cf",
+      "version": "f600eff3334d",
+      "bytes": 83816,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 62,
+      "name": "Экзоскелет Свобода",
+      "kind": "icon",
+      "file": "icons/armor_icon_62.webp",
+      "sha256": "cc6a36c26f0573bc6c5339ff70e7a39ef9866fa1953db5d644f223d95f403e45",
+      "version": "cc6a36c26f05",
+      "bytes": 52358,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 63,
+      "name": "Экзоскелет Атлант",
+      "kind": "char",
+      "file": "icons/armor_char_63.webp",
+      "sha256": "0aa676e0e3960dbbbcacd6ce240875a8cdab88dfbcbf9880b1559f997b403863",
+      "version": "0aa676e0e396",
+      "bytes": 81360,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 63,
+      "name": "Экзоскелет Атлант",
+      "kind": "icon",
+      "file": "icons/armor_icon_63.webp",
+      "sha256": "5eb939001deabda04c66011d3d1747ddff23a3d5da567ae959ea8eac43741818",
+      "version": "5eb939001dea",
+      "bytes": 50524,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 64,
+      "name": "Экзокостюм СЭВ",
+      "kind": "char",
+      "file": "icons/armor_char_15.webp",
+      "sha256": "9350a649575ed6c51a59abe6da97266619c46d221b311582242023fee9c4031e",
+      "version": "9350a649575e",
+      "bytes": 79788,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 64,
+      "name": "Экзокостюм СЭВ",
+      "kind": "icon",
+      "file": "icons/armor_icon_15.webp",
+      "sha256": "2e9fa92f2ca0de555f9f74e004fefb5bd3e26abd3d010a4bcb88c38b757eb2dd",
+      "version": "2e9fa92f2ca0",
+      "bytes": 55286,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 65,
+      "name": "Экзокостюм Чистое небо",
+      "kind": "char",
+      "file": "icons/armor_char_23.webp",
+      "sha256": "8e4ba540c077e62d4c560c08901d0db530151dbf22f5730fa9834196ba682d06",
+      "version": "8e4ba540c077",
+      "bytes": 79192,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 65,
+      "name": "Экзокостюм Чистое небо",
+      "kind": "icon",
+      "file": "icons/armor_icon_23.webp",
+      "sha256": "a963fd022dacf313f62e72f0250fc2f99ea2e09b48f2eb3f5089efa4f51eb707",
+      "version": "a963fd022dac",
+      "bytes": 47130,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 66,
+      "name": "Экзоскелет Титан-Экстрим",
+      "kind": "char",
+      "file": "icons/armor_char_66.webp",
+      "sha256": "0250560ad4b9e8f42df66ba618a1d8758f9a31705810f71e50c1fb35c8c79bec",
+      "version": "0250560ad4b9",
+      "bytes": 90026,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 66,
+      "name": "Экзоскелет Титан-Экстрим",
+      "kind": "icon",
+      "file": "icons/armor_icon_66.webp",
+      "sha256": "edbef4ec795c151b6418e3d22e07bf622b1b33eec28bb10262b3630c32d5a064",
+      "version": "edbef4ec795c",
+      "bytes": 54038,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 67,
+      "name": "Экзокостюм Периметр-1",
+      "kind": "char",
+      "file": "icons/armor_char_28.webp",
+      "sha256": "187a6551a87d374481dca0eddd1c12dfbbbc673ddd6903161d8bb45eaaefe650",
+      "version": "187a6551a87d",
+      "bytes": 85542,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 67,
+      "name": "Экзокостюм Периметр-1",
+      "kind": "icon",
+      "file": "icons/armor_icon_28.webp",
+      "sha256": "c92db90a0e7ef733af0b693427647a11a23da50b4831abaf3f05af952251d144",
+      "version": "c92db90a0e7e",
+      "bytes": 52928,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 68,
+      "name": "Экзоскелет Периметр-2",
+      "kind": "char",
+      "file": "icons/armor_char_68.webp",
+      "sha256": "1a36771abf442865d67d2ee5a88fec0004059a63650774c31b81d0deac8a58f1",
+      "version": "1a36771abf44",
+      "bytes": 79764,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 68,
+      "name": "Экзоскелет Периметр-2",
+      "kind": "icon",
+      "file": "icons/armor_icon_68.webp",
+      "sha256": "8e86504f446b438a1736c6e9b9fc79a3ce21fb65209a2cfccf055a4c3973d5ed",
+      "version": "8e86504f446b",
+      "bytes": 54236,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 69,
+      "name": "Экзокостюм Титан-Лайт",
+      "kind": "char",
+      "file": "icons/armor_char_35.webp",
+      "sha256": "8e5301ab73a309e19576463c3a1338e58ae4644fbdb4dc0481a62f998b7600a6",
+      "version": "8e5301ab73a3",
+      "bytes": 80592,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 69,
+      "name": "Экзокостюм Титан-Лайт",
+      "kind": "icon",
+      "file": "icons/armor_icon_35.webp",
+      "sha256": "274ebbf844725f2b41d007315508ed994c4f5dd2602b23f7ba5975f9857cff8a",
+      "version": "274ebbf84472",
+      "bytes": 51036,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 70,
+      "name": "Экзоскелет Штурмовой",
+      "kind": "char",
+      "file": "icons/armor_char_70.webp",
+      "sha256": "27f5a9d4eeeae0d28753b796362cde66d2d627c49dd3e03bd0a2687ae1fb1b93",
+      "version": "27f5a9d4eeea",
+      "bytes": 83686,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 70,
+      "name": "Экзоскелет Штурмовой",
+      "kind": "icon",
+      "file": "icons/armor_icon_70.webp",
+      "sha256": "1cfd8db64e288202ac8e710ae724abc0f106647e662d66072f63d82f66b8775e",
+      "version": "1cfd8db64e28",
+      "bytes": 48274,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 71,
+      "name": "Экзоскелет Периметр-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_71.webp",
+      "sha256": "01271447cd0c61f7dca8de744519680d7aa7754e0a6a8fad48258861626c11c8",
+      "version": "01271447cd0c",
+      "bytes": 84202,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 71,
+      "name": "Экзоскелет Периметр-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_71.webp",
+      "sha256": "9bb8fadedf70f1d27ec8489d32698a309b628a0e15791e4aa8059bf4bb0c09e6",
+      "version": "9bb8fadedf70",
+      "bytes": 51222,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 72,
+      "name": "Экзокостюм Бастион-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_72.webp",
+      "sha256": "8c548888f66f48a6df12c3b2a6c651f29c225f7e9d61af86310a3c62e62c7f09",
+      "version": "8c548888f66f",
+      "bytes": 85424,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 72,
+      "name": "Экзокостюм Бастион-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_72.webp",
+      "sha256": "4baafe06a7b4b2c39bbcc333ad89aa0b910052a83c3657bc0e20d00255208f1b",
+      "version": "4baafe06a7b4",
+      "bytes": 52432,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 73,
+      "name": "Экзокостюм Периметр-3",
+      "kind": "char",
+      "file": "icons/armor_char_41.webp",
+      "sha256": "05f0fc1e5f26f6228f957772a6fd203d08479129eb456c8ade8874d0fa014b77",
+      "version": "05f0fc1e5f26",
+      "bytes": 77230,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 73,
+      "name": "Экзокостюм Периметр-3",
+      "kind": "icon",
+      "file": "icons/armor_icon_41.webp",
+      "sha256": "a1bb832ab32928cd5231954e46344b37ee1114063322f7c72587b6961aaa76a6",
+      "version": "a1bb832ab329",
+      "bytes": 45414,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 74,
+      "name": "Экзоскелет Крепость",
+      "kind": "char",
+      "file": "icons/armor_char_74.webp",
+      "sha256": "2ec3280b2bd1dd27f7c967d8635ff889e22d25a82d3f6428caa2a336d84ad44e",
+      "version": "2ec3280b2bd1",
+      "bytes": 76056,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 74,
+      "name": "Экзоскелет Крепость",
+      "kind": "icon",
+      "file": "icons/armor_icon_74.webp",
+      "sha256": "5ea637f93a339446ebd8021a984ca5637ddf52e101d82337a832728d20c1ec07",
+      "version": "5ea637f93a33",
+      "bytes": 47196,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 75,
+      "name": "Экзокостюм Периметр-4",
+      "kind": "char",
+      "file": "icons/armor_char_48.webp",
+      "sha256": "9406c444b359caac4091d3aa6483efb17290fbda157888cd9293649c660177b1",
+      "version": "9406c444b359",
+      "bytes": 84018,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 75,
+      "name": "Экзокостюм Периметр-4",
+      "kind": "icon",
+      "file": "icons/armor_icon_48.webp",
+      "sha256": "e537651634198f763cfe79a0b3ffc7bcc6b53a62769656b79519a1c90f4d30b8",
+      "version": "e53765163419",
+      "bytes": 49918,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 76,
+      "name": "Экзоскелет Крепость-2",
+      "kind": "char",
+      "file": "icons/armor_char_76.webp",
+      "sha256": "14ef06034aa00eba45d19e28f6172b7146e91bb17be3c22275aca50af7fdd739",
+      "version": "14ef06034aa0",
+      "bytes": 85004,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 76,
+      "name": "Экзоскелет Крепость-2",
+      "kind": "icon",
+      "file": "icons/armor_icon_76.webp",
+      "sha256": "e8158676dfdb9d7b7c7870b0d5f6a87298bef57adb50db33ddc485cec8a9b9f5",
+      "version": "e8158676dfdb",
+      "bytes": 50644,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 77,
+      "name": "Экзоскелет Реликт",
+      "kind": "char",
+      "file": "icons/armor_char_77.webp",
+      "sha256": "f0ed47c27fe346e84ae7f19e8154e81e08aaa6add832d38a7c7bfc63ea592e19",
+      "version": "f0ed47c27fe3",
+      "bytes": 83582,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 77,
+      "name": "Экзоскелет Реликт",
+      "kind": "icon",
+      "file": "icons/armor_icon_77.webp",
+      "sha256": "496a6172d009d6a0367ebbcf8ac67b9e379ad2e51e7ee9cf7db1cc4c2567d903",
+      "version": "496a6172d009",
+      "bytes": 52318,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 78,
+      "name": "Экзокостюм Возмездие",
+      "kind": "char",
+      "file": "icons/armor_char_78.webp",
+      "sha256": "fb17c202ae6e4e452d38b53cff65868614b3b8aca79f7d3d226232b702c9551a",
+      "version": "fb17c202ae6e",
+      "bytes": 76082,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 78,
+      "name": "Экзокостюм Возмездие",
+      "kind": "icon",
+      "file": "icons/armor_icon_78.webp",
+      "sha256": "c870d002c25503b61a8d745fa1f40a110d6947476f13487476a01d61b225d079",
+      "version": "c870d002c255",
+      "bytes": 51060,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 79,
+      "name": "Экзокостюм Бастион",
+      "kind": "char",
+      "file": "icons/armor_char_54.webp",
+      "sha256": "25ca652c9402a24c304ab6e50eca1fa5a83eaa0b121197961ffb8a9d06e4cc64",
+      "version": "25ca652c9402",
+      "bytes": 82642,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 79,
+      "name": "Экзокостюм Бастион",
+      "kind": "icon",
+      "file": "icons/armor_icon_54.webp",
+      "sha256": "05c99c3a3d6d34bf6fdc3f73de08550d73d7a0cf61e68b66f4e209331135ec4c",
+      "version": "05c99c3a3d6d",
+      "bytes": 53074,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 80,
+      "name": "Экзоскелет",
+      "kind": "char",
+      "file": "icons/armor_char_80.webp",
+      "sha256": "4b4f09e8597011b87468503102ce8e9063363cebd7c8dc1fd925e2d68b6ebd4a",
+      "version": "4b4f09e85970",
+      "bytes": 79100,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 80,
+      "name": "Экзоскелет",
+      "kind": "icon",
+      "file": "icons/armor_icon_80.webp",
+      "sha256": "5ec517179adca2e2db2934d63dfd78cc7f81338d4ba17e0f241b6cc58d9acf79",
+      "version": "5ec517179adc",
+      "bytes": 47542,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 81,
+      "name": "Броня Зоны",
+      "kind": "char",
+      "file": "icons/armor_char_81.webp",
+      "sha256": "af5b933b1c6d10818d2eaf3ec689cc07285d050faf1fe4578ea491b20fae5f16",
+      "version": "af5b933b1c6d",
+      "bytes": 82758,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 81,
+      "name": "Броня Зоны",
+      "kind": "icon",
+      "file": "icons/armor_icon_81.webp",
+      "sha256": "a4e97ef126129dfa06f9dd8a3a00d4aa6f7ab62e326326f74670bc3fea00d862",
+      "version": "a4e97ef12612",
+      "bytes": 46718,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 82,
+      "name": "Экзоскелет Титан-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_82.webp",
+      "sha256": "4163f9ebc544e697caa46d51ee814678ebebf5d904fd8bf569a55f4b4bcbc9af",
+      "version": "4163f9ebc544",
+      "bytes": 82358,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 82,
+      "name": "Экзоскелет Титан-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_82.webp",
+      "sha256": "094f5eed2acf79f5210a10c5e8fc97b5faa7a26cda2119e8c8da65bddf6b691c",
+      "version": "094f5eed2acf",
+      "bytes": 42580,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 83,
+      "name": "Экзоскелет Абсолют-Финал",
+      "kind": "char",
+      "file": "icons/armor_char_83.webp",
+      "sha256": "8f6c57e3cd3e0b534fb2742b2489c55ce47368fa5620deb155844728b34741ab",
+      "version": "8f6c57e3cd3e",
+      "bytes": 93494,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 83,
+      "name": "Экзоскелет Абсолют-Финал",
+      "kind": "icon",
+      "file": "icons/armor_icon_83.webp",
+      "sha256": "0bda281e771b9a6430cc2aeb3861c70af75c4156c88646467bd7941d637695fc",
+      "version": "0bda281e771b",
+      "bytes": 47974,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 84,
+      "name": "Экзокостюм Апокалипсис",
+      "kind": "char",
+      "file": "icons/armor_char_84.webp",
+      "sha256": "b004313d77fd491e35523ff45397b1bdd1d09c775f9c915b96e93ebaf4657492",
+      "version": "b004313d77fd",
+      "bytes": 93866,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 84,
+      "name": "Экзокостюм Апокалипсис",
+      "kind": "icon",
+      "file": "icons/armor_icon_84.webp",
+      "sha256": "29a0fbdd156377923ec85e7f162e6d58267c495d823044354cf4a6dcb795be3d",
+      "version": "29a0fbdd1563",
+      "bytes": 52668,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 85,
+      "name": "Плащ тёмного сталкера",
+      "kind": "char",
+      "file": "icons/armor_char_85.webp",
+      "sha256": "5014808fe38cd828a14749277ab3ad670bb4adf6c88c35ab907bf5e39c495552",
+      "version": "5014808fe38c",
+      "bytes": 81812,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 85,
+      "name": "Плащ тёмного сталкера",
+      "kind": "icon",
+      "file": "icons/armor_icon_85.webp",
+      "sha256": "b40b0519233667aaffdfe8521f20e1981bc720218b23a9eb2bc2f9bda77d3424",
+      "version": "b40b05192336",
+      "bytes": 38960,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 86,
+      "name": "Исследовательский комбинезон A",
+      "kind": "char",
+      "file": "icons/armor_char_86.webp",
+      "sha256": "9dd6fc56251c4b0b878900575d9ac135ec080711d2dde13acb7c0e0db47022e4",
+      "version": "9dd6fc56251c",
+      "bytes": 70160,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 86,
+      "name": "Исследовательский комбинезон A",
+      "kind": "icon",
+      "file": "icons/armor_icon_86.webp",
+      "sha256": "99e62f3c1e71a1fc264d4e1bc9e3fd197db8958a23785ef28b83fd4734187634",
+      "version": "99e62f3c1e71",
+      "bytes": 46638,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 87,
+      "name": "Исследовательский комбинезон B",
+      "kind": "char",
+      "file": "icons/armor_char_87.webp",
+      "sha256": "bfbaae0ee02ea967e7ac52a41e0b4893f2d15eb6fd662d9c67ca90ed204c2586",
+      "version": "bfbaae0ee02e",
+      "bytes": 69312,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 87,
+      "name": "Исследовательский комбинезон B",
+      "kind": "icon",
+      "file": "icons/armor_icon_87.webp",
+      "sha256": "e04802763ccadae02eb96adaa1eb30b55857cd36f1619c0e32afb8a3f4b92360",
+      "version": "e04802763cca",
+      "bytes": 43546,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 88,
+      "name": "Исследовательский комбинезон C",
+      "kind": "char",
+      "file": "icons/armor_char_88.webp",
+      "sha256": "708d35a0769ba3126df0e07d6ce5f48a2b07033bfc2541ad6179ea2082951388",
+      "version": "708d35a0769b",
+      "bytes": 75010,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 88,
+      "name": "Исследовательский комбинезон C",
+      "kind": "icon",
+      "file": "icons/armor_icon_88.webp",
+      "sha256": "f8c755ae04295ad072dbad656e977b5501bbd21b4707a9b55c498396e4ae311c",
+      "version": "f8c755ae0429",
+      "bytes": 53338,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 89,
+      "name": "Исследовательский комбинезон D",
+      "kind": "char",
+      "file": "icons/armor_char_89.webp",
+      "sha256": "4b91b20ac846c726ca3130ad37007f159316df8b7722cadae269f7be8e338ad3",
+      "version": "4b91b20ac846",
+      "bytes": 74462,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 89,
+      "name": "Исследовательский комбинезон D",
+      "kind": "icon",
+      "file": "icons/armor_icon_89.webp",
+      "sha256": "4f6db3482d375664f4ecfd89a31ecb7b54d61402a746481ef0ddf71ea59989a9",
+      "version": "4f6db3482d37",
+      "bytes": 47908,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 90,
+      "name": "Исследовательский комбинезон E",
+      "kind": "char",
+      "file": "icons/armor_char_90.webp",
+      "sha256": "fd63f9e2ee6fd0756a036e0564e4985756011b5c632df38f0b9d4e512927002b",
+      "version": "fd63f9e2ee6f",
+      "bytes": 71234,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 90,
+      "name": "Исследовательский комбинезон E",
+      "kind": "icon",
+      "file": "icons/armor_icon_90.webp",
+      "sha256": "a0853b1e232bf7a85542d6cd91a70773f4c910640751dbdc847695d66fd92c96",
+      "version": "a0853b1e232b",
+      "bytes": 41938,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 91,
+      "name": "Исследовательский комбинезон F",
+      "kind": "char",
+      "file": "icons/armor_char_91.webp",
+      "sha256": "42593098f5eb4dce9cc01ea3242083875c66e0e8d72d7dead2bb3fc527ea9046",
+      "version": "42593098f5eb",
+      "bytes": 77972,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 91,
+      "name": "Исследовательский комбинезон F",
+      "kind": "icon",
+      "file": "icons/armor_icon_91.webp",
+      "sha256": "5df7dedafc952fcdd1555f64d4b888f58e2666e5adbe37a979e6b7acb1d2df89",
+      "version": "5df7dedafc95",
+      "bytes": 46346,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 92,
+      "name": "Исследовательский комбинезон G",
+      "kind": "char",
+      "file": "icons/armor_char_92.webp",
+      "sha256": "c54e094ff8db15cc3d4295e6a943b8ae4e1aa134c3562faf1d6f860d62d2708b",
+      "version": "c54e094ff8db",
+      "bytes": 72980,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 92,
+      "name": "Исследовательский комбинезон G",
+      "kind": "icon",
+      "file": "icons/armor_icon_92.webp",
+      "sha256": "afa5f00560ac20888d023dcb45dfb15cd8b64b50d220e9f70bdcd6995337e2a0",
+      "version": "afa5f00560ac",
+      "bytes": 51206,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 93,
+      "name": "Исследовательский комбинезон H",
+      "kind": "char",
+      "file": "icons/armor_char_93.webp",
+      "sha256": "0a35949ef8a495fbe68e2e82193a783d9211f94c63efa158c5c8cf38bd077c49",
+      "version": "0a35949ef8a4",
+      "bytes": 72854,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 93,
+      "name": "Исследовательский комбинезон H",
+      "kind": "icon",
+      "file": "icons/armor_icon_93.webp",
+      "sha256": "142a3c8b5e052d11a25a4ca96a2169a29508b4701887642d66f739b53c08dc05",
+      "version": "142a3c8b5e05",
+      "bytes": 53364,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 94,
+      "name": "Исследовательский комбинезон I",
+      "kind": "char",
+      "file": "icons/armor_char_94.webp",
+      "sha256": "5f0a9961aae386df402e48be9c9a12da7f0dd483439ef42fdccd92fcee9b12cb",
+      "version": "5f0a9961aae3",
+      "bytes": 77350,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 94,
+      "name": "Исследовательский комбинезон I",
+      "kind": "icon",
+      "file": "icons/armor_icon_94.webp",
+      "sha256": "9c8900fe3da60060f6fb3d8587fb0d4eb3310ba27103b4335e1fa80ffe67e96a",
+      "version": "9c8900fe3da6",
+      "bytes": 57714,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 95,
+      "name": "Исследовательский комбинезон J",
+      "kind": "char",
+      "file": "icons/armor_char_95.webp",
+      "sha256": "6fb838554cc2cbb741f164edb2b3ab48768c9d403a312feb91217a6e760a6381",
+      "version": "6fb838554cc2",
+      "bytes": 79910,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 95,
+      "name": "Исследовательский комбинезон J",
+      "kind": "icon",
+      "file": "icons/armor_icon_95.webp",
+      "sha256": "545e0e9b87aa5d7732636a0f4a7780bea628348fa7670dfd05691fc116e7682f",
+      "version": "545e0e9b87aa",
+      "bytes": 46480,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 96,
+      "name": "Исследовательский комбинезон K",
+      "kind": "char",
+      "file": "icons/armor_char_96.webp",
+      "sha256": "a2e1bceb39071d2c5623b01acd65617dead240064c6a19f09470c3feeb4cb662",
+      "version": "a2e1bceb3907",
+      "bytes": 77070,
+      "dimensions": [
+        512,
+        768
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    },
+    {
+      "catalog_id": 96,
+      "name": "Исследовательский комбинезон K",
+      "kind": "icon",
+      "file": "icons/armor_icon_96.webp",
+      "sha256": "31517db5c8da082aa4ee72a6d280865aab9a88d4dea4a7504b5dc5195d705fe1",
+      "version": "31517db5c8da",
+      "bytes": 49440,
+      "dimensions": [
+        384,
+        384
+      ],
+      "visual_review": "approved on light and dark backgrounds"
+    }
+  ]
+}
