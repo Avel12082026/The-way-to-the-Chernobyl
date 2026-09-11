@@ -1,0 +1,14 @@
+{
+  "source_sha256": "438b40b90417b0cfe0782cda0e9c77d6e510d0d90670bd06633c1b4c10346fbb",
+  "target_sha256": "dd06101e9cc1f282cd1eacfd35a7f26648277e4f270d486d3d70b4c76c39b921",
+  "replacements": [
+    {
+      "old": "app.get('/api/player/:id', (req, res) => {",
+      "new": "// Public loadout: only equipped slots and the equipped armor upgrade entry.\nfunction publicEquippedLoadout(full) {\n    const artifactSlots = Array.from({length:6}, (_, i) => {\n        const name = Array.isArray(full.artifactSlots) ? full.artifactSlots[i] : null;\n        return typeof name === 'string' && name ? name : null;\n    });\n    const numericStats = stats => Object.fromEntries(Object.entries(stats || {}).filter(([key, value]) =>\n        !['__proto__','constructor','prototype'].includes(key) && typeof value === 'number' && Number.isFinite(value)));\n    const equippedArtifactDetails = artifactSlots.map(name => {\n        if (!name) return null;\n        const def = serverArtifactDef(name);\n        if (!def) return null;\n        return {name, tier:Number(def.tier)||1, gen:Number(def.gen)||0,\n            isNamedArtifact:Boolean(def.isNamedArtifact), stats:numericStats(def.stats)};\n    });\n    const armorUpgradeData = {};\n    const armorName = typeof full.armor === 'string' ? full.armor : full.armor && full.armor.name;\n    if (typeof armorName === 'string' && armorName) {\n        const key = getStableArmorKeyServer(armorName);\n        const upgrades = full.armorUpgradeData;\n        if (upgrades && Object.prototype.hasOwnProperty.call(upgrades, key)) {\n            Object.defineProperty(armorUpgradeData, key, {value:numericStats(upgrades[key]), enumerable:true});\n        }\n    }\n    return {artifactSlots, equippedArtifactDetails, armorUpgradeData};\n}\n\napp.get('/api/player/:id', (req, res) => {"
+    },
+    {
+      "old": "        nickname: full.nickname, username: row.username,",
+      "new": "        ...publicEquippedLoadout(full),\n        nickname: full.nickname, username: row.username,"
+    }
+  ]
+}
