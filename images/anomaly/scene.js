@@ -80,15 +80,38 @@ function paintAnimation(ms){
  const box=p.detector.getBoundingClientRect(),area=host.getBoundingClientRect();if(!area.width||!box.width)return;
  d.save();d.translate((box.left-area.left)*1536/area.width,(box.top-area.top)*1024/area.height);d.scale(box.width*1536/area.width,box.height*1024/area.height);
  d.beginPath();corners.forEach(([x,y],i)=>i?d.lineTo(x,y):d.moveTo(x,y));d.closePath();d.clip();
- const cx=corners.reduce((a,v)=>a+v[0],0)/4,cy=corners.reduce((a,v)=>a+v[1],0)/4;
- d.fillStyle='#06281755';d.fillRect(0,0,1,1);d.strokeStyle='#a8ffb8';d.fillStyle='#b8ffd0';d.lineWidth=.007;d.shadowColor='#61ff90';d.shadowBlur=5;
- if(state.detector==='riper.jpg'||state.detector==='buran.jpg'){
-  const angle=-2.4+(Math.sin(t*(state.pending?8:3))*.5+.5)*1.6;d.beginPath();d.moveTo(cx,cy+.05);d.lineTo(cx+Math.cos(angle)*.16,cy+.05+Math.sin(angle)*.13);d.stroke();
- }else if(['hameleon.jpg','polyarnaya_zvezda.jpg'].includes(state.detector)){
-  for(let row=0;row<5;row++){d.globalAlpha=.35+.45*(.5+.5*Math.sin(t*3+row));d.fillRect(cx-.17,cy-.06+row*.03,.11+((Math.floor(t*2)+row*7)%5)*.035,.009)}
+ // Draw in screen-local coordinates: indicators tilt with the physical display.
+ const [a,b,,e]=corners;
+ d.transform(b[0]-a[0],b[1]-a[1],e[0]-a[0],e[1]-a[1],a[0],a[1]);
+ const model=state.detector,speed=state.pending?1.7:1;
+ d.shadowBlur=0;d.lineWidth=.012;d.strokeStyle='#72b58b';d.fillStyle='#72b58b';
+ if(model==='buran.jpg'){
+  // Buran has a mechanical fan, not a radar screen. Animate its hub subtly.
+  d.translate(.5,.5);d.rotate(t*speed*.8);d.globalAlpha=.24;
+  for(let i=0;i<6;i++){d.rotate(Math.PI/3);d.beginPath();d.moveTo(.08,0);d.lineTo(.35,.06);d.stroke();}
+ }else if(model==='riper.jpg'){
+  d.strokeStyle='#382e24';d.lineWidth=.018;
+  const angle=-1.9+Math.sin(t*speed*1.3)*.25;
+  d.beginPath();d.moveTo(.5,.85);d.lineTo(.5+Math.cos(angle)*.55,.85+Math.sin(angle)*.55);d.stroke();
+ }else if(model==='polyarnaya_zvezda.jpg'||model==='hameleon.jpg'){
+  d.fillStyle=model==='polyarnaya_zvezda.jpg'?'#133039':'#10251c';d.globalAlpha=.9;d.fillRect(0,0,1,1);d.globalAlpha=.7;
+  d.strokeStyle=model==='polyarnaya_zvezda.jpg'?'#7babb2':'#6ca77b';
+  for(let row=0;row<4;row++){
+   d.beginPath();for(let i=0;i<=40;i++){const x=.06+i*.022,y=.18+row*.2+Math.sin(i*.6-t*speed*2+row)*.025; i?d.lineTo(x,y):d.moveTo(x,y);}d.stroke();
+  }
+  d.fillStyle=d.strokeStyle;d.globalAlpha=.35;d.fillRect(.06+((t*speed*.15)% .85),.07,.012,.85);
  }else{
-  d.translate(cx,cy);d.scale(1,.72);d.rotate(t*(state.pending?3:1.8));d.globalAlpha=.3;d.beginPath();d.moveTo(0,0);d.arc(0,0,.24,-.6,0);d.closePath();d.fill();d.globalAlpha=.85;d.beginPath();d.moveTo(0,0);d.lineTo(.25,0);d.stroke();
+  const full=model==='sverchok.jpg',cx=.5,cy=full?.5:.86,r=full?.43:.78;
+  d.fillStyle='#061b13';d.globalAlpha=.86;d.fillRect(0,0,1,1);d.globalAlpha=.32;
+  d.strokeStyle=model==='grom.jpg'?'#b8aa66':model==='vizir.jpg'?'#80c9b5':'#71ae85';
+  for(let ring=1;ring<=3;ring++){d.beginPath();d.arc(cx,cy,r*ring/3,full?0:Math.PI,full?Math.PI*2:Math.PI*2);d.stroke();}
+  const angle=full?t*speed:Math.PI+(.5+.5*Math.sin(t*speed*.8))*Math.PI;
+  d.fillStyle=d.strokeStyle;d.globalAlpha=.12;d.beginPath();d.moveTo(cx,cy);d.arc(cx,cy,r,angle-.18,angle);d.closePath();d.fill();
+  d.globalAlpha=.6;d.beginPath();d.moveTo(cx,cy);d.lineTo(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r);d.stroke();
+  // Scan activity only; no invented artifact positions before the server responds.
+  d.globalAlpha=.35+.15*Math.sin(t*2);d.fillRect(.07,.06,.025,.025);
  }
+
  d.restore();
 }
 

@@ -1,0 +1,8 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const nodes={},events={},winEvents={};let audio,plays=0,fail=false;
+const el=()=>({dataset:{},setAttribute(){},append(){},querySelector:s=>nodes[s]||(nodes[s]=el()),showModal(){},close(){},focus(){}});
+const document={readyState:'complete',hidden:false,body:el(),getElementById:()=>el(),createElement:el,addEventListener:(n,f)=>events[n]=f};
+const ctx={document,window:{addEventListener:(n,f)=>winEvents[n]=f},localStorage:{getItem:()=>null,setItem(){}},Audio:class{constructor(src){this.src=src;this.events={};audio=this}play(){plays++;return fail?Promise.reject({name:'NotAllowedError'}):Promise.resolve()}pause(){}addEventListener(n,f){this.events[n]=f}},setInterval:()=>1,clearInterval(){},performance:{now:()=>0},console};
+vm.runInNewContext(fs.readFileSync('audio/menu-music.js','utf8'),ctx);
+(async()=>{await Promise.resolve();assert.equal(plays,1,'attempt autoplay at load');assert.equal(audio.loop,false);const first=audio.src;for(const path of ['radwind-pt1.mp3','dirge-for-the-planet.mp3','meditation.mp3','menu-ambient.mp3']){audio.events.ended();await Promise.resolve();assert.equal(audio.src,'audio/'+path)}
+assert.equal(audio.src,first);document.hidden=true;events.visibilitychange();const n=plays;document.hidden=false;events.visibilitychange();await Promise.resolve();assert.equal(plays,n+1);assert(!fs.readFileSync('audio/menu-music.js','utf8').includes("menu.style.display"),'music independent of game screen');console.log('PASS: autoplay attempted, all four tracks advance and wrap, visibility resumes, screen independent');})().catch(e=>{console.error(e);process.exit(1)});

@@ -5,3 +5,6 @@
 .inventory-drag-ghost{position:fixed!important;left:0;top:0;width:54px!important;height:54px!important;pointer-events:none!important;z-index:100000;opacity:.9;border:2px solid #c8b57e;background:#182019;overflow:hidden;box-sizing:border-box}
 #inventoryDragHint{font-size:11px;color:#c9bd96;margin:7px 0;min-height:2.5em}
 #inventoryScreen[aria-busy=true]{cursor:progress}
+
+#inventoryGrid [data-drag-item] *{pointer-events:none!important;user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none!important;-webkit-user-drag:none!important}
+.inventory-drag-ghost *{pointer-events:none!important;-webkit-touch-callout:none!important}

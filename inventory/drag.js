@@ -12,7 +12,7 @@ function compatible(name,slot){
 }
 function refresh(items){
  if(!screen)return;
- [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]&&kind(items[i]))cell.dataset.dragItem=items[i];});
+ [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]&&kind(items[i])){cell.dataset.dragItem=items[i];cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});}});
  [...document.getElementById('quickSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind=i<3?['weapon','armor','detector'][i]:'quick';if(i>=3)cell.dataset.dropIndex=i-3;});
  [...document.getElementById('artifactSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind='artifact';cell.dataset.dropIndex=i;});
 }
@@ -92,7 +92,7 @@ function init(){
  new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(screen,{attributes:true,attributeFilter:['class']});
  screen.addEventListener('click',e=>{if(Date.now()<suppressUntil||busy){e.preventDefault();e.stopImmediatePropagation();}},true);
  screen.addEventListener('dragstart',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
- screen.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
+ screen.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]')||gesture){e.preventDefault();e.stopPropagation();}},true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
