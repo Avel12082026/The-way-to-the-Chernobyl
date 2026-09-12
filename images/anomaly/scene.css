@@ -1,0 +1,26 @@
+#anomalyScene{position:relative;isolation:isolate;width:100%;aspect-ratio:3/2;overflow:hidden;background:#222b20 center/cover;border:1px solid #655938;border-radius:3px;margin:8px 0}
+#anomalyScene[hidden],#anomalyScene [hidden]{display:none!important}
+#anomalyScene img{position:absolute;pointer-events:none;user-select:none}
+#anomalyScene .anomaly-hand{inset:0;width:100%;height:100%;object-fit:contain}
+.anomaly-right{z-index:2}.anomaly-grip{z-index:4}
+#anomalyScene .anomaly-detector{z-index:3;left:74.21875%;bottom:21.875%;max-width:14.322917%;max-height:31.25%;width:auto;height:auto;transform:translateX(-50%)}
+.anomaly-found{position:absolute;inset:0;z-index:5;pointer-events:none}
+#anomalyScene .anomaly-artifact{left:26.692708%;bottom:19.628906%;max-width:10.742188%;max-height:15.136719%;width:auto;height:auto;transform:translateX(-50%)}
+.anomaly-found.arrives{animation:anomaly-arrive .32s ease-out}
+.anomaly-caption{position:absolute;top:0;left:0;right:0;z-index:6;padding:6px 8px;color:#ecebdc;font-size:12px;line-height:1.3;background:linear-gradient(#0c120dcc,#0c120d66);pointer-events:none}
+.anomaly-effect{position:absolute;z-index:1;left:27%;top:27%;width:46%;height:43%;color:var(--anomaly-color);pointer-events:none;opacity:.7;filter:drop-shadow(0 0 5px currentColor)}
+.anomaly-effect::before{content:'';position:absolute;inset:8%;border-radius:50%;background:radial-gradient(ellipse,transparent 20%,currentColor 24%,transparent 29%,currentColor 34%,transparent 39%);opacity:.32;animation:anomaly-pulse 4s ease-in-out infinite}
+.anomaly-effect i{position:absolute;width:3px;height:3px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:anomaly-drift 3s ease-in-out infinite}
+.anomaly-effect[data-kind=mist]::before{inset:35% -20% -5%;filter:blur(12px);background:radial-gradient(ellipse,currentColor,transparent 70%)}
+.anomaly-effect[data-kind=fire]::before{inset:20% 15% 0;filter:blur(7px);background:radial-gradient(ellipse at bottom,currentColor,transparent 65%)}
+.anomaly-effect[data-kind=electric]::before{border-radius:0;background:linear-gradient(122deg,transparent 47%,currentColor 49%,transparent 51%);transform:skew(-15deg)}
+.anomaly-effect[data-kind=vortex]::before{transform:scaleY(.45);border:2px solid currentColor}
+.anomaly-effect[data-kind=column]::before{inset:-20% 35% 0;filter:blur(5px);background:linear-gradient(90deg,transparent,currentColor,transparent)}
+.anomaly-effect[data-kind=spring]::before{inset:65% 0 0;background:radial-gradient(ellipse,currentColor,transparent 70%)}
+.anomaly-effect[data-kind=void]::before{inset:25%;background:radial-gradient(ellipse,#030407 20%,currentColor 48%,transparent 70%);opacity:.8}
+.anomaly-effect[data-kind=rift]::before{inset:0 42%;border-radius:20%;background:linear-gradient(90deg,transparent,currentColor,#fff,currentColor,transparent);transform:rotate(17deg);opacity:.5}
+.anomaly-effect[data-kind=mirror]::before{border:1px solid currentColor;background:linear-gradient(125deg,transparent,currentColor,transparent);border-radius:20%;opacity:.3}
+@keyframes anomaly-arrive{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:translateY(0)}}
+@keyframes anomaly-pulse{50%{opacity:.55}}
+@keyframes anomaly-drift{50%{transform:translate(4px,-14px);opacity:.2}}
+@media(prefers-reduced-motion:reduce){#anomalyScene *{animation:none!important}}

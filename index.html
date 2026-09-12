@@ -797,6 +797,9 @@ button:active {filter:brightness(1.18);}
 #characterPortraitStatus[hidden], #characterPortraitStatus button[hidden] { display:none!important; }
 #characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
 </style>
+<link rel="stylesheet" href="images/anomaly/scene.css">
+<script src="images/anomaly/assets.js"></script>
+<script src="images/anomaly/scene.js"></script>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -1042,6 +1045,7 @@ button:active {filter:brightness(1.18);}
 <span class="meter-text" id="raidRadiationText">0 / 100 ☢</span>
 </div>
 </div>
+<div id="anomalyScene" hidden role="img" aria-label="Поиск артефактов в аномалии"></div>
 <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
 <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
 <button id="raidStepBtn" onpointercancel="cancelHoldToConfirm(this)" onpointerdown="startHoldToConfirm(this, raidStep)" onpointerleave="cancelHoldToConfirm(this)" onpointerup="cancelHoldToConfirm(this)" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; position:relative; overflow:hidden; user-select:none;">
@@ -1700,6 +1704,7 @@ button:active {filter:brightness(1.18);}
     // Иконки расходников (еда/вода/аптечки) — по названию предмета. Пока только эти 7, для
     // остального снаряжения (оружие/броня/артефакты) своих иконок нет, показываем как раньше
     const ITEM_ICONS = {
+        'Сердце Зоны': 'serdce_zony.webp',
         'Сердце Зоны: Абсолют': 'admin_artifact.webp',
         // Иконки брони (96 из 96)
         'Броня Зоны': 'armor_icon_81.webp',
@@ -2160,6 +2165,7 @@ button:active {filter:brightness(1.18);}
     // Проверенные новые ассеты загружаются вместе с клиентом из GitHub Pages.
     // Остальная графика пока остаётся на сервере; хеш предотвращает старые версии из кеша.
     const CLIENT_ICON_VERSIONS = new Map([
+        ['serdce_zony.webp', 'anomaly-hands-1'],
         ['armor_icon_1.webp', '2ad6dc88281d'],
         ['armor_icon_2.webp', '183a39d78df1'],
         ['armor_icon_3.webp', '7523e99a27a7'],
@@ -2889,6 +2895,7 @@ button:active {filter:brightness(1.18);}
         document.getElementById('knowledgeBooksHeader').textContent = Number(player.inventory['Книга знаний']) || 0;
         document.getElementById('detector').textContent = player.detector.name;
         document.getElementById('detectorTier').textContent = 'Тир ' + player.detector.tier;
+        updateAnomalyScene();
         renderQuickSlots();
 
         // Валюта игрока на экранах торговцев/рынка/магазина Байт — обновляем везде разом, элемент
@@ -5235,6 +5242,7 @@ function startBattle(enemy) {
     // Общий помощник: убрать боевые/переговорные кнопки и вернуть на их место навигацию рейда —
     // используется везде, где встреча (бой или переговоры с фракцией) завершается любым способом
     function clearBattleUiAndRestoreNav() {
+        window.AnomalyScene?.hide();
         const container = document.getElementById('battleButtonsContainer');
         if (container) container.innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
@@ -5492,13 +5500,32 @@ function startBattle(enemy) {
     }
 
     // ===== ИНТЕРАКТИВНАЯ ВСТРЕЧА С АНОМАЛИЕЙ =====
+    function updateAnomalyScene() {
+        if (!window.AnomalyScene) return;
+        if (!currentAnomaly || !raidActive) { window.AnomalyScene.hide(); return; }
+        const armorName = parseGearName(player.armor?.name || '').baseName;
+        const armorFile = ARMOR_CHAR_IMAGES[armorName] || '';
+        const armorId = Number((armorFile.match(/armor_char_(\d+)/) || [])[1]) || 1;
+        const anomaly = {...currentAnomaly};
+        if (!anomaly.id) anomaly.id = anomalies.find(a => a.name === anomaly.name)?.id;
+        window.AnomalyScene.show({
+            armor: armorId,
+            detector: getItemIcon(player.detector?.name || ''),
+            anomaly,
+            artifacts: (currentAnomaly._foundNames || []).map(name => ({
+                name, icon: currentAnomaly.isNamedArtifactAnomaly ? NAMED_ARTIFACT_ICON : getItemIcon(name)
+            }))
+        });
+    }
+
     function startAnomalyEncounter(anomaly) {
-        currentAnomaly={...anomaly};
+        currentAnomaly={...anomaly,_foundNames:[],_searchPending:false};
         raidLogs.push(`☢️ Аномалия «${anomaly.name}»!`);
         renderAnomalyButtons();updateRaidLog();
     }
 
     function renderAnomalyButtons() {
+        updateAnomalyScene();
         const container = document.getElementById('battleButtonsContainer');
         container.innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
@@ -5532,14 +5559,19 @@ function startBattle(enemy) {
     }
 
     async function searchForArtifact() {
-        if(!currentAnomaly||currentAnomaly.resolved||!raidSessionToken)return;
+        if(!currentAnomaly||currentAnomaly.resolved||!raidSessionToken||currentAnomaly._searchPending)return;
+        const encounter=currentAnomaly, searchToken=raidSessionToken;
+        encounter._searchPending=true;encounter._foundNames=[];updateAnomalyScene();
         try{
             const r=await fetch(`${SERVER_URL}/api/raid/anomaly/search`,{
                 method:'POST',headers:{'Content-Type':'application/json'},
                 body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
             });
-            const x=await r.json();if(!x.success){showGameAlert(x.error||'Поиск не выполнен');return;}
+            const x=await r.json();
+            if(currentAnomaly!==encounter||raidSessionToken!==searchToken)return;
+            if(!x.success){showGameAlert(x.error||'Поиск не выполнен');return;}
             applyRaidServerState(x.state);
+            currentAnomaly._foundNames=Array.isArray(x.found)?x.found.filter(n=>typeof n==='string'&&n.length):[];
             currentAnomaly.attemptsUsed=Number(x.attempt)||0;currentAnomaly.resolved=!!x.resolved;
             if(Number(x.radiationAdded)>0)raidLogs.push(`☢️ Радиация +${Math.round(Number(x.radiationAdded)*10)/10}.`);
             if(Number(x.searchDmg)>0)raidLogs.push(`☢️ Поиск отнял ${Math.round(Number(x.searchDmg)*10)/10} HP.`);
@@ -5554,7 +5586,8 @@ function startBattle(enemy) {
                 showGameAlert('💀 Вы погибли в аномалии.');openScreen('main');return;
             }
             renderAnomalyButtons();updateRaidLog();updateUI();
-        }catch(e){console.error('[searchForArtifact]',e);showGameAlert('Ошибка соединения при поиске.');}
+        }catch(e){console.error('[searchForArtifact]',e);if(currentAnomaly===encounter)showGameAlert('Ошибка соединения при поиске.');}
+        finally{encounter._searchPending=false;}
     }
 
     async function bypassAnomaly() {
