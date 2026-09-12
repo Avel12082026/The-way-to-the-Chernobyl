@@ -1,0 +1,4 @@
+#mainMenu #menuMusicButton{position:absolute;right:5px;bottom:4px;width:32px;height:28px;min-height:28px;padding:0;margin:0;z-index:2;border:1px solid #80714d;background:#121a12df;color:#e0ce9c;font-size:21px;line-height:24px;border-radius:4px}
+#menuMusicButton[data-enabled=false]{opacity:.55}
+#menuMusicPanel{box-sizing:border-box;width:min(360px,calc(100% - 28px));border:1px solid #8c784b;border-radius:8px;padding:20px;color:#ded4b4;background:#182019;font:15px system-ui;box-shadow:0 12px 50px #000a}
+#menuMusicPanel::backdrop{background:#0009}#menuMusicPanel h3{margin-top:0}#menuMusicPanel label{display:block;margin:14px 0 8px}#menuMusicPanel input[type=checkbox]{width:auto;display:inline-block;margin:0 8px 0 0}#menuMusicPanel input[type=range]{box-sizing:border-box;width:100%;padding:0;accent-color:#b6a26a}#menuMusicPanel p{font-size:12px;color:#aca68e}#menuMusicPanel button{width:100%;min-height:40px}#menuMusicValue{float:right}
