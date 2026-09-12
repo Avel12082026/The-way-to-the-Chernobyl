@@ -9,3 +9,5 @@ Open `anomaly-preview.html` to fit each costume, detector and artifact. This pre
 Validation: `node --test tests/*.test.js`; `CHROMIUM_EXECUTABLE_PATH=/path/to/chromium node tests/anomaly_scene.browser.cjs` (Playwright required). Browser tests intercept API calls and cover misses/finds, exit/reset, late responses, duplicate searches, 320/390/768 px layouts, all 96 sleeve images, nine detectors and all artifact images. No write requests reach a live account.
 
 Deploy index.html, anomaly-preview.html, images/anomaly/ and icons/serdce_zony.webp together to the existing static client host. No game server restart or database changes are required.
+
+Animation: transparent canvas layers animate the anomaly and the fitted screen/needle of each detector at up to 30 fps. Scanning continues during an unresolved encounter and stops on a find or resolution. Artifact motion preserves the palm anchor; energy artifacts pulse more strongly. Hidden scenes and background tabs stop requesting frames; reduced-motion mode renders a static effect. No animation changes drop chances or invents a detector distance reading.

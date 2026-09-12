@@ -797,9 +797,9 @@ button:active {filter:brightness(1.18);}
 #characterPortraitStatus[hidden], #characterPortraitStatus button[hidden] { display:none!important; }
 #characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
 </style>
-<link rel="stylesheet" href="images/anomaly/scene.css">
+<link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
-<script src="images/anomaly/scene.js"></script>
+<script src="images/anomaly/scene.js?v=2"></script>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -5510,6 +5510,7 @@ function startBattle(enemy) {
         if (!anomaly.id) anomaly.id = anomalies.find(a => a.name === anomaly.name)?.id;
         window.AnomalyScene.show({
             armor: armorId,
+            searching: !currentAnomaly.resolved, pending: !!currentAnomaly._searchPending,
             detector: getItemIcon(player.detector?.name || ''),
             anomaly,
             artifacts: (currentAnomaly._foundNames || []).map(name => ({
@@ -5587,7 +5588,7 @@ function startBattle(enemy) {
             }
             renderAnomalyButtons();updateRaidLog();updateUI();
         }catch(e){console.error('[searchForArtifact]',e);if(currentAnomaly===encounter)showGameAlert('Ошибка соединения при поиске.');}
-        finally{encounter._searchPending=false;}
+        finally{encounter._searchPending=false;if(currentAnomaly===encounter)updateAnomalyScene();}
     }
 
     async function bypassAnomaly() {
