@@ -802,6 +802,8 @@ button:active {filter:brightness(1.18);}
 <script src="images/anomaly/scene.js?v=2"></script>
 <link rel="stylesheet" href="audio/menu-music.css?v=1">
 <script defer src="audio/menu-music.js?v=1"></script>
+<link rel="stylesheet" href="inventory/drag.css?v=1">
+<script defer src="inventory/drag.js?v=1"></script>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -6854,6 +6856,7 @@ function startBattle(enemy) {
         `;
         const emptySlotsCount = Math.max(0, MIN_INVENTORY_SLOTS - filledSlotsHtml.length);
         invGrid.innerHTML = filledSlotsHtml.join('') + emptySlotHtml.repeat(emptySlotsCount);
+        window.InventoryDrag?.refresh(items);
     }
 
     async function useInventoryQuickSlot(i) {
