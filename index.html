@@ -799,11 +799,12 @@ button:active {filter:brightness(1.18);}
 </style>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
-<script src="images/anomaly/scene.js?v=3"></script>
+<script src="images/anomaly/detector-layout.js?v=1"></script>
+<script src="images/anomaly/scene.js?v=4"></script>
 <link rel="stylesheet" href="audio/menu-music.css?v=2">
 <script defer src="audio/menu-music.js?v=2"></script>
-<link rel="stylesheet" href="inventory/drag.css?v=2">
-<script defer src="inventory/drag.js?v=2"></script>
+<link rel="stylesheet" href="inventory/drag.css?v=3">
+<script defer src="inventory/drag.js?v=3"></script>
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -7021,6 +7022,7 @@ function startBattle(enemy) {
             `;
             }).join('');
         }
+        window.InventoryDrag?.refreshWarehouse(items,invItems);
     }
 
     // Перенос конкретного количества предмета из инвентаря на склад (с экрана склада)

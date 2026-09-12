@@ -2,9 +2,12 @@
 'use strict';
 let screen, gesture=null, ghost=null, frame=0, busy=false, suppressUntil=0, preciseArtifacts=false;
 const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация.';
-function hint(text=instruction){document.getElementById('inventoryDragHint').textContent=text;}
+function hint(text=instruction){const el=document.getElementById(screen?.id==='warehouseScreen'?'warehouseDragHint':'inventoryDragHint');if(el)el.textContent=text;}
 function kind(name){return getEquipSlotType(name)||(findArtifactDef(name)?'artifact':consumables.some(c=>c.name===name)?'quick':null);}
-function compatible(name,slot){
+function compatible(name,slot,from=gesture?.from||'inventory'){
+ if(!slot)return false;
+ if(['deposit','withdraw'].includes(slot.dataset.dropKind))return !raidActive&&!inventoryOpenedFromRaid&&((slot.dataset.dropKind==='deposit'&&from==='inventory')||(slot.dataset.dropKind==='withdraw'&&from==='warehouse'));
+ if(from!=='inventory')return false;
  if(!slot||kind(name)!==slot.dataset.dropKind)return false;
  if(slot.dataset.dropKind==='quick'&&currentEnemy&&!isFriendlyEncounterActive)return false;
  if(slot.dataset.dropKind==='artifact'&&!preciseArtifacts)return Number(slot.dataset.dropIndex)===player.artifactSlots.findIndex(x=>!x);
@@ -12,11 +15,16 @@ function compatible(name,slot){
 }
 function refresh(items){
  if(!screen)return;
- [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]&&kind(items[i])){cell.dataset.dragItem=items[i];cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});}});
+ [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]){cell.dataset.dragItem=items[i];cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});}});
  [...document.getElementById('quickSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind=i<3?['weapon','armor','detector'][i]:'quick';if(i>=3)cell.dataset.dropIndex=i-3;});
  [...document.getElementById('artifactSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind='artifact';cell.dataset.dropIndex=i;});
 }
-function targetAt(x,y){return document.elementFromPoint(x,y)?.closest('#inventoryScreen [data-drop-kind]');}
+function refreshWarehouse(items,invItems){
+ const groups=[['warehouseGrid',items,'warehouse','deposit'],['warehouseInventoryGrid',invItems,'inventory','withdraw']];
+ groups.forEach(([id,names,from,to])=>{const grid=document.getElementById(id);grid.dataset.dropKind=to;
+ [...grid.children].forEach((cell,i)=>{if(!names[i])return;cell.dataset.dragItem=names[i];cell.dataset.dragFrom=from;cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});});});
+}
+function targetAt(x,y){return document.elementFromPoint(x,y)?.closest('[data-drop-kind]');}
 function paint(){
  if(!gesture?.active)return;
  const g=gesture;ghost.style.transform=`translate(${g.x-27}px,${g.y-65}px)`;
@@ -40,12 +48,13 @@ function cleanup(){
  screen.querySelectorAll('.drag-valid,.drag-over,.drag-invalid').forEach(s=>s.classList.remove('drag-valid','drag-over','drag-invalid'));
  gesture=null;
 }
-async function drop(name,slot){
- if(busy||!(player.inventory[name]>0))return;
- if(!compatible(name,slot)){hint(slot?.dataset.dropKind==='artifact'&&!preciseArtifacts?'Для выбора любого слота артефакта требуется обновление сервера. Пока доступен первый свободный.':'Этот предмет не подходит для выбранного слота.');return;}
+async function drop(name,slot,from='inventory'){
+ if(busy||!((from==='warehouse'?player.warehouse:player.inventory)[name]>0))return;
+ if(!compatible(name,slot,from)){hint(slot?.dataset.dropKind==='artifact'&&!preciseArtifacts?'Для выбора любого слота артефакта требуется обновление сервера. Пока доступен первый свободный.':'Этот предмет не подходит для выбранного слота.');return;}
  busy=true;screen.setAttribute('aria-busy','true');hint('Перемещаю предмет…');
  try{
   const type=slot.dataset.dropKind,index=Number(slot.dataset.dropIndex);
+  if(type==='deposit'||type==='withdraw'){const ok=await warehouseTransfer(type,name,1);hint(ok?'Предмет перемещён.':'Не удалось переместить предмет.');return;}
   if(['weapon','armor','detector'].includes(type)){const ok=await equipItem(name);hint(ok?'Предмет экипирован.': 'Не удалось экипировать предмет.');return;}
   await waitForSaveQueue();
   const endpoint=type==='artifact'?'/api/artifact-slots/equip':'/api/quickslots/set';
@@ -60,15 +69,19 @@ async function drop(name,slot){
 function init(){
  screen=document.getElementById('inventoryScreen');if(!screen)return;
  const help=document.createElement('p');help.id='inventoryDragHint';help.setAttribute('role','status');document.getElementById('inventoryGrid').before(help);hint();
- window.InventoryDrag={refresh};
+ window.InventoryDrag={refresh,refreshWarehouse};
+ const warehouse=document.getElementById('warehouseScreen');
+ if(warehouse){const help=document.createElement('p');help.id='warehouseDragHint';help.textContent='Удерживай и перетаскивай между складом и рюкзаком — по 1 предмету. Касание — обычные действия.';help.setAttribute('role','status');document.getElementById('warehouseGrid').before(help);refreshWarehouse(Object.keys(player.warehouse||{}).filter(n=>player.warehouse[n]>0),Object.keys(player.inventory).filter(n=>player.inventory[n]>0));}
+ const deposit=document.createElement('button');deposit.type='button';deposit.id='inventoryWarehouseDrop';deposit.dataset.dropKind='deposit';deposit.textContent='📦 На склад — перетащи сюда предмет';deposit.onclick=()=>{if(!raidActive&&!inventoryOpenedFromRaid)openScreen('warehouse');};document.getElementById('inventoryGrid').before(deposit);
  const items=Object.keys(player.inventory).filter(n=>player.inventory[n]>0&&n!=='Книга знаний');refresh(items);
  fetch(SERVER_URL+'/api/equipment/features').then(r=>r.ok?r.json():null).then(x=>{preciseArtifacts=x?.artifactSlotTarget===true;}).catch(()=>{});
- screen.addEventListener('pointerdown',e=>{
+ document.addEventListener('pointerdown',e=>{
   if(gesture||busy||e.button!==0||e.isPrimary===false)return;
   const source=e.target.closest('[data-drag-item]');if(!source)return;
+  const owner=source.closest('#inventoryScreen,#warehouseScreen');if(!owner||!owner.classList.contains('active'))return;screen=owner;
   let scroller=source.parentElement;while(scroller!==document.body&&!(scroller.scrollHeight>scroller.clientHeight&&/auto|scroll/.test(getComputedStyle(scroller).overflowY)))scroller=scroller.parentElement;
   if(scroller===document.body)scroller=document.scrollingElement;
-  gesture={id:e.pointerId,source,name:source.dataset.dragItem,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,lastY:e.clientY,scroller,touch:e.pointerType==='touch',active:false};
+  gesture={id:e.pointerId,source,from:source.dataset.dragFrom||'inventory',name:source.dataset.dragItem,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,lastY:e.clientY,scroller,touch:e.pointerType==='touch',active:false};
   if(gesture.touch)gesture.timer=setTimeout(begin,220);
  });
  document.addEventListener('pointermove',e=>{
@@ -83,16 +96,16 @@ function init(){
  document.addEventListener('pointerup',e=>{
   if(!gesture||gesture.id!==e.pointerId)return;
   const g=gesture,target=g.active?targetAt(e.clientX,e.clientY):null;cleanup();
-  if(g.active){suppressUntil=Date.now()+700;if(target)void drop(g.name,target);else hint('Перетаскивание отменено.');}
+  if(g.active){suppressUntil=Date.now()+700;if(target)void drop(g.name,target,g.from);else hint('Перетаскивание отменено.');}
  });
  function cancel(){if(gesture){suppressUntil=Date.now()+700;cleanup();hint();}}
  document.addEventListener('pointercancel',cancel);window.addEventListener('blur',cancel);
  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')cancel();});
- new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(screen,{attributes:true,attributeFilter:['class']});
- screen.addEventListener('click',e=>{if(Date.now()<suppressUntil||busy){e.preventDefault();e.stopImmediatePropagation();}},true);
- screen.addEventListener('dragstart',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
- screen.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]')||gesture){e.preventDefault();e.stopPropagation();}},true);
+ [screen,warehouse].filter(Boolean).forEach(el=>new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(el,{attributes:true,attributeFilter:['class']}));
+ document.addEventListener('click',e=>{if((e.target.closest('#inventoryScreen,#warehouseScreen'))&&(Date.now()<suppressUntil||busy)){e.preventDefault();e.stopImmediatePropagation();}},true);
+ document.addEventListener('dragstart',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
+ document.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]')||gesture){e.preventDefault();e.stopPropagation();}},true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

@@ -1,10 +1,14 @@
-#inventoryGrid [data-drag-item]{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
-#inventoryScreen .drag-valid{outline:2px solid #9cae62;outline-offset:-2px}
-#inventoryScreen .drag-over{outline:3px solid #d7ed80;outline-offset:-3px;box-shadow:inset 0 0 18px #b6d26788}
-#inventoryScreen .drag-invalid{outline:3px solid #c65e4c;outline-offset:-3px}
+:is(#inventoryGrid,#warehouseGrid,#warehouseInventoryGrid) [data-drag-item]{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
+:is(#inventoryScreen,#warehouseScreen) .drag-valid{outline:2px solid #9cae62;outline-offset:-2px}
+:is(#inventoryScreen,#warehouseScreen) .drag-over{outline:3px solid #d7ed80;outline-offset:-3px;box-shadow:inset 0 0 18px #b6d26788}
+:is(#inventoryScreen,#warehouseScreen) .drag-invalid{outline:3px solid #c65e4c;outline-offset:-3px}
 .inventory-drag-ghost{position:fixed!important;left:0;top:0;width:54px!important;height:54px!important;pointer-events:none!important;z-index:100000;opacity:.9;border:2px solid #c8b57e;background:#182019;overflow:hidden;box-sizing:border-box}
 #inventoryDragHint{font-size:11px;color:#c9bd96;margin:7px 0;min-height:2.5em}
 #inventoryScreen[aria-busy=true]{cursor:progress}
 
-#inventoryGrid [data-drag-item] *{pointer-events:none!important;user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none!important;-webkit-user-drag:none!important}
+:is(#inventoryGrid,#warehouseGrid,#warehouseInventoryGrid) [data-drag-item] *{pointer-events:none!important;user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none!important;-webkit-user-drag:none!important}
 .inventory-drag-ghost *{pointer-events:none!important;-webkit-touch-callout:none!important}
+
+#warehouseGrid,#warehouseInventoryGrid{max-height:30vh;min-height:90px;overflow:auto;align-content:start;border:1px solid #746343;padding:5px;overscroll-behavior:contain}
+#warehouseDragHint{font-size:12px;color:#c9bd96}
+#inventoryWarehouseDrop{border:1px dashed #9c895b;min-height:48px;width:100%;margin:6px 0}

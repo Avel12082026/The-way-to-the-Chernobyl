@@ -5,9 +5,18 @@ let host=null,signature='',foundKey='',frame=0,lastFrame=0,animationState=null;
 const reducedMotion=root.matchMedia('(prefers-reduced-motion: reduce)');
 const effects={1:['fire','#f17b28'],2:['electric','#75cfff'],3:['vortex','#b6bfb1'],4:['mist','#a6cf5b'],5:['vortex','#aaaf80'],6:['vortex','#bf7364'],7:['fire','#e7a353'],8:['orb','#bc9dff'],9:['column','#b7b9a5'],10:['mist','#c6e8ff'],11:['orb','#bdcbb7'],12:['spring','#b53530'],13:['void','#22212c'],14:['rift','#ba9dff'],15:['void','#474a73'],16:['mirror','#b2d1d5'],17:['orb','#eccb86'],18:['column','#a6d5ca']};
 function image(className,alt){const el=document.createElement('img');el.className=className;el.alt=alt;el.draggable=false;return el;}
+function installMasks(){
+ if(document.getElementById('detectorCutoutMasks'))return;
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.id='detectorCutoutMasks';svg.setAttribute('width','0');svg.setAttribute('height','0');svg.style.position='absolute';svg.setAttribute('aria-hidden','true');
+ for(const [name,spec] of Object.entries(root.DETECTOR_LAYOUT?.antennaMasks||{})){
+  const clip=document.createElementNS(ns,'clipPath');clip.id='cutout-'+name.replace('.jpg','');clip.setAttribute('clipPathUnits','objectBoundingBox');
+  for(const points of spec.polygons){const polygon=document.createElementNS(ns,'polygon');polygon.setAttribute('points',points.map(([x,y])=>[x/spec.size[0],y/spec.size[1]].join(',')).join(' '));clip.appendChild(polygon);}svg.appendChild(clip);
+ }document.body.appendChild(svg);
+}
 function mount(){
  if(host)return host;
  host=document.getElementById('anomalyScene');if(!host)return null;
+ installMasks();
  const effect=document.createElement('div');effect.className='anomaly-effect';effect.setAttribute('aria-hidden','true');
  for(let i=0;i<14;i++){const dot=document.createElement('i');dot.style.cssText=`left:${(i*37)%100}%;top:${(i*23)%100}%;animation-delay:-${i*.27}s;`;effect.appendChild(dot);}
  const right=image('anomaly-hand anomaly-right','Правая рука'),detector=image('anomaly-detector','Детектор'),grip=image('anomaly-hand anomaly-grip','');
@@ -23,7 +32,9 @@ function show(config){
  if(!data)return;
  const armor=Number(config.armor)||1;
  const safeArmor=data.armors.includes(armor)?armor:1;
- source(p.right,base+'hands/'+safeArmor+'_right.webp');source(p.left,base+'hands/'+safeArmor+'_left.webp');source(p.grip,base+'hands/'+safeArmor+'_grip.webp');
+ source(p.right,base+'hands/'+safeArmor+'_right.webp');source(p.left,base+'hands/'+safeArmor+'_left.webp');source(p.grip,base+'hands/'+safeArmor+'_right.webp');
+ const layout=root.DETECTOR_LAYOUT;
+ if(layout){p.grip.style.clipPath='polygon('+layout.grip.map(([x,y])=>`${x/1536*100}% ${y/1024*100}%`).join(',')+')';const fit=layout.placement[config.detector];if(fit){p.detector.style.left=fit.x/1536*100+'%';p.detector.style.bottom=(1024-fit.bottom)/1024*100+'%';}p.detector.style.clipPath=layout.antennaMasks[config.detector]?'url(#cutout-'+config.detector.replace('.jpg','')+')':'none';}
  const detector=data.detectors[config.detector];p.detector.hidden=p.grip.hidden=!detector;
  if(detector)source(p.detector,base+'items/'+detector);
  const found=Array.isArray(config.artifacts)?config.artifacts:[];
@@ -43,14 +54,14 @@ function hide(){cancelAnimationFrame(frame);frame=0;animationState=null;if(mount
 // Screen corners follow the actual perspective of each inventory detector.
 const screens={
  'riper.jpg':[[.25,.44],[.67,.51],[.62,.63],[.20,.56]],
- 'polyarnaya_zvezda.jpg':[[.28,.40],[.69,.45],[.62,.61],[.20,.56]],
- 'sverchok.jpg':[[.24,.44],[.61,.49],[.54,.68],[.17,.63]],
- 'hameleon.jpg':[[.34,.33],[.72,.37],[.65,.61],[.25,.56]],
+ 'polyarnaya_zvezda.jpg':[[0.30031, 0.43709], [0.6935, 0.50331], [0.613, 0.65563], [0.22291, 0.58499]],
+ 'sverchok.jpg':[[0.27273, 0.41333], [0.66477, 0.48667], [0.55682, 0.71111], [0.16477, 0.63556]],
+ 'hameleon.jpg':[[0.35644, 0.33482], [0.76238, 0.39509], [0.66337, 0.62054], [0.25083, 0.56027]],
  'buran.jpg':[[.36,.15],[.66,.17],[.65,.36],[.36,.36]],
- 'grom.jpg':[[.34,.16],[.73,.21],[.66,.43],[.27,.38]],
- 'vedmak.jpg':[[.32,.16],[.80,.24],[.72,.47],[.23,.39]],
- 'svetlyak.jpg':[[.35,.12],[.82,.19],[.75,.43],[.27,.36]],
- 'vizir.jpg':[[.33,.18],[.78,.25],[.70,.46],[.25,.39]]
+ 'grom.jpg':[[0.35103, 0.1236], [0.78761, 0.19775], [0.69027, 0.44719], [0.25369, 0.37978]],
+ 'vedmak.jpg':[[0.34969, 0.10682], [0.86503, 0.18182], [0.76074, 0.46364], [0.2546, 0.39318]],
+ 'svetlyak.jpg':[[0.3589, 0.10515], [0.84356, 0.16779], [0.74847, 0.4519], [0.26074, 0.37808]],
+ 'vizir.jpg':[[0.41748, 0.2], [0.85113, 0.25833], [0.73786, 0.46667], [0.31715, 0.40417]]
 };
 function startAnimation(){if(!frame&&animationState&&!document.hidden){lastFrame=0;frame=requestAnimationFrame(animate)}}
 function animate(ms){frame=0;if(!animationState||host.hidden||document.hidden)return;if(ms-lastFrame>=33||reducedMotion.matches){lastFrame=ms;paintAnimation(reducedMotion.matches?1000:ms)}if(!reducedMotion.matches)frame=requestAnimationFrame(animate)}
@@ -82,6 +93,8 @@ function paintAnimation(ms){
  d.beginPath();corners.forEach(([x,y],i)=>i?d.lineTo(x,y):d.moveTo(x,y));d.closePath();d.clip();
  // Draw in screen-local coordinates: indicators tilt with the physical display.
  const [a,b,,e]=corners;
+ d.fillStyle=state.detector==='polyarnaya_zvezda.jpg'?'#133039':'#061b13';
+ if(!['riper.jpg','buran.jpg'].includes(state.detector))d.fillRect(0,0,1,1);
  d.transform(b[0]-a[0],b[1]-a[1],e[0]-a[0],e[1]-a[1],a[0],a[1]);
  const model=state.detector,speed=state.pending?1.7:1;
  d.shadowBlur=0;d.lineWidth=.012;d.strokeStyle='#72b58b';d.fillStyle='#72b58b';
@@ -94,7 +107,7 @@ function paintAnimation(ms){
   const angle=-1.9+Math.sin(t*speed*1.3)*.25;
   d.beginPath();d.moveTo(.5,.85);d.lineTo(.5+Math.cos(angle)*.55,.85+Math.sin(angle)*.55);d.stroke();
  }else if(model==='polyarnaya_zvezda.jpg'||model==='hameleon.jpg'){
-  d.fillStyle=model==='polyarnaya_zvezda.jpg'?'#133039':'#10251c';d.globalAlpha=.9;d.fillRect(0,0,1,1);d.globalAlpha=.7;
+  d.fillStyle=model==='polyarnaya_zvezda.jpg'?'#133039':'#10251c';d.globalAlpha=1;d.fillRect(0,0,1,1);d.globalAlpha=.7;
   d.strokeStyle=model==='polyarnaya_zvezda.jpg'?'#7babb2':'#6ca77b';
   for(let row=0;row<4;row++){
    d.beginPath();for(let i=0;i<=40;i++){const x=.06+i*.022,y=.18+row*.2+Math.sin(i*.6-t*speed*2+row)*.025; i?d.lineTo(x,y):d.moveTo(x,y);}d.stroke();
@@ -102,7 +115,7 @@ function paintAnimation(ms){
   d.fillStyle=d.strokeStyle;d.globalAlpha=.35;d.fillRect(.06+((t*speed*.15)% .85),.07,.012,.85);
  }else{
   const full=model==='sverchok.jpg',cx=.5,cy=full?.5:.86,r=full?.43:.78;
-  d.fillStyle='#061b13';d.globalAlpha=.86;d.fillRect(0,0,1,1);d.globalAlpha=.32;
+  d.fillStyle='#061b13';d.globalAlpha=1;d.fillRect(0,0,1,1);d.globalAlpha=.32;
   d.strokeStyle=model==='grom.jpg'?'#b8aa66':model==='vizir.jpg'?'#80c9b5':'#71ae85';
   for(let ring=1;ring<=3;ring++){d.beginPath();d.arc(cx,cy,r*ring/3,full?0:Math.PI,full?Math.PI*2:Math.PI*2);d.stroke();}
   const angle=full?t*speed:Math.PI+(.5+.5*Math.sin(t*speed*.8))*Math.PI;
