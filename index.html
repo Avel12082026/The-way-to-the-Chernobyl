@@ -94,7 +94,31 @@
         .quick-slot { font-family: 'Russo One', sans-serif; background: #0d0d0c; border: 1px solid #4a4230; border-radius: 4px; padding: 2px; text-align: center; font-size: 9px; font-weight: normal; cursor: pointer; position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; word-break: break-word; overflow-wrap: anywhere; }
         .quick-slot:hover { border-color: #8a7a4a; }
         .chat-tab-btn { font-family: 'Russo One', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; padding: 8px 2px; background: linear-gradient(180deg,#151310,#0b0a08); border: 1px solid #4a4230; border-radius: 5px; color: #c9bb8d; }
-    </style>
+    
+/* First-person raid scene and compact HUD. */
+#raidScreen .raid-hud{margin:8px 0 0;width:100%;}
+#raidScreen .raid-vitals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;}
+#raidScreen .raid-vital{position:relative;overflow:hidden;border:1px solid #655938;background:#080b08;min-width:0;height:26px;}
+#raidScreen .raid-vital-fill{position:absolute;inset:0 auto 0 0;width:0;transition:width .3s;background:#753d39;}
+#raidScreen .raid-vital-hunger .raid-vital-fill{background:#75602c;}
+#raidScreen .raid-vital-thirst .raid-vital-fill{background:#28576b;}
+#raidScreen .raid-vital-value{position:absolute;inset:0;display:flex;gap:4px;align-items:center;justify-content:center;color:#f4eedb;font-size:12px;font-weight:700;text-shadow:0 1px 2px #000;}
+#raidScreen .raid-progress{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;}
+#raidScreen .raid-progress .raid-meter-track{width:auto!important;margin:0!important;border-radius:0!important;box-sizing:border-box;}
+#raidScreen #raidNavButtons,#raidScreen #battleButtonsContainer>div{margin-top:0!important;}
+#raidScene{position:relative;width:100%;height:clamp(240px,47vh,540px);overflow:hidden;background:#10140e;border:1px solid #655938;box-sizing:border-box;}
+#raidScene[hidden],#raidArtifactHand[hidden],#raidFoundChoices[hidden]{display:none!important;}
+#raidLocation{display:block;width:100%;height:100%;object-fit:cover;object-position:center 48%;}
+#raidAnomalyEffect{position:absolute;left:5%;top:23%;width:90%;height:48%;object-fit:contain;pointer-events:none;}
+#raidDetectorHand{position:absolute;bottom:0;right:0;width:44%;height:74%;object-fit:contain;object-position:bottom right;pointer-events:none;}
+#raidSceneCaption{position:absolute;left:0;right:0;top:0;padding:8px;background:linear-gradient(#000b,transparent);color:#eee1ba;font-size:12px;text-shadow:0 1px 2px #000;}
+#raidScene:not([hidden])+#raidLog{min-height:44px!important;height:58px!important;max-height:58px!important;margin:0!important;}
+#raidArtifactHand{position:absolute;bottom:0;left:0;width:45%;height:73%;pointer-events:none;}
+#raidArtifactHand .raid-palm{position:absolute;bottom:0;left:0;width:100%;height:100%;object-fit:contain;object-position:bottom left;}
+#raidFoundArtifact{position:absolute;width:60%;height:36%;left:28%;bottom:42%;object-fit:contain;}
+#raidFoundChoices{position:absolute;left:0;right:0;bottom:0;display:flex;gap:4px;overflow-x:auto;padding:4px;background:#000a;}
+#raidFoundChoices button{flex:0 0 auto;font-size:11px;padding:4px 7px;min-height:30px;max-width:80%;white-space:normal;}
+</style>
 <style id="zone-reference-theme">/* ZONE / REFERENCE EDITION — presentation only. All URLs are embedded by the builder. */
 :root {
  --zr-ink:#ded3b9; --zr-quiet:#a99d83; --zr-amber:#c6a45c; --zr-line:#6c5b3d;
@@ -1022,27 +1046,24 @@ button:active {filter:brightness(1.18);}
 </div>
 <div class="screen" id="raidScreen">
 <div style="flex-shrink:0; background:linear-gradient(180deg,#141310,#0a0a09); margin:-12px -12px 0; padding:12px 12px 0;">
-<div class="zr-raid-head" style="display:flex; align-items:center; justify-content:space-between;">
-<h3 style="margin-bottom:0;">⚔️ Рейд</h3>
-<div style="display:flex; gap:8px; font-size:12px; font-weight:bold;">
-<span style="color:#ff5e5e;">❤️ <span id="raidHealthMini">100</span></span>
-<span style="color:#e6a23c;">🍖 <span id="raidHungerMini">100</span></span>
-<span style="color:#3c8de6;">💧 <span id="raidThirstMini">100</span></span>
-</div>
-</div>
-<div class="raid-meter-track" id="raidExpTrack" style="position:relative; width:100%; height:16px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden; margin:6px 0;">
+<div id="raidScene" hidden aria-label="Поиск артефактов">
+<img id="raidLocation" alt=""><img id="raidAnomalyEffect" alt=""><img id="raidDetectorHand" alt="">
+<div id="raidArtifactHand" hidden><img class="raid-palm" src="assets/raid/artifact-palm.webp" alt=""><img id="raidFoundArtifact" alt=""></div>
+<div id="raidFoundChoices" hidden></div><div id="raidSceneCaption"></div></div>
+<div class="log" id="raidLog">Нажмите "Идти дальше"</div>
+<div hidden><span id="detector"></span><span id="detectorTier"></span><span id="radiationValue"></span></div>
+<div class="raid-hud"><div class="raid-vitals">
+<div class="raid-vital raid-vital-health" aria-label="Здоровье"><div id="raidHealthFill" class="raid-vital-fill"></div><span class="raid-vital-value">❤️ <span id="raidHealthMini">100</span></span></div>
+<div class="raid-vital raid-vital-hunger" aria-label="Сытость"><div id="raidHungerFill" class="raid-vital-fill"></div><span class="raid-vital-value">🍖 <span id="raidHungerMini">100</span></span></div>
+<div class="raid-vital raid-vital-thirst" aria-label="Жажда"><div id="raidThirstFill" class="raid-vital-fill"></div><span class="raid-vital-value">💧 <span id="raidThirstMini">100</span></span></div>
+</div><div class="raid-progress"><div class="raid-meter-track" id="raidExpTrack" style="position:relative; width:100%; height:16px; background:#0d0d0c; border:1px solid #4a4230; border-radius:4px; overflow:hidden; margin:6px 0;">
 <div class="expBarFill" style="position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#4a7c1f,#8ac926); transition:width 0.3s;"></div>
 <span class="meter-text" id="raidExpText">0 / 0 EXP</span>
 </div>
-<div class="detector">📡 <span id="detector">RADER 2-02</span>: <span id="detectorTier">Тир 1</span></div>
-<div style="margin-bottom:8px;">
-<div style="font-size:12px; color:#ccc; margin-bottom:3px; font-weight:bold;">☢️ Радиация: <span id="radiationValue" style="color:#e67e22;">0</span> / 100</div>
 <div class="raid-meter-track" id="raidRadiationTrack" style="position:relative;background:#0d0d0c; border:1px solid #4a4230; border-radius:6px; height:16px; overflow:hidden;">
 <div class="radiationBarFill" style="background:linear-gradient(90deg,#8ac926,#c0392b); height:100%; width:0%; transition:width 0.3s;"></div>
 <span class="meter-text" id="raidRadiationText">0 / 100 ☢</span>
-</div>
-</div>
-<div class="log" id="raidLog">Нажмите "Идти дальше"</div>
+</div></div></div>
 <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
 <button id="raidStepBtn" onpointercancel="cancelHoldToConfirm(this)" onpointerdown="startHoldToConfirm(this, raidStep)" onpointerleave="cancelHoldToConfirm(this)" onpointerup="cancelHoldToConfirm(this)" style="background: #27ae60; border: none; padding: 12px; color: #fff; font-weight: bold; border-radius: 8px; position:relative; overflow:hidden; user-select:none;">
 <span style="position:relative; z-index:1;">Идти дальше (удержите)</span>
@@ -2869,6 +2890,10 @@ button:active {filter:brightness(1.18);}
         if (raidHealthMini) raidHealthMini.textContent = Math.round(player.health);
         if (raidHungerMini) raidHungerMini.textContent = Math.round(player.hunger);
         if (raidThirstMini) raidThirstMini.textContent = Math.round(player.thirst);
+        for (const [key, value, maximum] of [['Health',player.health,player.maxHealth],['Hunger',player.hunger,player.maxHunger],['Thirst',player.thirst,player.maxThirst]]) {
+            const fill=document.getElementById('raid'+key+'Fill');
+            if(fill)fill.style.width=(Number(maximum)>0?Math.min(100,Math.max(0,(Number(value)||0)/Number(maximum)*100)):0)+'%';
+        }
         const invHealthMini = document.getElementById('invHealthMini');
         const invHungerMini = document.getElementById('invHungerMini');
         const invThirstMini = document.getElementById('invThirstMini');
@@ -5235,6 +5260,7 @@ function startBattle(enemy) {
     // Общий помощник: убрать боевые/переговорные кнопки и вернуть на их место навигацию рейда —
     // используется везде, где встреча (бой или переговоры с фракцией) завершается любым способом
     function clearBattleUiAndRestoreNav() {
+        renderRaidScene();
         const container = document.getElementById('battleButtonsContainer');
         if (container) container.innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
@@ -5388,7 +5414,7 @@ function startBattle(enemy) {
             triggerEnemyTurn();
         } else if (currentEnemy && isFriendlyEncounterActive) {
             renderFriendlyEncounterButtons(); // мирная встреча — просто восстанавливаем её кнопки, без "хода"
-        } else if (currentAnomaly && !currentAnomaly.resolved) {
+        } else if (currentAnomaly) {
             renderAnomalyButtons(); // аномалия ещё не разрешена — восстанавливаем именно её кнопки (Поиск/Обойти), а не общую навигацию
         } else {
             clearBattleUiAndRestoreNav(); // боя и аномалии нет — навигация рейда должна быть на месте
@@ -5492,6 +5518,46 @@ function startBattle(enemy) {
     }
 
     // ===== ИНТЕРАКТИВНАЯ ВСТРЕЧА С АНОМАЛИЕЙ =====
+    const RAID_ARTIFACT_SPRITES = {"Медуза": "assets/raid/artifact-1.webp", "Жемчужина": "assets/raid/artifact-2.webp", "Искра": "assets/raid/artifact-3.webp", "Пружина": "assets/raid/artifact-4.webp", "Льдинка": "assets/raid/artifact-5.webp", "Уголёк": "assets/raid/artifact-6.webp", "Хрусталик": "assets/raid/artifact-7.webp", "Паутинка": "assets/raid/artifact-8.webp", "Камешек": "assets/raid/artifact-9.webp", "Вспышка": "assets/raid/artifact-10.webp", "Батарейка": "assets/raid/artifact-11.webp", "Молния": "assets/raid/artifact-12.webp", "Стеклярус": "assets/raid/artifact-13.webp", "Смола": "assets/raid/artifact-14.webp", "Раковина": "assets/raid/artifact-15.webp", "Осколок": "assets/raid/artifact-16.webp", "Заноза": "assets/raid/artifact-17.webp", "Пыльца": "assets/raid/artifact-18.webp", "Камень крови": "assets/raid/artifact-19.webp", "Гравитационный шар": "assets/raid/artifact-20.webp", "Вихрь": "assets/raid/artifact-21.webp", "Слюда": "assets/raid/artifact-22.webp", "Ракушка": "assets/raid/artifact-23.webp", "Пыльный кристалл": "assets/raid/artifact-24.webp", "Обломок": "assets/raid/artifact-25.webp", "Игла": "assets/raid/artifact-26.webp", "Чешуйка": "assets/raid/artifact-27.webp", "Огненный шар": "assets/raid/artifact-28.webp", "Слеза": "assets/raid/artifact-29.webp", "Глаз": "assets/raid/artifact-30.webp", "Гарпун": "assets/raid/artifact-31.webp", "Клык": "assets/raid/artifact-32.webp", "Шип": "assets/raid/artifact-33.webp", "Капля ртути": "assets/raid/artifact-34.webp", "Осколок кости": "assets/raid/artifact-35.webp", "Жёлудь": "assets/raid/artifact-36.webp", "Стеклянный шарик": "assets/raid/artifact-37.webp", "Магнит": "assets/raid/artifact-38.webp", "Пузырь": "assets/raid/artifact-39.webp", "Кварц": "assets/raid/artifact-40.webp", "Спираль": "assets/raid/artifact-41.webp", "Обсидиан": "assets/raid/artifact-42.webp", "Лунный камень": "assets/raid/artifact-43.webp", "Игольчатый кристалл": "assets/raid/artifact-44.webp", "Вихревой шар": "assets/raid/artifact-45.webp", "Кусок мяса": "assets/raid/artifact-46.webp", "Коготь": "assets/raid/artifact-47.webp", "Зуб": "assets/raid/artifact-48.webp", "Ржавый механизм": "assets/raid/artifact-49.webp", "Кристалл разума": "assets/raid/artifact-50.webp", "Тлеющий уголь": "assets/raid/artifact-51.webp", "Ледяная слеза": "assets/raid/artifact-52.webp", "Шёпот бездны": "assets/raid/artifact-53.webp", "Стальное перо": "assets/raid/artifact-54.webp", "Кровь земли": "assets/raid/artifact-55.webp", "Пепел": "assets/raid/artifact-56.webp", "Пламя": "assets/raid/artifact-57.webp", "Осколок звезды": "assets/raid/artifact-58.webp", "Сердце бури": "assets/raid/artifact-59.webp", "Плачущий кристалл": "assets/raid/artifact-60.webp", "Вой пустоты": "assets/raid/artifact-61.webp", "Живая ртуть": "assets/raid/artifact-62.webp", "Тень зоны": "assets/raid/artifact-63.webp", "Ядро": "assets/raid/artifact-64.webp", "Звезда": "assets/raid/artifact-65.webp", "Антиматерия": "assets/raid/artifact-66.webp", "Осколок Монолита": "assets/raid/artifact-68.webp", "Слеза Вселенной": "assets/raid/artifact-69.webp", "Дыхание Чернобыля": "assets/raid/artifact-70.webp", "Кровь Зоны": "assets/raid/artifact-71.webp", "Разум Аномалии": "assets/raid/artifact-72.webp", "Шустряк": "assets/raid/artifact-73.webp", "Сердце Зоны: Абсолют": "assets/raid/artifact-74.webp"};
+    function getRaidLocationTier(detector) {
+        const name=String(typeof detector==='string'?detector:detector?.name||'').trim();
+        return detectors.find(d=>d.name===name)?.tier||1;
+    }
+    function chooseRaidLocationTier(detector,randomValue=Math.random()) {
+        const sample=Number.isFinite(randomValue)?Math.max(0,Math.min(1-Number.EPSILON,randomValue)):0;
+        return 1+Math.floor(sample*getRaidLocationTier(detector));
+    }
+    function setRaidSprite(id,url,alt) {
+        const image=document.getElementById(id);image.hidden=!url;
+        if(!url)return;
+        image.onerror=()=>{image.style.visibility='hidden'};
+        image.onload=()=>{image.style.visibility='visible'};
+        if(image.getAttribute('src')!==url)image.src=url;
+        image.alt=alt;
+    }
+    function renderRaidScene() {
+        const scene=document.getElementById('raidScene');if(!scene)return;
+        scene.hidden=!currentAnomaly;if(!currentAnomaly)return;
+        const maximum=getRaidLocationTier(player.detector);
+        if(!Number.isInteger(currentAnomaly.visualLocationTier)||currentAnomaly.visualLocationTier<1||currentAnomaly.visualLocationTier>maximum)
+            currentAnomaly.visualLocationTier=chooseRaidLocationTier(player.detector);
+        const tier=currentAnomaly.visualLocationTier;
+        setRaidSprite('raidLocation','assets/raid/location-tier-'+tier+'.webp',['Окраинная деревня','Заброшенная ферма','Лесной блокпост','Железнодорожная зона','Химический завод','Исследовательский пост','Рыжий лес','Припять','ЧАЭС'][tier-1]);
+        const anomaly=anomalies.find(a=>a.name===currentAnomaly.name);
+        setRaidSprite('raidAnomalyEffect',anomaly?'assets/raid/anomaly-'+anomaly.id+'.webp':null,currentAnomaly.name);
+        const detector=detectors.find(d=>d.name===(player.detector?.name||player.detector));
+        setRaidSprite('raidDetectorHand',detector?'assets/raid/detector-hand-'+detector.id+'.webp':null,detector?'В руке детектор «'+detector.name+'»':'');
+        const found=Array.isArray(currentAnomaly.visualFound)?currentAnomaly.visualFound:[];
+        const selected=Math.min(Math.max(0,currentAnomaly.visualFoundIndex||0),Math.max(0,found.length-1));
+        const name=found[selected];
+        const url=RAID_ARTIFACT_SPRITES[name]||(name&&currentAnomaly.isNamedArtifactAnomaly?'assets/raid/artifact-named.webp':null);
+        document.getElementById('raidArtifactHand').hidden=!url;
+        setRaidSprite('raidFoundArtifact',url,'Найден артефакт «'+name+'»');
+        const choices=document.getElementById('raidFoundChoices');choices.replaceChildren();choices.hidden=!found.length;
+        found.forEach((item,index)=>{const button=document.createElement('button');button.type='button';button.textContent=item;button.setAttribute('aria-pressed',String(index===selected));button.onclick=()=>{if(currentAnomaly){currentAnomaly.visualFoundIndex=index;renderRaidScene()}};choices.appendChild(button)});
+        document.getElementById('raidSceneCaption').textContent='☢ '+currentAnomaly.name;
+    }
+
     function startAnomalyEncounter(anomaly) {
         currentAnomaly={...anomaly};
         raidLogs.push(`☢️ Аномалия «${anomaly.name}»!`);
@@ -5499,6 +5565,7 @@ function startBattle(enemy) {
     }
 
     function renderAnomalyButtons() {
+        renderRaidScene();
         const container = document.getElementById('battleButtonsContainer');
         container.innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
@@ -5531,16 +5598,22 @@ function startBattle(enemy) {
         div.scrollIntoView({ block: 'nearest' });
     }
 
+    let raidArtifactSearchBusy=false;
     async function searchForArtifact() {
-        if(!currentAnomaly||currentAnomaly.resolved||!raidSessionToken)return;
+        if(!currentAnomaly||currentAnomaly.resolved||!raidSessionToken||raidArtifactSearchBusy)return;
+        const encounter=currentAnomaly;raidArtifactSearchBusy=true;
+        const searchButton=document.getElementById('searchArtifactBtn');if(searchButton)searchButton.disabled=true;
         try{
             const r=await fetch(`${SERVER_URL}/api/raid/anomaly/search`,{
                 method:'POST',headers:{'Content-Type':'application/json'},
                 body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,raidToken:raidSessionToken})
             });
             const x=await r.json();if(!x.success){showGameAlert(x.error||'Поиск не выполнен');return;}
+            if(currentAnomaly!==encounter)return;
             applyRaidServerState(x.state);
             currentAnomaly.attemptsUsed=Number(x.attempt)||0;currentAnomaly.resolved=!!x.resolved;
+            currentAnomaly.visualFound=Array.isArray(x.found)?x.found.filter(name=>typeof name==='string'&&name.trim()):[];
+            currentAnomaly.visualFoundIndex=0;
             if(Number(x.radiationAdded)>0)raidLogs.push(`☢️ Радиация +${Math.round(Number(x.radiationAdded)*10)/10}.`);
             if(Number(x.searchDmg)>0)raidLogs.push(`☢️ Поиск отнял ${Math.round(Number(x.searchDmg)*10)/10} HP.`);
             if(Number(x.anomalyDmg)>0)raidLogs.push(`💥 Аномалия нанесла ${Math.round(Number(x.anomalyDmg)*10)/10} HP.`);
@@ -5555,6 +5628,7 @@ function startBattle(enemy) {
             }
             renderAnomalyButtons();updateRaidLog();updateUI();
         }catch(e){console.error('[searchForArtifact]',e);showGameAlert('Ошибка соединения при поиске.');}
+        finally{raidArtifactSearchBusy=false;if(searchButton?.isConnected)searchButton.disabled=false;}
     }
 
     async function bypassAnomaly() {
