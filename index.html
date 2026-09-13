@@ -797,6 +797,11 @@ button:active {filter:brightness(1.18);}
 #characterPortraitStatus[hidden], #characterPortraitStatus button[hidden] { display:none!important; }
 #characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
 </style>
+<link rel="stylesheet" href="images/combat/scene.css?v=1">
+<script src="images/combat/catalog.js?v=1"></script>
+<script src="images/combat/assets.js?v=1"></script>
+<script src="images/combat/layout.js?v=1"></script>
+<script src="images/combat/scene.js?v=1"></script>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
 <script src="images/anomaly/detector-layout.js?v=1"></script>
@@ -1050,6 +1055,7 @@ button:active {filter:brightness(1.18);}
 <span class="meter-text" id="raidRadiationText">0 / 100 ☢</span>
 </div>
 </div>
+<div id="combatScene" hidden role="img" aria-label="Бой с мутантом"></div>
 <div id="anomalyScene" hidden role="img" aria-label="Поиск артефактов в аномалии"></div>
 <div class="log" id="raidLog">Нажмите "Идти дальше"</div>
 <div id="raidNavButtons" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
@@ -3051,6 +3057,7 @@ button:active {filter:brightness(1.18);}
 
     // ===== НАВИГАЦИЯ =====
     function openScreen(screen) {
+        window.CombatScene?.hide();
         document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
         document.getElementById('mainMenu').style.display = 'none';
         
@@ -3068,6 +3075,7 @@ button:active {filter:brightness(1.18);}
         const target = document.getElementById(screen + 'Screen');
         if (target) {
             target.classList.add('active');
+            if (screen === 'raid') updateCombatScene();
             if (screen === 'inventory') renderInventory();
             if (screen === 'shop') openShopTab(shopTab);
             if (screen === 'warehouse') renderWarehouse();
@@ -5046,7 +5054,15 @@ function startBattle(enemy) {
         currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();
     }
 
+    function updateCombatScene() {
+        if (!currentEnemy || !raidActive || currentEnemy.friendly || !document.getElementById('raidScreen')?.classList.contains('active')) { window.CombatScene?.hide(); return; }
+        const armorFile = ARMOR_CHAR_IMAGES[parseGearName(player.armor?.name || '').baseName] || '';
+        const armor = Number((armorFile.match(/armor_char_(\d+)/) || [])[1]) || 1;
+        const weapon = weapons.find(w => w.name === parseGearName(player.weapon?.name || '').baseName);
+        window.CombatScene?.show({enemy:currentEnemy, armor, weaponId:weapon?.id, pending:battleTurn !== 0});
+    }
     function renderBattleButtons() {
+        updateCombatScene();
         document.getElementById('battleButtonsContainer').innerHTML = '';
         const navButtons = document.getElementById('raidNavButtons');
         if (navButtons) navButtons.style.display = 'none'; // во время боя "Идти дальше"/"Вернуться с рейда" скрыты — их место занимают боевые кнопки
@@ -5124,6 +5140,7 @@ function startBattle(enemy) {
                     endBattle(true);
                     return;
                 }
+                window.CombatScene?.react(enemyAtAction.battleToken,x,'escape');
                 raidLogs.push('Побег не удался!');
                 if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)
                     raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
@@ -5176,6 +5193,7 @@ function startBattle(enemy) {
                 raidLogs.push(`Вы использовали «${x.usedMedkit.name}»! +${Number(x.usedMedkit.restore)||0} HP. Осталось аптечек в бою: ${Number(x.usedMedkit.remaining)||0}.`);
             }
 
+            window.CombatScene?.react(enemyAtAction.battleToken,x,action);
             if(x.enemyTurn && Number(x.enemyTurn.damage)>0){
                 raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}. Ваше HP: ${Math.max(0,Number(player.health)||0)}`);
             }else if(x.enemyTurn && !x.victoryReady){
@@ -5238,6 +5256,7 @@ function startBattle(enemy) {
     }
 
     function endBattle(win) {
+        window.CombatScene?.hide();
         currentEnemy=null;battleTurn=0;
         document.getElementById('battleButtonsContainer').innerHTML='';
         const nav=document.getElementById('raidNavButtons');if(nav)nav.style.display='grid';
@@ -5247,6 +5266,7 @@ function startBattle(enemy) {
     // Общий помощник: убрать боевые/переговорные кнопки и вернуть на их место навигацию рейда —
     // используется везде, где встреча (бой или переговоры с фракцией) завершается любым способом
     function clearBattleUiAndRestoreNav() {
+        window.CombatScene?.hide();
         window.AnomalyScene?.hide();
         const container = document.getElementById('battleButtonsContainer');
         if (container) container.innerHTML = '';
@@ -5525,6 +5545,7 @@ function startBattle(enemy) {
     }
 
     function startAnomalyEncounter(anomaly) {
+        window.CombatScene?.hide();
         currentAnomaly={...anomaly,_foundNames:[],_searchPending:false};
         raidLogs.push(`☢️ Аномалия «${anomaly.name}»!`);
         renderAnomalyButtons();updateRaidLog();

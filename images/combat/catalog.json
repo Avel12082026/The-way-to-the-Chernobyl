@@ -1,0 +1,925 @@
+{
+  "species": [
+    {
+      "id": "tushkan",
+      "name": "Тушкан",
+      "tier": 0,
+      "habitat": 0,
+      "mutant": "mutants/tushkan.png",
+      "backgrounds": [
+        "backgrounds/tushkan/1.png",
+        "backgrounds/tushkan/2.png",
+        "backgrounds/tushkan/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "blind-dog",
+      "name": "Слепая собака",
+      "tier": 1,
+      "habitat": 0,
+      "mutant": "mutants/blind-dog.png",
+      "backgrounds": [
+        "backgrounds/blind-dog/1.png",
+        "backgrounds/blind-dog/2.png",
+        "backgrounds/blind-dog/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "chernobyl-dog",
+      "name": "Чернобыльский пёс",
+      "tier": 1,
+      "habitat": 0,
+      "mutant": "mutants/chernobyl-dog.png",
+      "backgrounds": [
+        "backgrounds/chernobyl-dog/1.png",
+        "backgrounds/chernobyl-dog/2.png",
+        "backgrounds/chernobyl-dog/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "krakozyabra",
+      "name": "Кракозябра",
+      "tier": 1,
+      "habitat": 0,
+      "mutant": "mutants/krakozyabra.png",
+      "backgrounds": [
+        "backgrounds/krakozyabra/1.png",
+        "backgrounds/krakozyabra/2.png",
+        "backgrounds/krakozyabra/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "flesh",
+      "name": "Плоть",
+      "tier": 3,
+      "habitat": 0,
+      "mutant": "mutants/flesh.png",
+      "backgrounds": [
+        "backgrounds/flesh/1.png",
+        "backgrounds/flesh/2.png",
+        "backgrounds/flesh/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "boar",
+      "name": "Боров",
+      "tier": 5,
+      "habitat": 1,
+      "mutant": "mutants/boar.png",
+      "backgrounds": [
+        "backgrounds/boar/1.png",
+        "backgrounds/boar/2.png",
+        "backgrounds/boar/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "isotope",
+      "name": "Изотоп",
+      "tier": 5,
+      "habitat": 1,
+      "mutant": "mutants/isotope.png",
+      "backgrounds": [
+        "backgrounds/isotope/1.png",
+        "backgrounds/isotope/2.png",
+        "backgrounds/isotope/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "hinge",
+      "name": "Шарнир",
+      "tier": 5,
+      "habitat": 1,
+      "mutant": "mutants/hinge.png",
+      "backgrounds": [
+        "backgrounds/hinge/1.png",
+        "backgrounds/hinge/2.png",
+        "backgrounds/hinge/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "zombie",
+      "name": "Зомби",
+      "tier": 7,
+      "habitat": 1,
+      "mutant": "mutants/zombie.png",
+      "backgrounds": [
+        "backgrounds/zombie/1.png",
+        "backgrounds/zombie/2.png",
+        "backgrounds/zombie/3.png"
+      ],
+      "ready": true
+    },
+    {
+      "id": "pseudodog",
+      "name": "Псевдо собака",
+      "tier": 9,
+      "habitat": 2,
+      "mutant": "mutants/pseudodog.png",
+      "backgrounds": [
+        "backgrounds/pseudodog/1.png",
+        "backgrounds/pseudodog/2.png",
+        "backgrounds/pseudodog/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "lynx",
+      "name": "Рысь",
+      "tier": 9,
+      "habitat": 2,
+      "mutant": "mutants/lynx.png",
+      "backgrounds": [
+        "backgrounds/lynx/1.png",
+        "backgrounds/lynx/2.png",
+        "backgrounds/lynx/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "chupacabra",
+      "name": "Чупакабра",
+      "tier": 9,
+      "habitat": 2,
+      "mutant": "mutants/chupacabra.png",
+      "backgrounds": [
+        "backgrounds/chupacabra/1.png",
+        "backgrounds/chupacabra/2.png",
+        "backgrounds/chupacabra/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "psydog",
+      "name": "Пси собака",
+      "tier": 11,
+      "habitat": 2,
+      "mutant": "mutants/psydog.png",
+      "backgrounds": [
+        "backgrounds/psydog/1.png",
+        "backgrounds/psydog/2.png",
+        "backgrounds/psydog/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "bayun",
+      "name": "Кот Баюн",
+      "tier": 11,
+      "habitat": 2,
+      "mutant": "mutants/bayun.png",
+      "backgrounds": [
+        "backgrounds/bayun/1.png",
+        "backgrounds/bayun/2.png",
+        "backgrounds/bayun/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "snork",
+      "name": "Снорк",
+      "tier": 13,
+      "habitat": 3,
+      "mutant": "mutants/snork.png",
+      "backgrounds": [
+        "backgrounds/snork/1.png",
+        "backgrounds/snork/2.png",
+        "backgrounds/snork/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "stregun",
+      "name": "Стрегун",
+      "tier": 13,
+      "habitat": 3,
+      "mutant": "mutants/stregun.png",
+      "backgrounds": [
+        "backgrounds/stregun/1.png",
+        "backgrounds/stregun/2.png",
+        "backgrounds/stregun/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "owl",
+      "name": "Филин",
+      "tier": 13,
+      "habitat": 3,
+      "mutant": "mutants/owl.png",
+      "backgrounds": [
+        "backgrounds/owl/1.png",
+        "backgrounds/owl/2.png",
+        "backgrounds/owl/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "bloodsucker",
+      "name": "Кровосос",
+      "tier": 15,
+      "habitat": 3,
+      "mutant": "mutants/bloodsucker.png",
+      "backgrounds": [
+        "backgrounds/bloodsucker/1.png",
+        "backgrounds/bloodsucker/2.png",
+        "backgrounds/bloodsucker/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "poltergeist",
+      "name": "Полтергейст",
+      "tier": 17,
+      "habitat": 4,
+      "mutant": "mutants/poltergeist.png",
+      "backgrounds": [
+        "backgrounds/poltergeist/1.png",
+        "backgrounds/poltergeist/2.png",
+        "backgrounds/poltergeist/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "fire-poltergeist",
+      "name": "Огненный полтергейст",
+      "tier": 19,
+      "habitat": 4,
+      "mutant": "mutants/fire-poltergeist.png",
+      "backgrounds": [
+        "backgrounds/fire-poltergeist/1.png",
+        "backgrounds/fire-poltergeist/2.png",
+        "backgrounds/fire-poltergeist/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "fracture",
+      "name": "Излом",
+      "tier": 19,
+      "habitat": 4,
+      "mutant": "mutants/fracture.png",
+      "backgrounds": [
+        "backgrounds/fracture/1.png",
+        "backgrounds/fracture/2.png",
+        "backgrounds/fracture/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "burer",
+      "name": "Бюрер",
+      "tier": 21,
+      "habitat": 5,
+      "mutant": "mutants/burer.png",
+      "backgrounds": [
+        "backgrounds/burer/1.png",
+        "backgrounds/burer/2.png",
+        "backgrounds/burer/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "moose",
+      "name": "Лось",
+      "tier": 21,
+      "habitat": 5,
+      "mutant": "mutants/moose.png",
+      "backgrounds": [
+        "backgrounds/moose/1.png",
+        "backgrounds/moose/2.png",
+        "backgrounds/moose/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "controller",
+      "name": "Контролёр",
+      "tier": 23,
+      "habitat": 5,
+      "mutant": "mutants/controller.png",
+      "backgrounds": [
+        "backgrounds/controller/1.png",
+        "backgrounds/controller/2.png",
+        "backgrounds/controller/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "stronglav",
+      "name": "Стронглав",
+      "tier": 23,
+      "habitat": 5,
+      "mutant": "mutants/stronglav.png",
+      "backgrounds": [
+        "backgrounds/stronglav/1.png",
+        "backgrounds/stronglav/2.png",
+        "backgrounds/stronglav/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "chimera",
+      "name": "Химера",
+      "tier": 25,
+      "habitat": 6,
+      "mutant": "mutants/chimera.png",
+      "backgrounds": [
+        "backgrounds/chimera/1.png",
+        "backgrounds/chimera/2.png",
+        "backgrounds/chimera/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "electrochimera",
+      "name": "Электро химера",
+      "tier": 25,
+      "habitat": 6,
+      "mutant": "mutants/electrochimera.png",
+      "backgrounds": [
+        "backgrounds/electrochimera/1.png",
+        "backgrounds/electrochimera/2.png",
+        "backgrounds/electrochimera/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "observer",
+      "name": "Наблюдатель",
+      "tier": 25,
+      "habitat": 6,
+      "mutant": "mutants/observer.png",
+      "backgrounds": [
+        "backgrounds/observer/1.png",
+        "backgrounds/observer/2.png",
+        "backgrounds/observer/3.png"
+      ],
+      "ready": false
+    },
+    {
+      "id": "pseudogiant",
+      "name": "Псевдогигант",
+      "tier": 27,
+      "habitat": 6,
+      "mutant": "mutants/pseudogiant.png",
+      "backgrounds": [
+        "backgrounds/pseudogiant/1.png",
+        "backgrounds/pseudogiant/2.png",
+        "backgrounds/pseudogiant/3.png"
+      ],
+      "ready": false
+    }
+  ],
+  "entries": [
+    {
+      "name": "Тушкан",
+      "tier": 0,
+      "species": "tushkan"
+    },
+    {
+      "name": "Слепая собака",
+      "tier": 1,
+      "species": "blind-dog"
+    },
+    {
+      "name": "Чернобыльский пёс",
+      "tier": 1,
+      "species": "chernobyl-dog"
+    },
+    {
+      "name": "Кракозябра",
+      "tier": 1,
+      "species": "krakozyabra"
+    },
+    {
+      "name": "Плоть",
+      "tier": 3,
+      "species": "flesh"
+    },
+    {
+      "name": "Боров",
+      "tier": 5,
+      "species": "boar"
+    },
+    {
+      "name": "Изотоп",
+      "tier": 5,
+      "species": "isotope"
+    },
+    {
+      "name": "Шарнир",
+      "tier": 5,
+      "species": "hinge"
+    },
+    {
+      "name": "Зомби",
+      "tier": 7,
+      "species": "zombie"
+    },
+    {
+      "name": "Псевдо собака",
+      "tier": 9,
+      "species": "pseudodog"
+    },
+    {
+      "name": "Рысь",
+      "tier": 9,
+      "species": "lynx"
+    },
+    {
+      "name": "Чупакабра",
+      "tier": 9,
+      "species": "chupacabra"
+    },
+    {
+      "name": "Пси собака",
+      "tier": 11,
+      "species": "psydog"
+    },
+    {
+      "name": "Кот Баюн",
+      "tier": 11,
+      "species": "bayun"
+    },
+    {
+      "name": "Снорк",
+      "tier": 13,
+      "species": "snork"
+    },
+    {
+      "name": "Стрегун",
+      "tier": 13,
+      "species": "stregun"
+    },
+    {
+      "name": "Филин",
+      "tier": 13,
+      "species": "owl"
+    },
+    {
+      "name": "Кровосос",
+      "tier": 15,
+      "species": "bloodsucker"
+    },
+    {
+      "name": "Полтергейст",
+      "tier": 17,
+      "species": "poltergeist"
+    },
+    {
+      "name": "Огненный полтергейст",
+      "tier": 19,
+      "species": "fire-poltergeist"
+    },
+    {
+      "name": "Излом",
+      "tier": 19,
+      "species": "fracture"
+    },
+    {
+      "name": "Бюрер",
+      "tier": 21,
+      "species": "burer"
+    },
+    {
+      "name": "Лось",
+      "tier": 21,
+      "species": "moose"
+    },
+    {
+      "name": "Контролёр",
+      "tier": 23,
+      "species": "controller"
+    },
+    {
+      "name": "Стронглав",
+      "tier": 23,
+      "species": "stronglav"
+    },
+    {
+      "name": "Химера",
+      "tier": 25,
+      "species": "chimera"
+    },
+    {
+      "name": "Электро химера",
+      "tier": 25,
+      "species": "electrochimera"
+    },
+    {
+      "name": "Наблюдатель",
+      "tier": 25,
+      "species": "observer"
+    },
+    {
+      "name": "Псевдогигант",
+      "tier": 27,
+      "species": "pseudogiant"
+    },
+    {
+      "name": "Самка слепой собаки",
+      "tier": 2,
+      "species": "blind-dog"
+    },
+    {
+      "name": "Самка чернобыльского пса",
+      "tier": 2,
+      "species": "chernobyl-dog"
+    },
+    {
+      "name": "Самка кракозябры",
+      "tier": 4,
+      "species": "krakozyabra"
+    },
+    {
+      "name": "Самка плоти",
+      "tier": 4,
+      "species": "flesh"
+    },
+    {
+      "name": "Самка борова",
+      "tier": 6,
+      "species": "boar"
+    },
+    {
+      "name": "Самка изотопа",
+      "tier": 6,
+      "species": "isotope"
+    },
+    {
+      "name": "Самка шарнира",
+      "tier": 8,
+      "species": "hinge"
+    },
+    {
+      "name": "Самка зомби",
+      "tier": 8,
+      "species": "zombie"
+    },
+    {
+      "name": "Самка псевдо собаки",
+      "tier": 10,
+      "species": "pseudodog"
+    },
+    {
+      "name": "Самка рыси",
+      "tier": 10,
+      "species": "lynx"
+    },
+    {
+      "name": "Самка чупакабры",
+      "tier": 12,
+      "species": "chupacabra"
+    },
+    {
+      "name": "Самка пси собаки",
+      "tier": 12,
+      "species": "psydog"
+    },
+    {
+      "name": "Самка кота баюна",
+      "tier": 14,
+      "species": "bayun"
+    },
+    {
+      "name": "Самка снорка",
+      "tier": 14,
+      "species": "snork"
+    },
+    {
+      "name": "Самка стрегуна",
+      "tier": 16,
+      "species": "stregun"
+    },
+    {
+      "name": "Самка филина",
+      "tier": 16,
+      "species": "owl"
+    },
+    {
+      "name": "Самка кровососа",
+      "tier": 18,
+      "species": "bloodsucker"
+    },
+    {
+      "name": "Самка полтергейста",
+      "tier": 18,
+      "species": "poltergeist"
+    },
+    {
+      "name": "Самка огненного полтергейста",
+      "tier": 20,
+      "species": "fire-poltergeist"
+    },
+    {
+      "name": "Самка излома",
+      "tier": 20,
+      "species": "fracture"
+    },
+    {
+      "name": "Самка бюрера",
+      "tier": 22,
+      "species": "burer"
+    },
+    {
+      "name": "Самка лося",
+      "tier": 22,
+      "species": "moose"
+    },
+    {
+      "name": "Самка контролёра",
+      "tier": 24,
+      "species": "controller"
+    },
+    {
+      "name": "Самка стронглава",
+      "tier": 24,
+      "species": "stronglav"
+    },
+    {
+      "name": "Самка химеры",
+      "tier": 26,
+      "species": "chimera"
+    },
+    {
+      "name": "Самка электро химеры",
+      "tier": 26,
+      "species": "electrochimera"
+    },
+    {
+      "name": "Самка наблюдателя",
+      "tier": 28,
+      "species": "observer"
+    },
+    {
+      "name": "Самка псевдогиганта",
+      "tier": 28,
+      "species": "pseudogiant"
+    }
+  ],
+  "pistols": [
+    {
+      "id": 86,
+      "name": "Beretta 21A Bobcat",
+      "image": "pistols/86.png",
+      "ready": false
+    },
+    {
+      "id": 2,
+      "name": "Пистолет ПСМ",
+      "image": "pistols/2.png",
+      "ready": true
+    },
+    {
+      "id": 87,
+      "name": "Walther PPK",
+      "image": "pistols/87.png",
+      "ready": true
+    },
+    {
+      "id": 1,
+      "name": "Пистолет Макарова",
+      "image": "pistols/1.png",
+      "ready": false
+    },
+    {
+      "id": 3,
+      "name": "Пистолет ИЖ-71",
+      "image": "pistols/3.png",
+      "ready": false
+    },
+    {
+      "id": 88,
+      "name": "Glock 25",
+      "image": "pistols/88.png",
+      "ready": false
+    },
+    {
+      "id": 5,
+      "name": "Пистолет ОЦ-33 «Пернач»",
+      "image": "pistols/5.png",
+      "ready": false
+    },
+    {
+      "id": 6,
+      "name": "Револьвер Наган",
+      "image": "pistols/6.png",
+      "ready": false
+    },
+    {
+      "id": 89,
+      "name": "Walther P99",
+      "image": "pistols/89.png",
+      "ready": false
+    },
+    {
+      "id": 90,
+      "name": "CZ 75",
+      "image": "pistols/90.png",
+      "ready": false
+    },
+    {
+      "id": 91,
+      "name": "Glock 17",
+      "image": "pistols/91.png",
+      "ready": false
+    },
+    {
+      "id": 92,
+      "name": "Beretta 92FS",
+      "image": "pistols/92.png",
+      "ready": false
+    },
+    {
+      "id": 93,
+      "name": "SIG Sauer P226",
+      "image": "pistols/93.png",
+      "ready": false
+    },
+    {
+      "id": 7,
+      "name": "Пистолет ТТ",
+      "image": "pistols/7.png",
+      "ready": false
+    },
+    {
+      "id": 94,
+      "name": "HK USP",
+      "image": "pistols/94.png",
+      "ready": false
+    },
+    {
+      "id": 95,
+      "name": "Glock 22",
+      "image": "pistols/95.png",
+      "ready": false
+    },
+    {
+      "id": 96,
+      "name": "SIG Sauer P229",
+      "image": "pistols/96.png",
+      "ready": false
+    },
+    {
+      "id": 97,
+      "name": "Glock 20",
+      "image": "pistols/97.png",
+      "ready": false
+    },
+    {
+      "id": 98,
+      "name": "Colt 1911",
+      "image": "pistols/98.png",
+      "ready": false
+    },
+    {
+      "id": 99,
+      "name": "Glock 21",
+      "image": "pistols/99.png",
+      "ready": false
+    },
+    {
+      "id": 100,
+      "name": "CZ 97B",
+      "image": "pistols/100.png",
+      "ready": false
+    },
+    {
+      "id": 101,
+      "name": "HK Mark 23",
+      "image": "pistols/101.png",
+      "ready": false
+    },
+    {
+      "id": 102,
+      "name": "Taurus Judge",
+      "image": "pistols/102.png",
+      "ready": false
+    },
+    {
+      "id": 103,
+      "name": "Smith & Wesson Model 29",
+      "image": "pistols/103.png",
+      "ready": false
+    },
+    {
+      "id": 104,
+      "name": "Taurus Raging Bull",
+      "image": "pistols/104.png",
+      "ready": false
+    },
+    {
+      "id": 105,
+      "name": "Desert Eagle Mark XIX",
+      "image": "pistols/105.png",
+      "ready": false
+    }
+  ],
+  "armorIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96
+  ],
+  "femalePolicy": "Same species image and backgrounds as the corresponding base mutant"
+}
