@@ -2,9 +2,9 @@
   "weapon": 1,
   "armor": 74,
   "fit": {
-    "x": -340,
+    "x": -245,
     "y": -385,
-    "width": 1450,
+    "width": 1250,
     "height": 1250
   },
   "frontContours": [
@@ -157,5 +157,5 @@
       ]
     ]
   ],
-  "status": "candidate-needs-contour-refinement"
+  "status": "candidate-smoothed-contours-proportional-weapon"
 }

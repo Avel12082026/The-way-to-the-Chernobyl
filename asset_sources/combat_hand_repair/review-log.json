@@ -675,15 +675,22 @@
     }
   },
   "modular74": {
-    "status": "needs-refinement",
+    "status": "candidate-not-integrated",
     "weapon": 1,
     "renderer": "tools/review_armor74_layers.cjs",
     "issues": [
-      "angular finger masks",
-      "index overlap needs close review",
-      "weapon nonuniform scaling needs review"
+      "trigger contact close review pending",
+      "flash coordinates not validated"
     ],
     "integrated": false,
-    "flashChecked": false
+    "flashChecked": false,
+    "fit": {
+      "x": -245,
+      "y": -385,
+      "width": 1250,
+      "height": 1250
+    },
+    "contours": "quadratic midpoint smoothing",
+    "uniformScale": true
   }
 }
