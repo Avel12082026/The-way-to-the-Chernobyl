@@ -2,10 +2,10 @@ const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('nod
 const catalog=require('../images/combat/catalog.json');
 const {createResolver}=require('../images/combat/assets.js');
 let now=0,id=0,frames=new Map(),listener,fail=false;
-const calls=[],host={hidden:true,setAttribute(){},replaceChildren(){}};
+const calls=[],host={hidden:true,setAttribute(){},replaceChildren(...children){this.children=children;}};
 const ctx={clearRect(){},drawImage(){},save(){},restore(){},translate(x,y){calls.push(['recoil',y]);}};
 const reduced={matches:false};
-const env={window:{COMBAT_ASSETS:catalog,CombatAssets:createResolver(catalog),matchMedia:()=>reduced,
+const env={setTimeout,clearTimeout,console,window:{COMBAT_ASSETS:catalog,CombatAssets:createResolver(catalog),matchMedia:()=>reduced,
  CombatLayout:{drawCreature(c,i,s,l){calls.push(['lunge',l]);},drawForeground(){}}},
  document:{hidden:false,getElementById:()=>host,createElement:t=>t==='canvas'?{setAttribute(){},getContext:()=>ctx}:{setAttribute(){}},addEventListener:(n,f)=>listener=f},
  performance:{now:()=>now},requestAnimationFrame:f=>{frames.set(++id,f);return id;},cancelAnimationFrame:i=>frames.delete(i),
@@ -35,6 +35,29 @@ const config={enemy:{name:catalog.entries[0].name,hp:100,battleToken:'a'},weapon
  env.document.hidden=false;listener();
  // A late image load cannot reopen a hidden or replaced battle.
  const loading=scene.show({...config,armor:2});scene.hide();await loading;assert.equal(host.hidden,true);
- fail=true;assert.equal(await scene.show({...config,armor:3}),false);assert.equal(host.hidden,true);
+ // Missing sleeve must not erase the already loaded enemy and background.
+ fail=true;assert.equal(await scene.show({...config,armor:3}),true);assert.equal(host.hidden,false);
+ fail=false;
+ for(const name of ['Самка наблюдателя','Самка псевдогиганта']) {
+  assert.equal(await scene.show({...config,weaponId:105,enemy:{name,hp:100,battleToken:'deagle-'+name}}),true);
+  assert.equal(host.hidden,false,'Desert Eagle Mark XIX must show both female mutants');
+  assert.equal(await scene.show({...config,weaponId:50,enemy:{name,hp:100,battleToken:name}}),true);
+  assert.equal(host.hidden,false,'Rifle equipment must not hide a mutant encounter');
+  scene.react(name,{success:true,enemyTurn:{damage:0}},'attack');tick(now+545);
+  assert.ok(calls.find(c=>c[0]==='lunge')[1]>30,'Mutant still attacks with unsupported foreground');
+ }
+ assert.equal(await scene.show({...config,weaponId:undefined}),true);
+ assert.equal(host.hidden,false);
+ // A failed required image still hides the scene.
+ scene.hide();fail=true;
+ const fresh={...config,enemy:{name:'Боров',hp:100,battleToken:'fresh-background'}};
+ assert.equal(await scene.show(fresh),false);assert.equal(host.hidden,false,'Failed scene must show a retry message');
+ assert.equal(host.children[2].hidden,false,'Retry must be visible after image failure');
+ fail=false;host.children[2].onclick();
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(host.hidden,false);assert.equal(host.children[0].hidden,false,'Retry restores the canvas');
+ assert.equal(host.children[2].hidden,true);
+ env.window.CombatAssets=null;
+ assert.equal(await scene.show(config),false);assert.equal(host.hidden,false,'Missing dependency must show an explanation');
  console.log('Combat animation: shot/attack order, misses, consumables, victory, reduced motion, visibility and loading cancellation passed');
 })().catch(e=>{console.error(e);process.exitCode=1});

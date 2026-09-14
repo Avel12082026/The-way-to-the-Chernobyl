@@ -1,4 +1,7 @@
-#combatScene {position:relative;overflow:hidden;border:1px solid #756644;border-radius:8px;background:#141711;margin:12px 0;}
+#combatScene {position:relative;flex:0 0 auto;min-width:0;overflow:hidden;border:1px solid #756644;border-radius:8px;background:#141711;margin:12px 0;}
 #combatScene[hidden] {display:none;}
 #combatScene canvas {display:block;width:100%;height:auto;aspect-ratio:3/2;}
+#combatScene canvas[hidden] {display:none;}
 #combatScene .combat-caption {padding:8px 12px;color:#ded6b8;background:#171910;font-size:14px;}
+#combatScene .combat-retry {margin:0 12px 12px;}
+#combatScene .combat-retry[hidden] {display:none;}

@@ -797,11 +797,11 @@ button:active {filter:brightness(1.18);}
 #characterPortraitStatus[hidden], #characterPortraitStatus button[hidden] { display:none!important; }
 #characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
 </style>
-<link rel="stylesheet" href="images/combat/scene.css?v=1">
+<link rel="stylesheet" href="images/combat/scene.css?v=2">
 <script src="images/combat/catalog.js?v=4"></script>
 <script src="images/combat/assets.js?v=1"></script>
 <script src="images/combat/layout.js?v=4"></script>
-<script src="images/combat/scene.js?v=4"></script>
+<script src="images/combat/scene.js?v=6"></script>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
 <script src="images/anomaly/detector-layout.js?v=1"></script>
@@ -5060,8 +5060,15 @@ function startBattle(enemy) {
         window.AnomalyScene?.hide();
         const armorFile = ARMOR_CHAR_IMAGES[parseGearName(player.armor?.name || '').baseName] || '';
         const armor = Number((armorFile.match(/armor_char_(\d+)/) || [])[1]) || 1;
-        const weapon = weapons.find(w => w.name === parseGearName(player.weapon?.name || '').baseName);
-        window.CombatScene?.show({enemy:currentEnemy, armor, weaponId:weapon?.id, pending:battleTurn !== 0});
+        const weaponName = parseGearName(player.weapon?.name || '').baseName;
+        const weapon = weapons.find(w => w.name === weaponName) || weapons.find(w => w.id === Number(player.weapon?.id));
+        if (!window.CombatScene) {
+            const host = document.getElementById('combatScene');
+            host.hidden = false;
+            host.textContent = 'Не удалось загрузить интерфейс боя. Перезапусти игру.';
+            return;
+        }
+        window.CombatScene.show({enemy:currentEnemy, armor, weaponId:weapon?.id, pending:battleTurn !== 0});
     }
     function renderBattleButtons() {
         updateCombatScene();
