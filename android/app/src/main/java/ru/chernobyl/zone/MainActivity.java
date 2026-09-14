@@ -11,6 +11,36 @@ import java.util.Collections;
 
 public final class MainActivity extends Activity {
     private WebView web;
+    public final class DeviceSession {
+        private javax.crypto.SecretKey key() throws Exception {
+            java.security.KeyStore store=java.security.KeyStore.getInstance("AndroidKeyStore");store.load(null);
+            if(!store.containsAlias("zone-login")) {
+                javax.crypto.KeyGenerator generator=javax.crypto.KeyGenerator.getInstance("AES","AndroidKeyStore");
+                generator.init(new android.security.keystore.KeyGenParameterSpec.Builder("zone-login",3)
+                    .setBlockModes("GCM").setEncryptionPaddings("NoPadding").build());generator.generateKey();
+            }
+            return (javax.crypto.SecretKey)store.getKey("zone-login",null);
+        }
+        @JavascriptInterface public synchronized boolean save(String value) {
+            try {
+                javax.crypto.Cipher cipher=javax.crypto.Cipher.getInstance("AES/GCM/NoPadding");cipher.init(javax.crypto.Cipher.ENCRYPT_MODE,key());
+                String iv=android.util.Base64.encodeToString(cipher.getIV(),2);
+                String encrypted=android.util.Base64.encodeToString(cipher.doFinal(value.getBytes(java.nio.charset.StandardCharsets.UTF_8)),2);
+                return getSharedPreferences("private-login",MODE_PRIVATE).edit().putString("value",iv+":"+encrypted).commit();
+            }catch(Exception e){return false;}
+        }
+        @JavascriptInterface public synchronized String read() {
+            try {
+                String value=getSharedPreferences("private-login",MODE_PRIVATE).getString("value","");if(value.isEmpty())return "";
+                String[] parts=value.split(":");javax.crypto.Cipher cipher=javax.crypto.Cipher.getInstance("AES/GCM/NoPadding");
+                cipher.init(javax.crypto.Cipher.DECRYPT_MODE,key(),new javax.crypto.spec.GCMParameterSpec(128,android.util.Base64.decode(parts[0],2)));
+                return new String(cipher.doFinal(android.util.Base64.decode(parts[1],2)),java.nio.charset.StandardCharsets.UTF_8);
+            }catch(Exception e){clear();return "";}
+        }
+        @JavascriptInterface public synchronized void clear(){getSharedPreferences("private-login",MODE_PRIVATE).edit().clear().commit();}
+        @JavascriptInterface public void exit(){runOnUiThread(()->finishAndRemoveTask());}
+    }
+
     private static final String LOCAL="appassets.androidplatform.net";
     private static final String SERVER="213-176-92-184.sslip.io";
     private static WebResourceResponse blocked() {
@@ -54,6 +84,7 @@ public final class MainActivity extends Activity {
                 return !"https".equals(uri.getScheme())||!LOCAL.equals(uri.getHost())||!uri.getPath().startsWith("/assets/");
             }
         });
+        web.addJavascriptInterface(new DeviceSession(),"DeviceSession");
         web.setWebChromeClient(new WebChromeClient());
         web.loadUrl("https://"+LOCAL+"/assets/index.html");
     }

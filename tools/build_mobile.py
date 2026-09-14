@@ -38,7 +38,15 @@ def transform(html):
     part=html[start:end].replace('.then(res => res.json())',".then(res => {if(!res.ok)throw new Error('Не удалось загрузить профиль');return res.json();})")
     part=part.replace("document.getElementById('app').style.display = 'block';\n            });", "document.getElementById('app').style.display = 'none';\n                location.replace('index.html');\n            });")
     html=html[:start]+part+html[end:]
-    html=html.replace('</body>','<button style="position:fixed;right:8px;top:8px;z-index:9999;width:auto;padding:6px" onclick="GameSession.logout()">Выйти</button></body>')
+    html=html.replace('</body>','''<script>
+const mobileMenu=document.getElementById('mainMenu');
+if(mobileMenu){
+const controls=document.createElement('div');controls.style.cssText='display:grid;gap:10px;padding:16px';
+const exit=document.createElement('button');exit.textContent='Выход из игры';exit.onclick=()=>GameSession.exit();
+const logout=document.createElement('button');logout.textContent='Выйти из аккаунта';logout.onclick=()=>{if(confirm('Выйти из аккаунта и удалить сохранённый вход?'))GameSession.logout();};
+controls.append(exit,logout);mobileMenu.append(controls);
+}
+</script></body>''')
     return html
 
 def build(download=False):
@@ -69,6 +77,7 @@ def build(download=False):
             (OUT/relative).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(CACHE/relative,OUT/relative)
     for file in (ROOT/'mobile/web').iterdir():shutil.copy2(file,OUT/file.name)
     (OUT/'game.html').write_text(transform(html))
+    shutil.copy2(ROOT/'android/app/src/main/res/drawable-nodpi/game_logo.png',OUT/'game-logo.png')
     entries=[]
     for p in sorted(OUT.rglob('*')):
         if p.is_file():entries.append({'path':p.relative_to(OUT).as_posix(),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})

@@ -2,7 +2,8 @@
 'use strict';
 const server='https://213-176-92-184.sslip.io';
 const key='zone-mobile-session';
-let saved;
+let saved,credentials;
+try {credentials=JSON.parse(window.DeviceSession?.read()||'null');}catch(_){}
 try {saved=JSON.parse(sessionStorage.getItem(key)||'null');}catch(_){saved=null;}
 if(saved?.expiresAt<=Date.now())saved=null;
 const nativeFetch=window.fetch.bind(window);
@@ -15,7 +16,7 @@ async function api(path,body){
   return data;
  }finally{clearTimeout(timer);}
 }
-function forget(){saved=null;sessionStorage.removeItem(key);sessionStorage.removeItem('zone-mobile-purchase');}
+function forget(){saved=null;credentials=null;window.DeviceSession?.clear();sessionStorage.removeItem(key);sessionStorage.removeItem('zone-mobile-purchase');}
 window.fetch=async function(input,init={}){
  const url=new URL(typeof input==='string'||input instanceof URL?String(input):input.url,location.href);
  if(url.origin!==server || !url.pathname.startsWith('/api/'))return nativeFetch(input,init);
@@ -23,12 +24,19 @@ window.fetch=async function(input,init={}){
  new Headers(init.headers).forEach((value,name)=>headers.set(name,value));
  if(saved)headers.set('Authorization','Bearer '+saved.token);
  const response=await nativeFetch(input,{...init,headers});
- if(response.status===401){forget();location.replace('index.html');}
+ if(response.status===401){saved=null;sessionStorage.removeItem(key);location.replace('index.html');}
  return response;
 };
 window.GameSession={
  get user(){return saved?.user;},
- async authenticate(mode,login,password){const data=await api('/api/mobile/'+mode,{login,password});saved=data;sessionStorage.setItem(key,JSON.stringify(data));location.replace('game.html');},
+ exit(){window.DeviceSession?.exit();},
+ async resume(){
+  if(saved){location.replace('game.html');return true;}
+  if(!credentials)return false;
+  try {await this.authenticate('login',credentials.login,credentials.password);return true;}
+  catch(error){if(error.status===401||error.status===403){forget();}throw error;}
+ },
+ async authenticate(mode,login,password){const data=await api('/api/mobile/'+mode,{login,password});saved=data;credentials={login,password};if(window.DeviceSession&&!window.DeviceSession.save(JSON.stringify(credentials))){throw new Error('Не удалось сохранить вход на устройстве. Повтори попытку.');}sessionStorage.setItem(key,JSON.stringify(data));location.replace('game.html');},
  async logout(){try{await api('/api/mobile/logout',{});}finally{forget();location.replace('index.html');}},
  ensure(){if(!saved){location.replace('index.html');return false;}return true;},
  async renderShop(){
