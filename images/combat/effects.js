@@ -1,8 +1,28 @@
 (function(root){
 'use strict';
-// Muzzle coordinates are in the 1536×1024 battle canvas. Only reviewed sprites
-// are enabled: unsupported weapons must never flash at an invented position.
-const muzzles={1:{x:1105,y:683,angle:-2.65}};
+// Reviewed barrel tips in original sprite pixels, before canvas placement.
+// These are visual anchors, not inferred from alpha bounds or weapon attachments.
+const sourceMuzzles={
+ 1:[554,507,-2.65],2:[141,150,-2.85],3:[566,500,-2.65],
+ 5:[526,455,-2.70],6:[463,375,-2.72],7:[568,506,-2.65],
+ 86:[568,482,-2.65],87:[213,200,-2.82,1322,1190],
+ 88:[568,520,-2.68],89:[562,525,-2.72],90:[574,500,-2.65],
+ 91:[562,530,-2.72],92:[568,505,-2.65],93:[542,488,-2.75],
+ 94:[530,392,-2.65],95:[555,505,-2.65],96:[560,488,-2.72],
+ 97:[530,464,-2.65],98:[507,375,-2.65],99:[536,487,-2.72],
+ 100:[536,440,-2.65],101:[280,250,-2.80],102:[400,330,-2.78],
+ 103:[334,265,-2.68],104:[415,382,-2.72],105:[418,376,-2.68]
+};
+function getMuzzle(weaponId,layout=root.CombatLayout?.layout){
+ if(!layout&&typeof require==='function')layout=require('./layout.js').layout;
+ const point=sourceMuzzles[weaponId],fit=layout?.pistols[weaponId];
+ if(!point||!fit)return null;
+ const [x,y,angle,width=1254,height=1254]=point;
+ const sx=fit.width/width,sy=fit.height/height;
+ return {x:fit.x+x*sx,y:fit.y+y*sy,angle:Math.atan2(Math.sin(angle)*sy,Math.cos(angle)*sx)};
+}
+const muzzles={};
+for(const id of Object.keys(sourceMuzzles))Object.defineProperty(muzzles,id,{enumerable:true,get:()=>getMuzzle(id)});
 function effectKind(reaction,elapsed,weapon){
  if(!reaction?.shot||elapsed<0||!weapon)return null;
  if(weapon.suppressed===true)return elapsed<650?'smoke':null;
@@ -39,5 +59,5 @@ function drawFlash(ctx,reaction,elapsed,weaponId){
  ctx.fillStyle='#ffdc78';ctx.beginPath();ctx.moveTo(-9,-6);ctx.lineTo(28,-14);ctx.lineTo(20,-30);ctx.lineTo(55,-12);ctx.lineTo(94,0);ctx.lineTo(51,10);ctx.lineTo(25,28);ctx.lineTo(28,11);ctx.lineTo(-9,6);ctx.closePath();ctx.fill();
  ctx.fillStyle='#fffce9';ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(44,0);ctx.lineTo(-5,4);ctx.closePath();ctx.fill();ctx.restore();return true;
 }
-const api={drawFlash,drawSmoke,drawShot,effectKind,shouldFlash,muzzles};root.CombatEffects=api;if(typeof module!=='undefined')module.exports=api;
+const api={drawFlash,drawSmoke,drawShot,effectKind,shouldFlash,muzzles,getMuzzle,sourceMuzzles};root.CombatEffects=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

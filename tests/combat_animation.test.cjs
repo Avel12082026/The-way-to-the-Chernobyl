@@ -3,10 +3,10 @@ const catalog=require('../images/combat/catalog.json');
 const {createResolver}=require('../images/combat/assets.js');
 let now=0,id=0,frames=new Map(),listener,fail=false;
 const calls=[],host={hidden:true,setAttribute(){},replaceChildren(...children){this.children=children;}};
-const ctx={clearRect(){},drawImage(){},save(){},restore(){},translate(x,y){calls.push(['recoil',y]);}};
+const ctx={clearRect(){},drawImage(){},save(){calls.push(['save']);},restore(){calls.push(['restore']);},translate(x,y){calls.push(['recoil',y]);}};
 const reduced={matches:false};
 const env={setTimeout,clearTimeout,console,window:{COMBAT_ASSETS:catalog,CombatAssets:createResolver(catalog),matchMedia:()=>reduced,
- CombatLayout:{drawCreature(c,i,s,l){calls.push(['lunge',l]);},drawForeground(){}}},
+ CombatLayout:{drawCreature(c,i,s,l){calls.push(['lunge',l]);},drawForeground(){calls.push(['foreground']);return true;}},CombatEffects:{drawShot(){calls.push(['effect']);}}},
  document:{hidden:false,getElementById:()=>host,createElement:t=>t==='canvas'?{setAttribute(){},getContext:()=>ctx}:{setAttribute(){}},addEventListener:(n,f)=>listener=f},
  performance:{now:()=>now},requestAnimationFrame:f=>{frames.set(++id,f);return id;},cancelAnimationFrame:i=>frames.delete(i),
  Image:class{set src(v){queueMicrotask(()=>fail?this.onerror():this.onload());}}};
@@ -19,6 +19,9 @@ const config={enemy:{name:catalog.entries[0].name,hp:100,battleToken:'a'},weapon
  scene.react('wrong',{success:true,enemyTurn:{}},'attack');assert.equal(frames.size,0);
  scene.react('a',{success:false,enemyTurn:{}},'attack');assert.equal(frames.size,0);
  scene.react('a',{success:true,enemyHp:80,enemyTurn:{damage:5}},'attack');
+ tick(40);
+ const foregroundIndex=calls.findIndex(c=>c[0]==='foreground'),effectIndex=calls.findIndex(c=>c[0]==='effect'),restoreIndex=calls.findIndex(c=>c[0]==='restore');
+ assert.ok(foregroundIndex>=0&&effectIndex>foregroundIndex&&restoreIndex>effectIndex,'Effect must share foreground recoil transform');
  tick(110);assert.ok(calls.some(c=>c[0]==='recoil'&&c[1]>0));assert.equal(calls.find(c=>c[0]==='lunge')[1],0);
  tick(545);assert.ok(calls.find(c=>c[0]==='lunge')[1]>30);
  tick(900);assert.equal(frames.size,0);assert.equal(calls.find(c=>c[0]==='lunge')[1],0);
@@ -37,6 +40,8 @@ const config={enemy:{name:catalog.entries[0].name,hp:100,battleToken:'a'},weapon
  const loading=scene.show({...config,armor:2});scene.hide();await loading;assert.equal(host.hidden,true);
  // Missing sleeve must not erase the already loaded enemy and background.
  fail=true;assert.equal(await scene.show({...config,armor:3}),true);assert.equal(host.hidden,false);
+ scene.react('a',{success:true},'attack');tick(now+40);
+ assert.equal(calls.some(c=>c[0]==='effect'),false,'No flash when foreground failed to load');
  fail=false;
  for(const name of ['Самка наблюдателя','Самка псевдогиганта']) {
   assert.equal(await scene.show({...config,weaponId:105,enemy:{name,hp:100,battleToken:'deagle-'+name}}),true);
