@@ -9,6 +9,16 @@ function init(){
  const button=document.createElement('button');button.id='menuMusicButton';button.type='button';button.textContent='♫';button.setAttribute('aria-label','Настройки музыки');button.title='Фоновая музыка';
  const panel=document.createElement('dialog');panel.id='menuMusicPanel';panel.setAttribute('aria-labelledby','menuMusicTitle');panel.innerHTML='<h3 id="menuMusicTitle">Фоновая музыка</h3><p id="musicTrackTitle">MoozE — Radwind Pt.2</p><button type="button" id="musicNext">Следующий трек</button><label><input id="menuMusicEnabled" type="checkbox"> Включить музыку</label><label for="menuMusicVolume">Громкость <output id="menuMusicValue"></output></label><input id="menuMusicVolume" type="range" min="0" max="100" step="1"><p id="menuMusicStatus" role="status"></p><button type="button" id="menuMusicClose">Закрыть</button>';
  document.body.append(button,panel);
+ if(window.CombatAudio){
+  const soundSettings=window.CombatAudio.getSettings(),group=document.createElement('div');
+  group.innerHTML='<h3>Звуки боя</h3><label><input type="checkbox" id="combatSoundEnabled"> Включить звуки боя</label><label for="combatSoundVolume">Громкость выстрелов <output id="combatSoundValue"></output></label><input id="combatSoundVolume" type="range" min="0" max="100" step="1">';
+  panel.insertBefore(group,panel.querySelector('#menuMusicClose'));
+  const toggle=group.querySelector('#combatSoundEnabled'),slider=group.querySelector('#combatSoundVolume'),readout=group.querySelector('output');
+  toggle.checked=soundSettings.enabled;slider.value=Math.round(soundSettings.volume*100);readout.value=slider.value+'%';
+  toggle.onchange=()=>window.CombatAudio.setSettings({enabled:toggle.checked});
+  slider.oninput=()=>{readout.value=slider.value+'%';window.CombatAudio.setSettings({volume:Number(slider.value)/100});};
+ }
+
  const enabled=panel.querySelector('#menuMusicEnabled'),volume=panel.querySelector('#menuMusicVolume'),value=panel.querySelector('output'),status=panel.querySelector('#menuMusicStatus');enabled.checked=settings.enabled;volume.value=Math.round(settings.volume*100);value.value=volume.value+'%';
  function wanted(){return settings.enabled&&settings.volume>0&&!document.hidden}
  function save(){try{localStorage.setItem('zone.menuMusic',JSON.stringify(settings))}catch{}}
