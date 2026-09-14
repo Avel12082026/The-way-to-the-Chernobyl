@@ -61,3 +61,11 @@ Implementation references: [Android local content](https://developer.android.com
 - Live server has not been modified. Source-hash guard must match before installation.
 
 Local build used the SDK's aapt2 via `-Pandroid.aapt2FromMavenOverride=/path/to/sdk/build-tools/35.0.0/aapt2` when the Maven copy was unavailable; this is a build-environment option, not a change to the app's runtime network or TLS policy.
+
+## Current-server update (2026-09-14)
+
+The user supplied `/var/www/pocketzone/server.js`, SHA-256 `975ce098ce2853f2520be1a65c1806a7e7b06822ac437ea2ea8b096476f18068`. The source guard now targets this file. Its newer targeted artifact-slot replacement fix is preserved. All eight equipment, artifact-slot, quickslot and warehouse route blocks remain byte-identical; the APK's drag-and-drop client also remains byte-identical to the current repository client. Preserve dragging all compatible items to their slots, plus transfers to and from storage.
+
+`tools/package_mobile_deploy.py REVIEWED_SERVER OUTPUT_PY` produces a standalone installer containing only the patch and new module, never the full server source. The installer is scoped to `/var/www/pocketzone/server.js`, verifies exactly one online PM2 process actually owns port 3000, finds `game.db` from that process's working directory, makes a consistent SQLite backup including WAL, syntax-checks both files, and restarts only that process. Unknown process managers or source changes cause a stop before live changes. Failed post-restart health checks restore the old code and attempt to restart it; they never automatically roll back the player database.
+
+Validation on the uploaded version: five server tests including actual `requireAuth` middleware, five deployment tests including WAL backup and code rollback, and syntax checks pass. The user still needs to execute the installer; no live deployment has occurred.

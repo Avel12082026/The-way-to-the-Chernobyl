@@ -50,3 +50,18 @@ test('rate limit and banned accounts cannot authenticate',async()=>{
  for(let i=0;i<12;i++)await request('/api/mobile/login',{login:'bad'},undefined,'POST','same-ip');
  assert.equal((await request('/api/mobile/login',body,undefined,'POST','same-ip')).code,429);db.close();
 });
+test('actual uploaded server middleware accepts only the session owner', {skip:!process.env.MOBILE_SERVER_SOURCE}, async()=>{
+ const fs=require('node:fs'),vm=require('node:vm');const {db,request,tokenAuth}=setup();
+ const source=fs.readFileSync(process.env.MOBILE_SERVER_SOURCE,'utf8');
+ const start=source.indexOf('function requireAuth(req, res, next) {'),end=source.indexOf('// ===== ЗАЩИТА ОТ СПАМА',start);
+ assert.ok(start>=0&&end>start);
+ const middleware=source.slice(start,end).replace('const user = checkTelegramAuth(req.body.initData);','const user = req.headers.authorization ? mobileAuth.resolve(req) : checkTelegramAuth(req.body.initData);');
+ const context={db,mobileAuth:tokenAuth,checkTelegramAuth:()=>({id:'other-telegram-player'}),safeParsePlayerData:JSON.parse,console};
+ vm.createContext(context);vm.runInContext(middleware,context);
+ const result=await request('/api/mobile/register',{login:'middleware',password:'a-long-enough-password'});
+ const req={headers:{authorization:'Bearer '+result.body.token},body:{initData:'other-account',playerId:'other-telegram-player'}};
+ let next=0;const res={status(code){this.code=code;return this;},json(body){this.body=body;}};
+ context.requireAuth(req,res,()=>next++);assert.equal(next,1);assert.equal(req.telegramUser.id,result.body.user.id);
+ req.headers.authorization='Bearer '+'0'.repeat(64);context.requireAuth(req,res,()=>next++);assert.equal(next,1);assert.equal(res.code,401);
+ db.close();
+});

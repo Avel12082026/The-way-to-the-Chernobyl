@@ -1,5 +1,5 @@
 {
-  "source_sha256": "2035e77deff0cfe80475daa0f8cd4f331887d23322afa18504b2c4d13b53b320",
+  "source_sha256": "975ce098ce2853f2520be1a65c1806a7e7b06822ac437ea2ea8b096476f18068",
   "replacements": [
     {
       "old": "    const user = checkTelegramAuth(req.body.initData);",

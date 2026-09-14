@@ -18,6 +18,7 @@ module.exports = function installMobile({app,db,checkTelegramAuth,createFreshPla
     CREATE TABLE IF NOT EXISTS mobile_purchases (
     player_id TEXT NOT NULL, request_id TEXT NOT NULL, package_id TEXT NOT NULL,
     created_at INTEGER NOT NULL, PRIMARY KEY(player_id,request_id));`);
+  app.get('/api/mobile/status',(_req,res)=>res.json({success:true,version:1}));
   const buckets = new Map();
   let activeHashes=0;
   function limit(req,res,next) {
