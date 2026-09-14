@@ -1,0 +1,1966 @@
+{
+  "status": "restored_work_in_progress_not_release",
+  "source_archive": "CHERNOBYL-HAND-WIP.zip",
+  "weapons": {
+    "1": {
+      "path": "work/combat-hand/weapons/1.png",
+      "sha256": "db0ec765151f7dfa6b0b279072807e3a3ed8679ff8eb2b0d3e8dad72cdcedfee",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "100": {
+      "path": "work/combat-hand/weapons/100.png",
+      "sha256": "7bfe18c4c476c41dd2e49cea5b0322498357c9ed5fa3760188164429c4d130a6",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "101": {
+      "path": "work/combat-hand/weapons/101.png",
+      "sha256": "0b4c263da80034536852fe69fba0b10dccc9655b138b31726066b43f413ce696",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "102": {
+      "path": "work/combat-hand/weapons/102.png",
+      "sha256": "d0ea8d31c54a47ead290195c300a9cfa12ec9c9e17bf0b96ea1ad1b5cefb274d",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "103": {
+      "path": "work/combat-hand/weapons/103.png",
+      "sha256": "317cd61889c1cc407e19c999a46deb0a8c25d7b335ad8582b396d0d1b5b6c74d",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "104": {
+      "path": "work/combat-hand/weapons/104.png",
+      "sha256": "8ff3e743a742663166e7a38ed50d1d24930db8bf5b3bf193d65137c4a0a7096c",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "105": {
+      "path": "work/combat-hand/weapons/105.png",
+      "sha256": "e97820fef8073f48afe9bfd1eb1506471362b9bc955fd5820b65a3c1243b6a49",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "2": {
+      "path": "work/combat-hand/weapons/2.png",
+      "sha256": "c0a7c653583f75523fc09e261bb5f07bfb6e73de18b1a2558d5db1b915b1fc80",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "3": {
+      "path": "work/combat-hand/weapons/3.png",
+      "sha256": "abf009eb4323970f9d59e7e6b79fa14ebfc335ac272b136ac7fbdd3c64bd44ff",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "5": {
+      "path": "work/combat-hand/weapons/5.png",
+      "sha256": "be49fb31f1e7ead41a748ccea887bb9aeda25fdcb1169e89c7f81585ed6c0679",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "6": {
+      "path": "work/combat-hand/weapons/6.png",
+      "sha256": "30aac31451a241d0cc9490112be18b9e32ca57de1e04faa435d34f5ee333e0d4",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "7": {
+      "path": "work/combat-hand/weapons/7.png",
+      "sha256": "b5a6cc6cca6880ff51dbe57469ba131311dd7f8265dd9365ec79739f81dc2dd0",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "86": {
+      "path": "work/combat-hand/weapons/86.png",
+      "sha256": "71a4554b0fd49d7801db2be3904ffa629fe27324d6adaf2439313dceac687019",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "87": {
+      "path": "work/combat-hand/weapons/87.png",
+      "sha256": "7c6a209cead9bbb4c20e4bf8ffb7dd42e32374fe28ed3d50fb3ece331adcce6d",
+      "size": [
+        1322,
+        1190
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "88": {
+      "path": "work/combat-hand/weapons/88.png",
+      "sha256": "75f9c2a6871bccca73bd75bedb9fc9405633444ce2af95814399dfa839197678",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "89": {
+      "path": "work/combat-hand/weapons/89.png",
+      "sha256": "caa085b5505bdd97683ea8d6a288106fcd73fa3cebaeb4d602a5b4a2c6f22461",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "90": {
+      "path": "work/combat-hand/weapons/90.png",
+      "sha256": "4e205264859237f74c3dac197804e1046c40adde63b8b959b783066ef369344d",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "91": {
+      "path": "work/combat-hand/weapons/91.png",
+      "sha256": "15266216629370a6895802c52aabdfa0b2bd50cda221b082751890322f3ed450",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "92": {
+      "path": "work/combat-hand/weapons/92.png",
+      "sha256": "334976c6651cf4bcab551e783f2f3af782649b4e9372cbfce8006987d359c126",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "93": {
+      "path": "work/combat-hand/weapons/93.png",
+      "sha256": "433ae6078b3bef114a717b9cf1df28af15ebf7dcee52f571905343230452d4c9",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "94": {
+      "path": "work/combat-hand/weapons/94.png",
+      "sha256": "b3928b67193e9d397f4ffcad054fe79fbc140337599f9eb4d07a896e5778ca3c",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "95": {
+      "path": "work/combat-hand/weapons/95.png",
+      "sha256": "a04ace27ee40527a54e08e1044e4ec2f295da705bfab095f1e6254590a1b1b94",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "96": {
+      "path": "work/combat-hand/weapons/96.png",
+      "sha256": "0985fa2316956b199cc9479bee62762f4838bbe5cd59ac9ceedfc232b9facb22",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "97": {
+      "path": "work/combat-hand/weapons/97.png",
+      "sha256": "8e350906bd622caf28a06245fcab5b55cc2c18ae0ad4550a7b98e2428aefe52b",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "98": {
+      "path": "work/combat-hand/weapons/98.png",
+      "sha256": "8338bcf15104402f1c00b0b7c40f6c7e852b03aaba5ab470c0c9d3e03de44b21",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "99": {
+      "path": "work/combat-hand/weapons/99.png",
+      "sha256": "05e13eb6d757f2d704933084875e0e72ced66a72997925b2e08ca01c8e476543",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  },
+  "hands": {
+    "1": {
+      "path": "work/combat-hand/hands/1.png",
+      "sha256": "da7120baa5f4ed96a979b2e80ef4b4b4f476bbdfb85bd30ac96d1fcb22dd29d9",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "10": {
+      "path": "work/combat-hand/hands/10.png",
+      "sha256": "851676a17c2944fba90c341412b0db375ed2509c0e6d4138430438c6209f519b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "11": {
+      "path": "work/combat-hand/hands/11.png",
+      "sha256": "a70a8f866cb106989f4c67d1e10ec59f447a57e27442a09247fa782c5b80d801",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "12": {
+      "path": "work/combat-hand/hands/12.png",
+      "sha256": "232c3902b09f861c4e95f43bd48bb97a75e96f2bd183d593d7b92d850e57a8d8",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "13": {
+      "path": "work/combat-hand/hands/13.png",
+      "sha256": "f9fd13d71313550b0012544f22e2a91f6b7f1c689b4078a625055d5e288d8c1b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "14": {
+      "path": "work/combat-hand/hands/14.png",
+      "sha256": "41c7f29f3eb0446280b5a6c0b091b02fd9b56039786ccd8818e64f36182a4618",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "15": {
+      "path": "work/combat-hand/hands/15.png",
+      "sha256": "1f363b6306fd7bbb6b3d832cdafd78d889976d65caa39d92fdf26a2e50db6b72",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "16": {
+      "path": "work/combat-hand/hands/16.png",
+      "sha256": "f611e9b6c97baa094dda8ce41dc699a5bb558147ef6675ab76e631ad83feeee3",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "17": {
+      "path": "work/combat-hand/hands/17.png",
+      "sha256": "60896d157f703852dffc346e27283ae3f87060cd896538ec69928a961dba0675",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "18": {
+      "path": "work/combat-hand/hands/18.png",
+      "sha256": "46da335a27ceb8e8eeb200ed33c1179adac675964217f2049deefaa337ef8ef5",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "19": {
+      "path": "work/combat-hand/hands/19.png",
+      "sha256": "87be7c6f082d8cbe98dbb5071e7c5f178409f8bd9a663ed36d8d7a384545b27b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "2": {
+      "path": "work/combat-hand/hands/2.png",
+      "sha256": "657644f8e646d042daf446583c7f3fd65c1a0fe7bea3301f6e470a40ca3a6aad",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "20": {
+      "path": "work/combat-hand/hands/20.png",
+      "sha256": "5dc2d8c3ad01d500115e7ca10918db43bda6d37d5281d12f9b342f7ee856fbd6",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "21": {
+      "path": "work/combat-hand/hands/21.png",
+      "sha256": "7154b2bee2ea67c945cc7ca14109a88404f857e8e699fbbf0fe89f67e72b066e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "22": {
+      "path": "work/combat-hand/hands/22.png",
+      "sha256": "65faab3f040858a179264766606fb60bca5ae9afd65127da125a3c1fce78812b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "23": {
+      "path": "work/combat-hand/hands/23.png",
+      "sha256": "28dda4ad351217135eb3e95c7ce556716a3507e81cc5faa553ce934c0056f691",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "24": {
+      "path": "work/combat-hand/hands/24.png",
+      "sha256": "dbdd7adadad47e4e84ede6afa2cc411c40026ca6c13924902d8d639fab1bf867",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "25": {
+      "path": "work/combat-hand/hands/25.png",
+      "sha256": "d00b1cb31339fdb82154413cfd707d6a921a38b36831a753a0ccb6ebb691d8eb",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "26": {
+      "path": "work/combat-hand/hands/26.png",
+      "sha256": "adffc6517e7a77ea1fcf47081be6bfc79b6af131498877f8b36c5adcea868b90",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "27": {
+      "path": "work/combat-hand/hands/27.png",
+      "sha256": "0d10db35f81e0878eee97a9c42f20859b44a9a2a7a0491e6291189765b29af70",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "28": {
+      "path": "work/combat-hand/hands/28.png",
+      "sha256": "c67120fe9cd1051aa3b74f7d53cc1201589795080a80a0c3bfbe34a68b9fa6bd",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "29": {
+      "path": "work/combat-hand/hands/29.png",
+      "sha256": "075235629379d3cc9b369c6bb28afaa0ed8b71a05c459545e99005738c125853",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "3": {
+      "path": "work/combat-hand/hands/3.png",
+      "sha256": "059e83d10d7ada2ff59c66191d7af475a832cd2a0e7ddfcd082fb51ad96d9052",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "30": {
+      "path": "work/combat-hand/hands/30.png",
+      "sha256": "c4b9ec30c04a4c73db72f1bd139705204aa1070996326a800304da4588733520",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "31": {
+      "path": "work/combat-hand/hands/31.png",
+      "sha256": "60ea33cce1214c92aad7c8c09ae06e06cb3a86d4c294d54f40b8732d9dd32999",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "32": {
+      "path": "work/combat-hand/hands/32.png",
+      "sha256": "4cb79c80e7be30f146231fd5250a0f170fcd9d8a2b0190222520a63849f39a2a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "33": {
+      "path": "work/combat-hand/hands/33.png",
+      "sha256": "b0ed3a54318c92b7dfe0dae00c3068b6ad0c2dfa3285a2589af30ca64961556d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "34": {
+      "path": "work/combat-hand/hands/34.png",
+      "sha256": "c4d5ac417668aa8ce689c793d06752d59dd613ac4b86089249555e5051d2040a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "35": {
+      "path": "work/combat-hand/hands/35.png",
+      "sha256": "f1f4e1e8d37285b22c93eb1d8dcf7a457c0b7c2d672b504e59e8d472de622e33",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "36": {
+      "path": "work/combat-hand/hands/36.png",
+      "sha256": "a4b06d4df2c86c97c1123aebff76dc32cc1c1c64eeeb45649fc82b4dd9b14d9f",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "37": {
+      "path": "work/combat-hand/hands/37.png",
+      "sha256": "32f11a84bc421d3c64c181f433563088e649f139b222ac95b6cd448820979220",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "38": {
+      "path": "work/combat-hand/hands/38.png",
+      "sha256": "69c93b088e7c81901fd9c49d592f6d013167d19bb2143dfd7c5b73dd2199d5bb",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "39": {
+      "path": "work/combat-hand/hands/39.png",
+      "sha256": "e13b04a122311f35f6f383788ce1e63d645e4accc0e08077de41fc395dc9656a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "4": {
+      "path": "work/combat-hand/hands/4.png",
+      "sha256": "20a8736e476076d7cbf5e479582fcd40daf587097393cf1aa86ed666032a3e74",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "40": {
+      "path": "work/combat-hand/hands/40.png",
+      "sha256": "b6bff12cff7fcf6f023ef1529197238c4fa642e594c48ae873d46df2b01acb02",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "41": {
+      "path": "work/combat-hand/hands/41.png",
+      "sha256": "c24159bae4984c790cbcf75a8d552449bccfc74f41c8dcd9ee62f857bcb28a96",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "42": {
+      "path": "work/combat-hand/hands/42.png",
+      "sha256": "13ecc1baf9b024289e8f3bfddf7f82baf682806027dae372066d9524cf857037",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "43": {
+      "path": "work/combat-hand/hands/43.png",
+      "sha256": "3685b7a797cf9cd7429d3e292858dae1ced0f411cc78f09003c952cf1c0a2d88",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "44": {
+      "path": "work/combat-hand/hands/44.png",
+      "sha256": "c832a06fe1bdcfdba522f834aaaa7fc0a8a9243ac2234283ec9ac9573a35409a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "45": {
+      "path": "work/combat-hand/hands/45.png",
+      "sha256": "9c6c81b66a82df925b4545d4c5d25bfb8f6fdf562ce273a2f40de48471198e8f",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "46": {
+      "path": "work/combat-hand/hands/46.png",
+      "sha256": "3dd617fe0be3b3b3d03b0638e1b16e2567e658a254cdc0ef826caead32b0026b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "47": {
+      "path": "work/combat-hand/hands/47.png",
+      "sha256": "d1eede9b3fc95bba913f9ef43869e1ca0c80ab6306af7dd07c58463dc1b3a342",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "48": {
+      "path": "work/combat-hand/hands/48.png",
+      "sha256": "e61f247551b5a20b677f1aa21305b884fa509c4545804775377401c327eb4d24",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "49": {
+      "path": "work/combat-hand/hands/49.png",
+      "sha256": "820c70ee7de7603bdaadef10cb507e8ca08e19c4dc729032bff022781eef711a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "5": {
+      "path": "work/combat-hand/hands/5.png",
+      "sha256": "d1d707daa59f01507197617041a581c6e43bb91b7b0cc389c1f195842597377e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "50": {
+      "path": "work/combat-hand/hands/50.png",
+      "sha256": "3eaa95a94bbf3aec5a184a577367767747c676d0b86e4dc796c96bbb0f6340a4",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "51": {
+      "path": "work/combat-hand/hands/51.png",
+      "sha256": "5e4ff45309abdcf4be83ebb4473685d54ae94c3114b10319eed79c4f3ee2740c",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "52": {
+      "path": "work/combat-hand/hands/52.png",
+      "sha256": "8e99c5b9fdf834b01eff01b7436e7cfcc88ade6a1469ee3b30f9eec1ff58f111",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "53": {
+      "path": "work/combat-hand/hands/53.png",
+      "sha256": "625635a8dd2d08715e86e4bac259ba0d722a7ca767cfaf31886cbaa1d95489d0",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "54": {
+      "path": "work/combat-hand/hands/54.png",
+      "sha256": "6505117bea63927633f8ed9263d214c9b600497c7112cbae301e0bc2a94a8a40",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "55": {
+      "path": "work/combat-hand/hands/55.png",
+      "sha256": "d3ee61fda803a24b8928c885f9646a4979cef92a1ff8d59c77c3c07665bd337c",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "56": {
+      "path": "work/combat-hand/hands/56.png",
+      "sha256": "4f728f5ef725075896b0b9a0cb29c28db8a217424707e49f4f4fc7988d080f36",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "57": {
+      "path": "work/combat-hand/hands/57.png",
+      "sha256": "f073750c31da6c2f633b6c96727cba68bd7964154133532a1b7139c2f5075575",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "58": {
+      "path": "work/combat-hand/hands/58.png",
+      "sha256": "8f56175b468338f1f4018f50c363c677273ef1f432a56cd84f1f100258593ec7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "59": {
+      "path": "work/combat-hand/hands/59.png",
+      "sha256": "6b45fc58fa5e6f3ee6228b600601551aa480e065369a9417bdcac80107317e41",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "6": {
+      "path": "work/combat-hand/hands/6.png",
+      "sha256": "6c65fff07cb1e1b04cbc378cf6aa52b294480355c17944f9453433b3ad18018d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "60": {
+      "path": "work/combat-hand/hands/60.png",
+      "sha256": "27c422e2dd8a2eb1f0523342477c3e14b06e85fcf2df216fd740001a4b757362",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "61": {
+      "path": "work/combat-hand/hands/61.png",
+      "sha256": "d404bd91750e6bad7ddd508458438c77b356edcc5fb1c90b264dd9c6f96eb744",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "62": {
+      "path": "work/combat-hand/hands/62.png",
+      "sha256": "6623bb13d8fdf90180a08098fd2e5fb3793b4f326cfc885c21cf56dfdacbc5e7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "63": {
+      "path": "work/combat-hand/hands/63.png",
+      "sha256": "1f1ce369387cc9b644a416ebcee13a84481703a364e424885e6c370dbd42e5f4",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "64": {
+      "path": "work/combat-hand/hands/64.png",
+      "sha256": "9d46c36382ad5502b7ec434e6ccf7fedde828774ba37f3abcf0bb6b515d44d71",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "65": {
+      "path": "work/combat-hand/hands/65.png",
+      "sha256": "3ce528d038a2c965bf96188451c32707dc16cf62dd74bb695918b209441b1c81",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "66": {
+      "path": "work/combat-hand/hands/66.png",
+      "sha256": "e2e73d7ff5c3676f6e5b320416e2bad46070105b49859ecd96903c23b17e6728",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "67": {
+      "path": "work/combat-hand/hands/67.png",
+      "sha256": "e9606fc39bcb250786ed9112fd5a147e8905c81f5db5a689215ca42fccbd6d8e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "68": {
+      "path": "work/combat-hand/hands/68.png",
+      "sha256": "b2d914461cd2c54b83498b5239b8f4b5459263f0942fa0b9a687683c2331b1c4",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "69": {
+      "path": "work/combat-hand/hands/69.png",
+      "sha256": "c9aee0f78348f63bc1b3dcc1ca1352256cb39b47867486230a9fcf5f846ed730",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "7": {
+      "path": "work/combat-hand/hands/7.png",
+      "sha256": "89756ebc2d77a19bc5705f74bba4b63672d93124934800c4c3be207824cc0df5",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "70": {
+      "path": "work/combat-hand/hands/70.png",
+      "sha256": "9abb5c02fe2cad933950475056450305f830728ee1f0249cfdce572362621d3e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "71": {
+      "path": "work/combat-hand/hands/71.png",
+      "sha256": "a1c85fd886e72e1a2473162ab81e1842759f7f88ebde8dc24295c791a789b37b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "72": {
+      "path": "work/combat-hand/hands/72.png",
+      "sha256": "9c8248fd48ced4bc34fe1c6188f5ded5b6719e5336dc9cefd240052a0efd747d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "73": {
+      "path": "work/combat-hand/hands/73.png",
+      "sha256": "36d288e370351c80dd7687673121bbb6e5053aa136006c54f12598ce46045481",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "8": {
+      "path": "work/combat-hand/hands/8.png",
+      "sha256": "368e2aced9560fa483879a1abafa01ec2fd76c1e076a458fff1da00b23b7b53d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    "9": {
+      "path": "work/combat-hand/hands/9.png",
+      "sha256": "0da57900c3d9f031b97a8cc3d8384c320bbad6d9f44568af16990e841a800ee4",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  },
+  "weapon_fits": {
+    "1": {
+      "x": 760,
+      "y": 346,
+      "width": 592,
+      "height": 592
+    },
+    "2": {
+      "x": 934,
+      "y": 525,
+      "width": 478,
+      "height": 478
+    },
+    "3": {
+      "x": 771,
+      "y": 369,
+      "width": 568,
+      "height": 568
+    },
+    "5": {
+      "x": 783,
+      "y": 388,
+      "width": 544,
+      "height": 544
+    },
+    "6": {
+      "x": 747,
+      "y": 344,
+      "width": 600,
+      "height": 600
+    },
+    "7": {
+      "x": 752,
+      "y": 360,
+      "width": 580,
+      "height": 580
+    },
+    "86": {
+      "x": 775,
+      "y": 380,
+      "width": 561,
+      "height": 561
+    },
+    "87": {
+      "x": 887,
+      "y": 488,
+      "width": 638,
+      "height": 574
+    },
+    "88": {
+      "x": 749,
+      "y": 346,
+      "width": 596,
+      "height": 596
+    },
+    "89": {
+      "x": 759,
+      "y": 353,
+      "width": 585,
+      "height": 585
+    },
+    "90": {
+      "x": 763,
+      "y": 364,
+      "width": 571,
+      "height": 571
+    },
+    "91": {
+      "x": 757,
+      "y": 352,
+      "width": 582,
+      "height": 582
+    },
+    "92": {
+      "x": 771,
+      "y": 385,
+      "width": 556,
+      "height": 556
+    },
+    "93": {
+      "x": 758,
+      "y": 350,
+      "width": 586,
+      "height": 586
+    },
+    "94": {
+      "x": 796,
+      "y": 419,
+      "width": 524,
+      "height": 524
+    },
+    "95": {
+      "x": 758,
+      "y": 355,
+      "width": 577,
+      "height": 577
+    },
+    "96": {
+      "x": 751,
+      "y": 346,
+      "width": 589,
+      "height": 589
+    },
+    "97": {
+      "x": 778,
+      "y": 375,
+      "width": 555,
+      "height": 555
+    },
+    "98": {
+      "x": 812,
+      "y": 476,
+      "width": 486,
+      "height": 486
+    },
+    "99": {
+      "x": 766,
+      "y": 366,
+      "width": 567,
+      "height": 567
+    },
+    "100": {
+      "x": 781,
+      "y": 386,
+      "width": 545,
+      "height": 545
+    },
+    "101": {
+      "x": 853,
+      "y": 464,
+      "width": 476,
+      "height": 476
+    },
+    "102": {
+      "x": 783,
+      "y": 375,
+      "width": 577,
+      "height": 577
+    },
+    "103": {
+      "x": 815,
+      "y": 425,
+      "width": 504,
+      "height": 504
+    },
+    "104": {
+      "x": 753,
+      "y": 383,
+      "width": 564,
+      "height": 564
+    },
+    "105": {
+      "x": 798,
+      "y": 414,
+      "width": 522,
+      "height": 522
+    }
+  },
+  "hand_fits": {
+    "35": {
+      "x": -2.915,
+      "y": 87.909,
+      "width": 1538.915,
+      "height": 936.091
+    },
+    "68": {
+      "x": -2.789,
+      "y": 0.578,
+      "width": 1538.789,
+      "height": 1023.422
+    },
+    "64": {
+      "x": -7.185,
+      "y": -0.234,
+      "width": 1543.185,
+      "height": 1024.234
+    },
+    "6": {
+      "x": -3.358,
+      "y": -0.955,
+      "width": 1539.358,
+      "height": 1024.955
+    },
+    "12": {
+      "x": -3.727,
+      "y": -0.683,
+      "width": 1539.727,
+      "height": 1024.683
+    },
+    "29": {
+      "x": -3.845,
+      "y": -1.131,
+      "width": 1539.845,
+      "height": 1025.131
+    },
+    "59": {
+      "x": -3.189,
+      "y": 93.525,
+      "width": 1539.189,
+      "height": 930.475
+    },
+    "36": {
+      "x": -3.899,
+      "y": 90.743,
+      "width": 1539.899,
+      "height": 933.257
+    },
+    "32": {
+      "x": -1.006,
+      "y": 0.958,
+      "width": 1537.006,
+      "height": 1023.042
+    },
+    "9": {
+      "x": -2.038,
+      "y": -0.609,
+      "width": 1538.038,
+      "height": 1024.609
+    },
+    "45": {
+      "x": -2.561,
+      "y": -0.385,
+      "width": 1538.561,
+      "height": 1024.385
+    },
+    "22": {
+      "x": -3.624,
+      "y": -0.747,
+      "width": 1539.624,
+      "height": 1024.747
+    },
+    "60": {
+      "x": -7.009,
+      "y": 2.073,
+      "width": 1543.009,
+      "height": 1021.927
+    },
+    "20": {
+      "x": -0.857,
+      "y": -0.579,
+      "width": 1536.857,
+      "height": 1024.579
+    },
+    "23": {
+      "x": -3.256,
+      "y": 0.285,
+      "width": 1539.256,
+      "height": 1023.715
+    },
+    "34": {
+      "x": -3.428,
+      "y": -0.13,
+      "width": 1539.428,
+      "height": 1024.13
+    },
+    "25": {
+      "x": -0.566,
+      "y": 1.508,
+      "width": 1536.566,
+      "height": 1022.492
+    },
+    "54": {
+      "x": -6.855,
+      "y": 90.203,
+      "width": 1542.855,
+      "height": 933.797
+    },
+    "67": {
+      "x": -6.33,
+      "y": 38.389,
+      "width": 1542.33,
+      "height": 985.611
+    },
+    "62": {
+      "x": -4.558,
+      "y": 0.08,
+      "width": 1540.558,
+      "height": 1023.92
+    },
+    "55": {
+      "x": -4.476,
+      "y": -0.206,
+      "width": 1540.476,
+      "height": 1024.206
+    },
+    "21": {
+      "x": -4.205,
+      "y": 0.02,
+      "width": 1540.205,
+      "height": 1023.98
+    },
+    "27": {
+      "x": -3.065,
+      "y": 0.059,
+      "width": 1539.065,
+      "height": 1023.941
+    },
+    "46": {
+      "x": -5.712,
+      "y": -0.667,
+      "width": 1541.712,
+      "height": 1024.667
+    },
+    "48": {
+      "x": -2.87,
+      "y": 1.684,
+      "width": 1538.87,
+      "height": 1022.316
+    },
+    "44": {
+      "x": -4.294,
+      "y": -0.032,
+      "width": 1540.294,
+      "height": 1024.032
+    },
+    "49": {
+      "x": -3.646,
+      "y": -0.357,
+      "width": 1539.646,
+      "height": 1024.357
+    },
+    "30": {
+      "x": -3.893,
+      "y": 0.305,
+      "width": 1539.893,
+      "height": 1023.695
+    },
+    "42": {
+      "x": 6.918,
+      "y": 31.173,
+      "width": 1529.082,
+      "height": 992.827
+    },
+    "10": {
+      "x": -1.502,
+      "y": 0.042,
+      "width": 1537.502,
+      "height": 1023.958
+    },
+    "28": {
+      "x": -7.674,
+      "y": 5.791,
+      "width": 1543.674,
+      "height": 1018.209
+    },
+    "39": {
+      "x": -3.385,
+      "y": -0.942,
+      "width": 1539.385,
+      "height": 1024.942
+    },
+    "11": {
+      "x": -3.872,
+      "y": -0.347,
+      "width": 1539.872,
+      "height": 1024.347
+    },
+    "4": {
+      "x": -3.465,
+      "y": -0.293,
+      "width": 1539.465,
+      "height": 1024.293
+    },
+    "69": {
+      "x": -4.215,
+      "y": 1.601,
+      "width": 1540.215,
+      "height": 1022.399
+    },
+    "2": {
+      "x": -2.18,
+      "y": -0.561,
+      "width": 1538.18,
+      "height": 1024.561
+    },
+    "66": {
+      "x": -7.51,
+      "y": 79.034,
+      "width": 1543.51,
+      "height": 944.966
+    },
+    "8": {
+      "x": -3.349,
+      "y": -0.803,
+      "width": 1539.349,
+      "height": 1024.803
+    },
+    "52": {
+      "x": -2.835,
+      "y": 1.929,
+      "width": 1538.835,
+      "height": 1022.071
+    },
+    "65": {
+      "x": -4.409,
+      "y": -0.541,
+      "width": 1540.409,
+      "height": 1024.541
+    },
+    "19": {
+      "x": -2.873,
+      "y": 0.328,
+      "width": 1538.873,
+      "height": 1023.672
+    },
+    "17": {
+      "x": -1.742,
+      "y": 1.369,
+      "width": 1537.742,
+      "height": 1022.631
+    },
+    "38": {
+      "x": -4.329,
+      "y": -1.092,
+      "width": 1540.329,
+      "height": 1025.092
+    },
+    "7": {
+      "x": -2.864,
+      "y": -0.722,
+      "width": 1538.864,
+      "height": 1024.722
+    },
+    "33": {
+      "x": -3.246,
+      "y": 88.849,
+      "width": 1539.246,
+      "height": 935.151
+    },
+    "14": {
+      "x": -1.242,
+      "y": 1.673,
+      "width": 1537.242,
+      "height": 1022.327
+    },
+    "31": {
+      "x": -3.613,
+      "y": 0.25,
+      "width": 1539.613,
+      "height": 1023.75
+    },
+    "41": {
+      "x": -6.923,
+      "y": 3.503,
+      "width": 1542.923,
+      "height": 1020.497
+    },
+    "26": {
+      "x": -0.403,
+      "y": 0.465,
+      "width": 1536.403,
+      "height": 1023.535
+    },
+    "51": {
+      "x": -2.777,
+      "y": 0.241,
+      "width": 1538.777,
+      "height": 1023.759
+    },
+    "24": {
+      "x": -2.364,
+      "y": 0.758,
+      "width": 1538.364,
+      "height": 1023.242
+    },
+    "70": {
+      "x": -2.277,
+      "y": 1.97,
+      "width": 1538.277,
+      "height": 1022.03
+    },
+    "18": {
+      "x": -3.219,
+      "y": 0.212,
+      "width": 1539.219,
+      "height": 1023.788
+    },
+    "57": {
+      "x": -3.197,
+      "y": -0.325,
+      "width": 1539.197,
+      "height": 1024.325
+    },
+    "43": {
+      "x": -5.022,
+      "y": 1.582,
+      "width": 1541.022,
+      "height": 1022.418
+    },
+    "47": {
+      "x": -5.489,
+      "y": 18.855,
+      "width": 1541.489,
+      "height": 1005.145
+    },
+    "72": {
+      "x": -2.653,
+      "y": 3.162,
+      "width": 1538.653,
+      "height": 1020.838
+    },
+    "50": {
+      "x": -2.533,
+      "y": 2.754,
+      "width": 1538.533,
+      "height": 1021.246
+    },
+    "61": {
+      "x": -5.211,
+      "y": 1.337,
+      "width": 1541.211,
+      "height": 1022.663
+    },
+    "3": {
+      "x": -4.127,
+      "y": -0.687,
+      "width": 1540.127,
+      "height": 1024.687
+    },
+    "1": {
+      "x": -2.545,
+      "y": 0.595,
+      "width": 1538.545,
+      "height": 1023.405
+    },
+    "16": {
+      "x": -3.025,
+      "y": 0.516,
+      "width": 1539.025,
+      "height": 1023.484
+    },
+    "15": {
+      "x": -0.947,
+      "y": 1.938,
+      "width": 1536.947,
+      "height": 1022.062
+    },
+    "5": {
+      "x": -3.212,
+      "y": 0.465,
+      "width": 1539.212,
+      "height": 1023.535
+    },
+    "56": {
+      "x": -7.5,
+      "y": 2.047,
+      "width": 1543.5,
+      "height": 1021.953
+    },
+    "37": {
+      "x": -3.442,
+      "y": 16.015,
+      "width": 1539.442,
+      "height": 1007.985
+    },
+    "58": {
+      "x": -6.641,
+      "y": 88.151,
+      "width": 1542.641,
+      "height": 935.849
+    },
+    "40": {
+      "x": -4.697,
+      "y": -1.012,
+      "width": 1540.697,
+      "height": 1025.012
+    },
+    "53": {
+      "x": -2.487,
+      "y": -0.212,
+      "width": 1538.487,
+      "height": 1024.212
+    },
+    "63": {
+      "x": -5.099,
+      "y": 35.858,
+      "width": 1541.099,
+      "height": 988.142
+    },
+    "13": {
+      "x": -3.857,
+      "y": 0.364,
+      "width": 1539.857,
+      "height": 1023.636
+    }
+  },
+  "muzzles": {
+    "1": [
+      552,
+      537,
+      -2.7,
+      1254,
+      1254
+    ],
+    "2": [
+      138,
+      152,
+      -2.7,
+      1254,
+      1254
+    ],
+    "3": [
+      560,
+      518,
+      -2.7,
+      1254,
+      1254
+    ],
+    "5": [
+      523,
+      471,
+      -2.7,
+      1254,
+      1254
+    ],
+    "6": [
+      460,
+      378,
+      -2.7,
+      1254,
+      1254
+    ],
+    "7": [
+      560,
+      508,
+      -2.7,
+      1254,
+      1254
+    ],
+    "86": [
+      567,
+      482,
+      -2.7,
+      1254,
+      1254
+    ],
+    "87": [
+      209,
+      199,
+      -2.7,
+      1322,
+      1190
+    ],
+    "88": [
+      560,
+      544,
+      -2.7,
+      1254,
+      1254
+    ],
+    "89": [
+      555,
+      544,
+      -2.7,
+      1254,
+      1254
+    ],
+    "90": [
+      567,
+      508,
+      -2.7,
+      1254,
+      1254
+    ],
+    "91": [
+      557,
+      545,
+      -2.7,
+      1254,
+      1254
+    ],
+    "92": [
+      526,
+      414,
+      -2.7,
+      1254,
+      1254
+    ],
+    "93": [
+      537,
+      498,
+      -2.7,
+      1254,
+      1254
+    ],
+    "94": [
+      527,
+      412,
+      -2.7,
+      1254,
+      1254
+    ],
+    "95": [
+      549,
+      522,
+      -2.7,
+      1254,
+      1254
+    ],
+    "96": [
+      553,
+      498,
+      -2.7,
+      1254,
+      1254
+    ],
+    "97": [
+      527,
+      472,
+      -2.7,
+      1254,
+      1254
+    ],
+    "98": [
+      462,
+      240,
+      -2.7,
+      1254,
+      1254
+    ],
+    "99": [
+      531,
+      500,
+      -2.7,
+      1254,
+      1254
+    ],
+    "100": [
+      532,
+      450,
+      -2.7,
+      1254,
+      1254
+    ],
+    "101": [
+      274,
+      253,
+      -2.7,
+      1254,
+      1254
+    ],
+    "102": [
+      395,
+      332,
+      -2.7,
+      1254,
+      1254
+    ],
+    "103": [
+      254,
+      156,
+      -2.7,
+      1254,
+      1254
+    ],
+    "104": [
+      329,
+      250,
+      -2.7,
+      1254,
+      1254
+    ],
+    "105": [
+      411,
+      391,
+      -2.7,
+      1254,
+      1254
+    ]
+  }
+}
