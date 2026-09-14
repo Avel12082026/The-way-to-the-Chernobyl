@@ -652,6 +652,16 @@
         "armorMatch": "Closed black glove matches armor_char_74; selected armor candidate"
       }
     ],
-    "remaining": "Extract correct modular layers; fit all 26 weapons and test flash; armor75–96 pending. Existing older anatomy reviews do not approve new template."
+    "remaining": "Extract correct modular layers; fit all 26 weapons and test flash; armor75–96 pending. Existing older anatomy reviews do not approve new template.",
+    "hand-only-v2.webp": {
+      "status": "candidate-not-integrated",
+      "note": "Новый отдельный слой: указательный согнут вниз. Предыдущий exec-79e29f6b забракован пользователем за сломанный/задранный указательный. Слой v2 изменил позу; старые fits недействительны.",
+      "alpha": [
+        0,
+        254
+      ],
+      "modularFitVerified": false,
+      "flashVerified": false
+    }
   }
 }
