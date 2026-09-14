@@ -15,12 +15,6 @@
     },
     {
       "mode": "100644",
-      "path": "asset_sources/combat_hand_repair/combat-2-leather-v2.webp",
-      "sha": "b65d581bac91f8b88017db7d88b7c20706847d2a",
-      "type": "blob"
-    },
-    {
-      "mode": "100644",
       "path": "asset_sources/combat_hand_repair/detector-2-review.jpg",
       "sha": "06219e8c11ee22d4ef13e61343313a68a0a38e71",
       "type": "blob"
