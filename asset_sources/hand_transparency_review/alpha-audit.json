@@ -1,0 +1,7891 @@
+{
+  "scope": "existing files only; no missing variant replaced",
+  "files": [
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/1.webp",
+      "sha256": "3c775a0c2bb5050f4a7c348828e872ede8ffcaebf05273a8d5eaedf98ad2cdfb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489174,
+      "partial_pixels": 628,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/10.webp",
+      "sha256": "c339e321d9fc481f1e5f1ae7c63ea936891cf607155c349697afcfbe80c9ad6c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490576,
+      "partial_pixels": 599,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/11.webp",
+      "sha256": "cf3a185a6a6648246785a100261b225139caa5dc26396a3206df035807d04fa6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488779,
+      "partial_pixels": 594,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/12.webp",
+      "sha256": "de88eb06771c73abba6a403f5fc69e2c3904dd1efd0ab16915016aa97fa122fd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489290,
+      "partial_pixels": 607,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/13.webp",
+      "sha256": "59be18d8314b91a73a443d09857b91b313a8207dbd17bdb03b5f3e2afa595cc6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489293,
+      "partial_pixels": 654,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/14.webp",
+      "sha256": "fb0a818ddcac93e21332f2f8f663c92a817283fb3a45ba311114ed0f4f8a8b1e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489696,
+      "partial_pixels": 628,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/15.webp",
+      "sha256": "7f1e129b2c40bd84cac4713b515a13bbf452ba98c15461300ac193de8bb9c8ae",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489234,
+      "partial_pixels": 683,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/16.webp",
+      "sha256": "31667a1a21115361e960309d0f2a7aea98d3714cc6198ed22ab5013d7298b654",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489532,
+      "partial_pixels": 650,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/17.webp",
+      "sha256": "6e1428036ec8b980119999ef0ad9b0cad5ebfb376f90ee5d796ffc4e3b0cc16f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489747,
+      "partial_pixels": 634,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/18.webp",
+      "sha256": "00dac3fa8386f1393c136d7c16bdeee66b11510dc3bae6d9d7d3c8a7b0d47515",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489536,
+      "partial_pixels": 641,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/19.webp",
+      "sha256": "88baef61b936292fa1c886dafdc6bb8d50a0cbd6705113db41b17abbfaa54eaa",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490057,
+      "partial_pixels": 585,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/2.webp",
+      "sha256": "efcb5728c9cdfdab37fd2e7fffd2b4d181e79048aec25c9e38590d4065ff27e4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490719,
+      "partial_pixels": 613,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/20.webp",
+      "sha256": "a8680b1722d6b65e6c444b29beb29ad5933812fa2d6e7e6e40f7921849dae298",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488319,
+      "partial_pixels": 3217,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/21.webp",
+      "sha256": "3b5c26a1289adf85d8ef817694018ab6b7349ad4487f217035884794e6a2507e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481697,
+      "partial_pixels": 615,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/22.webp",
+      "sha256": "4f13a2593688d69aef6de5f38a1dc0e12298f451cdf179f2ee3c66e3aab4bf0b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489526,
+      "partial_pixels": 681,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/23.webp",
+      "sha256": "d8c913e3fc347e606433482f85d87b30b6a5259bbc068159be06f3b6bf2184a7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488620,
+      "partial_pixels": 747,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/24.webp",
+      "sha256": "06ecfd502162268fbbcc10009c4bbdd8542f60583f08d5b9c500177b3db5959c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1487860,
+      "partial_pixels": 712,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/25.webp",
+      "sha256": "5e9aa01b61f1a5f32857ab19975c7d886bb97f8752bd0091289aba10ab24246e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1487142,
+      "partial_pixels": 657,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/26.webp",
+      "sha256": "ba8151d0b8308826a9c7f3b915bf783bebcf728e29331f9665de63b405f01384",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1487134,
+      "partial_pixels": 706,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/27.webp",
+      "sha256": "a142a55c48d4835fac4506bd9d8e7e1b01c3193b3694b70581e98b0dfa7b877a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490743,
+      "partial_pixels": 653,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/28.webp",
+      "sha256": "ff97c5b3c0ef328512a49e4e4724326dc272e569f684ea09087536321cd6f1cb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480787,
+      "partial_pixels": 613,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/29.webp",
+      "sha256": "e7887f84a0332cb8a9e2fddfe9a98b8e885a6be7a75892cc63f6005f8d0f9d3f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490443,
+      "partial_pixels": 696,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/3.webp",
+      "sha256": "f3a6539e9d713d9590d9b95f3105db9e0657909778841dd5183bcdb13ef22bba",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488466,
+      "partial_pixels": 621,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/30.webp",
+      "sha256": "386e9393046b7b32408a3ee9a78496d0667522ca2676577fe923bfe03c9f9e9f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489410,
+      "partial_pixels": 657,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/31.webp",
+      "sha256": "07e0608d1d0c668bb2307b89c46b0dd0ec49359e7525a117164bff77753bd74a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484650,
+      "partial_pixels": 626,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/32.webp",
+      "sha256": "0a3b3e0392190f558d631f87527017def82be544aa882b3695d839c9ab34d2c8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488145,
+      "partial_pixels": 622,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/33.webp",
+      "sha256": "2440eec3d3ed672de1eb15b35378f67e68c94ed03b45ffa49f4487396aedf1f8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480961,
+      "partial_pixels": 624,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/34.webp",
+      "sha256": "929e9a5c4bbd814869bf88d5c1641bc105be73ecdf8ecc3c604c21a5809d7d33",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484635,
+      "partial_pixels": 641,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/35.webp",
+      "sha256": "0d42124e6fe1d9b9f6bc526e7a3e7749d3c33e3a8f4310d998d0931acb094b99",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480437,
+      "partial_pixels": 700,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/36.webp",
+      "sha256": "9f6ef4ef145cf10c111553e4a2e5b6249c6462f786f72e75ae91c3cbaebfd6be",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1474387,
+      "partial_pixels": 794,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/37.webp",
+      "sha256": "42f3299c3439974d565d39235841244013d7195a5c20698bbfc8a191162ca1a0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481501,
+      "partial_pixels": 710,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/38.webp",
+      "sha256": "f32236d54f5277cc9f6a3d34c0022ccd05302c73f6fdd69b30bff442d64b1260",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485370,
+      "partial_pixels": 744,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/39.webp",
+      "sha256": "9bced42647b6f95efb47be2639116159734e8a6355c5ecda624f9fc013fc4a56",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484777,
+      "partial_pixels": 714,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/4.webp",
+      "sha256": "063d60b3c1832df46929a5ef6b8104781345381f377f436b5564bcf9cdcb02c3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489676,
+      "partial_pixels": 646,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/40.webp",
+      "sha256": "8e0ca307127a57ae76de2b09d66b63aeaa5b5a0285a4088bf270ccb85f25dfcd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483427,
+      "partial_pixels": 706,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/41.webp",
+      "sha256": "15c5673ce291c75cc0a12d37a757907d7a90bd2570ec0c294564a2aef278de7d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483320,
+      "partial_pixels": 668,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/42.webp",
+      "sha256": "bcb8033ac87e632b6db11409ed06119d364b2274a8d2134f6b63554072054deb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482085,
+      "partial_pixels": 751,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/43.webp",
+      "sha256": "09a4ac57e354c09094fa2c7e9bdd35c3c3ded6bf5942864b33f6e0550307d84a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484344,
+      "partial_pixels": 728,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/44.webp",
+      "sha256": "b17dd246c95338c17fd317b7086e69272d6f9c208c5f6055f1ccecfee43c6540",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1487359,
+      "partial_pixels": 676,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/45.webp",
+      "sha256": "58b9b90b655dc914d2eb503ebe51d4d4990b051f506e00ea9c568937c506ca46",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484288,
+      "partial_pixels": 658,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/46.webp",
+      "sha256": "baa4d49de7011e3c0d1d5a6c414bba19a55d91f3d593985dd32d249eb171de32",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483285,
+      "partial_pixels": 593,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/47.webp",
+      "sha256": "3614e253f2b311b31c92d8d5bb81b339b58da32b458b37f80705f2cc58b54c88",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481387,
+      "partial_pixels": 606,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/48.webp",
+      "sha256": "1c48f817f85213acb913a454b87cacd37789b5c48518ab4b23ca3b12fa47e9c7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484541,
+      "partial_pixels": 735,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/49.webp",
+      "sha256": "d3d0c9c456795fc02b72f5161c9a35c365111c71bbf60cc1407da51819433f8e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485985,
+      "partial_pixels": 712,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/5.webp",
+      "sha256": "7fa49a0fd5d253d20fe29ca79ce1f689a786165f332c89ff5c55d4e7317fe20f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1486548,
+      "partial_pixels": 615,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/50.webp",
+      "sha256": "e2b6b148229e1df89db6aebf3448a362bb70cd916f2a7a28bab8851e94f8487e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483345,
+      "partial_pixels": 701,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/51.webp",
+      "sha256": "596e3fa2a6ae955375f2c2c1057dee5420eba94d8fce41038215a4a7db5b8357",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481879,
+      "partial_pixels": 640,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/52.webp",
+      "sha256": "c422b6b5c2f3168dc4ac3b6b566a554fdde289e9490046ce8521fb0654260b70",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485218,
+      "partial_pixels": 719,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/53.webp",
+      "sha256": "b64d58a9fe665c980550201db422468918a363499e0bdbea63981723880f625b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484538,
+      "partial_pixels": 699,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/54.webp",
+      "sha256": "1d55ee983da004678cae5399ed9da4afe4679abff657d6192085f5d1731931b7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477193,
+      "partial_pixels": 795,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/55.webp",
+      "sha256": "7a759699a895597a821acfd7c742fe584fc255f2bfc3767bb60c9951ce6bce2e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483592,
+      "partial_pixels": 681,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/56.webp",
+      "sha256": "19c70978f2512158dba653f76714438f3c082229b0647d0703a8e5410a9931ca",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483290,
+      "partial_pixels": 618,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/57.webp",
+      "sha256": "966866a4e6126b8c7898aa25659931a70ef32864ed6f575ec5673719180b7ada",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482360,
+      "partial_pixels": 697,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/58.webp",
+      "sha256": "0456455bfb6ab8698057c05da1ab81054e90642b0a7f9fa27b8cc6d36e12237a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1476173,
+      "partial_pixels": 710,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/59.webp",
+      "sha256": "be496374d0a78b5aa97f2b144d73e294b7c572e629298bd558449c48a9df7040",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1476576,
+      "partial_pixels": 644,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/6.webp",
+      "sha256": "09a6039294aea8d24d1a99d18a436ff6dca3980becad321cd65519075564204f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488578,
+      "partial_pixels": 605,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/60.webp",
+      "sha256": "160008145c8d49c55ce28905f287ba00b4b4244aa59875c70071b54da54fea77",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483594,
+      "partial_pixels": 715,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/61.webp",
+      "sha256": "cf8b37c80edd1b35503613dba803955587a0eb55971490e4cfb75ad6c8ecc8dc",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485719,
+      "partial_pixels": 757,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/62.webp",
+      "sha256": "40e234f2fb1cb7124c26b9a788c8ed8180b60a0aecbee8137361012bf0b8d37e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483236,
+      "partial_pixels": 728,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/63.webp",
+      "sha256": "5ef202f54f7406579a4d27281213ceb15553fbf2e98bd6cc45ea64225879a7e7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481558,
+      "partial_pixels": 850,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/64.webp",
+      "sha256": "6fd129c62ffaab8651c9d2301256b95ee1b580ef3598b93ba120592f1f51fde5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485040,
+      "partial_pixels": 647,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/65.webp",
+      "sha256": "a98d6b7b0b96debadf6249caa3c3c9c2e5eb569ec2869d6d33871b07e6dd9dfd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484561,
+      "partial_pixels": 719,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/66.webp",
+      "sha256": "edfbb19efa2ed2c0adcc54f5370cb40e00f124a56c73613a32f599e21801253b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479410,
+      "partial_pixels": 770,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/67.webp",
+      "sha256": "ea56466d52a52e218b448f5ac9f61f6bed7db169dc1c4974f5b7587376582f37",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482577,
+      "partial_pixels": 734,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/68.webp",
+      "sha256": "0cd24fc692454f266cc3e2d1dd1839bc81ac184d9f3686e83a7f98646e4457a4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484656,
+      "partial_pixels": 635,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/69.webp",
+      "sha256": "fb3f011aa99fdc5f341004cd0661f99e3c24310df971fc4ea703b1ce13825e68",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483802,
+      "partial_pixels": 736,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/7.webp",
+      "sha256": "473097ca50a1657e6ce8e79f5d1581738aecdebe03cd37f29736b425f3bb9660",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488400,
+      "partial_pixels": 585,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/70.webp",
+      "sha256": "81f6b84f63afec829529e11b228727142ea3a525037302e82b37a6683010066f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1478423,
+      "partial_pixels": 692,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/71.webp",
+      "sha256": "49fdc07d90d8eaa48b3e517c688cb44b7f9523940ca27c85db2628d6f91d04f5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480027,
+      "partial_pixels": 592,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/72.webp",
+      "sha256": "eb4211abff8c14cbf9de3cf9af46308afa5627082156db882b599333ec06cc5a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483057,
+      "partial_pixels": 679,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/73.webp",
+      "sha256": "dba83e28341ca2796739e409c2e0b6b012673ed281218f269793ab05ebcc5e01",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485704,
+      "partial_pixels": 701,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/8.webp",
+      "sha256": "de9ec29b4b53ec096026d5a1e478d46153456744975d812f538a6938ec904c9a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1490077,
+      "partial_pixels": 628,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "asset_sources/prepared_hand_pack/hands/9.webp",
+      "sha256": "aea58ce45d6f425874416c8ef7a10b4e21f58dc79775e5edef6ab0a9af55d12d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1487317,
+      "partial_pixels": 657,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/hands/1.webp",
+      "sha256": "d0810af5f316b59869fcd46049681500cbe73929f64585ade41454554c5ae179",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1470653,
+      "partial_pixels": 555,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/hands/2.webp",
+      "sha256": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1473346,
+      "partial_pixels": 483,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/1.png",
+      "sha256": "db0ec765151f7dfa6b0b279072807e3a3ed8679ff8eb2b0d3e8dad72cdcedfee",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1412485,
+      "partial_pixels": 1361,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/100.png",
+      "sha256": "7bfe18c4c476c41dd2e49cea5b0322498357c9ed5fa3760188164429c4d130a6",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1371317,
+      "partial_pixels": 1570,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/101.png",
+      "sha256": "0b4c263da80034536852fe69fba0b10dccc9655b138b31726066b43f413ce696",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1253101,
+      "partial_pixels": 2048,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/102.png",
+      "sha256": "d0ea8d31c54a47ead290195c300a9cfa12ec9c9e17bf0b96ea1ad1b5cefb274d",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1325768,
+      "partial_pixels": 1766,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/103.png",
+      "sha256": "317cd61889c1cc407e19c999a46deb0a8c25d7b335ad8582b396d0d1b5b6c74d",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1229204,
+      "partial_pixels": 2184,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/104.png",
+      "sha256": "8ff3e743a742663166e7a38ed50d1d24930db8bf5b3bf193d65137c4a0a7096c",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1264527,
+      "partial_pixels": 1967,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/105.png",
+      "sha256": "e97820fef8073f48afe9bfd1eb1506471362b9bc955fd5820b65a3c1243b6a49",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1328047,
+      "partial_pixels": 1702,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/2.png",
+      "sha256": "c0a7c653583f75523fc09e261bb5f07bfb6e73de18b1a2558d5db1b915b1fc80",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1240690,
+      "partial_pixels": 1963,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/3.png",
+      "sha256": "abf009eb4323970f9d59e7e6b79fa14ebfc335ac272b136ac7fbdd3c64bd44ff",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1400511,
+      "partial_pixels": 1402,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/5.png",
+      "sha256": "be49fb31f1e7ead41a748ccea887bb9aeda25fdcb1169e89c7f81585ed6c0679",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1387907,
+      "partial_pixels": 1444,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/6.png",
+      "sha256": "30aac31451a241d0cc9490112be18b9e32ca57de1e04faa435d34f5ee333e0d4",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1407250,
+      "partial_pixels": 1753,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/7.png",
+      "sha256": "b5a6cc6cca6880ff51dbe57469ba131311dd7f8265dd9365ec79739f81dc2dd0",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1418539,
+      "partial_pixels": 1404,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/86.png",
+      "sha256": "71a4554b0fd49d7801db2be3904ffa629fe27324d6adaf2439313dceac687019",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1419567,
+      "partial_pixels": 1349,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/87.png",
+      "sha256": "7c6a209cead9bbb4c20e4bf8ffb7dd42e32374fe28ed3d50fb3ece331adcce6d",
+      "size": [
+        1322,
+        1190
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1369633,
+      "partial_pixels": 1598,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/88.png",
+      "sha256": "75f9c2a6871bccca73bd75bedb9fc9405633444ce2af95814399dfa839197678",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1410748,
+      "partial_pixels": 1306,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/89.png",
+      "sha256": "caa085b5505bdd97683ea8d6a288106fcd73fa3cebaeb4d602a5b4a2c6f22461",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1408082,
+      "partial_pixels": 1334,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/90.png",
+      "sha256": "4e205264859237f74c3dac197804e1046c40adde63b8b959b783066ef369344d",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1408234,
+      "partial_pixels": 1454,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/91.png",
+      "sha256": "15266216629370a6895802c52aabdfa0b2bd50cda221b082751890322f3ed450",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1399293,
+      "partial_pixels": 1386,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/92.png",
+      "sha256": "334976c6651cf4bcab551e783f2f3af782649b4e9372cbfce8006987d359c126",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1349097,
+      "partial_pixels": 1741,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/93.png",
+      "sha256": "433ae6078b3bef114a717b9cf1df28af15ebf7dcee52f571905343230452d4c9",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1398626,
+      "partial_pixels": 1386,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/94.png",
+      "sha256": "b3928b67193e9d397f4ffcad054fe79fbc140337599f9eb4d07a896e5778ca3c",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1361398,
+      "partial_pixels": 1435,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/95.png",
+      "sha256": "a04ace27ee40527a54e08e1044e4ec2f295da705bfab095f1e6254590a1b1b94",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1394449,
+      "partial_pixels": 1273,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/96.png",
+      "sha256": "0985fa2316956b199cc9479bee62762f4838bbe5cd59ac9ceedfc232b9facb22",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1387216,
+      "partial_pixels": 1468,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/97.png",
+      "sha256": "8e350906bd622caf28a06245fcab5b55cc2c18ae0ad4550a7b98e2428aefe52b",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1370802,
+      "partial_pixels": 1343,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/98.png",
+      "sha256": "8338bcf15104402f1c00b0b7c40f6c7e852b03aaba5ab470c0c9d3e03de44b21",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1316224,
+      "partial_pixels": 1738,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/modular/weapons/99.png",
+      "sha256": "05e13eb6d757f2d704933084875e0e72ced66a72997925b2e08ca01c8e476543",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1373696,
+      "partial_pixels": 1497,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/10_grip.webp",
+      "sha256": "7c4e380d726b9f100538bbfec5a71b9bd5b5cc52be542aa94142e1ac49cc46e8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563428,
+      "partial_pixels": 135,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/10_left.webp",
+      "sha256": "f096d604f50af486a7bce1861cb713aeed87c72c690aa532ee85c6012f4d2f57",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466739,
+      "partial_pixels": 1196,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/10_right.webp",
+      "sha256": "5cc93c65a86a320cfd921a1ca1867fece830e4ee51b06387b30f829f24f05501",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485102,
+      "partial_pixels": 904,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/11_grip.webp",
+      "sha256": "63025f89bb141aeea022ba3e0b83dbfc01f68c91ee1cd570add854fb162a3e5c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563415,
+      "partial_pixels": 143,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/11_left.webp",
+      "sha256": "154a44e7c6055ae8faee209dcf4bf2da6b044ad4062aba4e79828ff20b301659",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465042,
+      "partial_pixels": 1196,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/11_right.webp",
+      "sha256": "ec3aa3ff0bbc1be93fb27dde401129001d4059bdd4bc61884963d140f144f3f1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484989,
+      "partial_pixels": 906,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/12_grip.webp",
+      "sha256": "8907f26a7755acbe9de792bae28ad7f1b97c81d463c092dffb396f3fbcc4c012",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563332,
+      "partial_pixels": 126,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/12_left.webp",
+      "sha256": "80410c9dfd3940cd3a167d98be3e99558b979033023e04ff15101b3fd7921d13",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467418,
+      "partial_pixels": 1197,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/12_right.webp",
+      "sha256": "f07136ef9974391a478ae49a7c9155126c738c09b360bcfe897310df3a9fe9e0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484406,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/13_grip.webp",
+      "sha256": "8ccb9c67f6625d060ab60d289925c986bf59910ef660e11b31988c5ba227fa54",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563466,
+      "partial_pixels": 147,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/13_left.webp",
+      "sha256": "1fd8d6b83675e9948f83a53547fe5d511074618c9aef7677c31390360d1ee784",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465365,
+      "partial_pixels": 1198,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/13_right.webp",
+      "sha256": "881ed5e4857bba65aafa2bad1aeb16f81cc1fd3eed0d17658a8c3a4d1b5a3fff",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483400,
+      "partial_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/14_grip.webp",
+      "sha256": "420b9723c9559fc2ab41aed4028b65329a0c83f0e7061fbf5f8dee8b4741990e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563307,
+      "partial_pixels": 136,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/14_left.webp",
+      "sha256": "c9e06ebc2d7d2c9ad4c7a7eccd51d1c48bfb267cd5c857ab9add56f0428df93a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465959,
+      "partial_pixels": 1203,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/14_right.webp",
+      "sha256": "d10c7fe09f1ce15affd778e5ce99ca94b01505271d87a16f61e0a4e8edbc8ab1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482713,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/15_grip.webp",
+      "sha256": "c2533aa8f832b10ce2d1ed31933b50afe58630e3b889c0bab06bec618e19018a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563398,
+      "partial_pixels": 141,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/15_left.webp",
+      "sha256": "eff57ef865b9e1d27e4d9cb63e0495f389b9cebd72fcf1a344642854de4a93c0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1468161,
+      "partial_pixels": 1194,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/15_right.webp",
+      "sha256": "9546e7f4f63db9447cc20363e93e4babfa7023acd63851a9af36a2554116aad9",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484049,
+      "partial_pixels": 898,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/16_grip.webp",
+      "sha256": "a23c6194f9a4427c3ceb57522d933194045cb035a6b8ff53ea1b9baa72972d06",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563441,
+      "partial_pixels": 144,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/16_left.webp",
+      "sha256": "d3ba4ec86fa0676c57939287dfdb976f56b1405ddb0c1f4ce255c1e1582a5980",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467839,
+      "partial_pixels": 1188,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/16_right.webp",
+      "sha256": "cd5592a38ef97fb59989a21c9f0a391fe05dbde41d2ee6393f23ab8d14d2ed6f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484105,
+      "partial_pixels": 904,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/17_grip.webp",
+      "sha256": "524182fac89ca964b519284d85f0cbbeb82b82e8c123e5c62128a79dd86bdee1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563417,
+      "partial_pixels": 144,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/17_left.webp",
+      "sha256": "d72e7730027075ddef3e626c346679d29fb36c4b2dea6051d83c6da429809854",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466565,
+      "partial_pixels": 1178,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/17_right.webp",
+      "sha256": "45c7bf2ca17050c989f454decd2e16b49288b0ecd2a089ba32ab4cdeb1cd6822",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485461,
+      "partial_pixels": 915,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/18_grip.webp",
+      "sha256": "19ff913eebebeb87bb6357e515b4046b4320440e9ed425e84d7edb3f0a3f8a84",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563382,
+      "partial_pixels": 143,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/18_left.webp",
+      "sha256": "8b743e50bdf86d756874f6df354d995ccf97bd06f5545e53c3b9f3423abebd0a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466501,
+      "partial_pixels": 1193,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/18_right.webp",
+      "sha256": "de894a023b778001a7bf7629aa18099591835c5f2c3eb799f4aae0cbfcad5adb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483979,
+      "partial_pixels": 907,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/19_grip.webp",
+      "sha256": "19432680f363e0cab9558681d22327f8ca67cc481f59d442c6acc906c92e074d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563411,
+      "partial_pixels": 141,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/19_left.webp",
+      "sha256": "fbbc6d50e42ad46fa81112edc485249bea069c865cc02ec37c98b4caacb8dd19",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467039,
+      "partial_pixels": 1186,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/19_right.webp",
+      "sha256": "acf9cf19cb211e69205980d328de862450ea2f63aaa0aa1f301945f1033f1ff9",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484425,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/1_grip.webp",
+      "sha256": "6ca93373b5d82bb3eaf730014e2f32c97017c2e9e55761d77b5f650ead1a2064",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563609,
+      "partial_pixels": 133,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/1_left.webp",
+      "sha256": "5f27fcd5b3f27e1cb481256822c2ac8a81703d5bce9499b2830a9c9af9e0bd41",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477860,
+      "partial_pixels": 1190,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/1_right.webp",
+      "sha256": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1495239,
+      "partial_pixels": 601,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/20_grip.webp",
+      "sha256": "a3e4cf07d072fdeeba90f608c5be4bff300631227f61f38381305b871bc9be58",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563402,
+      "partial_pixels": 142,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/20_left.webp",
+      "sha256": "3ceb46929b2cba036b806ea50c5393ae4ebfebbdfe6eb5f8b4ec8d4b4b496d57",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467066,
+      "partial_pixels": 1194,
+      "corner_alpha": [
+        0,
+        0,
+        191,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/20_right.webp",
+      "sha256": "d318f956c1305710e23b26543069f97368f24f71acaaee8377ef0f64b5fc64dd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483894,
+      "partial_pixels": 971,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/21_grip.webp",
+      "sha256": "79a26296c8480ace0d3dd38164f83e0be9638270cf8d139f21b9c082410df620",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563112,
+      "partial_pixels": 91,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/21_left.webp",
+      "sha256": "fc83949b0a0a16d4a62edb65432c6e5ddde8231fa9e0bd9d668f98d99ba9ee98",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466186,
+      "partial_pixels": 1166,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/21_right.webp",
+      "sha256": "8ec7bebea41e225a0437c40af51acb79deed646fd323fa20930ec79769036bd2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479722,
+      "partial_pixels": 891,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/22_grip.webp",
+      "sha256": "4866125e06551868dc664ece5ad487a3ccc2e7527599cedbb60825a728eed923",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563696,
+      "partial_pixels": 128,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/22_left.webp",
+      "sha256": "8756c53d97e4d095031ffd45a8dc8c7f7bd0259bba98789b69e2c3ab8fd8ede4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466755,
+      "partial_pixels": 1352,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/22_right.webp",
+      "sha256": "a8a46dcd1ff99dd26f20709ec47e5aced4202089fa5ab120130eb656e4c5a62e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1488528,
+      "partial_pixels": 893,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/23_grip.webp",
+      "sha256": "3c47d1bbc2e8f8e8501246b9ed6671811a00fa1c03a7afceb8c471758d5ddb35",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562902,
+      "partial_pixels": 31,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/23_left.webp",
+      "sha256": "acf143f0faac1bfe4f3bc9e8102f27680f1989da980cbec4fd340cabc86c3403",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1468332,
+      "partial_pixels": 1212,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/23_right.webp",
+      "sha256": "74f66e92126106b543a654159b6b7e9da8f4bd7d03557dcd4e0ab09bde76cb46",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484492,
+      "partial_pixels": 907,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/24_grip.webp",
+      "sha256": "bb2411d077d6973ca24732896314766062f907547d113e142092b6797c9d553b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563777,
+      "partial_pixels": 78,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/24_left.webp",
+      "sha256": "560fe42e8991840eaea706147a9ce1ab349323b674be7f8cddcbdf173ab29474",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467849,
+      "partial_pixels": 1300,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/24_right.webp",
+      "sha256": "797578e17d2e8f0b813f1b32b0d16365c47021e9e4c886f28ca12a1b62b1fc63",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1486502,
+      "partial_pixels": 861,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/25_grip.webp",
+      "sha256": "42c606b79f01fdf5ff7053fe9c05a8b3690bcc239fa96d040b41b5168eb5c838",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563519,
+      "partial_pixels": 110,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/25_left.webp",
+      "sha256": "ccc37e184521410bae89adb9ef03fb5c81446c2283cb6ebd31dbab5c35d5d3d7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1459728,
+      "partial_pixels": 1420,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/25_right.webp",
+      "sha256": "77b78ed1f3d8501667d05100352f8df3b8f40cc2ce48b2632de41de326d15bde",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479647,
+      "partial_pixels": 890,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/26_grip.webp",
+      "sha256": "5c024ca313d04309742d9582537556ba170283df3da18c2e786e2643852f3599",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563050,
+      "partial_pixels": 77,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/26_left.webp",
+      "sha256": "2f29da20d833c38eb9e2c81c5b907b66a2721b017d494793cac560fc9878e572",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1459761,
+      "partial_pixels": 1466,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/26_right.webp",
+      "sha256": "1012b5259b373d1834570d96dca09c086fd6bf4d114ab96b509e3e3ba9453893",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483205,
+      "partial_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/27_grip.webp",
+      "sha256": "128eb9a5c87980dc7feb8818c0d54c041623ca0f36e8be866c76699108bef697",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562889,
+      "partial_pixels": 66,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/27_left.webp",
+      "sha256": "70495918b482fe8629def5c6ac0aef0bb8a4fc636dde34c06122a06e164b7251",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466347,
+      "partial_pixels": 1222,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/27_right.webp",
+      "sha256": "c43d196d21826db03f01150d4b2d7b251063f673867bbe2bbb12559705986971",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484760,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/28_grip.webp",
+      "sha256": "9c7b2a5f4524bdfc9ccd8cc8c448cffd9384d71a1f4ee7efc24fec8ba1691fff",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563016,
+      "partial_pixels": 70,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/28_left.webp",
+      "sha256": "d2c10be0c421f074932873e015912dba0b0ecf00f7486ab224d134905e034af1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461703,
+      "partial_pixels": 1209,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/28_right.webp",
+      "sha256": "2dbeb45c78bae6fbf4072fe60bf349a8e4cd1431165c827a35f79721af717abb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481674,
+      "partial_pixels": 902,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/29_grip.webp",
+      "sha256": "0d5e646d933d939b5d1c45eb2c091d9130cfdf3bd10b7d3bf68b34324d72a426",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563625,
+      "partial_pixels": 58,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/29_left.webp",
+      "sha256": "7bdf375d2c25e160f2804306a1b4ada53a9e9f550b1eb263a1159e2b972f2b34",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1468504,
+      "partial_pixels": 1436,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/29_right.webp",
+      "sha256": "64aaaf7d46a450d54686be3aa64cbf3959c25c99332ad48943e9a7f25dd4a21c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1489967,
+      "partial_pixels": 875,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/2_grip.webp",
+      "sha256": "b8813ea9d90fa1b4ab9739aea19cfa541157e255ddd6ed2bd5a7f0807bd9cdb2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563390,
+      "partial_pixels": 156,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/2_left.webp",
+      "sha256": "d5d8d47c3ec7f21ad858ec4d2498545d3763d971b890d821ee9cd05414a429d9",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1467874,
+      "partial_pixels": 1273,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/2_right.webp",
+      "sha256": "145954c08cc386a7ab4a7cb2b71407695e740bb0b9030bb4d59b716ccdc96195",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485326,
+      "partial_pixels": 1037,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/30_grip.webp",
+      "sha256": "ee4658b3dc2a5be48fee1bce112b7b7e4af48d275d996693606236d72b257c76",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563177,
+      "partial_pixels": 57,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/30_left.webp",
+      "sha256": "e49f6d9c3ea9515ac7a38875f04c68025e980149d0c4c9f2f992f16d839750b2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463947,
+      "partial_pixels": 1510,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/30_right.webp",
+      "sha256": "aea8a1d52192cdd002abcb513cfdcc202d6b0cff4f6e54295b04ad3eb1572d7c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485149,
+      "partial_pixels": 915,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/31_grip.webp",
+      "sha256": "e8a10a3966de01620d6315a4e4809f27f4cd2a93e9b0fc2cc9e50b1961da4e44",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563472,
+      "partial_pixels": 137,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/31_left.webp",
+      "sha256": "ed63cc72e3932bfc7a4305bf383a141735fc8b855c17096b8c2b63d86f0439c0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463138,
+      "partial_pixels": 1159,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/31_right.webp",
+      "sha256": "6df286e98646fdace4f37f4a9b5d97e45abc77406b21f19ab57374304449b65d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1478106,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/32_grip.webp",
+      "sha256": "c172562a07ba48aff4b994a637216e775e2f5563ec1abed2efa2333331264eff",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563369,
+      "partial_pixels": 139,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/32_left.webp",
+      "sha256": "fc96526572cf85da2ab8668ee54fddbe10afa6601ec8faafe4319b7b28ddbf23",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462314,
+      "partial_pixels": 1195,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/32_right.webp",
+      "sha256": "f9b409e5a24d1263eee29c32e0a794a628bc0302189c06327356e4867551378d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480907,
+      "partial_pixels": 913,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/33_grip.webp",
+      "sha256": "2b49fd63d650acb37862db8bd65081f8ec07b14dbdb1175b92ced9fa997fcd30",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563026,
+      "partial_pixels": 79,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/33_left.webp",
+      "sha256": "413600d90f041ed3d6f946c3db60f578f644cf18b5cd224746438a7f2169ba29",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463895,
+      "partial_pixels": 1167,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/33_right.webp",
+      "sha256": "8781219f55e62a43b8a462e9fce7b606e3c8dceb8fb1f3349a723d345256b2cc",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1476640,
+      "partial_pixels": 922,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/34_grip.webp",
+      "sha256": "2f8c1ad99cc7fd77ffb07e08af0427a99897f6f8d7ae7d1bc0e3f03e99a11ea6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563408,
+      "partial_pixels": 144,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/34_left.webp",
+      "sha256": "bcbc752ef42ce4ca3d2ddcbf849cd90231667b8286c9cdb89e5ccb6966fc467b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464812,
+      "partial_pixels": 1197,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/34_right.webp",
+      "sha256": "276f58b75f4a60736a5f69bcd18983ec527ba5abe373102d88ded917e933e07e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479380,
+      "partial_pixels": 911,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/35_grip.webp",
+      "sha256": "b66a818ba22e0e65e355c7350e32ffda2753446a793ba59b92f77388427c102c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563398,
+      "partial_pixels": 144,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/35_left.webp",
+      "sha256": "3935b78335bd3afc4bf839a16b9980871433d42d5e7645d8180987c267c21dac",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461212,
+      "partial_pixels": 1214,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/35_right.webp",
+      "sha256": "fa4eb2fa4fa7c31584540c489bd3c8d9c0df399c0900246cd406163bd50f9779",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1476868,
+      "partial_pixels": 950,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/36_grip.webp",
+      "sha256": "efd907caf6eb86fc82391e51e242343829728c5b99e5da1b6224c85bd32f96b0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562766,
+      "partial_pixels": 27,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/36_left.webp",
+      "sha256": "8f9a437658b0bb5aabc9791e890ae963cfe36c2e72478b9dabf89accafe9cb15",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463656,
+      "partial_pixels": 1196,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/36_right.webp",
+      "sha256": "0d7d902bdd1b80261a8cecbcfe05ccaf5dba052cd816de0901d8fa62848972db",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477831,
+      "partial_pixels": 909,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/37_grip.webp",
+      "sha256": "c84d22906e26b4404786fc9afa609283389288237e44f4efcc05db6bc5387fc0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563064,
+      "partial_pixels": 86,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/37_left.webp",
+      "sha256": "7045a74f78091510cc88f46e5fb1a36d787227bc1c8fd8d7ce2394344948fba2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465278,
+      "partial_pixels": 1188,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/37_right.webp",
+      "sha256": "e378a22afa42355fdc9dfb196d4d79e974deec395bb9f67f6dc7d45ecf898264",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483248,
+      "partial_pixels": 890,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/38_grip.webp",
+      "sha256": "3581cafe6ad90a9c4dabb4cf459a40eda5ffb358283511f3125c3abb33bbf3a3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563150,
+      "partial_pixels": 87,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/38_left.webp",
+      "sha256": "0a0ff608cc9473a5793e84bc31b27ccb48ae09c78c8ee7bdc6c1416d6f0788d6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465531,
+      "partial_pixels": 1190,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/38_right.webp",
+      "sha256": "3e95e901dcfb6090cba482721ef1f865eabc3c2c94c150f29e54f6600251f71c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484314,
+      "partial_pixels": 904,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/39_grip.webp",
+      "sha256": "d1993b02b70b0d854d93567b4c96df281f86772a326c949105f7e7ad27c43f7e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563406,
+      "partial_pixels": 129,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/39_left.webp",
+      "sha256": "6f4dd9e63f698cd1bdc2be514e38a10d2233499d2a219882ea81d48b936d3768",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463753,
+      "partial_pixels": 1240,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/39_right.webp",
+      "sha256": "dc3fc8031d2e74a7b37fe62bb35dc009aa3cecffdcee1608c576b6db4de7ea2b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480548,
+      "partial_pixels": 968,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/3_grip.webp",
+      "sha256": "07f20a2a506380244e1e407f64290e1a9abc98a203c5d44772649d3e46186b53",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563409,
+      "partial_pixels": 144,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/3_left.webp",
+      "sha256": "4992000850701281485cd1fcfe424dd5ae45532a301513bd7f6b0a3554c8e363",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462932,
+      "partial_pixels": 1196,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/3_right.webp",
+      "sha256": "1d6397700a1cf6365d5f643a101b45e1aea91d509e51ff608723a78128c7b945",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482468,
+      "partial_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/40_grip.webp",
+      "sha256": "add6584cba4a61f5ffdd691f3af59ba77bcf610a98929c03822dfbff6d284ac5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563729,
+      "partial_pixels": 168,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/40_left.webp",
+      "sha256": "034aa252fc735c2d16839a838bd7886a1de7792274aaf67f53602cf8ec38d5e7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1458823,
+      "partial_pixels": 1184,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/40_right.webp",
+      "sha256": "727dec5d3a0a957207dd84736c9cf68f320304918b01cba8e60dbc9374a91fc5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477810,
+      "partial_pixels": 911,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/41_grip.webp",
+      "sha256": "5384f99c5c31beb601a4c3cea803b68899487cd10451a99bf268c1fa686ad0f4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563381,
+      "partial_pixels": 132,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/41_left.webp",
+      "sha256": "e32445129aee21629337c452dd78d8c43967a1ee7603672f271d06ce0a2b5fe2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464670,
+      "partial_pixels": 1186,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/41_right.webp",
+      "sha256": "b8dbcd704ea66f93b55b01bc33415d288d2b83799300dd63e68d97670e09ec60",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484918,
+      "partial_pixels": 913,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/42_grip.webp",
+      "sha256": "f2ef6564264234f8b27dc5a8f0c625969be4f0944dd5599ab50b2181f2d0863e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562821,
+      "partial_pixels": 37,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/42_left.webp",
+      "sha256": "6e0ef1dda37d67b2310666a1f454a21d609d9022bd3ce898479f69702527961b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1468436,
+      "partial_pixels": 1169,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/42_right.webp",
+      "sha256": "867d4a88ba40688117a23c6fd7d1d0cdcc10d733c83c3a9c1c7ec2c4288934f8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484741,
+      "partial_pixels": 897,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/43_grip.webp",
+      "sha256": "c1bb5a57f553cb45300aa31803b37f7850a85c20f3d9f97647e94c29b52e389d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563397,
+      "partial_pixels": 113,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/43_left.webp",
+      "sha256": "4178884af0a017ce0d24ef796637a3853d526f7ff08aefdb79683072c0e6e863",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464000,
+      "partial_pixels": 1198,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/43_right.webp",
+      "sha256": "2ee55632ee4c10193d7445d385607b2bcc77ce9c5374ad79680c66a404fe298a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480148,
+      "partial_pixels": 886,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/44_grip.webp",
+      "sha256": "75104c5d9a90f15ad2054a825249801092d07c49932e50d3de92914b0c68cf77",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563256,
+      "partial_pixels": 94,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/44_left.webp",
+      "sha256": "47393262d7f42188c832aee68a6c5c1a08b243540f4f2ed8cdac002d593ed023",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465598,
+      "partial_pixels": 1177,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/44_right.webp",
+      "sha256": "f7f29abc6d45acda57e8aac3a5d55dfa5a0ec0b63a5727df9cab2ea737ee7e5a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484586,
+      "partial_pixels": 893,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/45_grip.webp",
+      "sha256": "d83ab9108d7d0647c4a5477ae040690f07155b2e5a452cc57e7eb2c544a1cfca",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562908,
+      "partial_pixels": 69,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/45_left.webp",
+      "sha256": "77e1351a15522526def34259aca5dc3ef4d6c63f8d033f7dde52dab5c41883f1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1460864,
+      "partial_pixels": 1199,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/45_right.webp",
+      "sha256": "cd3b4bfec86582652d367cae19552087fce0727925de5e6f003cdd4727482f1a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1478139,
+      "partial_pixels": 919,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/46_grip.webp",
+      "sha256": "2494bffac66b8d63de27393e8b8f5b4893e05ff986c89336b556928079e3a9ae",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563718,
+      "partial_pixels": 155,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/46_left.webp",
+      "sha256": "619a7bd27bc467976270951c898fb4c052e00512c5bbf6862ab1169557cd4ac7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462760,
+      "partial_pixels": 1228,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/46_right.webp",
+      "sha256": "1ba5b8144f2c21b4486639a8ef8c999f85e7a68eb0a06a487209f813671e48c4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484744,
+      "partial_pixels": 894,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/47_grip.webp",
+      "sha256": "1e1aed40bd107a8d67eedd1fce95e8806a4f99d22a7ab2ba2fe7133db0bc1a8d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563199,
+      "partial_pixels": 108,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/47_left.webp",
+      "sha256": "13ffae72e90bc6891b3e3315adb17fc2b1c6278f096d9f92937232a1b91f4ced",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464564,
+      "partial_pixels": 1195,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/47_right.webp",
+      "sha256": "1564500cabd9f16ba99a48ccabf8b89cd69f89af73202651bdeb85b5746946fd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482602,
+      "partial_pixels": 919,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/48_grip.webp",
+      "sha256": "c929509b3dd4726247608a52749354562a7e6e3a0522cd770d323dbcf612725f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563278,
+      "partial_pixels": 88,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/48_left.webp",
+      "sha256": "2b6d5111486f71d66aca480ddac2fe7f43bf3260fe4562bc40a8f63c7aac15f1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466209,
+      "partial_pixels": 1206,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/48_right.webp",
+      "sha256": "75ba89052d6cff75ee8e6f7ffecd670917604245562c380c91742c6ad83ce850",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482163,
+      "partial_pixels": 897,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/49_grip.webp",
+      "sha256": "0f4c7a1a370f90b5dc1da540b784607b169f290858b2a771a25717b350f86d7c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563301,
+      "partial_pixels": 121,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/49_left.webp",
+      "sha256": "7c3a0b5ac87084bd22e02c9ea3fb59bd2715d5a0a90e40e28f468195d79611a2",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464980,
+      "partial_pixels": 1205,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/49_right.webp",
+      "sha256": "a3ce980a0bba3fd48da06de16cf2ef91d0ce77d9d5462a46aa58d65178d79eee",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480502,
+      "partial_pixels": 909,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/4_grip.webp",
+      "sha256": "8ca2fa7941864db59285f91ad662298f174d6b56a760439167496e03dfeb4670",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563421,
+      "partial_pixels": 128,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/4_left.webp",
+      "sha256": "7f8fd1888269909636a413fe9a8186e68165e658d15772c27c99d5e37dbccf68",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465011,
+      "partial_pixels": 1197,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/4_right.webp",
+      "sha256": "229e553f7fa02c0c303fdd7a746db28788c26affe1d254aa88b40915a19e0108",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484464,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/50_grip.webp",
+      "sha256": "1aa6a48b0264b38fd00466fb4d9bec1c71cbc905db9b91d8c911cb9582076e80",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562837,
+      "partial_pixels": 21,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/50_left.webp",
+      "sha256": "a60ed1f8e44814f86cfa082ae54d9a3a1964b63c3d9a85acc7a67a8bbe7cf5b8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464294,
+      "partial_pixels": 1206,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/50_right.webp",
+      "sha256": "49478e43916740425bcf7eb985c5082b656b708288b8087da7900be8b4b19c35",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482610,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/51_grip.webp",
+      "sha256": "064c603cc36e5e1e6c67298ef5ad678cff4aea2ec5cd7f6f17632ca3f1ee720a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563046,
+      "partial_pixels": 90,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/51_left.webp",
+      "sha256": "7090248ca0b4f88cd72c9441e9a2e33f516730114ba84a22dbd64e8ea5f9be06",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461399,
+      "partial_pixels": 1171,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/51_right.webp",
+      "sha256": "16c60ccd5cd67dd86f7ccfbb80d68c65550e42d4d6d7be2ddf6241738eff0447",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477758,
+      "partial_pixels": 904,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/52_grip.webp",
+      "sha256": "7227da48f4f8208b47fc9b88fe30b524bd1205a709642faf503eff1cccec1e72",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563226,
+      "partial_pixels": 109,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/52_left.webp",
+      "sha256": "b79a0ccfb069d40fb102e5ba7222ac26268731afefa3bb6c52d7dc7060267d29",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465809,
+      "partial_pixels": 1177,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/52_right.webp",
+      "sha256": "e378cd3800aaf23a5e65be197ff4975ad4e5d5bb6108194665b44774a606fee3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484527,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/53_grip.webp",
+      "sha256": "aebbf77f07d66800dc090a0852f136fc20395b535e85623e5dfa9219c8cafb0d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563541,
+      "partial_pixels": 93,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/53_left.webp",
+      "sha256": "89b58be3dd4168ac5185210a0a8f4fdd756d705779842a43770850f937c1bfa8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464841,
+      "partial_pixels": 1192,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/53_right.webp",
+      "sha256": "ba747be0051d63ee157e16e05b54b370df0c1572c4f5cc876e7de19750e513ee",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484883,
+      "partial_pixels": 921,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/54_grip.webp",
+      "sha256": "92be9ea18cf89485d561cdb0682e24275a164a5e2cb8f52859e060396a18b209",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562739,
+      "partial_pixels": 11,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/54_left.webp",
+      "sha256": "7495c8c252e3fa8f88a7f186d06b6318802da79043d8e218b5beaefae556a34d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1456729,
+      "partial_pixels": 1264,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/54_right.webp",
+      "sha256": "cb9fcb2942cec696ab6b5629ad9a398baa11fe483dcd3ba0dec655afb2f51bc0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1472532,
+      "partial_pixels": 962,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/55_grip.webp",
+      "sha256": "a4e03e9832e8e9d9df2f7cebe4bd3e9070f631c6a31a00fdb6c76c4e2fb74b10",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563262,
+      "partial_pixels": 121,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/55_left.webp",
+      "sha256": "a5ff85c5345cc49b95ee56173b4292cdc5c671843c68ca4823266becf3e77d74",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462427,
+      "partial_pixels": 1192,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/55_right.webp",
+      "sha256": "20d97a14dd7939661845fa11f24295bb4e6e1dee9d8e78731346ff5b18af7763",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480001,
+      "partial_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/56_grip.webp",
+      "sha256": "3a51eb65925db5292c7adda508bbcad11875a22de59e266fa430f89372e374d6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562825,
+      "partial_pixels": 42,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/56_left.webp",
+      "sha256": "f33a36285b36b73187ac34be4c01c7d61720b9ca7256809f3b2452fdf546db62",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465206,
+      "partial_pixels": 1185,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/56_right.webp",
+      "sha256": "0c5dac8e82675d8d2286e4275954c21241d3ad7239fceac55f59e902174606fc",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481376,
+      "partial_pixels": 928,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/57_grip.webp",
+      "sha256": "f4677076ce89fc4a29a475f7df28e2dfabf650cbc9dd691832450a6a82ca1436",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563230,
+      "partial_pixels": 109,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/57_left.webp",
+      "sha256": "935c94d1153ff8cf08f3fbb31010b5ad62a6c503392a77eed3488700b468808b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462987,
+      "partial_pixels": 1178,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/57_right.webp",
+      "sha256": "cdf9b90098020275f62e12105f966a6aaa379b90afb07b4f22a640e6037f729e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480227,
+      "partial_pixels": 875,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/58_grip.webp",
+      "sha256": "a3965a1486b421cbe0d8d91f7933205da903cd71b9ef586a36ee20319834ea89",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563611,
+      "partial_pixels": 173,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/58_left.webp",
+      "sha256": "e399f7fb97311735dcca289a82a1f4e610cf08f5558ee3e74d91e7318e3ea29c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462052,
+      "partial_pixels": 1154,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/58_right.webp",
+      "sha256": "db5df6a9033d52b11300ac9603615a15bb8fb5b957c7e14ed030f8db24766243",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479818,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/59_grip.webp",
+      "sha256": "f3c65c61e1c99495cbb71d5bc25f11f6451c2ecf5bfa08395196cff98bba9e53",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562995,
+      "partial_pixels": 126,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/59_left.webp",
+      "sha256": "e8313e5d609cb3df827dd789f4586f6a29249b8d597a4877d26d4d41b4e90abb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462826,
+      "partial_pixels": 1511,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/59_right.webp",
+      "sha256": "cb195ab14b900efdcfebfea728b626011a95d26ca4e03ea04559233493f51505",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479823,
+      "partial_pixels": 1470,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        191
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/5_grip.webp",
+      "sha256": "7fd8dd6af68361fb921297538cafa7b0461ed3e538ea2c8ab42810d801662fed",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1564516,
+      "partial_pixels": 183,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/5_left.webp",
+      "sha256": "42df9b1ab75ffe333e01be7ffb6464b2e1f330cfddc14b9c1745500fb98393cb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1469729,
+      "partial_pixels": 1180,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/5_right.webp",
+      "sha256": "25d423fd016a6b2404ac63d0c257de2379f1f208ccd9f7b2c67299b767424616",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484413,
+      "partial_pixels": 906,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/60_grip.webp",
+      "sha256": "e3dc6fc5b971c5491deee19a6828b7b33c5b84bf90262b3d466f2014a2bf63c1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563141,
+      "partial_pixels": 37,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/60_left.webp",
+      "sha256": "35c4e5b2391a455bf8068b6f1caa57136ebeb2d984314d49fe7c250e7a6fab0a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1457379,
+      "partial_pixels": 1273,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 1,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/60_right.webp",
+      "sha256": "dbb6b29292a9c6b8b2a639613daec8dff7c521f9c33cdab94b1ef8a645e5618c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480212,
+      "partial_pixels": 941,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/61_grip.webp",
+      "sha256": "ad5741d18ac07f72d22ebfbae17b51af14bc449065de8ca538f4a4199d153677",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563154,
+      "partial_pixels": 71,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/61_left.webp",
+      "sha256": "12606e881ca5476e3ac569e42a24115d36df5c84a21cac5a8ac17ed93c19e94c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1459057,
+      "partial_pixels": 1226,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/61_right.webp",
+      "sha256": "d72c65456a6be42c2e4c53fb4629453372863b1c976e59b42f2d6f59bda62f3d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485258,
+      "partial_pixels": 894,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/62_grip.webp",
+      "sha256": "0c577137e94c5136756945f9947e0d5c949392f76e8beea781a41f869619669a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563406,
+      "partial_pixels": 132,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/62_left.webp",
+      "sha256": "e050e26a6575cb6f0c8fa788841be47b7f72bb07cdb46833647cca7290b323a5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461969,
+      "partial_pixels": 1212,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/62_right.webp",
+      "sha256": "ea03443acfd42d7cd40186217386f14db28b212e9c70336e8da1c5f65c1f965e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480959,
+      "partial_pixels": 927,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/63_grip.webp",
+      "sha256": "646ba858c283b25a7eac8da904a1634840c314ac9b26ef799b38080833c3edcc",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563529,
+      "partial_pixels": 127,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/63_left.webp",
+      "sha256": "1ae397729f11382f392c393d6d1e954c954fea766786ebdeba3056de0de92354",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464261,
+      "partial_pixels": 1202,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/63_right.webp",
+      "sha256": "427b6fb310ce757401343c72cdbb7f12e69eec767d8a3b2cf16cdd2c1aaf76fa",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1483916,
+      "partial_pixels": 903,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/64_grip.webp",
+      "sha256": "f1cee35369c15f06851e6c2ee3cdfd217da7246edd935577d2ed6dae3eeb1c7d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1564021,
+      "partial_pixels": 175,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/64_left.webp",
+      "sha256": "324357fde82a635151bff744efd8da5c7805b76aeafc07c086ccbbdc78af4f77",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1466423,
+      "partial_pixels": 1192,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/64_right.webp",
+      "sha256": "7376e537957b251c99c964f2c52f684051a4a11a87e951bbae8e071e1fa7afad",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485549,
+      "partial_pixels": 897,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/65_grip.webp",
+      "sha256": "5186054b8e6e491dda4e392173f0bc54e7fbc0b2256e4ea4522564d8c66d8c02",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563406,
+      "partial_pixels": 117,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/65_left.webp",
+      "sha256": "52cb4eb4a672071942b68060b1c04d117cf967e34dac862ae62fcdb5e294f79a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463037,
+      "partial_pixels": 1179,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/65_right.webp",
+      "sha256": "cddb3165aae819ce7f6da2add83f046c89a4be7f0dc79ef8b4affcfeeb19d633",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485352,
+      "partial_pixels": 919,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/66_grip.webp",
+      "sha256": "c43ef47ae4463a5941db90f5d594f6680336ab3f3b00e6ed4cc157d0e4ddc809",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563087,
+      "partial_pixels": 105,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/66_left.webp",
+      "sha256": "0da0e9a78287651d20caeb0cd7cdfbb6d1b85c3a4b351981ce4d88123382d522",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462966,
+      "partial_pixels": 1182,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/66_right.webp",
+      "sha256": "31a113d15a3627b8829d8e14a8df81be4dc90d8c7acb364ad303af8e9eb409f7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481602,
+      "partial_pixels": 964,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/67_grip.webp",
+      "sha256": "8552ac4b7402013dfce7bf6a25b3ab3cdb2014e427f1d6a4d4475e1874c29219",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562875,
+      "partial_pixels": 58,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/67_left.webp",
+      "sha256": "dd38c198ddb7c11fa502415bc2ee0af6f0c4217190f2af3e139e775231585325",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461141,
+      "partial_pixels": 1188,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/67_right.webp",
+      "sha256": "65e7cae4967a96795fba822c03161efdb4123b36708da34fb83bf56652ee115f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1478394,
+      "partial_pixels": 902,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/68_grip.webp",
+      "sha256": "7e4ea07f923d9afbf98845a07412b320949e72acf0af7a120a74865bd541fe5b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563348,
+      "partial_pixels": 108,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/68_left.webp",
+      "sha256": "affc94c8afdf57734c96c2c9e4137b6103d51f12b862b5add886169473de8057",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463997,
+      "partial_pixels": 1188,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/68_right.webp",
+      "sha256": "8d9a75c98085eee501fb97974ff18f9a7f7cb036cb621f6897933dce93e28ac1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480251,
+      "partial_pixels": 890,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/69_grip.webp",
+      "sha256": "b0610b54b4a627125a8cff4735a47f28d506bca9a189d4b8a1500d32d941795b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563097,
+      "partial_pixels": 87,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/69_left.webp",
+      "sha256": "373852cd83f96ab58a7caf757ec904cbd41a52ad59178c2ab9db634eda747d63",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462183,
+      "partial_pixels": 1195,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/69_right.webp",
+      "sha256": "8748adfc2f3500e7fb75242cd9e58286c25aeb2cc202446716f882820d560895",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479577,
+      "partial_pixels": 900,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/6_grip.webp",
+      "sha256": "606b856f647a554fb21f1e85100c6faab8a518fa980aae802f7c7fe7b4aa969a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563399,
+      "partial_pixels": 138,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/6_left.webp",
+      "sha256": "a9a024194a79c09280dcaab06f4097d796ef39ceaa562e3b0b8b411d134a3a8e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465154,
+      "partial_pixels": 1185,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/6_right.webp",
+      "sha256": "3ce4ff87e5123bf415d0f1ac29f56fa7e8c2072c613a0f518ce43223aeb6198f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482180,
+      "partial_pixels": 908,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/70_grip.webp",
+      "sha256": "fcd700941b99a10e9d568f42dfdf360a65b7bcc951c407f067e36a14e38846ef",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563464,
+      "partial_pixels": 101,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/70_left.webp",
+      "sha256": "7979b4ee5ee69e31c07b1f83c3b3c44d56dc63e0441b6ceb0eb5b6d47480f417",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1459379,
+      "partial_pixels": 1202,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/70_right.webp",
+      "sha256": "96a154f7f1c172c629cc51ae2ac720c14daae2923dda9aef50d201709e88f3db",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480295,
+      "partial_pixels": 899,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/71_grip.webp",
+      "sha256": "2bf50f627871af41513c1ba84891a8702113fcf6d713d69f30c97cdb3e27ba22",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562965,
+      "partial_pixels": 73,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/71_left.webp",
+      "sha256": "d638c21399c14afb1ab02e457db3ce7c4c66c14b3a09d383a6f7020fc8cf0601",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1458958,
+      "partial_pixels": 1226,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/71_right.webp",
+      "sha256": "299022900bac6340bd559907ce1aa2a8332cc810706bfea4fa376351f3dad0d5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1478875,
+      "partial_pixels": 923,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/72_grip.webp",
+      "sha256": "2defe311dcaf0e4ed17a2972277d805bf5aac13d38e1a9881d658b8c3bd85cde",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562864,
+      "partial_pixels": 50,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/72_left.webp",
+      "sha256": "a7a5a2cf13bb2bcbfcdd36e73af447739cf5c01789efa5b65fd7be0397886fa8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461401,
+      "partial_pixels": 1175,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/72_right.webp",
+      "sha256": "aa0518ce67e0ebed9ec489db8679ea8df918b3e5157354f9ff1d5ee69107ab3d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477185,
+      "partial_pixels": 903,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/73_grip.webp",
+      "sha256": "7249968ee286044b1f5e1938ec51fbffd848a17975c929b6f1588b187261d16c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563410,
+      "partial_pixels": 108,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/73_left.webp",
+      "sha256": "b3881322992765a92e31897554e8b8c3dc0ce97a96299d371a971c909c113b62",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463227,
+      "partial_pixels": 1200,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/73_right.webp",
+      "sha256": "04037a66557b074f8d0979fc55eab12734bb259f148ff0988ec1e54df1dad452",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484050,
+      "partial_pixels": 878,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/74_grip.webp",
+      "sha256": "d96e7f19643c8988e18a3a98d83c14c3d2b5990c89afd4aafcafa649aa2cf978",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562972,
+      "partial_pixels": 72,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/74_left.webp",
+      "sha256": "2761536bf65227fd74f80e7c01edc8ae361bf71e7620a26402fa1fe7c94d8e6a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1456970,
+      "partial_pixels": 1174,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/74_right.webp",
+      "sha256": "902379e85b7c5688b600f1fb13235d7ec8aefcc6235ee9c2aa9793ea657d42f3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1474410,
+      "partial_pixels": 893,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/75_grip.webp",
+      "sha256": "36fc90a0e3f6e21757013ce180300fed373f0e5a54a4f3f38d5d612582a0c425",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563238,
+      "partial_pixels": 102,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/75_left.webp",
+      "sha256": "81e8da40894a7006e122b228c755ca4ea63a0ee620c8bb959fe9263d9c6b4818",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464863,
+      "partial_pixels": 1218,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/75_right.webp",
+      "sha256": "a4f3716725654ce6b6dbab6416f9dff36237e3250559858123374103f22678f6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484596,
+      "partial_pixels": 905,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/76_grip.webp",
+      "sha256": "862f100b87d6e5adfacbfeb29615dbb5f735c1006db488e6bd14a38e5ba1aaa6",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563021,
+      "partial_pixels": 80,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/76_left.webp",
+      "sha256": "d660ed8a32d9c91cdcd8b5901cbcdc752ca12a395e1eb778a9bedea0196b27ff",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462453,
+      "partial_pixels": 1218,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/76_right.webp",
+      "sha256": "e0329bd5beabc14baa10904c16a1c79e56ed126461c6646fed29d2129b8253fc",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480035,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/77_grip.webp",
+      "sha256": "919d8cc69130bcaa1b53ab541022afdea53bf4a27ba0a1044511858fcfefe408",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563300,
+      "partial_pixels": 86,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/77_left.webp",
+      "sha256": "271bca74146301d7689be78713251bd95ba0fc16c5725d7019d41a0073b8932d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464214,
+      "partial_pixels": 1226,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/77_right.webp",
+      "sha256": "e66c23cbfa0a64171003a8a2dbdabcae943bb36f5cde9de6b37d8118aec8c818",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1486590,
+      "partial_pixels": 905,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/78_grip.webp",
+      "sha256": "fd18ee2df7fd24a7a6a54eb64dd2054bbebf8b5cb2a1763739ba3bcf68080260",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562867,
+      "partial_pixels": 49,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/78_left.webp",
+      "sha256": "bc9a5e4ad4f84a52652d5a2e5f61ff00af0852b08f16112a5c58a9af9c9e1f20",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1458326,
+      "partial_pixels": 1162,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/78_right.webp",
+      "sha256": "d879fea5401ba1c4e420857ddccb691360df0a3503201ad0398693a1c1ce0699",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1476204,
+      "partial_pixels": 887,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/79_grip.webp",
+      "sha256": "068d41e8d828440ad4fe302a58dc551b49b9c0107c2a3927f687862b18a87266",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562943,
+      "partial_pixels": 63,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/79_left.webp",
+      "sha256": "f35a864cd13b30182b429bd86904c593b0b7976120febe0861d8b629b6496f1d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464678,
+      "partial_pixels": 1170,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/79_right.webp",
+      "sha256": "e78e0542fe38ab287d7ca733e463f03b6043d608efb34672386119ff5dcada5c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481047,
+      "partial_pixels": 924,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/7_grip.webp",
+      "sha256": "2304bc51d33a485d7f03e094db43399a4852043d91740dbc716ca04df83f7aa4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563444,
+      "partial_pixels": 132,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/7_left.webp",
+      "sha256": "1b72e606471fa4f07d2cf8ea7dd7e7434e3d3e978f4e06572d3a11dbcfbc8b08",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463720,
+      "partial_pixels": 1188,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/7_right.webp",
+      "sha256": "aa9417259d9e92a2765df8833d318616eebb59a127d8a8e9cd03068f062e85e1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482766,
+      "partial_pixels": 903,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/80_grip.webp",
+      "sha256": "2bfbc4c46607992f354b5efe5df919c444123116cfba91601ff03ac29f02fcb9",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563007,
+      "partial_pixels": 96,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/80_left.webp",
+      "sha256": "220c4b43753dbed17f095a459e392cb3f5e4600616c17c5a03c90ff9f2032bd3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462687,
+      "partial_pixels": 1182,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/80_right.webp",
+      "sha256": "5dac6ad7491d7b5308300ceb5f56b8197463f9201585cbed79bd75c270727e77",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480401,
+      "partial_pixels": 906,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/81_grip.webp",
+      "sha256": "fa4bd272382bbced3992dce183204a16191277753926cca9b966ddfd3aaa1deb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563442,
+      "partial_pixels": 136,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/81_left.webp",
+      "sha256": "31d54c235acc5f3ec2066b574949a8c1898b95b3e289be3343f83da32806eca0",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463647,
+      "partial_pixels": 1177,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/81_right.webp",
+      "sha256": "410e6220851aee08b9122abdd26324c4391191d5978d4412feea05f0f73cfe8f",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481678,
+      "partial_pixels": 909,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/82_grip.webp",
+      "sha256": "be22ed4c7b76fa4446d6cad4bb755f3561b9a7f168fac35201c2552feecb7992",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562941,
+      "partial_pixels": 70,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/82_left.webp",
+      "sha256": "9c8c3935fff330b7311392837f97a9b11de8d1203efe8a17a94faa78477253dd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461462,
+      "partial_pixels": 1197,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/82_right.webp",
+      "sha256": "d295cb7c1b4382dde70301e41dcf3559d4c21306d4b5f2b74905deae533bf126",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1480459,
+      "partial_pixels": 923,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/83_grip.webp",
+      "sha256": "43a1f848eceee60df4ecc5830380fa33d3087e7b489052a1938e46b4c6295269",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562777,
+      "partial_pixels": 31,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/83_left.webp",
+      "sha256": "456abc9a7c4596fb0374138a19b2ccb1b3399089e6bf15541f00d6f9d040c43e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463193,
+      "partial_pixels": 1260,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/83_right.webp",
+      "sha256": "81f2e57c1f08bbc3e7cd61bf97c3be6fd9ecfe8462a77585ea3e27b997e263f9",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477404,
+      "partial_pixels": 948,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/84_grip.webp",
+      "sha256": "8d95dba8c450320332ce1c779768d2a006fdb52f4086f5b93f9c135b49b3d14b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563135,
+      "partial_pixels": 89,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/84_left.webp",
+      "sha256": "ddbcb847120211ec5b6353015b9c83856f5f8b158e581c03310fbbb699d774a8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1457775,
+      "partial_pixels": 1214,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/84_right.webp",
+      "sha256": "490184229093135cd30144accca0bb4d1f7c323189c7cc97f04993f22d0632e3",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1477808,
+      "partial_pixels": 947,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/85_grip.webp",
+      "sha256": "bb51c498683ed2b7102bfc28807e97f3c015d8658db404dc480859772e99e932",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563293,
+      "partial_pixels": 113,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/85_left.webp",
+      "sha256": "e41321f5c430ef3f7fcf20712e354674a082806086ab88031d95bf7d3c35429a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465484,
+      "partial_pixels": 1198,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/85_right.webp",
+      "sha256": "c64413664b7b11fe35fe710982ea003cde7087d72df8fe1b6236598fda1a5dbb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482627,
+      "partial_pixels": 926,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/86_grip.webp",
+      "sha256": "d71d4d7be517dfffda42dbbd25b09d7e1b040fe58d67ba481c13add76bd63148",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563037,
+      "partial_pixels": 84,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/86_left.webp",
+      "sha256": "35d7b787546ecc19692ea8a6e38de1d8737b024a5c8876e19530673aebcc8877",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1462740,
+      "partial_pixels": 1189,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/86_right.webp",
+      "sha256": "3112dcb3be6551e11d71acd03f0ecccda4a0c49551e3abf1f18da6e8858b7205",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479751,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/87_grip.webp",
+      "sha256": "c6591476bc9c870186a1ef6a7b44c72e4fe0fdd2b9c7dea4984bc3e8c55b9353",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563566,
+      "partial_pixels": 137,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/87_left.webp",
+      "sha256": "1eb5dbfe86c26254f0637d0b3a3da519dcdaff8f1b5f6935d0a230ac8d490abd",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465668,
+      "partial_pixels": 1191,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/87_right.webp",
+      "sha256": "103cc26a629d4cb8de508a11dcf038ffc1d54301b952696172a5da2cb31766f4",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484319,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/88_grip.webp",
+      "sha256": "a8059bc21a398ac92a746606aca8b7a27478cf9aac640679fb67b1c1cf521f60",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563041,
+      "partial_pixels": 102,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/88_left.webp",
+      "sha256": "9cb949732be686e743c488647739ca317e113b49430dada72a4eeaf2348ef6ac",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1464441,
+      "partial_pixels": 1215,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/88_right.webp",
+      "sha256": "31db3edfb21e32f24325484492871025f4e8bb8477bab6e2727fa32cf634e0ff",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479752,
+      "partial_pixels": 925,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/89_grip.webp",
+      "sha256": "0c324adb05280a5d83485432a3b67c966f6bcce32612aa27b86e496f6a2cefbb",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562892,
+      "partial_pixels": 48,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/89_left.webp",
+      "sha256": "36f3835ec073cd0d058c783a268d96d55e04a4a0cca10ca5dcdc588402cf3317",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461843,
+      "partial_pixels": 1160,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/89_right.webp",
+      "sha256": "e46cbe67db67a1f8e7571521797f501fa2d1027f1dce2a5bf197317231f9bd56",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481258,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/8_grip.webp",
+      "sha256": "66869e01ccd026bfb1578eeed4675627d413e81d9319f1d1f7681becbf400181",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563435,
+      "partial_pixels": 133,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/8_left.webp",
+      "sha256": "a438f8e1454d9a3e4820db33ebdf94b57345fdb554b323040db7d207a67ed462",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465511,
+      "partial_pixels": 1203,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/8_right.webp",
+      "sha256": "9b95fd43fd4aab44c3b34514467adf05b57385f457bd7875421e8495aaf339b7",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484070,
+      "partial_pixels": 918,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/90_grip.webp",
+      "sha256": "5b476cc939466248e2d156ab14ca121be941cdcd8a20b9c270c87af3f2e7ec75",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563077,
+      "partial_pixels": 93,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/90_left.webp",
+      "sha256": "b18dd07206107efc9a7cf180fb5f5fc53dc0c8c7dc6bda23cd44407260f08e54",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1460713,
+      "partial_pixels": 1187,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/90_right.webp",
+      "sha256": "d1bb32ae2fdd66599f6726134f3f88520a1f4887b3696c79d3ac392cee2d7a59",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482037,
+      "partial_pixels": 920,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/91_grip.webp",
+      "sha256": "e14c54794613d6520c054f824bd2b590257e7647465ba423a45928981c26a6be",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563249,
+      "partial_pixels": 109,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/91_left.webp",
+      "sha256": "c6d2d66e76c471366ebf65702d940e5bba71abe881cd2de7b3f97b063f0c9f78",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461613,
+      "partial_pixels": 1230,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/91_right.webp",
+      "sha256": "8dd304d8a19cc6bc836bccf4bdca483926ca9a4b5b7315852434c6ce88e8e773",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1479627,
+      "partial_pixels": 910,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/92_grip.webp",
+      "sha256": "2d398aa26383c2e43e3726d14e4059a1e80a31e8752593f035a03c52f0f9933c",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563131,
+      "partial_pixels": 106,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/92_left.webp",
+      "sha256": "0ca99777f385c527db1cbd41d8c6dd0ce0bc8c21b473accde25aa169779b8c15",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463138,
+      "partial_pixels": 1189,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/92_right.webp",
+      "sha256": "190b8c9fcb0e06d35e772d955084ac664feff8487e578550bb18fa96d04942f8",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484743,
+      "partial_pixels": 908,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/93_grip.webp",
+      "sha256": "22c4fb9cb7beb9c0cc55a7c345c6a46c4b1c7fdba4b9704846ebb2fdfed7c36b",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563499,
+      "partial_pixels": 76,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/93_left.webp",
+      "sha256": "72711f092880544c44af268374d5aba63021f6bc4250d1c378deff05bff306a5",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1461374,
+      "partial_pixels": 1163,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/93_right.webp",
+      "sha256": "f8cc269fa3c1c6736083bf57e23010025314c05707f1336e64d1d0800d1e3127",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1485514,
+      "partial_pixels": 885,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/94_grip.webp",
+      "sha256": "b057d6c3f4bf6ed87e8e344b1f3d3000ef239136441e46e35bc1596e19c3e549",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562882,
+      "partial_pixels": 54,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/94_left.webp",
+      "sha256": "e4c4e39bb6ab422f35011a02d3bd9fa22e04fa881565c80861f062eb1047eb88",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1457359,
+      "partial_pixels": 1195,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/94_right.webp",
+      "sha256": "bf4a201b9e4944d69c9744e0dcedd6a4f9f8d61f20cabc615430359fcef41b41",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1473849,
+      "partial_pixels": 896,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/95_grip.webp",
+      "sha256": "1fa29612f580e7a1f759af30d3985430aa491ede7ac25f3795329fedd83ed125",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563267,
+      "partial_pixels": 99,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/95_left.webp",
+      "sha256": "f4caa22ef80d5077bc147bf8c6d931946760a76410fc37694b89ca3b6a7be69d",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463516,
+      "partial_pixels": 1206,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/95_right.webp",
+      "sha256": "86b06d7711abf37241f74ea6a8fc67d4b07f24d9d063a1c913bba9e0c270eef1",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1482347,
+      "partial_pixels": 914,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/96_grip.webp",
+      "sha256": "03cb7e29f7eac6f6990cdd0372f47dd6d27fb6fccf057e32f02a6c0f3792c6ea",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1562892,
+      "partial_pixels": 64,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/96_left.webp",
+      "sha256": "44a49dbd9654c1028d2a66d22d48585af93b0986f787e000fe88859bb50e530a",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1463425,
+      "partial_pixels": 1205,
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/96_right.webp",
+      "sha256": "5d758347dbee45f57b049b158ff4df3a8ee61d2b897a00cd171de370503e0d1e",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1484495,
+      "partial_pixels": 922,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/9_grip.webp",
+      "sha256": "4f93cb0a795d3321b55269016c87138f50763f4483b6e9caeb806e3b8409b744",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1563412,
+      "partial_pixels": 139,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/9_left.webp",
+      "sha256": "c5b96fa8708f7d0c9d2862074c33d0987b90fc8d4224b711b8770333470fbc67",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1465326,
+      "partial_pixels": 1205,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/anomaly/hands/9_right.webp",
+      "sha256": "a9dba12d6225d8cf00f9c8779b4615181e82ddccf2aa3956373b781745ae0f58",
+      "size": [
+        1536,
+        1024
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1481628,
+      "partial_pixels": 901,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/1.png",
+      "sha256": "5be1dbe2f0ffd1ab5ea0ffd5366cec575581867d3aceda88561f1debbd93c774",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1265698,
+      "partial_pixels": 4481,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/100.png",
+      "sha256": "deb1160efc902ea6577554507851c4a98441cb2241bcf119f83f642bb064281b",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1224644,
+      "partial_pixels": 4996,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        242
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/101.png",
+      "sha256": "e469394adbd5f3f44c84b7e577a644c613e4b730fa75e07202cd46ab6ee95cf5",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1082306,
+      "partial_pixels": 6009,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/102.png",
+      "sha256": "f8f9baf7e086296b60197a151613823cd8ba589cac1c432b925d99d47ae0d2e0",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1186024,
+      "partial_pixels": 5595,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/103.png",
+      "sha256": "93fb6bf34cdec8a6ac1dae564a206a73ee8d12f0ab433f049c2d60350ac1d94d",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1174948,
+      "partial_pixels": 6142,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/104.png",
+      "sha256": "2082c07bd338a837ecb70a799ca72259460dde7f4d4bc9ee0fff8497f1a0afac",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1214204,
+      "partial_pixels": 5302,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/105.png",
+      "sha256": "b70dba3b1e6cd1ffe68e6345b84252f502d336e22d5a11bef6581e979aba463b",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1181284,
+      "partial_pixels": 5690,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/2.png",
+      "sha256": "d28be30742d7a43066383452b2b9eb537a32f115a209ca84b46672b9cba4fcb9",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 928143,
+      "partial_pixels": 643520,
+      "corner_alpha": [
+        0,
+        0,
+        1,
+        250
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/3.png",
+      "sha256": "ff0ddce2984f5f8d84af106454c26ce5eb44175b786b9bd99152ed85114bfb0a",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1259026,
+      "partial_pixels": 4460,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/5.png",
+      "sha256": "140fabc19ae26192f5a80f0e787a79cec0ad0142796b9fe9956b6acf987fd307",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1243637,
+      "partial_pixels": 5037,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        247
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/6.png",
+      "sha256": "ad273e6b9899f92da011975cb66799ff11c391453129ff12dcc7bde396b988aa",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1251238,
+      "partial_pixels": 5517,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/7.png",
+      "sha256": "0d7a40599bb8bc4a0730f3ea06b9136afc092bee1adaf73c36a13d5e6ffa069b",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1269185,
+      "partial_pixels": 4715,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/86.png",
+      "sha256": "fb624c53234768cf41bd84697a43f1d6b7ebad4bbd1dda045de1322ee8b18831",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1270121,
+      "partial_pixels": 4563,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/87.png",
+      "sha256": "79f5d03f91aab3072cf0255b610baa5db70a6d7f9ad6b35071cc3ec5f00081fe",
+      "size": [
+        1322,
+        1190
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1095535,
+      "partial_pixels": 477287,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        252
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/88.png",
+      "sha256": "1b6e389b5d7c4a707fcefba4b8fa54560f53c9ce6703c00956b253c90458549f",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1265964,
+      "partial_pixels": 3667,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/89.png",
+      "sha256": "700f2d94733bc2c14ea63cef3760b2f13331cb08f076c7dd34709a312093e9f7",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1262830,
+      "partial_pixels": 3827,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        239
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/90.png",
+      "sha256": "aee0a1fa1ae439d37ba54d79f9309a7c1336f965b89425dbe59dd1fd9c2b24de",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1266501,
+      "partial_pixels": 3866,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/91.png",
+      "sha256": "82eb8f0a16b1e46924a736e88cfd7107e1c3c64070ca96eaab0ac29a11eb9cd5",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1264476,
+      "partial_pixels": 5023,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/92.png",
+      "sha256": "10a3969bd2e5c3b32958ea265e2e57b3f3ed881756c63f05f7f9ae70340c9273",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1273111,
+      "partial_pixels": 4014,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/93.png",
+      "sha256": "7c1d0e92b88476cf340221695e9656de111a678948cc83e56d4854d6a003efa1",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1254195,
+      "partial_pixels": 4680,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/94.png",
+      "sha256": "7d7ab9d6a8b05a1b3a7e08205bce6212a627ebdf93630f0f7f7ccd08fdb44811",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1211068,
+      "partial_pixels": 4799,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/95.png",
+      "sha256": "7b0793da10281dcca3d4dec20152aa5d59d502156b7267ab9e76dc14ace9d680",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1255842,
+      "partial_pixels": 4214,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/96.png",
+      "sha256": "87cc637548f1252b551cff0107470cadf64a9111daaf531ad2f394c24a7fa3ea",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1250435,
+      "partial_pixels": 4631,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/97.png",
+      "sha256": "d5efab0a10f59eb9358dcb5e05ad76479a3546c29587b70ec8a7bc94229c12af",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1236430,
+      "partial_pixels": 4608,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/98.png",
+      "sha256": "5c0d35aac903a0837570f5e44eb2e70cfb79ace408bba8836245b8e671ec54a3",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1233562,
+      "partial_pixels": 5324,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    },
+    {
+      "path": "images/combat/pistols/99.png",
+      "sha256": "5f1b46036c4d6836352844108792b53b89dfb9f27596dd08c49dd653301f9359",
+      "size": [
+        1254,
+        1254
+      ],
+      "has_alpha": true,
+      "transparent_pixels": 1235776,
+      "partial_pixels": 4726,
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "magenta_candidates": 0,
+      "visual_review": "pending"
+    }
+  ],
+  "limitations": "Alpha presence cannot prove clean contours, absence of baked checkerboard, or correct anatomy."
+}
