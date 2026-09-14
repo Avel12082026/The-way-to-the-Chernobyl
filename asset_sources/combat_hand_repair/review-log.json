@@ -1,0 +1,623 @@
+{
+  "date": "2026-09-14",
+  "scope": "Current 26 pistol sprites with armor 1. Not approval of the new 96-hand pack.",
+  "publication": "e5cfdc92bda1a1f3a210e9d5592ff4e839e1072a",
+  "currentWeapons": [
+    {
+      "id": 86,
+      "name": "Beretta 21A Bobcat",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/86.png": "fb624c53234768cf41bd84697a43f1d6b7ebad4bbd1dda045de1322ee8b18831",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Пистолет ПСМ",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/2.png": "d28be30742d7a43066383452b2b9eb537a32f115a209ca84b46672b9cba4fcb9",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 87,
+      "name": "Walther PPK",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/87.png": "79f5d03f91aab3072cf0255b610baa5db70a6d7f9ad6b35071cc3ec5f00081fe",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Пистолет Макарова",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/1.png": "5be1dbe2f0ffd1ab5ea0ffd5366cec575581867d3aceda88561f1debbd93c774",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Пистолет ИЖ-71",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/3.png": "ff0ddce2984f5f8d84af106454c26ce5eb44175b786b9bd99152ed85114bfb0a",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 88,
+      "name": "Glock 25",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/88.png": "1b6e389b5d7c4a707fcefba4b8fa54560f53c9ce6703c00956b253c90458549f",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Пистолет ОЦ-33 «Пернач»",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/5.png": "140fabc19ae26192f5a80f0e787a79cec0ad0142796b9fe9956b6acf987fd307",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Револьвер Наган",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/6.png": "ad273e6b9899f92da011975cb66799ff11c391453129ff12dcc7bde396b988aa",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 89,
+      "name": "Walther P99",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/89.png": "700f2d94733bc2c14ea63cef3760b2f13331cb08f076c7dd34709a312093e9f7",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 90,
+      "name": "CZ 75",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/90.png": "aee0a1fa1ae439d37ba54d79f9309a7c1336f965b89425dbe59dd1fd9c2b24de",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 91,
+      "name": "Glock 17",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/91.png": "82eb8f0a16b1e46924a736e88cfd7107e1c3c64070ca96eaab0ac29a11eb9cd5",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 92,
+      "name": "Beretta 92FS",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/92.png": "10a3969bd2e5c3b32958ea265e2e57b3f3ed881756c63f05f7f9ae70340c9273",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 93,
+      "name": "SIG Sauer P226",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/93.png": "7c1d0e92b88476cf340221695e9656de111a678948cc83e56d4854d6a003efa1",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Пистолет ТТ",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/7.png": "0d7a40599bb8bc4a0730f3ea06b9136afc092bee1adaf73c36a13d5e6ffa069b",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 94,
+      "name": "HK USP",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/94.png": "7d7ab9d6a8b05a1b3a7e08205bce6212a627ebdf93630f0f7f7ccd08fdb44811",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 95,
+      "name": "Glock 22",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/95.png": "7b0793da10281dcca3d4dec20152aa5d59d502156b7267ab9e76dc14ace9d680",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 96,
+      "name": "SIG Sauer P229",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/96.png": "87cc637548f1252b551cff0107470cadf64a9111daaf531ad2f394c24a7fa3ea",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 97,
+      "name": "Glock 20",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/97.png": "d5efab0a10f59eb9358dcb5e05ad76479a3546c29587b70ec8a7bc94229c12af",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 98,
+      "name": "Colt 1911",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/98.png": "5c0d35aac903a0837570f5e44eb2e70cfb79ace408bba8836245b8e671ec54a3",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 99,
+      "name": "Glock 21",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/99.png": "5f1b46036c4d6836352844108792b53b89dfb9f27596dd08c49dd653301f9359",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 100,
+      "name": "CZ 97B",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/100.png": "deb1160efc902ea6577554507851c4a98441cb2241bcf119f83f642bb064281b",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 101,
+      "name": "HK Mark 23",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/101.png": "e469394adbd5f3f44c84b7e577a644c613e4b730fa75e07202cd46ab6ee95cf5",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 102,
+      "name": "Taurus Judge",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/102.png": "f8f9baf7e086296b60197a151613823cd8ba589cac1c432b925d99d47ae0d2e0",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 103,
+      "name": "Smith & Wesson Model 29",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/103.png": "93fb6bf34cdec8a6ac1dae564a206a73ee8d12f0ab433f049c2d60350ac1d94d",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 104,
+      "name": "Taurus Raging Bull",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/104.png": "2082c07bd338a837ecb70a799ca72259460dde7f4d4bc9ee0fff8497f1a0afac",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    },
+    {
+      "id": 105,
+      "name": "Desert Eagle Mark XIX",
+      "armor": 1,
+      "phaseTimes": [
+        0,
+        40,
+        89,
+        90,
+        150,
+        240
+      ],
+      "animationChecks": "passed",
+      "visualReview": "reviewed-current-barrel-and-six-shot-phases",
+      "handAnatomy": "legacy hand; full remake still pending",
+      "inputHashes": {
+        "images/combat/scene.js": "c101c549aa5f49d70b67299744149fca81fccd5c93f07892c3785bdb16f5edc9",
+        "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+        "images/combat/effects.js": "648fd01beb76e06c9a463d424cdc44a1370601c4253821f8772665fb97522da9",
+        "images/combat/pistols/105.png": "b70dba3b1e6cd1ffe68e6345b84252f502d336e22d5a11bef6581e979aba463b",
+        "images/anomaly/hands/1_right.webp": "1790bc0962191c6dc307c2281c2b9aa656254038c552699be46a236891c5484e"
+      }
+    }
+  ],
+  "candidateHand1": {
+    "status": "not-approved-for-release",
+    "weaponsReviewedAfterContourChange": [
+      1,
+      2,
+      3,
+      102,
+      103,
+      104,
+      105
+    ],
+    "notes": "Improved glove occlusion. Index continuity and model-specific fit still require approval before rolling out to other hands."
+  },
+  "rules": [
+    "After changing any pistol placement or image, render and visually inspect that model again, including muzzle flash and recoil.",
+    "After changing any hand, inspect fingers, sleeve seam, transparency and equipped model overlap before copying its pose to further armor.",
+    "Hash changes invalidate the corresponding review; rendered output alone is not a visual approval."
+  ]
+}
