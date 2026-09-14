@@ -3,12 +3,6 @@
   "files": [
     {
       "mode": "100644",
-      "path": "asset_sources/combat_hand_repair/candidate-checks.json",
-      "sha": "d75c326bf8fc4fbe30a59c4e01515687617e9fdd",
-      "type": "blob"
-    },
-    {
-      "mode": "100644",
       "path": "asset_sources/combat_hand_repair/combat-1-bare-v2-source.png",
       "sha": "953a1f35e27da4c9f7506d273ef7d45259be3bfc",
       "type": "blob"
