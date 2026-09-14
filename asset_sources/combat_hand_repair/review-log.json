@@ -619,5 +619,21 @@
     "After changing any pistol placement or image, render and visually inspect that model again, including muzzle flash and recoil.",
     "After changing any hand, inspect fingers, sleeve seam, transparency and equipped model overlap before copying its pose to further armor.",
     "Hash changes invalidate the corresponding review; rendered output alone is not a visual approval."
-  ]
+  ],
+  "anatomy74": {
+    "status": "reference-only-not-integrated",
+    "rejected": "Initial isolated hand confused thumb/index; removed from local prepared hands. Do not reuse hand73 as anatomy master.",
+    "variants": [
+      {
+        "file": "asset_sources/combat_hand_repair/anatomy-74/fingerless.webp",
+        "alpha": [
+          0,
+          254
+        ],
+        "visualReview": "Distinct full thumb, separate index, three lower digits; alpha rendered on light background without checkerboard.",
+        "armorMatch": "Anatomy study only; not armor74 equipment"
+      }
+    ],
+    "remaining": "Extract correct modular layers; fit all 26 weapons and test flash; armor75–96 pending. Existing older anatomy reviews do not approve new template."
+  }
 }
