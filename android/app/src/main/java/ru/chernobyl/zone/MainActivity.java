@@ -48,11 +48,19 @@ public final class MainActivity extends Activity {
     }
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
-        web=new WebView(this);setContentView(web);
+        android.widget.FrameLayout frame=new android.widget.FrameLayout(this);
+        frame.setBackgroundColor(0xff101510);
+        web=new WebView(this);frame.addView(web,new android.widget.FrameLayout.LayoutParams(-1,-1));setContentView(frame);
         web.setBackgroundColor(0xff101510);
-        web.setOnApplyWindowInsetsListener((view,insets)->{
-            view.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;
+        frame.setOnApplyWindowInsetsListener((view,insets)->{
+            int left,top,right,bottom;
+            if(android.os.Build.VERSION.SDK_INT>=30){
+                android.graphics.Insets safe=insets.getInsets(android.view.WindowInsets.Type.systemBars()|android.view.WindowInsets.Type.displayCutout()|android.view.WindowInsets.Type.ime());
+                left=safe.left;top=safe.top;right=safe.right;bottom=safe.bottom;
+            }else{left=insets.getSystemWindowInsetLeft();top=insets.getSystemWindowInsetTop();right=insets.getSystemWindowInsetRight();bottom=insets.getSystemWindowInsetBottom();}
+            view.setPadding(left,top,right,bottom);return insets;
         });
+        frame.requestApplyInsets();
         WebSettings settings=web.getSettings();
         settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(false);settings.setAllowContentAccess(false);

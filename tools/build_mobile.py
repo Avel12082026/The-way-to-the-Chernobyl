@@ -38,13 +38,15 @@ def transform(html):
     part=html[start:end].replace('.then(res => res.json())',".then(res => {if(!res.ok)throw new Error('Не удалось загрузить профиль');return res.json();})")
     part=part.replace("document.getElementById('app').style.display = 'block';\n            });", "document.getElementById('app').style.display = 'none';\n                location.replace('index.html');\n            });")
     html=html[:start]+part+html[end:]
-    html=html.replace('</body>','''<script>
+    html=html.replace('</head>', '<style>.zr-raid-head{flex-wrap:wrap;gap:10px}.zr-raid-head>div{font-size:clamp(20px,5.8vw,28px)!important;gap:14px!important;line-height:1.4;flex-wrap:wrap}.zr-raid-head>div>span{white-space:nowrap;text-shadow:0 2px 3px #000}</style></head>')
+    html=html.replace('</body>', '''<script>
 const mobileMenu=document.getElementById('mainMenu');
 if(mobileMenu){
-const controls=document.createElement('div');controls.style.cssText='display:grid;gap:10px;padding:16px';
+const controls=document.createElement('div');controls.style.cssText='display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:8px 0;grid-column:1/-1;width:100%';
 const exit=document.createElement('button');exit.textContent='Выход из игры';exit.onclick=()=>GameSession.exit();
 const logout=document.createElement('button');logout.textContent='Выйти из аккаунта';logout.onclick=()=>{if(confirm('Выйти из аккаунта и удалить сохранённый вход?'))GameSession.logout();};
-controls.append(exit,logout);mobileMenu.append(controls);
+exit.style.cssText=logout.style.cssText='width:100%;min-width:0;min-height:48px;padding:8px 4px;font-size:clamp(11px,3vw,15px);white-space:normal';
+controls.append(logout,exit);const chat=document.getElementById('mainMenuChatSlot');if(chat)chat.after(controls);else mobileMenu.append(controls);
 }
 </script></body>''')
     return html
