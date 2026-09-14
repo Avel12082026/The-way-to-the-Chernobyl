@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.net.Uri;
 import android.webkit.*;
 import android.view.View;
-import androidx.webkit.WebViewAssetLoader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ByteArrayInputStream;
 import java.util.Collections;
 
@@ -28,15 +29,21 @@ public final class MainActivity extends Activity {
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         CookieManager.getInstance().setAcceptThirdPartyCookies(web,false);
         WebView.setWebContentsDebuggingEnabled(false);
-        final WebViewAssetLoader loader=new WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/",new WebViewAssetLoader.AssetsPathHandler(this)).build();
         web.setWebViewClient(new WebViewClient(){
             @Override public WebResourceResponse shouldInterceptRequest(WebView view,WebResourceRequest request){
                 Uri uri=request.getUrl();
                 if(!"https".equals(uri.getScheme()))return blocked();
                 if(LOCAL.equals(uri.getHost())){
-                    WebResourceResponse response=loader.shouldInterceptRequest(uri);
-                    return response==null?blocked():response;
+                    String path=uri.getPath();
+                    if(path==null||!path.startsWith("/assets/")||path.contains("..")||path.contains("\\"))return blocked();
+                    try {
+                        InputStream content=getAssets().open(path.substring(8));
+                        String extension=MimeTypeMap.getFileExtensionFromUrl(path);
+                        String mime=MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                        if("js".equals(extension))mime="application/javascript";
+                        if(mime==null)mime="application/octet-stream";
+                        return new WebResourceResponse(mime,"UTF-8",content);
+                    } catch(IOException error){return blocked();}
                 }
                 // Static images never fall back to GitHub or the game server.
                 if(SERVER.equals(uri.getHost())&&(uri.getPath().startsWith("/api/")||uri.getPath().startsWith("/avatars/")))return null;

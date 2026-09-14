@@ -1,6 +1,6 @@
 # Android migration — test version
 
-The Android app bundles the existing game, combat/anomaly assets, armor, icons and audio. `WebViewAssetLoader` serves them from the APK. Only API requests and player avatars may reach the game server; static asset requests cannot fall back to GitHub. The Telegram client remains supported.
+The Android app bundles the existing game, combat/anomaly assets, armor, icons and audio. A restricted `WebViewClient` serves them directly from Android assets under an HTTPS origin. Only API requests and player avatars may reach the game server; static asset requests cannot fall back to GitHub. The Telegram client remains supported.
 
 ## Build
 
@@ -49,3 +49,15 @@ node tests/combat_scene_exclusion.test.cjs
 The server tests use Node 24's temporary in-memory SQLite database. Browser verification uses Playwright with mocked API responses and never modifies live players. Device playtesting and validation against the actual deployed server remain required before production release.
 
 Implementation references: [Android local content](https://developer.android.com/develop/ui/views/layout/webapps/load-local-content), [AGP compatibility](https://developer.android.com/build/releases/agp-8-9-0-release-notes).
+
+## Result of this build (2026-09-14)
+
+- Debug APK built successfully; APK Signature Scheme v2 verified.
+- 910 bundled files verified byte-for-byte against SHA-256 manifest.
+- Server authentication/binding/shop tests: 4 passing; bundle tests: 2 passing.
+- Existing combat catalog/assets and combat/anomaly exclusion checks pass.
+- Bundled JavaScript syntax checks pass.
+- Browser visual verification was not completed: the provided browser could not access the local preview. The Playwright test is included for an environment with a working local browser. No Android device/emulator test has been performed.
+- Live server has not been modified. Source-hash guard must match before installation.
+
+Local build used the SDK's aapt2 via `-Pandroid.aapt2FromMavenOverride=/path/to/sdk/build-tools/35.0.0/aapt2` when the Maven copy was unavailable; this is a build-environment option, not a change to the app's runtime network or TLS policy.
