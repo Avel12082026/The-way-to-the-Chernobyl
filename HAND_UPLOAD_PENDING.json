@@ -1,10 +1,5 @@
 {
-  "repository": "Avel12082026/The-way-to-the-Chernobyl",
   "branch": "feature/android-local-assets",
-  "verified_asset_commit": "943eeb3ed019f82f3b7e197cd5e14c67b7c44466",
-  "local_checkpoint": "6d213b7",
-  "local_path": "/workspace/scratch/32622e83ed9b/game",
-  "reason": "environment_offline; local files unavailable for further upload",
   "files": [
     {
       "mode": "100644",
@@ -312,5 +307,10 @@
       "sha": "a03fb8abfeed7caf8c34e315a7d04cc12007b855",
       "type": "blob"
     }
-  ]
+  ],
+  "local_checkpoint": "6d213b7",
+  "local_path": "/workspace/scratch/32622e83ed9b/game",
+  "reason": "Publication in progress; environment available",
+  "repository": "Avel12082026/The-way-to-the-Chernobyl",
+  "verified_asset_commit": "943eeb3ed019f82f3b7e197cd5e14c67b7c44466"
 }
