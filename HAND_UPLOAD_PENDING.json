@@ -3,12 +3,6 @@
   "files": [
     {
       "mode": "100644",
-      "path": "asset_sources/combat_hand_repair/STATUS.md",
-      "sha": "f9da31c820e7d78302387355f425754e4584fa2c",
-      "type": "blob"
-    },
-    {
-      "mode": "100644",
       "path": "asset_sources/combat_hand_repair/candidate-checks.json",
       "sha": "d75c326bf8fc4fbe30a59c4e01515687617e9fdd",
       "type": "blob"
