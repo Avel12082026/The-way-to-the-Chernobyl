@@ -4,6 +4,14 @@ from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('deploy',ROOT/'tools/mobile_deploy_template.py');deploy=importlib.util.module_from_spec(spec);spec.loader.exec_module(deploy)
 class DeployTests(unittest.TestCase):
+ def test_inactive_service_rejected_before_proc_access(self):
+  from types import SimpleNamespace
+  with patch.object(deploy.shutil,'which',return_value='/usr/bin/node'),patch.object(deploy,'run',return_value=SimpleNamespace(stdout='LoadState=loaded\nActiveState=inactive\nSubState=dead\nMainPID=0\n')):
+   with self.assertRaisesRegex(RuntimeError,'не запущена'):deploy.find_process(Path('/var/www/pocketzone/server.js'))
+ def test_missing_service_pid_rejected(self):
+  from types import SimpleNamespace
+  with patch.object(deploy.shutil,'which',return_value='/usr/bin/node'),patch.object(deploy,'run',return_value=SimpleNamespace(stdout='LoadState=loaded\nActiveState=active\nSubState=running\nMainPID=0\n')):
+   with self.assertRaisesRegex(RuntimeError,'основной процесс'):deploy.find_process(Path('/var/www/pocketzone/server.js'))
  def test_rejects_unreviewed_source_before_process_or_database_access(self):
   with tempfile.TemporaryDirectory() as folder:
    server=Path(folder)/'server.js';server.write_text('unreviewed live server')
@@ -40,7 +48,7 @@ class TransactionTests(unittest.TestCase):
     backups=list(root.glob('BACKUP_BEFORE_MOBILE_*'));self.assertEqual(len(backups),1)
     with sqlite3.connect(backups[0]/'game.db') as snapshot:self.assertEqual(snapshot.execute('SELECT data FROM players').fetchone()[0],'saved progress')
     self.assertEqual(db.execute('SELECT data FROM players').fetchone()[0],'saved progress')
-    restarts=[x for x in run.call_args_list if x.args[0][:2]==['pm2','restart']];self.assertEqual(len(restarts),1 if healthy else 2)
+    restarts=[x for x in run.call_args_list if x.args[0][:2]==['systemctl','restart']];self.assertEqual(len(restarts),1 if healthy else 2)
    db.close()
  def test_success_backs_up_wal_database_before_restarting(self):self.exercise(True)
  def test_failed_health_restores_code_without_rolling_back_player_data(self):self.exercise(False)
