@@ -1,0 +1,589 @@
+{
+  "note": "Files preserved, not a claim that anatomy of every variant is approved. Original source paths are provenance only, not runtime dependencies.",
+  "hands": [
+    {
+      "armor": 1,
+      "path": "asset_sources/prepared_hand_pack/hands/1.webp",
+      "sha256": "3c775a0c2bb5050f4a7c348828e872ede8ffcaebf05273a8d5eaedf98ad2cdfb",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": true,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 2,
+      "path": "asset_sources/prepared_hand_pack/hands/2.webp",
+      "sha256": "efcb5728c9cdfdab37fd2e7fffd2b4d181e79048aec25c9e38590d4065ff27e4",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": true,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 3,
+      "path": "asset_sources/prepared_hand_pack/hands/3.webp",
+      "sha256": "f3a6539e9d713d9590d9b95f3105db9e0657909778841dd5183bcdb13ef22bba",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 4,
+      "path": "asset_sources/prepared_hand_pack/hands/4.webp",
+      "sha256": "063d60b3c1832df46929a5ef6b8104781345381f377f436b5564bcf9cdcb02c3",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 5,
+      "path": "asset_sources/prepared_hand_pack/hands/5.webp",
+      "sha256": "7fa49a0fd5d253d20fe29ca79ce1f689a786165f332c89ff5c55d4e7317fe20f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 6,
+      "path": "asset_sources/prepared_hand_pack/hands/6.webp",
+      "sha256": "09a6039294aea8d24d1a99d18a436ff6dca3980becad321cd65519075564204f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 7,
+      "path": "asset_sources/prepared_hand_pack/hands/7.webp",
+      "sha256": "473097ca50a1657e6ce8e79f5d1581738aecdebe03cd37f29736b425f3bb9660",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 8,
+      "path": "asset_sources/prepared_hand_pack/hands/8.webp",
+      "sha256": "de9ec29b4b53ec096026d5a1e478d46153456744975d812f538a6938ec904c9a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 9,
+      "path": "asset_sources/prepared_hand_pack/hands/9.webp",
+      "sha256": "aea58ce45d6f425874416c8ef7a10b4e21f58dc79775e5edef6ab0a9af55d12d",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 10,
+      "path": "asset_sources/prepared_hand_pack/hands/10.webp",
+      "sha256": "c339e321d9fc481f1e5f1ae7c63ea936891cf607155c349697afcfbe80c9ad6c",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 11,
+      "path": "asset_sources/prepared_hand_pack/hands/11.webp",
+      "sha256": "cf3a185a6a6648246785a100261b225139caa5dc26396a3206df035807d04fa6",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 12,
+      "path": "asset_sources/prepared_hand_pack/hands/12.webp",
+      "sha256": "de88eb06771c73abba6a403f5fc69e2c3904dd1efd0ab16915016aa97fa122fd",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 13,
+      "path": "asset_sources/prepared_hand_pack/hands/13.webp",
+      "sha256": "59be18d8314b91a73a443d09857b91b313a8207dbd17bdb03b5f3e2afa595cc6",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 14,
+      "path": "asset_sources/prepared_hand_pack/hands/14.webp",
+      "sha256": "fb0a818ddcac93e21332f2f8f663c92a817283fb3a45ba311114ed0f4f8a8b1e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 15,
+      "path": "asset_sources/prepared_hand_pack/hands/15.webp",
+      "sha256": "7f1e129b2c40bd84cac4713b515a13bbf452ba98c15461300ac193de8bb9c8ae",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 16,
+      "path": "asset_sources/prepared_hand_pack/hands/16.webp",
+      "sha256": "31667a1a21115361e960309d0f2a7aea98d3714cc6198ed22ab5013d7298b654",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 17,
+      "path": "asset_sources/prepared_hand_pack/hands/17.webp",
+      "sha256": "6e1428036ec8b980119999ef0ad9b0cad5ebfb376f90ee5d796ffc4e3b0cc16f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 18,
+      "path": "asset_sources/prepared_hand_pack/hands/18.webp",
+      "sha256": "00dac3fa8386f1393c136d7c16bdeee66b11510dc3bae6d9d7d3c8a7b0d47515",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 19,
+      "path": "asset_sources/prepared_hand_pack/hands/19.webp",
+      "sha256": "88baef61b936292fa1c886dafdc6bb8d50a0cbd6705113db41b17abbfaa54eaa",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 20,
+      "path": "asset_sources/prepared_hand_pack/hands/20.webp",
+      "sha256": "a8680b1722d6b65e6c444b29beb29ad5933812fa2d6e7e6e40f7921849dae298",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 21,
+      "path": "asset_sources/prepared_hand_pack/hands/21.webp",
+      "sha256": "3b5c26a1289adf85d8ef817694018ab6b7349ad4487f217035884794e6a2507e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 22,
+      "path": "asset_sources/prepared_hand_pack/hands/22.webp",
+      "sha256": "4f13a2593688d69aef6de5f38a1dc0e12298f451cdf179f2ee3c66e3aab4bf0b",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 23,
+      "path": "asset_sources/prepared_hand_pack/hands/23.webp",
+      "sha256": "d8c913e3fc347e606433482f85d87b30b6a5259bbc068159be06f3b6bf2184a7",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 24,
+      "path": "asset_sources/prepared_hand_pack/hands/24.webp",
+      "sha256": "06ecfd502162268fbbcc10009c4bbdd8542f60583f08d5b9c500177b3db5959c",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 25,
+      "path": "asset_sources/prepared_hand_pack/hands/25.webp",
+      "sha256": "5e9aa01b61f1a5f32857ab19975c7d886bb97f8752bd0091289aba10ab24246e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 26,
+      "path": "asset_sources/prepared_hand_pack/hands/26.webp",
+      "sha256": "ba8151d0b8308826a9c7f3b915bf783bebcf728e29331f9665de63b405f01384",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 27,
+      "path": "asset_sources/prepared_hand_pack/hands/27.webp",
+      "sha256": "a142a55c48d4835fac4506bd9d8e7e1b01c3193b3694b70581e98b0dfa7b877a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 28,
+      "path": "asset_sources/prepared_hand_pack/hands/28.webp",
+      "sha256": "ff97c5b3c0ef328512a49e4e4724326dc272e569f684ea09087536321cd6f1cb",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 29,
+      "path": "asset_sources/prepared_hand_pack/hands/29.webp",
+      "sha256": "e7887f84a0332cb8a9e2fddfe9a98b8e885a6be7a75892cc63f6005f8d0f9d3f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 30,
+      "path": "asset_sources/prepared_hand_pack/hands/30.webp",
+      "sha256": "386e9393046b7b32408a3ee9a78496d0667522ca2676577fe923bfe03c9f9e9f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 31,
+      "path": "asset_sources/prepared_hand_pack/hands/31.webp",
+      "sha256": "07e0608d1d0c668bb2307b89c46b0dd0ec49359e7525a117164bff77753bd74a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 32,
+      "path": "asset_sources/prepared_hand_pack/hands/32.webp",
+      "sha256": "0a3b3e0392190f558d631f87527017def82be544aa882b3695d839c9ab34d2c8",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 33,
+      "path": "asset_sources/prepared_hand_pack/hands/33.webp",
+      "sha256": "2440eec3d3ed672de1eb15b35378f67e68c94ed03b45ffa49f4487396aedf1f8",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 34,
+      "path": "asset_sources/prepared_hand_pack/hands/34.webp",
+      "sha256": "929e9a5c4bbd814869bf88d5c1641bc105be73ecdf8ecc3c604c21a5809d7d33",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 35,
+      "path": "asset_sources/prepared_hand_pack/hands/35.webp",
+      "sha256": "0d42124e6fe1d9b9f6bc526e7a3e7749d3c33e3a8f4310d998d0931acb094b99",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 36,
+      "path": "asset_sources/prepared_hand_pack/hands/36.webp",
+      "sha256": "9f6ef4ef145cf10c111553e4a2e5b6249c6462f786f72e75ae91c3cbaebfd6be",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 37,
+      "path": "asset_sources/prepared_hand_pack/hands/37.webp",
+      "sha256": "42f3299c3439974d565d39235841244013d7195a5c20698bbfc8a191162ca1a0",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 38,
+      "path": "asset_sources/prepared_hand_pack/hands/38.webp",
+      "sha256": "f32236d54f5277cc9f6a3d34c0022ccd05302c73f6fdd69b30bff442d64b1260",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 39,
+      "path": "asset_sources/prepared_hand_pack/hands/39.webp",
+      "sha256": "9bced42647b6f95efb47be2639116159734e8a6355c5ecda624f9fc013fc4a56",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 40,
+      "path": "asset_sources/prepared_hand_pack/hands/40.webp",
+      "sha256": "8e0ca307127a57ae76de2b09d66b63aeaa5b5a0285a4088bf270ccb85f25dfcd",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 41,
+      "path": "asset_sources/prepared_hand_pack/hands/41.webp",
+      "sha256": "15c5673ce291c75cc0a12d37a757907d7a90bd2570ec0c294564a2aef278de7d",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 42,
+      "path": "asset_sources/prepared_hand_pack/hands/42.webp",
+      "sha256": "bcb8033ac87e632b6db11409ed06119d364b2274a8d2134f6b63554072054deb",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 43,
+      "path": "asset_sources/prepared_hand_pack/hands/43.webp",
+      "sha256": "09a4ac57e354c09094fa2c7e9bdd35c3c3ded6bf5942864b33f6e0550307d84a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 44,
+      "path": "asset_sources/prepared_hand_pack/hands/44.webp",
+      "sha256": "b17dd246c95338c17fd317b7086e69272d6f9c208c5f6055f1ccecfee43c6540",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 45,
+      "path": "asset_sources/prepared_hand_pack/hands/45.webp",
+      "sha256": "58b9b90b655dc914d2eb503ebe51d4d4990b051f506e00ea9c568937c506ca46",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 46,
+      "path": "asset_sources/prepared_hand_pack/hands/46.webp",
+      "sha256": "baa4d49de7011e3c0d1d5a6c414bba19a55d91f3d593985dd32d249eb171de32",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 47,
+      "path": "asset_sources/prepared_hand_pack/hands/47.webp",
+      "sha256": "3614e253f2b311b31c92d8d5bb81b339b58da32b458b37f80705f2cc58b54c88",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 48,
+      "path": "asset_sources/prepared_hand_pack/hands/48.webp",
+      "sha256": "1c48f817f85213acb913a454b87cacd37789b5c48518ab4b23ca3b12fa47e9c7",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 49,
+      "path": "asset_sources/prepared_hand_pack/hands/49.webp",
+      "sha256": "d3d0c9c456795fc02b72f5161c9a35c365111c71bbf60cc1407da51819433f8e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 50,
+      "path": "asset_sources/prepared_hand_pack/hands/50.webp",
+      "sha256": "e2b6b148229e1df89db6aebf3448a362bb70cd916f2a7a28bab8851e94f8487e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 51,
+      "path": "asset_sources/prepared_hand_pack/hands/51.webp",
+      "sha256": "596e3fa2a6ae955375f2c2c1057dee5420eba94d8fce41038215a4a7db5b8357",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 52,
+      "path": "asset_sources/prepared_hand_pack/hands/52.webp",
+      "sha256": "c422b6b5c2f3168dc4ac3b6b566a554fdde289e9490046ce8521fb0654260b70",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 53,
+      "path": "asset_sources/prepared_hand_pack/hands/53.webp",
+      "sha256": "b64d58a9fe665c980550201db422468918a363499e0bdbea63981723880f625b",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 54,
+      "path": "asset_sources/prepared_hand_pack/hands/54.webp",
+      "sha256": "1d55ee983da004678cae5399ed9da4afe4679abff657d6192085f5d1731931b7",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 55,
+      "path": "asset_sources/prepared_hand_pack/hands/55.webp",
+      "sha256": "7a759699a895597a821acfd7c742fe584fc255f2bfc3767bb60c9951ce6bce2e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 56,
+      "path": "asset_sources/prepared_hand_pack/hands/56.webp",
+      "sha256": "19c70978f2512158dba653f76714438f3c082229b0647d0703a8e5410a9931ca",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 57,
+      "path": "asset_sources/prepared_hand_pack/hands/57.webp",
+      "sha256": "966866a4e6126b8c7898aa25659931a70ef32864ed6f575ec5673719180b7ada",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 58,
+      "path": "asset_sources/prepared_hand_pack/hands/58.webp",
+      "sha256": "0456455bfb6ab8698057c05da1ab81054e90642b0a7f9fa27b8cc6d36e12237a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 59,
+      "path": "asset_sources/prepared_hand_pack/hands/59.webp",
+      "sha256": "be496374d0a78b5aa97f2b144d73e294b7c572e629298bd558449c48a9df7040",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 60,
+      "path": "asset_sources/prepared_hand_pack/hands/60.webp",
+      "sha256": "160008145c8d49c55ce28905f287ba00b4b4244aa59875c70071b54da54fea77",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 61,
+      "path": "asset_sources/prepared_hand_pack/hands/61.webp",
+      "sha256": "cf8b37c80edd1b35503613dba803955587a0eb55971490e4cfb75ad6c8ecc8dc",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 62,
+      "path": "asset_sources/prepared_hand_pack/hands/62.webp",
+      "sha256": "40e234f2fb1cb7124c26b9a788c8ed8180b60a0aecbee8137361012bf0b8d37e",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 63,
+      "path": "asset_sources/prepared_hand_pack/hands/63.webp",
+      "sha256": "5ef202f54f7406579a4d27281213ceb15553fbf2e98bd6cc45ea64225879a7e7",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 64,
+      "path": "asset_sources/prepared_hand_pack/hands/64.webp",
+      "sha256": "6fd129c62ffaab8651c9d2301256b95ee1b580ef3598b93ba120592f1f51fde5",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 65,
+      "path": "asset_sources/prepared_hand_pack/hands/65.webp",
+      "sha256": "a98d6b7b0b96debadf6249caa3c3c9c2e5eb569ec2869d6d33871b07e6dd9dfd",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 66,
+      "path": "asset_sources/prepared_hand_pack/hands/66.webp",
+      "sha256": "edfbb19efa2ed2c0adcc54f5370cb40e00f124a56c73613a32f599e21801253b",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 67,
+      "path": "asset_sources/prepared_hand_pack/hands/67.webp",
+      "sha256": "ea56466d52a52e218b448f5ac9f61f6bed7db169dc1c4974f5b7587376582f37",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 68,
+      "path": "asset_sources/prepared_hand_pack/hands/68.webp",
+      "sha256": "0cd24fc692454f266cc3e2d1dd1839bc81ac184d9f3686e83a7f98646e4457a4",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 69,
+      "path": "asset_sources/prepared_hand_pack/hands/69.webp",
+      "sha256": "fb3f011aa99fdc5f341004cd0661f99e3c24310df971fc4ea703b1ce13825e68",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 70,
+      "path": "asset_sources/prepared_hand_pack/hands/70.webp",
+      "sha256": "81f6b84f63afec829529e11b228727142ea3a525037302e82b37a6683010066f",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 71,
+      "path": "asset_sources/prepared_hand_pack/hands/71.webp",
+      "sha256": "49fdc07d90d8eaa48b3e517c688cb44b7f9523940ca27c85db2628d6f91d04f5",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 72,
+      "path": "asset_sources/prepared_hand_pack/hands/72.webp",
+      "sha256": "eb4211abff8c14cbf9de3cf9af46308afa5627082156db882b599333ec06cc5a",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    },
+    {
+      "armor": 73,
+      "path": "asset_sources/prepared_hand_pack/hands/73.webp",
+      "sha256": "dba83e28341ca2796739e409c2e0b6b012673ed281218f269793ab05ebcc5e01",
+      "new_export_logged": true,
+      "integrated_corrected_modular_hand": false,
+      "individual_review": "see combat_hand_repair/review-log.json for armor 1 and 2; pending for other armor"
+    }
+  ]
+}
