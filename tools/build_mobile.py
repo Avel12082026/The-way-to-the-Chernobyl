@@ -38,7 +38,7 @@ def transform(html):
     part=html[start:end].replace('.then(res => res.json())',".then(res => {if(!res.ok)throw new Error('Не удалось загрузить профиль');return res.json();})")
     part=part.replace("document.getElementById('app').style.display = 'block';\n            });", "document.getElementById('app').style.display = 'none';\n                location.replace('index.html');\n            });")
     html=html[:start]+part+html[end:]
-    html=html.replace('</head>', '<style>.zr-raid-head{flex-wrap:wrap;gap:10px}.zr-raid-head>div{font-size:clamp(20px,5.8vw,28px)!important;gap:14px!important;line-height:1.4;flex-wrap:wrap}.zr-raid-head>div>span{white-space:nowrap;text-shadow:0 2px 3px #000}</style></head>')
+    html=html.replace('</head>', '<script src="images/combat/effects.js"></script><style>.zr-raid-head{flex-wrap:wrap;gap:10px}.zr-raid-head>div{font-size:clamp(20px,5.8vw,28px)!important;gap:14px!important;line-height:1.4;flex-wrap:wrap}.zr-raid-head>div>span{white-space:nowrap;text-shadow:0 2px 3px #000}</style></head>')
     html=html.replace('</body>', '''<script>
 const mobileMenu=document.getElementById('mainMenu');
 if(mobileMenu){
