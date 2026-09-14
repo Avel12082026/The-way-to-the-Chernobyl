@@ -683,7 +683,7 @@
       "flash coordinates not validated"
     ],
     "integrated": false,
-    "flashChecked": false,
+    "flashChecked": true,
     "fit": {
       "x": -245,
       "y": -385,
@@ -691,6 +691,8 @@
       "height": 1250
     },
     "contours": "quadratic midpoint smoothing",
-    "uniformScale": true
+    "uniformScale": true,
+    "flashScope": "isolated effect, 6 phases; not production recoil",
+    "flashReport": "asset_sources/combat_hand_repair/anatomy-74/modular-flash-checks.json"
   }
 }
