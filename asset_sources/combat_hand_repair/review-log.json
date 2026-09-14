@@ -673,5 +673,17 @@
       "modularFitVerified": false,
       "flashVerified": false
     }
+  },
+  "modular74": {
+    "status": "needs-refinement",
+    "weapon": 1,
+    "renderer": "tools/review_armor74_layers.cjs",
+    "issues": [
+      "angular finger masks",
+      "index overlap needs close review",
+      "weapon nonuniform scaling needs review"
+    ],
+    "integrated": false,
+    "flashChecked": false
   }
 }
