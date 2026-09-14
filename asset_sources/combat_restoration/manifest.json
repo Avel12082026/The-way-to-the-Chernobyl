@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Гротескная свинья-мутант с янтарными глазами.png",
+    "library_file_id": "libfile_78775a4261c0819192e0acd9586a6140",
+    "target": "mutants/flesh.png"
+  },
+  {
+    "name": "Заброшенная сторожка на лесной просеке.png",
+    "library_file_id": "libfile_d610f3924354819184cee401f9bac800",
+    "target": "backgrounds/chernobyl-dog/1.png"
+  },
+  {
+    "name": "Заросшие окраины Зоны у лесной опушки.png",
+    "library_file_id": "libfile_567b24bd83d4819191e4eac53053ea5e",
+    "target": "backgrounds/chernobyl-dog/2.png"
+  },
+  {
+    "name": "Заброшенный лесной бункер и мшистая дорога.png",
+    "library_file_id": "libfile_8178a430d1a081919cacd9fb1ad5ee83",
+    "target": "backgrounds/chernobyl-dog/3.png"
+  },
+  {
+    "name": "Заброшенный хлев на окраине деревни.png",
+    "library_file_id": "libfile_9e6272d260608191b730de83a71e7398",
+    "target": "backgrounds/flesh/1.png"
+  },
+  {
+    "name": "Заброшенный колодец в заросшем саду.png",
+    "library_file_id": "libfile_657b46ed99448191957e6a3d03458693",
+    "target": "backgrounds/flesh/2.png"
+  },
+  {
+    "name": "Заросший яблоневый сад у лесной опушки.png",
+    "library_file_id": "libfile_c4a195959af08191b84baa6200aadbf7",
+    "target": "backgrounds/flesh/3.png"
+  },
+  {
+    "name": "Заброшенный изотопный двор в зоне отчуждения.png",
+    "library_file_id": "libfile_99663439f7588191977ea16e7766785a",
+    "target": "backgrounds/isotope/1.png"
+  },
+  {
+    "name": "Заброшенный бетонный отстойник в промзоне.png",
+    "library_file_id": "libfile_e161a2d931b48191817975426c0ca670",
+    "target": "backgrounds/isotope/2.png"
+  },
+  {
+    "name": "Заброшенный советский дренажный тоннель.png",
+    "library_file_id": "libfile_40c11ac07cd08191bb9afbdaff0ab88a",
+    "target": "backgrounds/isotope/3.png"
+  },
+  {
+    "name": "Заброшенный заводской двор зоны отчуждения.png",
+    "library_file_id": "libfile_99d18549e82c8191a2b518524d506809",
+    "target": "backgrounds/zombie/1.png"
+  },
+  {
+    "name": "Туманный заброшенный двор у пруда.png",
+    "library_file_id": "libfile_4ab60bdc505c819193f23337ec35298e",
+    "target": "backgrounds/zombie/2.png"
+  },
+  {
+    "name": "Заброшенный вход в подземную лабораторию.png",
+    "library_file_id": "libfile_4ccbf256b3a481918a31df24ef924139",
+    "target": "backgrounds/zombie/3.png"
+  },
+  {
+    "name": "Пистолет Макарова в правой руке.png",
+    "library_file_id": "libfile_57506bfd29608191813a6c84d8f9a589",
+    "target": "pistols/1.png"
+  },
+  {
+    "name": "Пистолет ПСМ в правой руке.png",
+    "library_file_id": "libfile_aa62f03c9bfc8191b67c1f3c8ba461ca",
+    "target": "pistols/2.png"
+  },
+  {
+    "name": "Револьвер Нагана в правой руке.png",
+    "library_file_id": "libfile_55a73b97ee0081918ab3dcb34509e182",
+    "target": "pistols/6.png"
+  },
+  {
+    "name": "Револьвер Taurus Raging Bull в руке.png",
+    "library_file_id": "libfile_36477ffe7aac8191ab8a205c67631283",
+    "target": "pistols/104.png"
+  },
+  {
+    "name": "Воронёный револьвер Smith & Wesson Model 29.png",
+    "library_file_id": "libfile_0a95a162e3288191a06e6ddd1eeaaf44",
+    "target": "pistols/103.png"
+  },
+  {
+    "name": "Револьвер Taurus Judge в правой руке.png",
+    "library_file_id": "libfile_c67e07efde8c819181c95866db5c53f0",
+    "target": "pistols/102.png"
+  },
+  {
+    "name": "Беретта 92FS в правой руке.png",
+    "library_file_id": "libfile_ead84ced4644819189b2881a65a59483",
+    "target": "pistols/92.png"
+  },
+  {
+    "name": "Беретта 21A Bobcat на белом фоне.png",
+    "library_file_id": "libfile_737eead8e52c8191809130c1d1cc4b7b",
+    "target": "pistols/86.png"
+  },
+  {
+    "name": "Desert Eagle в правой руке.png",
+    "library_file_id": "libfile_257fe97013b48191880e923c43b9bcf8",
+    "target": "pistols/105.png"
+  },
+  {
+    "name": "Glock 21: вид от первого лица.png",
+    "library_file_id": "libfile_3fac37c117688191bf908ed48cf2d2e4",
+    "target": "pistols/99.png"
+  },
+  {
+    "name": "Glock 20 в правой руке.png",
+    "library_file_id": "libfile_7a47151fef9881919a9a994eaa3ff1d6",
+    "target": "pistols/97.png"
+  },
+  {
+    "name": "Чёрный Glock 22 на белом фоне.png",
+    "library_file_id": "libfile_6b914e4849b4819190a6d98896589e2d",
+    "target": "pistols/95.png"
+  },
+  {
+    "name": "Glock 25 в правой руке.png",
+    "library_file_id": "libfile_728fd1e2ad448191a66371e4171bae51",
+    "target": "pistols/88.png"
+  },
+  {
+    "name": "SIG Sauer P229 в правой руке.png",
+    "library_file_id": "libfile_d249a8aafb208191ad941e62ce4311a7",
+    "target": "pistols/96.png"
+  },
+  {
+    "name": "Чёрный SIG Sauer P226 в руке.png",
+    "library_file_id": "libfile_ccb29c465f3c819189c6850bd62a960d",
+    "target": "pistols/93.png"
+  },
+  {
+    "name": "Colt 1911 в правой руке на белом фоне.png",
+    "library_file_id": "libfile_f533b32555d48191a99ee9b6c1e133ef",
+    "target": "pistols/98.png"
+  },
+  {
+    "name": "CZ 97B .45 ACP в правой руке.png",
+    "library_file_id": "libfile_2e4980aa13ac819197cfd0aca5b183de",
+    "target": "pistols/100.png"
+  },
+  {
+    "name": "CZ 75 в правой руке.png",
+    "library_file_id": "libfile_202be0d6d6a48191955476c551b65e67",
+    "target": "pistols/90.png"
+  },
+  {
+    "name": "Чёрный HK Mark 23 в руке.png",
+    "library_file_id": "libfile_0ccfd6cff0c08191ba238131492d7398",
+    "target": "pistols/101.png"
+  },
+  {
+    "name": "Чёрный HK USP в правой руке.png",
+    "library_file_id": "libfile_ffc85ff2de7c81918d3c2a28c9e75c24",
+    "target": "pistols/94.png"
+  },
+  {
+    "name": "Глок 17 в правой руке.png",
+    "library_file_id": "libfile_a0716fbce8548191b0bf5d033190ef3f",
+    "target": "pistols/91.png"
+  },
+  {
+    "name": "Токарев ТТ-33 в правой руке.png",
+    "library_file_id": "libfile_52df1b7104588191b3f822e3d28b7ce8",
+    "target": "pistols/7.png"
+  },
+  {
+    "name": "ОЦ-33 Пернач в правой руке.png",
+    "library_file_id": "libfile_1ab1bb5884188191aa3a25a1bd56a072",
+    "target": "pistols/5.png"
+  },
+  {
+    "name": "ИЖ-71 в правой руке.png",
+    "library_file_id": "libfile_3f2e3f01ccf081919de42b73b431f718",
+    "target": "pistols/3.png"
+  },
+  {
+    "name": "Вальтер P99 в правой руке.png",
+    "library_file_id": "libfile_ff7f1f8935fc81918fe3e76dedc5570e",
+    "target": "pistols/89.png"
+  },
+  {
+    "name": "Заброшенная радиостанция в хвойном лесу.png",
+    "library_file_id": "libfile_7512c5227b948191bfd836378d72a38a",
+    "target": "backgrounds/hinge/1.png"
+  },
+  {
+    "name": "Березовый лес у заброшенного радарного комплекса.png",
+    "library_file_id": "libfile_7eb6744316ec8191ba788063128bbe69",
+    "target": "backgrounds/hinge/2.png"
+  },
+  {
+    "name": "Заросшие сады на лесной окраине.png",
+    "library_file_id": "libfile_f8c4679fbb94819187eac0475c635872",
+    "target": "backgrounds/hinge/3.png"
+  }
+]

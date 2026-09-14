@@ -1,0 +1,1475 @@
+{
+  "base_revision": "f207bb0",
+  "files": [
+    {
+      "path": "images/anomaly/hands/10_left.webp",
+      "sha256": "f096d604f50af486a7bce1861cb713aeed87c72c690aa532ee85c6012f4d2f57",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "6d2cab1b5ae42df5563e7688a8327acd4cd1676b1d7b45b01fe7f3beb11f4052",
+      "modified_pixels": 98
+    },
+    {
+      "path": "images/anomaly/hands/11_left.webp",
+      "sha256": "154a44e7c6055ae8faee209dcf4bf2da6b044ad4062aba4e79828ff20b301659",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "666b56dc5b8c249753b5c7580e1174ccae29fcdb400b5aee24ad4c042a67e582",
+      "modified_pixels": 51
+    },
+    {
+      "path": "images/anomaly/hands/12_left.webp",
+      "sha256": "80410c9dfd3940cd3a167d98be3e99558b979033023e04ff15101b3fd7921d13",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "bc164808481c9ce793ab452023e38e827c91ec82a0bfacaf90ee10b4c6efc78c",
+      "modified_pixels": 62
+    },
+    {
+      "path": "images/anomaly/hands/13_left.webp",
+      "sha256": "1fd8d6b83675e9948f83a53547fe5d511074618c9aef7677c31390360d1ee784",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "546f8c28038ded3b1ecc986ab351656c0c3e287de2986fa0ccec0b9714071814",
+      "modified_pixels": 140
+    },
+    {
+      "path": "images/anomaly/hands/14_left.webp",
+      "sha256": "c9e06ebc2d7d2c9ad4c7a7eccd51d1c48bfb267cd5c857ab9add56f0428df93a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "95aafbc0e77d23757890f691802572b07efe9b56442f90d89ffc25e111f47fe5",
+      "modified_pixels": 83
+    },
+    {
+      "path": "images/anomaly/hands/15_left.webp",
+      "sha256": "eff57ef865b9e1d27e4d9cb63e0495f389b9cebd72fcf1a344642854de4a93c0",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "f949bd7743c1c74eca5fa6b287ba20fd83c47c910f8149050087b496b6ab2a4a",
+      "modified_pixels": 174
+    },
+    {
+      "path": "images/anomaly/hands/15_right.webp",
+      "sha256": "9546e7f4f63db9447cc20363e93e4babfa7023acd63851a9af36a2554116aad9",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "887d57949a8613a2e0a41dece1e303123adafcf0290818a52568a0c4b94f45bd",
+      "modified_pixels": 347
+    },
+    {
+      "path": "images/anomaly/hands/16_left.webp",
+      "sha256": "d3ba4ec86fa0676c57939287dfdb976f56b1405ddb0c1f4ce255c1e1582a5980",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "0f220d2608262974266acefdfd5a8f06a1b8cf1a804e9c1ef45716d7543894fa",
+      "modified_pixels": 77
+    },
+    {
+      "path": "images/anomaly/hands/17_left.webp",
+      "sha256": "d72e7730027075ddef3e626c346679d29fb36c4b2dea6051d83c6da429809854",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "adfecba0201f29fc0328a0dfd785d7f39442ec07e03eb12125fb330ff4d21dbf",
+      "modified_pixels": 58
+    },
+    {
+      "path": "images/anomaly/hands/18_left.webp",
+      "sha256": "8b743e50bdf86d756874f6df354d995ccf97bd06f5545e53c3b9f3423abebd0a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "d5ed6aa8e2dbd9342dfc9883254025f0d6a4b400366b82a818b32514d4da9281",
+      "modified_pixels": 123
+    },
+    {
+      "path": "images/anomaly/hands/19_left.webp",
+      "sha256": "fbbc6d50e42ad46fa81112edc485249bea069c865cc02ec37c98b4caacb8dd19",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "ea6a2acc36fff881e5cf27fe6b640d3dfdc990e7be4cca30fc9c4500125044b7",
+      "modified_pixels": 65
+    },
+    {
+      "path": "images/anomaly/hands/20_left.webp",
+      "sha256": "3ceb46929b2cba036b806ea50c5393ae4ebfebbdfe6eb5f8b4ec8d4b4b496d57",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "413b8798c1c183dc4e677ecee0179868e24d618e847ec5e91bb2c7e0d5e77a97",
+      "modified_pixels": 78
+    },
+    {
+      "path": "images/anomaly/hands/22_left.webp",
+      "sha256": "8756c53d97e4d095031ffd45a8dc8c7f7bd0259bba98789b69e2c3ab8fd8ede4",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "5a4cb22391c7114513011dee3c85812ebb8d8e7f2445154c7871a2faf4317cfe",
+      "modified_pixels": 256
+    },
+    {
+      "path": "images/anomaly/hands/23_left.webp",
+      "sha256": "acf143f0faac1bfe4f3bc9e8102f27680f1989da980cbec4fd340cabc86c3403",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "63bb5630ec5f62ce01871f3f15cdc6e9dd2916b6860d89e53a07759b691499cc",
+      "modified_pixels": 358
+    },
+    {
+      "path": "images/anomaly/hands/24_left.webp",
+      "sha256": "560fe42e8991840eaea706147a9ce1ab349323b674be7f8cddcbdf173ab29474",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "2e71204bfcc9f1ce7c9c4190edf10cec9b02d076f1821d3339886de882b28bf0",
+      "modified_pixels": 228
+    },
+    {
+      "path": "images/anomaly/hands/25_left.webp",
+      "sha256": "ccc37e184521410bae89adb9ef03fb5c81446c2283cb6ebd31dbab5c35d5d3d7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "8cd8bbc5e4b8cedb83818848900a4570992cdc644d2f7e709a9a2c8be08d5d1e",
+      "modified_pixels": 159
+    },
+    {
+      "path": "images/anomaly/hands/25_right.webp",
+      "sha256": "77b78ed1f3d8501667d05100352f8df3b8f40cc2ce48b2632de41de326d15bde",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "d7728cb117b8c406849ab5051092c4bf803b66f0ddb871e82aa5994c411ee003",
+      "modified_pixels": 35
+    },
+    {
+      "path": "images/anomaly/hands/26_left.webp",
+      "sha256": "2f29da20d833c38eb9e2c81c5b907b66a2721b017d494793cac560fc9878e572",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "398bcc265f2e62664d30dc844a1b023f28a81bd5ad3c212788712de2969d2139",
+      "modified_pixels": 92
+    },
+    {
+      "path": "images/anomaly/hands/27_left.webp",
+      "sha256": "70495918b482fe8629def5c6ac0aef0bb8a4fc636dde34c06122a06e164b7251",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "7db043155fbcf94fd6e54ae8562aa426ff5188e4dcf1a398832236027e450a9f",
+      "modified_pixels": 485
+    },
+    {
+      "path": "images/anomaly/hands/28_left.webp",
+      "sha256": "d2c10be0c421f074932873e015912dba0b0ecf00f7486ab224d134905e034af1",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "1a156757354c8fd185942298e95af886ca0545f4aa7845ef8b47ce09eaa737fd",
+      "modified_pixels": 106
+    },
+    {
+      "path": "images/anomaly/hands/31_left.webp",
+      "sha256": "ed63cc72e3932bfc7a4305bf383a141735fc8b855c17096b8c2b63d86f0439c0",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "29936adc10bab7f6d0e67ed663da9ae8762dfcf0a1ac7b2566b9189ef027bf3f",
+      "modified_pixels": 413
+    },
+    {
+      "path": "images/anomaly/hands/31_right.webp",
+      "sha256": "6df286e98646fdace4f37f4a9b5d97e45abc77406b21f19ab57374304449b65d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "6411bcf4a0193b9d6641e620d2ab90009a6ceeb76af47ece4b6065d8a0024cdc",
+      "modified_pixels": 360
+    },
+    {
+      "path": "images/anomaly/hands/32_left.webp",
+      "sha256": "fc96526572cf85da2ab8668ee54fddbe10afa6601ec8faafe4319b7b28ddbf23",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "24994c38fad09d41f680e14f31c9d5f7d0650de7c962e3bbd2815b4f3246fff5",
+      "modified_pixels": 132
+    },
+    {
+      "path": "images/anomaly/hands/33_left.webp",
+      "sha256": "413600d90f041ed3d6f946c3db60f578f644cf18b5cd224746438a7f2169ba29",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "d0ba07563c3901da45e32b43c6b494e1fe1d1b7969aec97c281bb794c8aef0c4",
+      "modified_pixels": 64
+    },
+    {
+      "path": "images/anomaly/hands/34_left.webp",
+      "sha256": "bcbc752ef42ce4ca3d2ddcbf849cd90231667b8286c9cdb89e5ccb6966fc467b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "e6dd187cc8aa57be0e2b95c54de1afff10a8f25cebb86816f7366c8160d07668",
+      "modified_pixels": 136
+    },
+    {
+      "path": "images/anomaly/hands/35_left.webp",
+      "sha256": "3935b78335bd3afc4bf839a16b9980871433d42d5e7645d8180987c267c21dac",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "e989d2c24e1c272dd151d55d666cd5b0e8f3b5ec12787b9ac3aec1ca5b994784",
+      "modified_pixels": 155
+    },
+    {
+      "path": "images/anomaly/hands/37_left.webp",
+      "sha256": "7045a74f78091510cc88f46e5fb1a36d787227bc1c8fd8d7ce2394344948fba2",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "1eb4717febcf9b9617a0fcc1f65e7d57180e562ffad2340f6448f7b29da1633f",
+      "modified_pixels": 61
+    },
+    {
+      "path": "images/anomaly/hands/38_left.webp",
+      "sha256": "0a0ff608cc9473a5793e84bc31b27ccb48ae09c78c8ee7bdc6c1416d6f0788d6",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "81d2255d880f4fb56053f2a53f67ae4f1a9c4e0e516ce87a1dba44dee5ef9f96",
+      "modified_pixels": 66
+    },
+    {
+      "path": "images/anomaly/hands/39_left.webp",
+      "sha256": "6f4dd9e63f698cd1bdc2be514e38a10d2233499d2a219882ea81d48b936d3768",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "fd417341f295961f012ca3edc9283db03f3e6a5ba1436772713acb3b1da67e56",
+      "modified_pixels": 92
+    },
+    {
+      "path": "images/anomaly/hands/39_right.webp",
+      "sha256": "dc3fc8031d2e74a7b37fe62bb35dc009aa3cecffdcee1608c576b6db4de7ea2b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "0aeb02145eecc158360d31f8e0a83095066186420b7cc60b7f87fea6cd1cb8ec",
+      "modified_pixels": 67
+    },
+    {
+      "path": "images/anomaly/hands/3_left.webp",
+      "sha256": "4992000850701281485cd1fcfe424dd5ae45532a301513bd7f6b0a3554c8e363",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "0703cd95083ff197e444f17aa66b18039650e2b52d0ef669598a1277bcfa4ca8",
+      "modified_pixels": 60
+    },
+    {
+      "path": "images/anomaly/hands/40_left.webp",
+      "sha256": "034aa252fc735c2d16839a838bd7886a1de7792274aaf67f53602cf8ec38d5e7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "b387fd3c01caf05db16bd149e1dac9fba123e2f3dc9b851d10640e961ccfba18",
+      "modified_pixels": 418
+    },
+    {
+      "path": "images/anomaly/hands/42_left.webp",
+      "sha256": "6e0ef1dda37d67b2310666a1f454a21d609d9022bd3ce898479f69702527961b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "5fb8bc93b566731fe300eaaacc5779805618ea09e7f2385355d94b5c70e8b2bd",
+      "modified_pixels": 105
+    },
+    {
+      "path": "images/anomaly/hands/42_right.webp",
+      "sha256": "867d4a88ba40688117a23c6fd7d1d0cdcc10d733c83c3a9c1c7ec2c4288934f8",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "c9d2a1472b6fb838295efcf3606ec46dac4127df8e17ed16734218eae4212525",
+      "modified_pixels": 67
+    },
+    {
+      "path": "images/anomaly/hands/43_left.webp",
+      "sha256": "4178884af0a017ce0d24ef796637a3853d526f7ff08aefdb79683072c0e6e863",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "505f94a46451e3feefb7bb8cfed15888f0a1c883cf3f93f5b8b340f406dea4c1",
+      "modified_pixels": 501
+    },
+    {
+      "path": "images/anomaly/hands/43_right.webp",
+      "sha256": "2ee55632ee4c10193d7445d385607b2bcc77ce9c5374ad79680c66a404fe298a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "89ea39a77852ce6380225c9993da3bdd4b41a6f959e8c9232584e60c50d76774",
+      "modified_pixels": 59
+    },
+    {
+      "path": "images/anomaly/hands/44_left.webp",
+      "sha256": "47393262d7f42188c832aee68a6c5c1a08b243540f4f2ed8cdac002d593ed023",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "ac27fc282114beff52852e231d5e9229d31a7402d7aae9eab06663f425ebdf9d",
+      "modified_pixels": 508
+    },
+    {
+      "path": "images/anomaly/hands/46_left.webp",
+      "sha256": "619a7bd27bc467976270951c898fb4c052e00512c5bbf6862ab1169557cd4ac7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "5478acc966c7b5ee18b6792ac43ebc00f7ed18af7d560966fe0f8bfcb0c9f1c1",
+      "modified_pixels": 78
+    },
+    {
+      "path": "images/anomaly/hands/48_left.webp",
+      "sha256": "2b6d5111486f71d66aca480ddac2fe7f43bf3260fe4562bc40a8f63c7aac15f1",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "2c85402586953a87ff1e7feea0478daeef7be1e0cbd3c0f70f35f956916fef93",
+      "modified_pixels": 169
+    },
+    {
+      "path": "images/anomaly/hands/48_right.webp",
+      "sha256": "75ba89052d6cff75ee8e6f7ffecd670917604245562c380c91742c6ad83ce850",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "cf58ee02f04dc2864d7e77fe31f408ffc4f5cc8a574d3328e9536cb78ea7ddfb",
+      "modified_pixels": 137
+    },
+    {
+      "path": "images/anomaly/hands/49_left.webp",
+      "sha256": "7c3a0b5ac87084bd22e02c9ea3fb59bd2715d5a0a90e40e28f468195d79611a2",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "56995110d9e4c82be6c7f87a5a933be1721ded0d52cd76ee95daa6327e526217",
+      "modified_pixels": 39
+    },
+    {
+      "path": "images/anomaly/hands/4_left.webp",
+      "sha256": "7f8fd1888269909636a413fe9a8186e68165e658d15772c27c99d5e37dbccf68",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "21db41e821a4f3eaf04c62e236594d4e6685fad2ac91889119524a2396c27e51",
+      "modified_pixels": 66
+    },
+    {
+      "path": "images/anomaly/hands/51_left.webp",
+      "sha256": "7090248ca0b4f88cd72c9441e9a2e33f516730114ba84a22dbd64e8ea5f9be06",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "75e3832659f0a9cd5c096788dff14c7037f243972aff0269e18181312f2e5853",
+      "modified_pixels": 141
+    },
+    {
+      "path": "images/anomaly/hands/51_right.webp",
+      "sha256": "16c60ccd5cd67dd86f7ccfbb80d68c65550e42d4d6d7be2ddf6241738eff0447",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "08e62d165bad1fe4eda1fccd5ddb89c0884cfeac4c696083170a2e39a642d725",
+      "modified_pixels": 195
+    },
+    {
+      "path": "images/anomaly/hands/52_left.webp",
+      "sha256": "b79a0ccfb069d40fb102e5ba7222ac26268731afefa3bb6c52d7dc7060267d29",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "7d62e6c02a2d2e7f1f4a444f89ec098031f98d3388af3686381240653ea9b0c9",
+      "modified_pixels": 68
+    },
+    {
+      "path": "images/anomaly/hands/53_left.webp",
+      "sha256": "89b58be3dd4168ac5185210a0a8f4fdd756d705779842a43770850f937c1bfa8",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "6c3fa7da61bc9858ed61db7463f06f2caa6474d05e9655ebae5dfdcd95a99ea0",
+      "modified_pixels": 189
+    },
+    {
+      "path": "images/anomaly/hands/53_right.webp",
+      "sha256": "ba747be0051d63ee157e16e05b54b370df0c1572c4f5cc876e7de19750e513ee",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "f08ae385b4f70fa56880c64cb358cf37d05fd54f15f50911d914247f368914ba",
+      "modified_pixels": 104
+    },
+    {
+      "path": "images/anomaly/hands/54_left.webp",
+      "sha256": "7495c8c252e3fa8f88a7f186d06b6318802da79043d8e218b5beaefae556a34d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "35fbbd6a2a2f27290f7c6cc78d79281d2ed9f33176c1385742c9fd05ef8944b8",
+      "modified_pixels": 77
+    },
+    {
+      "path": "images/anomaly/hands/55_left.webp",
+      "sha256": "a5ff85c5345cc49b95ee56173b4292cdc5c671843c68ca4823266becf3e77d74",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "b207c7411730adc607018c40f0902764893eb60ed6c19b367e9dfe420d8db498",
+      "modified_pixels": 64
+    },
+    {
+      "path": "images/anomaly/hands/57_left.webp",
+      "sha256": "935c94d1153ff8cf08f3fbb31010b5ad62a6c503392a77eed3488700b468808b",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "b9459f41cbe2f5005016cc027e8339d4f48b510ec47e4902f9b8b027c837ea4a",
+      "modified_pixels": 71
+    },
+    {
+      "path": "images/anomaly/hands/58_left.webp",
+      "sha256": "e399f7fb97311735dcca289a82a1f4e610cf08f5558ee3e74d91e7318e3ea29c",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "2b1a677398e1d127760ca91b8ff10208462fa8f6d5f1799a2aea12be3c065cff",
+      "modified_pixels": 34
+    },
+    {
+      "path": "images/anomaly/hands/5_left.webp",
+      "sha256": "42df9b1ab75ffe333e01be7ffb6464b2e1f330cfddc14b9c1745500fb98393cb",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "ce5d5ace43ba51148b8bbc85c66999669df848dbe3b44ac0efe5645dfc29dbf1",
+      "modified_pixels": 119
+    },
+    {
+      "path": "images/anomaly/hands/60_left.webp",
+      "sha256": "35c4e5b2391a455bf8068b6f1caa57136ebeb2d984314d49fe7c250e7a6fab0a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "a47b3a2e1dc0da96da239cd6349676d7914b567ca390f2c8fa2ee4ace2043756",
+      "modified_pixels": 170
+    },
+    {
+      "path": "images/anomaly/hands/61_left.webp",
+      "sha256": "12606e881ca5476e3ac569e42a24115d36df5c84a21cac5a8ac17ed93c19e94c",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "022456ed7269a1fc2bcf379b97e9e25008ef875bd3db2947fb9400121e8cad0a",
+      "modified_pixels": 410
+    },
+    {
+      "path": "images/anomaly/hands/61_right.webp",
+      "sha256": "d72c65456a6be42c2e4c53fb4629453372863b1c976e59b42f2d6f59bda62f3d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "83a0e889e6ea6fb1f88ad90317afb9037e7148cf1d79297af5fd61d8194f1baa",
+      "modified_pixels": 104
+    },
+    {
+      "path": "images/anomaly/hands/62_left.webp",
+      "sha256": "e050e26a6575cb6f0c8fa788841be47b7f72bb07cdb46833647cca7290b323a5",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "2a79af1830b7094e1c4e1f596c3443c167d421bd931d0982305448168ffa3c94",
+      "modified_pixels": 421
+    },
+    {
+      "path": "images/anomaly/hands/62_right.webp",
+      "sha256": "ea03443acfd42d7cd40186217386f14db28b212e9c70336e8da1c5f65c1f965e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "4f9db0aea69aa7d851f0a9b5d152fb59e5bee7f4e0477263f5e6514fd31f135a",
+      "modified_pixels": 208
+    },
+    {
+      "path": "images/anomaly/hands/63_left.webp",
+      "sha256": "1ae397729f11382f392c393d6d1e954c954fea766786ebdeba3056de0de92354",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "7eca2e4225607540cc19a611759ae73d5a3fdd90a3b2fb9b5af70391931e3833",
+      "modified_pixels": 82
+    },
+    {
+      "path": "images/anomaly/hands/64_left.webp",
+      "sha256": "324357fde82a635151bff744efd8da5c7805b76aeafc07c086ccbbdc78af4f77",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "97a6fc9a069f42d31d1a7c656a98c3e572988d0e2fb20437439ef8f294dbee26",
+      "modified_pixels": 60
+    },
+    {
+      "path": "images/anomaly/hands/66_left.webp",
+      "sha256": "0da0e9a78287651d20caeb0cd7cdfbb6d1b85c3a4b351981ce4d88123382d522",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "894f0932615262aecbc7ab9c19a811f29bd26beb14f99c9837d2dbd2371cd738",
+      "modified_pixels": 584
+    },
+    {
+      "path": "images/anomaly/hands/66_right.webp",
+      "sha256": "31a113d15a3627b8829d8e14a8df81be4dc90d8c7acb364ad303af8e9eb409f7",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "342cf624dc905dbdc9e91ef941c88e375a0df923e0858f8437699ac0466b2d28",
+      "modified_pixels": 35
+    },
+    {
+      "path": "images/anomaly/hands/67_left.webp",
+      "sha256": "dd38c198ddb7c11fa502415bc2ee0af6f0c4217190f2af3e139e775231585325",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "c0bd7f7074f414c7e53e422d424215406fe9b5ae60e6ab9b74312db34e9aecd0",
+      "modified_pixels": 86
+    },
+    {
+      "path": "images/anomaly/hands/68_left.webp",
+      "sha256": "affc94c8afdf57734c96c2c9e4137b6103d51f12b862b5add886169473de8057",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "bec46e46a1dbc5b988f72ffd8606db707dd6d4b62f68d177fdd8b5f9c213ee8c",
+      "modified_pixels": 86
+    },
+    {
+      "path": "images/anomaly/hands/69_left.webp",
+      "sha256": "373852cd83f96ab58a7caf757ec904cbd41a52ad59178c2ab9db634eda747d63",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "12dcc6c2d9090783b7f478f7692314c2790c801d0167d90421614bdd93ae85b8",
+      "modified_pixels": 69
+    },
+    {
+      "path": "images/anomaly/hands/6_left.webp",
+      "sha256": "a9a024194a79c09280dcaab06f4097d796ef39ceaa562e3b0b8b411d134a3a8e",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "a5be831a66ea83b28d96d0d8a515adac6ff0ed347195eeb00b5d3c4a86050fd6",
+      "modified_pixels": 135
+    },
+    {
+      "path": "images/anomaly/hands/70_left.webp",
+      "sha256": "7979b4ee5ee69e31c07b1f83c3b3c44d56dc63e0441b6ceb0eb5b6d47480f417",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "ce027d48144dc603f15a1292944622690f3f9a47dff8d7a6a1906a4cde951dee",
+      "modified_pixels": 123
+    },
+    {
+      "path": "images/anomaly/hands/71_left.webp",
+      "sha256": "d638c21399c14afb1ab02e457db3ce7c4c66c14b3a09d383a6f7020fc8cf0601",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "82bab826827f7c94c56f42b9e8d56164d7bb30c28786f664056a9d24f0daa9cf",
+      "modified_pixels": 277
+    },
+    {
+      "path": "images/anomaly/hands/71_right.webp",
+      "sha256": "299022900bac6340bd559907ce1aa2a8332cc810706bfea4fa376351f3dad0d5",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "78dc8a307e7b254e648f140caeb6ded288312398855fc068781d682cbb737b29",
+      "modified_pixels": 203
+    },
+    {
+      "path": "images/anomaly/hands/73_left.webp",
+      "sha256": "b3881322992765a92e31897554e8b8c3dc0ce97a96299d371a971c909c113b62",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "634b5fc0ae0f84337de115cd9fa76027d056cd36d139b41e69ed25947842fca9",
+      "modified_pixels": 40
+    },
+    {
+      "path": "images/anomaly/hands/74_left.webp",
+      "sha256": "2761536bf65227fd74f80e7c01edc8ae361bf71e7620a26402fa1fe7c94d8e6a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "4289c0e8ed075e6429f2b4eca574dad1f005f9d109eb2142d58384882d917e9f",
+      "modified_pixels": 52
+    },
+    {
+      "path": "images/anomaly/hands/75_left.webp",
+      "sha256": "81e8da40894a7006e122b228c755ca4ea63a0ee620c8bb959fe9263d9c6b4818",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "577c53e298a1d6febbd2d40ab579931c208e6e60284c7d1fd1baab030b7d97c1",
+      "modified_pixels": 78
+    },
+    {
+      "path": "images/anomaly/hands/76_left.webp",
+      "sha256": "d660ed8a32d9c91cdcd8b5901cbcdc752ca12a395e1eb778a9bedea0196b27ff",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "a16ed634d11676a1009b47d202d87f66dab8a4c82c2ecd14bd8377deda6b90b9",
+      "modified_pixels": 41
+    },
+    {
+      "path": "images/anomaly/hands/77_left.webp",
+      "sha256": "271bca74146301d7689be78713251bd95ba0fc16c5725d7019d41a0073b8932d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "991628d3b15a1fcc3bb3e5bfb85f23ab083ccb376724dcabdda18e0b11f026e8",
+      "modified_pixels": 100
+    },
+    {
+      "path": "images/anomaly/hands/77_right.webp",
+      "sha256": "e66c23cbfa0a64171003a8a2dbdabcae943bb36f5cde9de6b37d8118aec8c818",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "d9939afeb6f4c626f43d4f2453bf5c1450801a5a0cf952a6d1e5f70adf97ccec",
+      "modified_pixels": 11
+    },
+    {
+      "path": "images/anomaly/hands/78_left.webp",
+      "sha256": "bc9a5e4ad4f84a52652d5a2e5f61ff00af0852b08f16112a5c58a9af9c9e1f20",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "1cd00a0955634cd8e18c1e526a70598ad8e5bb024706ee58cfd380390a04f2d2",
+      "modified_pixels": 69
+    },
+    {
+      "path": "images/anomaly/hands/79_left.webp",
+      "sha256": "f35a864cd13b30182b429bd86904c593b0b7976120febe0861d8b629b6496f1d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "1d0f8e819205cba00221b203f239883fb407a78ec8cb72f8fb2e5300a788a1e5",
+      "modified_pixels": 112
+    },
+    {
+      "path": "images/anomaly/hands/7_left.webp",
+      "sha256": "1b72e606471fa4f07d2cf8ea7dd7e7434e3d3e978f4e06572d3a11dbcfbc8b08",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "3ea93f236955e6acbbf352b652376a86c509db25945f174111858e38025e2e53",
+      "modified_pixels": 100
+    },
+    {
+      "path": "images/anomaly/hands/81_left.webp",
+      "sha256": "31d54c235acc5f3ec2066b574949a8c1898b95b3e289be3343f83da32806eca0",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "50dfee03074e726c0363a62ff8e2cbaa8f704e5fbe34b0d1b7e9e04b30007cc1",
+      "modified_pixels": 20
+    },
+    {
+      "path": "images/anomaly/hands/84_left.webp",
+      "sha256": "ddbcb847120211ec5b6353015b9c83856f5f8b158e581c03310fbbb699d774a8",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "7b343d17c354ae0ff60c0f4fa38ab21710b00add354fb4abe4fcb0a13856f26f",
+      "modified_pixels": 113
+    },
+    {
+      "path": "images/anomaly/hands/85_left.webp",
+      "sha256": "e41321f5c430ef3f7fcf20712e354674a082806086ab88031d95bf7d3c35429a",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "1198c0fbe4ea81a6425d3506e2e4006c29fd057cc855733b13ab51a096d225a3",
+      "modified_pixels": 74
+    },
+    {
+      "path": "images/anomaly/hands/86_left.webp",
+      "sha256": "35d7b787546ecc19692ea8a6e38de1d8737b024a5c8876e19530673aebcc8877",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "bf0e04d543841eebfbe1f7ab030603f38bbc1f709cba869ca8cca9afdc4b4f7d",
+      "modified_pixels": 41
+    },
+    {
+      "path": "images/anomaly/hands/89_left.webp",
+      "sha256": "36f3835ec073cd0d058c783a268d96d55e04a4a0cca10ca5dcdc588402cf3317",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "534a476d2296ea5c1a985a8b8904a2316dcfeb51d4380f349be0f4f7b6880c8d",
+      "modified_pixels": 64
+    },
+    {
+      "path": "images/anomaly/hands/8_left.webp",
+      "sha256": "a438f8e1454d9a3e4820db33ebdf94b57345fdb554b323040db7d207a67ed462",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "06bf265ab787cbc6e43c7d4dc9fc429f394ec37bfe05c2e5b52180eb3e7b08a4",
+      "modified_pixels": 169
+    },
+    {
+      "path": "images/anomaly/hands/91_left.webp",
+      "sha256": "c6d2d66e76c471366ebf65702d940e5bba71abe881cd2de7b3f97b063f0c9f78",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "88443ca9c0d9173de979c5ed1b66068e17c45117c11cc776d572bddf708f517a",
+      "modified_pixels": 45
+    },
+    {
+      "path": "images/anomaly/hands/92_left.webp",
+      "sha256": "0ca99777f385c527db1cbd41d8c6dd0ce0bc8c21b473accde25aa169779b8c15",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "5b8bdab92c97ce2727bdee7c24cd8339c03c47e22e14c8ccc033a091b95feb2a",
+      "modified_pixels": 47
+    },
+    {
+      "path": "images/anomaly/hands/93_left.webp",
+      "sha256": "72711f092880544c44af268374d5aba63021f6bc4250d1c378deff05bff306a5",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "d2efeeb593e011abfcd6f5ed4265a2c57a53444a3f5191da17ce9a00d4b38f4d",
+      "modified_pixels": 187
+    },
+    {
+      "path": "images/anomaly/hands/94_left.webp",
+      "sha256": "e4c4e39bb6ab422f35011a02d3bd9fa22e04fa881565c80861f062eb1047eb88",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "3b70f445b47b65951755fa04e2200862bdd481c7bd6f219103cecf08d1ae5c0f",
+      "modified_pixels": 92
+    },
+    {
+      "path": "images/anomaly/hands/94_right.webp",
+      "sha256": "bf4a201b9e4944d69c9744e0dcedd6a4f9f8d61f20cabc615430359fcef41b41",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "77e7e0d4c7b11eb978758a184ebeff3747650fbc2336a11499f4278d2b629b66",
+      "modified_pixels": 59
+    },
+    {
+      "path": "images/anomaly/hands/95_left.webp",
+      "sha256": "f4caa22ef80d5077bc147bf8c6d931946760a76410fc37694b89ca3b6a7be69d",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "6c04b0a82e2af08dd28b2ef71463d40b68dcd29bac0feb19650341758b270654",
+      "modified_pixels": 76
+    },
+    {
+      "path": "images/anomaly/hands/9_left.webp",
+      "sha256": "c5b96fa8708f7d0c9d2862074c33d0987b90fc8d4224b711b8770333470fbc67",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source_revision": "f207bb0",
+      "source_sha256": "5d3d60940119f02990c1ffc2e80aee449e34be34ba512eb2c39c404cb4b38ecc",
+      "modified_pixels": 64
+    },
+    {
+      "path": "images/combat/mutants/zombie.png",
+      "sha256": "bfdc677f7646feaf5578239cc15e435ec1f7533b18024a06c4bb2405e78dc69c",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source": "asset_sources/combat_cleanup/zombie_rgb.png",
+      "source_sha256": "c76f58ce2e50647356f6491a1bff2df30f1a8833635bf328bdba48881acc5123"
+    },
+    {
+      "path": "images/combat/mutants/chernobyl-dog.png",
+      "sha256": "bfce1db2acd0a45cc66c27025b848ca3ca8d10791d27f783a40a04e343388249",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "rgba_lossless": true,
+      "source": "asset_sources/combat_cleanup/chernobyl-dog_rgb.png",
+      "source_sha256": "87d934bba7f99670030fea5274f0ba4c4119d2c1912f8b5cfe4b3908cb0e0cd0"
+    }
+  ]
+}

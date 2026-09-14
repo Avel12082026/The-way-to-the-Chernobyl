@@ -1,0 +1,5 @@
+images/anomaly/hands/*.webp.tmp
+images/combat/mutants/*.png.tmp
+images/combat/pistols/*.png.tmp
+.validation/
+tools/__pycache__/

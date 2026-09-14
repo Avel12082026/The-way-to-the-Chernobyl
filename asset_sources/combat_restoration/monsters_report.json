@@ -1,0 +1,427 @@
+[
+  {
+    "path": "images/combat/mutants/stronglav.png",
+    "sha256": "99bf7bc3f8ae602754b6e87319118e845c822a6ea7e00f4ec0719e7044423704",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_20c1665d5aa88191b8ec3d447eb8c024.png",
+    "source_sha256": "2ae1dcbae74a304e52030c265afb32e97aebedb759ab7ca72ffec2541f65b20f",
+    "library_file_id": "libfile_20c1665d5aa88191b8ec3d447eb8c024",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/poltergeist.png",
+    "sha256": "e2a4d52b686b8daa2aac98e6556472f86107ceb8e08505bf6297dc752bf7fbcb",
+    "size": [
+      1145,
+      1374
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_10547f9a06f481919ad5afea731b0be4.png",
+    "source_sha256": "14a9fe91fc4d6dc045e9f3dcea4bb81ecc33cd2ab11c9b2c1ef256ca01f35a15",
+    "library_file_id": "libfile_10547f9a06f481919ad5afea731b0be4",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/moose.png",
+    "sha256": "8038e09ef2eba6f872ecaf15d9d93693b80ab1674655136b9a42b46280cf2cb4",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_6a78937569e88191bc4801ce065c9ddf.png",
+    "source_sha256": "0dcf02c724d60e7bda689d7b5fd96630222a1af3febdd0fcd0c6c558096f382d",
+    "library_file_id": "libfile_6a78937569e88191bc4801ce065c9ddf",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/controller.png",
+    "sha256": "148e84546a0baae64836334c0feb0b87f9602734ab4060f712b595805765c496",
+    "size": [
+      1024,
+      1536
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_3944e3cc06b88191b7b4f8cd410dd5a6.png",
+    "source_sha256": "6439312829836ead0706cbc960f784e87da7812a0e1822b3ace95a13e03607fd",
+    "library_file_id": "libfile_3944e3cc06b88191b7b4f8cd410dd5a6",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/burer.png",
+    "sha256": "dcf636931640ddd6c554543105d03eef420ae1edbaa3b2951bfbf3f8dd02f15d",
+    "size": [
+      1140,
+      1380
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_038fe636c1688191a0dff7a18ce93b8f.png",
+    "source_sha256": "958b1453f7cbbfbd76b5d433b7dc074666f14a8b00f080aa45100c0656271561",
+    "library_file_id": "libfile_038fe636c1688191a0dff7a18ce93b8f",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/owl.png",
+    "sha256": "5b0ca6ed12817cc1e46a505784830e3bc054d25e4e3b7d00e1ab648da11ba209",
+    "size": [
+      1145,
+      1374
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_766cdc43a36081918715dc6516844bb6.png",
+    "source_sha256": "87112cb7d54b7d5f088800cd787d11fe06c1912fc65a121201b1a44406d441f6",
+    "library_file_id": "libfile_766cdc43a36081918715dc6516844bb6",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/chupacabra.png",
+    "sha256": "d129340fdd4aa2b4b27b8d3f50fbe56148e8dac41151abe392424824847d6b7c",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_fc7a356d8dac81918fe7ca3a5297ca58.png",
+    "source_sha256": "05bcca62b5b963a79a07d0481dc846173398987d005c40cbde0c9703a8242915",
+    "library_file_id": "libfile_fc7a356d8dac81918fe7ca3a5297ca58",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/psydog.png",
+    "sha256": "c43e79c074ed88912a44092281f5451dc9544e4bccd235a13485ed9b5a3f01a1",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_b15da131d7688191a2c8ec3b4fc28659.png",
+    "source_sha256": "967458651053385d2547168d19b011da10c79031d3c283adafea1be58015d5db",
+    "library_file_id": "libfile_b15da131d7688191a2c8ec3b4fc28659",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/pseudodog.png",
+    "sha256": "2eb503b8851103a20c5e137335258a1c8de1152ba1acb67acd76133e99c2f816",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_f76a5ba9ae248191ac3721afeef1cfbf.png",
+    "source_sha256": "9460a2298dd2a02d49dbf8180618b7fdbeb5073f10034b7f602329d6ba0ec952",
+    "library_file_id": "libfile_f76a5ba9ae248191ac3721afeef1cfbf",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/blind-dog.png",
+    "sha256": "b6a44c26e8f842c9185b7476ecab68f7fc269cd8b0a69dce61348e5259aa8275",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_f3d23d9c9cd48191957eeb4058ce48fa.png",
+    "source_sha256": "06a70a0a7050179309e0a01af7d7d59f8fedc973f8bfcd435564ae3fe24f129f",
+    "library_file_id": "libfile_f3d23d9c9cd48191957eeb4058ce48fa",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/tushkan.png",
+    "sha256": "ff30e28860c230be66449d34b61640e55a64c6f21243239ee7ca947cb7a7a534",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_79c316837b948191912ad22f49f6e7f9.png",
+    "source_sha256": "b6f8a55d8231ee19690e59e47cb99138afc04a4a055cb9e1a8bd70e8384c33fe",
+    "library_file_id": "libfile_79c316837b948191912ad22f49f6e7f9",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/snork.png",
+    "sha256": "125b239b412b651613068958d070151d48d577b6ff2b888f3053bef76a9d3df0",
+    "size": [
+      1536,
+      1024
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_22532c1acd2081919f7cafb3695e6e73.png",
+    "source_sha256": "11819d8e4de1b1cec1a466bfe04057271ffc39d8b79f5f8164a585ad6f698a4b",
+    "library_file_id": "libfile_22532c1acd2081919f7cafb3695e6e73",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/bloodsucker.png",
+    "sha256": "e5d248d5a4a0f9b8bad308fe883bf5895063986b53145f4b2acb5db1528c4051",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_4ef57d61b6688191a9133dbd4c7b44c5.png",
+    "source_sha256": "e39291802b1384745319f84092e9c3d03875c3924f66134952b0e5d7c5f20cbb",
+    "library_file_id": "libfile_4ef57d61b6688191a9133dbd4c7b44c5",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/chimera.png",
+    "sha256": "e0ceaca351e34d01265852faafee17a72e68bb39d25a13882bd40fc3efed00e8",
+    "size": [
+      1526,
+      1031
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_7d197cd73c808191b81de515c729101d.png",
+    "source_sha256": "06e4b3a58666086991f62152b5852728c8699aee4b486f155c35aa46c9b7c8cf",
+    "library_file_id": "libfile_7d197cd73c808191b81de515c729101d",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/electrochimera.png",
+    "sha256": "fb5016698ec519f5292c6e53982a32333f068379f9a163f08ed50bbf3af8a438",
+    "size": [
+      1526,
+      1031
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_03b82799f18c8191bfcdad5591b72fef.png",
+    "source_sha256": "b7796a4805c315b6782ea6d71745f94fe87141aeeca551fd25d35170f72c846e",
+    "library_file_id": "libfile_03b82799f18c8191bfcdad5591b72fef",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/observer.png",
+    "sha256": "e87806efa589b9041b0719295d5bb91244dae6edd552919e3189c02f077cb3ff",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_e4c7a8e485008191b1a97ab2d303eb38.png",
+    "source_sha256": "485495fcb9c24193a592e4d4dbeefae8d7ac16d825079a37a821bafa6c69e268",
+    "library_file_id": "libfile_e4c7a8e485008191b1a97ab2d303eb38",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/pseudogiant.png",
+    "sha256": "07383f5adf3810024448b8c9507ae34a2ee3ba485484a543850ccce55497a069",
+    "size": [
+      1218,
+      1292
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_7490b261af188191a3b8ee0fa64c7e17.png",
+    "source_sha256": "565ba40408b3d2e1ca7a9ec3b38ac92682a4fc8132ef0d7686b3df60415c5417",
+    "library_file_id": "libfile_7490b261af188191a3b8ee0fa64c7e17",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/stregun.png",
+    "sha256": "ab682fffd942671260d6e66fdbde9b22fb0a0dbcd01bc8fbb31c34a2fb32a668",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_fd0bb80000ac81918f3ef77fa97205be.png",
+    "source_sha256": "d42b385db2481be602c4f6f78aa021cac7095158089110065d72a6a446857eb8",
+    "library_file_id": "libfile_fd0bb80000ac81918f3ef77fa97205be",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/hinge.png",
+    "sha256": "a18ffe4040dc22487ed2f21e5e2fcdb5ebae2c95740fdfef75f89f4f9a0ced52",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_550643d5b7988191967808eb5a2f9ea9.png",
+    "source_sha256": "e6304011c927864e5a9938195c19a8d134257505ff2d8f8478c03ecaf77662ef",
+    "library_file_id": "libfile_550643d5b7988191967808eb5a2f9ea9",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/fire-poltergeist.png",
+    "sha256": "8d7910df0adefa69002a6b26aeaf1ffffc39e6bd32d726aa6e20f59f26e72980",
+    "size": [
+      1145,
+      1374
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_75431de5a9548191b9c257673c503aec.png",
+    "source_sha256": "c86d734a7e8b4aa9f2c39637b5c620c3fea2d8ae4904b73c6efb74fbd09d5f94",
+    "library_file_id": "libfile_75431de5a9548191b9c257673c503aec",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/krakozyabra.png",
+    "sha256": "653dd15db67c5d58a705611b4a6ea1d6ea00b5c6b0ac4121fbb581eba9f97bed",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_e293df8d54ec8191bfb6375e4977b7c1.png",
+    "source_sha256": "6e235eee190844a1607c8f5d4f5c0b6b7418178c4540015129986175f25b0783",
+    "library_file_id": "libfile_e293df8d54ec8191bfb6375e4977b7c1",
+    "operation": "native_alpha_unchanged"
+  },
+  {
+    "path": "images/combat/mutants/fracture.png",
+    "sha256": "356394bc0d69ea0d3976bc281f86680c7e749624648dac3b303a7679299fb51c",
+    "size": [
+      1024,
+      1536
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_225cffdea0888191aa4ec350350f70d9.png",
+    "source_sha256": "1f57135f8e5d4421b156aa0d7a6ae4f309b995cb0f263b5aeea03cfc9187bf3d",
+    "library_file_id": "libfile_225cffdea0888191aa4ec350350f70d9",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/lynx.png",
+    "sha256": "6667d01574bb6be5b52860ac1979f41f63e1bf42a793ee301d5a9ad10d3730af",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_adfe79e3e3c081919ac5f5f15076815e.png",
+    "source_sha256": "5ad3f12b51bac99795858e4afc20eb499623169cdb328f1c9c73379ee7fc7a99",
+    "library_file_id": "libfile_adfe79e3e3c081919ac5f5f15076815e",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/bayun.png",
+    "sha256": "4063c802f107842c9a75b5a34fb0b4a0aa9fc27318872c84aeaff401db8894d4",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_6a21c322cfa48191b36616ed0490aa38.png",
+    "source_sha256": "3ba1c627e8727c3a3e95e9e0cc50124e8d2e36e9c12f5f85d47882354b30783a",
+    "library_file_id": "libfile_6a21c322cfa48191b36616ed0490aa38",
+    "operation": "reviewed_matte_removal"
+  },
+  {
+    "path": "images/combat/mutants/boar.png",
+    "sha256": "970a235af89ce884c3f7d13cc8977c4c19bdec630d4339485cd7300c7d7d9dad",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "source": "asset_sources/combat_restoration/originals/mutants/libfile_e998b152e6ac81919d456e4be1f4ae08.png",
+    "source_sha256": "4344896dcfc8b6976d9d34b38a2f884e2f918a115e9786874c7caf99f6706619",
+    "library_file_id": "libfile_e998b152e6ac81919d456e4be1f4ae08",
+    "operation": "reviewed_matte_removal"
+  }
+]

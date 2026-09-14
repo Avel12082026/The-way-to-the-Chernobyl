@@ -1,0 +1,127 @@
+[
+  {
+    "library_file_id": "libfile_20c1665d5aa88191b8ec3d447eb8c024",
+    "name": "Древний мутант с венцом щупалец.png",
+    "target": "mutants/stronglav.png"
+  },
+  {
+    "library_file_id": "libfile_10547f9a06f481919ad5afea731b0be4",
+    "name": "Плавающий серый мутант с заострёнными ушами.png",
+    "target": "mutants/poltergeist.png"
+  },
+  {
+    "library_file_id": "libfile_6a78937569e88191bc4801ce065c9ddf",
+    "name": "Мутантный лось с ветвистыми рогами.png",
+    "target": "mutants/moose.png"
+  },
+  {
+    "library_file_id": "libfile_3944e3cc06b88191b7b4f8cd410dd5a6",
+    "name": "Серокожий мутант-контролёр в полный рост.png",
+    "target": "mutants/controller.png"
+  },
+  {
+    "library_file_id": "libfile_038fe636c1688191a0dff7a18ce93b8f",
+    "name": "Приземистый мутант в потёртом капюшоне.png",
+    "target": "mutants/burer.png"
+  },
+  {
+    "library_file_id": "libfile_766cdc43a36081918715dc6516844bb6",
+    "name": "Мрачный филин-мутант с когтистыми руками.png",
+    "target": "mutants/owl.png"
+  },
+  {
+    "library_file_id": "libfile_fc7a356d8dac81918fe7ca3a5297ca58",
+    "name": "Мутант-чупакабра с шипастым хвостом.png",
+    "target": "mutants/chupacabra.png"
+  },
+  {
+    "library_file_id": "libfile_b15da131d7688191a2c8ec3b4fc28659",
+    "name": "Седой мутант-псевдопёс в низкой стойке.png",
+    "target": "mutants/psydog.png"
+  },
+  {
+    "library_file_id": "libfile_f76a5ba9ae248191ac3721afeef1cfbf",
+    "name": "Оскалившийся постапокалиптический мутант-волк.png",
+    "target": "mutants/pseudodog.png"
+  },
+  {
+    "library_file_id": "libfile_f3d23d9c9cd48191957eeb4058ce48fa",
+    "name": "Слепой мутант-пёс с рваными ушами.png",
+    "target": "mutants/blind-dog.png"
+  },
+  {
+    "library_file_id": "libfile_79c316837b948191912ad22f49f6e7f9",
+    "name": "Мутант-тушкан с кисточкой на хвосте.png",
+    "target": "mutants/tushkan.png"
+  },
+  {
+    "library_file_id": "libfile_22532c1acd2081919f7cafb3695e6e73",
+    "name": "Мутант на прозрачном фоне.png",
+    "target": "mutants/snork.png"
+  },
+  {
+    "library_file_id": "libfile_4ef57d61b6688191a9133dbd4c7b44c5",
+    "name": "Пепельнокожий мутант с четырьмя щупальцами.png",
+    "target": "mutants/bloodsucker.png"
+  },
+  {
+    "library_file_id": "libfile_7d197cd73c808191b81de515c729101d",
+    "name": "Химера на прозрачном фоне.png",
+    "target": "mutants/chimera.png"
+  },
+  {
+    "library_file_id": "libfile_03b82799f18c8191bfcdad5591b72fef",
+    "name": "Сланцево-серая химера с электрическими разрядами.png",
+    "target": "mutants/electrochimera.png"
+  },
+  {
+    "library_file_id": "libfile_e4c7a8e485008191b1a97ab2d303eb38",
+    "name": "Пепельный четырёхглазый наблюдатель.png",
+    "target": "mutants/observer.png"
+  },
+  {
+    "library_file_id": "libfile_7490b261af188191a3b8ee0fa64c7e17",
+    "name": "Громоздкий псевдогигант на мощных ногах.png",
+    "target": "mutants/pseudogiant.png"
+  },
+  {
+    "library_file_id": "libfile_fd0bb80000ac81918f3ef77fa97205be",
+    "name": "Шестиногий панцирный стрегун.png",
+    "target": "mutants/stregun.png"
+  },
+  {
+    "name": "Сутулый мутант с угольными пластинами.png",
+    "library_file_id": "libfile_550643d5b7988191967808eb5a2f9ea9",
+    "target": "mutants/hinge.png"
+  },
+  {
+    "name": "Угольный полтергейст с янтарными глазами.png",
+    "library_file_id": "libfile_75431de5a9548191b9c257673c503aec",
+    "target": "mutants/fire-poltergeist.png"
+  },
+  {
+    "name": "Кракозябра — серый мутант-падальщик.png",
+    "library_file_id": "libfile_e293df8d54ec8191bfb6375e4977b7c1",
+    "target": "mutants/krakozyabra.png"
+  },
+  {
+    "name": "Существо с исправленными ушами на прозрачном фоне.png",
+    "library_file_id": "libfile_225cffdea0888191aa4ec350350f70d9",
+    "target": "mutants/fracture.png"
+  },
+  {
+    "name": "Мутационная рысь в настороженной стойке.png",
+    "library_file_id": "libfile_adfe79e3e3c081919ac5f5f15076815e",
+    "target": "mutants/lynx.png"
+  },
+  {
+    "name": "Мутировавший кот-скрытник с крючковатым хвостом.png",
+    "library_file_id": "libfile_6a21c322cfa48191b36616ed0490aa38",
+    "target": "mutants/bayun.png"
+  },
+  {
+    "name": "Мутантный кабан с массивными клыками.png",
+    "library_file_id": "libfile_e998b152e6ac81919d456e4be1f4ae08",
+    "target": "mutants/boar.png"
+  }
+]

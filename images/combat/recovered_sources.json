@@ -1,0 +1,11 @@
+[
+  {
+    "path": "images/combat/mutants/isotope.png",
+    "source_library_file_id": "libfile_af709ef2913c8191a048fbd498ee47bf",
+    "source_name": "Мутант Изотоп на прозрачном фоне.png",
+    "sha256": "87334adf9ad7b5871bc2fcf5472bbcaf8608d377c8fd2548282f46d4045342cd",
+    "mode": "RGBA",
+    "pixels_modified": false,
+    "status": "Recovered source; species stays disabled until all three backgrounds are verified. Other retrieved zombie and dog images have baked-in checkerboards and were not installed."
+  }
+]

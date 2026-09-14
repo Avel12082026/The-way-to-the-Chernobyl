@@ -1,0 +1,614 @@
+[
+  {
+    "path": "images/combat/mutants/flesh.png",
+    "sha256": "b0e009d89b4b31e8bfbdaf2b11b944330750ee6db76c81968b6160ce51843ec9",
+    "size": [
+      1254,
+      1254
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/mutants/flesh.png",
+    "source_sha256": "b0e009d89b4b31e8bfbdaf2b11b944330750ee6db76c81968b6160ce51843ec9",
+    "library_file_id": "libfile_78775a4261c0819192e0acd9586a6140"
+  },
+  {
+    "path": "images/combat/backgrounds/chernobyl-dog/1.png",
+    "sha256": "9617009518b8eac362aadf17822ff89f701b3539e05b92b01de6a8b1c9dc8a3a",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/chernobyl-dog/1.png",
+    "source_sha256": "9617009518b8eac362aadf17822ff89f701b3539e05b92b01de6a8b1c9dc8a3a",
+    "library_file_id": "libfile_d610f3924354819184cee401f9bac800"
+  },
+  {
+    "path": "images/combat/backgrounds/chernobyl-dog/2.png",
+    "sha256": "29054f06b9f5fd2fd42672ef26264223f63c3899f775a49758a2d232674291a1",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/chernobyl-dog/2.png",
+    "source_sha256": "29054f06b9f5fd2fd42672ef26264223f63c3899f775a49758a2d232674291a1",
+    "library_file_id": "libfile_567b24bd83d4819191e4eac53053ea5e"
+  },
+  {
+    "path": "images/combat/backgrounds/chernobyl-dog/3.png",
+    "sha256": "5dc78a792e5693b30b2a184e10f500baae28dfee81fcd39f1736d8b05c0bbcc9",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/chernobyl-dog/3.png",
+    "source_sha256": "5dc78a792e5693b30b2a184e10f500baae28dfee81fcd39f1736d8b05c0bbcc9",
+    "library_file_id": "libfile_8178a430d1a081919cacd9fb1ad5ee83"
+  },
+  {
+    "path": "images/combat/backgrounds/flesh/1.png",
+    "sha256": "487ca32606e7e1388e7f194f0f0ec0ab782570fddcb686b443fa12aee19c25d3",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/flesh/1.png",
+    "source_sha256": "487ca32606e7e1388e7f194f0f0ec0ab782570fddcb686b443fa12aee19c25d3",
+    "library_file_id": "libfile_9e6272d260608191b730de83a71e7398"
+  },
+  {
+    "path": "images/combat/backgrounds/flesh/2.png",
+    "sha256": "d753e6743952d66b4ccdf267bc89def550413e86596b4785a1a9cd2dfe079ee6",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/flesh/2.png",
+    "source_sha256": "d753e6743952d66b4ccdf267bc89def550413e86596b4785a1a9cd2dfe079ee6",
+    "library_file_id": "libfile_657b46ed99448191957e6a3d03458693"
+  },
+  {
+    "path": "images/combat/backgrounds/flesh/3.png",
+    "sha256": "792d9b9c5696612dd3ca207dfc0f6fdcb754194fd8dc33560627dd05392fc62c",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/flesh/3.png",
+    "source_sha256": "792d9b9c5696612dd3ca207dfc0f6fdcb754194fd8dc33560627dd05392fc62c",
+    "library_file_id": "libfile_c4a195959af08191b84baa6200aadbf7"
+  },
+  {
+    "path": "images/combat/backgrounds/isotope/1.png",
+    "sha256": "0d8359d75f62a79a318808db33116bacfffd3ef62df5a78890d2309407e8d075",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/isotope/1.png",
+    "source_sha256": "0d8359d75f62a79a318808db33116bacfffd3ef62df5a78890d2309407e8d075",
+    "library_file_id": "libfile_99663439f7588191977ea16e7766785a"
+  },
+  {
+    "path": "images/combat/backgrounds/isotope/2.png",
+    "sha256": "02ddff9f7a03504c8a88c0c58c2d041368417e7bac0b0b80e91960d33f6c8b94",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/isotope/2.png",
+    "source_sha256": "02ddff9f7a03504c8a88c0c58c2d041368417e7bac0b0b80e91960d33f6c8b94",
+    "library_file_id": "libfile_e161a2d931b48191817975426c0ca670"
+  },
+  {
+    "path": "images/combat/backgrounds/isotope/3.png",
+    "sha256": "d10648fd84cdce8e5d80bb18f09a260017fdc3f36f11d3cd5f6f75bb52176561",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/isotope/3.png",
+    "source_sha256": "d10648fd84cdce8e5d80bb18f09a260017fdc3f36f11d3cd5f6f75bb52176561",
+    "library_file_id": "libfile_40c11ac07cd08191bb9afbdaff0ab88a"
+  },
+  {
+    "path": "images/combat/backgrounds/zombie/1.png",
+    "sha256": "da5dcd8cde463b44f00d5529db163eff74ba66fdddeac405e566ce429ea150fc",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/zombie/1.png",
+    "source_sha256": "da5dcd8cde463b44f00d5529db163eff74ba66fdddeac405e566ce429ea150fc",
+    "library_file_id": "libfile_99d18549e82c8191a2b518524d506809"
+  },
+  {
+    "path": "images/combat/backgrounds/zombie/2.png",
+    "sha256": "65cbca9636c5df852e4f232a7746d87b8fd98e76a5789f5b49145f933bd8abd1",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/zombie/2.png",
+    "source_sha256": "65cbca9636c5df852e4f232a7746d87b8fd98e76a5789f5b49145f933bd8abd1",
+    "library_file_id": "libfile_4ab60bdc505c819193f23337ec35298e"
+  },
+  {
+    "path": "images/combat/backgrounds/zombie/3.png",
+    "sha256": "3eff7610a16eb8386070570326d113364594ecc6398d71e2a7d52a398e99e3f8",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/zombie/3.png",
+    "source_sha256": "3eff7610a16eb8386070570326d113364594ecc6398d71e2a7d52a398e99e3f8",
+    "library_file_id": "libfile_4ccbf256b3a481918a31df24ef924139"
+  },
+  {
+    "path": "images/combat/pistols/1.png",
+    "sha256": "5be1dbe2f0ffd1ab5ea0ffd5366cec575581867d3aceda88561f1debbd93c774",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/1.png",
+    "source_sha256": "db5f55be7711c153b02e5d9203d4d00efc3767a71a56bae9b004bddd1fc071ee",
+    "library_file_id": "libfile_57506bfd29608191813a6c84d8f9a589"
+  },
+  {
+    "path": "images/combat/pistols/2.png",
+    "sha256": "d28be30742d7a43066383452b2b9eb537a32f115a209ca84b46672b9cba4fcb9",
+    "size": [
+      1254,
+      1254
+    ],
+    "operation": "original_unchanged",
+    "source": "asset_sources/combat_restoration/originals/pistols/2.png",
+    "source_sha256": "d28be30742d7a43066383452b2b9eb537a32f115a209ca84b46672b9cba4fcb9",
+    "library_file_id": "libfile_aa62f03c9bfc8191b67c1f3c8ba461ca"
+  },
+  {
+    "path": "images/combat/pistols/6.png",
+    "sha256": "ad273e6b9899f92da011975cb66799ff11c391453129ff12dcc7bde396b988aa",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/6.png",
+    "source_sha256": "ee7aa29dcda472a22422d55552926cd7e90ba7398d120e602a48662d5986a129",
+    "library_file_id": "libfile_55a73b97ee0081918ab3dcb34509e182"
+  },
+  {
+    "path": "images/combat/pistols/104.png",
+    "sha256": "2082c07bd338a837ecb70a799ca72259460dde7f4d4bc9ee0fff8497f1a0afac",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/104.png",
+    "source_sha256": "c95552538a25170b38109734f448a855dccf0091a38be3f597b8d6090d86befd",
+    "library_file_id": "libfile_36477ffe7aac8191ab8a205c67631283"
+  },
+  {
+    "path": "images/combat/pistols/103.png",
+    "sha256": "93fb6bf34cdec8a6ac1dae564a206a73ee8d12f0ab433f049c2d60350ac1d94d",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/103.png",
+    "source_sha256": "241678c5a5e8089286c164d123595cf0f9263b88e502faf210774fa7f0be42b2",
+    "library_file_id": "libfile_0a95a162e3288191a06e6ddd1eeaaf44"
+  },
+  {
+    "path": "images/combat/pistols/102.png",
+    "sha256": "f8f9baf7e086296b60197a151613823cd8ba589cac1c432b925d99d47ae0d2e0",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/102.png",
+    "source_sha256": "111b7197bbfc6cd50014fea6be5b77f50a2797e2aa2eb1df11aae7bff15b39f3",
+    "library_file_id": "libfile_c67e07efde8c819181c95866db5c53f0"
+  },
+  {
+    "path": "images/combat/pistols/92.png",
+    "sha256": "10a3969bd2e5c3b32958ea265e2e57b3f3ed881756c63f05f7f9ae70340c9273",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_checkerboard",
+    "source": "asset_sources/combat_restoration/originals/pistols/92.png",
+    "source_sha256": "50a6a0b0c88558f92cf16228b915261a3724280ad493ec4a2e105cfac260cd8d",
+    "library_file_id": "libfile_ead84ced4644819189b2881a65a59483"
+  },
+  {
+    "path": "images/combat/pistols/86.png",
+    "sha256": "fb624c53234768cf41bd84697a43f1d6b7ebad4bbd1dda045de1322ee8b18831",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/86.png",
+    "source_sha256": "a289f3c69a05581f7038e9165319715e27615af3b5e2af3e90eff8ddf615a817",
+    "library_file_id": "libfile_737eead8e52c8191809130c1d1cc4b7b"
+  },
+  {
+    "path": "images/combat/pistols/105.png",
+    "sha256": "b70dba3b1e6cd1ffe68e6345b84252f502d336e22d5a11bef6581e979aba463b",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/105.png",
+    "source_sha256": "654d47d2035cc9b3b4cd2181a4c5270cacf692356e4f440dfae7ecc29abd5d2b",
+    "library_file_id": "libfile_257fe97013b48191880e923c43b9bcf8"
+  },
+  {
+    "path": "images/combat/pistols/99.png",
+    "sha256": "5f1b46036c4d6836352844108792b53b89dfb9f27596dd08c49dd653301f9359",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/99.png",
+    "source_sha256": "18d56cad14f9c35c777615dd6f30beefe076d0fdb6bc238566341967e5d7e1b0",
+    "library_file_id": "libfile_3fac37c117688191bf908ed48cf2d2e4"
+  },
+  {
+    "path": "images/combat/pistols/97.png",
+    "sha256": "d5efab0a10f59eb9358dcb5e05ad76479a3546c29587b70ec8a7bc94229c12af",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/97.png",
+    "source_sha256": "94e1cc8155f610a247f00deea2c6c74ac94071f729d74c19d3e1a5eef8bb3092",
+    "library_file_id": "libfile_7a47151fef9881919a9a994eaa3ff1d6"
+  },
+  {
+    "path": "images/combat/pistols/95.png",
+    "sha256": "7b0793da10281dcca3d4dec20152aa5d59d502156b7267ab9e76dc14ace9d680",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/95.png",
+    "source_sha256": "0b82e84fe5bea7915921094b80a8de77ffc787ba31c241c1f3551cfd463d790c",
+    "library_file_id": "libfile_6b914e4849b4819190a6d98896589e2d"
+  },
+  {
+    "path": "images/combat/pistols/88.png",
+    "sha256": "1b6e389b5d7c4a707fcefba4b8fa54560f53c9ce6703c00956b253c90458549f",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_checkerboard",
+    "source": "asset_sources/combat_restoration/originals/pistols/88.png",
+    "source_sha256": "c57aaa997d4dc1b2d75de44452a6fb2c473ca7f998f75e82958b5de227220fbd",
+    "library_file_id": "libfile_728fd1e2ad448191a66371e4171bae51"
+  },
+  {
+    "path": "images/combat/pistols/96.png",
+    "sha256": "87cc637548f1252b551cff0107470cadf64a9111daaf531ad2f394c24a7fa3ea",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/96.png",
+    "source_sha256": "4ca1d6dc67f2a828ddab2fb894fafe936aaa5d9344a03f72adeae8aa1531cd93",
+    "library_file_id": "libfile_d249a8aafb208191ad941e62ce4311a7"
+  },
+  {
+    "path": "images/combat/pistols/93.png",
+    "sha256": "7c1d0e92b88476cf340221695e9656de111a678948cc83e56d4854d6a003efa1",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/93.png",
+    "source_sha256": "f658bb5dc6d5e2c547d0e94b04125db71521babaa7802c29673827e688deeafe",
+    "library_file_id": "libfile_ccb29c465f3c819189c6850bd62a960d"
+  },
+  {
+    "path": "images/combat/pistols/98.png",
+    "sha256": "5c0d35aac903a0837570f5e44eb2e70cfb79ace408bba8836245b8e671ec54a3",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/98.png",
+    "source_sha256": "c1a2a1fc3403ea8a3ae5f203438012258424bb8601aa3d457f806bc045ebf371",
+    "library_file_id": "libfile_f533b32555d48191a99ee9b6c1e133ef"
+  },
+  {
+    "path": "images/combat/pistols/100.png",
+    "sha256": "deb1160efc902ea6577554507851c4a98441cb2241bcf119f83f642bb064281b",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/100.png",
+    "source_sha256": "5546ffe57ae25709e09a57fd8d78415d605d62ea6d5841e6f6ca6d4581bd04cd",
+    "library_file_id": "libfile_2e4980aa13ac819197cfd0aca5b183de"
+  },
+  {
+    "path": "images/combat/pistols/90.png",
+    "sha256": "aee0a1fa1ae439d37ba54d79f9309a7c1336f965b89425dbe59dd1fd9c2b24de",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_checkerboard",
+    "source": "asset_sources/combat_restoration/originals/pistols/90.png",
+    "source_sha256": "fdb5b9bf8df3aa82d3ffc2aed8fab1d9822299dd765ef74a327e57dd2bd59320",
+    "library_file_id": "libfile_202be0d6d6a48191955476c551b65e67"
+  },
+  {
+    "path": "images/combat/pistols/101.png",
+    "sha256": "e469394adbd5f3f44c84b7e577a644c613e4b730fa75e07202cd46ab6ee95cf5",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/101.png",
+    "source_sha256": "0701b5dffca4dce73325994143ae5c41e5cc87c1790083fb3bf6efb401ffc84f",
+    "library_file_id": "libfile_0ccfd6cff0c08191ba238131492d7398"
+  },
+  {
+    "path": "images/combat/pistols/94.png",
+    "sha256": "7d7ab9d6a8b05a1b3a7e08205bce6212a627ebdf93630f0f7f7ccd08fdb44811",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/94.png",
+    "source_sha256": "d730df1cad0a8fdae7bcfc9fa08cdb06bccae5cf56575d829686c2e9f8ae0ffe",
+    "library_file_id": "libfile_ffc85ff2de7c81918d3c2a28c9e75c24"
+  },
+  {
+    "path": "images/combat/pistols/91.png",
+    "sha256": "82eb8f0a16b1e46924a736e88cfd7107e1c3c64070ca96eaab0ac29a11eb9cd5",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_checkerboard",
+    "source": "asset_sources/combat_restoration/originals/pistols/91.png",
+    "source_sha256": "9f1fbe89d07aef1e34c71c294b9285f6d39c0b5dbd32965de92020f687a18e68",
+    "library_file_id": "libfile_a0716fbce8548191b0bf5d033190ef3f"
+  },
+  {
+    "path": "images/combat/pistols/7.png",
+    "sha256": "0d7a40599bb8bc4a0730f3ea06b9136afc092bee1adaf73c36a13d5e6ffa069b",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/7.png",
+    "source_sha256": "f92f07984c2e428fe7e8673484cd78b8762bb5aee9136039c87387ddf0df5cce",
+    "library_file_id": "libfile_52df1b7104588191b3f822e3d28b7ce8"
+  },
+  {
+    "path": "images/combat/pistols/5.png",
+    "sha256": "140fabc19ae26192f5a80f0e787a79cec0ad0142796b9fe9956b6acf987fd307",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/5.png",
+    "source_sha256": "d1a455bb3685a2de0143b375858f146339fa5d174e160e9d209d47570f2d8b95",
+    "library_file_id": "libfile_1ab1bb5884188191aa3a25a1bd56a072"
+  },
+  {
+    "path": "images/combat/pistols/3.png",
+    "sha256": "ff0ddce2984f5f8d84af106454c26ce5eb44175b786b9bd99152ed85114bfb0a",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_white",
+    "source": "asset_sources/combat_restoration/originals/pistols/3.png",
+    "source_sha256": "1b89d8b2ef70893de1ed0f6114009f06d31dfe820e8c177c10e5a4f90e1bb030",
+    "library_file_id": "libfile_3f2e3f01ccf081919de42b73b431f718"
+  },
+  {
+    "path": "images/combat/pistols/89.png",
+    "sha256": "700f2d94733bc2c14ea63cef3760b2f13331cb08f076c7dd34709a312093e9f7",
+    "size": [
+      1254,
+      1254
+    ],
+    "alpha_range": [
+      0,
+      255
+    ],
+    "rgba_lossless": true,
+    "operation": "remove_checkerboard",
+    "source": "asset_sources/combat_restoration/originals/pistols/89.png",
+    "source_sha256": "3c53f52b4074387d38ee5f9da32a31ab141704bc187a4a25d4af2c81e83950f5",
+    "library_file_id": "libfile_ff7f1f8935fc81918fe3e76dedc5570e"
+  },
+  {
+    "path": "images/combat/backgrounds/hinge/1.png",
+    "sha256": "f701be601ad312020a27d4e589358149b6835f6c5cd4a10fdff9185006083f77",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/hinge/1.png",
+    "source_sha256": "f701be601ad312020a27d4e589358149b6835f6c5cd4a10fdff9185006083f77",
+    "library_file_id": "libfile_7512c5227b948191bfd836378d72a38a"
+  },
+  {
+    "path": "images/combat/backgrounds/hinge/2.png",
+    "sha256": "4454194fdd66d2bc520f84f342977861e791f1e8791c6a7af4337624fb778937",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/hinge/2.png",
+    "source_sha256": "4454194fdd66d2bc520f84f342977861e791f1e8791c6a7af4337624fb778937",
+    "library_file_id": "libfile_7eb6744316ec8191ba788063128bbe69"
+  },
+  {
+    "path": "images/combat/backgrounds/hinge/3.png",
+    "sha256": "12a72211372d815992828747286cd5dfd70e2671bff43f0b0a836782817f4a85",
+    "size": [
+      1536,
+      1024
+    ],
+    "operation": "original_unchanged",
+    "source": "images/combat/backgrounds/hinge/3.png",
+    "source_sha256": "12a72211372d815992828747286cd5dfd70e2671bff43f0b0a836782817f4a85",
+    "library_file_id": "libfile_f8c4679fbb94819187eac0475c635872"
+  }
+]

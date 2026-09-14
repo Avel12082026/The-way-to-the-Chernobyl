@@ -32,7 +32,7 @@ function show(config){
  if(!data)return;
  const armor=Number(config.armor)||1;
  const safeArmor=data.armors.includes(armor)?armor:1;
- source(p.right,base+'hands/'+safeArmor+'_right.webp');source(p.left,base+'hands/'+safeArmor+'_left.webp');source(p.grip,base+'hands/'+safeArmor+'_right.webp');
+ source(p.right,base+'hands/'+safeArmor+'_right.webp?v=20260913-clean1');source(p.left,base+'hands/'+safeArmor+'_left.webp?v=20260913-clean1');source(p.grip,base+'hands/'+safeArmor+'_right.webp?v=20260913-clean1');
  const layout=root.DETECTOR_LAYOUT;
  if(layout){p.grip.style.clipPath='polygon('+layout.grip.map(([x,y])=>`${x/1536*100}% ${y/1024*100}%`).join(',')+')';const fit=layout.placement[config.detector];if(fit){p.detector.style.left=fit.x/1536*100+'%';p.detector.style.bottom=(1024-fit.bottom)/1024*100+'%';}p.detector.style.clipPath=layout.antennaMasks[config.detector]?'url(#cutout-'+config.detector.replace('.jpg','')+')':'none';}
  const detector=data.detectors[config.detector];p.detector.hidden=p.grip.hidden=!detector;
