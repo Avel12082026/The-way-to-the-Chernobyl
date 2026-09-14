@@ -9,12 +9,6 @@
     },
     {
       "mode": "100644",
-      "path": "asset_sources/combat_hand_repair/combat-1-bare-v2.webp",
-      "sha": "ae8079326cdb50f4a525f4dcc1f6a0605fd597a5",
-      "type": "blob"
-    },
-    {
-      "mode": "100644",
       "path": "asset_sources/combat_hand_repair/combat-2-leather-v2-source.png",
       "sha": "05bc674f4fdd285b9dad18d3c008eb4ccb628523",
       "type": "blob"
