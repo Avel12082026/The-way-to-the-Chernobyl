@@ -15,12 +15,6 @@
     },
     {
       "mode": "100644",
-      "path": "asset_sources/combat_hand_repair/extract_chroma.py",
-      "sha": "b50f43c58ecc59115e4f1426a93c2d52b12af7f2",
-      "type": "blob"
-    },
-    {
-      "mode": "100644",
       "path": "asset_sources/combat_hand_repair/glock17-v2/checks.json",
       "sha": "9499854014d06b5ce4352af40c5bb9546d677c89",
       "type": "blob"
