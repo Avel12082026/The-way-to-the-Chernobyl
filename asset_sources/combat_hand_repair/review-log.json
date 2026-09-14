@@ -662,6 +662,16 @@
       ],
       "modularFitVerified": false,
       "flashVerified": false
+    },
+    "makarov-assembled-v2.webp": {
+      "status": "candidate-not-integrated",
+      "note": "Собран цельный художественный образец с Макаровым через imagegen по двум исходникам. Видны указательный внутри скобы, отдельный большой и три нижних пальца. Это НЕ проверка программной модульной сборки: генерация подправила положение руки и оружия.",
+      "alpha": [
+        0,
+        254
+      ],
+      "modularFitVerified": false,
+      "flashVerified": false
     }
   }
 }
