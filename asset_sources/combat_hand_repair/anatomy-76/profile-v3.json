@@ -107,5 +107,14 @@
         650
       ]
     ]
-  ]
+  ],
+  "weaponAdjustments": {
+    "87": {
+      "scale": 1.08,
+      "anchorX": 480,
+      "anchorY": 400,
+      "x": -5,
+      "y": -5
+    }
+  }
 }

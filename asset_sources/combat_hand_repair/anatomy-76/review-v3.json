@@ -7,12 +7,196 @@
     254
   ],
   "transparent_background": "viewed on light background; no backdrop visible",
-  "pair_review": "26 initial combinations viewed; lower finger masks need adjustment",
-  "updated_mask_review": "Makarov 75 viewed; remaining revised closeups pending",
+  "pair_review": "All26 revised-mask grips visually inspected at close range",
+  "updated_mask_review": "Lower finger outlines continuous; thumb distinct; model87 scale adjusted 1.08 and shifted -5,-5, reinspected for both hands. Model87 image is marked WALTHER PPK (earlier commentary called it Beretta incorrectly).",
   "release_approved": false,
   "remaining": [
-    "individual closeups after revised mask for all26",
-    "trigger contact for each model",
-    "scene integration and recoil"
-  ]
+    "scene integration and recoil",
+    "verify aim against actual enemy position"
+  ],
+  "pairs": [
+    {
+      "weapon": 1,
+      "image_sha256": "9b618f6572d82b6861a3a53821bbf24b7297db8ac3a6d41516cb5d79db793653",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 2,
+      "image_sha256": "f284968034408780d2e8b23d15cf3bb87c90d7b0cd4e66e62f78373e4177273f",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 3,
+      "image_sha256": "162501f87b9345a6dbbb27302055cef3eee68948814aa12bc02ab05e5395e505",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 5,
+      "image_sha256": "469f85f6f3c53f6fcf46621b74f12974f4faabb76c008afd9ca878f54f7340ae",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 6,
+      "image_sha256": "03f064fb6d04dcfef9c2dd616ada63b241f5d6cab7095dee1d4d6652e67ae597",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 7,
+      "image_sha256": "89b5960745fdfb5e6c0554b267f71fe4608fcd69743c36b09f20bf121a6acb60",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 86,
+      "image_sha256": "c366f9824028a608662326c990c4ffa43891314a117d2b328a2b32dc4e09bcea",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 87,
+      "image_sha256": "a0740e41be17e64867fea2ad143b22e8b2263a29fbde0e1f2962c2ad407cfcbc",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 88,
+      "image_sha256": "b0832d6c2fbecce96889119aeaf9c836d0def2f1eb2c4749e322d17fa578c44a",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 89,
+      "image_sha256": "b861af4836cd37bff0e45684d5c63197871a044c5f4379efca53d31539437795",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 90,
+      "image_sha256": "6a2401660ab8b09d1d36df8c965e29f977b2f408e1a84946cb0eb04083939697",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 91,
+      "image_sha256": "bc1c5a7993f0d0577ebd60383b68e4693ffaf6785ee4c87ce76129f90cf04f27",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 92,
+      "image_sha256": "6a98424d7d3b762be129ad39b3f4ea53e019bd9e4c2c837535e4439f3e58a1cd",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 93,
+      "image_sha256": "82fea511348282246a5d41f055ce6422464c8e10e7afd9dcdef02e27b7db009c",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 94,
+      "image_sha256": "59c63ca43b6b4d877857dffe3ecdb1e740f7fa3e9983a0f33ab9f284be53b127",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 95,
+      "image_sha256": "cd4e517dc401a7e65b59ed9f57ec1bb5229b9f1490a3a421c9bb3fc2ea792855",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 96,
+      "image_sha256": "830b2a7c9e5bd13810eb5b5eeb4aaf155327fb1a7184cbbaf4a3614399540d09",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 97,
+      "image_sha256": "5c56e07d9460f76e4b273535595ea738063fae34489f5118006f2a2e27b4d2e4",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 98,
+      "image_sha256": "2e1402528f264d77d8a2928c628ffb5859a992b768f3ac09342c05f09f6a4658",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 99,
+      "image_sha256": "abee4bf62933a1c5ffe48cea65d8a5435d04c4df001d2b4367d812ff9365f494",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 100,
+      "image_sha256": "e78b9006555277ab793a5d6ed03758385c10ec25aa26f28a29c304e4c1c87b8c",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 101,
+      "image_sha256": "c0e82d03af837f71f4b4cbb0dfa1f2845e3a7222cd01c38aaef3cb07ecd0bc1c",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 102,
+      "image_sha256": "7256a5d2ddfba6ae601081b315c41c230ac11f19bdfe57fa73a9b5a02d9681fc",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 103,
+      "image_sha256": "7808193be5ff514024bc3198cbdf1f7b252b62934064cabfa61e20ff960e09dc",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 104,
+      "image_sha256": "f1a596b00c065af4c18784b6f4942119bf74cadd5164640713db852235104d85",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    },
+    {
+      "weapon": 105,
+      "image_sha256": "2978ac840a5ca5ff340c66f966cac8bc9a7638f13a6e4ad8b7fe94b1c9e6505d",
+      "visual": "closeup inspected; candidate static fit",
+      "flash_phases_passed": 6,
+      "release_approved": false
+    }
+  ],
+  "flash87": "0ms frame visually inspected after adjustment; effect starts at muzzle"
 }
