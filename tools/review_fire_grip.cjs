@@ -4,10 +4,12 @@ const fs=require('fs'),path=require('path');
 const root=path.resolve(__dirname,'..');process.chdir(root);
 const effects=require('../images/combat/effects.js'),layout=require('../images/combat/layout.js');
 (async()=>{
-const dir='asset_sources/forward_grips/9-91/fire-v1-review';
+const version=process.argv[2]||'fire-v1';
+if(!/^fire-v[0-9]+$/.test(version))throw Error('Invalid version');
+const dir=`asset_sources/forward_grips/9-91/${version}-review`;
 fs.mkdirSync(dir,{recursive:true});
-const [fg,bg,enemy]=await Promise.all([loadImage('asset_sources/forward_grips/9-91/fire-v1.webp'),loadImage('images/combat/backgrounds/zombie/1.png'),loadImage('images/combat/mutants/zombie.png')]);
-const fit=JSON.parse(fs.readFileSync('asset_sources/forward_grips/9-91/fire-v1-placement.json'));
+const [fg,bg,enemy]=await Promise.all([loadImage(`asset_sources/forward_grips/9-91/${version}.webp`),loadImage('images/combat/backgrounds/zombie/1.png'),loadImage('images/combat/mutants/zombie.png')]);
+const fit=JSON.parse(fs.readFileSync(`asset_sources/forward_grips/9-91/${version}-placement.json`));
 const sheet=createCanvas(1536,768),s=sheet.getContext('2d'),checks=[];
 for(const [i,ms] of [0,40,89,110,150,240].entries()){
  const c=createCanvas(1536,1024),ctx=c.getContext('2d');
