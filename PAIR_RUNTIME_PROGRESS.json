@@ -37,6 +37,28 @@
       "canvasReview": "visible-grip-reviewed-index-partially-occluded",
       "sceneTests": "passed",
       "browserReview": "blocked"
+    },
+    {
+      "weapon": 9,
+      "armor": 92,
+      "species": [
+        "zombie"
+      ],
+      "source": "images/combat/paired/9-92.webp",
+      "canvasReview": "passed",
+      "sceneTests": "passed",
+      "browserReview": "blocked"
+    },
+    {
+      "weapon": 8,
+      "armor": 92,
+      "species": [
+        "zombie"
+      ],
+      "source": "images/combat/paired/8-92.webp",
+      "canvasReview": "passed",
+      "sceneTests": "passed",
+      "browserReview": "blocked"
     }
   ],
   "fullyValidatedCombinations": 0,
