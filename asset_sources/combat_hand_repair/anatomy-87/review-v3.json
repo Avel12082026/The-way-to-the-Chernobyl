@@ -1,0 +1,152 @@
+{
+  "armor": 87,
+  "status": "static-visually-reviewed-not-integrated",
+  "source_sha256": "36ec6a31cd41a64839d3d0563fa69dd6ee590b3d126317187b24f4bb1422f49f",
+  "alpha_range": [
+    0,
+    254
+  ],
+  "notes": "Оливковая защитная ткань, чёрные ремни и тёмный наручный блок с жёлтыми деталями по armor_char_87, закрытая перчатка. Все26 хватов и вспышек просмотрены; пальцы целые, фон прозрачен.",
+  "visual_review": {
+    "all_26_grip_closeups": true,
+    "all_26_flash_images_0ms": true,
+    "light_and_dark_backgrounds": true
+  },
+  "technical_flash_phases": 156,
+  "pairs": [
+    {
+      "weapon": 1,
+      "pair_sha256": "d07395b4da3f1e0a173ed350136bd7a60e75e7a59a443aaf7708f10e031e89ed",
+      "shot_sha256": "6c4b0de190ebe13e648961e955608d1d9b55735bbf1dfb51acc93f73e9a13cd9"
+    },
+    {
+      "weapon": 2,
+      "pair_sha256": "b3415b5c69f494c3fd2c02d0599795085fe86f6bdb38cf881f8102236d7a3c21",
+      "shot_sha256": "586027c76f4de264e5e37228696e3634f670ee5a49524d6d8099d601ccdec377"
+    },
+    {
+      "weapon": 3,
+      "pair_sha256": "2316cc7e3576b92abafd8fd6a88b470ce6b448fd45d25a04375e0b37ffbfa8dc",
+      "shot_sha256": "679cd6a7fdfeb6f9c13fae1a96dc73ddeafe34913f68cdb95dd36edb49f5883b"
+    },
+    {
+      "weapon": 5,
+      "pair_sha256": "3efe1731803ed2959c03baeb975f25041574f1a1f159406709c81602682cee9a",
+      "shot_sha256": "1f9ce26ceb4501a4aa2a7dead15d5aed139aca30c0eb1c381e4872bd9e284662"
+    },
+    {
+      "weapon": 6,
+      "pair_sha256": "65b05086cb318370c50cef2db608c39d95b5eb4e9e05d0abdd6c9b5ff40311c9",
+      "shot_sha256": "107293abe68a28ce44ad18176954f778e7e5749d30b3ad60e0982b3b1ca01d8a"
+    },
+    {
+      "weapon": 7,
+      "pair_sha256": "b26a22c4a33f6e19a172f2a1edd7cf5252a1a212bea86327644fbe9d276e8596",
+      "shot_sha256": "6666824565fab665e69f4bab5c9e31ce8d0130958006b11ee6a64ff78f3ca731"
+    },
+    {
+      "weapon": 86,
+      "pair_sha256": "718fb60b56141f2690ac124f87c256352e2a0ac2da1d105e88e71d45dfd930b7",
+      "shot_sha256": "02e9a278b0936414c70ae2724d8f41438013d30c1d5fb7c0e9f24f31b7b93ffb"
+    },
+    {
+      "weapon": 87,
+      "pair_sha256": "d5cc1b80096073f6fadeaa16c67d89143b02d2c0d144f60b946069299f6a3de2",
+      "shot_sha256": "ea7510f34e303bae59d19c18cc08e2f7e823f74b3747cac5c1f477c2d32cc0c7"
+    },
+    {
+      "weapon": 88,
+      "pair_sha256": "ea6105edc46c0d9e0fd32b0ede1af75e2503d8bf9bc60e0e30b2626a1018b3f8",
+      "shot_sha256": "9075e3ca0c42c8dede928ec0986268257eb9ac38d5da55fd53e3e276424ea9e7"
+    },
+    {
+      "weapon": 89,
+      "pair_sha256": "0fe4b9a074d35b2c10fed6c0bd8c5f467de6151e228ee7a20a825dfa3197a7dd",
+      "shot_sha256": "a8d9ca1ac06a904b0ab8d5843fe7207c3057382193e41f781ccae47a3e941fea"
+    },
+    {
+      "weapon": 90,
+      "pair_sha256": "60b62deb3cfbb16b996bfaa0d09a0ed91a35e355418a9eb5e8c6194e2389be1a",
+      "shot_sha256": "146c0f58ee255c16f295642d36a2fa645bb6835ee1192326a523707519d7615c"
+    },
+    {
+      "weapon": 91,
+      "pair_sha256": "ae0b4957a8229e409099d029e71952a7b0e165e5d3050b07005776d2280e44fd",
+      "shot_sha256": "42e11def3ffd3f254906611da07e221a3cd5b331df0e0720dc5be3209e9679ec"
+    },
+    {
+      "weapon": 92,
+      "pair_sha256": "143a3a3a303708cab2bc02db6c71a70eb1ce7aee7d7678d838df382b254a0084",
+      "shot_sha256": "b6e6a0e1b198795e865bafea3a4b614a3c845ba2f9a7c70798d7127c63fc3665"
+    },
+    {
+      "weapon": 93,
+      "pair_sha256": "18fe05497bd4f2e4e99ee2b7ad3e93030083297cc6296df0ca6547e6bbbd1e40",
+      "shot_sha256": "7d5599e7484abc794659e2fdf25ac00a6041d5ca29e24ebeacadfb321fb8f67d"
+    },
+    {
+      "weapon": 94,
+      "pair_sha256": "44ce259417120f2dd8e54ba6a41517c6c60ad37f69f354f3765426b2de7fc921",
+      "shot_sha256": "a641fc544849fb822fa7bb0140e1bb88e474857c95f7b6b813690fd62188ea63"
+    },
+    {
+      "weapon": 95,
+      "pair_sha256": "d1618b4251842e10957cfe9ae02445528e320772c16034b788a7855708c42735",
+      "shot_sha256": "9a45cab6ae8396bd25e5da630f3ce9e6adc87a24c5ffe872b22ced81f6125ff5"
+    },
+    {
+      "weapon": 96,
+      "pair_sha256": "c29579441b21f4d190428e94df5bc2f0fec59f712b31fd5b8db7f829ac5f5644",
+      "shot_sha256": "15cf24e35f42c0a71d7c603cb6bade7a04f6c465160be34450caef5248d65647"
+    },
+    {
+      "weapon": 97,
+      "pair_sha256": "cf5f30e70c37174392088310b7fbdb89de2c73490ad916b061085f8ea2877450",
+      "shot_sha256": "ee18efb11a316d85a78432acad43d6b169b545a80ad2d1790ebaea9788bb1dc0"
+    },
+    {
+      "weapon": 98,
+      "pair_sha256": "64ae5a1d22dead146abeb55da273e8b3e625f5a7896b9cb64d0d85aa30875ead",
+      "shot_sha256": "3231e08bd249d856f753fd31d3a0f78a5e7e5ea1a442e2df649bf633586bcd84"
+    },
+    {
+      "weapon": 99,
+      "pair_sha256": "620a0093e3c19d90e9dec2259090481e94843f94dbc00f754e2ab447edcf0308",
+      "shot_sha256": "68d918cd9358b0d2d2ab0153781beccff0a83d979ada5d2b923211d3486ae889"
+    },
+    {
+      "weapon": 100,
+      "pair_sha256": "208ac072d601198fca67056b3ec6eeb26bbdeae6e2a02a9ea449a5b471dd5828",
+      "shot_sha256": "a8a44674d82206efff48677b6f7a4476d093643aa663e571601a1acd396aa639"
+    },
+    {
+      "weapon": 101,
+      "pair_sha256": "a6a31fc1cbb72b63d438ffbf6de19fa33eb1425f70f0a6d8e95ea71fd9ff9636",
+      "shot_sha256": "264906b0c8ed6d7bb800d4f6b8e46be0c6897ca7b752fb35eef9dd1b5c0ed010"
+    },
+    {
+      "weapon": 102,
+      "pair_sha256": "bc667677af2602a44f01294e6fa199c156c7a6120f0d6b8b6b5e5f55bf710b49",
+      "shot_sha256": "179933ed6ec817954bf3c6babc996b8a1902b1deee0746954b86aea990060a8f"
+    },
+    {
+      "weapon": 103,
+      "pair_sha256": "f6f7460c027c42261bdd50131d5dca01802d9922e77581b0f4f1d14ab36eaad0",
+      "shot_sha256": "6edc092a1d3a7b84a9159a438734987a310625605ea7ebd9d645d1eb2f967185"
+    },
+    {
+      "weapon": 104,
+      "pair_sha256": "d9ae0dd0a24b3de4bbe541b0d9a0f0ae8dfd53bb7f2e26555daecf1ab1786cd5",
+      "shot_sha256": "a1f555b79b9c68153c5f21470a47b750a665155025976ab4ac9e9372e7604ccd"
+    },
+    {
+      "weapon": 105,
+      "pair_sha256": "c9f69063463d99e77597d9bb6e6195236d04a9cb70907517ec9370c6224dba67",
+      "shot_sha256": "6917ffaacc0c2ee7d4cf5aea8fcc004e877f20c180b9c562c61637120879accf"
+    }
+  ],
+  "remaining": [
+    "Production scene integration, recoil and aim review"
+  ],
+  "reproduce": "HAND_VERSION=v3 node tools/review_modular_armor_all.cjs 87; python tools/hand_review_sheets.py 87"
+}
