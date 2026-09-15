@@ -707,5 +707,19 @@
       "status": "static-candidates-reviewed-not-production",
       "report": "asset_sources/combat_hand_repair/anatomy-74/all-pairs.json"
     }
+  },
+  "modular75": {
+    "status": "candidate-overview-reviewed",
+    "source": "asset_sources/combat_hand_repair/anatomy-75/hand-only-v2.webp",
+    "armorReference": "icons/armor_char_75.webp",
+    "glove": "closed-black",
+    "alpha": [
+      0,
+      254
+    ],
+    "combinations": 26,
+    "technicalFlashPhases": 156,
+    "closeReview": false,
+    "integrated": false
   }
 }
