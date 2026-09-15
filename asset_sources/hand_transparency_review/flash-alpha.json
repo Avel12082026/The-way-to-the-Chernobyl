@@ -1,0 +1,2498 @@
+[
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 1,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 2,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17710,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17710,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17710,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 3,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 5,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17703,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 6,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17707,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 7,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17686,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17686,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17686,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 86,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 87,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17694,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17694,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17694,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 88,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17690,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17690,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17690,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 89,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17702,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 90,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 91,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17695,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 92,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17691,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 93,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 94,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 95,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17682,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 96,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 97,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17684,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17704,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 98,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 99,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17692,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17692,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17692,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 100,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17709,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17709,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17709,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 101,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17696,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17697,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 102,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17698,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 103,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17705,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17699,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 104,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 0,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 40,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 89,
+    "visible": 17706,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "legacy",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 0,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 40,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 89,
+    "visible": 17701,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 90,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 150,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  },
+  {
+    "weapon": 105,
+    "mode": "modular",
+    "ms": 240,
+    "visible": 0,
+    "outside": 0,
+    "passed": true
+  }
+]

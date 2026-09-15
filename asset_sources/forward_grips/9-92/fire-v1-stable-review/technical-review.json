@@ -1,0 +1,69 @@
+{
+  "status": "six-states-and-two-backgrounds-visually-reviewed",
+  "checks": [
+    {
+      "ms": -1,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 539.36
+      }
+    },
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 539.36
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 545.8476898094672
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 551.36
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974174,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 549.4550423939742
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 776.62,
+        "y": 539.36
+      }
+    }
+  ],
+  "weapon": 9,
+  "armor": 92,
+  "integration": "zombie-profile-only",
+  "browser": "blocked"
+}

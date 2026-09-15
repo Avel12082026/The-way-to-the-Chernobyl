@@ -1,0 +1,77 @@
+{
+  "status": "individual-firing-pose-visually-reviewed",
+  "checks": [
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 538.3
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 544.7876898094671
+      }
+    },
+    {
+      "ms": 89,
+      "recoilY": 11.46446582189156,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 549.7644658218915
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 550.3
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974177,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 548.3950423939741
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 1.4695761589768238e-15,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 779.8,
+        "y": 538.3
+      }
+    }
+  ],
+  "anatomy": "continuous index into guard; three curled fingers",
+  "backgrounds": [
+    "light",
+    "dark"
+  ],
+  "transition": "hold/fire compared; receiver highlights and contour drift remain; not approved for instant sprite switching",
+  "integration": false,
+  "hashes": {
+    "fire-v2.webp": "e2e4ec5d26848d3c91c425843d8894f9f52843c3542862e18a2328ed527969b1",
+    "fire-v2-alpha-review.jpg": "384e8806eed77fe1c98768e245309a0216b4fba1d750af11d2fb1d4b3f14c348",
+    "hold-fire-comparison.jpg": "3c7fcd0557b24d5eb4bdb0d8cf2d284583b55ad9f2c235f3f84500170a7bbd5e"
+  }
+}

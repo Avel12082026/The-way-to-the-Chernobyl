@@ -1,0 +1,3790 @@
+[
+  {
+    "armor": 1,
+    "source": "asset_sources/prepared_hand_pack/hands/1.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "65c32d979f55ee6e601531ac0bdcff74a8bf611e181c6d2fcc5bae9b3f02897d",
+      "shot": "dfb7a9c27bbdf53cb42312d7277dded8c3f76521ae7966fb7cfffae23ffac995"
+    }
+  },
+  {
+    "armor": 2,
+    "source": "asset_sources/prepared_hand_pack/hands/2.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "2d49e9402b7a5f9b1e83ff5643811780f215fec91193b92f64bea74f5617726a",
+      "shot": "a086f63e0a2adb416fe6a2509b2ced9638c2e6689804be6659074a951f8d51b8"
+    }
+  },
+  {
+    "armor": 3,
+    "source": "asset_sources/prepared_hand_pack/hands/3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "686f1a1470593d158cab57af234bb7d062b0f4ad7e7683ee36b29b0fe981344d",
+      "shot": "9b9e7c139d31312fde4bb98949cb75139f2878d71c3078256bca89faa928438e"
+    }
+  },
+  {
+    "armor": 4,
+    "source": "asset_sources/prepared_hand_pack/hands/4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "58126ae5010cdef923456c6d61cb2a6ce80c2b14a8252902833aef417b446564",
+      "shot": "1eca4a69784cbe711bba166c1b201799cbef77cb7e5b14a99315624c5865ec6b"
+    }
+  },
+  {
+    "armor": 5,
+    "source": "asset_sources/prepared_hand_pack/hands/5.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "206ffce317f968210471a3bf30e71c4ee68c35e6648ae1f20b1697624d18dc70",
+      "shot": "6875b0cefa2185838dfacf6a8c6c90fc3368557709338a857c175afeb3a834e9"
+    }
+  },
+  {
+    "armor": 6,
+    "source": "asset_sources/prepared_hand_pack/hands/6.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "b3e220fc71e7e3e9bc7f54e8c0580af4777b7f0b3f622acc7cd8762b885a20cf",
+      "shot": "f39626055d5da1fbb1fcafb280d392fbfff4f86434113f8e143e89a5ba2e3882"
+    }
+  },
+  {
+    "armor": 7,
+    "source": "asset_sources/prepared_hand_pack/hands/7.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ff26d8fbeb404b8e71de001c45ff701f5fc113551d86dfee4c7e39571518342e",
+      "shot": "7145cb01184b93337af27a19d70171356284fffdbfaaa98692bacce383ee7b5b"
+    }
+  },
+  {
+    "armor": 8,
+    "source": "asset_sources/prepared_hand_pack/hands/8.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "c061302de6e5dc22d47c9aa1677351af03cb3f8d4c54c215c6105648f9014a6d",
+      "shot": "a330db8d925fa1e0014c6136230ab2a9daee8143e878f02223873d9d120ca764"
+    }
+  },
+  {
+    "armor": 9,
+    "source": "asset_sources/prepared_hand_pack/hands/9.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "10faed21a0b38738498438dc11352de7d965e1e665be1ec70c7d70ba18b41320",
+      "shot": "ae4d100645d5788cf176683e63a58caafd78751ad4c5608906512782500f48db"
+    }
+  },
+  {
+    "armor": 10,
+    "source": "asset_sources/prepared_hand_pack/hands/10.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ef417c42386cbbf231e3e70d767e4761817d884a3b370e8db29d8cb95e8f86a4",
+      "shot": "a24a8b86e1211b91228b9ff792d09661ddf914751c1f4dbabeb2d48167daf78e"
+    }
+  },
+  {
+    "armor": 11,
+    "source": "asset_sources/prepared_hand_pack/hands/11.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "e3ef3b3611b730e88f562a2fef9cade1018f4ed06f219a09e384efd3878464b1",
+      "shot": "ce385593fe3dacd6cfd2c18401f5648df752f7d86bfb037a68f28f1c08c17ce7"
+    }
+  },
+  {
+    "armor": 12,
+    "source": "asset_sources/prepared_hand_pack/hands/12.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "30051c6476c25e1bfd098f76919a6c49a274b889f7c6d34f89746c7eb0d11e1e",
+      "shot": "4f07087e3e373f382d6bc03e3909cb246d201f84ec341a8e4e6f595b818bcd64"
+    }
+  },
+  {
+    "armor": 13,
+    "source": "asset_sources/prepared_hand_pack/hands/13.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "acae0d588671ec0766836c78940db765436bc81614ea83a5ab70bf966c73af0e",
+      "shot": "d51ad20826a8859e3ba935a9664f16aea33f76d2fdeae6d8b8cddecb696e1305"
+    }
+  },
+  {
+    "armor": 14,
+    "source": "asset_sources/prepared_hand_pack/hands/14.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "84b28e20169e1fad0896d490023e6457fbdd1ebc4a2f3cced916827ce5194fb4",
+      "shot": "b6808aea3642c745f74bdebfd134b1bec19a830793934854ea85c4d32bcf1d1d"
+    }
+  },
+  {
+    "armor": 15,
+    "source": "asset_sources/prepared_hand_pack/hands/15.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "6332f75a264fc5a029a570bf815d96ac898132d9a789c96a03622a8708384104",
+      "shot": "e66bbdeeb8ae5498521c757ece6d4f17f7cdd3048b6b7836698da52ff12824db"
+    }
+  },
+  {
+    "armor": 16,
+    "source": "asset_sources/prepared_hand_pack/hands/16.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1b87ad31c715f104877cefa278c289cb94009170e3caa3c2b7ee3bf8a18cfec7",
+      "shot": "470ed89148b1b6ca491fd1b9cafbfc0c735d33fa0993a3fe07068e652f64259d"
+    }
+  },
+  {
+    "armor": 17,
+    "source": "asset_sources/prepared_hand_pack/hands/17.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "6d5da0bb4bed941273ca1223c8a3b0c530412a17eceaccf1b8daf24e90c7238e",
+      "shot": "672965b7c07741509e966ca610ae91f6ed2a82b637af3e9b8113ca89c8e3579b"
+    }
+  },
+  {
+    "armor": 18,
+    "source": "asset_sources/prepared_hand_pack/hands/18.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "0eb60887956e86db7825bbe1004716adf9c35f9fd64e88452f878923e6568280",
+      "shot": "5f393a5664f7e7658365862f61ddca4684126cc70b3d92e6d4a2a6a78726e922"
+    }
+  },
+  {
+    "armor": 19,
+    "source": "asset_sources/prepared_hand_pack/hands/19.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "6438458d8147442995d2a2021d885bb70ee312e942c889231967578148bdfd1c",
+      "shot": "d8253cbbc6dd9b53c9706dd5cb0cdfed989e65c4f21cf8f7efdff0384e1bd148"
+    }
+  },
+  {
+    "armor": 20,
+    "source": "asset_sources/prepared_hand_pack/hands/20.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1dd388372561f1f4319404aff3ef273ba6bef613999f593e276ba596b0770e60",
+      "shot": "36b84c3a165c78ecead26d7211c7698f6fb76acf005f2cb12510f90d3352febb"
+    }
+  },
+  {
+    "armor": 21,
+    "source": "asset_sources/prepared_hand_pack/hands/21.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "9e551f4470fdab364f180ef5e3e195c8d85f6181e7e2bbb0be86ce14c8de757c",
+      "shot": "c40d4d34627240fefbda99825fdba7e2d98dc47350e7b41037a38dab4090f129"
+    }
+  },
+  {
+    "armor": 22,
+    "source": "asset_sources/prepared_hand_pack/hands/22.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "2590cf4976fd4260fb84b1fb232e9c3e6e021edc91c8908666ac3aa966c15316",
+      "shot": "6960339dfc4331b3eff24281a0cb63bd325a77a06e0c35252363a21856eb6ff7"
+    }
+  },
+  {
+    "armor": 23,
+    "source": "asset_sources/prepared_hand_pack/hands/23.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "e734bb1a3d23aa4780da314900d0ae72b37bcb2894aa93b95028533c85c15823",
+      "shot": "e7b98c1155b8a291cfa5a73a1ed51ed9cdb819f382eb5b84d41e753b8321efb1"
+    }
+  },
+  {
+    "armor": 24,
+    "source": "asset_sources/prepared_hand_pack/hands/24.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ca2b3eaa052a65a4ab36111fbe4001fa46bd67978c364672e67b26a6d0579984",
+      "shot": "35c17aaec6b689ad4e5f8a90f329e64eec7d067680666cbc85385bb4785e39b5"
+    }
+  },
+  {
+    "armor": 25,
+    "source": "asset_sources/prepared_hand_pack/hands/25.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "a4e2dfeff94d963db10429d3b5fde723b1a7eff72b6a6f6c6bc4c0f9925daa02",
+      "shot": "9699582d72580554f6f3d337501002fac0f4d0278796e64c70e23fccaa88de2b"
+    }
+  },
+  {
+    "armor": 26,
+    "source": "asset_sources/prepared_hand_pack/hands/26.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "673b66c7971b1a1cf40dba3878715639eaa2c444cca046978561a58d137ef436",
+      "shot": "147ee28f8d7169a05f6a61dd27dffdc5ed4c30e472d7bce9133222a65ae2a1a9"
+    }
+  },
+  {
+    "armor": 27,
+    "source": "asset_sources/prepared_hand_pack/hands/27.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "2af3ed84edf532541705a0ed9a4cc34a1d11b00822e32848ccf8635c1411e387",
+      "shot": "e5ddd0a92a94a744842a7a96bfc498da56a9b633daa465fb11043b574494a5da"
+    }
+  },
+  {
+    "armor": 28,
+    "source": "asset_sources/prepared_hand_pack/hands/28.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "2bc4982ac995101caa87d7ec93ee920746526ad0bc3130ccfeb1547234a5ec08",
+      "shot": "83ee8bb57312e504e0b346ee4a3651e1ec233fa18051119d74462afc864fdf10"
+    }
+  },
+  {
+    "armor": 29,
+    "source": "asset_sources/prepared_hand_pack/hands/29.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "a6676e8ec8d7c6cbffbd51f4b620b5727b008e2cd494b9be5b38e7787e7345a8",
+      "shot": "6b16a3755d6e83bb101bff7dde1dacbec7c266dd579241b5aedeba2d7c394bc0"
+    }
+  },
+  {
+    "armor": 30,
+    "source": "asset_sources/prepared_hand_pack/hands/30.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "b581278678e0aa342b369e1bdec635a7328f64b2bdd54bf5e205c3ecf70b1e6a",
+      "shot": "20aa31d2600579513a35f35f7b439670dbe63ecd993b62118f0a4f81aa261c04"
+    }
+  },
+  {
+    "armor": 31,
+    "source": "asset_sources/prepared_hand_pack/hands/31.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "49f0b305f0b0e70ac692d08fc9bc356f75e106109e989fd7fa550da6a37a8819",
+      "shot": "7de0e2ae0fa2b354fd8c50b7fa06d379a75f44e3f0252bcb3be526dee8d81fc3"
+    }
+  },
+  {
+    "armor": 32,
+    "source": "asset_sources/prepared_hand_pack/hands/32.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ed1f2da07f22eb7b72fa30bfb90c1865f4739032fcc5cf5d570dd7c0c87edef0",
+      "shot": "6df8c6a70684d22a1ee700b5f5944e3725fad483af3de8792b122751aba12d3a"
+    }
+  },
+  {
+    "armor": 33,
+    "source": "asset_sources/prepared_hand_pack/hands/33.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "397071129a4a8f51a44eb597ef0d1aa45e921167c72057130327d346f10a4878",
+      "shot": "ffa366fbe36a928f8e8eac718421348fffe65d15fe76921f7cd23876d4033d98"
+    }
+  },
+  {
+    "armor": 34,
+    "source": "asset_sources/prepared_hand_pack/hands/34.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "078c31dc05088fee04b5c10328d2f34b6e416fff405416adc6abac22ca0d37f1",
+      "shot": "d058704e26c85bba7544149c4e98aaf7f2faa6b2f64a51dd72fbb3259985aac8"
+    }
+  },
+  {
+    "armor": 35,
+    "source": "asset_sources/prepared_hand_pack/hands/35.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "10332ba93aa324481464ca4d930d27d39b4cbd079e46e7b3f921d503043b1d0a",
+      "shot": "5450e746eb62b35d9a2ad410ac873608483e11188007a6c0e169a676e682eab2"
+    }
+  },
+  {
+    "armor": 36,
+    "source": "asset_sources/prepared_hand_pack/hands/36.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "652e5af3b1df48c438f32581fdc2f7c2a7139227175292530497d1eb5271960d",
+      "shot": "d7729182d2dff88b0eaa4fc605abbd1e074831b21a5d665ba9aa40d7b833254a"
+    }
+  },
+  {
+    "armor": 37,
+    "source": "asset_sources/prepared_hand_pack/hands/37.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "088a27249174b3af2baadd576cbd90f2fc312e359b579b326cfca1a8536a7655",
+      "shot": "a584b70939314b5327f55711d94c3e663d942ae908c2ec7ae61b498015119cb7"
+    }
+  },
+  {
+    "armor": 38,
+    "source": "asset_sources/prepared_hand_pack/hands/38.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "0d5ff800f0a89d9cb5482320f8f66585907b4e746787230ea9832ec6981ab277",
+      "shot": "512ada35b5fc64bd9ea8b7f902fd6e97cbdcd2252c0c1fbbd20188ed64ec34be"
+    }
+  },
+  {
+    "armor": 39,
+    "source": "asset_sources/prepared_hand_pack/hands/39.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "93da816495686aa4e781b199e2f639bef22e2ea836774eadb66dd79e8116761f",
+      "shot": "549a23a9428a36e4ef19f6a8e05f4fd3dda9635d21b3841403cd83ead07f308e"
+    }
+  },
+  {
+    "armor": 40,
+    "source": "asset_sources/prepared_hand_pack/hands/40.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "0e011cc734f3a6e4debfaddceb45025f2adf7d1c3b70a4445ba71c7e3afdc034",
+      "shot": "e4752ca9010bcd55c9c45638258a837f6a08d8c24253dace9cc9fe07159a8ca3"
+    }
+  },
+  {
+    "armor": 41,
+    "source": "asset_sources/prepared_hand_pack/hands/41.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "5ad99fe5e9c72e4eb52b6c336e62748ff5dfb39b40164bbf4edcbd4f728429b8",
+      "shot": "9b54171096445fe61c5c83324ea7297bb234a75be80310d384699cae8acf55f1"
+    }
+  },
+  {
+    "armor": 42,
+    "source": "asset_sources/prepared_hand_pack/hands/42.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "6581a1ec7d163f81404e1124130db782a6283cb3b05b22638b65049de633ddec",
+      "shot": "3ea3481cf7a0d048337711720b0a623defdd9c543ee52f94397523561dace391"
+    }
+  },
+  {
+    "armor": 43,
+    "source": "asset_sources/prepared_hand_pack/hands/43.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ac2808ea384479ce3b04f0e2d4bafdd549d5f287635f590fb620c044bc7ac3e4",
+      "shot": "f62ea6d92f02e0d43be1274939344b6e380783b82cb240ab643bca4750bbd9ee"
+    }
+  },
+  {
+    "armor": 44,
+    "source": "asset_sources/prepared_hand_pack/hands/44.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "54e5eb8f8c670ff1055d48ae0589934e6583b60e7c02be7653af31d1894e2650",
+      "shot": "93ae4d8cc4a629c56b934f673a691172afc2d333d35a0e4e26510852ef05fce9"
+    }
+  },
+  {
+    "armor": 45,
+    "source": "asset_sources/prepared_hand_pack/hands/45.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "edff2a08fbfab1c5bedc1452bab2f672029767cd5f617e873721d308ae6c719e",
+      "shot": "9d831ce40ad6a5b62af97cc39906bcff7be5a706e78d46a20ab778f355b8b9e8"
+    }
+  },
+  {
+    "armor": 46,
+    "source": "asset_sources/prepared_hand_pack/hands/46.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1984784c0867bdd0da0cac36870966a30f78f215e1504c6eb0c436c238cb32d4",
+      "shot": "eef0714dfbd3b0e0fa0a8a028c76b3f69733aca11a04823cbbce24bc44b660d0"
+    }
+  },
+  {
+    "armor": 47,
+    "source": "asset_sources/prepared_hand_pack/hands/47.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "7f9c7ac0138e0a96827208e71faf2789c560dc665abadf506a7c79d058942527",
+      "shot": "30636050427a3bb7f7272966ca4d493e4cbeb789a6c742d805c8f85714b6246d"
+    }
+  },
+  {
+    "armor": 48,
+    "source": "asset_sources/prepared_hand_pack/hands/48.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "65a16d4dd7089681a9db04242779c215d327ece8cfc88129f5638f28de762e3f",
+      "shot": "d4eb0204c68ec0dee94916e7e2df8101e898fa77e63a52052a3a89681892734e"
+    }
+  },
+  {
+    "armor": 49,
+    "source": "asset_sources/prepared_hand_pack/hands/49.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "f98bf98f6719e06298f86e81a2b3b2102e37c0cafb75a1a0b5af3248f664c132",
+      "shot": "431de709934a4d1f5b8d2f9d05fd7a7606e6d24f472f5a5628f0efb1c836de5c"
+    }
+  },
+  {
+    "armor": 50,
+    "source": "asset_sources/prepared_hand_pack/hands/50.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ae3885c0777286baab77f6926ce6bb231082427579e974e18b6049e7a0c5e224",
+      "shot": "e16c4afedc47565d406badda3e770db07d095f80d87b8882cd3706b4d40c349c"
+    }
+  },
+  {
+    "armor": 51,
+    "source": "asset_sources/prepared_hand_pack/hands/51.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "8c0b4b2cdbba3bd7388fb9c20802332a3c0aedfb8328ca9843a8eccfa9de9b04",
+      "shot": "b4dff1c732b69167a512f1f65c8b33f24be02d5bd3d114b1c73cd654e62cc7e7"
+    }
+  },
+  {
+    "armor": 52,
+    "source": "asset_sources/prepared_hand_pack/hands/52.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1d4cf6de08e734952de62f18346bee25916a7d2469edb396ca2e99c0793a832a",
+      "shot": "b31b6870159a3a49ea5e5021164423dbfc3d0f8a9c5dff4f2cedd2701e80f3d8"
+    }
+  },
+  {
+    "armor": 53,
+    "source": "asset_sources/prepared_hand_pack/hands/53.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "253594cec1947bf3bf206dabaf1f2ab011228b4c12995b3bca5771bdfcbd0727",
+      "shot": "2dd38342f3245b2b9c6f153120719095e336c6f83fba065bc3d5997361cd14c5"
+    }
+  },
+  {
+    "armor": 54,
+    "source": "asset_sources/prepared_hand_pack/hands/54.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "d3217b5f9df27892d94baf22c1ffc5bbacef418681d9fb140faf8ec5b8450f2e",
+      "shot": "d3b7e8ac99d6be0ffc203382ef30682f6666f08d7c9707fde23f7456c09a1154"
+    }
+  },
+  {
+    "armor": 55,
+    "source": "asset_sources/prepared_hand_pack/hands/55.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "38fa0240aa2cd3eabf8f7d08ba5bbe1bf8425bae38f313f663edaf1482cd670d",
+      "shot": "5f49e0323058f6b29399b4907e99116e5ebebe29760e2b4b4e30b8bda8ae067a"
+    }
+  },
+  {
+    "armor": 56,
+    "source": "asset_sources/prepared_hand_pack/hands/56.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "fb00bf1709145bd6ad86b054272c4a318fee404d413ee3d29e917648ce56959d",
+      "shot": "a45bce9d5cf5bea0c1d8c173fadb94bd0284d5d6d3062c95fadfcda6dc3c9fdc"
+    }
+  },
+  {
+    "armor": 57,
+    "source": "asset_sources/prepared_hand_pack/hands/57.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "5b6eee77530baa42658d6f7b2cec6547073f7f46531a9802d7a19158041ef00b",
+      "shot": "731e274f85b56d66f3c48feb0bd509777cc1f192d235f128682a3319b89d33fb"
+    }
+  },
+  {
+    "armor": 58,
+    "source": "asset_sources/prepared_hand_pack/hands/58.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "529e8a8ef51edeac81e6f34e2295dee3152c555d99d997efc30a5f21b8e35d0b",
+      "shot": "20e123a482d2e21e99b7138ea8c68928ecf7118faa661820800eedcbb5e8a9e9"
+    }
+  },
+  {
+    "armor": 59,
+    "source": "asset_sources/prepared_hand_pack/hands/59.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ebca0d4058cc09cde34fbcbe5b78fba969ea7516736857908dd652db48ef3388",
+      "shot": "2d96d375df21531727222405926f1837dff4d402a6b048b3a013bda96099aa7d"
+    }
+  },
+  {
+    "armor": 60,
+    "source": "asset_sources/prepared_hand_pack/hands/60.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "df9429c38bc90dd84c8bdef3f674294f09226fa1164a1fcb59a58e42e77cadb3",
+      "shot": "917d42991c0189b27823e3e58f1ba6113b0d30c7fabf56612b9ad6b44cd4ffb3"
+    }
+  },
+  {
+    "armor": 61,
+    "source": "asset_sources/prepared_hand_pack/hands/61.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "570533f037aaded82dc5a3d757dc1f6cebe1b8ab9c370615e9fbf1056b555f57",
+      "shot": "0f927415af618f590e8fdb8fd0634ba0aefbc543d5cd6d5e115d5a33b28f8704"
+    }
+  },
+  {
+    "armor": 62,
+    "source": "asset_sources/prepared_hand_pack/hands/62.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "7d24e3cf12f594620cb9c91776ba919c889799a0663b19047b3c7e1c6160ad98",
+      "shot": "c4dd495ca47c15c66ab74343126d334d0871a47bd4b8bd887e43a2daf543b2dd"
+    }
+  },
+  {
+    "armor": 63,
+    "source": "asset_sources/prepared_hand_pack/hands/63.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "6fcf74ea73653dff7fa81857ca3dd03e03414d51fc3de386a5f0256103fdefa2",
+      "shot": "bc4c5932d263793e8b1fedb241a48c7fd62305d7a7a0e66c51c6358ec9021708"
+    }
+  },
+  {
+    "armor": 64,
+    "source": "asset_sources/prepared_hand_pack/hands/64.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "fa46122eebe94a0b09d9ea3a54a75bfd4a72fb854045b2904ad6a73641d80783",
+      "shot": "3a68651f66b462c88772dc48a7d276af3620b94350fab7107d39f7585462ba61"
+    }
+  },
+  {
+    "armor": 65,
+    "source": "asset_sources/prepared_hand_pack/hands/65.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1ddae62b91e4727bf8b322632c51e8d610007e4da7762f7eae6c0e8a28533f8b",
+      "shot": "919959ab3b606e60090ae92fb142dc16c497012aaf6ef7518de9e607dc9efef9"
+    }
+  },
+  {
+    "armor": 66,
+    "source": "asset_sources/prepared_hand_pack/hands/66.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "546358bf84ff21160303e5957de8522ea424094f123a276c3df9ad93435b5262",
+      "shot": "3c1414723e5955ab4166d5150f2b5b0fc363de36ae1b191bdff650ca52134d9a"
+    }
+  },
+  {
+    "armor": 67,
+    "source": "asset_sources/prepared_hand_pack/hands/67.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "17cb082eca316303abd53fab01e9d40146ba4a0e84243cb0113064bbda4741f7",
+      "shot": "00832b00768adccafc7d1ae4948147479602596f61e327270e5ea46dd8e5ea68"
+    }
+  },
+  {
+    "armor": 68,
+    "source": "asset_sources/prepared_hand_pack/hands/68.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "1bd0b0886a66fe0375dc027c2005519270464685ffc53d4155481e71609a4a86",
+      "shot": "55c26e526711e2d2241b7e2a8229dcfbb697549f57801483c4f7505bfe13edd1"
+    }
+  },
+  {
+    "armor": 69,
+    "source": "asset_sources/prepared_hand_pack/hands/69.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "56d951921d20f61134a16d2aa0e6b008b95462e2b109531c2aca5d63aff561f4",
+      "shot": "ccfd8ca1dd6a8580b6968d09e77e99f57e94931bddf67581c6991dc3db1ae8ba"
+    }
+  },
+  {
+    "armor": 70,
+    "source": "asset_sources/prepared_hand_pack/hands/70.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "69badc49860edce6e14a1a8fa755d4811568ea42822aca810019d115f87a85a9",
+      "shot": "980e4c9196d02688574e995fe36bdc5630a7a2cf0ccbb90c60d93409372f5dad"
+    }
+  },
+  {
+    "armor": 71,
+    "source": "asset_sources/prepared_hand_pack/hands/71.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "0131ba90d4f455cebc5bc7af30b4f3c35105e88668c497b3e95dcdc77caaeee2",
+      "shot": "c1855f83d008f7b7bc18f32540adfe13437f3177aac4f847c522e2d4757d1bda"
+    }
+  },
+  {
+    "armor": 72,
+    "source": "asset_sources/prepared_hand_pack/hands/72.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "ac0085977b74b734703275990afe43639d32ba2f08fafd6993f27c78319aeebc",
+      "shot": "870e0e29feb02b6f822ed4098d1800a58e544c5c4cb7c74223996ee532b0b1c7"
+    }
+  },
+  {
+    "armor": 73,
+    "source": "asset_sources/prepared_hand_pack/hands/73.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 794.6875,
+      "y": 477.8125,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17697
+      },
+      {
+        "ms": 40,
+        "visible": 17697
+      },
+      {
+        "ms": 89,
+        "visible": 17697
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Detached index fingertip / trigger reach needs correction; not approved.",
+    "reviewHashes": {
+      "armor": "e8e16d5e655de85fb44e14e1081f375f02dbc88349e6a79b7803f1c314d690a1",
+      "shot": "f8b7b96c5a7b8823492c47c56d37b8d78f4c7886bf050a10c2cfae5c894be6ed"
+    }
+  },
+  {
+    "armor": 74,
+    "source": "asset_sources/combat_hand_repair/anatomy-74/hand-only-v2.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "9e57779660e907be505a02d80e9902ff9f79fa43a3bf85810cb02f7330ae55fd",
+      "shot": "2c532cdee1f6b09ba00c43d23a52ec686a77df7db65c3aa1c722b54156e0d8ef"
+    }
+  },
+  {
+    "armor": 75,
+    "source": "asset_sources/combat_hand_repair/anatomy-75/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "c94fabf1e8738bad757c70bcdfd85e2762172ec201c92963a47144393cf303bd",
+      "shot": "51e217098c15176319728b5fdd11794da904adea0f58db1332353f0fe44f723c"
+    }
+  },
+  {
+    "armor": 76,
+    "source": "asset_sources/combat_hand_repair/anatomy-76/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "0b929525b108aa3c2e81e8ffbefb0fe80dbab20454b93e2580635581dbc15683",
+      "shot": "132d26d1df0d528d29c92ed80a10bb383be7215e37670913c4b6b8c90b4f446f"
+    }
+  },
+  {
+    "armor": 77,
+    "source": "asset_sources/combat_hand_repair/anatomy-77/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "ecaa57a36265a5b1b3ed4766eae053c020ed81142a3e43216f8b04001002b837",
+      "shot": "bcb123a4a03cc34badcd381cb7e57bf07be5547d5aa09e511763db5c7ccae392"
+    }
+  },
+  {
+    "armor": 78,
+    "source": "asset_sources/combat_hand_repair/anatomy-78/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "becf99e357608559aba65cbdacbd57f3bb8e6c085262d541091949651fe16857",
+      "shot": "4173a0085d455c25e013176ff94e98f4cf1961910e103a58849ded9fe10c1dde"
+    }
+  },
+  {
+    "armor": 79,
+    "source": "asset_sources/combat_hand_repair/anatomy-79/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "aa128ce25c8b1472b0deffe5f3026ec9646652d3e72964cb1678f300a886ca0d",
+      "shot": "1a10925e71bdf6944ac2b60dfefea0425985c7fae06552939f3ba462f7d5869f"
+    }
+  },
+  {
+    "armor": 80,
+    "source": "asset_sources/combat_hand_repair/anatomy-80/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "bb5d758c18157ccd12088e8eb79025e675367449aa021afa6e899f45efb7c6e9",
+      "shot": "96275bb24330b2da33a6997f131c0a81b91524c252648cacd54b924ab53ae9ac"
+    }
+  },
+  {
+    "armor": 81,
+    "source": "asset_sources/combat_hand_repair/anatomy-81/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "fea094d8ef6e1a20c8b3f08537345427a9a6afd43858905225fa0afa8aaa0677",
+      "shot": "c9ba4bf43585e9a6775c74e6ec33d25bc73aafaa1d8c0a532f8c8f7b5ba488e5"
+    }
+  },
+  {
+    "armor": 82,
+    "source": "asset_sources/combat_hand_repair/anatomy-82/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "71075edf8c7cd5b842e324bb140d9f9eedc0e2bdef38cebd6a7272820efaeac9",
+      "shot": "15fa661179c4b928dfa350e59411d4e4a72a0935bac68535558010a6c98c8350"
+    }
+  },
+  {
+    "armor": 83,
+    "source": "asset_sources/combat_hand_repair/anatomy-83/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "6bce6d4a3678369b4687f1bc8252212401b3a79a82fa46b5c5914e52d6852431",
+      "shot": "30e9c6b4587559a305611be8c81ce1b512c90fb249e865834a7692fd5e278e3e"
+    }
+  },
+  {
+    "armor": 84,
+    "source": "asset_sources/combat_hand_repair/anatomy-84/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "ee8bb4238a13d523b64b2baeb7f6df755569ca40f378435fd395fc33b154779f",
+      "shot": "34e241e298db4f8ff046a8384d0720c08ff41a9a208b03d6e0f432f39b888a20"
+    }
+  },
+  {
+    "armor": 85,
+    "source": "asset_sources/combat_hand_repair/anatomy-85/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "826dc506b9133bea0c9263b69e44cd08b44d13095cda4f7be04b71569cfe4696",
+      "shot": "63591de31c032210ec2ee3b816a3df868e9110ee00cf9c6d384f12b91dc8d011"
+    }
+  },
+  {
+    "armor": 86,
+    "source": "asset_sources/combat_hand_repair/anatomy-86/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "cce2f0599336385a9f8c65c9245d3730618e11e9688ea68e559c06bf4fc18239",
+      "shot": "40b1db5dd808f52b366a93e166d8001e0fd41dabaeb6c48cc8422ed8dea48685"
+    }
+  },
+  {
+    "armor": 87,
+    "source": "asset_sources/combat_hand_repair/anatomy-87/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "89733dc6d5a3a54532680a50b8622172554c92feff3c6809f174e09d606feba8",
+      "shot": "018afef5c578ba84f83b86eb345878ee18bc7bc1fdf6c57f8936a157e6e17a15"
+    }
+  },
+  {
+    "armor": 88,
+    "source": "asset_sources/combat_hand_repair/anatomy-88/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "97aa27b2cbc619ceedffb9a18f6cc9f5b5289400deb1a3aba9de65425d07d906",
+      "shot": "be40bd9708da70907ed6e0738e0253933a316f9099d17d50d5979945d5635e1b"
+    }
+  },
+  {
+    "armor": 89,
+    "source": "asset_sources/combat_hand_repair/anatomy-89/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "403ca79a1f412f365fc9b95d7a051b45a7eb72caab00c7bca36bf7c6cf734fa4",
+      "shot": "9ce166eca70074d3bf3c2f2029b786f4c1f2183df4665f075c53e2f4e3f465a8"
+    }
+  },
+  {
+    "armor": 90,
+    "source": "asset_sources/combat_hand_repair/anatomy-90/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "bc5e299439ff35cb2783eeddc9098653d2003d6e48c938412f7398d98b4eb938",
+      "shot": "add8b9f8684b3a7763dca2aa97cd7e80208a65ad15234a73bd99fb729786771c"
+    }
+  },
+  {
+    "armor": 91,
+    "source": "asset_sources/combat_hand_repair/anatomy-91/hand-only-v4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "adef1763fec9381c2683fc943ece548beb9680b527640f04d494360eada717f0",
+      "shot": "b16f840a7ba98c6c667033e7598bba78ba4297163562355c40cc5c801408db03"
+    }
+  },
+  {
+    "armor": 92,
+    "source": "asset_sources/combat_hand_repair/anatomy-92/hand-only-v4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 339.76953125,
+      "y": 232.52421875,
+      "angle": -2.8
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17693
+      },
+      {
+        "ms": 40,
+        "visible": 17693
+      },
+      {
+        "ms": 89,
+        "visible": 17693
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Individual index-finger/trigger and folded-stock/hand overlap correction required; not approved.",
+    "reviewHashes": {
+      "armor": "c8d06f7ffe1dc7f9c13f64b687b01aaa974aa353f3c3f71383df3b166b1bc0f0",
+      "shot": "9492562e6d088abcd8119df4cc7c87434d4156b8b8af0b4f5e20239579a7fb88"
+    }
+  },
+  {
+    "armor": 93,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 94,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 95,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 96,
+    "status": "missing-hand-source"
+  }
+]

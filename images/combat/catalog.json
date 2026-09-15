@@ -670,157 +670,183 @@
       "id": 86,
       "name": "Beretta 21A Bobcat",
       "image": "pistols/86.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 2,
       "name": "Пистолет ПСМ",
       "image": "pistols/2.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 87,
       "name": "Walther PPK",
       "image": "pistols/87.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 1,
       "name": "Пистолет Макарова",
       "image": "pistols/1.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 3,
       "name": "Пистолет ИЖ-71",
       "image": "pistols/3.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 88,
       "name": "Glock 25",
       "image": "pistols/88.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 5,
       "name": "Пистолет ОЦ-33 «Пернач»",
       "image": "pistols/5.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 6,
       "name": "Револьвер Наган",
       "image": "pistols/6.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 89,
       "name": "Walther P99",
       "image": "pistols/89.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 90,
       "name": "CZ 75",
       "image": "pistols/90.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 91,
       "name": "Glock 17",
       "image": "pistols/91.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 92,
       "name": "Beretta 92FS",
       "image": "pistols/92.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 93,
       "name": "SIG Sauer P226",
       "image": "pistols/93.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 7,
       "name": "Пистолет ТТ",
       "image": "pistols/7.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 94,
       "name": "HK USP",
       "image": "pistols/94.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 95,
       "name": "Glock 22",
       "image": "pistols/95.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 96,
       "name": "SIG Sauer P229",
       "image": "pistols/96.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 97,
       "name": "Glock 20",
       "image": "pistols/97.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 98,
       "name": "Colt 1911",
       "image": "pistols/98.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 99,
       "name": "Glock 21",
       "image": "pistols/99.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 100,
       "name": "CZ 97B",
       "image": "pistols/100.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 101,
       "name": "HK Mark 23",
       "image": "pistols/101.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 102,
       "name": "Taurus Judge",
       "image": "pistols/102.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 103,
       "name": "Smith & Wesson Model 29",
       "image": "pistols/103.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 104,
       "name": "Taurus Raging Bull",
       "image": "pistols/104.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     },
     {
       "id": 105,
       "name": "Desert Eagle Mark XIX",
       "image": "pistols/105.png",
-      "ready": true
+      "ready": true,
+      "suppressed": false
     }
   ],
   "armorIds": [

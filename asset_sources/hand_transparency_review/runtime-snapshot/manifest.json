@@ -1,0 +1,27 @@
+[
+  {
+    "source": "images/combat/layout.js",
+    "snapshot": "asset_sources/hand_transparency_review/runtime-snapshot/layout.js",
+    "sha256": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78"
+  },
+  {
+    "source": "images/combat/effects.js",
+    "snapshot": "asset_sources/hand_transparency_review/runtime-snapshot/effects.js",
+    "sha256": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15"
+  },
+  {
+    "source": "images/combat/modular/data.js",
+    "snapshot": "asset_sources/hand_transparency_review/runtime-snapshot/modular/data.js",
+    "sha256": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1"
+  },
+  {
+    "source": "images/combat/modular/renderer.js",
+    "snapshot": "asset_sources/hand_transparency_review/runtime-snapshot/modular/renderer.js",
+    "sha256": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+  },
+  {
+    "source": "images/combat/scene.js",
+    "snapshot": "asset_sources/hand_transparency_review/runtime-snapshot/scene.js",
+    "sha256": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3"
+  }
+]

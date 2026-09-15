@@ -1,0 +1,13 @@
+{
+  "source_sha256": "975ce098ce2853f2520be1a65c1806a7e7b06822ac437ea2ea8b096476f18068",
+  "replacements": [
+    {
+      "old": "    const user = checkTelegramAuth(req.body.initData);",
+      "new": "    const user = req.headers.authorization ? mobileAuth.resolve(req) : checkTelegramAuth(req.body.initData);"
+    },
+    {
+      "old": "app.listen(PORT, () => {",
+      "new": "const mobileAuth = require('./mobile-auth.cjs')({app,db,checkTelegramAuth,createFreshPlayerDataServer,itemPackages:ITEM_PACKAGES});\n\napp.listen(PORT, () => {"
+    }
+  ]
+}

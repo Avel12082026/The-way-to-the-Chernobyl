@@ -1,0 +1,75 @@
+{
+  "status": "visible-grip-and-zombie-canvas-reviewed-index-partially-occluded",
+  "checks": [
+    {
+      "ms": -1,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 626.04
+      }
+    },
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 626.04
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 632.5276898094671
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 638.04
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974174,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 636.1350423939741
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 750.97,
+        "y": 626.04
+      }
+    }
+  ],
+  "alphaRange": [
+    0,
+    254
+  ],
+  "sourceSha256": "8b256ab2eb097f8b665802417c83d31f3628c6a15d66250cc2280935907142d4",
+  "limitations": [
+    "Index partially hidden, hidden anatomy not reviewed",
+    "Live browser and Android not checked",
+    "Other opponents not approved"
+  ]
+}
