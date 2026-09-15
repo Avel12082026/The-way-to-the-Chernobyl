@@ -1,0 +1,122 @@
+{
+  "armor": 77,
+  "status": "static-candidate-not-integrated",
+  "source_sha256": "f3639250a08914cfdc12740f9c80f2c83290b2ad17a513ec612084ac16ea2eb1",
+  "visual_review": {
+    "all_26_overviews": true,
+    "all_26_grip_closeups": true,
+    "flash_images": false
+  },
+  "technical_flash_phases": 156,
+  "remaining": [
+    "Visual review of 26 muzzle flashes",
+    "Production scene integration and recoil/aim review",
+    "Armor 78-96"
+  ],
+  "pairs": [
+    {
+      "weapon": 1,
+      "sha256": "dc16c03059c36d8e58d9caf8f9bd5aa8e781ffc884e1d07e7e46b8e051450bad"
+    },
+    {
+      "weapon": 2,
+      "sha256": "827431605f350497c0eb4bac8ff0266cc3f957b33e01b79a27eed2e1da59b73d"
+    },
+    {
+      "weapon": 3,
+      "sha256": "bc3a70ddc32dde0680cad1161802a8cd820b39148ee4186088661d2c1bdb0bbb"
+    },
+    {
+      "weapon": 5,
+      "sha256": "302cee76f9b381b28ebd5b3c1ced792c2b822302c7d439228714a1802df92f30"
+    },
+    {
+      "weapon": 6,
+      "sha256": "bd50b9a14e93fda95487e93b11b853869ca1d7026a949a4fdc6f35b7e3da69a0"
+    },
+    {
+      "weapon": 7,
+      "sha256": "b4bb013db441ecbd5f4bc14b47faff9eaa081de7d47403f520d81d5159763a11"
+    },
+    {
+      "weapon": 86,
+      "sha256": "f814c12bfc22af2c79813c64f97150f61864019068d7fb9e941445f8dad0927f"
+    },
+    {
+      "weapon": 87,
+      "sha256": "823bc97f26386bc76c23810569ef5a4b968c3d0a3e79c390324027c45ec84785"
+    },
+    {
+      "weapon": 88,
+      "sha256": "41471d751f3610687608f85e878dae261d60eba4cf24d27bcac77ce01b9f2169"
+    },
+    {
+      "weapon": 89,
+      "sha256": "c970af9133d51222e47f2ac9cbff03492fc7eb3258ec257f58713e19d787664c"
+    },
+    {
+      "weapon": 90,
+      "sha256": "38cfcd22e1a80f741f73123bc7a8eb0635a8f17a7fef40043c5df0dfdf838b1b"
+    },
+    {
+      "weapon": 91,
+      "sha256": "b1537b853b3791ca6c87c23b545323d83fd8943e0f025ad0c5b75fa9f3422f0e"
+    },
+    {
+      "weapon": 92,
+      "sha256": "6c7898fe00100630a9334b5eb240fec7ab0cc85410fe77b3f3656d2c112c1c19"
+    },
+    {
+      "weapon": 93,
+      "sha256": "5ec6eec33544c57ab1740596be6059a128341b947d144df14857b2ee15eebc5c"
+    },
+    {
+      "weapon": 94,
+      "sha256": "c6f2f821fe26ccc17bba3098014f5f812a68bb08f787495a8103d40a9f0f2033"
+    },
+    {
+      "weapon": 95,
+      "sha256": "dee81eb93a22ecbf5facc0a22f76cb204741d22edf7db5edd2f7a6028c0b6803"
+    },
+    {
+      "weapon": 96,
+      "sha256": "8adc2bbd74fd423d7ccb1fd0da86aa227caf7cb2023bed71b3c9e1be7532799c"
+    },
+    {
+      "weapon": 97,
+      "sha256": "caf20c1acd456227bef44bafa52d260f16c2d718760964dbde08efd5b5c1c46f"
+    },
+    {
+      "weapon": 98,
+      "sha256": "f510465d3ec3dd19057500330c8a309f93fdf08db72d8c34e37e500f97c058fa"
+    },
+    {
+      "weapon": 99,
+      "sha256": "15c5d02f327d9b380978592a63809f3797fdff83a43fa9e4c3cce3ee509ce82c"
+    },
+    {
+      "weapon": 100,
+      "sha256": "87f0f4dc835577bc3a6d78e30444ef5fc34cb9281bfc9ff03891bfe925411f41"
+    },
+    {
+      "weapon": 101,
+      "sha256": "b6bad70ffd67d46faac711ba9901abbaf45cbca313468f1d54902abb9bbc7d56"
+    },
+    {
+      "weapon": 102,
+      "sha256": "40436c778d703283de6b2d50f797e030c4f75a16c235987458af7f987e6acdb4"
+    },
+    {
+      "weapon": 103,
+      "sha256": "afd27e58dc03aab2083afcbdba209ef2974298891b86fe637f64a2d540c0f544"
+    },
+    {
+      "weapon": 104,
+      "sha256": "75d1b36f93d84acfc7cc63df4665a505a477be07fe5e9f50cf2636538a2ef848"
+    },
+    {
+      "weapon": 105,
+      "sha256": "b19cbff8dd1e6ee81df394d7f646eff1fced113c0b6b99c41ed74a59ab91e242"
+    }
+  ]
+}
