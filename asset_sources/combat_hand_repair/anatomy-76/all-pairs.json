@@ -3,10 +3,10 @@
     "weapon": 1,
     "armor": 76,
     "fit": {
-      "x": -474,
-      "y": -642,
-      "width": 1500,
-      "height": 1500
+      "x": -285,
+      "y": -425,
+      "width": 1250,
+      "height": 1250
     },
     "camera": {
       "scale": 0.7,
@@ -14,24 +14,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 590.400956937799,
-      "y": 307.4411483253588,
+      "x": 645.6674641148325,
+      "y": 384.40095693779904,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17689,
+        "visible": 17683,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17689,
+        "visible": 17683,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17689,
+        "visible": 17683,
         "outside": 0
       },
       {
@@ -50,16 +50,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 2,
     "armor": 76,
     "fit": {
-      "x": -33.12162162162164,
-      "y": -188.45270270270277,
-      "width": 1211.1486486486485,
-      "height": 1211.1486486486485
+      "x": 82.39864864864865,
+      "y": -47.04391891891896,
+      "width": 1009.2905405405405,
+      "height": 1009.2905405405405
     },
     "camera": {
       "scale": 0.7,
@@ -67,24 +67,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 530.1138755980861,
-      "y": 278.04723587223583,
+      "x": 595.4282296650717,
+      "y": 359.9060298935299,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17698,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17698,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17698,
+        "visible": 17703,
         "outside": 0
       },
       {
@@ -103,16 +103,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 3,
     "armor": 76,
     "fit": {
-      "x": -446.1283783783784,
-      "y": -583.7229729729729,
-      "width": 1439.1891891891892,
-      "height": 1439.1891891891892
+      "x": -261.77364864864865,
+      "y": -376.43581081081084,
+      "width": 1199.3243243243244,
+      "height": 1199.3243243243244
     },
     "camera": {
       "scale": 0.7,
@@ -120,24 +120,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 597.600216604164,
-      "y": 314.7422442777706,
+      "x": 651.6668471701366,
+      "y": 390.4852035648088,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17696,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17696,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17696,
+        "visible": 17688,
         "outside": 0
       },
       {
@@ -156,16 +156,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 5,
     "armor": 76,
     "fit": {
-      "x": -415.72297297297297,
-      "y": -535.581081081081,
-      "width": 1378.378378378378,
-      "height": 1378.378378378378
+      "x": -236.4358108108108,
+      "y": -336.31756756756755,
+      "width": 1148.6486486486485,
+      "height": 1148.6486486486485
     },
     "camera": {
       "scale": 0.7,
@@ -173,24 +173,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 571.4056608043448,
-      "y": 294.6946398551661,
+      "x": 629.8380506702874,
+      "y": 373.7788665459718,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17685,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17685,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17685,
+        "visible": 17703,
         "outside": 0
       },
       {
@@ -209,16 +209,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 6,
     "armor": 76,
     "fit": {
-      "x": -506.93918918918916,
-      "y": -647.0675675675675,
-      "width": 1520.2702702702702,
-      "height": 1520.2702702702702
+      "x": -312.4493243243243,
+      "y": -429.22297297297297,
+      "width": 1266.8918918918919,
+      "height": 1266.8918918918919
     },
     "camera": {
       "scale": 0.7,
@@ -226,24 +226,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 495.51499741368156,
-      "y": 175.0370037501617,
+      "x": 566.595831178068,
+      "y": 274.06416979180136,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17709,
+        "visible": 17707,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17709,
+        "visible": 17707,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17709,
+        "visible": 17707,
         "outside": 0
       },
       {
@@ -262,16 +262,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 7,
     "armor": 76,
     "fit": {
-      "x": -494.27027027027026,
-      "y": -606.527027027027,
-      "width": 1469.5945945945944,
-      "height": 1469.5945945945944
+      "x": -301.8918918918919,
+      "y": -395.43918918918916,
+      "width": 1224.662162162162,
+      "height": 1224.662162162162
     },
     "camera": {
       "scale": 0.7,
@@ -279,24 +279,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 573.4056123108754,
-      "y": 299.36779387042543,
+      "x": 631.5046769257295,
+      "y": 377.67316155868787,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17683,
+        "visible": 17687,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17683,
+        "visible": 17687,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17683,
+        "visible": 17687,
         "outside": 0
       },
       {
@@ -315,16 +315,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 86,
     "armor": 76,
     "fit": {
-      "x": -435.9932432432432,
-      "y": -555.8513513513514,
-      "width": 1421.4527027027027,
-      "height": 1421.4527027027027
+      "x": -253.3277027027027,
+      "y": -353.2094594594595,
+      "width": 1184.543918918919,
+      "height": 1184.543918918919
     },
     "camera": {
       "scale": 0.7,
@@ -332,24 +332,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 604.7047119487909,
-      "y": 300.55871266002845,
+      "x": 657.5872599573258,
+      "y": 378.665593883357,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17688,
+        "visible": 17686,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17688,
+        "visible": 17686,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17688,
+        "visible": 17686,
         "outside": 0
       },
       {
@@ -368,16 +368,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 87,
     "armor": 76,
     "fit": {
-      "x": -152.2094594594595,
-      "y": -282.2027027027027,
-      "width": 1616.554054054054,
-      "height": 1454.3918918918916
+      "x": -16.841216216216253,
+      "y": -125.1689189189189,
+      "width": 1347.1283783783783,
+      "height": 1211.9932432432431
     },
     "camera": {
       "scale": 0.7,
@@ -385,24 +385,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 532.3503966144661,
-      "y": 279.9075119236884,
+      "x": 597.2919971787218,
+      "y": 361.456259936407,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17704,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17704,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17704,
+        "visible": 17688,
         "outside": 0
       },
       {
@@ -421,16 +421,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 88,
     "armor": 76,
     "fit": {
-      "x": -501.8716216216216,
-      "y": -642,
-      "width": 1510.135135135135,
-      "height": 1510.135135135135
+      "x": -308.22635135135135,
+      "y": -425,
+      "width": 1258.4459459459458,
+      "height": 1258.4459459459458
     },
     "camera": {
       "scale": 0.7,
@@ -438,24 +438,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 580.7576264063106,
-      "y": 316.38011121169006,
+      "x": 637.6313553385921,
+      "y": 391.8500926764084,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17696,
+        "visible": 17699,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17696,
+        "visible": 17699,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17696,
+        "visible": 17699,
         "outside": 0
       },
       {
@@ -474,16 +474,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 89,
     "armor": 76,
     "fit": {
-      "x": -476.53378378378375,
-      "y": -624.2635135135135,
-      "width": 1482.2635135135135,
-      "height": 1482.2635135135135
+      "x": -287.11148648648646,
+      "y": -410.2195945945946,
+      "width": 1235.2195945945946,
+      "height": 1235.2195945945946
     },
     "camera": {
       "scale": 0.7,
@@ -491,24 +491,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 585.6443537436959,
-      "y": 320.33192486745116,
+      "x": 641.7036281197466,
+      "y": 395.1432707228759,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17685,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17685,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17685,
+        "visible": 17697,
         "outside": 0
       },
       {
@@ -527,16 +527,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 90,
     "armor": 76,
     "fit": {
-      "x": -466.39864864864865,
-      "y": -596.3918918918919,
-      "width": 1446.7905405405404,
-      "height": 1446.7905405405404
+      "x": -278.6655405405405,
+      "y": -386.9932432432432,
+      "width": 1205.6587837837837,
+      "height": 1205.6587837837837
     },
     "camera": {
       "scale": 0.7,
@@ -544,24 +544,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 591.4405356911935,
-      "y": 299.9957843010475,
+      "x": 646.5337797426612,
+      "y": 378.1964869175395,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17703,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17703,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17703,
+        "visible": 17697,
         "outside": 0
       },
       {
@@ -580,16 +580,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 91,
     "armor": 76,
     "fit": {
-      "x": -481.60135135135135,
-      "y": -626.7972972972973,
-      "width": 1474.6621621621618,
-      "height": 1474.6621621621618
+      "x": -291.3344594594595,
+      "y": -412.3310810810811,
+      "width": 1228.885135135135,
+      "height": 1228.885135135135
     },
     "camera": {
       "scale": 0.7,
@@ -597,24 +597,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 581.388445622656,
-      "y": 317.07316371395314,
+      "x": 638.15703801888,
+      "y": 392.42763642829425,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
@@ -633,16 +633,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 92,
     "armor": 76,
     "fit": {
-      "x": -446.1283783783784,
-      "y": -543.1824324324325,
-      "width": 1408.7837837837837,
-      "height": 1408.7837837837837
+      "x": -261.77364864864865,
+      "y": -342.65202702702703,
+      "width": 1173.9864864864865,
+      "height": 1173.9864864864865
     },
     "camera": {
       "scale": 0.7,
@@ -650,24 +650,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 561.3578139143929,
-      "y": 252.54290378895635,
+      "x": 621.4648449286607,
+      "y": 338.65241982413033,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17685,
+        "visible": 17682,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17685,
+        "visible": 17682,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17685,
+        "visible": 17682,
         "outside": 0
       },
       {
@@ -686,16 +686,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 93,
     "armor": 76,
     "fit": {
-      "x": -479.06756756756755,
-      "y": -631.8648648648648,
-      "width": 1484.7972972972973,
-      "height": 1484.7972972972973
+      "x": -289.22297297297297,
+      "y": -416.55405405405406,
+      "width": 1237.331081081081,
+      "height": 1237.331081081081
     },
     "camera": {
       "scale": 0.7,
@@ -703,24 +703,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 569.7366772274667,
-      "y": 277.6540346566663,
+      "x": 628.4472310228889,
+      "y": 359.5783622138885,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17693,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17693,
+        "visible": 17688,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17693,
+        "visible": 17688,
         "outside": 0
       },
       {
@@ -739,16 +739,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 94,
     "armor": 76,
     "fit": {
-      "x": -382.78378378378375,
-      "y": -457.03378378378375,
-      "width": 1327.7027027027027,
-      "height": 1327.7027027027027
+      "x": -208.98648648648648,
+      "y": -270.86148648648646,
+      "width": 1106.418918918919,
+      "height": 1106.418918918919
     },
     "camera": {
       "scale": 0.7,
@@ -756,24 +756,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 582.6331113410062,
-      "y": 292.6267974912712,
+      "x": 639.1942594508384,
+      "y": 372.05566457605937,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17683,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17683,
+        "visible": 17703,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17683,
+        "visible": 17703,
         "outside": 0
       },
       {
@@ -792,16 +792,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 95,
     "armor": 76,
     "fit": {
-      "x": -479.06756756756755,
-      "y": -619.1959459459459,
-      "width": 1461.9932432432431,
-      "height": 1461.9932432432431
+      "x": -289.22297297297297,
+      "y": -405.9966216216216,
+      "width": 1218.3277027027027,
+      "height": 1218.3277027027027
     },
     "camera": {
       "scale": 0.7,
@@ -809,24 +809,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 572.6941727014096,
-      "y": 299.7694814431656,
+      "x": 630.911810584508,
+      "y": 378.007901202638,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17694,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17694,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17694,
+        "visible": 17700,
         "outside": 0
       },
       {
@@ -845,16 +845,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 96,
     "armor": 76,
     "fit": {
-      "x": -496.80405405405406,
-      "y": -642,
-      "width": 1492.3986486486485,
-      "height": 1492.3986486486485
+      "x": -304.0033783783784,
+      "y": -425,
+      "width": 1243.6655405405404,
+      "height": 1243.6655405405404
     },
     "camera": {
       "scale": 0.7,
@@ -862,24 +862,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 572.9289619164618,
-      "y": 272.67254299754296,
+      "x": 631.1074682637181,
+      "y": 355.4271191646191,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17704,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17704,
+        "visible": 17697,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17704,
+        "visible": 17697,
         "outside": 0
       },
       {
@@ -898,16 +898,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 97,
     "armor": 76,
     "fit": {
-      "x": -428.3918918918919,
-      "y": -568.5202702702702,
-      "width": 1406.25,
-      "height": 1406.25
+      "x": -246.99324324324323,
+      "y": -363.7668918918919,
+      "width": 1171.875,
+      "height": 1171.875
     },
     "camera": {
       "scale": 0.7,
@@ -915,24 +915,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 573.8143718479245,
-      "y": 279.7501648777965,
+      "x": 631.8453098732704,
+      "y": 361.3251373981637,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17700,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17700,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17700,
+        "visible": 17698,
         "outside": 0
       },
       {
@@ -951,16 +951,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 98,
     "armor": 76,
     "fit": {
-      "x": -342.2432432432432,
-      "y": -312.6081081081081,
-      "width": 1231.4189189189187,
-      "height": 1231.4189189189187
+      "x": -175.2027027027027,
+      "y": -150.50675675675677,
+      "width": 1026.1824324324323,
+      "height": 1026.1824324324323
     },
     "camera": {
       "scale": 0.7,
@@ -968,24 +968,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 538.006187766714,
-      "y": 253.3491077201603,
+      "x": 602.0051564722617,
+      "y": 339.3242564334669,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17702,
+        "visible": 17704,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17702,
+        "visible": 17704,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17702,
+        "visible": 17704,
         "outside": 0
       },
       {
@@ -1004,16 +1004,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 99,
     "armor": 76,
     "fit": {
-      "x": -458.7972972972973,
-      "y": -591.3243243243244,
-      "width": 1436.6554054054052,
-      "height": 1436.6554054054052
+      "x": -272.3310810810811,
+      "y": -382.77027027027026,
+      "width": 1197.2128378378377,
+      "height": 1197.2128378378377
     },
     "camera": {
       "scale": 0.7,
@@ -1021,24 +1021,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 564.6830515323936,
-      "y": 294.25334928229654,
+      "x": 624.2358762769946,
+      "y": 373.4111244019138,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17695,
+        "visible": 17691,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17695,
+        "visible": 17691,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17695,
+        "visible": 17691,
         "outside": 0
       },
       {
@@ -1057,16 +1057,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 100,
     "armor": 76,
     "fit": {
-      "x": -420.7905405405405,
-      "y": -540.6486486486485,
-      "width": 1380.9121621621618,
-      "height": 1380.9121621621618
+      "x": -240.65878378378378,
+      "y": -340.5405405405405,
+      "width": 1150.760135135135,
+      "height": 1150.760135135135
     },
     "camera": {
       "scale": 0.7,
@@ -1074,24 +1074,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 575.5356879606878,
-      "y": 275.62579529290053,
+      "x": 633.27973996724,
+      "y": 357.8881627440838,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
@@ -1110,16 +1110,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 101,
     "armor": 76,
     "fit": {
-      "x": -238.35810810810813,
-      "y": -343.01351351351354,
-      "width": 1206.081081081081,
-      "height": 1206.081081081081
+      "x": -88.63175675675677,
+      "y": -175.8445945945946,
+      "width": 1005.0675675675675,
+      "height": 1005.0675675675675
     },
     "camera": {
       "scale": 0.7,
@@ -1127,24 +1127,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 477.6200989266779,
-      "y": 237.42304409672826,
+      "x": 551.6834157722316,
+      "y": 326.05253674727356,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17684,
+        "visible": 17700,
         "outside": 0
       },
       {
@@ -1163,16 +1163,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 102,
     "armor": 76,
     "fit": {
-      "x": -415.72297297297297,
-      "y": -568.5202702702702,
-      "width": 1461.9932432432431,
-      "height": 1461.9932432432431
+      "x": -236.4358108108108,
+      "y": -363.7668918918919,
+      "width": 1218.3277027027027,
+      "height": 1218.3277027027027
     },
     "camera": {
       "scale": 0.7,
@@ -1180,24 +1180,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 491.35526800724165,
-      "y": 180.1825649812492,
+      "x": 563.1293900060348,
+      "y": 278.35213748437434,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17697,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17697,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17697,
+        "visible": 17700,
         "outside": 0
       },
       {
@@ -1216,16 +1216,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 103,
     "armor": 76,
     "fit": {
-      "x": -334.6418918918919,
-      "y": -441.8310810810811,
-      "width": 1277.0270270270269,
-      "height": 1277.0270270270269
+      "x": -168.86824324324323,
+      "y": -258.1925675675676,
+      "width": 1064.1891891891892,
+      "height": 1064.1891891891892
     },
     "camera": {
       "scale": 0.7,
@@ -1233,24 +1233,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 406.815592266908,
-      "y": 109.12346760636231,
+      "x": 492.67966022242337,
+      "y": 219.13622300530193,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17706,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17706,
+        "visible": 17700,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17706,
+        "visible": 17700,
         "outside": 0
       },
       {
@@ -1269,16 +1269,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 104,
     "armor": 76,
     "fit": {
-      "x": -491.7364864864865,
-      "y": -548.25,
-      "width": 1429.054054054054,
-      "height": 1429.054054054054
+      "x": -299.7804054054054,
+      "y": -346.875,
+      "width": 1190.8783783783783,
+      "height": 1190.8783783783783
     },
     "camera": {
       "scale": 0.7,
@@ -1286,24 +1286,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 378.233541316436,
-      "y": 122.85439350834088,
+      "x": 468.86128443036336,
+      "y": 230.57866125695068,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17706,
+        "visible": 17698,
         "outside": 0
       },
       {
@@ -1322,16 +1322,16 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 105,
     "armor": 76,
     "fit": {
-      "x": -377.71621621621625,
-      "y": -469.7027027027027,
-      "width": 1322.635135135135,
-      "height": 1322.635135135135
+      "x": -204.76351351351352,
+      "y": -281.41891891891896,
+      "width": 1102.1959459459458,
+      "height": 1102.1959459459458
     },
     "camera": {
       "scale": 0.7,
@@ -1339,24 +1339,24 @@
       "y": 307.2
     },
     "muzzle": {
-      "x": 499.0453219966377,
-      "y": 267.0885199793094,
+      "x": 569.5377683305314,
+      "y": 350.7737666494245,
       "angle": -2.7
     },
     "flashChecks": [
       {
         "ms": 0,
-        "visible": 17697,
+        "visible": 17694,
         "outside": 0
       },
       {
         "ms": 40,
-        "visible": 17697,
+        "visible": 17694,
         "outside": 0
       },
       {
         "ms": 89,
-        "visible": 17697,
+        "visible": 17694,
         "outside": 0
       },
       {
@@ -1375,6 +1375,6 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   }
 ]
