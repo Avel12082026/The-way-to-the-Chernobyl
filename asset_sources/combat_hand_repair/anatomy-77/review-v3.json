@@ -5,11 +5,10 @@
   "visual_review": {
     "all_26_overviews": true,
     "all_26_grip_closeups": true,
-    "flash_images": false
+    "flash_images": true
   },
   "technical_flash_phases": 156,
   "remaining": [
-    "Visual review of 26 muzzle flashes",
     "Production scene integration and recoil/aim review",
     "Armor 78-96"
   ],
