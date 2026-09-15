@@ -44,16 +44,16 @@ function drawSmoke(ctx,reaction,elapsed,muzzle){
  }
  ctx.restore();return true;
 }
-function drawShot(ctx,reaction,elapsed,weaponId,weapon){
+function drawShot(ctx,reaction,elapsed,weaponId,weapon,muzzle=muzzles[weaponId]){
  const kind=effectKind(reaction,elapsed,weapon);
  // The point must be calibrated at the actual barrel/suppressor tip.
- if(kind==='smoke')return drawSmoke(ctx,reaction,elapsed,muzzles[weaponId]);
- if(kind==='flash')return drawFlash(ctx,reaction,elapsed,weaponId);
+ if(kind==='smoke')return drawSmoke(ctx,reaction,elapsed,muzzle);
+ if(kind==='flash')return drawFlash(ctx,reaction,elapsed,weaponId,muzzle);
  return false;
 }
-function drawFlash(ctx,reaction,elapsed,weaponId){
- if(!shouldFlash(reaction,elapsed,weaponId))return false;
- const muzzle=muzzles[weaponId],fade=1-elapsed/90;
+function drawFlash(ctx,reaction,elapsed,weaponId,muzzle=muzzles[weaponId]){
+ if(!muzzle||!shouldFlash(reaction,elapsed,weaponId))return false;
+ const fade=1-elapsed/90;
  ctx.save();ctx.translate(muzzle.x,muzzle.y);ctx.rotate(muzzle.angle);ctx.globalCompositeOperation='screen';ctx.globalAlpha=fade;
  const glow=ctx.createRadialGradient(0,0,2,0,0,75);glow.addColorStop(0,'rgba(255,243,178,.9)');glow.addColorStop(.35,'rgba(255,170,38,.45)');glow.addColorStop(1,'rgba(255,120,10,0)');ctx.fillStyle=glow;ctx.fillRect(-75,-75,150,150);
  ctx.fillStyle='#ffdc78';ctx.beginPath();ctx.moveTo(-9,-6);ctx.lineTo(28,-14);ctx.lineTo(20,-30);ctx.lineTo(55,-12);ctx.lineTo(94,0);ctx.lineTo(51,10);ctx.lineTo(25,28);ctx.lineTo(28,11);ctx.lineTo(-9,6);ctx.closePath();ctx.fill();
