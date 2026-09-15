@@ -52,7 +52,7 @@ function drawShot(ctx,reaction,elapsed,weaponId,weapon,muzzle=muzzles[weaponId])
  return false;
 }
 function drawFlash(ctx,reaction,elapsed,weaponId,muzzle=muzzles[weaponId]){
- if(!muzzle||!shouldFlash(reaction,elapsed,weaponId))return false;
+ if(!muzzle||effectKind(reaction,elapsed,{suppressed:false})!=='flash')return false;
  const fade=1-elapsed/90;
  ctx.save();ctx.translate(muzzle.x,muzzle.y);ctx.rotate(muzzle.angle);ctx.globalCompositeOperation='screen';ctx.globalAlpha=fade;
  const glow=ctx.createRadialGradient(0,0,2,0,0,75);glow.addColorStop(0,'rgba(255,243,178,.9)');glow.addColorStop(.35,'rgba(255,170,38,.45)');glow.addColorStop(1,'rgba(255,120,10,0)');ctx.fillStyle=glow;ctx.fillRect(-75,-75,150,150);
