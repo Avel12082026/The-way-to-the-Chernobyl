@@ -26,6 +26,17 @@
       "canvasReview": "passed",
       "sceneTests": "passed",
       "browserReview": "blocked"
+    },
+    {
+      "weapon": 4,
+      "armor": 91,
+      "species": [
+        "zombie"
+      ],
+      "source": "images/combat/paired/4-91.webp",
+      "canvasReview": "visible-grip-reviewed-index-partially-occluded",
+      "sceneTests": "passed",
+      "browserReview": "blocked"
     }
   ],
   "fullyValidatedCombinations": 0,

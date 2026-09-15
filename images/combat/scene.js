@@ -1,8 +1,8 @@
 (function(root){
 'use strict';
 const cache=new Map();let host,canvas,caption,retry,config,pictures,signature='',ticket=0,frame=0,reaction;
-// Only this exact weapon/armor/species combination has a reviewed paired sprite.
-const reviewedPairs=[{name:'ПП-19 «Бизон»',weaponId:9,armor:91,species:'zombie',image:'images/combat/paired/9-91.webp',x:430,y:480,scale:.53,muzzle:[660,110],angle:-2.47,suppressed:false},{name:'ПП «Кедр»',weaponId:8,armor:91,species:'zombie',image:'images/combat/paired/8-91.webp',x:400,y:500,scale:.53,muzzle:[690,115],angle:-2.58,suppressed:false}];
+// Only these exact weapon/armor/species combinations have reviewed paired sprites.
+const reviewedPairs=[{name:'ПП-19 «Бизон»',weaponId:9,armor:91,species:'zombie',image:'images/combat/paired/9-91.webp',x:430,y:480,scale:.53,muzzle:[660,110],angle:-2.47,suppressed:false},{name:'ПП «Кедр»',weaponId:8,armor:91,species:'zombie',image:'images/combat/paired/8-91.webp',x:400,y:500,scale:.53,muzzle:[690,115],angle:-2.58,suppressed:false},{name:'Обрез охотничьего ружья',weaponId:4,armor:91,species:'zombie',image:'images/combat/paired/4-91.webp',x:460,y:560,scale:.53,muzzle:[545,125],angle:-2.1,suppressed:false}];
 let pairedLoader;
 function ensurePairedRenderer(){
  if(root.CombatPairedForeground)return Promise.resolve();
