@@ -693,6 +693,19 @@
     "contours": "quadratic midpoint smoothing",
     "uniformScale": true,
     "flashScope": "isolated effect, 6 phases; not production recoil",
-    "flashReport": "asset_sources/combat_hand_repair/anatomy-74/modular-flash-checks.json"
+    "flashReport": "asset_sources/combat_hand_repair/anatomy-74/modular-flash-checks.json",
+    "allWeapons": {
+      "count": 26,
+      "flashPhases": 156,
+      "closeGripSheetsReviewed": 5,
+      "flashSheetsReviewed": 5,
+      "camera": {
+        "scale": 0.7,
+        "x": 460,
+        "y": 307.2
+      },
+      "status": "static-candidates-reviewed-not-production",
+      "report": "asset_sources/combat_hand_repair/anatomy-74/all-pairs.json"
+    }
   }
 }
