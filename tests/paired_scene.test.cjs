@@ -18,3 +18,5 @@ test('obrez uses rear-view grip and own muzzle calibration',async()=>{const h=ha
 test('Bizon armor92 uses camouflage sprite rather than armor91',async()=>{const h=harness();assert.equal(await h.window.CombatScene.show({...next,armor:92}),true);assert(h.urls.some(x=>x.startsWith('images/combat/paired/9-92.webp')));assert.equal(h.draws[0][2].armor,92);});
 
 test('Kedr armor92 selects its own camouflage and muzzle',async()=>{const h=harness();assert.equal(await h.window.CombatScene.show({...next,weaponId:8,armor:92}),true);assert(h.urls.some(x=>x.startsWith('images/combat/paired/8-92.webp')));assert.equal(h.draws[0][2].armor,92);assert.equal(h.draws[0][2].muzzle[0],666);});
+
+test('obrez armor92 uses own rear-view camouflage placement',async()=>{const h=harness();assert.equal(await h.window.CombatScene.show({...next,weaponId:4,armor:92}),true);assert(h.urls.some(x=>x.startsWith('images/combat/paired/4-92.webp')));assert.equal(h.draws[0][2].armor,92);assert.equal(h.draws[0][2].muzzle[1],68);});
