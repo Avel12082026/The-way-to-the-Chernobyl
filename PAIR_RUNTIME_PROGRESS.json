@@ -1,0 +1,33 @@
+{
+  "scope": {
+    "weapons": 29,
+    "armors": 96,
+    "expectedCombinations": 2784
+  },
+  "runtimeProfiles": [
+    {
+      "weapon": 9,
+      "armor": 91,
+      "species": [
+        "zombie"
+      ],
+      "source": "images/combat/paired/9-91.webp",
+      "canvasReview": "passed",
+      "sceneTests": "passed",
+      "browserReview": "blocked"
+    },
+    {
+      "weapon": 8,
+      "armor": 91,
+      "species": [
+        "zombie"
+      ],
+      "source": "images/combat/paired/8-91.webp",
+      "canvasReview": "passed",
+      "sceneTests": "passed",
+      "browserReview": "blocked"
+    }
+  ],
+  "fullyValidatedCombinations": 0,
+  "note": "Limited zombie profiles do not imply approval for every opponent or live Android deployment."
+}

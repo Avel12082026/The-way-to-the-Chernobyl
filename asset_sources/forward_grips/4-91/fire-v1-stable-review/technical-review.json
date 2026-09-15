@@ -1,0 +1,79 @@
+{
+  "status": "reviewed-rejected-for-hand-anatomy",
+  "checks": [
+    {
+      "ms": -1,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 553.6
+      }
+    },
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 553.6
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 560.0876898094672
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 565.6
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974174,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 563.6950423939742
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 749.1,
+        "y": 553.6
+      }
+    }
+  ],
+  "weapon": 4,
+  "armor": 91,
+  "integration": false,
+  "visual_review": [
+    "two backgrounds",
+    "six states with zombie"
+  ],
+  "issue": "index fingertip visually disconnected",
+  "source_sha256": "8c79a506ba7ff11eba83a318a72af2826729d195eaf52cb52ec912d43b464b92",
+  "rejected_attempts": {
+    "v2": "same disconnected fingertip",
+    "v3": "extra extended finger plus floating fingertip",
+    "v4": "baked flash added and disconnected fingertip remains"
+  }
+}
