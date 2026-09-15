@@ -1,0 +1,18 @@
+{
+  "armor": 75,
+  "source": "hand-only-v3.webp",
+  "sha256": "fba2404a0f68dbf135380afa3e7d6a7d13f9173823b8b9fd6906037aec2ec950",
+  "alpha_range": [
+    0,
+    254
+  ],
+  "transparent_background": "viewed on light background; no backdrop visible",
+  "pair_review": "26 initial combinations viewed; lower finger masks need adjustment",
+  "updated_mask_review": "Makarov 75 viewed; remaining revised closeups pending",
+  "release_approved": false,
+  "remaining": [
+    "individual closeups after revised mask for all26",
+    "trigger contact for each model",
+    "scene integration and recoil"
+  ]
+}

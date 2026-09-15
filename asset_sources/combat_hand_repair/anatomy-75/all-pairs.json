@@ -50,7 +50,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 2,
@@ -103,7 +103,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 3,
@@ -156,7 +156,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 5,
@@ -209,7 +209,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 6,
@@ -262,7 +262,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 7,
@@ -315,7 +315,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 86,
@@ -368,7 +368,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 87,
@@ -421,7 +421,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 88,
@@ -474,7 +474,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 89,
@@ -527,7 +527,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 90,
@@ -580,7 +580,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 91,
@@ -633,7 +633,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 92,
@@ -686,7 +686,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 93,
@@ -739,7 +739,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 94,
@@ -792,7 +792,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 95,
@@ -845,7 +845,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 96,
@@ -898,7 +898,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 97,
@@ -951,7 +951,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 98,
@@ -1004,7 +1004,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 99,
@@ -1057,7 +1057,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 100,
@@ -1110,7 +1110,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 101,
@@ -1163,7 +1163,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 102,
@@ -1216,7 +1216,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 103,
@@ -1269,7 +1269,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 104,
@@ -1322,7 +1322,7 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   },
   {
     "weapon": 105,
@@ -1375,6 +1375,6 @@
         "outside": 0
       }
     ],
-    "status": "overview-reviewed-not-release-approved"
+    "status": "rendered-awaiting-individual-visual-review"
   }
 ]
