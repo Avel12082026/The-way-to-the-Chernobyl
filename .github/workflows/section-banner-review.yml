@@ -1,0 +1,32 @@
+name: Section banner review
+on:
+  push:
+    branches: [fix/remove-section-banners]
+    paths: [.github/workflows/section-banner-review.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Inspect exact banner markup in both clients
+        run: |
+          python3 - <<'PY'
+          import re, urllib.request
+          refs = ['5349032b9cadacd8313f83af5909012299960ced', '8731df258ec113967cfc28f372b9a7c06f97ee1a']
+          for ref in refs:
+              url = 'https://raw.githubusercontent.com/Avel12082026/The-way-to-the-Chernobyl/' + ref + '/index.html'
+              with urllib.request.urlopen(url, timeout=30) as response:
+                  html = response.read().decode('utf-8')
+              print('\n=== CLIENT ' + ref + ' ===')
+              for name in ['technician', 'scientists', 'kpk', 'warehouse', 'trader']:
+                  needle = 'images/ui/' + name + '.svg'
+                  matches = list(re.finditer(re.escape(needle), html))
+                  print('\n---', name, 'occurrences:', len(matches), '---')
+                  for match in matches:
+                      print(html[max(0, match.start()-650):match.end()+650])
+              print('\n--- linked styles and scripts ---')
+              for match in re.finditer(r'<(?:link|script)\b[^>]*(?:href|src)=[^>]+>', html, re.I):
+                  if len(match[0]) < 500: print(match[0])
+          PY
