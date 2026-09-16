@@ -4,29 +4,34 @@ on:
     branches: [fix/remove-section-banners]
     paths: [.github/workflows/section-banner-review.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  inspect:
+  verify-and-prepare:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
-      - name: Inspect exact banner markup in both clients
+      - name: Install browser test driver
+        run: python3 -m pip install playwright==1.55.0
+      - name: Fetch guarded cleanup script
+        env:
+          SOURCE_SHA: ${{ github.sha }}
         run: |
           python3 - <<'PY'
-          import re, urllib.request
-          refs = ['5349032b9cadacd8313f83af5909012299960ced', '8731df258ec113967cfc28f372b9a7c06f97ee1a']
-          for ref in refs:
-              url = 'https://raw.githubusercontent.com/Avel12082026/The-way-to-the-Chernobyl/' + ref + '/index.html'
-              with urllib.request.urlopen(url, timeout=30) as response:
-                  html = response.read().decode('utf-8')
-              print('\n=== CLIENT ' + ref + ' ===')
-              for name in ['technician', 'scientists', 'kpk', 'warehouse', 'trader']:
-                  needle = 'images/ui/' + name + '.svg'
-                  matches = list(re.finditer(re.escape(needle), html))
-                  print('\n---', name, 'occurrences:', len(matches), '---')
-                  for match in matches:
-                      print(html[max(0, match.start()-650):match.end()+650])
-              print('\n--- linked styles and scripts ---')
-              for match in re.finditer(r'<(?:link|script)\b[^>]*(?:href|src)=[^>]+>', html, re.I):
-                  if len(match[0]) < 500: print(match[0])
+          import os, urllib.request
+          url = 'https://raw.githubusercontent.com/Avel12082026/The-way-to-the-Chernobyl/' + os.environ['SOURCE_SHA'] + '/tools/prepare_section_banner_cleanup.py'
+          with urllib.request.urlopen(url, timeout=40) as response:
+              content = response.read()
+          open('prepare.py', 'wb').write(content)
           PY
+      - name: Check both clients and prepare commits without moving branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 prepare.py
+      - name: Save tested source and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: section-banner-cleanup
+          path: validation/
+          retention-days: 7
+          if-no-files-found: error
