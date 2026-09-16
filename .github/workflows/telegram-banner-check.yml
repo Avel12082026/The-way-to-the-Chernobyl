@@ -1,13 +1,13 @@
-name: Telegram banner inspection
+name: Telegram banner patch validation
 on:
   push:
     branches: [fix/telegram-section-banners]
     paths:
       - .github/workflows/telegram-banner-check.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
-  inspect:
+  validate:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -15,31 +15,63 @@ jobs:
         with:
           sparse-checkout: |
             index.html
-            mobile
-            images/ui
-            tests
+            tools/patch_telegram_section_banners.py
           sparse-checkout-cone-mode: false
-      - name: Inspect banner markup and native runtime guards
+      - name: Apply exactly the locally reviewed CSS patch
+        run: python3 tools/patch_telegram_section_banners.py index.html
+      - name: Validate blob and all inline JavaScript
         run: |
           python3 - <<'PY'
-          import re
           from pathlib import Path
-          lines = Path('index.html').read_text().splitlines()
-          patterns = r'images/ui|technician\.svg|trader\.svg|scientist\.svg|warehouse\.svg|pda\.svg|section-banner|screen-banner|Capacitor|AndroidBridge|NATIVE_APP|serviceWorker'
-          selected = set()
-          for i, line in enumerate(lines):
-              if re.search(patterns, line, re.I):
-                  selected.update(range(max(0, i - 4), min(len(lines), i + 6)))
-          for i in sorted(selected):
-              line = lines[i]
-              print(f'{i + 1}: {line[:2500]}')
+          from html.parser import HTMLParser
+          import hashlib
+          import subprocess
+          import tempfile
+          data = Path('index.html').read_bytes()
+          sha = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+          assert sha == '65ec627d3dd8708e4f94e1a0aca53995f344e29c', sha
+          class Scripts(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.active = False
+                  self.parts = []
+                  self.scripts = []
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script':
+                      a = dict(attrs)
+                      self.active = 'src' not in a and a.get('type', '') in ('', 'text/javascript', 'application/javascript')
+                      self.parts = []
+              def handle_data(self, data):
+                  if self.active:
+                      self.parts.append(data)
+              def handle_endtag(self, tag):
+                  if tag == 'script' and self.active:
+                      self.scripts.append(''.join(self.parts))
+                      self.active = False
+          parser = Scripts()
+          parser.feed(data.decode('utf-8'))
+          assert len(parser.scripts) == 2
+          with tempfile.TemporaryDirectory() as directory:
+              for number, script in enumerate(parser.scripts):
+                  path = Path(directory) / f'inline-{number}.js'
+                  path.write_text(script)
+                  subprocess.run(['node', '--check', str(path)], check=True)
+          print('Verified CSS-only output and both inline JavaScript blocks.')
+          print('PATCHED_INDEX_BLOB=' + sha)
           PY
+      - name: Store only the patched index on the isolated branch
+        run: |
+          test "${GITHUB_REF_NAME}" = "fix/telegram-section-banners"
+          git diff --check
+          git diff --stat
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html
+          git commit -m 'Remove five screenshot-matched decorative banners from Telegram web client'
+          git push origin HEAD:refs/heads/fix/telegram-section-banners
       - uses: actions/upload-artifact@v4
         with:
-          name: telegram-banner-source
-          path: |
-            index.html
-            mobile
-            images/ui
+          name: telegram-banner-patched-client
+          path: index.html
           retention-days: 3
           if-no-files-found: error
