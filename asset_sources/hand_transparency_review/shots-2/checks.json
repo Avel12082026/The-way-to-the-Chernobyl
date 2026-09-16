@@ -1,0 +1,652 @@
+[
+  {
+    "id": 86,
+    "name": "Beretta 21A Bobcat",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/86.png": "71a4554b0fd49d7801db2be3904ffa629fe27324d6adaf2439313dceac687019",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Пистолет ПСМ",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/2.png": "c0a7c653583f75523fc09e261bb5f07bfb6e73de18b1a2558d5db1b915b1fc80",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 87,
+    "name": "Walther PPK",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/87.png": "7c6a209cead9bbb4c20e4bf8ffb7dd42e32374fe28ed3d50fb3ece331adcce6d",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 1,
+    "name": "Пистолет Макарова",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/1.png": "db0ec765151f7dfa6b0b279072807e3a3ed8679ff8eb2b0d3e8dad72cdcedfee",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Пистолет ИЖ-71",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/3.png": "abf009eb4323970f9d59e7e6b79fa14ebfc335ac272b136ac7fbdd3c64bd44ff",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 88,
+    "name": "Glock 25",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/88.png": "75f9c2a6871bccca73bd75bedb9fc9405633444ce2af95814399dfa839197678",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Пистолет ОЦ-33 «Пернач»",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/5.png": "be49fb31f1e7ead41a748ccea887bb9aeda25fdcb1169e89c7f81585ed6c0679",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Револьвер Наган",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/6.png": "30aac31451a241d0cc9490112be18b9e32ca57de1e04faa435d34f5ee333e0d4",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 89,
+    "name": "Walther P99",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/89.png": "caa085b5505bdd97683ea8d6a288106fcd73fa3cebaeb4d602a5b4a2c6f22461",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 90,
+    "name": "CZ 75",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/90.png": "4e205264859237f74c3dac197804e1046c40adde63b8b959b783066ef369344d",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 91,
+    "name": "Glock 17",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/91.png": "15266216629370a6895802c52aabdfa0b2bd50cda221b082751890322f3ed450",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 92,
+    "name": "Beretta 92FS",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/92.png": "334976c6651cf4bcab551e783f2f3af782649b4e9372cbfce8006987d359c126",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 93,
+    "name": "SIG Sauer P226",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/93.png": "433ae6078b3bef114a717b9cf1df28af15ebf7dcee52f571905343230452d4c9",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Пистолет ТТ",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/7.png": "b5a6cc6cca6880ff51dbe57469ba131311dd7f8265dd9365ec79739f81dc2dd0",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 94,
+    "name": "HK USP",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/94.png": "b3928b67193e9d397f4ffcad054fe79fbc140337599f9eb4d07a896e5778ca3c",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 95,
+    "name": "Glock 22",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/95.png": "a04ace27ee40527a54e08e1044e4ec2f295da705bfab095f1e6254590a1b1b94",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 96,
+    "name": "SIG Sauer P229",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/96.png": "0985fa2316956b199cc9479bee62762f4838bbe5cd59ac9ceedfc232b9facb22",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 97,
+    "name": "Glock 20",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/97.png": "8e350906bd622caf28a06245fcab5b55cc2c18ae0ad4550a7b98e2428aefe52b",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 98,
+    "name": "Colt 1911",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/98.png": "8338bcf15104402f1c00b0b7c40f6c7e852b03aaba5ab470c0c9d3e03de44b21",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 99,
+    "name": "Glock 21",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/99.png": "05e13eb6d757f2d704933084875e0e72ced66a72997925b2e08ca01c8e476543",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 100,
+    "name": "CZ 97B",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/100.png": "7bfe18c4c476c41dd2e49cea5b0322498357c9ed5fa3760188164429c4d130a6",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 101,
+    "name": "HK Mark 23",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/101.png": "0b4c263da80034536852fe69fba0b10dccc9655b138b31726066b43f413ce696",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 102,
+    "name": "Taurus Judge",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/102.png": "d0ea8d31c54a47ead290195c300a9cfa12ec9c9e17bf0b96ea1ad1b5cefb274d",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 103,
+    "name": "Smith & Wesson Model 29",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/103.png": "317cd61889c1cc407e19c999a46deb0a8c25d7b335ad8582b396d0d1b5b6c74d",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 104,
+    "name": "Taurus Raging Bull",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/104.png": "8ff3e743a742663166e7a38ed50d1d24930db8bf5b3bf193d65137c4a0a7096c",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  },
+  {
+    "id": 105,
+    "name": "Desert Eagle Mark XIX",
+    "armor": 2,
+    "mode": "current",
+    "phaseTimes": [
+      0,
+      40,
+      89,
+      90,
+      150,
+      240
+    ],
+    "animationChecks": "passed",
+    "visualReview": "pending",
+    "inputHashes": {
+      "images/combat/scene.js": "61d4be0e2a528e8b50abfd3c6c76cd8f4d83dd60c3690447f8252e07aa4920a3",
+      "images/combat/layout.js": "51c5942fef38e777da4d10b36b192ac8f0c639d0c662a64cc02ae55ed2ffcb78",
+      "images/combat/effects.js": "375c3b2342af375b8298a53d245b719782016ed88feac583bfe16304f9763a15",
+      "images/combat/modular/weapons/105.png": "e97820fef8073f48afe9bfd1eb1506471362b9bc955fd5820b65a3c1243b6a49",
+      "images/combat/modular/hands/2.webp": "d415d44beb20988560a5660992f9f06de71d3cd2581a8b78de05ef7782b6e097",
+      "images/combat/modular/data.js": "6d16867f4ddc97869d72fe31e0556bdce3e5b6bb20a1c28629c7fa4f248bfea1",
+      "images/combat/modular/renderer.js": "75a4fc64cedb4d04b52f2d9df5179c479e172a86727ceab1e9494f7bc01cca50"
+    }
+  }
+]

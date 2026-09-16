@@ -3,3 +3,11 @@ images/combat/mutants/*.png.tmp
 images/combat/pistols/*.png.tmp
 .validation/
 tools/__pycache__/
+.mobile-assets/
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/
+android/local.properties
+*.keystore
+*.jks

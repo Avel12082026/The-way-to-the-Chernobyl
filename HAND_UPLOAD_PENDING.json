@@ -1,0 +1,280 @@
+{
+  "branch": "feature/android-local-assets",
+  "files": [
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/combat-1-bare-v2-source.png",
+      "sha": "953a1f35e27da4c9f7506d273ef7d45259be3bfc",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/combat-2-leather-v2-source.png",
+      "sha": "05bc674f4fdd285b9dad18d3c008eb4ccb628523",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/checks.json",
+      "sha": "9499854014d06b5ce4352af40c5bb9546d677c89",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/composite.png",
+      "sha": "ffe99dce49002b50caddf9501697378ec31c60a9",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/idle.png",
+      "sha": "42fc5ed1609d5a661e5c9d294f278a78bcf48988",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/placement.json",
+      "sha": "4f9226fc4fb6cee5d31a64dd6fade9694a226ef3",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/shot.jpg",
+      "sha": "e6a4ce3e9c0377f47f55322068c010ec27e23d44",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/glock17-v2/source.png",
+      "sha": "e5d6872881840267540e4feca33253affd81b614",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/checks.json",
+      "sha": "d93a64a2fc9fa9ccba85ab56a5132c848a6f9dd1",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/composite.png",
+      "sha": "880cd5cb19bbfb4a48bf1bb8dfdebfb124e179b5",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/idle.png",
+      "sha": "eed13a7f0e5e96b3d8ec95e437e09dadcce435dc",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/placement.json",
+      "sha": "1a9e0d8947e92c58165a2e02ea86e1dc4135ddca",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/shot.jpg",
+      "sha": "725a2b3580891594f0da93b87e35ed1fb956663c",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/makarov-v2/source.png",
+      "sha": "5a19373400a8889cf676f67dab2e154ac0f22143",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/combat_hand_repair/review-log.json",
+      "sha": "e7801525010acf83f97a1f15bbfd5b9191a39c57",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/full-fit-0.jpg",
+      "sha": "426c5b9d4f755b87002ce038a3a52a91f000aafe",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/full-fit-1.jpg",
+      "sha": "14d5139f05878e4d4d2217db7598d6f75797e1f8",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/full-fit-2.jpg",
+      "sha": "2e3dea74d941ce95507b4c9182a807c3555c704a",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/grip-fit-review.jpg",
+      "sha": "bf81f065b88825c0ceb04c2a8d581b2013149d61",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-0.jpg",
+      "sha": "4c7a45247260cd54d20cd09eb18fcbe1440d18d2",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-1.jpg",
+      "sha": "d4019be646d013c78ad5c9ef61033874e084e082",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-2.jpg",
+      "sha": "a187a617877fc653512cf13917305a46b4ac251c",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-3.jpg",
+      "sha": "64d6d7e5c9f879f83f3859399d389934e18ccbf7",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-4.jpg",
+      "sha": "8734a512b58ac28e242722cf4ee01889923d501b",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-5.jpg",
+      "sha": "8fea97d458024659d8daf8c228c2b3af2043bcbf",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-6.jpg",
+      "sha": "1b0c0842e8874c7d4f87c46b159b8a250e4faa54",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/hand-review-7.jpg",
+      "sha": "1b0c0842e8874c7d4f87c46b159b8a250e4faa54",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/makarov-edge-review.jpg",
+      "sha": "fc778fe51eada4668eeb71f4d3e29a63c6f562f6",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/muzzle-review-0.jpg",
+      "sha": "037ecf5344e9d0e4970cdeb7a021ba85dcc51443",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/muzzle-review-1.jpg",
+      "sha": "a8c933896fee30b2519a3bd0c450027c7b5e874c",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/muzzle-review-2.jpg",
+      "sha": "ae21e980581d2ac5cac4b4600c84267a64cfaba8",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/refined-review.jpg",
+      "sha": "f003a2e4abf69c05076f62d7771a18f98b566224",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "asset_sources/prepared_hand_pack/two-weapons-review.jpg",
+      "sha": "1c8c163c00dc81a19ed919471d9016ac911cfb59",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/effects.js",
+      "sha": "830be258308be187876d874bf239af3ce31b0b34",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/modular/data.js",
+      "sha": "e4ec1df1993ff23f46f283d1135508a4784ccfb2",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/modular/hands/1.webp",
+      "sha": "ae8079326cdb50f4a525f4dcc1f6a0605fd597a5",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/modular/hands/2.webp",
+      "sha": "b65d581bac91f8b88017db7d88b7c20706847d2a",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/modular/renderer.js",
+      "sha": "8aa61a9b1b7b461e2250b1317b0a9afb4553302c",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "images/combat/scene.js",
+      "sha": "0c7b640ac790970942b980cdcc53ade78e2e62df",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "index.html",
+      "sha": "724d0ff3ffeef3e83ab2cac617bbc6355d7c4ae9",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/combat_effects.test.cjs",
+      "sha": "5e21376f58d860f7066f01e1f87c39baed259f6f",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/combat_modular.test.cjs",
+      "sha": "79a9cdc86e0761bec7f50d684270642c153bf277",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "tests/combat_shot_review.cjs",
+      "sha": "6b1de6b3d7d1f7fae8e5e08ec90ba24235eb8701",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "tools/build_mobile.py",
+      "sha": "e2afa6fd4ea8e9e6ac006ed1e54cb682b877a2a2",
+      "type": "blob"
+    },
+    {
+      "mode": "100644",
+      "path": "tools/prepare_hand_candidate.py",
+      "sha": "a03fb8abfeed7caf8c34e315a7d04cc12007b855",
+      "type": "blob"
+    }
+  ],
+  "local_checkpoint": "6d213b7",
+  "local_path": "/workspace/scratch/32622e83ed9b/game",
+  "reason": "Publication in progress; environment available",
+  "repository": "Avel12082026/The-way-to-the-Chernobyl",
+  "verified_asset_commit": "943eeb3ed019f82f3b7e197cd5e14c67b7c44466"
+}

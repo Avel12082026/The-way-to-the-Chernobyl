@@ -1,0 +1,50 @@
+{
+  "source_commit": "8a4723ed4a6675e9fcafc919c61a74dd7df9cfd0",
+  "checked": 151,
+  "failed": 6,
+  "failures": [
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-74/fingerless.webp",
+      "actual_bytes": 786444,
+      "declared_riff_bytes": 814716,
+      "sha256": "1003eee5744c3156e8cb85787b1f62e320dd765f3f55a3b59b758b0357f7183f",
+      "error": "could not create decoder object"
+    },
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-74/full-glove.webp",
+      "actual_bytes": 786444,
+      "declared_riff_bytes": 842294,
+      "sha256": "62b47484cb6532fb70efda82bbd82cdca62b0817d3be435bc681431a350bccf2",
+      "error": "could not create decoder object"
+    },
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-74/hand-only-v2.webp",
+      "actual_bytes": 786444,
+      "declared_riff_bytes": 845016,
+      "sha256": "a51afcc16332c3a76a44fefe4ebff5d5b3404a854ff0b60742edddd0479805f6",
+      "error": "could not create decoder object"
+    },
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-74/makarov-assembled-v2.webp",
+      "actual_bytes": 786444,
+      "declared_riff_bytes": 859712,
+      "sha256": "6a36649c828d2b382a9bb0f4ac075a0ac6a9105c69889819d04d1195e618e4dc",
+      "error": "could not create decoder object"
+    },
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-75/hand-only-v2.webp",
+      "actual_bytes": 786445,
+      "declared_riff_bytes": 879966,
+      "sha256": "7f92351e3d994872e65aeb47dbcdeb0a0e749a57487f47be3964f96be5a4340f",
+      "error": "could not create decoder object"
+    },
+    {
+      "path": "asset_sources/combat_hand_repair/anatomy-76/hand-only-v2.webp",
+      "actual_bytes": 786444,
+      "declared_riff_bytes": 1074764,
+      "sha256": "033260f090f855af2e6af588d5aec214f6481ceb3acd90ecd06e0ccaf0959387",
+      "error": "could not create decoder object"
+    }
+  ],
+  "scope": "Decode stored image bytes; not anatomy or fit approval"
+}

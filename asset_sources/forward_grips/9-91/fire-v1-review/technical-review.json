@@ -1,0 +1,71 @@
+{
+  "status": "visually-reviewed-needs-index-connection",
+  "checks": [
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 538.3
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 544.7876898094671
+      }
+    },
+    {
+      "ms": 89,
+      "recoilY": 11.46446582189156,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 549.7644658218915
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 550.3
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974177,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 548.3950423939741
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 1.4695761589768238e-15,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 784.04,
+        "y": 538.3
+      }
+    }
+  ],
+  "visual_review": [
+    "light and dark backgrounds",
+    "six shot phases in zombie scene"
+  ],
+  "anatomy": "index fingertip still looks detached; rejected for integration",
+  "integration": false
+}

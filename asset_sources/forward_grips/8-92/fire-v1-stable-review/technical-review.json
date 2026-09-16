@@ -1,0 +1,74 @@
+{
+  "status": "visible-grip-and-zombie-canvas-reviewed",
+  "checks": [
+    {
+      "ms": -1,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 560.95
+      }
+    },
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 560.95
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 567.4376898094672
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 572.95
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974174,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 571.0450423939742
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 752.98,
+        "y": 560.95
+      }
+    }
+  ],
+  "alphaRange": [
+    0,
+    254
+  ],
+  "sourceSha256": "db9ee49e02086b830dea76d3d05570437e0763ae9a155c47f43c6750c7aca377",
+  "limitations": [
+    "Live browser and Android not checked",
+    "Other opponents not approved"
+  ]
+}

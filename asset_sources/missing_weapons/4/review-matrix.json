@@ -1,0 +1,3606 @@
+[
+  {
+    "armor": 1,
+    "source": "asset_sources/prepared_hand_pack/hands/1.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "d339e2078dc9548db89d03f3beae381ad9deead894b2990fba2d7e62f96c5905",
+    "shot_sha256": "a0cfcc377b6fa9c1030292e61848aa2bccfc836ede7494846cb149c11425653f"
+  },
+  {
+    "armor": 2,
+    "source": "asset_sources/prepared_hand_pack/hands/2.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "dad838e582bbb762fccbea5f975b08b4461665867ef819e827956f07c679ed0a",
+    "shot_sha256": "3dba6d11b10114521f089b38ce5ad4d42166fead856b6068d43fe37119b041d7"
+  },
+  {
+    "armor": 3,
+    "source": "asset_sources/prepared_hand_pack/hands/3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "9235355bfd862e639624cd6c4e7514ca4aafd0b830451f88c5b0020bcc198afe",
+    "shot_sha256": "ba4312c448045c7a142428303174ecb6faf2ae29fc4a87ab0a4214a4eb30d85c"
+  },
+  {
+    "armor": 4,
+    "source": "asset_sources/prepared_hand_pack/hands/4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "c76db9571d083ef5f6841efa1584a9d038dcb8bb50d1a4953ef206e14d2f5f82",
+    "shot_sha256": "7f7f2f6bd9b092a4b8a589da685adf0249c5f702c72d6eba94b041b484cfe000"
+  },
+  {
+    "armor": 5,
+    "source": "asset_sources/prepared_hand_pack/hands/5.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "b572c111f71a72fb7324f16a8eefcbfee125a39952cb0894b800372165965fb7",
+    "shot_sha256": "cc792bcbf2eefe4abdc43079038a6d9147ea70de31d3f7cf4b8f2848c97c0f4f"
+  },
+  {
+    "armor": 6,
+    "source": "asset_sources/prepared_hand_pack/hands/6.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "5f84c9d1bda2eae6553930cb06e178f6e4438326b3ec51d07f51342edb85620b",
+    "shot_sha256": "54515ea4e3e5a789897f80f851e0f520774ba390d2359870986707b97dd6e2e5"
+  },
+  {
+    "armor": 7,
+    "source": "asset_sources/prepared_hand_pack/hands/7.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "f2d46e91449448f4e309cf4532c52a54ce6dd67deb07cfb295fc9cbcbd3d66d8",
+    "shot_sha256": "c58b8aade82d2555bbddce7622f9ae454483d19f2db5de319b888434dbdbe288"
+  },
+  {
+    "armor": 8,
+    "source": "asset_sources/prepared_hand_pack/hands/8.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "ecad5589ac227c638612eda11bd989d8cdd591f6f8e9b6d9fb99d1207986c71f",
+    "shot_sha256": "f2b0ce9b683ff7ea93f56fb9fdaeef2dcb946a733a7dc196da46591aec87e1cb"
+  },
+  {
+    "armor": 9,
+    "source": "asset_sources/prepared_hand_pack/hands/9.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "0d14da77daa3e46f7a1ab294ee7206643e836555e6045846a40f4d4fc1cd5bdc",
+    "shot_sha256": "cccaff28984672ec9f9e24d66e7d331523db37f543d34a5b3f6696c38a877a89"
+  },
+  {
+    "armor": 10,
+    "source": "asset_sources/prepared_hand_pack/hands/10.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "b372b161a5f5aabdbf4f1b642b405f56f3989ddb303e5a0d272732d03acde9c3",
+    "shot_sha256": "84e1644df474d456bab9c75db3ecd9c162066ce66c48a7e8321a6c78a315ecf4"
+  },
+  {
+    "armor": 11,
+    "source": "asset_sources/prepared_hand_pack/hands/11.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "2293dbfff2ed54c022150da05c8c92862907ceecb01d1d6e11e883905c7cc975",
+    "shot_sha256": "6538aa2788d2e66996a7713dfa39ea7f13d11c93b4d9a6be48710322480d904f"
+  },
+  {
+    "armor": 12,
+    "source": "asset_sources/prepared_hand_pack/hands/12.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "316b817df040a9854a6a075552b4910e132e818ba81091fba42a2ec75ba10a68",
+    "shot_sha256": "119c1d0c16e405d55bbea31c72e3c71f076386c22a26f1a3445712b71cdd1cfd"
+  },
+  {
+    "armor": 13,
+    "source": "asset_sources/prepared_hand_pack/hands/13.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "26f5d8d46f01535387041efd9f17abe3126fb205f61028324a2c804b5398c088",
+    "shot_sha256": "3de8588a1838d3963aac89db7e4a617cd8e8524d589e183c543083d15d967544"
+  },
+  {
+    "armor": 14,
+    "source": "asset_sources/prepared_hand_pack/hands/14.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "5fbfa8e589fb6afe5e349bc30f7f9e25ccc4cb40df0bcecbd29a92f1a23b6ac0",
+    "shot_sha256": "1aed9ee1c62f65b45c5cf8d086e3896d089f62739bd074aa318768d8fa1d5b6e"
+  },
+  {
+    "armor": 15,
+    "source": "asset_sources/prepared_hand_pack/hands/15.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "305a725dfcc3eedcf87c8de62ea979dc95ebb8fa6a11dd53817e49eaf3f05857",
+    "shot_sha256": "f1aab6480c79020cc1a4262020a5569e815731ed73ccb6bad7c7d8d836952e25"
+  },
+  {
+    "armor": 16,
+    "source": "asset_sources/prepared_hand_pack/hands/16.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "11c2dd1de1167b849d452a026e85af1a453a2f5958871d66232eab6b140cd4d2",
+    "shot_sha256": "a2da1dfcdd418a1fecc6ad30c7e94facbd33ecded98ca393d8bea9bffa28c415"
+  },
+  {
+    "armor": 17,
+    "source": "asset_sources/prepared_hand_pack/hands/17.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "48dba56ba9a8c502a8f589263105df05a66f1f9cdb0d5d173f6c554173289b23",
+    "shot_sha256": "9c0773741e3e9256dd7c23d841b4ee1e34f41c34a7f4211c0ce797ca504308ef"
+  },
+  {
+    "armor": 18,
+    "source": "asset_sources/prepared_hand_pack/hands/18.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "6a16bbb7af5a75c3f92d596c32b444857ee8439e2720185aaa4523a855965f3b",
+    "shot_sha256": "a722a3947de7bd4cfff1c2f32b16c42a942f383f586d175ebbd04013f86de390"
+  },
+  {
+    "armor": 19,
+    "source": "asset_sources/prepared_hand_pack/hands/19.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "efee6c4855247be649c412e234eb4579f7fcbd210448f6c04bfe92af31e22218",
+    "shot_sha256": "a49a5016c9b6b6c9d89da34fc5b04414be51f1b61ad56afd12e96001409050a0"
+  },
+  {
+    "armor": 20,
+    "source": "asset_sources/prepared_hand_pack/hands/20.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "927c201bb8c3d43d415ac443a34f2e072d74756aa4988c5670398a3301c2b6ba",
+    "shot_sha256": "4a806ade09fdb4ce5b523bd1ed9bb7e756071aec714834b366b7d58867aef113"
+  },
+  {
+    "armor": 21,
+    "source": "asset_sources/prepared_hand_pack/hands/21.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "fe43888e3e2d7771ea126a5764f9c408cfdb7180b41ed72481a3c2e52b43265c",
+    "shot_sha256": "021f8a7a3c6edf947afee5bdf1e3b14f140436fa7b0165478ba68e0b2012dd00"
+  },
+  {
+    "armor": 22,
+    "source": "asset_sources/prepared_hand_pack/hands/22.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "448ca068cbe021672532c7769e42b59a259157822774ad5b4901d51f14f3991c",
+    "shot_sha256": "fbce437ff4a6e868d38f4756d712f60f325865458e505cf4388a49e6f9567f19"
+  },
+  {
+    "armor": 23,
+    "source": "asset_sources/prepared_hand_pack/hands/23.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "fadd094b52f9ca643457876496c851bce5bf6f377428ddda76657d6cabb2b9b0",
+    "shot_sha256": "8009d38c1a500f7abdc7ee7dc3c3989e3b7f6ee28a551554b6039a917d9e5c94"
+  },
+  {
+    "armor": 24,
+    "source": "asset_sources/prepared_hand_pack/hands/24.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "ddc470b23f0698ce5aa8794d196faab8acf4509648e993f18e2241e9a022255f",
+    "shot_sha256": "c4c1bec757270b4f5783ff79cf419357e107a814b5ae5c1d52da6bbf03cc44d9"
+  },
+  {
+    "armor": 25,
+    "source": "asset_sources/prepared_hand_pack/hands/25.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "e5abc25b193f850f06afd7a584f531c013e365714531306bf981f876facb8c2a",
+    "shot_sha256": "bc8469ba9cdc749a0adbb793ef930179596ade6b89aab60ced73a41c72c8eeb8"
+  },
+  {
+    "armor": 26,
+    "source": "asset_sources/prepared_hand_pack/hands/26.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "aedf01a8b10f784f1867ed80b3a7e5dc621224b0a851cf8a22a9a67c3e542be3",
+    "shot_sha256": "d44380f1482b9bf543cad3a64b54c0c4351e102d1c25c7bba9125f6551be38fb"
+  },
+  {
+    "armor": 27,
+    "source": "asset_sources/prepared_hand_pack/hands/27.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "626ea9efbf5b8457802d9dc822fc952efee359d224ae81b151c01acc419d75b0",
+    "shot_sha256": "40d2804d2b307c916789e92cd6847e857ee865af35c9a422e8bbc9b157bb5252"
+  },
+  {
+    "armor": 28,
+    "source": "asset_sources/prepared_hand_pack/hands/28.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "a099ff74bb5e8996812be04e9b9fb67741a40a24f09a4e19f22c324202d25d74",
+    "shot_sha256": "974c65480944f32a6a58224a33807645b93d2231332922c341f29d545724559a"
+  },
+  {
+    "armor": 29,
+    "source": "asset_sources/prepared_hand_pack/hands/29.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "5a2ab493447618a413f22b1c382e2286e3e3f893716dc9d3c2f3cf324a13d082",
+    "shot_sha256": "b5a1af0168804ee2ef7f6c0b8a708a2b3cae83314676ade2abb1dd8fb53ddc37"
+  },
+  {
+    "armor": 30,
+    "source": "asset_sources/prepared_hand_pack/hands/30.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "bc2a71bb9d221e998e21bccc239c8601e94c4d148d9f643758837eac5232c095",
+    "shot_sha256": "eb89c09bb1ba247e5a3a9b349dbb0f6f35b166da46c52a4c5f6788baa590c279"
+  },
+  {
+    "armor": 31,
+    "source": "asset_sources/prepared_hand_pack/hands/31.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "201cc1f12aeda9bdf6295d709ff91a43227e78c384c5dc2893677c3c51e29a34",
+    "shot_sha256": "ce8e8c318adbc0d60a9effa218a0b00345caf15f82c0a928e3ef7f1ad2093e00"
+  },
+  {
+    "armor": 32,
+    "source": "asset_sources/prepared_hand_pack/hands/32.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "992735dc9878a5b8234b1e2b8d0ce8417b342ee0a6d1d2e6ea99356648d0131e",
+    "shot_sha256": "c2a2d05c43f30628e73fa0bb7fb6a8c66410f0266a2ebc3b64b94ab24b9fad92"
+  },
+  {
+    "armor": 33,
+    "source": "asset_sources/prepared_hand_pack/hands/33.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "628cebd981bd5a2cc3d5609fdc0519d91a342d72d6f9e08d013c5fe5ee7500c2",
+    "shot_sha256": "a2cf783fa2f86bfe449da9f4c1f1ff59c176de94c491ea216307415a380d3a77"
+  },
+  {
+    "armor": 34,
+    "source": "asset_sources/prepared_hand_pack/hands/34.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "0e20050e85dc34c29de0f6e4466e4f932bb9751960efd785ca2df3083d5c5794",
+    "shot_sha256": "3a808702f74242cc35b345fdfe2a8d9c223df9c5d2808104702ea5cf6f634fd8"
+  },
+  {
+    "armor": 35,
+    "source": "asset_sources/prepared_hand_pack/hands/35.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "b2b0dc073955a4406329bcc515816b6269bdefca997822305dd138e62fda7411",
+    "shot_sha256": "dc3a56bbec1a5b19c4d1aa2c8b610b93202440e6e98bb2aac06e23d1cc25c036"
+  },
+  {
+    "armor": 36,
+    "source": "asset_sources/prepared_hand_pack/hands/36.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "97588f77293f05aa75c36d9c4d50dc9df511950b1097f7815e87495614e7da4a",
+    "shot_sha256": "a4dc7e6d526bc29399c53cf3210ace9f580155b766b71d08ab72ab40d4edcd5c"
+  },
+  {
+    "armor": 37,
+    "source": "asset_sources/prepared_hand_pack/hands/37.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "094f1ee7a7a72f3bc852e3583d687ede69efdaa5b0c6bb1f509f54781f89b642",
+    "shot_sha256": "ceaa972c435e563aa2fddf79408d0703bb736e71d022215e4a63a73014e95869"
+  },
+  {
+    "armor": 38,
+    "source": "asset_sources/prepared_hand_pack/hands/38.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "2170e0788fc4e78d1a296ce812e2e0a5e5eda3715fd642eadb9885479addf8b5",
+    "shot_sha256": "d46a9782e241aa5c9fa0239caf2ea610b97b30f13028205cec08d0fbe6d833c7"
+  },
+  {
+    "armor": 39,
+    "source": "asset_sources/prepared_hand_pack/hands/39.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "89d19fd9e5d0d3d86a8483a1c7409b82155af389eaa10c828fb2438493b3d0fd",
+    "shot_sha256": "b9b1cb6dad2c216350cf13094ea935fcdf6d24149d113f81b60b5b40af6705a1"
+  },
+  {
+    "armor": 40,
+    "source": "asset_sources/prepared_hand_pack/hands/40.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "daa6972421ce8ccf03c3e903312f620fb2b409a794530ed4948dfdcc38dce19f",
+    "shot_sha256": "2b551abe637bd288fb88b26599df863a759efba7e855d816c66d1a5442407e68"
+  },
+  {
+    "armor": 41,
+    "source": "asset_sources/prepared_hand_pack/hands/41.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "7149321abab0d11ff7a83f2acb367d5c887f8d72cc7b2f8e9771fbde796e70d3",
+    "shot_sha256": "95aac987f1aa4b5e83db1b9bb23c55946bb97c754dcd7baf6798638ac936f788"
+  },
+  {
+    "armor": 42,
+    "source": "asset_sources/prepared_hand_pack/hands/42.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "4c0e0e7ba6ad3d12811175a5e85edd81e9c90ddabe728a985357290c48bdd7f7",
+    "shot_sha256": "46bec2d24e8a5b2dd977f6a53f11cac975638b99e674bba83117ed9adb1fae59"
+  },
+  {
+    "armor": 43,
+    "source": "asset_sources/prepared_hand_pack/hands/43.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "f4dc70b5aa17a70a18dd8d95700439a06cd635cb1489e7ad5cb3fce73c09d21c",
+    "shot_sha256": "3d7a3c581d72f02f72efa6ad542e50d3ea93c29663d432813bae25ceaa9aafbd"
+  },
+  {
+    "armor": 44,
+    "source": "asset_sources/prepared_hand_pack/hands/44.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "443ec4eba3a4ac59fcd672452be8755da3eb16f69ffe519fe6f3e0c3fbe6ff6d",
+    "shot_sha256": "edef875299431264bb55fe7784e612b858609c1bcd48465ad5593a4b82766ad7"
+  },
+  {
+    "armor": 45,
+    "source": "asset_sources/prepared_hand_pack/hands/45.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "b02f29e9ac12c4e52051911bfb55df5acba6a3c0e9b9b660b6fd5146a501b61c",
+    "shot_sha256": "b67e5f7f48a8edbc64711a90ba4e965f432239aa03c61c4955f6322143db1659"
+  },
+  {
+    "armor": 46,
+    "source": "asset_sources/prepared_hand_pack/hands/46.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "23ef9fdc510c2c5086017d2dd2b08d38f44eace58550dd5c67eb4097d6eab1e9",
+    "shot_sha256": "16450436d9acf69e459b1516b87df76f8e9cca4ef2e953e04cd03ca14cc5ee20"
+  },
+  {
+    "armor": 47,
+    "source": "asset_sources/prepared_hand_pack/hands/47.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "d024320ed26d11ff7d1e833529271cc70c289e9d80d8971e94f09fbf2d54748c",
+    "shot_sha256": "652627a5ca049dd2f5368d9ddcf297d4fedbe7b0f4cc544de6b3f56e72f86512"
+  },
+  {
+    "armor": 48,
+    "source": "asset_sources/prepared_hand_pack/hands/48.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "6cabf25879e24c94df0b58c96fafe89f0e4cb0d1bea76561e8d10801523fe421",
+    "shot_sha256": "f908129ca9440f3ab398da44a9cc86f244f96999bd810215d789a3e8cf33e822"
+  },
+  {
+    "armor": 49,
+    "source": "asset_sources/prepared_hand_pack/hands/49.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "4fd62d87d7d3c6ea7ab4e9a526a6ad4186839bab658cdb6ba8114348e32a5774",
+    "shot_sha256": "a3c591f3c84eaf96b6f4f9c667572bca87ac0853b3d815c4074d368a74e51bf1"
+  },
+  {
+    "armor": 50,
+    "source": "asset_sources/prepared_hand_pack/hands/50.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "f5d1b053c3a48d57676cf332b9db79e1227929b2e65994059b2e0eb4004baac6",
+    "shot_sha256": "88bdbb270c21f04bba4afc45dd5b2e6563a07feefd00ff11b49b1ce0285544fa"
+  },
+  {
+    "armor": 51,
+    "source": "asset_sources/prepared_hand_pack/hands/51.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "3ea46314b57544d8ba7b8573c74ea1afcc797d5d7ad0ea50bc3d3b5af8cd3bdb",
+    "shot_sha256": "88db1d153bec66ce825b3db80a9c2f87d9e500b68e55a86d348d7a340b587b89"
+  },
+  {
+    "armor": 52,
+    "source": "asset_sources/prepared_hand_pack/hands/52.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "27ceca1803d1cc4ea089f09836872def9a8de18516f0263db2ce9472f147b023",
+    "shot_sha256": "2dc33396d9ff8851a4932958bd625cfaeacc55d76856dc85c1b7f4d9e31a478d"
+  },
+  {
+    "armor": 53,
+    "source": "asset_sources/prepared_hand_pack/hands/53.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "c2a52935bd2fd0f627dc4d23a686abecabd180a92fd9757f028b29d12ba57b92",
+    "shot_sha256": "1235f7ab121c419dcc1a66cc5605bb4441b57e41c9f6edadb727c103c29e43a8"
+  },
+  {
+    "armor": 54,
+    "source": "asset_sources/prepared_hand_pack/hands/54.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "e41e1d2ca1d4cb2fabe03ed374620a52ecdd81d1fba4aedd54be7f3c62f42623",
+    "shot_sha256": "9b96b81c59a6e4d40e4130216ee8c871c2062b8f643e78559a803d8cc4dc59ec"
+  },
+  {
+    "armor": 55,
+    "source": "asset_sources/prepared_hand_pack/hands/55.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "f48aa9088c5b6507fa28b4668adca77f06bd86d2a0b4195271910b9c5ded1c18",
+    "shot_sha256": "9f8f9b44a5b6fa207f8c480291ea3a62a3aa5c062bc698269957b015980636a7"
+  },
+  {
+    "armor": 56,
+    "source": "asset_sources/prepared_hand_pack/hands/56.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "c53bf3949209ed6589fcdead94a85f817988927e87d304ec2cc09d03c68674c6",
+    "shot_sha256": "62408768b06f8fc9ff217feb8fac7cb59cd1dcc1a7b2cff97ddac4c7435e3f8b"
+  },
+  {
+    "armor": 57,
+    "source": "asset_sources/prepared_hand_pack/hands/57.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "0efe2b09502c4abcdccc11852130cbcb0cd44fa0cf7475b275c79fd1ca0d86cd",
+    "shot_sha256": "ae9941e7d571b7ce9b5f13942a047c81746961e9ebb74ab1bfe4ec9a83825cf7"
+  },
+  {
+    "armor": 58,
+    "source": "asset_sources/prepared_hand_pack/hands/58.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "440e127af9a7f5e896ec42e60d32a19cd5e0ccc3ae430d36e085ed79a2b1b3bf",
+    "shot_sha256": "dba4548d4b89d87d1dfbaf5bcb5a3934e94ac0c1fbc4978ca32f56cf4f5bc413"
+  },
+  {
+    "armor": 59,
+    "source": "asset_sources/prepared_hand_pack/hands/59.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "e146a368de406c96f4c1fc19e248fc3920032c3a48ebc9cef30c8975430ce0b9",
+    "shot_sha256": "15349b9281bbd565dbcd2023bf9180e1923b24aef8d92a952e35af1371c393e9"
+  },
+  {
+    "armor": 60,
+    "source": "asset_sources/prepared_hand_pack/hands/60.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "e6437ad0471424fc73715e5a4c42b12d5078e93f479834daa808cfd913bb2d45",
+    "shot_sha256": "49bbc1165dbdbb2d01bb6a6d3617e901d9a51aac5c55ec7ec88cb6d8cc04107a"
+  },
+  {
+    "armor": 61,
+    "source": "asset_sources/prepared_hand_pack/hands/61.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "9392d2ff6b76df9768b716585d1616955cf287ef54d30b1bcd6c53b50db5f9d6",
+    "shot_sha256": "c2aeb95983c9da282564280e3041453c49ed81e7fe8e90725ff8c74c7260af92"
+  },
+  {
+    "armor": 62,
+    "source": "asset_sources/prepared_hand_pack/hands/62.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "52aae1e4c7b729ab6fb84bce8df85c34596f1b95d5d7302bd962fdacbfae44f2",
+    "shot_sha256": "d6f5b75da77827de06a1850f03cc31c6bb134e40fffde793651eea9163f81495"
+  },
+  {
+    "armor": 63,
+    "source": "asset_sources/prepared_hand_pack/hands/63.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "97bec71d1d86b738e2e6972b3cb04496a12e75f45be888ce0302788916b7eeef",
+    "shot_sha256": "116518acb402d34755284c11e87ad52e84629be4768456b8fb5538a705c4e2d0"
+  },
+  {
+    "armor": 64,
+    "source": "asset_sources/prepared_hand_pack/hands/64.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "2c33040c3dcaa4e4fad5190546a70c3379a7e3a4f05cae291f3f78ae9fd5ec65",
+    "shot_sha256": "adf8fa7ed311fd9ab75642fd7f00d67042f5dd1940f50c34c1ff728ad80df420"
+  },
+  {
+    "armor": 65,
+    "source": "asset_sources/prepared_hand_pack/hands/65.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "6f55d20d929253ee21e868733b2581c15d8ed5769cb40e96518b77c6c862e7ab",
+    "shot_sha256": "d7cec37dd1cb18e7f8215c4019bcc6557e759444dc014b610e68b302a22f49f9"
+  },
+  {
+    "armor": 66,
+    "source": "asset_sources/prepared_hand_pack/hands/66.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "8415dc0a14bb28edca83169f9fe50436bca68c760a823b53840ffebad60a3bf8",
+    "shot_sha256": "8d63fbb1ccd521c0df840de227f365984fe923d223653ebd38c0b6752b22be1b"
+  },
+  {
+    "armor": 67,
+    "source": "asset_sources/prepared_hand_pack/hands/67.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "c38f2a3dac68de3e661c5718bb6b3dd7a3594dbd305dc7418d35f3e5fefee05f",
+    "shot_sha256": "d2bfa1ded14b4474283af8b891b5a8f07269e07053987ce70063d01ab76d3188"
+  },
+  {
+    "armor": 68,
+    "source": "asset_sources/prepared_hand_pack/hands/68.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "f0198490c6cb16c698b001cf9b3f7b7951b60751d38385253b50a8fefcb9d777",
+    "shot_sha256": "e29ddbdac36b2619a52f90a5c651d55c28117000a57803731905ddc2c35f10c2"
+  },
+  {
+    "armor": 69,
+    "source": "asset_sources/prepared_hand_pack/hands/69.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "d39930e587af89e6d0c8f471162bc575051f465443f86067fdd11e55ed944730",
+    "shot_sha256": "a4930950b28fe9ee11b683f0dd56d77698fb05c10f25d7eb3f036432a1d6dfe4"
+  },
+  {
+    "armor": 70,
+    "source": "asset_sources/prepared_hand_pack/hands/70.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "3d812705ce6e5a7dd458561bd4ed8c8266299678ba02da9ab76f0cd1be83fa3b",
+    "shot_sha256": "68aaabc9cf734ee9f401340af2e38a28a73f96cf7783e6875594e63ac0345aac"
+  },
+  {
+    "armor": 71,
+    "source": "asset_sources/prepared_hand_pack/hands/71.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "09a5f98184361c202dcff74970558964c564415db3daf7973cdd6bf7317d4be7",
+    "shot_sha256": "06f9c5e5dca85ac7ff72e68cf18ff49529c6f959b63952a513b3ed91e5031f62"
+  },
+  {
+    "armor": 72,
+    "source": "asset_sources/prepared_hand_pack/hands/72.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "bc03c6e1c3ae96612abc7d61286c8dba699fb45b90f763259a9687cb70411ed4",
+    "shot_sha256": "4e95d1b784858b4780b4703d39f080f89e483dc645755e358952ef77c34c14ec"
+  },
+  {
+    "armor": 73,
+    "source": "asset_sources/prepared_hand_pack/hands/73.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 731.6,
+      "y": 463.8,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17696
+      },
+      {
+        "ms": 40,
+        "visible": 17696
+      },
+      {
+        "ms": 89,
+        "visible": 17696
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Legacy hand: detached index tip/trigger reach and grip alignment need correction",
+    "pair_sha256": "381e171c2055891d90c761ac1b7c63298fc06754fd61e5e67470827eba330774",
+    "shot_sha256": "19902f879f3ce3ae3a421ba8674101294b97d8c0db67cb852d44585f81005e9b"
+  },
+  {
+    "armor": 74,
+    "source": "asset_sources/combat_hand_repair/anatomy-74/hand-only-v2.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "6e31db5bb477605079da08aa8c812f3ca82f65329466bb79408de5d44bea198e",
+    "shot_sha256": "72efa499c684784e8c225e728ec49371adcdbf7136d3ae077d2b701b731d4cb9"
+  },
+  {
+    "armor": 75,
+    "source": "asset_sources/combat_hand_repair/anatomy-75/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "15f661aff93bf644567e2f90d42c758268f2073e6ad2dc008c28455c8e514840",
+    "shot_sha256": "25093af7a922558c42afc108463eff9faad775749e3fa60b4bf4e77e765feaed"
+  },
+  {
+    "armor": 76,
+    "source": "asset_sources/combat_hand_repair/anatomy-76/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "92fb0a664658eff0eee190abc93589bf8603cdafcd7c7c010c93c9f341869178",
+    "shot_sha256": "621381748f3cdb901f640d1ea6534916dd750e89736303e666df642d15357655"
+  },
+  {
+    "armor": 77,
+    "source": "asset_sources/combat_hand_repair/anatomy-77/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "8c676c1fc445c1b543be27ab1729ced9c07edb805de13d1ff020d13106404c3a",
+    "shot_sha256": "c40914e2bc2811105442b6f22255f526561eb2bc0d0d7bf6ffcebbc413491ca8"
+  },
+  {
+    "armor": 78,
+    "source": "asset_sources/combat_hand_repair/anatomy-78/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "b4b016903eba36c4ac7ed570a175d298b64a654db5649ee80ea9c2299784a793",
+    "shot_sha256": "013dc1f8b743f783fba94855c63001496f3e6036b6fc0f2424f222b5a3dba541"
+  },
+  {
+    "armor": 79,
+    "source": "asset_sources/combat_hand_repair/anatomy-79/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "0201858124ac8ef359a53f2350cb36f069e16de1bc666d7c1593b8b9050efe1e",
+    "shot_sha256": "688bea23b9d7d770a16765800f9a7d7ba722fd497db0205542fabe6d815e3f36"
+  },
+  {
+    "armor": 80,
+    "source": "asset_sources/combat_hand_repair/anatomy-80/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "e13ea9890c22312e3b1b654c407024789e6ac341b8cb22566d6d493b6f927ff0",
+    "shot_sha256": "436be160b06090e2750009ff7d7a2afc49aa7e2e6dc9414bf4a7d0933331cb7c"
+  },
+  {
+    "armor": 81,
+    "source": "asset_sources/combat_hand_repair/anatomy-81/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "b6011e6395b93e7020d48c43d596123e6549d2eacce9ec5adf6815505ca1fb9d",
+    "shot_sha256": "c3678a48c994d2c492ab49d4a58a93ae7f8b43922ecf548d2503f534260da977"
+  },
+  {
+    "armor": 82,
+    "source": "asset_sources/combat_hand_repair/anatomy-82/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "78b41fff2e87f43602b2e7ee10128c1ceb5819b56654101a2f2c0a7445dfa8bd",
+    "shot_sha256": "e5b14f4593e3b94d01d1e331404850c43f923a7692c738207b697e909dddf27d"
+  },
+  {
+    "armor": 83,
+    "source": "asset_sources/combat_hand_repair/anatomy-83/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "976876a29095a96bd49dcdaf3b5b933fc63db05e884879c8f260f48deb6be222",
+    "shot_sha256": "ad606adf7f80f7ea0281684eed9a2d97dc7efd84fa9288a0776663fa05b8d5fe"
+  },
+  {
+    "armor": 84,
+    "source": "asset_sources/combat_hand_repair/anatomy-84/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "eb903e8ee407bb38eb56cd209cdf1ad78cf6a0c098d756d98bc068cff9a942fc",
+    "shot_sha256": "b065568f56d1bc9b55c837c872ef81021f3e2083df49c70257742ecec2b217f7"
+  },
+  {
+    "armor": 85,
+    "source": "asset_sources/combat_hand_repair/anatomy-85/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "01b8541aea3be395d4ac2f04ef775ade03705e7a5085ed02d7c9556e2ac98b53",
+    "shot_sha256": "134a9d712d6830159772e8ce12fdd614c63f28d47cbfc5b25f877b6f489136fc"
+  },
+  {
+    "armor": 86,
+    "source": "asset_sources/combat_hand_repair/anatomy-86/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "cb05192d8b48d84ca260beb49926046dcd05468fd8f505f25073a309b8966fc7",
+    "shot_sha256": "36b3d00c0a4353bd23d7a3cb82375a68864bfb8c0f50b2d7105442fc4bf10ab0"
+  },
+  {
+    "armor": 87,
+    "source": "asset_sources/combat_hand_repair/anatomy-87/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "0349eb9749cb5287972de589bd638a7d7aa14779f2dba3f56e774c030d8875d1",
+    "shot_sha256": "b9ad9688d32992cfb7c6a2e4dc706cbb59276535770b2ab96e622907e6f016d4"
+  },
+  {
+    "armor": 88,
+    "source": "asset_sources/combat_hand_repair/anatomy-88/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "ec59750affa73dfcfcc366ce373af1bc6646780f7e098661e632edfedb26f5c2",
+    "shot_sha256": "3db702437caf6c399e55742eee17b80fa66f6afce53cb12c76ab57d3360ed782"
+  },
+  {
+    "armor": 89,
+    "source": "asset_sources/combat_hand_repair/anatomy-89/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "6bc70973d3e3a8a5f57ccf24cc1a440c0ceab0bbe9d7f1111cc30eab34eebf35",
+    "shot_sha256": "9b90a1835fd6c983dc5a71c91b590f715ec8eca052b2512fbae67bf910f50481"
+  },
+  {
+    "armor": 90,
+    "source": "asset_sources/combat_hand_repair/anatomy-90/hand-only-v3.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "c07e9b3f6bcd35be3e38cc214ccb25fd323d2adc5033e3d57889a7edaa953817",
+    "shot_sha256": "220d3c60bc0e4e39448d9725465ad5c0a27ec61df93955bbed5cbc0f45cd4ff6"
+  },
+  {
+    "armor": 91,
+    "source": "asset_sources/combat_hand_repair/anatomy-91/hand-only-v4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "b7cce403acdbf7b868cbb2a58bd4a0ca9579f64db8468c45b5783340a5c061bd",
+    "shot_sha256": "763c4472623763aa85d95734379d7250f78d2befa896e4f2ae1b59233c4c92a4"
+  },
+  {
+    "armor": 92,
+    "source": "asset_sources/combat_hand_repair/anatomy-92/hand-only-v4.webp",
+    "status": "overview-reviewed-needs-grip-correction",
+    "muzzle": {
+      "x": 291.65,
+      "y": 234.39999999999998,
+      "angle": -2.7
+    },
+    "flashChecks": [
+      {
+        "ms": 0,
+        "visible": 17682
+      },
+      {
+        "ms": 40,
+        "visible": 17682
+      },
+      {
+        "ms": 89,
+        "visible": 17682
+      },
+      {
+        "ms": 90,
+        "visible": 0
+      },
+      {
+        "ms": 150,
+        "visible": 0
+      },
+      {
+        "ms": 240,
+        "visible": 0
+      }
+    ],
+    "notes": "Modern hand: index reach to shotgun trigger requires close fit correction; not approved",
+    "pair_sha256": "0cbc2b91cdd6a4b59b46513baabc701305cb5bf2f2aec74d384ff960bd785fc0",
+    "shot_sha256": "d3d360f565288da39c112e20494d8228a7562474aaa02048a074f3093adc0977"
+  },
+  {
+    "armor": 93,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 94,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 95,
+    "status": "missing-hand-source"
+  },
+  {
+    "armor": 96,
+    "status": "missing-hand-source"
+  }
+]

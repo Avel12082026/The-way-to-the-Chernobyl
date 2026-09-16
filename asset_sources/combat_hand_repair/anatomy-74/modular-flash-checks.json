@@ -1,0 +1,42 @@
+{
+  "weapon": 1,
+  "armor": 74,
+  "muzzle": {
+    "x": 305.2392344497607,
+    "y": 150.28708133971293,
+    "angle": -2.7
+  },
+  "checks": [
+    {
+      "ms": 0,
+      "alphaPixels": 17699,
+      "outsideEffect": 0
+    },
+    {
+      "ms": 40,
+      "alphaPixels": 17699,
+      "outsideEffect": 0
+    },
+    {
+      "ms": 89,
+      "alphaPixels": 17699,
+      "outsideEffect": 0
+    },
+    {
+      "ms": 90,
+      "alphaPixels": 0,
+      "outsideEffect": 0
+    },
+    {
+      "ms": 150,
+      "alphaPixels": 0,
+      "outsideEffect": 0
+    },
+    {
+      "ms": 240,
+      "alphaPixels": 0,
+      "outsideEffect": 0
+    }
+  ],
+  "status": "candidate-only-not-production"
+}

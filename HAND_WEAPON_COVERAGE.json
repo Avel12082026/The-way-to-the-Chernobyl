@@ -1,0 +1,60 @@
+{
+  "source": "local index.html weapon group Beretta 21A Bobcat through Desert Eagle Mark XIX",
+  "source_sha256": "6304eee64032ef3c70eb60c5ce952e22226283596d579c4ba1843095117358b9",
+  "expected_count": 29,
+  "catalog_count": 26,
+  "missing_from_catalog": [
+    {
+      "id": 4,
+      "name": "Обрез охотничьего ружья"
+    },
+    {
+      "id": 8,
+      "name": "ПП «Кедр»"
+    },
+    {
+      "id": 9,
+      "name": "ПП-19 «Бизон»"
+    }
+  ],
+  "hands": {
+    "91": {
+      "reviewed_count": 26,
+      "expected_count": 29,
+      "missing": [
+        {
+          "id": 4,
+          "name": "Обрез охотничьего ружья"
+        },
+        {
+          "id": 8,
+          "name": "ПП «Кедр»"
+        },
+        {
+          "id": 9,
+          "name": "ПП-19 «Бизон»"
+        }
+      ],
+      "complete": false
+    },
+    "92": {
+      "reviewed_count": 26,
+      "expected_count": 29,
+      "missing": [
+        {
+          "id": 4,
+          "name": "Обрез охотничьего ружья"
+        },
+        {
+          "id": 8,
+          "name": "ПП «Кедр»"
+        },
+        {
+          "id": 9,
+          "name": "ПП-19 «Бизон»"
+        }
+      ],
+      "complete": false
+    }
+  }
+}

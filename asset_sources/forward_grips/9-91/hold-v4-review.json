@@ -1,0 +1,23 @@
+{
+  "weapon": 9,
+  "armor": 91,
+  "asset": "hold-v4.webp",
+  "status": "holding-pose-visually-reviewed",
+  "review": [
+    "three curled fingers and connected extended index",
+    "light and dark background",
+    "forward-facing zombie scene"
+  ],
+  "alpha_range": [
+    0,
+    254
+  ],
+  "firing_pose": "not-created",
+  "integration": false,
+  "separate_hand_weapon_alpha": "not-checked-combined-asset",
+  "hashes": {
+    "hold-v4.webp": "d543b0d6a85a9017736e8addfa9433cde024e97f6458e85ceff09f8200fcc017",
+    "hold-v4-review.jpg": "e94f9b2f39d3c92ff4fc3121e88cbc95b16daa602c17ca1d4ad4a78a353fe615",
+    "hold-v4-scene.jpg": "9200fe86d19024f2a2d08d85d58e9c6fbd5a9bbe69ddf5146ec0cf249d80ff0d"
+  }
+}

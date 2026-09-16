@@ -1,0 +1,71 @@
+{
+  "status": "visible-grip-and-six-states-reviewed",
+  "checks": [
+    {
+      "ms": -1,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 626.25
+      }
+    },
+    {
+      "ms": 0,
+      "recoilY": 0,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 626.25
+      }
+    },
+    {
+      "ms": 40,
+      "recoilY": 6.48768980946717,
+      "flash": true,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 632.7376898094672
+      }
+    },
+    {
+      "ms": 110,
+      "recoilY": 12,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 638.25
+      }
+    },
+    {
+      "ms": 150,
+      "recoilY": 10.095042393974174,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 636.3450423939742
+      }
+    },
+    {
+      "ms": 240,
+      "recoilY": 0,
+      "flash": false,
+      "cornerAlpha": 0,
+      "muzzle": {
+        "x": 748.85,
+        "y": 626.25
+      }
+    }
+  ],
+  "weapon": 4,
+  "armor": 91,
+  "anatomy_limit": "index partly occluded by grip; only visible silhouette reviewed",
+  "source_sha256": "c89f1f263a18af7230628f6b15b9a16751d05f8669f08f6b1bd0576895e072ed",
+  "integration": "zombie-profile-only",
+  "browser": "blocked"
+}

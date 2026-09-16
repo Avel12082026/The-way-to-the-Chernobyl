@@ -1,0 +1,128 @@
+{
+  "alpha_range": [
+    0,
+    254
+  ],
+  "armor": 91,
+  "git_blob": "8ff9b0d1bee91f83d2c92c068cd2a603003c4c06",
+  "glove": "closed black rubber, all five fingers covered",
+  "pairs": [
+    {
+      "sha256": "fdf7ee291b5b74629ba1bf23e12c56c278cd5240dddfbebed20966e4b1326d5e",
+      "weapon": 1
+    },
+    {
+      "sha256": "a6f5a0069587e063e7c780e7cbe68f4ef47026e2918fe4f1dab2fd0d6774824f",
+      "weapon": 100
+    },
+    {
+      "sha256": "778109fed9821315d82c8b3c33fcd9185067b39e72db6f7cc65dee74388b5438",
+      "weapon": 101
+    },
+    {
+      "sha256": "b60af836ca5bd5435ad27cc2a66ffcb340ce136bb248be6382eeab9390cf1792",
+      "weapon": 102
+    },
+    {
+      "sha256": "067f95183fbd295b8f0176c3d5cc72ea9ef91b2f0b033292e0c0324f019699a2",
+      "weapon": 103
+    },
+    {
+      "sha256": "7015fcbd0ac5865456b11aef7d241ea868ad0ebdbc9f4397a7ef5c061d586dd6",
+      "weapon": 104
+    },
+    {
+      "sha256": "72c72af300073ffa11e50e48170ff57208f99f702a85967b6528b647fb230cfb",
+      "weapon": 105
+    },
+    {
+      "sha256": "a01ec05d6ecd1faae7b20f1bde376242676aa01f1b7a002e895e658949a45c9b",
+      "weapon": 2
+    },
+    {
+      "sha256": "a5518d0869abae427b25b3805e5949439f6f2f3648353fdba0cd2cb8b62e4d8b",
+      "weapon": 3
+    },
+    {
+      "sha256": "3554fc3ec706b35aeb414cdcf9dc8535c9989d6a52de2a3d4bca3ded8a7fd9cc",
+      "weapon": 5
+    },
+    {
+      "sha256": "a73e587e3818b736ae661c6c7736d0f8b1562c9de185ae0e7928a9204434ab2c",
+      "weapon": 6
+    },
+    {
+      "sha256": "1106614e5e85b5deee20beab7369b1b9a529ce118f9d803878d6bcfda552a5c8",
+      "weapon": 7
+    },
+    {
+      "sha256": "03eb7618e6ce5e3f2484c005f884e80d91cc6bc7a6ad07fa50b5160834ce75b0",
+      "weapon": 86
+    },
+    {
+      "sha256": "d8fb303b62012c80bf0438063de1cb1689b3f81ac4f0ad8e992f3e9eadce0f49",
+      "weapon": 87
+    },
+    {
+      "sha256": "46efe4d21abce03219856000ad7f15be6dd6a2c33f4d5acc38357d4946e77761",
+      "weapon": 88
+    },
+    {
+      "sha256": "fa1cc7c080f4cf49f4fb68151ed56f5cf6c3b10ad5586489559ab0098a6d8727",
+      "weapon": 89
+    },
+    {
+      "sha256": "bd0d9da677faa72d1caba7db73afa2a422f73b09d00e30c827ab94618e438e21",
+      "weapon": 90
+    },
+    {
+      "sha256": "e17f55c6ee8b1d0ce2621e98feaaa42f830ff3df7c7b5298d31dda4e2719d683",
+      "weapon": 91
+    },
+    {
+      "sha256": "6969ca7d797b1edec66411a740ba69490a1cddecdae9c17ccd23333bbd7815a5",
+      "weapon": 92
+    },
+    {
+      "sha256": "9a30eea4478c501c41d21622bd00ea2d858bd5460cbb4ceb9a51eacb98921639",
+      "weapon": 93
+    },
+    {
+      "sha256": "6c1db3a863c85447cac1ef2b788d5d1bbba9ff4efcf5acb01538dc80d86ae1b9",
+      "weapon": 94
+    },
+    {
+      "sha256": "e723ab324359351932b3c38fb74d9f6d87b3739d82849fdcb760cba3fdffda1f",
+      "weapon": 95
+    },
+    {
+      "sha256": "3ea3fa77a923e57ce03138756ce2c32f6ed4dd7b0a413ddde7d45681ab7ff9e4",
+      "weapon": 96
+    },
+    {
+      "sha256": "475b64bbcdf6ec9a1fd90b7a84cf8870de6c187559821cdbcb4dd9cbc614a0b6",
+      "weapon": 97
+    },
+    {
+      "sha256": "0d3f9d283ef7cca2caa550110bc46c1955e815c542b61d12bb0b006af3b81d40",
+      "weapon": 98
+    },
+    {
+      "sha256": "f0ee4cba958b345c83026b60740df6b4daf1f0255b4724ea6718973e6eb1bde8",
+      "weapon": 99
+    }
+  ],
+  "remaining": [
+    "Production scene, recoil and enemy aim verification",
+    "Apply closed rubber gloves to remaining research armor and detector/artifact hands"
+  ],
+  "source_sha256": "924add0a12e8e92355319d01c9ef5d9b72088146aad7513b7c0c02eea2c2a516",
+  "status": "static-reviewed-not-integrated",
+  "technical_flash_phases": 156,
+  "version": "v4",
+  "visual_review": {
+    "all_26_flash_0ms": true,
+    "all_26_grips": true,
+    "each_pair_on_light_and_dark": true
+  }
+}
