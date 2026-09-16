@@ -1,0 +1,45 @@
+name: Telegram banner inspection
+on:
+  push:
+    branches: [fix/telegram-section-banners]
+    paths:
+      - .github/workflows/telegram-banner-check.yml
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            index.html
+            mobile
+            images/ui
+            tests
+          sparse-checkout-cone-mode: false
+      - name: Inspect banner markup and native runtime guards
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          lines = Path('index.html').read_text().splitlines()
+          patterns = r'images/ui|technician\.svg|trader\.svg|scientist\.svg|warehouse\.svg|pda\.svg|section-banner|screen-banner|Capacitor|AndroidBridge|NATIVE_APP|serviceWorker'
+          selected = set()
+          for i, line in enumerate(lines):
+              if re.search(patterns, line, re.I):
+                  selected.update(range(max(0, i - 4), min(len(lines), i + 6)))
+          for i in sorted(selected):
+              line = lines[i]
+              print(f'{i + 1}: {line[:2500]}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: telegram-banner-source
+          path: |
+            index.html
+            mobile
+            images/ui
+          retention-days: 3
+          if-no-files-found: error
