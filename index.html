@@ -392,28 +392,14 @@ button:active {filter:brightness(1.18);}
   linear-gradient(rgba(10,12,9,.94),rgba(8,9,7,.97)),
   repeating-linear-gradient(135deg,rgba(132,109,59,.045) 0 2px,transparent 2px 8px)!important;
 }
-/* warehouse atmosphere, made from CSS so it loads offline and never depends on a remote image */
-#warehouseScreen::before {
- content:"";display:block;height:145px;margin:2px 0 12px;border:1px solid #665639;border-radius:4px;
- background:linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.42)),url('https://213-176-92-184.sslip.io/images/ui/warehouse.svg') center/cover no-repeat;
- box-shadow:inset 0 0 35px #000;
-}
-#warehouseScreen::after {
- content:"СКЛАД НА БАЗЕ • СНАРЯЖЕНИЕ В БЕЗОПАСНОСТИ";display:block;margin:-45px 12px 22px;
- position:relative;color:#c8b57e;font:700 11px/1.2 'Russo One',sans-serif;letter-spacing:.5px;text-align:center;text-shadow:0 2px 3px #000;
-}
 </style>
 
 <style id="pz-location-panels">
-#technicianScreen::before,#scientistsScreen::before,#shopScreen::before,#marketScreen::before,#kpkScreen::before {
+#marketScreen::before {
  content:"";display:block;height:96px;margin:0 0 10px;border:1px solid #655638;border-radius:4px;box-shadow:inset 0 0 26px #000;
  background-color:#111;
 }
-#technicianScreen::before {background:linear-gradient(#0002,#0008),url('https://213-176-92-184.sslip.io/images/ui/technician.svg') center/cover no-repeat;}
-#scientistsScreen::before {background:linear-gradient(#0002,#0008),url('https://213-176-92-184.sslip.io/images/ui/scientists.svg') center/cover no-repeat;}
-#shopScreen::before {background:linear-gradient(#0002,#0008),url('https://213-176-92-184.sslip.io/images/ui/trader.svg') center/cover no-repeat;}
 #marketScreen::before {background:linear-gradient(#0002,#0008),url('https://213-176-92-184.sslip.io/images/ui/trader.svg') center/cover no-repeat;}
-#kpkScreen::before {background:linear-gradient(#0002,#0008),url('https://213-176-92-184.sslip.io/images/ui/kpk.svg') center/cover no-repeat;}
 </style>
 
 
