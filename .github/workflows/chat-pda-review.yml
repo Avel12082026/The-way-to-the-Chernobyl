@@ -1,0 +1,40 @@
+name: Review chat PDA navigation
+on:
+  push:
+    branches: [work/chat-in-pda]
+    paths:
+      - '.github/workflows/chat-pda-review.yml'
+      - 'tools/patch_chat_pda.py'
+      - 'tests/chat_pda_navigation.py'
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            /index.html
+            /tests/
+            /tools/
+          sparse-checkout-cone-mode: false
+      - name: Export client source and navigation excerpts
+        run: |
+          mkdir -p chat-review
+          cp index.html chat-review/index.original.html
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          lines = Path('index.html').read_text(encoding='utf-8').splitlines()
+          hits = [i for i, line in enumerate(lines) if re.search(r'chat|showPDA|showPda|openPDA|openPda|renderPDA|renderPda', line, re.I)]
+          selected = sorted({j for i in hits for j in range(max(0, i-3), min(len(lines), i+5))})
+          Path('chat-review/navigation-excerpts.txt').write_text('\n'.join(f'{i+1}: {lines[i]}' for i in selected), encoding='utf-8')
+          print('Client lines:', len(lines), 'navigation hits:', len(hits))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chat-navigation-source
+          path: chat-review/
+          retention-days: 3
