@@ -12,3 +12,91 @@
 #warehouseGrid,#warehouseInventoryGrid{max-height:30vh;min-height:90px;overflow:auto;align-content:start;border:1px solid #746343;padding:5px;overscroll-behavior:contain}
 #warehouseDragHint{font-size:12px;color:#c9bd96}
 #inventoryWarehouseDrop{border:1px dashed #9c895b;min-height:48px;width:100%;margin:6px 0}
+/* Approved inventory layout: Telegram/main only. Existing DOM and handlers stay intact. */
+#inventoryScreen.active {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(78px, calc((100% - 24px) / 7)));
+  grid-auto-flow: row;
+  gap: 4px;
+  align-content: start;
+  align-items: start;
+}
+#inventoryScreen > * { grid-column: 1 / -1; min-width: 0; }
+#inventoryScreen > .zr-topbar { grid-row: 1; }
+#inventoryScreen > div:nth-child(2) { grid-row: 2; margin: 0 !important; }
+#inventoryScreen .zr-inv-status {
+  margin: 0 !important;
+  justify-content: flex-start !important;
+}
+#inventoryScreen > .zr-character-stage {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: stretch;
+  position: relative;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+#inventoryScreen .zr-character-stage #characterPortraitImg {
+  position: absolute !important;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+#inventoryScreen .zr-character-stage::after { content: none !important; display: none !important; }
+#inventoryScreen #characterPortraitStatus { position: absolute; inset: auto 4px 4px; z-index: 2; }
+#inventoryScreen > #artifactSlotsGrid {
+  grid-column: 2;
+  grid-row: 3;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-auto-rows: auto;
+  align-content: start;
+  width: 100%;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#inventoryScreen #artifactSlotsGrid > .slot {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1 / 1 !important;
+}
+#inventoryScreen > #quickSlotsGrid {
+  grid-row: 4;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#inventoryScreen > #inventoryWarehouseDrop { grid-row: 5; margin: 0 !important; }
+#inventoryScreen > #inventoryGrid { grid-row: 6; margin: 4px 0 0 !important; }
+/* Remove only the old content captions, not headings, buttons, counts or item dialogs. */
+#inventoryScreen > div[style*="font-size: 12px"],
+#inventoryScreen > div[style*="font-size:12px"] { display: none !important; }
+/* Preserve the live status for assistive technology without leaving a text-sized gap. */
+#inventoryScreen > #inventoryDragHint {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0 !important;
+}
