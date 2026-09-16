@@ -4,10 +4,8 @@ on:
     branches: [work/chat-in-pda]
     paths:
       - '.github/workflows/chat-pda-review.yml'
-      - 'tools/patch_chat_pda.py'
-      - 'tests/chat_pda_navigation.py'
 permissions:
-  contents: read
+  contents: write
 jobs:
   review:
     runs-on: ubuntu-latest
@@ -17,24 +15,41 @@ jobs:
         with:
           sparse-checkout: |
             /index.html
-            /tests/
-            /tools/
+            /tools/patch_chat_pda.py
           sparse-checkout-cone-mode: false
-      - name: Export client source and navigation excerpts
+      - name: Apply exact reviewed patch
+        run: python tools/patch_chat_pda.py index.html
+      - name: Verify tested client checksum and JavaScript syntax
         run: |
-          mkdir -p chat-review
-          cp index.html chat-review/index.original.html
           python - <<'PY'
           from pathlib import Path
-          import re
-          lines = Path('index.html').read_text(encoding='utf-8').splitlines()
-          hits = [i for i, line in enumerate(lines) if re.search(r'chat|showPDA|showPda|openPDA|openPda|renderPDA|renderPda', line, re.I)]
-          selected = sorted({j for i in hits for j in range(max(0, i-3), min(len(lines), i+5))})
-          Path('chat-review/navigation-excerpts.txt').write_text('\n'.join(f'{i+1}: {lines[i]}' for i in selected), encoding='utf-8')
-          print('Client lines:', len(lines), 'navigation hits:', len(hits))
+          import hashlib, re, subprocess, tempfile
+          data = Path('index.html').read_bytes()
+          actual = hashlib.sha256(data).hexdigest()
+          expected = '17306f97d562063d14c07a9f8abff52cc6d2e1f69b508eb66698471239227668'
+          if actual != expected:
+              raise SystemExit('The patched client differs from the browser-tested file: ' + actual)
+          text = data.decode('utf-8')
+          with tempfile.TemporaryDirectory() as tmp:
+              for i, script in enumerate(re.findall(r'<script\b[^>]*>([\s\S]*?)</script>', text)):
+                  if script.strip():
+                      path = Path(tmp) / f'script-{i}.js'
+                      path.write_text(script, encoding='utf-8')
+                      subprocess.run(['node', '--check', str(path)], check=True)
+          print('PASS: exact browser-tested client, SHA-256', actual)
           PY
+      - name: Commit reviewed client on work branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Move existing chat into PDA Teleg rammka screen'
+          git push origin HEAD:work/chat-in-pda
+          git rev-parse HEAD > reviewed-commit.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: chat-navigation-source
-          path: chat-review/
+          name: chat-navigation-reviewed
+          path: |
+            index.html
+            reviewed-commit.txt
           retention-days: 3
