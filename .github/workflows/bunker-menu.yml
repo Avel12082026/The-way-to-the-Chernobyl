@@ -1,0 +1,57 @@
+name: Validate Telegram bunker menu
+
+on:
+  push:
+    branches: [ui/bunker-menu-20260917]
+    paths:
+      - 'ui/bunker-menu.*'
+      - 'tools/install_bunker_menu.py'
+      - 'tests/bunker_menu.browser.py'
+      - '.github/workflows/bunker-menu.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bunker-menu-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/ui/bunker-menu-20260917'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - name: Install Telegram menu with guarded anchors
+        run: python tools/install_bunker_menu.py
+      - name: Verify JavaScript and preserved PDA chat
+        run: |
+          node --check ui/bunker-menu.js
+          node tests/chat_pda_structure.cjs
+      - name: Install browser test dependency
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test complete client without live player writes
+        run: python tests/bunker_menu.browser.py
+      - name: Attach screenshots and test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bunker-menu-validation
+          path: .validation/bunker-menu/
+          retention-days: 7
+      - name: Commit validated client to feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Install validated interactive Telegram bunker main menu"
+            git push origin HEAD:ui/bunker-menu-20260917
+          fi
