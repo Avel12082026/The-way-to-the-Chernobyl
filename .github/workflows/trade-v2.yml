@@ -1,0 +1,81 @@
+name: Validate trade v2 and trader hubs
+
+on:
+  push:
+    branches: [ui/shared-trade-20260918]
+    paths:
+      - 'ui/trade-menu.*'
+      - 'ui/trader-hubs.*'
+      - 'ui/zhuchara-portrait.webp.b64'
+      - 'tools/apply_trade_v2.py'
+      - 'tests/trade_v2*'
+      - '.github/workflows/trade-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trade-v2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/ui/shared-trade-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Apply requested trade corrections
+        run: |
+          python tools/apply_trade_v2.py
+          sha256sum index.html ui/trade-menu.js ui/trade-menu.css > /tmp/trade-v2.sha256
+          python tools/apply_trade_v2.py
+          sha256sum --check /tmp/trade-v2.sha256
+
+      - name: Static safety and requirement checks
+        run: |
+          node --check ui/trade-menu.js
+          node --check ui/trader-hubs.js
+          node --check ui/bunker-menu.js
+          node tests/trade_v2_requirements.cjs
+          node tests/chat_pda_structure.cjs
+          python -m py_compile tools/apply_trade_v2.py tests/trade_v2.browser.py
+
+      - name: Install Chromium test dependency
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+
+      - name: Test mobile trade scrolling and trader hubs
+        run: python tests/trade_v2.browser.py
+
+      - name: Attach screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-v2-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: |
+            .validation/trade-v2/
+            ui/trade-menu.js
+            ui/trade-menu.css
+            ui/trader-hubs.js
+            ui/trader-hubs.css
+            ui/zhuchara-portrait.webp.b64
+            index.html
+
+      - name: Commit validated client to feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html ui/trade-menu.js ui/trade-menu.css
+          if ! git diff --cached --quiet; then
+            git commit -m "Install validated trade scrolling and trader portrait fixes"
+            git push origin HEAD:ui/shared-trade-20260918
+          fi
