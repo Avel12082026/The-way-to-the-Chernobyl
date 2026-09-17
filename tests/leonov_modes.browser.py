@@ -65,9 +65,12 @@ async def main():
         await page.set_content(html,wait_until='domcontentloaded',timeout=5000)
         await page.wait_for_function("window.BunkerMenu?.version === '1.2.0' && document.getElementById('coins').textContent === '6891'")
         names = await page.evaluate("artifacts.filter(a=>!a.isNamedArtifact && !a.gen).slice(0,2).map(a=>a.name)")
+        assert len(names) == 2
         a,b=names
+        named = await page.evaluate("artifacts.find(a=>a.isNamedArtifact)?.name || null")
+        assert named, 'Named/admin artifact definition was not found'
         state.update(await page.evaluate('JSON.parse(JSON.stringify(player))'))
-        state['inventory'].update({a:1,b:2})
+        state['inventory'].update({a:1,b:2,named:1})
         await page.evaluate('(inv)=>{player.inventory=inv;updateUI()}',state['inventory'])
         breed_calls=lambda: [c for c in calls if c['path'].endswith('/artifacts/breed')]
         async def enter(mode):
@@ -98,9 +101,11 @@ async def main():
                 if cancel: await page.keyboard.press('Escape')
                 await page.mouse.up()
             await page.wait_for_timeout(550)
-        # Hub navigation and no automatic breeding or trade request.
+        # Hub has exactly two primary choices and performs no automatic transaction.
         await page.locator('#bunkerLeonov').click()
         assert await page.locator('#leonovHubScreen').is_visible()
+        assert await page.locator('#leonovHubScreen .leonov-actions [data-leonov-action]').count()==2
+        assert await page.locator('#leonovHubScreen [data-leonov-action=talk]').count()==0
         await page.locator('[data-leonov-action=selection]').click()
         assert await page.locator('#leonovSelectionPanel').is_visible()
         assert not await page.locator('#leonovTradePanel').is_visible()
@@ -109,13 +114,24 @@ async def main():
         assert len(breed_calls())==0
         assert not await page.locator('#gameAlertModal').is_visible()
         assert await page.locator('#leonovSelectionPanel .zr-breed-actions button').count()==1
-        assert await page.locator('#leonovArtifactInventory [data-leonov-item]').count()==2
+        assert not await page.locator('#leonovBreedButton').is_visible()
+        assert await page.locator('#leonovArtifactInventory [data-leonov-item]').count()==3
+        first_item=page.locator('#leonovArtifactInventory [data-leonov-item]').first
+        assert await first_item.get_attribute('data-leonov-item')==named
+        assert 'именной артефакт' in (await first_item.get_attribute('aria-label'))
+        await first_item.click()
+        assert await page.evaluate('breedSlot1')==named
+        assert not await page.locator('#leonovBreedButton').is_visible()
+        await clean_slots()
         # Pointer drag retains the original two parents and never spends inventory locally.
         snapshot=await page.evaluate('JSON.stringify(player.inventory)')
         await drag(a,1)
         assert await page.evaluate('breedSlot1')==a
+        assert not await page.locator('#leonovBreedButton').is_visible()
         await drag(b,2,touch=True)
         assert await page.evaluate('breedSlot2')==b
+        assert await page.locator('#leonovBreedButton').is_visible()
+        assert not await page.locator('#leonovBreedButton').is_disabled()
         assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
         await page.screenshot(path=str(OUT/'selection-390x844.png'))
         # Cancel and single-copy duplicate rejection.
@@ -125,6 +141,7 @@ async def main():
         assert await page.evaluate('breedSlot2') is None
         assert 'два экземпляра' in await page.locator('#leonovDragHint').inner_text()
         await drag(b,2)
+        assert await page.locator('#leonovBreedButton').is_visible()
         # Server rejection and repeat click guard. Slots/inventory/credits survive rejection.
         await page.evaluate('doBreedArtifacts();doBreedArtifacts()')
         await page.wait_for_timeout(350)
@@ -150,7 +167,7 @@ async def main():
         assert await page.evaluate('player.breedCredits')==6
         assert await page.evaluate('player.inventory["Тестовая селекция"]')==1
         assert not await page.locator('#gameAlertModal').is_visible()
-        # Back reaches approved Leonov hub; trade cannot expose or invoke selection.
+        # Back reaches the Leonov hub; trade cannot expose or invoke selection.
         await page.locator('#scientistsScreen .back-btn:visible').click()
         assert await page.locator('#leonovHubScreen').is_visible()
         await page.locator('[data-leonov-action=trade]').click()
@@ -172,18 +189,25 @@ async def main():
         # Empty inventory refresh does not retain unavailable parents.
         await page.evaluate("player.inventory={};renderScientists()")
         assert await page.locator('#leonovArtifactInventory .leonov-empty').count()==1
-        await page.evaluate('(inv)=>{player.inventory=inv;renderScientists()}',state['inventory'])
+        viewport_inventory=dict(state['inventory'])
+        viewport_inventory.update({a:1,b:2,named:1})
+        await page.evaluate('(inv)=>{player.inventory=inv;renderScientists()}',viewport_inventory)
         for width,height in [(320,568),(360,800),(390,844),(412,915),(844,390)]:
             await page.set_viewport_size({'width':width,'height':height})
-            for mode in ('selection','trade'):
-                await enter(mode)
+            for screen_mode in ('selection','trade'):
+                await enter(screen_mode)
                 assert not await page.evaluate('document.documentElement.scrollWidth>innerWidth')
                 assert not await page.locator('#scientistsScreen').evaluate('(e)=>e.scrollWidth>e.clientWidth+1')
-                if mode=='selection':
+                if screen_mode=='selection':
+                    await clean_slots()
+                    assert not await page.locator('#leonovBreedButton').is_visible()
+                    await page.evaluate('([x,y])=>{breedSlot1=x;breedSlot2=y;renderScientists()}',[a,b])
+                    assert await page.locator('#leonovBreedButton').is_visible()
                     button=await page.locator('#leonovBreedButton').bounding_box()
                     panel=await page.locator('.zr-breed-actions').bounding_box()
-                    assert abs(button['width']-panel['width'])<2
-                await page.screenshot(path=str(OUT/f'{mode}-{width}x{height}.png'))
+                    assert button and panel and abs(button['width']-panel['width'])<2
+                    await clean_slots()
+                await page.screenshot(path=str(OUT/f'{screen_mode}-{width}x{height}.png'))
         await page.evaluate("openScreen('scientists')")
         assert await page.locator('#leonovHubScreen').is_visible()
         await page.locator('[data-leonov-action=back]').click()
@@ -194,7 +218,7 @@ async def main():
             assert await page.locator('#'+target+'Screen').is_visible()
         assert not errors,errors
         result={'status':'passed','live_player_writes':0,'page_errors':errors,'mock_breed_requests':len(breed_calls()),'viewports':5,
-                'checks':['exclusive modes','no automatic transaction','original slots and result','mouse drag','touch hold/drag','touch cancellation','single-copy duplicate rejection','no local spending','double-submit guard','server rejection','network failure recovery','server success and result','buy/sell views','back to hub','warehouse entry','other screen navigation','full-width selection action']}
+                'checks':['exactly two Leonov primary choices','named/admin artifact first and selectable','exclusive modes','selection action hidden until two artifacts','no automatic transaction','original slots and result','mouse drag','touch hold/drag','touch cancellation','single-copy duplicate rejection','no local spending','double-submit guard','server rejection','network failure recovery','server success and result','buy/sell views','back to hub','warehouse entry','other screen navigation','full-width selection action']}
         (OUT/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
         print(json.dumps(result,ensure_ascii=False));await browser.close()
 asyncio.run(main())
