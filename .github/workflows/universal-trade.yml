@@ -1,0 +1,63 @@
+name: Validate universal NPC trade
+
+on:
+  push:
+    branches: [ui/universal-trade-20260918]
+    paths:
+      - 'ui/universal-trade.*'
+      - 'tools/install_universal_trade.py'
+      - 'tests/universal_trade.browser.py'
+      - '.github/workflows/universal-trade.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: universal-trade-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/ui/universal-trade-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - name: Install shared trade with guarded anchors and check idempotence
+        run: |
+          python tools/install_universal_trade.py
+          sha256sum index.html > /tmp/trade-index.sha256
+          python tools/install_universal_trade.py
+          sha256sum --check /tmp/trade-index.sha256
+      - name: Check JavaScript and preserve PDA and selection rules
+        run: |
+          node --check ui/bunker-menu.js
+          node --check ui/universal-trade.js
+          node tests/chat_pda_structure.cjs
+          node tests/leonov_requirements.test.cjs
+      - name: Install isolated browser test
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test actual client with mocked API only
+        run: python tests/universal_trade.browser.py
+      - name: Attach test report and viewport screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-trade-validation
+          path: .validation/universal-trade/
+          retention-days: 7
+      - name: Commit the validated loader to the feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Install validated shared NPC trade in Telegram client"
+            git push origin HEAD:ui/universal-trade-20260918
+          fi
