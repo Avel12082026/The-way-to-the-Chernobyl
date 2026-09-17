@@ -1,4 +1,4 @@
-"""Refresh cache-busting hashes for HQ trader portraits and trade UI."""
+"""Refresh or install cache-busted HQ trader portrait/trade assets idempotently."""
 from pathlib import Path
 import hashlib, re
 
@@ -19,16 +19,27 @@ for kind,rel in assets:
         raise SystemExit('Missing asset: '+rel)
     v=hashlib.sha256(f.read_bytes()).hexdigest()[:12]
     if kind=='css':
-        pattern=rf'<link\\b[^>]*href="{re.escape(rel)}(?:\\?[^"]*)?"[^>]*>'
+        pattern=rf'<link\b[^>]*href=["\']{re.escape(rel)}(?:\?[^"\']*)?["\'][^>]*>'
         tag=f'<link rel="stylesheet" href="{rel}?v={v}">'
+        anchor='</head>'
     else:
-        pattern=rf'<script\\b[^>]*src="{re.escape(rel)}(?:\\?[^"]*)?"[^>]*>\\s*</script>'
+        pattern=rf'<script\b[^>]*src=["\']{re.escape(rel)}(?:\?[^"\']*)?["\'][^>]*>\s*</script>'
         tag=f'<script src="{rel}?v={v}"></script>'
-    s,n=re.subn(pattern,lambda _:tag,s)
-    if n!=1:
-        raise SystemExit(f'Expected one {rel} tag, got {n}')
+        anchor='</body>'
+    if re.search(pattern,s):
+        s,n=re.subn(pattern,lambda _:tag,s,count=1)
+        if n!=1:
+            raise SystemExit(f'Could not refresh {rel}')
+    else:
+        if s.count(anchor)!=1:
+            raise SystemExit(f'Unexpected HTML boundary while installing {rel}')
+        s=s.replace(anchor,tag+'\n'+anchor,1)
 
+# Trade must load after bunker; trader hubs must load after trade.
+if s.index('ui/trade-menu.js') < s.index('ui/bunker-menu.js'):
+    raise SystemExit('Trade menu must load after bunker menu')
 if s.index('ui/trader-hubs.js') < s.index('ui/trade-menu.js'):
     raise SystemExit('Trader hubs must load after trade menu')
+
 p.write_text(s,encoding='utf-8')
 print('HQ trader portrait cache-busting installed')
