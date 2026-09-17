@@ -5,7 +5,7 @@
 
   const nativeOpenScreen = window.openScreen;
   // Full 864x1536 WebP portraits, split only to keep repository text uploads reliable.
-  const portraitParts = Object.freeze({zhuchara: 3, leonov: 4, diesel: 4});
+  const portraitParts = Object.freeze({zhuchara: 2, leonov: 3, diesel: 3});
   const portraitPromises = new Map();
   const portraitLocks = new WeakMap();
   let zhucharaHub = null;
@@ -21,13 +21,12 @@
     if (!total) return Promise.reject(new Error('Unknown portrait: ' + key));
     const promise = Promise.all(Array.from({length: total}, (_, i) => {
       const part = String(i).padStart(2, '0');
-      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd2`, {cache: 'force-cache'}).then(r => {
+      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd3`, {cache: 'force-cache'}).then(r => {
         if (!r.ok) throw new Error(`${key} portrait chunk ${part}: HTTP ${r.status}`);
         return r.text();
       });
     })).then(parts => 'data:image/webp;base64,' + parts.join('').replace(/\s+/g, ''))
       .catch(err => {
-        // A temporary network/cache failure must not permanently poison this portrait.
         portraitPromises.delete(key);
         throw err;
       });
@@ -51,7 +50,7 @@
       observer.observe(img, {attributes: true, attributeFilter: ['src']});
       img.decoding = 'async';
       img.setAttribute('src', src);
-      img.dataset.portraitQuality = 'hd-864x1536-q90';
+      img.dataset.portraitQuality = 'hd-864x1536-q85';
       return img.decode?.().catch(() => {})?.then(() => true) ?? true;
     }).catch(err => {
       portraitLocks.delete(img);
@@ -68,7 +67,6 @@
     if (!hub) return false;
     const nav = hub.querySelector('.leonov-actions');
     if (!nav) return false;
-
     hub.querySelector('.leonov-back')?.remove();
     if (!nav.querySelector('[data-leonov-action="talk"]')) {
       const talk = document.createElement('button');
@@ -132,9 +130,7 @@
     if (!hub) return;
     hub.hidden = true;
     hub.classList.remove('active');
-    if (![zhucharaHub, dieselHub].some(item => item && !item.hidden)) {
-      document.body.classList.remove('trader-portrait-visible');
-    }
+    if (![zhucharaHub, dieselHub].some(item => item && !item.hidden)) document.body.classList.remove('trader-portrait-visible');
   }
 
   function showHub(hub, key) {
@@ -148,14 +144,9 @@
 
   function ensureZhucharaHub() {
     if (zhucharaHub) return zhucharaHub;
-    zhucharaHub = createPortraitHub({
-      id: 'zhucharaHubScreen', label: 'Торговец Жучара', key: 'zhuchara',
-      actions: [
-        {id:'trade', label:'Торговля'},
-        {id:'talk', label:'Говорить'},
-        {id:'back', label:'Назад'}
-      ]
-    });
+    zhucharaHub = createPortraitHub({id:'zhucharaHubScreen', label:'Торговец Жучара', key:'zhuchara', actions:[
+      {id:'trade', label:'Торговля'}, {id:'talk', label:'Говорить'}, {id:'back', label:'Назад'}
+    ]});
     zhucharaHub.addEventListener('click', event => {
       const button = event.target.closest('[data-trader-action]');
       if (!button) return;
@@ -169,15 +160,9 @@
 
   function ensureDieselHub() {
     if (dieselHub) return dieselHub;
-    dieselHub = createPortraitHub({
-      id: 'dieselHubScreen', label: 'Техник Дизель', key: 'diesel',
-      actions: [
-        {id:'trade', label:'Торговля'},
-        {id:'upgrade', label:'Улучшить'},
-        {id:'talk', label:'Говорить'},
-        {id:'back', label:'Назад'}
-      ]
-    });
+    dieselHub = createPortraitHub({id:'dieselHubScreen', label:'Техник Дизель', key:'diesel', actions:[
+      {id:'trade', label:'Торговля'}, {id:'upgrade', label:'Улучшить'}, {id:'talk', label:'Говорить'}, {id:'back', label:'Назад'}
+    ]});
     dieselHub.addEventListener('click', event => {
       const button = event.target.closest('[data-trader-action]');
       if (!button) return;
@@ -212,11 +197,5 @@
     return nativeOpenScreen.apply(this, arguments);
   };
 
-  window.TraderHubs = Object.freeze({
-    version: '1.1.1',
-    openZhuchara, hideZhuchara,
-    openDiesel, hideDiesel,
-    decorateLeonov,
-    bindPortrait
-  });
+  window.TraderHubs = Object.freeze({version:'1.1.2', openZhuchara, hideZhuchara, openDiesel, hideDiesel, decorateLeonov, bindPortrait});
 })();
