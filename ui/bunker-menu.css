@@ -50,13 +50,15 @@
 #mainMenu .bunker-message { position:absolute; left:12%; bottom:12%; width:76%; z-index:4; padding:10px; border:1px solid #8e7952; background:#111d; color:#f0dbac; font:12px/1.3 Arial,sans-serif; text-align:center; }
 body.bunker-menu-visible #menuMusicPanel,body.bunker-menu-visible #menuMusicButton,body.bunker-menu-visible .admin-btn { display:none!important; }
 @media(prefers-reduced-motion:reduce){ #mainMenu * { transition:none!important; } }
-/* Leonov first-person counter screen */
+
+/* Leonov first-person counter screen. Only Selection and Trade are primary actions. */
 #leonovHubScreen.leonov-hub-screen{display:none;position:fixed;inset:0;z-index:1600;background:#050605;overflow:hidden;}
 #leonovHubScreen.active{display:block;}
 #leonovHubScreen .leonov-hub-artwork{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none;pointer-events:none;}
 #leonovHubScreen .leonov-actions{position:absolute;left:4%;right:4%;bottom:max(18px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:8px;z-index:2;}
-#leonovHubScreen .leonov-actions button{min-height:48px;padding:10px 8px;border:1px solid #9b7b4d;border-radius:6px;background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.97));color:#ead7a9;font:14px/1.1 'Russo One',Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;box-shadow:inset 0 0 0 1px #d0ad6522,0 2px 8px #0009;text-shadow:0 1px 2px #000;}
-#leonovHubScreen .leonov-actions button:active{transform:scale(.98);opacity:.85;}
-#leonovHubScreen .leonov-talk-bubble{position:absolute;left:6%;right:6%;bottom:140px;z-index:2;padding:12px 14px;border:1px solid #90784f;background:rgba(12,13,11,.93);color:#e8dcc0;font:14px/1.4 Arial,sans-serif;text-align:center;box-shadow:0 4px 20px #000a;}
+#leonovHubScreen .leonov-actions button,#leonovHubScreen .leonov-back{min-height:48px;padding:10px 8px;border:1px solid #9b7b4d;border-radius:6px;background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.97));color:#ead7a9;font:14px/1.1 'Russo One',Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;box-shadow:inset 0 0 0 1px #d0ad6522,0 2px 8px #0009;text-shadow:0 1px 2px #000;}
+#leonovHubScreen .leonov-actions button:active,#leonovHubScreen .leonov-back:active{transform:scale(.98);opacity:.85;}
+#leonovHubScreen .leonov-back{position:absolute;left:4%;top:max(12px,env(safe-area-inset-top));z-index:3;min-height:40px;padding:8px 12px;font-size:12px;text-transform:none;}
+#leonovHubScreen .leonov-actions button:focus-visible,#leonovHubScreen .leonov-back:focus-visible{outline:2px solid #e4c477;outline-offset:2px;}
 body.leonov-hub-visible{overflow:hidden!important;}
 body.leonov-hub-visible #menuMusicPanel,body.leonov-hub-visible #menuMusicButton,body.leonov-hub-visible .admin-btn{display:none!important;}
