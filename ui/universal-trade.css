@@ -1,0 +1,49 @@
+/* Uses the game's original metal and slot frames, not a flattened screenshot. */
+#universalTradeScreen {position:fixed;inset:8px;z-index:80;margin:0 auto!important;padding:9px!important;overflow-x:hidden;overscroll-behavior:contain;max-width:760px;height:calc(100vh - 16px);height:calc(100dvh - 16px);}
+#universalTradeScreen [hidden] {display:none!important;}
+#universalTradeScreen .ut-header {display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #645537;margin-bottom:8px;padding-bottom:8px;}
+#universalTradeScreen h3 {margin:0;font-size:clamp(14px,4vw,20px);line-height:1.2;color:#dbc38a;}
+#universalTradeScreen h4 {margin:8px 0 5px;color:#cbb985;font-size:12px;line-height:1.3;}
+#universalTradeScreen .ut-header .back-btn {width:90px!important;min-height:40px;flex-shrink:0;margin:0!important;}
+#universalTradeScreen .ut-vitals {color:#d1c5a3;font-size:11px;white-space:pre-wrap;line-height:1.7;}
+#universalTradeScreen .ut-balance {color:#e2c779;font-size:12px;font-weight:700;line-height:1.6;}
+#universalTradeScreen .ut-heading {display:flex;justify-content:space-between;align-items:center;gap:6px;}
+#universalTradeScreen .ut-heading label {font-size:10px;color:#b5aa8c;display:flex;gap:4px;align-items:center;}
+#universalTradeScreen #utSearch {width:110px!important;max-width:30vw;height:30px;min-width:0;font-size:11px;padding:5px!important;}
+#universalTradeScreen .ut-note {font-size:11px;color:#c7bb9b;line-height:1.4;margin:4px 0;}
+#universalTradeScreen .ut-note:empty {display:none;}
+#universalTradeScreen .ut-grid {display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:5px 0 9px;}
+#universalTradeScreen #utStock {max-height:370px;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;}
+#universalTradeScreen .slot {min-width:0;min-height:50px;aspect-ratio:1/1.14;position:relative;overflow:hidden;}
+#universalTradeScreen button.ut-item {display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0!important;padding:3px!important;border:4px solid transparent!important;border-image:var(--zr-slot-frame,var(--zr-button-frame)) 7 stretch!important;background:linear-gradient(125deg,#181b15,#080b09)!important;border-radius:0!important;min-width:0;min-height:50px;max-width:100%;line-height:1.05;letter-spacing:0;text-transform:none;touch-action:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none;box-shadow:none;}
+#universalTradeScreen button.ut-item::before,#universalTradeScreen button.ut-item::after {display:none!important;}
+#universalTradeScreen .ut-icon {height:65%;width:100%;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+#universalTradeScreen .ut-icon img {width:100%!important;height:100%!important;max-width:42px;max-height:45px;object-fit:contain;pointer-events:none;}
+#universalTradeScreen .ut-name {position:absolute;overflow:hidden;clip:rect(0,0,0,0);width:1px;height:1px;}
+#universalTradeScreen .ut-count {position:absolute;top:1px;right:1px;font-size:10px;font-weight:bold;color:#eee4cb!important;text-shadow:0 1px 2px #000;pointer-events:none;}
+#universalTradeScreen .ut-item small {max-width:100%;font:9px/1.1 Arial,sans-serif;overflow-wrap:anywhere;color:#d9c78f!important;text-shadow:0 1px 2px #000;pointer-events:none;}
+#universalTradeScreen .ut-not-accepted {opacity:.55;}
+#universalTradeScreen .ut-deal-bar {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;width:100%;margin:8px 0 0;}
+#universalTradeScreen .ut-deal-bar button {display:block;width:100%!important;min-width:0;min-height:49px;margin:0!important;padding:10px 6px!important;border-radius:0!important;background:linear-gradient(#34432a,#202d1c)!important;}
+#universalTradeScreen .ut-baskets {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;}
+#universalTradeScreen .ut-basket {min-width:0;padding:2px;}
+#universalTradeScreen .ut-basket h4 {text-align:center;margin:5px 0 3px;}
+#universalTradeScreen .ut-basket output {display:block;color:#d6c18b;text-align:center;font:11px/1.3 Arial,sans-serif;min-height:30px;}
+#universalTradeScreen .ut-cart-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;}
+#universalTradeScreen .ut-help {font-size:11px;line-height:1.4;color:#a99f83;margin-top:8px;}
+#universalTradeScreen .ut-status {font-size:12px;line-height:1.4;color:#e1c889;margin:8px 0;min-height:32px;}
+#universalTradeScreen .ut-tools {display:flex;gap:5px;flex-wrap:wrap;}
+#universalTradeScreen .ut-tools button {min-width:0;min-height:35px;font-size:10px;flex:1;padding:6px!important;margin:0!important;}
+#universalTradeScreen #utDeposit {display:block;width:100%;min-height:47px;font-size:12px;white-space:normal;margin:8px 0;padding:8px!important;}
+#universalTradeScreen .ut-ready {outline:1px dashed #b8a16b;outline-offset:-1px;}
+#universalTradeScreen .ut-over {outline:2px solid #e3ca86;background-color:#3a4529!important;}
+#universalTradeScreen button:focus-visible {outline:2px solid #e3ca86;outline-offset:1px;}
+.ut-ghost {position:fixed;left:0;top:0;width:56px;height:64px;z-index:9999;pointer-events:none;border:2px solid #d5be7b;background:#171c14;opacity:.92;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.ut-ghost .ut-icon img {width:45px!important;height:45px!important;object-fit:contain;}
+.ut-ghost .ut-name,.ut-ghost small {display:none;}
+.ut-ghost .ut-count {position:absolute;top:1px;right:1px;color:#f0e3bb;font-size:11px;}
+@media (orientation:landscape) {#universalTradeScreen #utStock{max-height:240px;}#universalTradeScreen .ut-grid{grid-template-columns:repeat(10,minmax(0,1fr));}}
+@media (min-width:650px) {#universalTradeScreen {max-width:760px;margin:auto;}}
+
+#universalTradeScreen .ut-image-missing .ut-name {position:static;clip:auto;width:100%;height:auto;max-height:35px;font:8px/1.15 Arial,sans-serif;color:#d8cbad!important;text-align:center;overflow:hidden;}
+#universalTradeScreen .ut-image-missing .ut-icon {display:none;}
