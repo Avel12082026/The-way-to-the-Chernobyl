@@ -16,7 +16,14 @@ def replace_once(path, before, after):
     raise SystemExit(f'{path}: expected one anchor or an already-applied replacement, found {count}: {before[:80]}')
 
 js = 'ui/trade-menu.js'
-replace_once(js, "  const MAX_SLOTS = 6;", "  const MAX_SLOTS = 6;\n  const VISIBLE_GRID_SLOTS = 21; // 7 x 3: merchant and player show the same number of visible cells")
+p = ROOT / js
+s = p.read_text(encoding='utf-8')
+visible_line = "  const VISIBLE_GRID_SLOTS = 21; // 7 x 3: merchant and player show the same number of visible cells"
+if visible_line not in s:
+    anchor = "  const MAX_SLOTS = 6;"
+    if s.count(anchor) != 1: raise SystemExit('trade-menu.js: MAX_SLOTS anchor mismatch')
+    p.write_text(s.replace(anchor, anchor + '\n' + visible_line, 1), encoding='utf-8')
+
 replace_once(js,
 "        ...consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'})),\n        ...detectors.filter(d => d.tier <= getDetectorUnlockTier(player.level)).map(d => ({...d, category: 'detector'})),\n        ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))",
 "        ...consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'})),\n        ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))")
@@ -40,13 +47,11 @@ if marker not in css_text:
     css_text += '''\n\n/* TRADE_V2_SCROLL_GRIDS */\n/* Merchant and player inventories expose the same 7x3 viewport, then scroll. */\n#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:min(24dvh,210px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 0 3px;align-content:start}\n/* Both staging lists remain compact and independently scroll when more positions are queued. */\n#tradeMenu .trade-staging{max-height:min(18dvh,150px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;align-content:start}\n@media(min-width:600px){#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:246px}#tradeMenu .trade-staging{max-height:166px}}\n'''
     css.write_text(css_text, encoding='utf-8')
 
-# Install generic portrait hubs after the trade module so Zhuchara can intercept openScreen('shop').
 index = ROOT / 'index.html'
 s = index.read_text(encoding='utf-8')
 for suffix in ('css','js'):
     asset = ROOT / 'ui' / f'trader-hubs.{suffix}'
-    if not asset.is_file():
-        raise SystemExit('Missing ' + str(asset))
+    if not asset.is_file(): raise SystemExit('Missing ' + str(asset))
     version = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
     if suffix == 'css':
         tag = f'<link rel="stylesheet" href="ui/trader-hubs.css?v={version}">'
@@ -63,7 +68,6 @@ for suffix in ('css','js'):
         if s.count(anchor) != 1: raise SystemExit('Unexpected HTML boundary')
         s = s.replace(anchor, tag + '\n' + anchor, 1)
 
-# Refresh trade asset hashes after the modifications above.
 for suffix in ('css','js'):
     asset = ROOT / 'ui' / f'trade-menu.{suffix}'
     version = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
