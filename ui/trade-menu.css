@@ -1,0 +1,51 @@
+/* Match the existing inventory's metal cells; never use a static screenshot as UI. */
+#tradeMenu[hidden],#tradeMenu [hidden]{display:none!important}
+#tradeMenu{position:fixed;inset:0;z-index:999;overflow:auto;overscroll-behavior:contain;box-sizing:border-box;background:#070a08;color:#d5c7a2;padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));font:12px/1.3 'Segoe UI',Arial,sans-serif;scrollbar-width:thin}
+#tradeMenu *{box-sizing:border-box}
+#tradeMenu .trade-shell{max-width:720px;min-height:100%;margin:auto;padding:5px;border:5px solid transparent;border-image:var(--zr-frame) 10 stretch;background:linear-gradient(130deg,#0b0d0bf3,#15130feb),var(--zr-metal) center/380px}
+#tradeMenu h2,#tradeMenu h3,#tradeMenu p{margin:0}
+#tradeMenu h3{color:#b4a67e;font:600 11px/1.4 'Segoe UI',Arial,sans-serif;margin:6px 0 4px;text-transform:uppercase;letter-spacing:.3px}
+#tradeMenu .trade-header{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #49422d;padding-bottom:5px}
+#tradeMenu h2{font:700 clamp(12px,3.5vw,18px)/1.2 'Russo One',Arial,sans-serif;color:#d1ba77;overflow-wrap:anywhere;flex:1}
+#tradeMenu button{position:relative;margin:0!important;min-width:0;min-height:44px;padding:6px!important;border:3px solid transparent!important;border-image:var(--zr-button-frame) 7 stretch!important;border-radius:0!important;background:linear-gradient(#24371ff2,#162118f5),var(--zr-metal) center/200px!important;color:#dfcf9e!important;font:700 14px/1.15 'Russo One',Arial,sans-serif!important;letter-spacing:0!important;text-transform:none!important;text-shadow:0 1px 2px #000;box-shadow:inset 0 0 6px #0008!important;touch-action:manipulation;transform:none!important}
+#tradeMenu button::before,#tradeMenu button::after{display:none!important;content:none!important}
+#tradeMenu button:disabled{opacity:.47!important;cursor:default}
+#tradeMenu button:focus-visible,#tradeMenu input:focus-visible{outline:2px solid #dbc488;outline-offset:-2px}
+#tradeMenu .trade-header>button{width:82px;flex:0 0 82px;background:linear-gradient(#48251eee,#27130fed)!important}
+#tradeMenu .trade-vitals{display:flex;flex-wrap:wrap;gap:5px 12px;padding:7px 0 4px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+#tradeHealth{color:#e25c59}#tradeHunger{color:#d1a44f}#tradeThirst{color:#58acc9}#tradeBalance{color:#dbbd71;margin-left:auto}
+#tradeMenu .trade-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;min-width:0}
+#tradeMenu .trade-stock-scroll{max-height:min(36dvh,320px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 0 3px}
+#tradeMenu .trade-cell,#tradeMenu .trade-empty{aspect-ratio:1;min-height:0!important;min-width:0!important;overflow:hidden;position:relative;border:3px solid transparent!important;border-image:var(--zr-button-frame) 7 stretch!important;background:linear-gradient(#0d130bc9,#080c0be0),var(--zr-metal) center/200px!important}
+#tradeMenu .trade-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 2px 10px!important;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;font-size:12px!important}
+#tradeMenu .trade-cell img{width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain;pointer-events:none}
+#tradeMenu .trade-cell>span:not(.trade-cell-detail){font-size:18px!important}
+#tradeMenu .trade-cell-detail{position:absolute;bottom:0;left:0;right:0;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:right;padding-right:1px;background:#090b09d9;color:#e2c67f;font:700 clamp(8px,2.3vw,11px)/1.2 Arial,sans-serif;text-shadow:0 1px 2px #000}
+#tradeMenu .trade-not-accepted{opacity:.55}
+#tradeMenu .trade-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;margin:6px 0 0;width:100%}
+#tradeMenu .trade-actions>button{width:100%;min-height:46px;font-size:18px!important;text-transform:uppercase!important}
+#tradeMenu .trade-deals{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}
+#tradeMenu .trade-deals>section{min-width:0}
+#tradeMenu .trade-staging{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:2px;border:1px solid #555039}
+#tradeMenu .trade-deals p{font-size:11px;min-height:18px;margin-top:3px;overflow-wrap:anywhere}
+#tradeEditor{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid #4b4932;margin-top:4px;background:#11150fed}
+#tradeItemName{flex:1 0 100%;font-size:12px;overflow-wrap:anywhere}
+#tradeEditor label{display:flex;align-items:center;gap:5px;font-size:11px;flex:1}
+#tradeQuantity{width:62px!important;height:40px;margin:0;padding:3px;color:#e5dbbe;background:#111;border:1px solid #877341;font-size:16px}
+#tradeEditor button{min-height:40px;font-size:11px!important;padding:5px!important}
+#tradeMenu #tradeStatus{font-size:11px;line-height:1.35;min-height:34px;padding:5px 0;color:#aea58d}
+#tradeMenu #tradeWarehouse,#tradeMenu #tradeResync{width:100%;margin-top:8px!important}
+#tradeMenu #tradeWarehouse{font-size:12px!important;background:linear-gradient(#25251eeb,#161811ed),var(--zr-metal) center/240px!important}
+#tradeMenu #tradeWarehouseNote,#tradeMenu #tradeStockNote{font-size:11px;color:#aaa086;margin:5px 0}
+#tradeMenu .trade-drop-ready{outline:1px dashed #9eaf72;outline-offset:-2px}
+#tradeMenu .trade-drop-over{outline:2px solid #e2cb83;outline-offset:-2px;background-color:#3a4328!important}
+.trade-drag-ghost{position:fixed!important;z-index:1003!important;left:0;top:0;pointer-events:none!important;width:58px!important;height:64px!important;margin:0!important;padding:5px!important;background:#161c13ee!important;border:1px solid #c2b783!important;display:flex;flex-direction:column;align-items:center;font:10px/1.1 Arial,sans-serif!important;color:#e4d7ac!important}
+.trade-drag-ghost img{max-width:45px;max-height:42px;object-fit:contain}
+.trade-drag-ghost::before,.trade-drag-ghost::after{display:none!important}
+body.trade-menu-visible{overflow:hidden!important}
+body.trade-menu-visible #menuMusicPanel,body.trade-menu-visible #menuMusicButton,body.trade-menu-visible .admin-btn{display:none!important}
+@media(min-width:600px){#tradeMenu .trade-stock-scroll{max-height:40dvh}#tradeMenu .trade-cell{max-height:82px}#tradeMenu .trade-staging .trade-cell,#tradeMenu .trade-staging .trade-empty{max-height:80px}}
+@media(prefers-reduced-motion:reduce){#tradeMenu *, .trade-drag-ghost{transition:none!important;animation:none!important}}
+
+#tradeMenu button.trade-cell>span.trade-cell-name{font:9px/1.05 Arial,sans-serif!important;overflow:hidden;overflow-wrap:anywhere;max-height:100%;text-align:center;color:#bab49e}
+#tradeMenu .trade-cell img{min-width:0!important;margin:0!important;border:0!important;background:transparent!important}
