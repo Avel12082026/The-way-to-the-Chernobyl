@@ -5,7 +5,7 @@
 
   const nativeOpenScreen = window.openScreen;
   // Full 864x1536 WebP portraits, split only to keep repository text uploads reliable.
-  const portraitParts = Object.freeze({zhuchara: 2, leonov: 3, diesel: 3});
+  const portraitParts = Object.freeze({zhuchara: 6, leonov: 7, diesel: 7});
   const portraitPromises = new Map();
   const portraitLocks = new WeakMap();
   let zhucharaHub = null;
@@ -21,7 +21,7 @@
     if (!total) return Promise.reject(new Error('Unknown portrait: ' + key));
     const promise = Promise.all(Array.from({length: total}, (_, i) => {
       const part = String(i).padStart(2, '0');
-      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd3`, {cache: 'force-cache'}).then(r => {
+      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd4`, {cache: 'force-cache'}).then(r => {
         if (!r.ok) throw new Error(`${key} portrait chunk ${part}: HTTP ${r.status}`);
         return r.text();
       });
@@ -50,7 +50,7 @@
       observer.observe(img, {attributes: true, attributeFilter: ['src']});
       img.decoding = 'async';
       img.setAttribute('src', src);
-      img.dataset.portraitQuality = 'hd-864x1536-q85';
+      img.dataset.portraitQuality = 'hd-864x1536-q80';
       return img.decode?.().catch(() => {})?.then(() => true) ?? true;
     }).catch(err => {
       portraitLocks.delete(img);
@@ -197,5 +197,5 @@
     return nativeOpenScreen.apply(this, arguments);
   };
 
-  window.TraderHubs = Object.freeze({version:'1.1.2', openZhuchara, hideZhuchara, openDiesel, hideDiesel, decorateLeonov, bindPortrait});
+  window.TraderHubs = Object.freeze({version:'1.1.3', openZhuchara, hideZhuchara, openDiesel, hideDiesel, decorateLeonov, bindPortrait});
 })();
