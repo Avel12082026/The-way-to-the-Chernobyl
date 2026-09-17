@@ -7,13 +7,13 @@ ROOT = Path(__file__).resolve().parents[1]
 def replace_once(path, before, after):
     p = ROOT / path
     s = p.read_text(encoding='utf-8')
-    if after in s:
-        return False
     count = s.count(before)
-    if count != 1:
-        raise SystemExit(f'{path}: expected one anchor, found {count}: {before[:80]}')
-    p.write_text(s.replace(before, after, 1), encoding='utf-8')
-    return True
+    if count == 1:
+        p.write_text(s.replace(before, after, 1), encoding='utf-8')
+        return True
+    if count == 0 and after in s:
+        return False
+    raise SystemExit(f'{path}: expected one anchor or an already-applied replacement, found {count}: {before[:80]}')
 
 js = 'ui/trade-menu.js'
 replace_once(js, "  const MAX_SLOTS = 6;", "  const MAX_SLOTS = 6;\n  const VISIBLE_GRID_SLOTS = 21; // 7 x 3: merchant and player show the same number of visible cells")
