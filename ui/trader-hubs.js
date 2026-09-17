@@ -4,7 +4,8 @@
   if (window.TraderHubs || !window.TradeMenu || typeof window.openScreen !== 'function') return;
 
   const nativeOpenScreen = window.openScreen;
-  const portraitParts = Object.freeze({zhuchara: 9, leonov: 12, diesel: 10});
+  // Full 864x1536 WebP portraits, split only to keep repository text uploads reliable.
+  const portraitParts = Object.freeze({zhuchara: 3, leonov: 4, diesel: 4});
   const portraitPromises = new Map();
   const portraitLocks = new WeakMap();
   let zhucharaHub = null;
@@ -20,11 +21,16 @@
     if (!total) return Promise.reject(new Error('Unknown portrait: ' + key));
     const promise = Promise.all(Array.from({length: total}, (_, i) => {
       const part = String(i).padStart(2, '0');
-      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd1`, {cache: 'force-cache'}).then(r => {
+      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd2`, {cache: 'force-cache'}).then(r => {
         if (!r.ok) throw new Error(`${key} portrait chunk ${part}: HTTP ${r.status}`);
         return r.text();
       });
-    })).then(parts => 'data:image/webp;base64,' + parts.join('').replace(/\s+/g, ''));
+    })).then(parts => 'data:image/webp;base64,' + parts.join('').replace(/\s+/g, ''))
+      .catch(err => {
+        // A temporary network/cache failure must not permanently poison this portrait.
+        portraitPromises.delete(key);
+        throw err;
+      });
     portraitPromises.set(key, promise);
     return promise;
   }
@@ -45,9 +51,10 @@
       observer.observe(img, {attributes: true, attributeFilter: ['src']});
       img.decoding = 'async';
       img.setAttribute('src', src);
-      img.dataset.portraitQuality = 'hd-864x1536';
+      img.dataset.portraitQuality = 'hd-864x1536-q90';
       return img.decode?.().catch(() => {})?.then(() => true) ?? true;
     }).catch(err => {
+      portraitLocks.delete(img);
       console.error(`[${key} portrait]`, err);
       img.alt = 'Изображение торговца не загрузилось';
       return false;
@@ -206,7 +213,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version: '1.1.0',
+    version: '1.1.1',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov,
