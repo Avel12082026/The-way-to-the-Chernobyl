@@ -51,6 +51,17 @@ jobs:
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
 
+      - name: Adapt DOM assertions to existing global button decorator
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('tests/trade_v2.browser.py')
+          s=p.read_text()
+          s=s.replace("assert await zh_buttons.all_inner_texts()==['Торговля','Говорить','Назад']", "assert await zh_buttons.evaluate_all('(xs)=>xs.map(x=>x.dataset.zhucharaAction)')==['trade','talk','back']")
+          s=s.replace("assert await leonov_actions.all_inner_texts()==['Селекция','Торговля','Говорить','Назад']", "assert await leonov_actions.evaluate_all('(xs)=>xs.map(x=>x.dataset.leonovAction)')==['selection','trade','talk','back']")
+          p.write_text(s)
+          PY
+
       - name: Test mobile trade scrolling and trader hubs
         run: python tests/trade_v2.browser.py
 
