@@ -1,0 +1,71 @@
+name: Validate unified NPC trade
+
+on:
+  push:
+    branches: [ui/unified-trade-20260918]
+    paths:
+      - 'ui/trade-menu.*'
+      - 'tools/install_trade_menu.py'
+      - 'tests/trade_menu.browser.py'
+      - '.github/workflows/unified-trade.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: unified-trade-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/ui/unified-trade-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - name: Install shared trading interface with guarded anchors
+        run: |
+          python tools/install_trade_menu.py
+          sha256sum index.html > /tmp/trade-index.sha256
+          python tools/install_trade_menu.py
+          sha256sum --check /tmp/trade-index.sha256
+          node --check ui/trade-menu.js
+          node --check ui/bunker-menu.js
+          node tests/chat_pda_structure.cjs
+          python -m py_compile tools/install_trade_menu.py tests/trade_menu.browser.py
+      - name: Install browser test dependencies
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test all four NPC vendors without live player writes
+        run: python tests/trade_menu.browser.py
+      - name: Attach screenshots, report and tested client
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unified-trade-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: |
+            .validation/trade-menu/
+            ui/trade-menu.css
+            ui/trade-menu.js
+            ui/bunker-menu.css
+            ui/bunker-menu.js
+            ui/leonov-portrait.webp.b64
+            tools/install_trade_menu.py
+            tests/trade_menu.browser.py
+            index.html
+      - name: Commit validated HTML to feature branch only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Install validated shared NPC trading menu in Telegram client"
+            git push origin HEAD:ui/unified-trade-20260918
+          fi
