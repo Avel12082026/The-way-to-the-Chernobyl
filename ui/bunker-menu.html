@@ -1,0 +1,32 @@
+<!-- Interactive Telegram menu. Coordinates use the approved 941 x 1672 artwork. -->
+<div id="mainMenu" class="bunker-menu" aria-label="Главное меню — база сталкеров">
+  <div id="bunkerScene" class="bunker-scene">
+    <img id="bunkerArtwork" class="bunker-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="База сталкеров: склад и арена слева, выход в рейд впереди, Дизель, Жучара и Леонов справа" draggable="false" fetchpriority="high" />
+    <nav class="bunker-hotspots" aria-label="Разделы игры">
+      <button id="bunkerLeonov" class="bunker-hotspot" data-bunker-target="scientists" type="button" aria-label="Эколог Леонов — торговля и селекция артефактов" onclick="openScreen('scientists')" style="left:83%;top:20%;width:16.2%;height:29%"></button>
+      <button id="bunkerZhuchara" class="bunker-hotspot" data-bunker-target="shop" type="button" aria-label="Торговец Жучара" onclick="openScreen('shop')" style="left:68.7%;top:23.5%;width:13.9%;height:24.5%"></button>
+      <button id="bunkerDiesel" class="bunker-hotspot" data-bunker-target="technician" type="button" aria-label="Техник Дизель — торговля и улучшение" onclick="openScreen('technician')" style="left:56%;top:27.1%;width:12.4%;height:18.5%"></button>
+      <button id="bunkerArena" class="bunker-hotspot" data-bunker-target="arena" type="button" aria-label="Арена" onclick="openScreen('arena')" style="left:17.5%;top:27.3%;width:13.3%;height:14.2%"></button>
+      <button id="bunkerWarehouse" class="bunker-hotspot" data-bunker-target="warehouse" type="button" aria-label="Склад" onclick="openScreen('warehouse')" style="left:1.5%;top:24.8%;width:13%;height:15.6%"></button>
+      <button id="bunkerRaid" class="bunker-hotspot" data-bunker-target="raid" type="button" aria-label="В рейд" onclick="BunkerMenu.enterRaid()" style="left:33.3%;top:24.7%;width:20.7%;height:23.3%"></button>
+      <button id="bunkerInventory" class="bunker-hotspot" data-bunker-target="inventory" type="button" aria-label="Инвентарь" onclick="openScreen('inventory')" style="left:70%;top:90.4%;width:13.9%;height:7.8%"></button>
+      <button id="bunkerPda" class="bunker-hotspot" data-bunker-target="kpk" type="button" aria-label="КПК" onclick="openScreen('kpk')" style="left:84.1%;top:90.4%;width:13.7%;height:7.8%"></button>
+    </nav>
+    <div class="bunker-progress-row" aria-label="Опыт и радиация">
+      <div id="bunkerExperience" class="bunker-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="expBarFill" class="expBarFill bunker-progress-fill"></div><span id="bunkerExperienceText" class="bunker-progress-text">Опыт: 0</span></div>
+      <div id="bunkerRadiation" class="bunker-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="mainRadiationBarFill" class="radiationBarFill bunker-progress-fill"></div><span id="bunkerRadiationText" class="bunker-progress-text">Радиация: 0 / 100</span></div>
+    </div>
+    <div id="bunkerHunger" class="bunker-vital bunker-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span class="bunker-vital-text"><span id="hunger">0</span><span id="bunkerHungerMax"> / 100</span></span></div>
+    <div id="bunkerThirst" class="bunker-vital bunker-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span class="bunker-vital-text"><span id="thirst">0</span><span id="bunkerThirstMax"> / 100</span></span></div>
+    <div id="bunkerHealth" class="bunker-vital bunker-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span class="bunker-vital-text"><span id="health">0</span><span id="bunkerHealthMax"> / 100</span></span></div>
+    <section class="bunker-resources" aria-label="Ресурсы персонажа">
+      <div class="bunker-resource"><span>Байты</span><span id="coins">0</span></div>
+      <div class="bunker-resource"><span>Жетоны сталкера</span><span id="breedCreditsHeader">0</span></div>
+      <div class="bunker-resource"><span>Книги знаний</span><span id="knowledgeBooksHeader">0</span></div>
+    </section>
+    <button id="bunkerReadBook" class="bunker-read-book" type="button" onclick="BunkerMenu.readBook()" aria-label="Прочитать книгу знаний">Прочитать</button>
+    <p id="bunkerMessage" class="bunker-message" role="status" hidden></p>
+    <!-- Preserve legacy updateUI/profile targets; these do not occupy layout space. -->
+    <div hidden aria-hidden="true"><span id="level">1</span><span id="nicknameCreditsHeader">0</span><span id="zrPlayerName"></span><span id="zrPlayerFaction"></span></div>
+  </div>
+</div>
