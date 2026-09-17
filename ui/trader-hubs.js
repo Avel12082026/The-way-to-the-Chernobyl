@@ -50,12 +50,10 @@
   function loadZhucharaImage(img) {
     if (img.src) return Promise.resolve();
     if (!zhucharaImagePromise) {
-      zhucharaImagePromise = Promise.all([0,1,2,3].map(i =>
-        fetch(`ui/zhuchara-portrait-${i}.b64?v=20260918`).then(r => {
-          if (!r.ok) throw new Error('Zhuchara portrait HTTP ' + r.status);
-          return r.text();
-        })
-      )).then(parts => parts.join('').replace(/\s+/g, ''));
+      zhucharaImagePromise = fetch('ui/zhuchara-portrait.webp.b64?v=20260918').then(r => {
+        if (!r.ok) throw new Error('Zhuchara portrait HTTP ' + r.status);
+        return r.text();
+      }).then(b64 => b64.replace(/\s+/g, ''));
     }
     return zhucharaImagePromise.then(b64 => {
       img.src = 'data:image/webp;base64,' + b64;
@@ -124,7 +122,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version: '1.0.0',
+    version: '1.0.1',
     openZhuchara,
     hideZhuchara,
     decorateLeonov
