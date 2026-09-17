@@ -7,6 +7,8 @@ on:
       - 'ui/bunker-menu.*'
       - 'tools/install_bunker_menu.py'
       - 'tests/bunker_menu.browser.py'
+      - 'tests/leonov_modes.browser.py'
+      - 'tests/leonov_requirements.test.cjs'
       - '.github/workflows/bunker-menu.yml'
   workflow_dispatch:
 
@@ -33,18 +35,21 @@ jobs:
         run: |
           node --check ui/bunker-menu.js
           node tests/chat_pda_structure.cjs
+          node tests/leonov_requirements.test.cjs
       - name: Install browser test dependency
         run: |
           python -m pip install playwright==1.57.0
           python -m playwright install --with-deps chromium
-      - name: Test complete client without live player writes
-        run: python tests/bunker_menu.browser.py
+      - name: Test Leonov modes without live player writes
+        run: python tests/leonov_modes.browser.py
       - name: Attach screenshots and test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: bunker-menu-validation
-          path: .validation/bunker-menu/
+          path: |
+            .validation/bunker-menu/
+            .validation/leonov-modes/
           retention-days: 7
       - name: Commit validated client to feature branch only
         run: |
