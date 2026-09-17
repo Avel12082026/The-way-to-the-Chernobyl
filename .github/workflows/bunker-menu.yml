@@ -60,3 +60,5 @@ jobs:
             git commit -m "Install validated interactive Telegram bunker main menu"
             git push origin HEAD:ui/bunker-menu-20260917
           fi
+
+# CI trigger: validate the final gated Leonov selection flow.
