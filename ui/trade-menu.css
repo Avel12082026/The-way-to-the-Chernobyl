@@ -49,3 +49,11 @@ body.trade-menu-visible #menuMusicPanel,body.trade-menu-visible #menuMusicButton
 
 #tradeMenu button.trade-cell>span.trade-cell-name{font:9px/1.05 Arial,sans-serif!important;overflow:hidden;overflow-wrap:anywhere;max-height:100%;text-align:center;color:#bab49e}
 #tradeMenu .trade-cell img{min-width:0!important;margin:0!important;border:0!important;background:transparent!important}
+
+
+/* TRADE_V2_SCROLL_GRIDS */
+/* Merchant and player inventories expose the same 7x3 viewport, then scroll. */
+#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:min(24dvh,210px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 0 3px;align-content:start}
+/* Both staging lists remain compact and independently scroll when more positions are queued. */
+#tradeMenu .trade-staging{max-height:min(18dvh,150px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;align-content:start}
+@media(min-width:600px){#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:246px}#tradeMenu .trade-staging{max-height:166px}}

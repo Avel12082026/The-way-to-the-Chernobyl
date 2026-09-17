@@ -3,6 +3,7 @@
   'use strict';
   if (window.TradeMenu || typeof player !== 'object' || typeof buyFromServer !== 'function') return;
   const MAX_SLOTS = 6;
+  const VISIBLE_GRID_SLOTS = 21; // 7 x 3: merchant and player show the same number of visible cells
   const queues = {buy: new Map(), sell: new Map()};
   const native = {
     openScreen: window.openScreen,
@@ -31,7 +32,6 @@
       title: () => 'ЭКОЛОГ ЛЕОНОВ — ТОРГОВЛЯ',
       stock: () => [
         ...consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'})),
-        ...detectors.filter(d => d.tier <= getDetectorUnlockTier(player.level)).map(d => ({...d, category: 'detector'})),
         ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))
       ],
       price: item => getBuyPrice(item.price),
@@ -41,8 +41,9 @@
     },
     technician: {
       title: () => 'ТЕХНИК ДИЗЕЛЬ — ТОРГОВЛЯ',
-      // The current server buys equipment here; do not invent a new sell catalog.
-      stock: () => [], price: () => 0,
+      // Detectors are sold by Diesel now; use the same level gate that previously lived at Leonov.
+      stock: () => detectors.filter(d => d.tier <= getDetectorUnlockTier(player.level)).map(d => ({...d, category: 'detector'})),
+      price: item => getBuyPrice(item.price),
       accepts: name => !!getEquipSlotType(name),
       offer: name => ({coins: Math.round(getSellPrice(name) * (getEquipSlotType(name) === 'detector' ? 1.10 : 1.02)), tokens: 0})
     },
@@ -137,10 +138,10 @@
       stockSignature = nextStock;
       const grid = el('tradeStock'); grid.replaceChildren();
       for (const [name, item] of goods) grid.append(cell(name, 'stock', money(config.price(item))));
-      fillEmpty(grid, 35, 7);
+      fillEmpty(grid, VISIBLE_GRID_SLOTS, 7);
     }
     el('tradeStockNote').hidden = goods.size > 0;
-    el('tradeStockNote').textContent = 'Дизель выкупает снаряжение. Товаров для покупки у него пока нет.';
+    el('tradeStockNote').textContent = 'У этого торговца сейчас нет доступных товаров.';
     const nextBag = JSON.stringify([vendor, ownedNames().map(name => [name, count(name), config.accepts(name)])]);
     if (nextBag !== bagSignature) {
       bagSignature = nextBag;
@@ -150,7 +151,7 @@
         if (!config.accepts(name)) { button.classList.add('trade-not-accepted'); button.title += ' · Торговец не принимает'; }
         grid.append(button);
       }
-      fillEmpty(grid, 14, 7);
+      fillEmpty(grid, VISIBLE_GRID_SLOTS, 7);
     }
     for (const side of ['buy', 'sell']) {
       const grid = el(side === 'buy' ? 'tradeBuySlots' : 'tradeSellSlots');
@@ -292,6 +293,7 @@
     if (busy) return;
     const id = vendor; hide();
     if (id === 'leonov' && window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov();
+    else if (id === 'zhuchara' && window.TraderHubs?.openZhuchara) window.TraderHubs.openZhuchara();
     else if (id === 'friendly') await native.closeFriendlyTrade();
     else if (id === 'technician') { technicianTab = 'upgrade'; native.openScreen('technician'); }
     else native.openScreen('main');
@@ -418,5 +420,5 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.0.0', open, refresh: render});
+  window.TradeMenu = Object.freeze({version: '1.1.0', open, refresh: render});
 })();
