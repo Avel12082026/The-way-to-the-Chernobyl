@@ -1,0 +1,47 @@
+/* Shared NPC trading workspace: trader stock -> staging -> player loot -> warehouse. */
+#sharedTradeScreen{display:none;position:fixed;inset:0;z-index:1550;overflow-y:auto;overflow-x:hidden;background:radial-gradient(circle at 50% 0,#171812 0,#090a08 43%,#050605 100%);padding:calc(env(safe-area-inset-top) + 10px) 10px calc(env(safe-area-inset-bottom) + 18px);box-sizing:border-box;color:#ddd2b7;overscroll-behavior:contain;}
+#sharedTradeScreen.active{display:block;}
+#sharedTradeScreen *{box-sizing:border-box;}
+#sharedTradeScreen .trade-shell{width:min(100%,680px);margin:0 auto;padding:8px;border:1px solid #5b503b;background:linear-gradient(180deg,#11120f,#080908);box-shadow:inset 0 0 0 2px #211f18,0 0 18px #000;}
+#sharedTradeScreen .trade-topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 2px 10px;border-bottom:1px solid #3b372a;}
+#sharedTradeScreen .trade-title{margin:0;min-width:0;color:#e0c88a;font:700 18px/1.15 'Russo One',Arial,sans-serif;letter-spacing:.4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#sharedTradeScreen .trade-back{flex:0 0 auto;min-width:94px;min-height:42px;margin:0;padding:7px 12px;border:1px solid #80643d;background:linear-gradient(#673028,#351714);color:#e8d8b2;font:700 13px/1 'Russo One',Arial,sans-serif;text-transform:uppercase;}
+#sharedTradeScreen .trade-balance{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 4px 6px;font:700 12px/1.2 Arial,sans-serif;color:#d6bd77;}
+#sharedTradeScreen .trade-section-label{margin:7px 0 5px;color:#ab9c78;font:700 11px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:.65px;}
+#sharedTradeScreen .trade-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+#sharedTradeScreen .trade-slot{position:relative;min-width:0;aspect-ratio:1;border:1px solid #4c4433;background:linear-gradient(145deg,#151712,#080907);box-shadow:inset 0 0 0 2px #242219;display:flex;align-items:center;justify-content:center;padding:3px;color:#d9ceb2;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;overflow:hidden;}
+#sharedTradeScreen button.trade-slot{width:100%;margin:0;min-height:0;border-radius:0;text-transform:none;letter-spacing:0;}
+#sharedTradeScreen .trade-slot img{display:block;max-width:82%;max-height:70%;object-fit:contain;pointer-events:none;}
+#sharedTradeScreen .trade-slot .trade-qty{position:absolute;right:3px;bottom:2px;padding:1px 3px;background:#050605cc;color:#f0d27a;font:700 10px/1 Arial,sans-serif;pointer-events:none;}
+#sharedTradeScreen .trade-slot .trade-price{position:absolute;left:2px;right:2px;top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e6c970;font:700 8px/1 Arial,sans-serif;text-shadow:0 1px #000;pointer-events:none;}
+#sharedTradeScreen .trade-slot.selected{outline:2px solid #c7a65d;outline-offset:-2px;background:#282716;}
+#sharedTradeScreen .trade-slot.drop-ready{outline:1px dashed #d2b568;outline-offset:-2px;}
+#sharedTradeScreen .trade-slot.drop-over{outline:2px solid #f2d47d;outline-offset:-2px;background:#33331d;}
+#sharedTradeScreen .trade-actions{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:8px 0 5px;}
+#sharedTradeScreen .trade-action{width:100%;min-height:58px;margin:0;padding:8px 4px;border:1px solid #6f6844;background:linear-gradient(180deg,#425d35,#263a25);color:#e8ddb9;font:700 18px/1 'Russo One',Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;box-shadow:inset 0 0 0 2px #202418,0 2px 4px #0008;}
+#sharedTradeScreen .trade-action:disabled{filter:grayscale(.8);opacity:.52;}
+#sharedTradeScreen .trade-staging{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px;}
+#sharedTradeScreen .trade-stage{min-width:0;padding:4px;border:1px solid #38352b;background:#0b0c09;}
+#sharedTradeScreen .trade-stage-title{text-align:center;margin:0 0 4px;color:#ac9d79;font:700 10px/1.2 Arial,sans-serif;text-transform:uppercase;}
+#sharedTradeScreen .trade-stage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;min-height:48px;}
+#sharedTradeScreen .trade-stage .trade-slot{aspect-ratio:1;}
+#sharedTradeScreen .trade-player-wrap{margin-top:5px;}
+#sharedTradeScreen .trade-warehouse-drop{width:100%;min-height:58px;margin:10px 0 7px;padding:8px;border:1px solid #67583d;background:linear-gradient(#29281f,#151713);color:#d7c69e;font:700 13px/1.25 'Russo One',Arial,sans-serif;text-transform:uppercase;letter-spacing:.25px;display:flex;align-items:center;justify-content:center;text-align:center;touch-action:none;}
+#sharedTradeScreen .trade-warehouse-drop.drop-ready{outline:1px dashed #d3ba78;outline-offset:-5px;}
+#sharedTradeScreen .trade-warehouse-drop.drop-over{outline:2px solid #e8cd83;outline-offset:-5px;background:#353525;}
+#sharedTradeScreen .trade-warehouse-grid{margin-top:4px;}
+#sharedTradeScreen .trade-status{min-height:30px;margin:7px 2px 0;color:#a99f88;font:11px/1.35 Arial,sans-serif;text-align:center;}
+.trade-drag-ghost{position:fixed;z-index:4000;width:58px;height:58px;pointer-events:none;display:flex;align-items:center;justify-content:center;border:1px solid #d3ba78;background:#11120fee;box-shadow:0 3px 10px #000;padding:3px;}
+.trade-drag-ghost img{max-width:82%;max-height:82%;object-fit:contain;}
+@media(max-width:360px){
+  #sharedTradeScreen{padding-left:5px;padding-right:5px;}
+  #sharedTradeScreen .trade-shell{padding:5px;}
+  #sharedTradeScreen .trade-grid{gap:3px;}
+  #sharedTradeScreen .trade-action{min-height:52px;font-size:15px;}
+  #sharedTradeScreen .trade-title{font-size:15px;}
+}
+@media(orientation:landscape) and (max-height:500px){
+  #sharedTradeScreen .trade-grid{grid-template-columns:repeat(10,minmax(0,1fr));}
+  #sharedTradeScreen .trade-slot{aspect-ratio:1;}
+  #sharedTradeScreen .trade-action{min-height:46px;font-size:15px;}
+}
