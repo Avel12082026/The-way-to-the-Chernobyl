@@ -1,0 +1,72 @@
+name: Validate HQ trader portraits
+
+on:
+  push:
+    branches: [ui/trader-portraits-sharp-20260918]
+    paths:
+      - 'ui/portraits/*-hq.b64'
+      - 'ui/trader-hubs.*'
+      - 'ui/trade-menu.*'
+      - 'ui/bunker-menu.js'
+      - 'tools/install_trader_portraits_hq.py'
+      - 'tests/trader_portraits_hq.browser.py'
+      - '.github/workflows/trader-portraits-hq.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trader-portraits-hq-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - name: Refresh cache-busting asset hashes
+        run: |
+          python tools/install_trader_portraits_hq.py
+          sha256sum index.html > /tmp/hq-index.sha256
+          python tools/install_trader_portraits_hq.py
+          sha256sum --check /tmp/hq-index.sha256
+      - name: Static checks
+        run: |
+          node --check ui/trader-hubs.js
+          node --check ui/trade-menu.js
+          node --check ui/bunker-menu.js
+          python -m py_compile tools/install_trader_portraits_hq.py tests/trader_portraits_hq.browser.py
+          test "$(grep -c 'width:22px' ui/trade-menu.css)" -ge 1
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Browser regression
+        run: python tests/trader_portraits_hq.browser.py
+      - name: Attach validation screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trader-portraits-hq-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: |
+            .validation/trader-portraits-hq/
+            index.html
+            ui/trader-hubs.js
+            ui/trader-hubs.css
+            ui/trade-menu.css
+      - name: Commit validated cache-busting index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Install validated HQ trader portrait assets"
+            git push origin HEAD:ui/trader-portraits-sharp-20260918
+          fi
