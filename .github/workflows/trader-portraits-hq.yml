@@ -70,3 +70,12 @@ jobs:
             git commit -m "Install validated HQ trader portrait assets"
             git push origin HEAD:ui/trader-portraits-sharp-20260918
           fi
+
+      - name: Publish validated branch to main
+        run: |
+          git fetch origin main --depth=1
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "main moved independently; refusing non-fast-forward publish"
+            exit 1
+          fi
+          git push origin HEAD:main
