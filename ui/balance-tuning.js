@@ -16,7 +16,7 @@ function rebalanceResearchPrices(){
   if(typeof armorItems==='undefined')return [];
   const normal=armorItems.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
   const changed=[];
-  for(const suit of armorItems.filter(a=>a.isResearchSuit)){
+  for(const suit of armorItems.filter(a=>a.isResearchSuit&&!a.adminOnly)){
     const same=normal.filter(a=>Number(a.tier)===Number(suit.tier));
     if(!same.length)continue;
     const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
@@ -29,7 +29,8 @@ function rebalanceResearchPrices(){
 function rebalanceArtifacts(){
   if(typeof artifacts==='undefined'||typeof anomalies==='undefined')return [];
   const records=[];
-  const byName=new Map(artifacts.map(a=>[a.name,a]));
+  // Administrator-only artifacts never participate in rarity/stat balancing.
+  const byName=new Map(artifacts.filter(a=>!a.adminOnly).map(a=>[a.name,a]));
   for(const anomaly of anomalies){
     const tier=Number(anomaly.tier)||0;
     if(tier<1||tier>8||!Array.isArray(anomaly.artifacts))continue; // named tier-9 anomalies stay untouched
@@ -75,7 +76,7 @@ if(typeof nativeInfo==='function'){
     try{
       const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
       const def=typeof artifacts!=='undefined'?artifacts.find(a=>a.name===clean):null;
-      if(def&&Number(def.tier)<=8&&Number.isFinite(Number(def.catchChancePercent))){
+      if(def&&!def.adminOnly&&Number(def.tier)<=8&&Number.isFinite(Number(def.catchChancePercent))){
         const body=document.getElementById('itemInfoModalBody');
         if(body&&!body.querySelector('.artifact-catch-chance')){
           const line=document.createElement('div');
