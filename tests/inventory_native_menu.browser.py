@@ -23,6 +23,7 @@ async def main():
         const path=new URL(typeof input==='string'?input:input.url,'http://offline.test').pathname;
         let data={};
         if(path.endsWith('/api/player/private'))data=s;
+        else if(path.endsWith('/api/named-artifacts'))data=[];
         else if(path.endsWith('/api/equipment/features'))data={artifactSlotTarget:true};
         else if(path.includes('/api/faction'))data={success:true,faction:null};
         else if(path.includes('/api/'))data={success:true};
