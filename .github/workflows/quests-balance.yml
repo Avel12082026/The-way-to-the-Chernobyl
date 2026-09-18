@@ -15,6 +15,7 @@ on:
       - 'tests/artifact_balance.test.cjs'
       - 'tests/admin_balance_exclusion.test.cjs'
       - 'tools/audit_live_balance_readonly.py'
+      - 'tools/simulate_pve_balance.cjs'
       - 'tests/install_quest_balance_patch.test.py'
       - 'tests/inventory_drag.test.cjs'
       - '.github/workflows/quests-balance.yml'
@@ -37,6 +38,7 @@ jobs:
           node --check ui/balance-tuning.js
           node --check ui/trader-hubs.js
           node --check server_patches/quest-balance.cjs
+          node --check tools/simulate_pve_balance.cjs
           python3 -m py_compile tools/install_quest_balance_server.py
           python3 -m py_compile tools/audit_live_balance_readonly.py
       - name: Unit and static checks
@@ -45,6 +47,7 @@ jobs:
           node tests/quests_client.static.cjs
           node tests/artifact_balance.test.cjs
           node tests/admin_balance_exclusion.test.cjs
+          node tools/simulate_pve_balance.cjs
           node tests/inventory_drag.test.cjs
           python3 tests/install_quest_balance_patch.test.py
           git diff --check
