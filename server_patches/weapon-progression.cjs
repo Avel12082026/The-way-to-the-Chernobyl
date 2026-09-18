@@ -2,7 +2,7 @@
 
 module.exports=function installWeaponProgression(ctx){
   const {
-    SHOP_WEAPONS,PVE_MUTANTS,PVE_NPC_TIER_HP,PVE_NPC_TIER_DMG,PVE_NPC_TIER_MULT
+    app,SHOP_WEAPONS,PVE_MUTANTS,PVE_NPC_TIER_HP,PVE_NPC_TIER_DMG,PVE_NPC_TIER_MULT
   }=ctx||{};
   if(!Array.isArray(SHOP_WEAPONS)||!Array.isArray(PVE_MUTANTS))
     throw new Error('weapon progression: missing live catalogues');
@@ -64,6 +64,13 @@ module.exports=function installWeaponProgression(ctx){
     if(!weapon||weapon.adminOnly)return null;
     const pct=Math.min(.25,level*.005);
     return Math.round((Number(weapon.dmg)||0)*(1+pct));
+  }
+
+  if(app&&typeof app.get==='function'){
+    app.get('/api/weapon-progression/version',(_req,res)=>res.json({
+      success:true,version:DATA.version,maxOrdinaryUpgrade:50,
+      adminExcluded:[...DATA.adminExcluded],finalUnlockLevel:335
+    }));
   }
 
   return Object.freeze({
