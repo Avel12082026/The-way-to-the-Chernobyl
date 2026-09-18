@@ -26,7 +26,7 @@ function ensureRaidUtilityRow(raid) {
     });
     row.append(telegram);
   }
-  backpack.textContent='🎒 Рюкзак';
+  if((backpack.textContent||'').trim()!=='🎒 Рюкзак')backpack.textContent='🎒 Рюкзак';
   return row;
 }
 
@@ -102,7 +102,12 @@ function apply(){
   applyPdaLayout();
 }
 
-const observer=new MutationObserver(()=>queueMicrotask(apply));
+let applyQueued=false;
+const observer=new MutationObserver(()=>{
+  if(applyQueued)return;
+  applyQueued=true;
+  queueMicrotask(()=>{applyQueued=false;apply();});
+});
 function init(){
   apply();
   observer.observe(document.body,{childList:true,subtree:true});
