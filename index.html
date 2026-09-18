@@ -766,8 +766,8 @@ button:active {filter:brightness(1.18);}
 <script src="images/anomaly/scene.js?v=5"></script>
 <link rel="stylesheet" href="audio/menu-music.css?v=2">
 <script defer src="audio/menu-music.js?v=2"></script>
-<link rel="stylesheet" href="inventory/drag.css?v=20260919q2">
-<script defer src="inventory/drag.js?v=20260919q2"></script>
+<link rel="stylesheet" href="inventory/drag.css?v=20260919q3">
+<script defer src="inventory/drag.js?v=20260919q3"></script>
 <script defer src="mobile/account-link.js"></script>
 
 <style id="chat-pda-navigation-20260917">
@@ -804,7 +804,7 @@ button:active {filter:brightness(1.18);}
 </style>
 <link rel="stylesheet" href="ui/bunker-menu.css?v=1">
 <link rel="stylesheet" href="ui/trade-menu.css?v=6b99d9115767">
-<link rel="stylesheet" href="ui/trader-hubs.css?v=20260919q2">
+<link rel="stylesheet" href="ui/trader-hubs.css?v=20260919q3">
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -7614,7 +7614,7 @@ function startBattle(enemy) {
     // прокачка всегда остаётся ощутимой, но никогда не обгоняет прогресс по тирам на много шагов вперёд
     const UPGRADE_MAX_BONUS_PCT = 0.25;
     function getUpgradedStat(baseStat, level, ceiling) {
-        const lvl = Math.max(0, Number(level) || 0);
+        const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Number(level) || 0));
         const base = Number(baseStat) || 0;
         const pct = Math.min(UPGRADE_MAX_BONUS_PCT, lvl * (UPGRADE_MAX_BONUS_PCT / UPGRADE_MAX_LEVEL));
         const raw = base === 0 ? Math.round(lvl) : Math.round(base * (1 + pct));
@@ -7775,7 +7775,9 @@ function startBattle(enemy) {
             const statCostDivisor = isSuit ? 9 : 2;
             const rowsHtml = rows.map(r => {
                 const statLevel = Number(upgradeData[r.key]) || 0;
-                const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;
+                // TOTAL_ARMOR_BUDGET_50_V1: legacy records are not silently deleted.
+                const totalUpgrades=Math.max(parsed.level,Object.values(upgradeData).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
+                const rowMaxed = totalUpgrades >= UPGRADE_MAX_LEVEL;
                 const rowUsesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
                 const rowCost = Math.max(1, Math.round((rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel)) / statCostDivisor));
                 const rowCanAfford = rowUsesTokens ? (Number(player.breedCredits) || 0) >= rowCost : player.coins >= rowCost;
@@ -7791,7 +7793,7 @@ function startBattle(enemy) {
                     <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${nextValue}</b></div>
                     <div style="font-size:11px; color:#888;">Уровень этой характеристики: ${statLevel} / ${UPGRADE_MAX_LEVEL}${statLevel < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}</div>
                     ${rowMaxed
-                        ? `<button disabled>Эта характеристика улучшена до максимума</button>`
+                        ? `<button disabled>Достигнут общий предел улучшений</button>`
                         : `<div class="price">Цена: ${rowUsesTokens ? '🧬 ' + rowCost + ' Жетон(ов) сталкера' : '🪙 ' + rowCost.toLocaleString('ru-RU') + ' Байт'}</div>
                     <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, '${r.key}')" ${!rowCanAfford ? 'disabled' : ''}>⬆️ Улучшить</button>`}
                 </div>
@@ -7803,7 +7805,7 @@ function startBattle(enemy) {
                 <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}${isSuit ? ' <span style="color:#8a7a4a; font-size:11px;">(исследовательский — только защита от радиации/аномалий)</span>' : ''}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Пулестойкость: <b style="color:#fff;">${eff.bulletResist}</b> · Гашение ударов: <b style="color:#fff;">${eff.hitAbsorption}</b><br>
-                    Всего улучшений предмета: ${parsed.level}
+                    Всего улучшений предмета: ${parsed.level} / ${UPGRADE_MAX_LEVEL} (общий предел)
                 </div>
                 <button onclick="toggleStatPanel('${panelId}', '${trackKey.replace(/'/g, "\\'")}')">
                     🔧 Выбрать и улучшить характеристику
@@ -8073,7 +8075,7 @@ function startBattle(enemy) {
 <script src="ui/trade-menu.js?v=df71084cb139"></script>
 <script src="ui/terminology-market.js?v=cd42e2a7acba"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
-<script src="ui/trader-hubs.js?v=20260919q2"></script>
+<script src="ui/trader-hubs.js?v=20260919q3"></script>
 
 </body>
 </html>
