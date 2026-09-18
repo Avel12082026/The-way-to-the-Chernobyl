@@ -24,7 +24,7 @@ module.exports=function installQuestBalance({
         const rarity=n<=1?0:rank/(n-1);
         const weight=Math.round(18-16*rarity);
         const pos=Math.max(1,Math.round((2.5*tier+1.5)*(0.90+0.25*rarity)));
-        const neg=Math.max(1,Math.round((1.2*tier+1)*(1.05-0.35*rarity)));
+        const neg=Math.max(1,Math.ceil((1.2*tier+1)*(1.20-0.50*rarity)));
         const stats={};
         for(const [key,value] of Object.entries(def.stats||{})){
           const num=Number(value)||0;
