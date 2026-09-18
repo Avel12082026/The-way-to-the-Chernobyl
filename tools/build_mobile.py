@@ -82,7 +82,6 @@ def build(download=False):
             (OUT/relative).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(CACHE/relative,OUT/relative)
     for file in (ROOT/'mobile/web').iterdir():shutil.copy2(file,OUT/file.name)
     (OUT/'game.html').write_text(transform(html))
-    shutil.copy2(ROOT/'android/app/src/main/res/drawable-nodpi/game_logo.png',OUT/'game-logo.png')
     entries=[]
     for p in sorted(OUT.rglob('*')):
         if p.is_file():entries.append({'path':p.relative_to(OUT).as_posix(),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
