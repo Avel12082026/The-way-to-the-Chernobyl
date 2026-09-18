@@ -1,0 +1,21 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'ru.chernobyl.zone'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'ru.chernobyl.zone'
+        minSdk 26
+        targetSdk 35
+        versionCode 5
+        versionName '0.1.4-test'
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+tasks.register('checkBundledAssets') {
+    doLast {
+        if (!file('src/main/assets/asset-manifest.json').exists()) {
+            throw new GradleException('Run python3 tools/build_mobile.py --download from repository root first.')
+        }
+    }
+}
+tasks.named('preBuild').configure { dependsOn 'checkBundledAssets' }
