@@ -1,0 +1,322 @@
+(() => {
+'use strict';
+if (window.QuestSystem) return;
+
+const API = '/api/quests';
+const vendorMeta = {
+  leonov:{name:'Леонов', title:'Эколог Леонов', kind:'артефакты и части мутантов'},
+  zhuchara:{name:'Жучара', title:'Торговец Жучара', kind:'броню'},
+  diesel:{name:'Дизель', title:'Техник Дизель', kind:'оружие'}
+};
+let state={accepted:[],activeId:null,completed:[],completedCount:0};
+let offers={};
+let loading=false;
+let activeTab='accepted';
+let dialogueVendor=null;
+
+function esc(value){
+  return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function baseName(name){
+  const raw=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B-\u200D\u2060\uFEFF].*$/,'');
+  if(typeof parseGearName==='function'){
+    try{return parseGearName(raw)?.baseName||raw;}catch(_){}
+  }
+  return raw.replace(/\s+\+\d+$/,'');
+}
+function haveQty(itemName){
+  const inv=(typeof player==='object'&&player?.inventory)||{};
+  const target=baseName(itemName);
+  return Object.entries(inv).reduce((sum,[name,qty])=>sum+(baseName(name)===target?Math.max(0,Number(qty)||0):0),0);
+}
+function completeNow(q){return haveQty(q.itemName)>=Number(q.qty||1);}
+function activeQuest(){return state.accepted.find(q=>q.id===state.activeId)||null;}
+function vendorName(id){return vendorMeta[id]?.name||id;}
+function objective(q){
+  const have=haveQty(q.itemName),qty=Number(q.qty||1);
+  return `Принести: ${q.itemName} — ${Math.min(have,qty)} / ${qty}`;
+}
+function rewardText(q){return `Награда: ${Math.round(Number(q.reward)||0).toLocaleString('ru-RU')} сталбайтов`;}
+
+async function api(path,body={}){
+  const response=await fetch(SERVER_URL+API+path,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({initData:window.Telegram?.WebApp?.initData,...body})
+  });
+  let data={};
+  try{data=await response.json();}catch(_){}
+  if(!response.ok||data.success===false)throw new Error(data.error||'Сервер заданий временно недоступен.');
+  return data;
+}
+async function sync(){
+  if(loading)return state;
+  loading=true;
+  try{
+    const data=await api('/state');
+    state={
+      accepted:Array.isArray(data.accepted)?data.accepted:[],
+      activeId:data.activeId||null,
+      completed:Array.isArray(data.completed)?data.completed:[],
+      completedCount:Math.max(0,Number(data.completedCount)||0)
+    };
+    renderAll();
+    return state;
+  }catch(e){
+    console.warn('[quests state]',e);
+    renderAll();
+    throw e;
+  }finally{loading=false;}
+}
+
+const style=document.createElement('link');
+style.rel='stylesheet';style.href='ui/quests.css?v=20260919-1';document.head.append(style);
+
+const pda=document.createElement('section');
+pda.id='questPdaScreen';pda.hidden=true;pda.innerHTML=`
+ <div class="quest-pda-shell">
+  <header class="quest-pda-head">
+   <h2>КПК — Задания</h2>
+   <button type="button" data-quest-action="pda-back">Назад</button>
+  </header>
+  <nav class="quest-tabs" aria-label="Разделы заданий">
+   <button type="button" data-quest-tab="accepted">Взятые</button>
+   <button type="button" data-quest-tab="active">Активные</button>
+   <button type="button" data-quest-tab="completed">Выполненные <span id="questCompletedCount">0</span></button>
+  </nav>
+  <div id="questPdaList" class="quest-list"></div>
+  <div id="questPdaDetails" class="quest-details" hidden></div>
+ </div>`;
+document.body.append(pda);
+
+const dialogue=document.createElement('section');
+dialogue.id='traderQuestDialogue';dialogue.hidden=true;dialogue.innerHTML=`
+ <div class="trader-dialogue-shell" role="dialog" aria-modal="true" aria-labelledby="traderDialogueName">
+  <header><h2 id="traderDialogueName"></h2><button type="button" data-dialogue-action="close">Закрыть</button></header>
+  <div class="trader-dialogue-body">
+   <div class="trader-dialogue-copy">
+    <p id="traderDialogueLine"></p>
+    <div id="traderDialogueContent"></div>
+   </div>
+   <div class="trader-dialogue-portrait"><img id="traderDialoguePortrait" alt="" draggable="false"></div>
+  </div>
+  <nav id="traderDialogueResponses" class="trader-dialogue-responses" aria-label="Ответы сталкера"></nav>
+ </div>`;
+document.body.append(dialogue);
+
+const tracker=document.createElement('section');
+tracker.id='activeQuestRaidTracker';tracker.hidden=true;tracker.setAttribute('aria-live','polite');
+
+function ensurePdaButton(){
+  const screen=document.getElementById('kpkScreen');
+  if(!screen||document.getElementById('kpkQuestsBtn'))return;
+  const button=document.createElement('button');
+  button.id='kpkQuestsBtn';button.type='button';button.textContent='Задания';
+  button.addEventListener('click',openPda);
+  const chat=document.getElementById('kpkChatBtn');
+  if(chat?.parentElement)chat.insertAdjacentElement('afterend',button);
+  else{
+    const host=screen.querySelector('nav, .tabs, .kpk-tabs, .zr-actions')||screen;
+    host.append(button);
+  }
+}
+function ensureTracker(){
+  const battle=document.getElementById('battleButtonsContainer');
+  if(!battle)return;
+  if(!tracker.isConnected)battle.insertAdjacentElement('afterend',tracker);
+  else if(tracker.previousElementSibling!==battle)battle.insertAdjacentElement('afterend',tracker);
+}
+
+function questCard(q,mode){
+  const ready=completeNow(q);
+  const el=document.createElement('article');
+  el.className='quest-card'+(ready?' quest-ready':'');
+  el.dataset.questId=q.id;
+  const h=document.createElement('button');
+  h.type='button';h.className='quest-card-open';
+  h.innerHTML=`<strong>${esc(q.title||'Задание')}</strong><span>${esc(vendorName(q.vendor))}</span><span class="quest-objective">${esc(objective(q))}</span>`;
+  h.addEventListener('click',()=>showQuestDetails(q,mode));
+  el.append(h);
+  return el;
+}
+function showQuestDetails(q,mode){
+  const box=document.getElementById('questPdaDetails');
+  box.hidden=false;
+  box.classList.toggle('quest-ready',completeNow(q));
+  box.innerHTML=`
+   <button type="button" class="quest-details-close" data-quest-action="details-close">×</button>
+   <h3>${esc(q.title||'Задание')}</h3>
+   <p>Заказчик: ${esc(vendorMeta[q.vendor]?.title||vendorName(q.vendor))}</p>
+   <p class="quest-objective">${esc(objective(q))}</p>
+   <p>${esc(rewardText(q))}</p>
+   <p class="quest-note">Чтобы завершить задание, вернись из рейда и отдай предмет заказчику в разговоре.</p>
+   ${mode==='accepted'&&q.id!==state.activeId?'<button type="button" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
+   ${q.id===state.activeId?'<p class="quest-priority">Приоритетное задание</p>':''}
+  `;
+}
+function renderPda(){
+  document.querySelectorAll('[data-quest-tab]').forEach(b=>b.classList.toggle('active',b.dataset.questTab===activeTab));
+  const count=document.getElementById('questCompletedCount');if(count)count.textContent=String(state.completedCount);
+  const list=document.getElementById('questPdaList');if(!list)return;
+  list.replaceChildren();
+  const details=document.getElementById('questPdaDetails');if(details)details.hidden=true;
+  let rows=[];
+  if(activeTab==='accepted')rows=state.accepted;
+  else if(activeTab==='active'){const q=activeQuest();rows=q?[q]:[];}
+  else rows=state.completed;
+  if(!rows.length){
+    const empty=document.createElement('p');empty.className='quest-empty';
+    empty.textContent=activeTab==='accepted'?'Взятых заданий нет.':activeTab==='active'?'Приоритетное задание не выбрано.':'Выполненных заданий пока нет.';
+    list.append(empty);return;
+  }
+  rows.forEach(q=>list.append(questCard(q,activeTab)));
+}
+function renderTracker(){
+  ensureTracker();
+  const q=activeQuest();
+  if(!q||!tracker.isConnected){tracker.hidden=true;return;}
+  const ready=completeNow(q);
+  tracker.hidden=false;tracker.className=ready?'quest-ready':'';
+  tracker.innerHTML=`<strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span>`;
+}
+function renderAll(){renderPda();renderTracker();if(!dialogue.hidden&&dialogueVendor)renderDialogue(dialogueVendor);}
+
+function openPda(){
+  ensurePdaButton();activeTab='accepted';pda.hidden=false;document.body.classList.add('quest-pda-visible');renderPda();
+  sync().catch(()=>{});
+}
+function closePda(){pda.hidden=true;document.body.classList.remove('quest-pda-visible');}
+
+async function activate(id){
+  try{await api('/activate',{questId:id});await sync();activeTab='active';renderPda();}
+  catch(e){showGameAlert?.(e.message);}
+}
+async function fetchOffers(vendor){
+  try{
+    const data=await api('/offers',{vendor});
+    offers[vendor]=Array.isArray(data.offers)?data.offers:[];
+    renderDialogue(vendor,'offers');
+  }catch(e){showGameAlert?.(e.message);}
+}
+async function accept(vendor,id){
+  try{
+    await api('/accept',{vendor,questId:id});
+    await sync();await fetchOffers(vendor);
+  }catch(e){showGameAlert?.(e.message);}
+}
+async function turnIn(vendor,id){
+  try{
+    const data=await api('/turn-in',{vendor,questId:id});
+    await sync();renderDialogue(vendor,'turnin');
+    showGameAlert?.(`Задание выполнено. Получено ${Math.round(Number(data.reward)||0).toLocaleString('ru-RU')} сталбайтов.`);
+  }catch(e){showGameAlert?.(e.message);}
+}
+async function abandon(vendor,id){
+  if(!confirm('Отказаться от этого задания? Получить его снова сразу может не получиться.'))return;
+  try{await api('/abandon',{vendor,questId:id});await sync();renderDialogue(vendor,'abandon');}
+  catch(e){showGameAlert?.(e.message);}
+}
+
+function portraitFor(vendor){
+  if(vendor==='leonov')return document.querySelector('#leonovHubScreen img')?.src||'';
+  if(vendor==='zhuchara')return document.querySelector('#zhucharaHubScreen img')?.src||'';
+  if(vendor==='diesel')return document.querySelector('#dieselHubScreen img')?.src||'';
+  return '';
+}
+function response(label,action){
+  const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.dialogueAction=action;return b;
+}
+function renderDialogue(vendor,mode='root'){
+  dialogueVendor=vendor;
+  const meta=vendorMeta[vendor];if(!meta)return;
+  dialogue.hidden=false;document.body.classList.add('trader-dialogue-visible');
+  document.getElementById('traderDialogueName').textContent=meta.title;
+  const img=document.getElementById('traderDialoguePortrait');img.src=portraitFor(vendor);img.alt=meta.title;
+  const line=document.getElementById('traderDialogueLine');
+  const content=document.getElementById('traderDialogueContent');content.replaceChildren();
+  const responses=document.getElementById('traderDialogueResponses');responses.replaceChildren();
+
+  const mine=state.accepted.filter(q=>q.vendor===vendor);
+  const ready=mine.filter(completeNow);
+  if(mode==='offers'){
+    line.textContent=vendor==='leonov'?'Зона много чего выбрасывает наружу. Мне нужны образцы и трофеи.':vendor==='zhuchara'?'Иногда нужен не хабар, а конкретная броня. Есть работа.':'Нужны рабочие стволы. Чем дальше ходишь — тем интереснее заказ.';
+    const list=document.createElement('div');list.className='dialogue-quest-list';
+    const rows=offers[vendor]||[];
+    if(!rows.length){const p=document.createElement('p');p.textContent='Новых заказов сейчас нет.';list.append(p);}
+    rows.forEach(q=>{
+      const row=document.createElement('article');row.className='dialogue-quest-offer';
+      row.innerHTML=`<strong>${esc(q.title)}</strong><span>${esc(q.itemName)} × ${Number(q.qty)||1}</span><span>${esc(rewardText(q))}</span>`;
+      const take=document.createElement('button');take.type='button';take.textContent='Взять задание';take.onclick=()=>accept(vendor,q.id);row.append(take);list.append(row);
+    });
+    content.append(list);responses.append(response('Назад','root'));
+  }else if(mode==='turnin'){
+    line.textContent='Есть что по моему заказу?';
+    if(!ready.length){const p=document.createElement('p');p.textContent='Сейчас у тебя нет полного комплекта предметов для сдачи.';content.append(p);}
+    ready.forEach(q=>{
+      const row=document.createElement('article');row.className='dialogue-turnin quest-ready';
+      row.innerHTML=`<strong>${esc(q.title)}</strong><span>${esc(objective(q))}</span><span>${esc(rewardText(q))}</span>`;
+      const give=document.createElement('button');give.type='button';give.textContent='Отдать и получить награду';give.onclick=()=>turnIn(vendor,q.id);row.append(give);content.append(row);
+    });
+    responses.append(response('Назад','root'));
+  }else if(mode==='abandon'){
+    line.textContent='Передумал? Назови заказ, от которого отказываешься.';
+    if(!mine.length){const p=document.createElement('p');p.textContent='У тебя нет моих незавершённых заданий.';content.append(p);}
+    mine.forEach(q=>{
+      const row=document.createElement('article');row.className='dialogue-abandon';
+      row.innerHTML=`<strong>${esc(q.title)}</strong><span>${esc(objective(q))}</span>`;
+      const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Отказаться';cancel.onclick=()=>abandon(vendor,q.id);row.append(cancel);content.append(row);
+    });
+    responses.append(response('Назад','root'));
+  }else{
+    line.textContent=vendor==='leonov'?'Артефакты — это язык Зоны. Но иногда мне нужны и образцы мутантов. Что хотел?':vendor==='zhuchara'?'В Зоне нет ненужного хлама. Есть лишь не та цена. Что принёс?':'Железо не врёт. Говори, зачем пришёл.';
+    responses.append(response('Какая у тебя есть работа?','offers'));
+    if(ready.length)responses.append(response('Я принёс то, что ты просил.','turnin'));
+    if(mine.length)responses.append(response('Хочу отказаться от задания.','abandon'));
+    responses.append(response('Поговорим в другой раз.','close'));
+  }
+}
+async function openTraderDialogue(vendor){
+  if(!vendorMeta[vendor])return false;
+  try{await sync();}catch(_){}
+  renderDialogue(vendor,'root');return true;
+}
+function closeDialogue(){dialogue.hidden=true;dialogueVendor=null;document.body.classList.remove('trader-dialogue-visible');}
+
+pda.addEventListener('click',e=>{
+  const tab=e.target.closest('[data-quest-tab]');if(tab){activeTab=tab.dataset.questTab;renderPda();return;}
+  const b=e.target.closest('[data-quest-action]');if(!b)return;
+  if(b.dataset.questAction==='pda-back')closePda();
+  else if(b.dataset.questAction==='details-close')document.getElementById('questPdaDetails').hidden=true;
+  else if(b.dataset.questAction==='activate')activate(b.dataset.questId);
+});
+dialogue.addEventListener('click',e=>{
+  const b=e.target.closest('[data-dialogue-action]');if(!b)return;
+  const action=b.dataset.dialogueAction;
+  if(action==='close')closeDialogue();
+  else if(action==='root')renderDialogue(dialogueVendor,'root');
+  else if(action==='offers')fetchOffers(dialogueVendor);
+  else if(action==='turnin')renderDialogue(dialogueVendor,'turnin');
+  else if(action==='abandon')renderDialogue(dialogueVendor,'abandon');
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  if(!dialogue.hidden){closeDialogue();e.preventDefault();return;}
+  if(!pda.hidden){closePda();e.preventDefault();}
+});
+
+const oldUpdate=window.updateUI;
+if(typeof oldUpdate==='function')window.updateUI=function(){const r=oldUpdate.apply(this,arguments);queueMicrotask(renderAll);return r;};
+const oldBattle=window.renderBattleButtons;
+if(typeof oldBattle==='function')window.renderBattleButtons=function(){const r=oldBattle.apply(this,arguments);queueMicrotask(renderTracker);return r;};
+
+new MutationObserver(()=>{ensurePdaButton();ensureTracker();renderTracker();}).observe(document.body,{childList:true,subtree:true});
+ensurePdaButton();ensureTracker();
+setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
+
+window.QuestSystem=Object.freeze({
+  version:'1.0.0',openPda,openTraderDialogue,closeDialogue,sync,
+  get state(){return state;},hasRequired:completeNow
+});
+sync().catch(()=>{});
+})();
