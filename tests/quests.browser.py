@@ -77,12 +77,15 @@ async def main():
     if not await page.evaluate("!!window.QuestSystem"):
       await page.add_style_tag(content=(ROOT/'ui/quests.css').read_text())
       await page.add_script_tag(content=(ROOT/'ui/quests.js').read_text())
-    await page.wait_for_function("window.QuestSystem?.version==='1.1.0'")
+    await page.wait_for_function("window.QuestSystem?.version==='1.2.0'")
     await page.evaluate("QuestSystem.sync()")
     await page.wait_for_timeout(80)
 
     # PDA button and 3 requested tabs.
-    await page.evaluate("openScreen('kpk')")
+    await page.evaluate("openScreen('kpk');RaidKpkPolish.apply()")
+    assert await page.locator('#kpkScreen .zr-pda-banner').count()==0
+    kpk_buttons=page.locator('#kpkScreen .zr-pda-tabs > button')
+    assert await kpk_buttons.count()%2==0
     button=page.locator('#kpkQuestsBtn');await button.wait_for(state='visible');assert (await button.text_content()).strip()=='Задания'
     await button.click()
     tabs=[(x or '').strip() for x in await page.locator('#questPdaScreen [data-quest-tab]').all_text_contents()]
@@ -96,10 +99,11 @@ async def main():
     await page.locator('[data-quest-tab="active"]').click()
     assert await page.locator('#questPdaList [data-quest-id="q1"]').count()==1
 
-    # Tracker appears directly under battle buttons and reacts live to inventory.
-    await page.evaluate("document.querySelector('[data-quest-action=pda-back]').click();openScreen('raid');renderBattleButtons()")
+    # Tracker appears below the quick slots; combat history is below the tracker.
+    await page.evaluate("document.querySelector('[data-quest-action=pda-back]').click();openScreen('raid');renderBattleButtons();RaidKpkPolish.apply()")
     tracker=page.locator('#activeQuestRaidTracker');await tracker.wait_for(state='visible')
-    assert await tracker.evaluate("e=>e.previousElementSibling?.id")=='battleButtonsContainer'
+    assert await tracker.evaluate("e=>e.previousElementSibling?.id")=='quickSlots'
+    assert await tracker.evaluate("e=>e.nextElementSibling?.id")=='raidLog'
     assert not await tracker.evaluate("e=>e.classList.contains('quest-ready')")
     await page.evaluate("player.inventory['Медуза']=1;updateUI()");await page.wait_for_timeout(80)
     assert await tracker.evaluate("e=>e.classList.contains('quest-ready')")
@@ -111,6 +115,7 @@ async def main():
     talk=page.locator('#zhucharaHubScreen [data-trader-action="talk"]');await talk.click()
     dialog=page.locator('#traderQuestDialogue');await dialog.wait_for(state='visible')
     assert 'Жучара' in (await page.locator('#traderDialogueName').text_content())
+    assert await dialog.get_by_role('button',name='Торговля').count()==0
     work=page.get_by_role('button',name='Какая у тебя есть работа?');await work.click();await page.wait_for_timeout(80)
     assert await dialog.get_by_text('Комбинезон Комбат').count()>=1
     take=dialog.get_by_role('button',name='Взять задание');await take.click();await page.wait_for_timeout(80)
