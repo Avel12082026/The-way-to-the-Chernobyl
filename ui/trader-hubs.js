@@ -230,28 +230,47 @@
   'use strict';
   const POLL_MS = 15000;
   let notificationReady = false;
-  let previousState = {dm:false, parcel:false, system:false};
+  let previousState = {dm:false, parcel:false, system:false, latestDm:0, latestParcel:0, latestSystem:0};
   let audioUnlocked = false;
-  const notificationAudio = new Audio('ui/pda-notification.mp3?v=20260918');
+  const notificationAudio = new Audio();
   notificationAudio.preload = 'auto';
   notificationAudio.volume = 0.9;
+  let notificationAudioPromise = null;
+
+  function ensureNotificationAudio() {
+    if (notificationAudio.src) return Promise.resolve(notificationAudio);
+    if (!notificationAudioPromise) {
+      notificationAudioPromise = fetch('ui/pda-notification.mp3.b64?v=20260918-a1', {cache:'force-cache'})
+        .then(r => { if (!r.ok) throw new Error('PDA sound HTTP '+r.status); return r.text(); })
+        .then(b64 => {
+          notificationAudio.src = 'data:audio/mpeg;base64,' + b64.replace(/\s+/g,'');
+          return notificationAudio;
+        })
+        .catch(err => { notificationAudioPromise = null; console.error('[PDA notification sound]',err); throw err; });
+    }
+    return notificationAudioPromise;
+  }
 
   function unlockAudio() {
     if (audioUnlocked) return;
     audioUnlocked = true;
-    const old = notificationAudio.volume;
-    notificationAudio.volume = 0.001;
-    const p = notificationAudio.play();
-    if (p?.then) p.then(() => { notificationAudio.pause(); notificationAudio.currentTime = 0; notificationAudio.volume = old; }).catch(() => { notificationAudio.volume = old; });
+    ensureNotificationAudio().then(() => {
+      const old = notificationAudio.volume;
+      notificationAudio.volume = 0.001;
+      const p = notificationAudio.play();
+      if (p?.then) p.then(() => { notificationAudio.pause(); notificationAudio.currentTime = 0; notificationAudio.volume = old; }).catch(() => { notificationAudio.volume = old; });
+    }).catch(() => {});
   }
   document.addEventListener('pointerdown', unlockAudio, {once:true, passive:true});
 
   function playPdaSound() {
-    try {
-      notificationAudio.currentTime = 0;
-      const p = notificationAudio.play();
-      if (p?.catch) p.catch(() => {});
-    } catch (_) {}
+    ensureNotificationAudio().then(() => {
+      try {
+        notificationAudio.currentTime = 0;
+        const p = notificationAudio.play();
+        if (p?.catch) p.catch(() => {});
+      } catch (_) {}
+    }).catch(() => {});
     try { window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred?.('success'); } catch (_) {}
   }
 
@@ -306,6 +325,7 @@
   async function checkPdaNotifications() {
     if (typeof player !== 'object' || !player?.nickname) return;
     let dm=false, parcel=playerParcelUnread(), system=playerSystemUnread();
+    let latestDm=0, latestParcel=0, latestSystem=0;
     try {
       const r = await fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
         method:'POST', headers:{'Content-Type':'application/json'},
@@ -313,8 +333,10 @@
       });
       const list = await r.json();
       const myId = String(typeof getPlayerId === 'function' ? getPlayerId() : '');
-      dm = (list || []).some(c => typeof isDmConvUnread === 'function' ? isDmConvUnread(c,myId) :
-        Number(c.lastMessageAt||0) > Number(localStorage.getItem('pdaDmSeenAt')||0) && String(c.lastSenderId)!==myId);
+      const incoming = (list || []).filter(c => String(c.lastSenderId)!==myId);
+      dm = incoming.some(c => typeof isDmConvUnread === 'function' ? isDmConvUnread(c,myId) :
+        Number(c.lastMessageAt||0) > Number(localStorage.getItem('pdaDmSeenAt')||0));
+      latestDm = Math.max(0,...incoming.map(c=>Number(new Date(c.lastMessageAt).getTime())||Number(c.lastMessageAt)||0));
     } catch (_) {}
 
     try {
@@ -326,6 +348,8 @@
       const sMsgs = sys.filter(m => !parcelRx.test(String(m.text||'')));
       const latestP = Math.max(0,...pMsgs.map(m=>Number(new Date(m.createdAt).getTime())||0));
       const latestS = Math.max(0,...sMsgs.map(m=>Number(new Date(m.createdAt).getTime())||0));
+      latestParcel = latestP;
+      latestSystem = latestS;
       const chatOpen = document.getElementById('chatScreen')?.classList.contains('active');
       const generalOpen = chatOpen && typeof chatTab !== 'undefined' && chatTab === 'general';
       if (generalOpen) {
@@ -337,9 +361,16 @@
       }
     } catch (_) {}
 
-    const next={dm,parcel,system};
+    const next={dm,parcel,system,latestDm,latestParcel,latestSystem};
     renderBadges(next);
-    if (notificationReady && ['dm','parcel','system'].some(k => next[k] && !previousState[k])) playPdaSound();
+    const hasNewEvent = notificationReady && (
+      (latestDm && latestDm > previousState.latestDm) ||
+      (latestParcel && latestParcel > previousState.latestParcel) ||
+      (latestSystem && latestSystem > previousState.latestSystem) ||
+      (parcel && !previousState.parcel && !latestParcel) ||
+      (system && !previousState.system && !latestSystem)
+    );
+    if (hasNewEvent) playPdaSound();
     previousState=next;
     notificationReady=true;
   }
@@ -369,6 +400,22 @@
     if (cell.id==='raidEquipWeapon') return player.weapon?.name || '';
     if (cell.id==='raidEquipArmor') return player.armor?.name || '';
     if (cell.id==='raidEquipDetector') return player.detector?.name || '';
+    const src = decodeURIComponent(String(img.currentSrc || img.src || ''));
+    const candidates = new Set([
+      ...Object.keys(typeof player==='object' && player?.inventory || {}),
+      ...(typeof weapons!=='undefined' ? weapons.map(x=>x.name) : []),
+      ...(typeof armorItems!=='undefined' ? armorItems.map(x=>x.name) : []),
+      ...(typeof detectors!=='undefined' ? detectors.map(x=>x.name) : []),
+      ...(typeof consumables!=='undefined' ? consumables.map(x=>x.name) : []),
+      ...(typeof artifacts!=='undefined' ? artifacts.map(x=>x.name) : []),
+      ...(typeof mutants!=='undefined' ? mutants.map(x=>x.loot).filter(Boolean) : [])
+    ]);
+    for (const candidate of candidates) {
+      try {
+        const icon = typeof getItemIcon==='function' ? getItemIcon(candidate) : null;
+        if (icon && (src.includes(icon) || src.includes(encodeURIComponent(icon)))) return candidate;
+      } catch (_) {}
+    }
     return '';
   }
 
