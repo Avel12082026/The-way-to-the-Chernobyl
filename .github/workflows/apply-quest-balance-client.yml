@@ -31,5 +31,7 @@ jobs:
           git config user.name "Avel12082026"
           git config user.email "avelsvobodniy@gmail.com"
           git add index.html
-          git commit -m "Cap upgrades and delay research suits"
+          git commit -m "Cap upgrades and align research suit progression"
+          git fetch origin feature/quests-balance-20260919
+          git rebase origin/feature/quests-balance-20260919
           git push origin HEAD:feature/quests-balance-20260919
