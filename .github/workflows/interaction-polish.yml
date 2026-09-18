@@ -1,0 +1,28 @@
+name: Validate interaction polish
+
+on:
+  push:
+    branches: [ui/interaction-notifications-20260918]
+    paths:
+      - 'ui/trader-hubs.js'
+      - 'ui/trader-hubs.css'
+      - 'ui/trade-menu.js'
+      - 'ui/pda-notification.mp3.b64'
+      - 'tests/interaction_polish.static.cjs'
+      - '.github/workflows/interaction-polish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and regression checks
+        run: |
+          node --check ui/trader-hubs.js
+          node --check ui/trade-menu.js
+          node tests/interaction_polish.static.cjs
