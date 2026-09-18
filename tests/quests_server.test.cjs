@@ -2,10 +2,40 @@ const assert=require('node:assert/strict');
 const install=require('../server_patches/quest-balance.cjs');
 
 class FakeDB{
-  constructor(data){this.rows=new Map([['p1',{data:JSON.stringify(data)}]]);}
+  constructor(data){
+    this.rows=new Map([['p1',{data:JSON.stringify(data)}]]);
+    this.receipts=[];this.seq=0;this.raid=new Set();this.battles=new Set();
+  }
+  exec(){return this;}
   prepare(sql){
     if(sql.startsWith('SELECT data FROM players'))return{get:id=>this.rows.get(id)};
     if(sql.startsWith('UPDATE players SET data='))return{run:(data,_last,id)=>{this.rows.set(id,{data});return{changes:1};}};
+    if(sql.startsWith('SELECT 1 FROM raid_sessions'))return{get:id=>this.raid.has(id)?{1:1}:undefined};
+    if(sql.startsWith('SELECT 1 FROM pve_battles'))return{get:id=>this.battles.has(id)?{1:1}:undefined};
+    if(sql.startsWith('SELECT status,payload FROM quest_receipts'))return{get:(id,qid)=>{
+      const r=this.receipts.find(x=>x.player_id===id&&x.quest_id===qid);return r?{status:r.status,payload:r.payload}:undefined;
+    }};
+    if(sql.startsWith('SELECT COUNT(*) AS n FROM quest_receipts WHERE player_id=? AND vendor='))return{get:(id,vendor,day)=>({n:this.receipts.filter(x=>x.player_id===id&&x.vendor===vendor&&x.day===day).length})};
+    if(sql.includes("SELECT COUNT(*) AS n FROM quest_receipts")&&sql.includes("status='completed'"))return{get:id=>({n:this.receipts.filter(x=>x.player_id===id&&x.status==='completed').length})};
+    if(sql.startsWith("SELECT seq,payload FROM quest_receipts")&&sql.includes("status='completed'")){
+      return{all:(id,before)=>{
+        let rows=this.receipts.filter(x=>x.player_id===id&&x.status==='completed');
+        if(sql.includes('seq<?'))rows=rows.filter(x=>x.seq<before);
+        return rows.sort((a,b)=>b.seq-a.seq).slice(0,51).map(x=>({seq:x.seq,payload:x.payload}));
+      }};
+    }
+    if(sql.startsWith('INSERT INTO quest_receipts'))return{run:(player_id,quest_id,vendor,day,status,payload)=>{
+      if(this.receipts.some(x=>x.player_id===player_id&&x.quest_id===quest_id))throw new Error('UNIQUE');
+      this.receipts.push({seq:++this.seq,player_id,quest_id,vendor,day,status,payload});return{changes:1};
+    }};
+    if(sql.startsWith("UPDATE quest_receipts SET status='abandoned'"))return{run:(id,qid)=>{
+      const r=this.receipts.find(x=>x.player_id===id&&x.quest_id===qid&&x.status==='accepted');
+      if(!r)return{changes:0};r.status='abandoned';return{changes:1};
+    }};
+    if(sql.startsWith("UPDATE quest_receipts SET status='completed',payload=?"))return{run:(payload,id,qid)=>{
+      const r=this.receipts.find(x=>x.player_id===id&&x.quest_id===qid&&x.status==='accepted');
+      if(!r)return{changes:0};r.status='completed';r.payload=payload;return{changes:1};
+    }};
     throw new Error('Unexpected SQL: '+sql);
   }
   transaction(fn){return(...args)=>fn(...args);}
@@ -30,7 +60,7 @@ const artifacts=[
  {name:'А3',tier:1,price:300,stats:{health:4,hunger:-3}}
 ];
 const loot=[{name:'Хвост',price:200},{name:'Ухо',price:500}];
-const mutants=[{name:'Тушкан',tier:0,loot:'Хвост'},{name:'Пёс',tier:1,loot:'Ухо'}];
+const mutants=[{name:'Тушкан',tier:0,loot:'Хвост',lootChance:50},{name:'Пёс',tier:1,loot:'Ухо',lootChance:50}];
 const anomalies=[{id:1,name:'Жарка',tier:1,artifacts:['А1','А2','А3']}];
 const data={level:120,coins:0,inventory:{},quests:{}};
 const db=new FakeDB(data);
@@ -45,7 +75,7 @@ const api=install({
  PVE_MUTANTS:mutants,RAID_ANOMALIES:anomalies,resolveSellPriceServer:sell,
  parseGearNameServer:n=>({baseName:String(n).replace(/\s+\+\d+$/,'')})
 });
-assert.equal(api.version,1);
+assert.equal(api.version,2);
 assert.equal(api.artifactMeta.get('А1').weight,18);
 assert.equal(api.artifactMeta.get('А3').weight,2);
 assert(artifacts[2].stats.health>artifacts[0].stats.health,'rarer artifact must have stronger positive stat');
