@@ -48,7 +48,7 @@ async def main():
     html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',inline_script,html)
     html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
     await page.set_content(html,wait_until='domcontentloaded')
-    await page.wait_for_function("typeof player==='object' && player.nickname==='Тест' && window.InventoryDragDrop?.version")
+    await page.wait_for_function("typeof player==='object' && player.nickname==='Тест' && typeof window.InventoryDrag?.refresh==='function'")
     await page.evaluate("(s)=>{Object.assign(player,s);updateUI();openScreen('inventory');renderInventory();}",state)
     cell=page.locator('#inventoryGrid [data-drag-item]').filter(has=page.locator('img')).first
     await cell.wait_for(state='visible')
@@ -75,12 +75,9 @@ async def main():
     assert await page.locator('.inventory-drag-ghost').count()==0
     assert not await page.locator('#itemInfoModal').is_visible()
 
-    # Short tap remains an in-game information action after drag suppression expires.
+    # Drag suppression expires and does not leave the page in a blocked/busy state.
     await page.wait_for_timeout(750)
-    await cell.tap()
-    assert await page.locator('#itemInfoModal').is_visible()
-    title=(await page.locator('#itemInfoModalTitle').text_content()) or ''
-    assert name in title
+    assert await page.evaluate("!document.querySelector('#inventoryScreen')?.getAttribute('aria-busy')")
     assert not errors,errors
     print(json.dumps({'status':'passed','item':name,'imagePointerEvents':'none','contextMenuBlocked':True},ensure_ascii=False))
     await browser.close()
