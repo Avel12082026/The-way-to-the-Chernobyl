@@ -316,13 +316,31 @@ def main():
     if args.dry_run or not args.install:
         import re
         def read_catalog(const_name):
-            match=re.search(r'const\\s+'+re.escape(const_name)+r'\\s*=\\s*(\\[[\\s\\S]*?\\]);',source)
+            # Parse the JSON-compatible catalogue by bracket depth; avoid a regex over nested arrays/objects.
+            match=re.search(r'const\s+'+re.escape(const_name)+r'\s*=\s*\[',source)
             if not match:
                 return []
-            try:
-                return json.loads(match.group(1))
-            except Exception:
-                return []
+            begin=source.find('[',match.start())
+            depth=0;quote=None;escaped=False
+            for pos in range(begin,len(source)):
+                ch=source[pos]
+                if quote is not None:
+                    if escaped: escaped=False
+                    elif ch=='\\': escaped=True
+                    elif ch==quote: quote=None
+                    continue
+                if ch in ('"',"'"):
+                    quote=ch;continue
+                if ch=='[': depth+=1
+                elif ch==']':
+                    depth-=1
+                    if depth==0:
+                        try:
+                            value=json.loads(source[begin:pos+1])
+                            return value if isinstance(value,list) else []
+                        except (ValueError,TypeError,json.JSONDecodeError):
+                            return []
+            return []
         admin_gear={str(x.get('name')) for x in read_catalog('SHOP_WEAPONS')+read_catalog('SHOP_ARMOR') if x.get('adminOnly') and x.get('name')}
         admin_artifacts={str(x.get('name')) for x in read_catalog('SHOP_ARTIFACTS') if x.get('adminOnly') and x.get('name')}
         invis='\\u200b\\u200c\\u200d\\u2060\\ufeff'
