@@ -240,7 +240,7 @@
   function ensureNotificationAudio() {
     if (notificationAudio.src) return Promise.resolve(notificationAudio);
     if (!notificationAudioPromise) {
-      notificationAudioPromise = fetch('ui/pda-notification.mp3.b64?v=20260918-a1', {cache:'force-cache'})
+      notificationAudioPromise = fetch('ui/pda-notification.mp3.b64?v=20260918-a2', {cache:'force-cache'})
         .then(r => { if (!r.ok) throw new Error('PDA sound HTTP '+r.status); return r.text(); })
         .then(b64 => {
           notificationAudio.src = 'data:audio/mpeg;base64,' + b64.replace(/\s+/g,'');
