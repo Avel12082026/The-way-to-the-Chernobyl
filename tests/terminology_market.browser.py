@@ -80,11 +80,10 @@ async def main():
         await page.evaluate('(inv)=>{player.inventory=inv;updateUI()}',state['inventory'])
 
         # Sell for Stalcoins: currency must be sent to the server with total price.
-        prompts=iter(['2','2','3'])
-        async def prompt_fixture(_message,_default=None):
-            return next(prompts)
-        await page.expose_function('__promptFixture',prompt_fixture)
-        await page.evaluate("window.prompt=(m,d)=>window.__promptFixture(m,d)")
+        await page.evaluate("""() => {
+          window.__promptQueue=['2','2','3'];
+          window.prompt=()=>window.__promptQueue.shift();
+        }""")
         await page.evaluate('(name)=>listItemForSale(name)',weapon)
         await page.wait_for_timeout(150)
         assert calls and calls[-1]['path'].endswith('/market/sell'),calls
