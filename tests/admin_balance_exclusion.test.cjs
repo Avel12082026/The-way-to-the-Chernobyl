@@ -48,6 +48,6 @@ for(const required of [
 const audit=fs.readFileSync('tools/audit_balance.cjs','utf8');
 assert(audit.includes('adminExcluded')&&audit.includes('balanceArtifacts=report.artifacts.filter(x=>!x.adminOnly)'));
 const live=fs.readFileSync('tools/audit_live_balance_readonly.py','utf8');
-assert(live.includes('admin_gear = admin_weapons | admin_armor')&&live.includes("'adminExcluded'"));
+assert(/admin_gear\s*=\s*admin_weapons\s*\|\s*admin_armor/.test(live)&&live.includes("'adminExcluded'"));
 
 console.log('administrator weapon/armor/artifact are excluded from all player balance pools: OK');
