@@ -33,10 +33,25 @@ if MARK not in s:
     if len(matches)!=1: raise SystemExit(f'research suit gate: expected 1 match, found {len(matches)}')
     m=matches[0];s=s[:m.start()]+research+s[m.end():]
 
+# One item has 50 upgrades in total, not 50 independently for each armor stat.
+if 'TOTAL_ARMOR_BUDGET_50_V1' not in s:
+    old="    function getUpgradedStat(baseStat, level, ceiling) {\n        const lvl = Math.max(0, Number(level) || 0);"
+    new="    function getUpgradedStat(baseStat, level, ceiling) {\n        const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Number(level) || 0));"
+    if s.count(old)!=1: raise SystemExit('getUpgradedStat: unique reviewed anchor missing')
+    s=s.replace(old,new,1)
+    old="                const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;"
+    new="""                // TOTAL_ARMOR_BUDGET_50_V1: legacy records are not silently deleted.
+                const totalUpgrades=Math.max(parsed.level,Object.values(upgradeData).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
+                const rowMaxed = totalUpgrades >= UPGRADE_MAX_LEVEL;"""
+    if s.count(old)!=1: raise SystemExit('armor budget: unique reviewed anchor missing')
+    s=s.replace(old,new,1)
+    s=s.replace('Всего улучшений предмета: ${parsed.level}', 'Всего улучшений предмета: ${parsed.level} / ${UPGRADE_MAX_LEVEL} (общий предел)')
+    s=s.replace('Эта характеристика улучшена до максимума</button>', 'Достигнут общий предел улучшений</button>')
+
 # Cache bust the gesture and trader modules. These replacements are idempotent.
 for asset in ('inventory/drag.js','inventory/drag.css','ui/trader-hubs.js','ui/trader-hubs.css'):
     esc=re.escape(asset)
-    s,n=re.subn(esc+r'(?:\?v=[^"\'<>\s]+)?',asset+'?v=20260919q2',s)
+    s,n=re.subn(esc+r'(?:\?v=[^"\'<>\s]+)?',asset+'?v=20260919q3',s)
     if n<1: raise SystemExit('asset tag not found: '+asset)
 
 path.write_text(s,encoding='utf-8')
