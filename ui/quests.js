@@ -370,7 +370,7 @@ const oldOpenScreen=window.openScreen;
 if(typeof oldOpenScreen==='function')window.openScreen=function(){closePda();closeDialogue();return oldOpenScreen.apply(this,arguments);};
 
 const oldUpdate=window.updateUI;
-if(typeof oldUpdate==='function')window.updateUI==='function')window.updateUI=function(){const r=oldUpdate.apply(this,arguments);queueMicrotask(renderAll);return r;};
+if(typeof oldUpdate==='function')window.updateUI=function(){const r=oldUpdate.apply(this,arguments);queueMicrotask(renderAll);return r;};
 const oldBattle=window.renderBattleButtons;
 if(typeof oldBattle==='function')window.renderBattleButtons=function(){const r=oldBattle.apply(this,arguments);queueMicrotask(renderTracker);return r;};
 
