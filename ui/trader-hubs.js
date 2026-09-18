@@ -186,8 +186,13 @@
         window.TradeMenu.open('technician');
       } else if (action === 'upgrade') {
         hideDiesel();
-        nativeOpenScreen('technician');
-        if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
+        const screen = document.getElementById('technicianScreen');
+        if (screen) screen.dataset.dieselUpgradeOnly = 'true';
+        if (window.TradeMenu?.openTechnicianUpgrade) window.TradeMenu.openTechnicianUpgrade();
+        else {
+          nativeOpenScreen('technician');
+          if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
+        }
       } else if (action === 'talk') {
         say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
       } else if (action === 'back') {
@@ -217,4 +222,208 @@
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
   });
+})();
+
+
+/* INTERACTION_POLISH_V1: item info, topmost alerts, PDA badges/sound, raid utility row. */
+(() => {
+  'use strict';
+  const POLL_MS = 15000;
+  let notificationReady = false;
+  let previousState = {dm:false, parcel:false, system:false};
+  let audioUnlocked = false;
+  const notificationAudio = new Audio('ui/pda-notification.mp3?v=20260918');
+  notificationAudio.preload = 'auto';
+  notificationAudio.volume = 0.9;
+
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    const old = notificationAudio.volume;
+    notificationAudio.volume = 0.001;
+    const p = notificationAudio.play();
+    if (p?.then) p.then(() => { notificationAudio.pause(); notificationAudio.currentTime = 0; notificationAudio.volume = old; }).catch(() => { notificationAudio.volume = old; });
+  }
+  document.addEventListener('pointerdown', unlockAudio, {once:true, passive:true});
+
+  function playPdaSound() {
+    try {
+      notificationAudio.currentTime = 0;
+      const p = notificationAudio.play();
+      if (p?.catch) p.catch(() => {});
+    } catch (_) {}
+    try { window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred?.('success'); } catch (_) {}
+  }
+
+  function ensureBadges(host, prefix) {
+    if (!host) return null;
+    host.classList.add('pda-notification-host');
+    const kinds = [['dm','Личное сообщение'],['parcel','Посылка'],['system','Системное сообщение']];
+    const result = {};
+    for (const [kind,label] of kinds) {
+      let dot = host.querySelector('[data-pda-indicator="'+kind+'"]');
+      if (!dot) {
+        dot = document.createElement('span');
+        dot.className = 'pda-notification-dot pda-notification-'+kind;
+        dot.dataset.pdaIndicator = kind;
+        dot.setAttribute('aria-label', label);
+        dot.setAttribute('aria-hidden','true');
+        host.append(dot);
+      }
+      result[kind] = dot;
+    }
+    return result;
+  }
+
+  function renderBadges(state) {
+    const hosts = [
+      ensureBadges(document.getElementById('bunkerPda'),'main'),
+      ensureBadges(document.getElementById('kpkChatBtn'),'kpk')
+    ].filter(Boolean);
+    for (const dots of hosts) for (const kind of ['dm','parcel','system']) {
+      dots[kind].classList.toggle('active', !!state[kind]);
+    }
+    const legacy = document.getElementById('kpkChatUnreadDot');
+    if (legacy) legacy.style.display = 'none';
+  }
+
+  function unreadGeneric(value) {
+    if (!value) return false;
+    if (Array.isArray(value)) return value.some(x => x && x.read !== true && x.seen !== true && x.claimed !== true);
+    if (typeof value === 'object') return Object.values(value).some(x => x && x.read !== true && x.seen !== true && x.claimed !== true);
+    return !!value;
+  }
+
+  function playerParcelUnread() {
+    if (typeof player !== 'object' || !player) return false;
+    return ['pendingParcels','parcels','pendingGifts','gifts','mailbox'].some(k => unreadGeneric(player[k]));
+  }
+  function playerSystemUnread() {
+    if (typeof player !== 'object' || !player) return false;
+    return ['systemMessages','notifications'].some(k => unreadGeneric(player[k]));
+  }
+
+  async function checkPdaNotifications() {
+    if (typeof player !== 'object' || !player?.nickname) return;
+    let dm=false, parcel=playerParcelUnread(), system=playerSystemUnread();
+    try {
+      const r = await fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+      });
+      const list = await r.json();
+      const myId = String(typeof getPlayerId === 'function' ? getPlayerId() : '');
+      dm = (list || []).some(c => typeof isDmConvUnread === 'function' ? isDmConvUnread(c,myId) :
+        Number(c.lastMessageAt||0) > Number(localStorage.getItem('pdaDmSeenAt')||0) && String(c.lastSenderId)!==myId);
+    } catch (_) {}
+
+    try {
+      const r = await fetch(`${SERVER_URL}/api/chat/general?_=${Date.now()}`, {cache:'no-store'});
+      const messages = await r.json();
+      const sys = (messages || []).filter(m => m?.isSystem);
+      const parcelRx = /подар|посыл|достав|получил.+(?:предмет|байт|жетон)/i;
+      const pMsgs = sys.filter(m => parcelRx.test(String(m.text||'')));
+      const sMsgs = sys.filter(m => !parcelRx.test(String(m.text||'')));
+      const latestP = Math.max(0,...pMsgs.map(m=>Number(new Date(m.createdAt).getTime())||0));
+      const latestS = Math.max(0,...sMsgs.map(m=>Number(new Date(m.createdAt).getTime())||0));
+      const chatOpen = document.getElementById('chatScreen')?.classList.contains('active');
+      const generalOpen = chatOpen && typeof chatTab !== 'undefined' && chatTab === 'general';
+      if (generalOpen) {
+        if (latestP) localStorage.setItem('pdaParcelSeenAt',String(latestP));
+        if (latestS) localStorage.setItem('pdaSystemSeenAt',String(latestS));
+      } else {
+        parcel ||= latestP > Number(localStorage.getItem('pdaParcelSeenAt')||0);
+        system ||= latestS > Number(localStorage.getItem('pdaSystemSeenAt')||0);
+      }
+    } catch (_) {}
+
+    const next={dm,parcel,system};
+    renderBadges(next);
+    if (notificationReady && ['dm','parcel','system'].some(k => next[k] && !previousState[k])) playPdaSound();
+    previousState=next;
+    notificationReady=true;
+  }
+
+  function itemNameFromIcon(img) {
+    const cell = img.closest('[data-trade-name],.slot,.belt-slot,.quick-slot,.shop-item');
+    if (!cell) return '';
+    if (cell.dataset?.tradeName) return cell.dataset.tradeName;
+    const title = cell.getAttribute('title') || '';
+    if (/^(?:Забрать|Положить):\s*/.test(title)) return title.replace(/^(?:Забрать|Положить):\s*/,'');
+    if (title) return title.replace(/\s+x\d+$/i,'').trim();
+    const onclick = cell.getAttribute('onclick') || '';
+    let m = onclick.match(/openItemActions\((['"])(.*?)\1/);
+    if (m) return m[2].replace(/\\'/g,"'");
+    const artGrid = cell.closest('#artifactSlotsGrid');
+    if (artGrid && typeof player === 'object') {
+      const idx=[...artGrid.children].indexOf(cell); return player.artifactSlots?.[idx] || '';
+    }
+    const quickGrid = cell.closest('#quickSlotsGrid');
+    if (quickGrid && typeof player === 'object') {
+      const idx=[...quickGrid.children].indexOf(cell);
+      if (idx===0) return player.weapon?.name || '';
+      if (idx===1) return player.armor?.name || '';
+      if (idx===2) return player.detector?.name || '';
+      return player.quickSlots?.[idx-3] || '';
+    }
+    if (cell.id==='raidEquipWeapon') return player.weapon?.name || '';
+    if (cell.id==='raidEquipArmor') return player.armor?.name || '';
+    if (cell.id==='raidEquipDetector') return player.detector?.name || '';
+    return '';
+  }
+
+  document.addEventListener('click', event => {
+    // Tap the actual item icon for information; tapping the surrounding trade cell keeps stage/remove behavior.
+    const img = event.target.closest?.('img');
+    if (img && !img.closest('.trader-portrait-screen,.bunker-menu')) {
+      const name = itemNameFromIcon(img);
+      if (name && typeof showItemInfoModal === 'function') {
+        event.preventDefault(); event.stopImmediatePropagation();
+        showItemInfoModal(name);
+        return;
+      }
+    }
+
+    // Back from Diesel's upgrade-only screen returns to Diesel portrait.
+    const techBack = event.target.closest?.('#technicianScreen[data-diesel-upgrade-only="true"] .back-btn');
+    if (techBack) {
+      event.preventDefault(); event.stopImmediatePropagation();
+      document.getElementById('technicianScreen')?.removeAttribute('data-diesel-upgrade-only');
+      window.TraderHubs?.openDiesel?.();
+      return;
+    }
+
+    // Chat opened from a raid returns to that raid.
+    const chatBack = event.target.closest?.('#chatBackToKpkBtn');
+    if (chatBack && window.__chatOpenedFromRaid && typeof raidActive !== 'undefined' && raidActive) {
+      event.preventDefault(); event.stopImmediatePropagation();
+      window.__chatOpenedFromRaid=false;
+      if (typeof returnToRaid === 'function') returnToRaid();
+    }
+  }, true);
+
+  function installRaidUtilityRow() {
+    const raid = document.getElementById('raidScreen');
+    if (!raid || document.getElementById('raidUtilityButtons')) return;
+    const backpack = raid.querySelector('button[onclick="openBackpackFromRaid()"]');
+    if (!backpack) return;
+    const row=document.createElement('div'); row.id='raidUtilityButtons';
+    backpack.parentNode.insertBefore(row,backpack);
+    row.append(backpack);
+    const telegram=document.createElement('button');
+    telegram.type='button'; telegram.id='raidTelegramBtn'; telegram.textContent='Телеграммка';
+    telegram.addEventListener('click',()=>{ window.__chatOpenedFromRaid=true; if(typeof openScreen==='function') openScreen('chat'); });
+    row.append(telegram);
+  }
+
+  function install() {
+    installRaidUtilityRow();
+    renderBadges(previousState);
+    checkPdaNotifications();
+    setInterval(checkPdaNotifications,POLL_MS);
+    const tech=document.getElementById('technicianScreen');
+    if (tech) new MutationObserver(()=>{ if(!tech.classList.contains('active')) tech.removeAttribute('data-diesel-upgrade-only'); }).observe(tech,{attributes:true,attributeFilter:['class']});
+  }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',install,{once:true}); else install();
+  window.PdaNotifications = Object.freeze({check:checkPdaNotifications,play:playPdaSound});
 })();
