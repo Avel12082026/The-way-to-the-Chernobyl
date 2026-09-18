@@ -1,0 +1,37 @@
+name: Apply quest balance client
+on:
+  push:
+    branches: [feature/quests-balance-20260919]
+    paths:
+      - 'tools/apply_balance_client.py'
+      - '.github/workflows/apply-quest-balance-client.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: feature/quests-balance-20260919 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Apply balance constants and cache versions
+        run: python3 tools/apply_balance_client.py
+      - name: Validate JavaScript modules
+        run: |
+          node --check inventory/drag.js
+          node --check ui/trader-hubs.js
+          node --check ui/quests.js
+          node --check ui/balance-tuning.js
+          git diff --check
+      - name: Commit generated client change
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "Avel12082026"
+          git config user.email "avelsvobodniy@gmail.com"
+          git add index.html
+          git commit -m "Cap upgrades and align research suit progression"
+          git fetch origin feature/quests-balance-20260919
+          git rebase origin/feature/quests-balance-20260919
+          git push origin HEAD:feature/quests-balance-20260919

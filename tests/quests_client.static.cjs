@@ -1,0 +1,17 @@
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const q=fs.readFileSync('ui/quests.js','utf8');
+const css=fs.readFileSync('ui/quests.css','utf8');
+const drag=fs.readFileSync('inventory/drag.js','utf8');
+const dragCss=fs.readFileSync('inventory/drag.css','utf8');
+const hubs=fs.readFileSync('ui/trader-hubs.js','utf8');
+const balance=fs.readFileSync('ui/balance-tuning.js','utf8');
+for(const x of ['Взятые','Активные','Выполненные','data-quest-action="activate"','activeQuestRaidTracker','openTraderDialogue','/turn-in','/abandon'])assert(q.includes(x),x);
+assert(q.includes("vendor==='leonov'")&&q.includes("vendor==='zhuchara'"));
+assert(css.includes('.quest-ready .quest-objective')&&css.includes('.trader-dialogue-responses'));
+assert(hubs.includes("openTraderDialogue('leonov')")&&hubs.includes("openTraderDialogue('zhuchara')")&&hubs.includes("openTraderDialogue('diesel')"));
+assert(balance.includes("if(tier<1||tier>8")&&balance.includes('catchChancePercent')&&balance.includes('RESEARCH_UNLOCKS=[[4,135]')&&balance.includes('[14,570]'));
+assert(balance.includes("artifacts.filter(a=>!a.adminOnly)")&&balance.includes("a.isResearchSuit&&!a.adminOnly"),'admin-only items must stay outside client balance tuning');
+assert(drag.includes('sanitizeDragCell')&&drag.includes("e.target.closest('#inventoryScreen [data-drag-item]')"));
+assert(drag.includes('stopImmediatePropagation()'));
+assert(dragCss.includes('INVENTORY_NATIVE_MENU_GUARD_V2'));
+console.log('quest/inventory client static checks: OK');

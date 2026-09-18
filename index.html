@@ -766,8 +766,8 @@ button:active {filter:brightness(1.18);}
 <script src="images/anomaly/scene.js?v=5"></script>
 <link rel="stylesheet" href="audio/menu-music.css?v=2">
 <script defer src="audio/menu-music.js?v=2"></script>
-<link rel="stylesheet" href="inventory/drag.css?v=20260919-inventory3">
-<script defer src="inventory/drag.js?v=20260919-inventory3"></script>
+<link rel="stylesheet" href="inventory/drag.css?v=20260919q3">
+<script defer src="inventory/drag.js?v=20260919q3"></script>
 <script defer src="mobile/account-link.js"></script>
 
 <style id="chat-pda-navigation-20260917">
@@ -804,7 +804,7 @@ button:active {filter:brightness(1.18);}
 </style>
 <link rel="stylesheet" href="ui/bunker-menu.css?v=1">
 <link rel="stylesheet" href="ui/trade-menu.css?v=6b99d9115767">
-<link rel="stylesheet" href="ui/trader-hubs.css?v=20260919-inventory3">
+<link rel="stylesheet" href="ui/trader-hubs.css?v=20260919q3">
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -3155,7 +3155,7 @@ button:active {filter:brightness(1.18);}
         if (data.weapon && data.weapon.name && data.weapon.name !== DEFAULT_WEAPON.name) {
             const parsed = parseGearName(data.weapon.name);
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentDmg = base ? getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg')) : data.weapon.dmg;
+            const currentDmg = base ? getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'), !!base.adminOnly) : data.weapon.dmg;
             html += `<p>⚔️ Оружие: ${escapeHtml(data.weapon.name)}<br>
                 <span style="color:#aaa; font-size:11px;">Урон: ${currentDmg}${parsed.level > 0 ? ` (базовый ${base ? base.dmg : '?'} +${parsed.level} от улучшений)` : ''}</span></p>`;
         }
@@ -5935,19 +5935,19 @@ function startBattle(enemy) {
         const stored = playerData.armorUpgradeData && playerData.armorUpgradeData[stableKey];
         if (!stored && parsed.level > 0) {
             return {
-                bulletResist: getUpgradedStat(base.armor, parsed.level, getNextItemCeiling(armorItems, base, 'armor')),
+                bulletResist: getUpgradedStat(base.armor, parsed.level, getNextItemCeiling(armorItems, base, 'armor'), !!base.adminOnly),
                 hitAbsorption: base.hitAbsorption || 0,
                 stats: { ...(base.stats || {}) },
                 totalUpgrades: parsed.level
             };
         }
         const u = stored || {};
-        const bulletResist = getUpgradedStat(base.armor, u.armor || 0, getNextItemCeiling(armorItems, base, 'armor'));
-        const hitAbsorption = getUpgradedStat(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeiling(armorItems, base, 'hitAbsorption'));
+        const bulletResist = getUpgradedStat(base.armor, u.armor || 0, getNextItemCeiling(armorItems, base, 'armor'), !!base.adminOnly);
+        const hitAbsorption = getUpgradedStat(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeiling(armorItems, base, 'hitAbsorption'), !!base.adminOnly);
         const stats = { ...(base.stats || {}) };
         Object.keys(u).forEach(key => {
             if (key === 'armor' || key === 'hitAbsorption') return;
-            stats[key] = getUpgradedStat(stats[key] || 0, u[key]);
+            stats[key] = getUpgradedStat(stats[key] || 0, u[key], undefined, !!base.adminOnly);
         });
         return { bulletResist, hitAbsorption, stats, totalUpgrades: parsed.level };
     }
@@ -6147,7 +6147,7 @@ function startBattle(enemy) {
         const parsed = parseGearName(itemName);
         const weapon = weapons.find(w => w.name === parsed.baseName);
         if (weapon) {
-            const currentDmg = getUpgradedStat(weapon.dmg, parsed.level, getNextItemCeiling(weapons, weapon, 'dmg'));
+            const currentDmg = getUpgradedStat(weapon.dmg, parsed.level, getNextItemCeiling(weapons, weapon, 'dmg'), !!weapon.adminOnly);
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                 Тир: ${weapon.tier}<br>
                 Базовый урон: ${weapon.dmg}<br>
@@ -6362,9 +6362,11 @@ function startBattle(enemy) {
     // Исследовательские комбинезоны начинаются с тира 4 (а не 1) и идут до 14 — 11 тиров,
     // раскрываются по уровню с тем же шагом плотности, что и детекторы
     function getResearchSuitUnlockTier(level) {
-        // Исследовательские комбинезоны открываются каждые 25 уровней игрока: A (тир 4) доступен
-        // с самого начала, B — с 25 уровня, C — с 50, ..., K (тир 14, самый мощный) — с 250 уровня.
-        return Math.min(14, 4 + Math.floor((Math.max(1, Number(level) || 1) - 1) / 50));
+        const lv = Math.max(1, Number(level) || 1);
+        const unlocks = [[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];
+        let tier = 0;
+        for (const [value, required] of unlocks) if (lv >= required) tier = value;
+        return tier;
     }
 
     function openScientistsBuyView() {
@@ -7602,7 +7604,7 @@ function startBattle(enemy) {
     }
 
     // ===== ТЕХНИК: улучшение и продажа снаряжения =====
-    const UPGRADE_MAX_LEVEL = 100;
+    const UPGRADE_MAX_LEVEL = 50; // BALANCE_20260919_V2
 
     // Раньше каждый уровень улучшения давал ПЛОСКИЙ +1 к характеристике (максимум +100 при полной
     // прокачке) — а разница между соседними по силе видами оружия/брони часто всего +1..+30.
@@ -7610,14 +7612,23 @@ function startBattle(enemy) {
     // тиров вперёд, и покупать что-то новее становилось бессмысленно. Теперь бонус — ПРОЦЕНТ от
     // БАЗОВОЙ характеристики самого предмета, с потолком +50% на 100 уровне улучшения — так
     // прокачка всегда остаётся ощутимой, но никогда не обгоняет прогресс по тирам на много шагов вперёд
-    const UPGRADE_MAX_BONUS_PCT = 0.5;
-    function getUpgradedStat(baseStat, level, ceiling) {
-        const lvl = Math.max(0, Number(level) || 0);
+    const UPGRADE_MAX_BONUS_PCT = 0.25;
+    // ADMIN_BALANCE_EXCLUSION_V1: administrator-only equipment keeps its legacy
+    // upgrade curve and is never used when tuning ordinary player progression.
+    function getUpgradedStat(baseStat, level, ceiling, adminOnly = false) {
         const base = Number(baseStat) || 0;
+        if (adminOnly) {
+            const lvl = Math.max(0, Number(level) || 0);
+            const pct = Math.min(0.5, lvl * 0.005);
+            return base === 0 ? Math.round(lvl) : Math.round(base * (1 + pct));
+        }
+        const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Number(level) || 0));
         const pct = Math.min(UPGRADE_MAX_BONUS_PCT, lvl * (UPGRADE_MAX_BONUS_PCT / UPGRADE_MAX_LEVEL));
         const raw = base === 0 ? Math.round(lvl) : Math.round(base * (1 + pct));
         return (typeof ceiling === 'number') ? Math.min(raw, ceiling) : raw;
     }
+    function getItemUpgradeMaxLevel(item) { return item && item.adminOnly ? 100 : UPGRADE_MAX_LEVEL; }
+    function getItemUpgradeByteThreshold(item) { return item && item.adminOnly ? 50 : UPGRADE_BYTE_THRESHOLD; }
     // Жёсткий потолок апгрейда: улучшенная характеристика НИКОГДА не должна превышать
     // ХАРАКТЕРИСТИКУ СЛЕДУЮЩЕГО по уровню открытия предмета (даже на 1 очко) — иначе полностью
     // прокачанный слабый предмет мог обогнать ещё не открытый более сильный (жалоба игроков:
@@ -7641,7 +7652,7 @@ function startBattle(enemy) {
         const nextValueAt20 = getUpgradedStat(Number(nextItem[statKey]) || 0, 20, nextCeiling);
         return Math.max((Number(item[statKey]) || 0), nextValueAt20);
     }
-    const UPGRADE_BYTE_THRESHOLD = 50; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
+    const UPGRADE_BYTE_THRESHOLD = 25; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
 
     // Стоимость улучшения В БАЙТАХ для перехода С уровня currentLevel на currentLevel+1 (только 0-49) —
     // растёт с каждым уровнем, а не фиксированная сумма
@@ -7703,11 +7714,14 @@ function startBattle(enemy) {
         const equippedRow = (label, current, slotType, def) => {
             if (current.name === def.name) return ''; // ничего не надето — нечего улучшать
             const parsed = parseGearName(current.name);
-            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
-            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'));
-            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+            if (!base) return '';
+            const itemMaxLevel = getItemUpgradeMaxLevel(base);
+            const itemByteThreshold = getItemUpgradeByteThreshold(base);
+            const maxed = parsed.level >= itemMaxLevel;
+            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'), !!base.adminOnly);
+            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'), !!base.adminOnly);
+            const usesTokens = parsed.level >= itemByteThreshold;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
             return `
@@ -7715,7 +7729,7 @@ function startBattle(enemy) {
                 <div>${label}: ${current.name} <span style="color:#8a7a4a;">(надето)</span></div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Урон сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
-                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
+                    Уровень улучшения: ${parsed.level} / ${itemMaxLevel}${parsed.level < itemByteThreshold ? ` (до ${itemByteThreshold} — за Байты)` : ' (за Жетоны сталкера)'}
                 </div>
                 <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
                 <button onclick="upgradeGearItem('${current.name.replace(/'/g, "\\'")}', true)" ${maxed || !canAfford ? 'disabled' : ''}>
@@ -7732,9 +7746,11 @@ function startBattle(enemy) {
         // Пулестойкость и Гашение ударов, без защиты от аномалий/радиации вообще
         function renderArmorUpgradeCard(itemName, qty, isEquipped) {
             const parsed = parseGearName(itemName);
-            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = armorItems.find(a => a.name === parsed.baseName);
             if (!base) return '';
+            const itemMaxLevel = getItemUpgradeMaxLevel(base);
+            const itemByteThreshold = getItemUpgradeByteThreshold(base);
+            const maxed = !base.adminOnly && parsed.level >= itemMaxLevel;
             const eff = getArmorEffectiveStats(itemName);
             const stableKey = getStableArmorKey(itemName);
             const upgradeData = (player.armorUpgradeData && player.armorUpgradeData[stableKey]) || {};
@@ -7773,8 +7789,10 @@ function startBattle(enemy) {
             const statCostDivisor = isSuit ? 9 : 2;
             const rowsHtml = rows.map(r => {
                 const statLevel = Number(upgradeData[r.key]) || 0;
-                const rowMaxed = statLevel >= UPGRADE_MAX_LEVEL;
-                const rowUsesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;
+                // TOTAL_ARMOR_BUDGET_50_V1: legacy records are not silently deleted.
+                const totalUpgrades=Math.max(parsed.level,Object.values(upgradeData).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
+                const rowMaxed = base.adminOnly ? statLevel >= 100 : totalUpgrades >= itemMaxLevel;
+                const rowUsesTokens = statLevel >= itemByteThreshold;
                 const rowCost = Math.max(1, Math.round((rowUsesTokens ? getUpgradeCostTokens(statLevel) : getUpgradeCostBytes(statLevel)) / statCostDivisor));
                 const rowCanAfford = rowUsesTokens ? (Number(player.breedCredits) || 0) >= rowCost : player.coins >= rowCost;
                 const baseStatValue = r.key === 'armor' ? (Number(base.armor)||0)
@@ -7782,14 +7800,14 @@ function startBattle(enemy) {
                     : Number((base.stats||{})[r.key]) || 0;
                 const ceiling = r.key === 'armor' ? getNextItemCeiling(armorItems, base, 'armor')
                     : r.key === 'hitAbsorption' ? getNextItemCeiling(armorItems, base, 'hitAbsorption') : undefined;
-                const nextValue = getUpgradedStat(baseStatValue, statLevel + 1, ceiling);
+                const nextValue = getUpgradedStat(baseStatValue, statLevel + 1, ceiling, !!base.adminOnly);
                 return `
                 <div class="shop-item">
                     <div>${r.label}${r.isNew ? ' <span style="color:#8ac926;">(новая характеристика)</span>' : ''}</div>
                     <div style="font-size:12px; color:#aaa;">Сейчас: <b style="color:#fff;">${r.current}</b> → после улучшения: <b style="color:#27ae60;">${nextValue}</b></div>
-                    <div style="font-size:11px; color:#888;">Уровень этой характеристики: ${statLevel} / ${UPGRADE_MAX_LEVEL}${statLevel < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}</div>
+                    <div style="font-size:11px; color:#888;">Уровень этой характеристики: ${statLevel} / ${base.adminOnly ? 100 : itemMaxLevel}${statLevel < itemByteThreshold ? ` (до ${itemByteThreshold} — за Байты)` : ' (за Жетоны сталкера)'}</div>
                     ${rowMaxed
-                        ? `<button disabled>Эта характеристика улучшена до максимума</button>`
+                        ? `<button disabled>Достигнут общий предел улучшений</button>`
                         : `<div class="price">Цена: ${rowUsesTokens ? '🧬 ' + rowCost + ' Жетон(ов) сталкера' : '🪙 ' + rowCost.toLocaleString('ru-RU') + ' Байт'}</div>
                     <button onclick="upgradeArmorStat('${itemName.replace(/'/g, "\\'")}', ${isEquipped}, '${r.key}')" ${!rowCanAfford ? 'disabled' : ''}>⬆️ Улучшить</button>`}
                 </div>
@@ -7801,7 +7819,7 @@ function startBattle(enemy) {
                 <div>${isEquipped ? '🛡️ Броня: ' : ''}${itemName}${isEquipped ? ' <span style="color:#8a7a4a;">(надето)</span>' : ` ×${qty}`}${isSuit ? ' <span style="color:#8a7a4a; font-size:11px;">(исследовательский — только защита от радиации/аномалий)</span>' : ''}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Пулестойкость: <b style="color:#fff;">${eff.bulletResist}</b> · Гашение ударов: <b style="color:#fff;">${eff.hitAbsorption}</b><br>
-                    Всего улучшений предмета: ${parsed.level}
+                    ${base.adminOnly ? `Администраторское снаряжение вне игрового баланса · улучшений: ${parsed.level}` : `Всего улучшений предмета: ${parsed.level} / ${itemMaxLevel} (общий предел)`}
                 </div>
                 <button onclick="toggleStatPanel('${panelId}', '${trackKey.replace(/'/g, "\\'")}')">
                     🔧 Выбрать и улучшить характеристику
@@ -7823,11 +7841,14 @@ function startBattle(enemy) {
                 return renderArmorUpgradeCard(name, player.inventory[name], false);
             }
             const parsed = parseGearName(name);
-            const maxed = parsed.level >= UPGRADE_MAX_LEVEL;
             const base = weapons.find(w => w.name === parsed.baseName);
-            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'));
-            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'));
-            const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+            if (!base) return '';
+            const itemMaxLevel = getItemUpgradeMaxLevel(base);
+            const itemByteThreshold = getItemUpgradeByteThreshold(base);
+            const maxed = parsed.level >= itemMaxLevel;
+            const currentStat = getUpgradedStat(base.dmg, parsed.level, getNextItemCeiling(weapons, base, 'dmg'), !!base.adminOnly);
+            const nextStat = getUpgradedStat(base.dmg, parsed.level + 1, getNextItemCeiling(weapons, base, 'dmg'), !!base.adminOnly);
+            const usesTokens = parsed.level >= itemByteThreshold;
             const cost = usesTokens ? getUpgradeCostTokens(parsed.level) : getUpgradeCostBytes(parsed.level);
             const canAfford = usesTokens ? (Number(player.breedCredits) || 0) >= cost : player.coins >= cost;
             return `
@@ -7835,7 +7856,7 @@ function startBattle(enemy) {
                 <div>${name} ×${player.inventory[name]}</div>
                 <div style="font-size:12px; color:#aaa; margin:4px 0;">
                     Урон сейчас: <b style="color:#fff;">${currentStat}</b>${maxed ? '' : ` → после улучшения: <b style="color:#27ae60;">${nextStat}</b>`}<br>
-                    Уровень улучшения: ${parsed.level} / ${UPGRADE_MAX_LEVEL}${parsed.level < UPGRADE_BYTE_THRESHOLD ? ` (до ${UPGRADE_BYTE_THRESHOLD} — за Байты)` : ' (за Жетоны сталкера)'}
+                    ${base.adminOnly ? `Администраторское снаряжение вне игрового баланса · улучшений: ${parsed.level}` : `Всего улучшений предмета: ${parsed.level} / ${itemMaxLevel} (общий предел)`}
                 </div>
                 <div class="price">Цена улучшения: ${usesTokens ? '🧬 ' + cost + ' Жетон(ов) сталкера' : '🪙 ' + cost.toLocaleString('ru-RU') + ' Байт'}</div>
                 <button onclick="upgradeGearItem('${name.replace(/'/g, "\\'")}')" ${maxed || !canAfford ? 'disabled' : ''}>
@@ -8071,7 +8092,7 @@ function startBattle(enemy) {
 <script src="ui/trade-menu.js?v=df71084cb139"></script>
 <script src="ui/terminology-market.js?v=cd42e2a7acba"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
-<script src="ui/trader-hubs.js?v=0661ddee1554"></script>
+<script src="ui/trader-hubs.js?v=20260919q3"></script>
 
 </body>
 </html>

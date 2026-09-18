@@ -1,0 +1,52 @@
+/* PDA quests + S.T.A.L.K.E.R.-inspired trader dialogue. */
+#questPdaScreen[hidden],#traderQuestDialogue[hidden],#activeQuestRaidTracker[hidden]{display:none!important}
+body.quest-pda-visible,body.trader-dialogue-visible{overflow:hidden!important}
+.quest-pda-shell{position:fixed;inset:0;z-index:6100;overflow:auto;background:linear-gradient(135deg,#080c09fa,#13160ff8);color:#d7ceb1;padding:max(10px,env(safe-area-inset-top)) 10px max(12px,env(safe-area-inset-bottom));}
+.quest-pda-head{display:flex;align-items:center;gap:8px;padding:7px;border:3px solid #665b3e;background:#12150f}
+.quest-pda-head h2{flex:1;margin:0;color:#d4bd79;font:700 clamp(16px,4.5vw,24px)/1.1 'Russo One',Arial,sans-serif}
+.quest-pda-head button,.quest-tabs button,.quest-details button,.dialogue-quest-offer button,.dialogue-turnin button,.dialogue-abandon button{min-height:44px;border:2px solid #796746;background:linear-gradient(#443821,#201b13);color:#e2d2a6;font-weight:700}
+.quest-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:8px 0}
+.quest-tabs button{padding:7px 2px;font-size:clamp(10px,2.8vw,14px)}
+.quest-tabs button.active{outline:2px solid #c9ad68;outline-offset:-3px;background:linear-gradient(#5b4a29,#282116)}
+.quest-list{display:grid;gap:6px}
+.quest-card{border:1px solid #62583d;background:#0c100c;box-shadow:inset 0 0 15px #000}
+.quest-card-open{width:100%;display:grid;grid-template-columns:1fr auto;gap:4px;text-align:left;padding:10px;border:0;background:transparent;color:#d6ccb0}
+.quest-card-open strong{color:#e0c77c}.quest-card-open .quest-objective{grid-column:1/-1}
+.quest-card.quest-ready,.quest-details.quest-ready,#activeQuestRaidTracker.quest-ready{border-color:#66b66f}
+.quest-ready .quest-objective{color:#6fe17b!important}
+.quest-details{position:fixed;z-index:6200;left:4%;right:4%;top:18%;max-height:70dvh;overflow:auto;padding:14px;border:4px solid #65573a;background:#0b0e0bed;color:#ddd1ad;box-shadow:0 14px 60px #000}
+.quest-details h3{color:#d8bd70;margin-top:0}.quest-details-close{float:right;width:44px}.quest-priority{color:#d6bd73;font-weight:700}.quest-note{color:#9f9a88;font-size:12px}.quest-empty{padding:20px;text-align:center;color:#99917d}
+
+#activeQuestRaidTracker{margin:7px 0;padding:8px;border:1px solid #6c6041;background:#090c09e8;color:#e0d9c8;display:grid;gap:2px;font-size:12px}
+#activeQuestRaidTracker strong{color:#d7bb70}
+#activeQuestRaidTracker.quest-ready{box-shadow:inset 0 0 14px #1d5d2b66}
+#activeQuestRaidTracker.quest-ready .quest-objective{color:#6fe17b;font-weight:700}
+
+#traderQuestDialogue{position:fixed;inset:0;z-index:100030;background:#0009;display:grid;place-items:center;padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))}
+.trader-dialogue-shell{width:min(100%,780px);max-height:96dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;border:6px solid transparent;border-image:var(--zr-frame) 10 stretch;background:linear-gradient(145deg,#0a0d0af5,#17140ff5),var(--zr-metal) center/380px;color:#d5c9a8;box-shadow:0 20px 80px #000}
+.trader-dialogue-shell>header{display:flex;align-items:center;padding:8px 10px;border-bottom:1px solid #625438;background:#12140f}
+.trader-dialogue-shell>header h2{flex:1;margin:0;color:#d6bd72;font:700 clamp(15px,4vw,22px)/1.2 'Russo One',Arial,sans-serif}
+.trader-dialogue-shell>header button{min-height:40px;border:1px solid #725a39;background:#3f251a;color:#d8c49a}
+.trader-dialogue-body{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,31%);overflow:hidden}
+.trader-dialogue-copy{min-height:0;overflow:auto;padding:12px}
+#traderDialogueLine{margin:0 0 12px;padding:10px;border-left:3px solid #856f42;background:#0b0d09;color:#cfc4a5;line-height:1.45}
+.trader-dialogue-portrait{border-left:1px solid #574b34;background:#060806;overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr) auto}
+.trader-dialogue-portrait img{width:100%;height:100%;min-height:230px;display:block;object-fit:cover;object-position:center top;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none;filter:saturate(.78) contrast(1.08)}
+.trader-dialogue-portrait-meta{display:grid;gap:1px;padding:6px 8px;border-top:1px solid #66583b;background:linear-gradient(#171a13,#0a0d09);font-size:11px}
+.trader-dialogue-portrait-meta strong{color:#d4b85f;font-size:12px}.trader-dialogue-portrait-meta span{color:#9f987f}
+.dialogue-quest-list,#traderDialogueContent{display:grid;gap:6px}
+.dialogue-quest-offer,.dialogue-turnin,.dialogue-abandon{display:grid;gap:4px;padding:9px;border:1px solid #5f5438;background:#10120d}
+.dialogue-quest-offer strong,.dialogue-turnin strong,.dialogue-abandon strong{color:#d8bd72}
+.trader-dialogue-responses{display:grid;gap:2px;padding:8px 9px;border-top:2px solid #66573b;background:linear-gradient(#0b0d09,#050705);counter-reset:dialogue-choice}
+.trader-dialogue-responses button{counter-increment:dialogue-choice;min-height:40px;padding:7px 9px;text-align:left;border:0;border-bottom:1px solid #38382d;background:transparent;color:#d7ceb5;font-weight:600}
+.trader-dialogue-responses button::before{content:counter(dialogue-choice) '. ';color:#cfb263;font-weight:800}
+.trader-dialogue-responses button:active{background:#2b3123}
+@media(max-width:520px){
+ .trader-dialogue-body{grid-template-columns:minmax(0,1fr) 104px}
+ .trader-dialogue-portrait img{min-height:210px}
+ .trader-dialogue-copy{padding:8px}
+}
+@media(max-width:350px){.trader-dialogue-body{grid-template-columns:1fr}.trader-dialogue-portrait{display:none}}
+
+/* Original trilogy dialogue composition: large NPC text pane, compact portrait card, numbered answer pane below. */
+#traderDialogueLine::before{content:'NPC';display:block;margin-bottom:4px;color:#b79a4c;font:700 10px/1 'Russo One',Arial,sans-serif;letter-spacing:.08em}

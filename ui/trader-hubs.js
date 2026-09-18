@@ -3,6 +3,23 @@
   'use strict';
   if (window.TraderHubs || !window.TradeMenu || typeof window.openScreen !== 'function') return;
 
+  // Balance + quest modules are layered on top of existing trader hubs so
+  // trading/upgrades keep their original routes in Telegram and Android.
+  if (!document.querySelector('script[data-zone-balance]')) {
+    const balanceScript = document.createElement('script');
+    balanceScript.src = 'ui/balance-tuning.js?v=20260919-1';
+    balanceScript.defer = true;
+    balanceScript.dataset.zoneBalance = '1';
+    document.head.append(balanceScript);
+  }
+  if (!document.querySelector('script[data-zone-quests]')) {
+    const questScript = document.createElement('script');
+    questScript.src = 'ui/quests.js?v=20260919-1';
+    questScript.defer = true;
+    questScript.dataset.zoneQuests = '1';
+    document.head.append(questScript);
+  }
+
   const nativeOpenScreen = window.openScreen;
   const portraitLocks = new WeakMap();
   let zhucharaHub = null;
@@ -81,7 +98,11 @@
     if (!talk) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    say('Леонов: Артефакты — это язык Зоны. Главное — уметь слушать.');
+    if (window.QuestSystem?.openTraderDialogue) {
+      window.QuestSystem.openTraderDialogue('leonov');
+    } else {
+      say('Леонов: Артефакты — это язык Зоны. Главное — уметь слушать.');
+    }
   }, true);
 
   new MutationObserver(() => decorateLeonov()).observe(document.body, {childList:true, subtree:true});
@@ -155,7 +176,8 @@
         hideZhuchara();
         window.TradeMenu.open('zhuchara');
       } else if (action === 'talk') {
-        say('Жучара: В Зоне нет ненужного хлама. Есть лишь не та цена…');
+        if (window.QuestSystem?.openTraderDialogue) window.QuestSystem.openTraderDialogue('zhuchara');
+        else say('Жучара: В Зоне нет ненужного хлама. Есть лишь не та цена…');
       } else if (action === 'back') {
         hideZhuchara();
         nativeOpenScreen('main');
@@ -194,7 +216,8 @@
           if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
         }
       } else if (action === 'talk') {
-        say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
+        if (window.QuestSystem?.openTraderDialogue) window.QuestSystem.openTraderDialogue('diesel');
+        else say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
       } else if (action === 'back') {
         hideDiesel();
         nativeOpenScreen('main');

@@ -1,0 +1,24 @@
+name: Audit game balance
+on:
+  push:
+    branches: [feature/quests-balance-20260919]
+    paths:
+      - 'index.html'
+      - 'tools/audit_balance.cjs'
+      - '.github/workflows/balance-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: node tools/audit_balance.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: balance-audit
+          path: balance-audit.json
+          retention-days: 3

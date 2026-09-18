@@ -1,0 +1,55 @@
+name: Validate quests and balance
+on:
+  push:
+    branches: [feature/quests-balance-20260919]
+    paths:
+      - 'index.html'
+      - 'inventory/**'
+      - 'ui/quests.*'
+      - 'ui/balance-tuning.js'
+      - 'ui/trader-hubs.*'
+      - 'server_patches/quest-balance.cjs'
+      - 'tools/install_quest_balance_server.py'
+      - 'tools/apply_balance_client.py'
+      - 'tests/quests_*'
+      - 'tests/artifact_balance.test.cjs'
+      - 'tests/admin_balance_exclusion.test.cjs'
+      - 'tools/audit_live_balance_readonly.py'
+      - 'tools/audit_market_upgrade_readonly.py'
+      - 'tools/simulate_pve_balance.cjs'
+      - 'tests/install_quest_balance_patch.test.py'
+      - 'tests/inventory_drag.test.cjs'
+      - '.github/workflows/quests-balance.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Syntax
+        run: |
+          node --check inventory/drag.js
+          node --check ui/quests.js
+          node --check ui/balance-tuning.js
+          node --check ui/trader-hubs.js
+          node --check server_patches/quest-balance.cjs
+          node --check tools/simulate_pve_balance.cjs
+          python3 -m py_compile tools/install_quest_balance_server.py
+          python3 -m py_compile tools/audit_live_balance_readonly.py
+          python3 -m py_compile tools/audit_market_upgrade_readonly.py
+      - name: Unit and static checks
+        run: |
+          node tests/quests_server.test.cjs
+          node tests/quests_client.static.cjs
+          node tests/artifact_balance.test.cjs
+          node tests/admin_balance_exclusion.test.cjs
+          node tools/simulate_pve_balance.cjs
+          node tests/inventory_drag.test.cjs
+          python3 tests/install_quest_balance_patch.test.py
+          git diff --check
