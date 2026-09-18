@@ -4,9 +4,9 @@ function array(name){
   const re=new RegExp('const\\s+'+name+'\\s*=\\s*(\\[[\\s\\S]*?\\n\\s*\\]);');
   const m=html.match(re);assert(m,'missing '+name);return vm.runInNewContext(m[1],{});
 }
-const artifacts=array('artifacts'),anomalies=array('anomalies');
+const artifacts=array('artifacts'),anomalies=array('anomalies'),armorItems=array('armorItems');
 const ctx={
-  artifacts,anomalies,
+  artifacts,anomalies,armorItems,
   window:{},
   document:{getElementById(){return null},createElement(){return{append(){},className:'',textContent:''}}},
   stripInvisibleSuffix:s=>s,console
@@ -17,12 +17,23 @@ vm.runInContext(fs.readFileSync('ui/balance-tuning.js','utf8'),ctx);
 const model=ctx.GameBalanceTuning.artifactModel;
 assert(model.length>=70,'expected regular artifact model');
 assert(model.every(x=>x.tier>=1&&x.tier<=8),'tier-9 named artifacts must stay outside rebalance');
-assert.equal(ctx.GameBalanceTuning.researchTier(99),0);
-assert.equal(ctx.GameBalanceTuning.researchTier(100),4);
-assert.equal(ctx.GameBalanceTuning.researchTier(140),5);
-assert.equal(ctx.GameBalanceTuning.researchTier(500),14);
+assert.equal(ctx.GameBalanceTuning.researchTier(134),0);
+assert.equal(ctx.GameBalanceTuning.researchTier(135),4);
+assert.equal(ctx.GameBalanceTuning.researchTier(174),4);
+assert.equal(ctx.GameBalanceTuning.researchTier(175),5);
+assert.equal(ctx.GameBalanceTuning.researchTier(569),13);
+assert.equal(ctx.GameBalanceTuning.researchTier(570),14);
 assert.equal(ctx.GameBalanceTuning.maxUpgradeLevel,50);
 assert.equal(ctx.GameBalanceTuning.maxUpgradeBonusPct,.25);
+
+const researchPrices=ctx.GameBalanceTuning.researchPrices;
+assert.equal(researchPrices.length,11);
+for(const row of researchPrices){
+  const same=armorItems.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===Number(row.tier));
+  assert(same.length,'normal armor tier '+row.tier);
+  const floor=Math.min(...same.map(a=>Number(a.price)));
+  assert.equal(row.price,Math.round(floor*1.10),'research price tier '+row.tier);
+}
 
 const byName=new Map(artifacts.map(a=>[a.name,a]));
 const tierStrength=new Map();
