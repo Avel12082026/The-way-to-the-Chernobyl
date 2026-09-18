@@ -26,10 +26,11 @@ jobs:
           test -x "$BT/apksigner"
           test -x "$BT/zipalign"
           test -f "$BT/lib/apksigner.jar"
-          mkdir -p signing-tools/lib
+          mkdir -p signing-tools/lib signing-tools/lib64
           cp "$BT/apksigner" signing-tools/
           cp "$BT/zipalign" signing-tools/
           cp "$BT/lib/apksigner.jar" signing-tools/lib/
+          cp "$BT/lib64/libc++.so" signing-tools/lib64/
           chmod +x signing-tools/apksigner signing-tools/zipalign
       - uses: actions/upload-artifact@v4
         with:
