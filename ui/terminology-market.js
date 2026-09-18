@@ -38,7 +38,15 @@
 
   function rewriteText(value) {
     let text = String(value ?? '');
+    // Protect already-renamed Stalbyte words so repeated MutationObserver passes are idempotent.
+    const protectedWords = [];
+    text = text.replace(/Сталбайт(?:ы|а|ов)?|сталбайт(?:ы|а|ов)?/g, word => {
+      const token = '\\uE000' + protectedWords.length + '\\uE001';
+      protectedWords.push(word);
+      return token;
+    });
     for (const [from, to] of replacements) text = text.split(from).join(to);
+    text = text.replace(/\\uE000(\\d+)\\uE001/g, (_, index) => protectedWords[Number(index)] || '');
     return text;
   }
 
