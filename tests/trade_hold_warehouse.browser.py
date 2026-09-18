@@ -1,5 +1,5 @@
 """Full client regression tests with isolated state and no live networking."""
-import asyncio, json, re, mimetypes
+import asyncio, json, re, mimetypes, sys
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 from playwright.async_api import async_playwright
@@ -15,7 +15,7 @@ async def main():
     writes, errors, checks = [], [], []
     images = {p.name:p for p in ROOT.rglob('*') if p.is_file() and p.suffix.lower() in ('.png','.webp','.jpg','.jpeg','.svg')}
     async with async_playwright() as pw:
-        browser = await pw.chromium.launch(args=['--no-sandbox','--disable-dev-shm-usage'])
+        browser = await pw.chromium.launch(executable_path=sys.argv[1] if len(sys.argv)>1 else None,args=['--no-sandbox','--disable-dev-shm-usage'])
         context = await browser.new_context(viewport={'width':390,'height':844},has_touch=True,is_mobile=True,service_workers='block')
         async def resource(route):
             name = Path(unquote(urlsplit(route.request.url).path)).name
@@ -47,7 +47,6 @@ async def main():
             return new Response('{}',{status:404});
           };
           window.__contextMenus=[];
-          window.addEventListener('contextmenu',e=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName}));
         }""",(ROOT/'ui/pda-notification.mp3.b64').read_text())
         html = (ROOT/'index.html').read_text()
         def inline_script(m):
@@ -58,6 +57,7 @@ async def main():
         html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',inline_script,html)
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
         await page.set_content(html,wait_until='domcontentloaded')
+        await page.evaluate("window.addEventListener('contextmenu',e=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName}))")
         await page.wait_for_function("window.TradeItemContextGuard?.version==='1.0.0' && player.nickname==='Тест'")
         names=await page.evaluate("[...new Set([...getShopCatalog().map(x=>x.name),detectors[0].name,armorItems[5].name])]")
         state['inventory']={n:10 for n in names}
