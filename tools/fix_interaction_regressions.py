@@ -3,7 +3,7 @@ from pathlib import Path
 import hashlib,re
 ROOT=Path(__file__).resolve().parents[1]
 required={
- 'ui/trade-menu.js':["version: '1.3.0'","openTradeItemInfoFromHold","520","queues[source].delete(name)"],
+ 'ui/trade-menu.js':["version: '1.3.1'","openTradeItemInfoFromHold","520","queues[source].delete(name)","#tradeMenu,#itemInfoModal"],
  'ui/trader-hubs.js':["/api/friends/pending","newFriendRequest","['dm','parcel','system','friend']","telegram.className=backpack.className"],
  'ui/trader-hubs.css':[".pda-notification-friend","#bunkerPda .pda-notification-friend"],
 }
