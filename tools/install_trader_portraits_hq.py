@@ -69,5 +69,8 @@ positions={rel:s.index(rel) for rel in ('ui/bunker-menu.js','ui/trade-menu.js','
 if not (positions['ui/bunker-menu.js'] < positions['ui/trade-menu.js'] < positions['ui/trader-portrait-data.js'] < positions['ui/trader-hubs.js']):
     raise SystemExit('Unexpected trader script order: '+repr(positions))
 
+# Canonicalize blank lines so a second installer run is byte-for-byte identical.
+s=re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+','\n\n',s)
+
 p.write_text(s,encoding='utf-8')
 print('HQ trader portrait assets installed in deterministic order')
