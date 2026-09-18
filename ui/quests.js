@@ -161,7 +161,7 @@ function renderPda(){
   list.replaceChildren();
   const details=document.getElementById('questPdaDetails');if(details)details.hidden=true;
   let rows=[];
-  if(activeTab==='accepted')rows=state.accepted;
+  if(activeTab==='accepted')rows=state.accepted.filter(q=>q.id!==state.activeId);
   else if(activeTab==='active'){const q=activeQuest();rows=q?[q]:[];}
   else rows=state.completed;
   if(!rows.length){
