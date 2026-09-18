@@ -1,0 +1,59 @@
+name: Validate terminology and Stalcoin market
+
+on:
+  push:
+    branches: [ui/terminology-market-20260918]
+    paths:
+      - 'index.html'
+      - 'ui/terminology-market.js'
+      - 'ui/bunker-menu.html'
+      - 'ui/bunker-menu.js'
+      - 'ui/trade-menu.js'
+      - 'tools/install_market_stalkcoins.*'
+      - 'tests/terminology_market*'
+      - 'tests/market_stalkcoins_installer.test.py'
+      - '.github/workflows/terminology-market.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terminology-market-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Static syntax and terminology checks
+        run: |
+          node --check ui/terminology-market.js
+          node --check ui/bunker-menu.js
+          node --check ui/trade-menu.js
+          node tests/terminology_market.test.cjs
+          python -m py_compile tools/install_market_stalkcoins.py tests/market_stalkcoins_installer.test.py tests/terminology_market.browser.py
+          python tests/market_stalkcoins_installer.test.py
+
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+
+      - name: Browser regression
+        run: python tests/terminology_market.browser.py
+
+      - name: Attach report and screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: terminology-market-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: .validation/terminology-market/
