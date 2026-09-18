@@ -1,0 +1,131 @@
+diff --git a/inventory/drag.css b/inventory/drag.css
+index 48c06af..4d20dee 100644
+--- a/inventory/drag.css
++++ b/inventory/drag.css
+@@ -117,3 +117,14 @@
+ #inventoryScreen #inventoryGrid [data-drag-item] a{
+   pointer-events:none!important;
+ }
++
++/* Also protect an empty cell, equipped item and the dialog opened after a tap. */
++#inventoryScreen :is(#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid) img,
++#warehouseScreen :is(#warehouseGrid,#warehouseInventoryGrid) img,
++#itemActionModal img {
++  pointer-events:none!important;
++  -webkit-touch-callout:none!important;
++  -webkit-user-drag:none!important;
++  -webkit-user-select:none!important;
++  user-select:none!important;
++}
+diff --git a/inventory/drag.js b/inventory/drag.js
+index 475cb15..6a2dc0c 100644
+--- a/inventory/drag.js
++++ b/inventory/drag.js
+@@ -1,7 +1,7 @@
+ (()=>{
+ 'use strict';
+ let screen, gesture=null, ghost=null, frame=0, busy=false, suppressUntil=0, preciseArtifacts=false;
+-const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация.';
++const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация и действия.';
+ function hint(text=instruction){const el=document.getElementById(screen?.id==='warehouseScreen'?'warehouseDragHint':'inventoryDragHint');if(el)el.textContent=text;}
+ function kind(name){return getEquipSlotType(name)||(findArtifactDef(name)?'artifact':consumables.some(c=>c.name===name)?'quick':null);}
+ function compatible(name,slot,from=gesture?.from||'inventory'){
+@@ -133,9 +133,13 @@ function init(){
+   }
+  },true);
+  document.addEventListener('dragstart',e=>{if(e.target.closest('#inventoryScreen [data-drag-item],#warehouseScreen [data-drag-item]')){e.preventDefault();e.stopPropagation();}},true);
++ // Capturing the native menu is independent of drag state and re-render timing.
++ // Item dialogs are siblings of the inventory, not descendants of it.
+  document.addEventListener('contextmenu',e=>{
+-  if(e.target.closest('#inventoryScreen [data-drag-item],#inventoryScreen #itemInfoModal,#warehouseScreen [data-drag-item]')||gesture){
+-   e.preventDefault();e.stopImmediatePropagation();
++  const target=e.target?.closest?e.target:e.target?.parentElement;
++  if(target?.closest('input,textarea,[contenteditable="true"]'))return;
++  if(target?.closest('#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid,#warehouseGrid,#warehouseInventoryGrid,#itemActionModal,#itemInfoModal,.inventory-drag-ghost')||gesture){
++   e.preventDefault();e.stopPropagation();
+   }
+  },true);
+ }
+diff --git a/tests/inventory_native_menu.browser.py b/tests/inventory_native_menu.browser.py
+index 492127a..7f1d7a1 100644
+--- a/tests/inventory_native_menu.browser.py
++++ b/tests/inventory_native_menu.browser.py
+@@ -1,5 +1,5 @@
+ """Inventory long-press regression: item cells own touch; image URLs never own Android context menus."""
+-import asyncio,re,mimetypes,sys,json
++import os,asyncio,re,mimetypes,sys,json
+ from pathlib import Path
+ from urllib.parse import urlsplit,unquote
+ from playwright.async_api import async_playwright
+@@ -13,18 +13,29 @@ async def main():
+   errors=[]
+   images={p.name:p for p in ROOT.rglob('*') if p.is_file() and p.suffix.lower() in ('.png','.webp','.jpg','.jpeg','.svg')}
+   async with async_playwright() as pw:
+-    browser=await pw.chromium.launch(args=['--no-sandbox','--disable-dev-shm-usage'])
++    browser=await pw.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH'),args=['--no-sandbox','--disable-dev-shm-usage'])
+     context=await browser.new_context(viewport={'width':390,'height':844},has_touch=True,is_mobile=True,service_workers='block')
+     page=await context.new_page();page.set_default_timeout(8000);page.on('pageerror',lambda e:errors.append(str(e)))
+     await page.evaluate(TG)
+     await page.evaluate("""s=>{
+-      HTMLMediaElement.prototype.play=function(){return Promise.resolve()};
++      HTMLMediaElement.prototype.play=function(){return Promise.resolve()};window.__writes=[];
+       window.fetch=async(input,init={})=>{
+         const path=new URL(typeof input==='string'?input:input.url,'http://offline.test').pathname;
+         let data={};
+         if(path.endsWith('/api/player/private'))data=s;
+         else if(path.endsWith('/api/equipment/features'))data={artifactSlotTarget:true};
++        else if(path.endsWith('/api/named-artifacts'))data=[];
+         else if(path.includes('/api/faction'))data={success:true,faction:null};
++        else if(path.endsWith('/api/quickslots/set')){
++          const b=JSON.parse(init.body);window.__writes.push({path,payload:b});
++          s.quickSlots=s.quickSlots||[null,null,null,null];s.quickSlots[b.index]=b.itemName;
++          data={success:true,quickSlots:s.quickSlots};
++        }else if(path.endsWith('/api/warehouse/transfer')){
++          const b=JSON.parse(init.body);window.__writes.push({path,payload:b});
++          const from=b.direction==='deposit'?s.inventory:s.warehouse,to=b.direction==='deposit'?s.warehouse:s.inventory;
++          if((from[b.item]||0)<b.qty)data={success:false,error:'not enough'};
++          else{from[b.item]-=b.qty;if(!from[b.item])delete from[b.item];to[b.item]=(to[b.item]||0)+b.qty;data={success:true,inventory:s.inventory,warehouse:s.warehouse,quickSlots:s.quickSlots};}
++        }
+         else if(path.includes('/api/'))data={success:true};
+         return new Response(JSON.stringify(data),{status:200,headers:{'Content-Type':'application/json'}});
+       };
+@@ -78,7 +89,39 @@ async def main():
+     # Drag suppression expires and does not leave the page in a blocked/busy state.
+     await page.wait_for_timeout(750)
+     assert await page.evaluate("!document.querySelector('#inventoryScreen')?.getAttribute('aria-busy')")
++    # Short tap still opens the game's information dialog after a cancelled drag.
++    await cell.tap();await page.locator('#itemActionModal').wait_for(state='visible')
++    assert name in (await page.locator('#itemActionTitle').text_content())
++    assert await page.locator('#itemActionModal button[onclick*=applyInventoryItem]').is_visible()
++    assert await cancelled(page.locator('#itemActionModal img').first)
++    await page.locator('#itemActionModal button[onclick*=closeItemActionModal]').click()
++    await page.wait_for_timeout(750)
++    # Emulated touch drag to a real quick slot submits one real-shaped API request.
++    await cell.scroll_into_view_if_needed()
++    a=await cell.bounding_box();b=await page.locator('#quickSlotsGrid [data-drop-kind="quick"]').first.bounding_box()
++    cdp=await context.new_cdp_session(page)
++    await cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':a['x']+a['width']/2,'y':a['y']+a['height']/2}]})
++    await page.wait_for_timeout(280)
++    await cdp.send('Input.dispatchTouchEvent',{'type':'touchMove','touchPoints':[{'x':b['x']+b['width']/2,'y':b['y']+b['height']/2}]})
++    await cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]})
++    await page.wait_for_function("window.__writes.length===1 && player.quickSlots[0]==='Аптечка армейская'")
++    assert not await page.locator('#itemInfoModal').is_visible()
++    assert await page.locator('.inventory-drag-ghost').count()==0
++    await page.wait_for_timeout(750)
++    # Trading hold remains info-only; it must not add the item to the purchase basket.
++    await page.evaluate("TradeMenu.open('zhuchara')")
++    stock=page.locator('#tradeStock [data-trade-source]').first
++    await stock.scroll_into_view_if_needed();b=await stock.bounding_box()
++    await cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':b['x']+b['width']/2,'y':b['y']+b['height']/2}]})
++    await page.wait_for_timeout(1600)
++    assert await page.locator('#itemInfoModal').is_visible()
++    assert await cancelled(page.locator('#itemInfoModal img').first)
++    await cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});await cdp.detach()
++    assert await page.locator('#tradeBuySlots [data-trade-name]').count()==0
++    assert await page.evaluate('window.__writes.length')==1
+     assert not errors,errors
++    report={'status':'passed','item':name,'checks':['inventory and image contextmenu blocked','img pointer-events none','220ms hold drag ghost','cancel cleans ghost','short tap preserves item info and use actions','quick-slot drop exactly one API request','trade 1600ms hold still info without purchase'],'page_errors':errors,'live_player_writes':0,'physical_android_tested':False}
++    out=ROOT/'.validation/inventory-native-menu';out.mkdir(parents=True,exist_ok=True);(out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+     print(json.dumps({'status':'passed','item':name,'imagePointerEvents':'none','contextMenuBlocked':True},ensure_ascii=False))
+     await browser.close()
+ 
