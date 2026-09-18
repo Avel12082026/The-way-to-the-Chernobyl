@@ -9,7 +9,10 @@ on:
       - 'ui/trader-hubs.*'
       - 'server_patches/quest-balance.cjs'
       - 'tools/install_quest_balance_server.py'
+      - 'tools/apply_balance_client.py'
       - 'tests/quests_*'
+      - 'tests/artifact_balance.test.cjs'
+      - 'tests/install_quest_balance_patch.test.py'
       - 'tests/inventory_drag.test.cjs'
       - '.github/workflows/quests-balance.yml'
   workflow_dispatch:
