@@ -63,7 +63,7 @@ async def main():
         html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',inline_script,html)
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.evaluate("window.addEventListener('contextmenu',e=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName}))")
+        await page.evaluate("document.addEventListener('contextmenu',e=>queueMicrotask(()=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName})),true)")
         await page.wait_for_function("window.TradeItemContextGuard?.version==='1.0.0' && player.nickname==='Тест'")
         names=await page.evaluate("[...new Set([...getShopCatalog().map(x=>x.name),detectors[0].name,armorItems[5].name])]")
         state['inventory']={n:10 for n in names}
