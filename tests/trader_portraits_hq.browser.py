@@ -48,7 +48,7 @@ async def main():
         await page.evaluate("(s)=>{Object.assign(player,s);updateUI();openScreen('main')}",state)
 
         async def dims(sel):
-            await page.wait_for_function("(s)=>{const i=document.querySelector(s);return i&&i.naturalWidth>0}",sel)
+            await page.wait_for_function("(s)=>{const i=document.querySelector(s);return i&&i.naturalWidth>0}", arg=sel)
             return await page.locator(sel).evaluate("(i)=>[i.naturalWidth,i.naturalHeight,i.dataset.portraitQuality||'']")
 
         # Zhuchara: full-resolution source and one-row actions.
