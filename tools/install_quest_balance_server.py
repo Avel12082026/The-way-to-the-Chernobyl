@@ -205,51 +205,121 @@ def main():
     parser.add_argument('--dry-run',action='store_true',help='Проверить без изменения кода, профилей и службы')
     args=parser.parse_args()
     if args.install and not LIVE_DEPLOYMENT_READY:
-        raise RuntimeError('Установка пока закрыта: не завершена миграция старых улучшений и итоговая симуляция баланса. Используйте --dry-run.')
-    if os.geteuid()!=0: raise RuntimeError('Запустите установщик от root на сервере.')
+        raise RuntimeError('Установка пока закрыта: не завершена итоговая симуляция баланса. Используйте --dry-run.')
+    if os.geteuid()!=0:
+        raise RuntimeError('Запустите установщик от root на сервере.')
+
     server=SERVER.resolve(strict=True)
     module_source=Path(args.module).resolve(strict=True)
-    raw=server.read_bytes();source=raw.decode('utf-8')
+    raw=server.read_bytes()
+    source=raw.decode('utf-8')
     if sha(raw) not in KNOWN_SERVER_SHA256 and MARK not in source:
         raise RuntimeError('Версия server.js не совпадает с проверенной. Ничего не изменено.')
+
     new_source,changed=patch(source)
     module_raw=module_source.read_bytes()
 
     if not changed and (server.parent/MODULE_NAME).is_file() and (server.parent/MODULE_NAME).read_bytes()==module_raw and health():
-        print('Уже установлено; API заданий отвечает.');return
+        print('Уже установлено; API заданий отвечает.')
+        return
 
-    pid,cwd,database=process_check(server)
+    _pid,cwd,database=process_check(server)
     with tempfile.TemporaryDirectory(prefix='zone-quest-check-') as td:
-        p=Path(td);(p/'server.js').write_text(new_source);(p/MODULE_NAME).write_bytes(module_raw)
+        p=Path(td)
+        (p/'server.js').write_text(new_source,encoding='utf-8')
+        (p/MODULE_NAME).write_bytes(module_raw)
         run(['node','--check',str(p/'server.js')],timeout=30)
         run(['node','--check',str(p/MODULE_NAME)],timeout=30)
 
     if args.dry_run or not args.install:
+        import re
+        def read_catalog(const_name):
+            match=re.search(r'const\\s+'+re.escape(const_name)+r'\\s*=\\s*(\\[[\\s\\S]*?\\]);',source)
+            if not match:
+                return []
+            try:
+                return json.loads(match.group(1))
+            except Exception:
+                return []
+        admin_gear={str(x.get('name')) for x in read_catalog('SHOP_WEAPONS')+read_catalog('SHOP_ARMOR') if x.get('adminOnly') and x.get('name')}
+        admin_artifacts={str(x.get('name')) for x in read_catalog('SHOP_ARTIFACTS') if x.get('adminOnly') and x.get('name')}
+        invis='\\u200b\\u200c\\u200d\\u2060\\ufeff'
+        def clean_base(name):
+            value=str(name or '').rstrip(invis)
+            return re.sub(r' \\+\\d+$','',value)
         source_db=sqlite3.connect(database.as_uri()+'?mode=ro',uri=True,timeout=10)
         try:
-            summary={'profiles':0,'profilesWithUpgradesOver50':0,'profilesWithEquippedArtifacts':0}
-            import re
+            summary={
+                'profiles':0,
+                'profilesWithPlayerGearUpgradesOver50':0,
+                'profilesWithRegularEquippedArtifacts':0,
+                'adminGearExcluded':len(admin_gear),
+                'adminArtifactsExcluded':len(admin_artifacts),
+            }
             for (raw_data,) in source_db.execute('SELECT data FROM players'):
-                data=json.loads(raw_data);summary['profiles']+=1
+                data=json.loads(raw_data)
+                summary['profiles']+=1
                 names=list((data.get('inventory') or {}).keys())+list((data.get('warehouse') or {}).keys())
                 names += [str((data.get(k) or {}).get('name','')) for k in ('weapon','armor')]
-                over=any(int(m.group(1))>50 for name in names if (m:=re.search(r' \+(\d+)[\u200B\u200C]*
-    backup=server.parent/('BACKUP_BEFORE_QUEST_BALANCE_'+stamp);backup.mkdir(mode=0o700)
-    shutil.copy2(server,backup/'server.js')
-    existing=server.parent/MODULE_NAME
-    if existing.exists():shutil.copy2(existing,backup/MODULE_NAME)
-    make_db_backup(database,backup/'game.db');os.chmod(backup/'game.db',0o600)
+                over=False
+                for name in names:
+                    if clean_base(name) in admin_gear:
+                        continue
+                    match=re.search(r' \\+(\\d+)['+invis+r']*$',str(name or ''))
+                    if match and int(match.group(1))>50:
+                        over=True
+                        break
+                if not over:
+                    for stable,stats in (data.get('armorUpgradeData') or {}).items():
+                        if clean_base(stable) in admin_gear or not isinstance(stats,dict):
+                            continue
+                        total=sum(max(0,float(v)) for v in stats.values() if isinstance(v,(int,float)))
+                        if total>50:
+                            over=True
+                            break
+                summary['profilesWithPlayerGearUpgradesOver50']+=int(over)
+                equipped=[str(x or '').rstrip(invis) for x in (data.get('artifactSlots') or []) if x]
+                summary['profilesWithRegularEquippedArtifacts']+=int(any(name not in admin_artifacts for name in equipped))
+            summary['activeRaids']=source_db.execute('SELECT COUNT(*) FROM raid_sessions').fetchone()[0]
+        finally:
+            source_db.close()
+        print(json.dumps({
+            'mode':'READ_ONLY',
+            'syntax':'passed',
+            'releaseReady':LIVE_DEPLOYMENT_READY,
+            'sourceSha256':sha(raw),
+            'patchedSha256':sha(new_source.encode()),
+            'summary':summary
+        },ensure_ascii=False,indent=2))
+        print('Админские оружие, броня и артефакты исключены из расчёта баланса.')
+        print('Файлы, игровые профили и служба не изменялись. Это проверка, не установка.')
+        return
 
     if server.read_bytes()!=raw:
         raise RuntimeError('server.js изменился во время проверки; установка остановлена.')
+
+    stamp=time.strftime('%Y%m%d_%H%M%S')+'_'+str(os.getpid())
+    backup=server.parent/('BACKUP_BEFORE_QUEST_BALANCE_'+stamp)
+    backup.mkdir(mode=0o700)
+    shutil.copy2(server,backup/'server.js')
+    existing=server.parent/MODULE_NAME
+    if existing.exists():
+        shutil.copy2(existing,backup/MODULE_NAME)
+    make_db_backup(database,backup/'game.db')
+    os.chmod(backup/'game.db',0o600)
+
     owner=server.stat()
     def atomic(path,content,mode):
         fd,name=tempfile.mkstemp(prefix='.quest-stage-',dir=path.parent)
         try:
-            with os.fdopen(fd,'wb') as h:h.write(content);h.flush();os.fsync(h.fileno())
-            os.chown(name,owner.st_uid,owner.st_gid);os.chmod(name,mode);os.replace(name,path)
+            with os.fdopen(fd,'wb') as h:
+                h.write(content);h.flush();os.fsync(h.fileno())
+            os.chown(name,owner.st_uid,owner.st_gid)
+            os.chmod(name,mode)
+            os.replace(name,path)
         finally:
-            if os.path.exists(name):os.unlink(name)
+            if os.path.exists(name):
+                os.unlink(name)
     try:
         atomic(existing,module_raw,0o644)
         atomic(server,new_source.encode('utf-8'),owner.st_mode & 0o777)
@@ -265,65 +335,19 @@ def main():
         raise RuntimeError('Новый API не ответил после перезапуска')
     except Exception as error:
         atomic(server,raw,(backup/'server.js').stat().st_mode & 0o777)
-        if (backup/MODULE_NAME).exists():atomic(existing,(backup/MODULE_NAME).read_bytes(),0o644)
-        elif existing.exists():existing.unlink()
-        try:run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
-        except Exception:pass
-        raise RuntimeError('Установка не подтверждена. Старый код восстановлен. База не откатывалась. '+str(error))
-
-if __name__=='__main__':
-    try:main()
-    except Exception as e:
-        print('СТОП:',e)
-        sys.exit(1)
-,name)))
-                over=over or any(sum(max(0,float(v)) for v in stats.values() if isinstance(v,(int,float)))>50 for stats in (data.get('armorUpgradeData') or {}).values() if isinstance(stats,dict))
-                summary['profilesWithUpgradesOver50']+=int(over)
-                summary['profilesWithEquippedArtifacts']+=int(any(data.get('artifactSlots') or []))
-            summary['activeRaids']=source_db.execute('SELECT COUNT(*) FROM raid_sessions').fetchone()[0]
-        finally:source_db.close()
-        print(json.dumps({'mode':'READ_ONLY','syntax':'passed','releaseReady':LIVE_DEPLOYMENT_READY,'sourceSha256':sha(raw),'patchedSha256':sha(new_source.encode()),'summary':summary},ensure_ascii=False,indent=2))
-        print('Файлы, игровые профили и служба не изменялись. Это проверка, не установка.')
-        return
-
-    stamp=time.strftime('%Y%m%d_%H%M%S')+'_'+str(os.getpid())
-    backup=server.parent/('BACKUP_BEFORE_QUEST_BALANCE_'+stamp);backup.mkdir(mode=0o700)
-    shutil.copy2(server,backup/'server.js')
-    existing=server.parent/MODULE_NAME
-    if existing.exists():shutil.copy2(existing,backup/MODULE_NAME)
-    make_db_backup(database,backup/'game.db');os.chmod(backup/'game.db',0o600)
-
-    owner=server.stat()
-    def atomic(path,content,mode):
-        fd,name=tempfile.mkstemp(prefix='.quest-stage-',dir=path.parent)
+        if (backup/MODULE_NAME).exists():
+            atomic(existing,(backup/MODULE_NAME).read_bytes(),0o644)
+        elif existing.exists():
+            existing.unlink()
         try:
-            with os.fdopen(fd,'wb') as h:h.write(content);h.flush();os.fsync(h.fileno())
-            os.chown(name,owner.st_uid,owner.st_gid);os.chmod(name,mode);os.replace(name,path)
-        finally:
-            if os.path.exists(name):os.unlink(name)
-    try:
-        atomic(existing,module_raw,0o644)
-        atomic(server,new_source.encode('utf-8'),owner.st_mode & 0o777)
-        run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
-        for _ in range(25):
-            if health():
-                process_check(server)
-                print('ГОТОВО: задания, баланс +50, исследовательская броня, ранний PvE и редкость артефактов установлены.')
-                print('Резервная копия:',backup)
-                print('server.js SHA-256:',sha(server.read_bytes()))
-                return
-            time.sleep(1)
-        raise RuntimeError('Новый API не ответил после перезапуска')
-    except Exception as error:
-        atomic(server,raw,(backup/'server.js').stat().st_mode & 0o777)
-        if (backup/MODULE_NAME).exists():atomic(existing,(backup/MODULE_NAME).read_bytes(),0o644)
-        elif existing.exists():existing.unlink()
-        try:run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
-        except Exception:pass
-        raise RuntimeError('Установка не подтверждена. Старый код восстановлен. База не откатывалась. '+str(error))
+            run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
+        except Exception:
+            pass
+        raise RuntimeError('Установка не подтверждена. Старый код восстановлен. Для базы сохранена резервная копия: '+str(backup/'game.db')+'. '+str(error))
 
 if __name__=='__main__':
-    try:main()
+    try:
+        main()
     except Exception as e:
         print('СТОП:',e)
         sys.exit(1)
