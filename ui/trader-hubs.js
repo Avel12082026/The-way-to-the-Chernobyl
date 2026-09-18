@@ -185,9 +185,7 @@
         hideDiesel();
         window.TradeMenu.open('technician');
       } else if (action === 'upgrade') {
-        hideDiesel();
-        nativeOpenScreen('technician');
-        if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
+        openDieselUpgrade();
       } else if (action === 'talk') {
         say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
       } else if (action === 'back') {
@@ -201,7 +199,28 @@
   function hideZhuchara() { hideHub(zhucharaHub); }
   function hideDiesel() { hideHub(dieselHub); }
   function openZhuchara() { return showHub(ensureZhucharaHub(), 'zhuchara'); }
-  function openDiesel() { return showHub(ensureDieselHub(), 'diesel'); }
+  function openDiesel() {
+    document.getElementById('technicianScreen')?.classList.remove('diesel-upgrade-only');
+    return showHub(ensureDieselHub(), 'diesel');
+  }
+  function openDieselUpgrade() {
+    hideDiesel();
+    nativeOpenScreen('technician');
+    const screen = document.getElementById('technicianScreen');
+    screen?.classList.add('diesel-upgrade-only');
+    if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
+    screen?.scrollTo?.({top:0, behavior:'instant'});
+    return screen;
+  }
+
+  document.addEventListener('click', event => {
+    const back = event.target.closest?.('#technicianScreen.diesel-upgrade-only .back-btn');
+    if (!back) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    document.getElementById('technicianScreen')?.classList.remove('diesel-upgrade-only');
+    openDiesel();
+  }, true);
 
   window.openScreen = function(screen) {
     if (screen === 'shop') return openZhuchara();
@@ -212,9 +231,9 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.2.0',
+    version:'1.3.0',
     openZhuchara, hideZhuchara,
-    openDiesel, hideDiesel,
+    openDiesel, hideDiesel, openDieselUpgrade,
     decorateLeonov, bindPortrait
   });
 })();
