@@ -4,7 +4,7 @@ on:
   push:
     branches: [ui/trader-portraits-sharp-20260918]
     paths:
-      - 'ui/portraits/*-hq.b64'
+      - 'ui/trader-portrait-data.js'
       - 'ui/trader-hubs.*'
       - 'ui/trade-menu.*'
       - 'ui/bunker-menu.js'
@@ -37,6 +37,7 @@ jobs:
           sha256sum --check /tmp/hq-index.sha256
       - name: Static checks
         run: |
+          node --check ui/trader-portrait-data.js
           node --check ui/trader-hubs.js
           node --check ui/trade-menu.js
           node --check ui/bunker-menu.js
@@ -58,6 +59,7 @@ jobs:
           path: |
             .validation/trader-portraits-hq/
             index.html
+            ui/trader-portrait-data.js
             ui/trader-hubs.js
             ui/trader-hubs.css
             ui/trade-menu.css
