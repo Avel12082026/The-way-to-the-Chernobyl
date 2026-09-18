@@ -119,7 +119,7 @@
     },
     {
       "id": "pseudodog",
-      "name": "Псевдо собака",
+      "name": "Псевдособака",
       "tier": 9,
       "habitat": 2,
       "mutant": "mutants/pseudodog.png",
@@ -158,7 +158,7 @@
     },
     {
       "id": "psydog",
-      "name": "Пси собака",
+      "name": "Пси-собака",
       "tier": 11,
       "habitat": 2,
       "mutant": "mutants/psydog.png",
@@ -340,7 +340,7 @@
     },
     {
       "id": "electrochimera",
-      "name": "Электро химера",
+      "name": "Электрохимера",
       "tier": 25,
       "habitat": 6,
       "mutant": "mutants/electrochimera.png",
@@ -425,7 +425,7 @@
       "species": "zombie"
     },
     {
-      "name": "Псевдо собака",
+      "name": "Псевдособака",
       "tier": 9,
       "species": "pseudodog"
     },
@@ -440,7 +440,7 @@
       "species": "chupacabra"
     },
     {
-      "name": "Пси собака",
+      "name": "Пси-собака",
       "tier": 11,
       "species": "psydog"
     },
@@ -510,7 +510,7 @@
       "species": "chimera"
     },
     {
-      "name": "Электро химера",
+      "name": "Электрохимера",
       "tier": 25,
       "species": "electrochimera"
     },
