@@ -38,4 +38,5 @@ jobs:
           node tests/quests_client.static.cjs
           node tests/artifact_balance.test.cjs
           node tests/inventory_drag.test.cjs
+          python3 tests/install_quest_balance_patch.test.py
           git diff --check
