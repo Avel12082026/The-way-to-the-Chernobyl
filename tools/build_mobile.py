@@ -72,8 +72,11 @@ def build(download=False):
         raise SystemExit(f'Missing {len(missing)} static assets; see .mobile-assets/missing.json. No incomplete APK bundle produced.')
     if OUT.exists():shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
-    for folder in ('images','icons','audio','inventory'):
+    for folder in ('images','icons','audio','inventory','ui'):
         shutil.copytree(ROOT/folder,OUT/folder)
+    # Bunker scene artwork is referenced by ui/bunker-menu.html from the asset root.
+    bunker = ROOT/'file_000000002bb08210800056ebfb1dce1f.png'
+    if bunker.is_file(): shutil.copy2(bunker, OUT/bunker.name)
     for relative in required:
         if not (ROOT/relative).is_file():
             (OUT/relative).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(CACHE/relative,OUT/relative)
