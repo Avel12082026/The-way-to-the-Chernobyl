@@ -59,7 +59,7 @@ async def main():
         html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',inline_script,html)
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.wait_for_function("window.TradeMenu?.version==='1.3.0' && player.nickname==='Тест'")
+        await page.wait_for_function("typeof window.TradeMenu?.open==='function' && player.nickname==='Тест'")
         names=await page.evaluate("getShopCatalog().slice(0,40).map(x=>x.name)")
         state['inventory']={n:10 for n in names}
         armor_name=await page.evaluate('armorItems[5].name');state['inventory'][armor_name]=1

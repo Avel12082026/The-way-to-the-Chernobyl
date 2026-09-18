@@ -470,3 +470,23 @@
   if (technicianButton) technicianButton.textContent = 'Торговля';
   window.TradeMenu = Object.freeze({version: '1.3.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
+
+/* TRADE_HOLD_WAREHOUSE_FIX_V1 */
+(() => {
+  'use strict';
+  if (window.TradeItemContextGuard) return;
+  // The information modal is a sibling of tradeMenu, not one of its children.
+  // Capture also covers a contextmenu retargeted after the hold opens that modal.
+  const scope = '#tradeMenu [data-trade-source], #itemInfoModal';
+  function preventItemBrowserAction(event) {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    if (!target?.closest(scope)) return;
+    if (target.closest('input,textarea,[contenteditable="true"]')) return;
+    event.preventDefault();
+  }
+  for (const type of ['contextmenu', 'dragstart']) {
+    document.addEventListener(type, preventItemBrowserAction, {capture:true, passive:false});
+  }
+  // Do not cancel touchstart/pointerdown: taps, custom dragging and scrolling need them.
+  window.TradeItemContextGuard = Object.freeze({version:'1.0.0'});
+})();

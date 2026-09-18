@@ -1,0 +1,83 @@
+name: Validate trade hold and warehouse cleanup
+
+on:
+  push:
+    branches: [ui/trade-hold-warehouse-20260918]
+    paths:
+      - 'tools/fix_trade_hold_warehouse.py'
+      - 'tests/trade_hold_warehouse.browser.py'
+      - '.github/workflows/trade-hold-warehouse.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trade-hold-warehouse-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.ref == 'refs/heads/ui/trade-hold-warehouse-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh fixture bootstrap after concurrent main-branch fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          # The regression suite tests behavior, not one historical version string.
+          path = Path('tests/interaction_regressions.browser.py')
+          source = path.read_text()
+          source = source.replace("window.TradeMenu?.version==='1.3.0'", "typeof window.TradeMenu?.open==='function'")
+          path.write_text(source)
+          # Main's guard now stops bubbling at document; observe cancellation at that same node.
+          path = Path('tests/trade_hold_warehouse.browser.py')
+          source = path.read_text()
+          source = source.replace("window.addEventListener('contextmenu',e=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName}))", "document.addEventListener('contextmenu',e=>queueMicrotask(()=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName})),true)")
+          path.write_text(source)
+          PY
+      - name: Apply the scoped client fix and verify idempotence
+        run: |
+          python tools/fix_trade_hold_warehouse.py
+          sha256sum index.html ui/trade-menu.js ui/trade-menu.css > /tmp/trade-hold.sha256
+          python tools/fix_trade_hold_warehouse.py
+          sha256sum --check /tmp/trade-hold.sha256
+      - name: Syntax and existing structural and drag regressions
+        run: |
+          node --check ui/trade-menu.js
+          node tests/interaction_polish.static.cjs
+          node tests/chat_pda_structure.cjs
+          node tests/inventory_drag.test.cjs
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Real client with isolated networking and emulated touch
+        run: |
+          python tests/trade_hold_warehouse.browser.py
+          python tests/interaction_regressions.browser.py
+      - name: Attach the tested source and reports
+        if: always()
+        run: |
+          mkdir -p .validation/trade-hold-warehouse
+          zip -qr .validation/trade-hold-warehouse/client-source.zip index.html ui inventory tests/trade_hold_warehouse.browser.py tests/interaction_regressions.browser.py tools/fix_trade_hold_warehouse.py tools/install_trade_menu.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trade-hold-warehouse-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: |
+            .validation/trade-hold-warehouse/
+            .validation/interaction-regressions/
+      - name: Commit only the tested client and fixture changes to the working branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html ui/trade-menu.js ui/trade-menu.css tests/trade_hold_warehouse.browser.py tests/interaction_regressions.browser.py
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix trade image long-press menus and simplify warehouse navigation"
+            git push origin HEAD:ui/trade-hold-warehouse-20260918
+          fi
