@@ -1,0 +1,59 @@
+name: Validate raid PDA weapon progression
+on:
+  push:
+    branches: [feature/raid-pda-weapon-progression-20260919]
+    paths:
+      - 'index.html'
+      - 'data/weapon-progression.json'
+      - 'ui/weapon-progression.js'
+      - 'ui/raid-kpk-polish.*'
+      - 'ui/quests.*'
+      - 'ui/trader-hubs.*'
+      - 'server_patches/weapon-progression.cjs'
+      - 'tools/install_weapon_progression_server.py'
+      - 'tests/weapon_progression.test.cjs'
+      - 'tests/install_weapon_progression_patch.test.py'
+      - 'tests/raid_kpk.static.cjs'
+      - 'tests/raid_quickslot.browser.py'
+      - 'tests/quests.browser.py'
+      - '.github/workflows/raid-kpk-weapon.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Syntax
+        run: |
+          node --check ui/weapon-progression.js
+          node --check ui/raid-kpk-polish.js
+          node --check ui/quests.js
+          node --check ui/trader-hubs.js
+          node --check server_patches/weapon-progression.cjs
+          python3 -m py_compile tools/install_weapon_progression_server.py
+          python3 -m py_compile tests/raid_quickslot.browser.py
+          python3 -m py_compile tests/quests.browser.py
+      - name: Static and unit
+        run: |
+          node tests/weapon_progression.test.cjs
+          node tests/raid_kpk.static.cjs
+          python3 tests/install_weapon_progression_patch.test.py
+          git diff --check
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - run: python tests/quests.browser.py
+      - run: python tests/raid_quickslot.browser.py

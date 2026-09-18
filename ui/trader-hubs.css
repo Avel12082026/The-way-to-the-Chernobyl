@@ -84,3 +84,14 @@ img[data-item-info]{pointer-events:auto!important;cursor:pointer}
 .pda-notification-friend{right:49px;top:7px;background:#42d66b;color:#42d66b}
 #bunkerPda .pda-notification-friend{right:61%}
 #raidUtilityButtons>button{box-sizing:border-box}
+
+
+/* Raid quick slots: ordinary tap consumes; only an 800 ms hold opens item information. */
+#raidScreen #quickSlots .quick-slot,
+#raidScreen #quickSlots .quick-slot *{
+  -webkit-touch-callout:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-user-drag:none!important;
+}
+#raidScreen #quickSlots .quick-slot img{pointer-events:none!important}
