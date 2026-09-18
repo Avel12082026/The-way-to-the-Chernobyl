@@ -318,10 +318,15 @@
     }
     if (action === 'warehouse') { if (atBase() && !needsSync) { hide(); native.openScreen('warehouse'); } return; }
     if (action === 'remove' && editing) { queues[editing.side].delete(editing.name); editing = null; render(); return; }
-    if (source === 'buy' || source === 'sell') { queues[source].delete(name); if (editing?.side === source && editing?.name === name) editing = null; render(); message('Предмет возвращён обратно.'); if (typeof showItemInfoModal === 'function') showItemInfoModal(name); return; }
+    if (source === 'buy' || source === 'sell') {
+      queues[source].delete(name);
+      if (editing?.side === source && editing?.name === name) editing = null;
+      render();
+      message(source === 'buy' ? 'Товар возвращён торговцу.' : 'Предмет возвращён в инвентарь.');
+      return;
+    }
     if (source === 'stock' || source === 'inventory') {
       stage(source, name, source === 'stock' ? 'buy' : 'sell');
-      if (typeof showItemInfoModal === 'function') showItemInfoModal(name);
     }
   });
   el('tradeAuto').addEventListener('toggle', () => {
@@ -339,7 +344,10 @@
   });
   const targetAt = (x, y) => document.elementFromPoint(x, y)?.closest('#tradeMenu [data-trade-drop]');
   function cleanup() {
-    if (gesture) clearTimeout(gesture.timer);
+    if (gesture) {
+      clearTimeout(gesture.dragTimer);
+      clearTimeout(gesture.infoTimer);
+    }
     cancelAnimationFrame(frame); ghost?.remove(); ghost = null; gesture = null;
     root.querySelectorAll('.trade-drop-ready,.trade-drop-over').forEach(node => node.classList.remove('trade-drop-ready', 'trade-drop-over'));
   }
@@ -361,17 +369,34 @@
     gesture.active = true; ghost = gesture.node.cloneNode(true); ghost.className = 'trade-drag-ghost';
     ghost.removeAttribute('id'); ghost.setAttribute('aria-hidden', 'true'); document.body.append(ghost); paint();
   }
+  function openTradeItemInfoFromHold() {
+    const g = gesture;
+    if (!g || g.active || g.scrolling || !['stock', 'inventory'].includes(g.source)) return;
+    suppressUntil = Date.now() + 650;
+    const name = g.name;
+    cleanup();
+    if (name && typeof showItemInfoModal === 'function') showItemInfoModal(name);
+  }
   root.addEventListener('pointerdown', e => {
-    const node = e.target.closest('[data-trade-source]');
+    const node = e.target.closest('[data-trade-source="stock"],[data-trade-source="inventory"]');
     if (!node || busy || needsSync || gesture || e.button !== 0 || !e.isPrimary) return;
-    gesture = {id: e.pointerId, node, source: node.dataset.tradeSource, name: node.dataset.tradeName, touch: e.pointerType === 'touch', x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, lastY: e.clientY, scroller: node.closest('#tradeStockScroll,#tradeInventory,.trade-staging') || root};
-    if (gesture.touch) gesture.timer = setTimeout(begin, 240);
+    gesture = {
+      id: e.pointerId, node, source: node.dataset.tradeSource, name: node.dataset.tradeName,
+      touch: e.pointerType === 'touch', x: e.clientX, y: e.clientY,
+      startX: e.clientX, startY: e.clientY, lastY: e.clientY,
+      dragReady: e.pointerType !== 'touch',
+      scroller: node.closest('#tradeStockScroll,#tradeInventory') || root
+    };
+    if (gesture.touch) gesture.dragTimer = setTimeout(() => { if (gesture) gesture.dragReady = true; }, 220);
+    gesture.infoTimer = setTimeout(openTradeItemInfoFromHold, 520);
   });
   document.addEventListener('pointermove', e => {
     const g = gesture; if (!g || e.pointerId !== g.id) return;
     g.x = e.clientX; g.y = e.clientY;
-    if (!g.active && Math.hypot(g.x - g.startX, g.y - g.startY) > 8) {
-      if (g.touch) { clearTimeout(g.timer); g.scrolling = true; } else begin();
+    if (!g.active && !g.scrolling && Math.hypot(g.x - g.startX, g.y - g.startY) > 8) {
+      clearTimeout(g.infoTimer);
+      if (g.touch && !g.dragReady) g.scrolling = true;
+      else begin();
     }
     if (g.scrolling) { g.scroller.scrollTop += g.lastY - g.y; suppressUntil = Date.now() + 500; }
     g.lastY = g.y;
@@ -423,5 +448,5 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.2.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();

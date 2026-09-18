@@ -230,7 +230,7 @@
   'use strict';
   const POLL_MS = 15000;
   let notificationReady = false;
-  let previousState = {dm:false, parcel:false, system:false, latestDm:0, latestParcel:0, latestSystem:0};
+  let previousState = {dm:false, parcel:false, system:false, friend:false, latestDm:0, latestParcel:0, latestSystem:0, friendIds:[]};
   let audioUnlocked = false;
   const notificationAudio = new Audio();
   notificationAudio.preload = 'auto';
@@ -277,7 +277,7 @@
   function ensureBadges(host, prefix) {
     if (!host) return null;
     host.classList.add('pda-notification-host');
-    const kinds = [['dm','Личное сообщение'],['parcel','Посылка'],['system','Системное сообщение']];
+    const kinds = [['dm','Личное сообщение'],['parcel','Посылка'],['system','Системное сообщение'],['friend','Заявка в друзья']];
     const result = {};
     for (const [kind,label] of kinds) {
       let dot = host.querySelector('[data-pda-indicator="'+kind+'"]');
@@ -300,12 +300,16 @@
       ensureBadges(document.getElementById('kpkChatBtn'),'kpk'),
       ensureBadges(document.getElementById('raidTelegramBtn'),'raid')
     ].filter(Boolean);
-    for (const dots of hosts) for (const kind of ['dm','parcel','system']) {
+    for (const dots of hosts) for (const kind of ['dm','parcel','system','friend']) {
       dots[kind].classList.toggle('active', !!state[kind]);
       dots[kind].setAttribute('aria-hidden', String(!state[kind]));
     }
     const legacy = document.getElementById('kpkChatUnreadDot');
     if (legacy) legacy.style.display = 'none';
+    for (const id of ['friendReqUnreadDot','friendReqKpkDot','friendReqDmDot']) {
+      const dot=document.getElementById(id);
+      if (dot) dot.style.display = state.friend ? 'block' : 'none';
+    }
   }
 
   function unreadGeneric(value) {
@@ -328,8 +332,10 @@
     if (typeof player !== 'object' || !player?.nickname) return;
     if (window.__pdaNotificationPollBusy) return;
     window.__pdaNotificationPollBusy = true;
-    let dm=previousState.dm, parcel=playerParcelUnread(), system=playerSystemUnread();
+    let dm=previousState.dm, parcel=playerParcelUnread(), system=playerSystemUnread(), friend=previousState.friend;
     let latestDm=previousState.latestDm, latestParcel=previousState.latestParcel, latestSystem=previousState.latestSystem;
+    let friendIds=Array.isArray(previousState.friendIds) ? previousState.friendIds : [];
+    let newFriendRequest=false;
     try {
       const r = await fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
         method:'POST', headers:{'Content-Type':'application/json'},
@@ -369,14 +375,30 @@
       }
     } catch (_) {}
 
-    const next={dm,parcel,system,latestDm,latestParcel,latestSystem};
+    try {
+      const r = await fetch(`${SERVER_URL}/api/friends/pending`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
+      });
+      if (!r.ok) throw new Error('Friend request poll HTTP ' + r.status);
+      const list = await r.json();
+      if (!Array.isArray(list)) throw new Error('Invalid pending friend requests');
+      const nextIds = list.map(p => String(p?.id ?? p?.player_id ?? p?.fromId ?? '')).filter(Boolean).sort();
+      const previousIds = new Set(friendIds);
+      newFriendRequest = notificationReady && nextIds.some(id => !previousIds.has(id));
+      friendIds = nextIds;
+      friend = nextIds.length > 0;
+    } catch (_) {}
+
+    const next={dm,parcel,system,friend,latestDm,latestParcel,latestSystem,friendIds};
     renderBadges(next);
     const hasNewEvent = notificationReady && (
       (latestDm && latestDm > previousState.latestDm) ||
       (latestParcel && latestParcel > previousState.latestParcel) ||
       (latestSystem && latestSystem > previousState.latestSystem) ||
       (parcel && !previousState.parcel && !latestParcel) ||
-      (system && !previousState.system && !latestSystem)
+      (system && !previousState.system && !latestSystem) ||
+      newFriendRequest
     );
     if (hasNewEvent) playPdaSound();
     previousState=next;
@@ -469,6 +491,8 @@
     row.append(backpack);
     const telegram=document.createElement('button');
     telegram.type='button'; telegram.id='raidTelegramBtn'; telegram.textContent='Телеграммка';
+    telegram.className=backpack.className;
+    telegram.style.cssText=backpack.style.cssText;
     telegram.addEventListener('click',()=>{ window.__chatOpenedFromRaid=true; if(typeof openScreen==='function') openScreen('chat'); });
     row.append(telegram);
   }

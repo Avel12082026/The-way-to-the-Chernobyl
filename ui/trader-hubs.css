@@ -60,7 +60,6 @@ button[onclick*="showItemInfoModal"]{display:none!important}
 #bunkerPda .pda-notification-system{right:43%}
 #raidUtilityButtons{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px}
 #raidUtilityButtons>button{width:100%!important;margin:0!important;min-height:48px}
-#raidTelegramBtn{background:#34495e!important}
 
 
 /* INTERACTION_REGRESSION_FIXES */
@@ -78,3 +77,9 @@ img[data-item-info],#inventoryScreen #inventoryGrid [data-drag-item] img[data-it
 #technicianScreen[data-diesel-upgrade-only="true"] .zr-title .zr-sr{position:static!important;width:auto!important;height:auto!important;clip:auto!important;clip-path:none!important;overflow:visible!important}
 /* Keep all message indicators consistent with the requested green chat dot. */
 .pda-notification-dot,#dmUnreadDot{background:#42d66b!important;color:#42d66b!important}
+
+
+/* INTERACTION_POLISH_V2 */
+.pda-notification-friend{right:49px;top:7px;background:#42d66b;color:#42d66b}
+#bunkerPda .pda-notification-friend{right:61%}
+#raidUtilityButtons>button{box-sizing:border-box}

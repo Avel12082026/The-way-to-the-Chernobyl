@@ -10,7 +10,7 @@ TG="window.Telegram={WebApp:{initData:'offline-only',initDataUnsafe:{user:{id:10
 
 async def main():
     state={'nickname':'Тест','health':100,'maxHealth':100,'hunger':100,'thirst':100,'level':600,'exp':0,'radiation':0,'coins':9999999,'breedCredits':50,'inventory':{},'warehouse':{}}
-    notifications={'dm':[],'system':[],'fail':False}
+    notifications={'dm':[],'system':[],'friends':[],'fail':False}
     writes=[]; errors=[]; checks=[]
     async with async_playwright() as pw:
         browser=await pw.chromium.launch(executable_path=sys.argv[1] if len(sys.argv)>1 else None,args=['--no-sandbox','--disable-dev-shm-usage'])
@@ -27,6 +27,9 @@ async def main():
             elif path.endswith('/chat/general'):
                 status=503 if notifications['fail'] else 200
                 data=notifications['system'] if status==200 else {'error':'offline fixture'}
+            elif path.endswith('/friends/pending'):
+                status=503 if notifications['fail'] else 200
+                data=notifications['friends'] if status==200 else {'error':'offline fixture'}
             elif path.endswith('/shop/buy'):
                 writes.append({'path':path,'payload':payload});await asyncio.sleep(.15)
                 name=payload['name'];state['inventory'][name]=state['inventory'].get(name,0)+payload['qty']
@@ -56,7 +59,7 @@ async def main():
         html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',inline_script,html)
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.wait_for_function("window.TradeMenu?.version==='1.2.1' && player.nickname==='Тест'")
+        await page.wait_for_function("window.TradeMenu?.version==='1.3.0' && player.nickname==='Тест'")
         names=await page.evaluate("getShopCatalog().slice(0,40).map(x=>x.name)")
         state['inventory']={n:10 for n in names}
         armor_name=await page.evaluate('armorItems[5].name');state['inventory'][armor_name]=1
@@ -91,19 +94,28 @@ async def main():
         name=names[0]
         await item('stock',name).click()
         assert await item('buy',name).count()==1
+        assert not await page.locator('#itemInfoModal').is_visible()
+        await item('buy',name).click()
+        assert await item('buy',name).count()==0
+        assert not await page.locator('#itemInfoModal').is_visible()
+        await item('inventory',name).click()
+        assert await item('sell',name).count()==1
+        assert not await page.locator('#itemInfoModal').is_visible()
+        await item('sell',name).click()
+        assert await item('sell',name).count()==0
+        assert not await page.locator('#itemInfoModal').is_visible()
+        target=item('stock',name);box=await target.bounding_box()
+        cdp=await context.new_cdp_session(page);x=box['x']+box['width']/2;y=box['y']+box['height']/2
+        await cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':[{'x':x,'y':y}]})
+        await page.wait_for_timeout(560)
+        await cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});await cdp.detach()
         assert await page.locator('#itemInfoModal').is_visible()
         assert name in await page.locator('#itemInfoModalTitle').text_content()
-        await dismiss();await item('buy',name).click()
         assert await item('buy',name).count()==0
-        assert await page.locator('#itemInfoModal').is_visible()
-        await dismiss();await item('inventory',name).click()
-        assert await item('sell',name).count()==1
-        await dismiss();await item('sell',name).click()
-        assert await item('sell',name).count()==0
         await dismiss()
         assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
         assert not writes
-        checks.append('Tap stages/unstages both ways, shows information, never spends items locally')
+        checks.append('Short tap stages/unstages only; long hold on source opens info without moving the item')
         bag=page.locator('#tradeInventory');await bag.scroll_into_view_if_needed()
         await bag.evaluate('(e)=>e.scrollTop=0')
         outer=await page.locator('#tradeMenu').evaluate('(e)=>e.scrollTop')
@@ -145,10 +157,18 @@ async def main():
         await page.evaluate('PdaNotifications.check()');await page.wait_for_timeout(80)
         assert await page.evaluate('window.__pdaPlays')>played
         checks.append('New DM while already unread sounds again; failed poll/recovery does not repeat')
+        notifications['friends']=[{'id':'303','username':'Новый друг'}]
+        before_friend=await page.evaluate('window.__pdaPlays');await page.evaluate('PdaNotifications.check()');await page.wait_for_timeout(80)
+        assert await page.locator('#bunkerPda [data-pda-indicator=friend]').get_attribute('aria-hidden')=='false'
+        assert await page.locator('#kpkChatBtn [data-pda-indicator=friend]').count()==1
+        assert await page.evaluate('window.__pdaPlays')>before_friend
+        checks.append('Pending friend request shows on PDA/Telegram indicators and plays the PDA sound')
         await page.evaluate("raidActive=true;currentEnemy=null;currentAnomaly=null;raidSessionToken='offline-test';openScreen('raid')")
         assert await page.locator('#raidUtilityButtons').evaluate("e=>e.previousElementSibling.id==='battleButtonsContainer'")
         boxes=await page.locator('#raidUtilityButtons>button').evaluate_all('(xs)=>xs.map(x=>x.getBoundingClientRect().top)')
         assert len(boxes)==2 and abs(boxes[0]-boxes[1])<1
+        assert await page.locator('#raidTelegramBtn').get_attribute('class')==await page.locator('#raidUtilityButtons>button').first.get_attribute('class')
+        assert await page.locator('#raidTelegramBtn [data-pda-indicator=friend]').count()==1
         await page.locator('#raidTelegramBtn').click()
         assert await page.locator('#chatScreen').is_visible()
         await page.locator('#chatBackToKpkBtn').click()
