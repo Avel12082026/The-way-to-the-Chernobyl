@@ -57,197 +57,195 @@ module.exports=function installQuestBalance({
     return pool.at(-1).name;
   }
 
+  // Durable receipt journal: completed/cancelled offers cannot be accepted twice.
+  // History is paginated, never erased to keep the profile JSON small.
+  db.exec(`CREATE TABLE IF NOT EXISTS quest_receipts (
+    seq INTEGER PRIMARY KEY AUTOINCREMENT, player_id TEXT NOT NULL,
+    quest_id TEXT NOT NULL, vendor TEXT NOT NULL, day TEXT NOT NULL,
+    status TEXT NOT NULL CHECK(status IN ('accepted','completed','abandoned')),
+    payload TEXT NOT NULL, UNIQUE(player_id,quest_id));
+    CREATE INDEX IF NOT EXISTS quest_receipts_player ON quest_receipts(player_id,status,seq);`);
+  const MAX_ACCEPTED=8, OFFERS_PER_VENDOR=3;
+  const integer=(v,fallback=0)=>Number.isSafeInteger(Number(v))&&Number(v)>=0?Number(v):fallback;
+  const today=()=>new Date().toISOString().slice(0,10);
   function normalizeQuestState(data){
-    const q=data.quests&&typeof data.quests==='object'?data.quests:{};
-    q.accepted=Array.isArray(q.accepted)?q.accepted.filter(x=>x&&typeof x.id==='string').slice(0,8):[];
-    q.activeId=typeof q.activeId==='string'&&q.accepted.some(x=>x.id===q.activeId)?q.activeId:null;
-    q.completed=Array.isArray(q.completed)?q.completed.filter(Boolean).slice(-50):[];
-    q.completedCount=Math.max(q.completed.length,Math.floor(Number(q.completedCount)||0));
-    q.lastRaidReturnAt=Math.max(0,Number(q.lastRaidReturnAt)||0);
+    const q=data.quests&&typeof data.quests==='object'&&!Array.isArray(data.quests)?data.quests:{};
+    q.accepted=Array.isArray(q.accepted)?q.accepted.filter(x=>x&&typeof x.id==='string'):[];
+    q.activeId=q.accepted.some(x=>x.id===q.activeId)?q.activeId:null;
+    q.lastRaidReturnAt=integer(q.lastRaidReturnAt);
     data.quests=q;return q;
   }
   function load(playerId){
     const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);
     if(!row)throw new Error('Игрок не найден');
-    const data=JSON.parse(row.data||'{}');normalizeQuestState(data);data.inventory=data.inventory||{};data.coins=Math.max(0,Number(data.coins)||0);return data;
+    const data=JSON.parse(row.data);normalizeQuestState(data);
+    data.inventory=data.inventory||{};data.coins=integer(data.coins);return data;
   }
   function save(playerId,data){
-    db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+    const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+    if(result.changes!==1)throw new Error('Не удалось сохранить профиль');
   }
-  function cleanBase(name){
-    const raw=String(name||'').replace(/[\u200B\u200C\u200D\u2060\uFEFF]+$/,'');
-    try{return parseGearNameServer?parseGearNameServer(raw).baseName:raw.replace(/\s+\+\d+$/,'');}
-    catch(_){return raw.replace(/\s+\+\d+$/,'');}
+  function atBase(playerId){
+    if(db.prepare('SELECT 1 FROM raid_sessions WHERE player_id=?').get(playerId) ||
+       db.prepare('SELECT 1 FROM pve_battles WHERE player_id=?').get(playerId))
+      throw new Error('Сначала вернись на базу и поговори с заказчиком');
   }
-  function inventoryQty(data,itemName){
-    const target=cleanBase(itemName);
-    return Object.entries(data.inventory||{}).reduce((sum,[name,qty])=>sum+(cleanBase(name)===target?Math.max(0,Number(qty)||0):0),0);
+  const cleanName=name=>String(name||'').replace(/[\u200B\u200C\u200D\u2060\uFEFF]+$/,'');
+  function parsed(name){return parseGearNameServer(cleanName(name));}
+  const lookup=new Map([
+    ...(SHOP_WEAPONS||[]).filter(x=>!x.adminOnly&&!x.isPremiumWeapon).map(x=>[x.name,{...x,kind:'weapon'}]),
+    ...(SHOP_ARMOR||[]).filter(x=>!x.adminOnly&&!x.isPremiumArmor&&!x.isResearchSuit).map(x=>[x.name,{...x,kind:'armor'}]),
+    ...(SHOP_ARTIFACTS||[]).filter(x=>artifactMeta.has(x.name)&&!x.adminOnly&&!x.isNamedArtifact).map(x=>[x.name,{...x,kind:'artifact'}]),
+    ...(SHOP_MUTANT_LOOT||[]).map(x=>[x.name,{...x,kind:'loot'}])
+  ]);
+  function matchingItems(data,quest){
+    const target=lookup.get(quest.itemName);if(!target)return [];
+    return Object.entries(data.inventory||{}).filter(([name,qty])=>{
+      if(!integer(qty)||parsed(name).baseName!==quest.itemName)return false;
+      // No silent surrender of valuable upgrades for a base-item order.
+      if(['armor','weapon'].includes(target.kind)&&integer(parsed(name).level)>0)return false;
+      if(target.kind==='armor'){
+        const stable=String(name).replace(/ \+\d+(?=[\u200B\u200C]*$)/,'');
+        if(Object.values(data.armorUpgradeData?.[stable]||{}).some(x=>integer(x)>0))return false;
+      }
+      return true;
+    }).sort(([a],[b])=>a.localeCompare(b));
   }
-  function consume(data,itemName,qty){
-    let left=Math.max(1,Math.floor(Number(qty)||1)),target=cleanBase(itemName);
-    for(const key of Object.keys(data.inventory||{})){
-      if(cleanBase(key)!==target)continue;
-      const have=Math.max(0,Math.floor(Number(data.inventory[key])||0));
-      if(!have)continue;
-      const take=Math.min(have,left);
-      data.inventory[key]=have-take;if(data.inventory[key]<=0)delete data.inventory[key];
-      left-=take;if(left<=0)return true;
+  function inventoryQty(data,quest){return matchingItems(data,quest).reduce((n,[,qty])=>n+integer(qty),0);}
+  function consume(data,quest){
+    let left=quest.qty;
+    for(const [key,qty] of matchingItems(data,quest)){
+      const take=Math.min(integer(qty),left);data.inventory[key]-=take;left-=take;
+      if(!data.inventory[key])delete data.inventory[key];
+      if(left===0)break;
     }
-    return false;
+    if(left!==0)throw new Error('Нужных предметов пока недостаточно');
+    if(Array.isArray(data.quickSlots))data.quickSlots=data.quickSlots.map(n=>n&&integer(data.inventory[n])?n:null);
   }
-
-  function dailySeed(playerId,vendor){
-    return crypto.createHash('sha256').update(playerId+'|'+vendor+'|'+new Date().toISOString().slice(0,10)).digest();
+  function receipt(playerId,id){return db.prepare('SELECT status,payload FROM quest_receipts WHERE player_id=? AND quest_id=?').get(playerId,id);}
+  function remainingToday(playerId,vendor){
+    const used=db.prepare('SELECT COUNT(*) AS n FROM quest_receipts WHERE player_id=? AND vendor=? AND day=?').get(playerId,vendor,today()).n;
+    return Math.max(0,OFFERS_PER_VENDOR-Number(used));
   }
-  function randomFrom(seed,index){
-    const h=crypto.createHash('sha256').update(seed).update('|'+index).digest();
-    return h.readUInt32BE(0)/0x100000000;
+  function rng(playerId,vendor,index){
+    return crypto.createHash('sha256').update([playerId,vendor,today(),index].join('|')).digest().readUInt32BE(0)/0x100000000;
   }
-  function sampleUnique(pool,count,seed,offset=0){
+  function sample(pool,count,playerId,vendor,offset=0){
     const left=[...pool],out=[];
-    for(let i=0;i<count&&left.length;i++){
-      const n=Math.floor(randomFrom(seed,offset+i)*left.length);
-      out.push(left.splice(Math.min(n,left.length-1),1)[0]);
-    }
+    for(let i=0;i<count&&left.length;i++)out.push(left.splice(Math.floor(rng(playerId,vendor,offset+i)*left.length),1)[0]);
     return out;
   }
-  function topBand(items,level){
-    const sorted=[...items].sort((a,b)=>(Number(a.unlockLevel??a.tier)||0)-(Number(b.unlockLevel??b.tier)||0)||(Number(a.price)||0)-(Number(b.price)||0));
-    if(!sorted.length)return [];
-    const accessible=sorted.filter(x=>(Number(x.unlockLevel)||0)<=level+15);
-    const src=accessible.length?accessible:sorted.slice(0,Math.min(6,sorted.length));
-    const size=Math.max(5,Math.ceil(src.length*0.35));
-    return src.slice(-size);
+  function band(items){
+    const ordered=[...items].sort((a,b)=>(Number(a.unlockLevel??a.tier)||0)-(Number(b.unlockLevel??b.tier)||0)||(Number(a.price)||0)-(Number(b.price)||0)||a.name.localeCompare(b.name));
+    return ordered.slice(-Math.max(3,Math.ceil(ordered.length*.25)));
   }
   function bestSale(itemName,qty,playerId){
-    let base=5,category='unknown';
-    if(typeof resolveSellPriceServer==='function'){
-      const r=resolveSellPriceServer(itemName,playerId)||{};base=Math.max(1,Number(r.price)||5);category=r.category||category;
-    }else{
-      const name=cleanBase(itemName);
-      const found=(SHOP_WEAPONS||[]).find(x=>x.name===name)||(SHOP_ARMOR||[]).find(x=>x.name===name)||(SHOP_ARTIFACTS||[]).find(x=>x.name===name)||(SHOP_MUTANT_LOOT||[]).find(x=>x.name===name);
-      base=Math.max(1,Math.round((Number(found?.price)||10)*.5));
-    }
-    const multiplier=category==='artifact'?1.35:category==='loot'?1.20:(category==='weapon'||category==='armor')?1.02:1;
-    return Math.max(1,Math.round(base*multiplier*Math.max(1,qty)));
-  }
-  function questReward(itemName,qty,playerId,difficulty){
-    const sale=bestSale(itemName,qty,playerId);
-    const mult=1.70+Math.min(.55,Math.max(0,Number(difficulty)||0)*.035);
-    return Math.max(sale+1,Math.ceil(sale*mult));
-  }
-  function questId(playerId,vendor,itemName,qty){
-    return crypto.createHash('sha256').update(playerId+'|'+vendor+'|'+itemName+'|'+qty+'|'+new Date().toISOString().slice(0,10)).digest('hex').slice(0,20);
-  }
-  function makeOffer(playerId,data,vendor,item,index){
-    const level=Math.max(1,Number(data.level)||1),qty=Math.max(1,Number(item.questQty)||1),difficulty=Number(item.tier)||Math.floor((Number(item.unlockLevel)||level)/40);
-    const title=vendor==='leonov'?(item.questKind==='loot'?'Образец мутанта':'Артефакт для исследований'):vendor==='zhuchara'?'Броня для заказа':'Оружие для заказа';
-    return {
-      id:questId(playerId,vendor,item.name,qty),vendor,title,itemName:item.name,qty,
-      reward:questReward(item.name,qty,playerId,difficulty),levelAtOffer:level,difficulty,index
-    };
+    const resolved=resolveSellPriceServer(itemName,playerId);
+    if(!resolved||resolved.isNamed||!['weapon','armor','artifact','loot'].includes(resolved.category))throw new Error('Этот предмет не подходит для заказа');
+    const markup=resolved.category==='artifact'?1.35:resolved.category==='loot'?1.20:1.02;
+    // Round the unit exactly as the real merchant endpoints, then multiply quantity.
+    return Math.round(resolved.price*markup)*qty;
   }
   function makeOffers(playerId,data,vendor){
-    if(!vendors.has(vendor))return [];
-    const level=Math.max(1,Number(data.level)||1),seed=dailySeed(playerId,vendor);
+    if(!vendors.has(vendor)||remainingToday(playerId,vendor)===0)return [];
+    const level=Math.max(1,integer(data.level,1));
     let candidates=[];
-    if(vendor==='zhuchara'){
-      candidates=topBand((SHOP_ARMOR||[]).filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit),level)
-        .map(a=>({...a,questQty:1,questKind:'armor'}));
-    }else if(vendor==='diesel'){
-      candidates=topBand((SHOP_WEAPONS||[]).filter(w=>!w.adminOnly&&!w.isPremiumWeapon),level)
-        .map(w=>({...w,questQty:1,questKind:'weapon'}));
+    if(vendor==='zhuchara'||vendor==='diesel'){
+      const kind=vendor==='zhuchara'?'armor':'weapon';
+      candidates=band([...lookup.values()].filter(x=>x.kind===kind&&integer(x.unlockLevel,Number.MAX_SAFE_INTEGER)<=level));
     }else{
-      const maxArtifactTier=Math.min(8,Math.max(1,1+Math.floor((level-1)/55)));
-      const arts=(SHOP_ARTIFACTS||[]).filter(a=>!a.adminOnly&&!a.isNamedArtifact&&Number(a.tier)<=maxArtifactTier)
-        .sort((a,b)=>(Number(a.tier)||0)-(Number(b.tier)||0)||(Number(a.price)||0)-(Number(b.price)||0));
-      const artBand=arts.slice(-Math.max(7,Math.ceil(arts.length*.25))).map(a=>({...a,questQty:Math.min(3,1+Math.floor(level/180)),questKind:'artifact'}));
-      const maxMutantTier=Math.min(27,Math.max(1,1+Math.floor(level/20)));
-      const lootTier=new Map((PVE_MUTANTS||[]).filter(m=>m.loot).map(m=>[m.loot,Number(m.tier)||0]));
-      const loots=(SHOP_MUTANT_LOOT||[]).filter(l=>(lootTier.get(l.name)||0)<=maxMutantTier)
-        .map(l=>({...l,tier:lootTier.get(l.name)||1,questQty:Math.min(4,1+Math.floor(level/140)),questKind:'loot'}));
-      const lootBand=loots.slice(-Math.max(5,Math.ceil(loots.length*.3)));
-      candidates=[...sampleUnique(artBand,2,seed,10),...sampleUnique(lootBand,2,seed,20)];
+      const artifactTier=Math.min(8,1+Math.floor(level/20));
+      const mutantTier=Math.min(28,1+Math.floor(level/20));
+      const lootTier=new Map((PVE_MUTANTS||[]).filter(m=>m.loot&&Number(m.lootChance)>0).map(m=>[m.loot,Number(m.tier)]));
+      const artBand=band([...lookup.values()].filter(x=>x.kind==='artifact'&&x.tier<=artifactTier));
+      const lootBand=band([...lookup.values()].filter(x=>x.kind==='loot'&&lootTier.has(x.name)&&lootTier.get(x.name)<=mutantTier).map(x=>({...x,tier:lootTier.get(x.name)})));
+      // Guarantee both specialties when both pools are nonempty.
+      candidates=[...sample(artBand,2,playerId,vendor,10),...sample(lootBand,1,playerId,vendor,20)];
     }
-    const picked=sampleUnique(candidates,3,seed,30);
-    return picked.map((item,index)=>makeOffer(playerId,data,vendor,item,index));
+    return sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30).map((item,index)=>{
+      const qty=['weapon','armor'].includes(item.kind)?1:Math.min(3,1+Math.floor(level/200));
+      const id=crypto.createHash('sha256').update([playerId,vendor,today(),item.name,qty].join('|')).digest('hex').slice(0,24);
+      const saleValue=bestSale(item.name,qty,playerId),premium=.20+Math.min(.15,(Number(item.tier)||1)*.01);
+      const title=vendor==='leonov'?(item.kind==='loot'?'Образцы для лаборатории':'Артефакт для исследований'):vendor==='zhuchara'?'Броня для заказа':'Оружие для мастерской';
+      return {id,vendor,title,itemName:item.name,qty,kind:item.kind,reward:Math.max(saleValue+1,Math.ceil(saleValue*(1+premium))),saleValue,
+        levelAtOffer:level,difficulty:Number(item.tier)||1,index,day:today(),baseOnly:['weapon','armor'].includes(item.kind)};
+    }).filter(q=>!receipt(playerId,q.id)).slice(0,remainingToday(playerId,vendor));
   }
-
-  function publicState(data){
+  function history(playerId,before=0){
+    const rows=before
+      ?db.prepare("SELECT seq,payload FROM quest_receipts WHERE player_id=? AND status='completed' AND seq<? ORDER BY seq DESC LIMIT 51").all(playerId,before)
+      :db.prepare("SELECT seq,payload FROM quest_receipts WHERE player_id=? AND status='completed' ORDER BY seq DESC LIMIT 51").all(playerId);
+    const page=rows.slice(0,50);
+    return {completed:page.map(x=>JSON.parse(x.payload)),completedNextCursor:rows.length>50?page.at(-1).seq:null};
+  }
+  function publicState(playerId,data){
     const q=normalizeQuestState(data);
-    return {accepted:q.accepted,activeId:q.activeId,completed:q.completed,completedCount:q.completedCount,lastRaidReturnAt:q.lastRaidReturnAt};
+    const count=db.prepare("SELECT COUNT(*) AS n FROM quest_receipts WHERE player_id=? AND status='completed'").get(playerId).n;
+    return {accepted:q.accepted.map(x=>({...x,have:inventoryQty(data,x)})),activeId:q.activeId,
+      ...history(playerId),completedCount:Number(count),lastRaidReturnAt:q.lastRaidReturnAt};
   }
-  const limiter=(name,max=30)=>typeof rateLimit==='function'?rateLimit('quests-'+name,max,10000):(_req,_res,next)=>next();
-
-  app.get('/api/quests/version',(_req,res)=>res.json({success:true,version:1,balanceVersion:'2026-09-19'}));
-
-  app.post('/api/quests/state',requireAuth,limiter('state',60),(req,res)=>{
-    try{const data=load(String(req.telegramUser.id));return res.json({success:true,...publicState(data)});}
-    catch(e){return res.status(400).json({success:false,error:e.message});}
+  const limiter=(name,max=30)=>rateLimit('quests-'+name,max,10000);
+  function endpoint(path,fn){
+    app.post(API+path,requireAuth,limiter(path),(req,res)=>{
+      try{return res.json({success:true,...fn(String(req.telegramUser.id),req.body||{})});}
+      catch(e){return res.status(400).json({success:false,error:e.message});}
+    });
+  }
+  const API='/api/quests';
+  app.get(API+'/version',(_req,res)=>res.json({success:true,version:2,balanceVersion:'2026-09-19-review',maxAccepted:MAX_ACCEPTED,offersPerVendorPerDay:OFFERS_PER_VENDOR}));
+  endpoint('/state',id=>publicState(id,load(id)));
+  endpoint('/history',(id,body)=>history(id,integer(body.before)));
+  endpoint('/offers',(id,body)=>{
+    atBase(id);if(!vendors.has(body.vendor))throw new Error('Неизвестный заказчик');
+    return {offers:makeOffers(id,load(id),body.vendor),remainingToday:remainingToday(id,body.vendor)};
   });
-  app.post('/api/quests/offers',requireAuth,limiter('offers',40),(req,res)=>{
-    try{
-      const playerId=String(req.telegramUser.id),vendor=String(req.body?.vendor||'');
-      if(!vendors.has(vendor))return res.status(400).json({success:false,error:'Неизвестный заказчик'});
-      const data=load(playerId);
-      return res.json({success:true,offers:makeOffers(playerId,data,vendor)});
-    }catch(e){return res.status(400).json({success:false,error:e.message});}
-  });
-  app.post('/api/quests/accept',requireAuth,limiter('accept',20),(req,res)=>{
-    try{
-      const playerId=String(req.telegramUser.id),vendor=String(req.body?.vendor||''),questId=String(req.body?.questId||'');
-      if(!vendors.has(vendor))return res.status(400).json({success:false,error:'Неизвестный заказчик'});
-      const data=load(playerId),q=normalizeQuestState(data);
-      if(q.accepted.length>=8)return res.status(400).json({success:false,error:'Одновременно можно держать не больше 8 заданий'});
-      if(q.accepted.some(x=>x.id===questId))return res.json({success:true,...publicState(data)});
-      const offer=makeOffers(playerId,data,vendor).find(x=>x.id===questId);
-      if(!offer)return res.status(400).json({success:false,error:'Этот заказ больше недоступен'});
-      const accepted={...offer,acceptedAt:Date.now()};
-      q.accepted.push(accepted);save(playerId,data);
-      return res.json({success:true,...publicState(data)});
-    }catch(e){return res.status(400).json({success:false,error:e.message});}
-  });
-  app.post('/api/quests/activate',requireAuth,limiter('activate',30),(req,res)=>{
-    try{
-      const playerId=String(req.telegramUser.id),questId=String(req.body?.questId||''),data=load(playerId),q=normalizeQuestState(data);
-      if(!q.accepted.some(x=>x.id===questId))return res.status(404).json({success:false,error:'Задание не найдено'});
-      q.activeId=questId;save(playerId,data);return res.json({success:true,...publicState(data)});
-    }catch(e){return res.status(400).json({success:false,error:e.message});}
-  });
-  app.post('/api/quests/abandon',requireAuth,limiter('abandon',20),(req,res)=>{
-    try{
-      const playerId=String(req.telegramUser.id),vendor=String(req.body?.vendor||''),questId=String(req.body?.questId||''),data=load(playerId),q=normalizeQuestState(data);
-      const quest=q.accepted.find(x=>x.id===questId);
-      if(!quest||quest.vendor!==vendor)return res.status(400).json({success:false,error:'Отказаться от задания можно только у его заказчика'});
-      q.accepted=q.accepted.filter(x=>x.id!==questId);if(q.activeId===questId)q.activeId=null;save(playerId,data);
-      return res.json({success:true,...publicState(data)});
-    }catch(e){return res.status(400).json({success:false,error:e.message});}
-  });
-  app.post('/api/quests/turn-in',requireAuth,limiter('turnin',20),(req,res)=>{
-    try{
-      const playerId=String(req.telegramUser.id),vendor=String(req.body?.vendor||''),questId=String(req.body?.questId||'');
-      const result=db.transaction(()=>{
-        const data=load(playerId),q=normalizeQuestState(data),quest=q.accepted.find(x=>x.id===questId);
-        if(!quest||quest.vendor!==vendor)throw new Error('Это задание получено у другого торговца');
-        if(q.lastRaidReturnAt<=Number(quest.acceptedAt||0))throw new Error('Сначала вернись из рейда после получения задания');
-        if(inventoryQty(data,quest.itemName)<Number(quest.qty||1))throw new Error('Нужных предметов пока недостаточно');
-        if(!consume(data,quest.itemName,quest.qty))throw new Error('Не удалось списать предметы задания');
-        data.coins=Math.max(0,Number(data.coins)||0)+Math.max(1,Math.round(Number(quest.reward)||0));
-        const done={...quest,completedAt:Date.now()};
-        q.accepted=q.accepted.filter(x=>x.id!==questId);if(q.activeId===questId)q.activeId=null;
-        q.completed.push(done);if(q.completed.length>50)q.completed=q.completed.slice(-50);q.completedCount+=1;
-        save(playerId,data);
-        return {reward:quest.reward,coins:data.coins,inventory:data.inventory,...publicState(data)};
-      })();
-      return res.json({success:true,...result});
-    }catch(e){return res.status(400).json({success:false,error:e.message});}
-  });
-
+  endpoint('/accept',(id,body)=>db.transaction(()=>{
+    atBase(id);if(!vendors.has(body.vendor))throw new Error('Неизвестный заказчик');
+    const data=load(id),q=normalizeQuestState(data),old=q.accepted.find(x=>x.id===body.questId);
+    if(old&&old.vendor===body.vendor)return publicState(id,data);
+    if(receipt(id,body.questId))throw new Error('Этот заказ уже взят, выполнен или отменён');
+    if(q.accepted.length>=MAX_ACCEPTED)throw new Error('Одновременно можно взять не больше 8 заданий');
+    const offer=makeOffers(id,data,body.vendor).find(x=>x.id===body.questId);
+    if(!offer)throw new Error('Этот заказ больше недоступен');
+    const accepted={...offer,acceptedAt:Date.now()};
+    db.prepare('INSERT INTO quest_receipts(player_id,quest_id,vendor,day,status,payload) VALUES(?,?,?,?,?,?)').run(id,offer.id,offer.vendor,offer.day,'accepted',JSON.stringify(accepted));
+    q.accepted.push(accepted);save(id,data);return publicState(id,data);
+  })());
+  endpoint('/activate',(id,body)=>db.transaction(()=>{
+    const data=load(id),q=normalizeQuestState(data);
+    if(!q.accepted.some(x=>x.id===body.questId))throw new Error('Задание не найдено');
+    if(q.activeId!==body.questId){q.activeId=body.questId;save(id,data);}
+    return publicState(id,data);
+  })());
+  endpoint('/abandon',(id,body)=>db.transaction(()=>{
+    atBase(id);const data=load(id),q=normalizeQuestState(data),quest=q.accepted.find(x=>x.id===body.questId);
+    if(!quest||quest.vendor!==body.vendor)throw new Error('Отказаться можно только в разговоре с заказчиком');
+    const result=db.prepare("UPDATE quest_receipts SET status='abandoned' WHERE player_id=? AND quest_id=? AND status='accepted'").run(id,quest.id);
+    if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
+    q.accepted=q.accepted.filter(x=>x.id!==quest.id);if(q.activeId===quest.id)q.activeId=null;
+    save(id,data);return publicState(id,data);
+  })());
+  endpoint('/turn-in',(id,body)=>db.transaction(()=>{
+    atBase(id);const data=load(id),q=normalizeQuestState(data),record=receipt(id,body.questId);
+    if(!record||record.status!=='accepted')throw new Error('Этот заказ уже закрыт или не найден');
+    const quest=JSON.parse(record.payload); // authoritative receipt, never client reward/quantity
+    if(!q.accepted.some(x=>x.id===quest.id)||quest.vendor!==body.vendor)throw new Error('Это задание другого торговца');
+    if(q.lastRaidReturnAt<=quest.acceptedAt)throw new Error('Сначала вернись из рейда после получения задания');
+    if(inventoryQty(data,quest)<quest.qty)throw new Error('Нужных предметов без улучшений пока недостаточно');
+    consume(data,quest);
+    const coins=data.coins+quest.reward;if(!Number.isSafeInteger(coins))throw new Error('Лимит валюты: обратитесь к администратору');
+    data.coins=coins;
+    const done={...quest,completedAt:Date.now()};
+    const result=db.prepare("UPDATE quest_receipts SET status='completed',payload=? WHERE player_id=? AND quest_id=? AND status='accepted'").run(JSON.stringify(done),id,quest.id);
+    if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
+    q.accepted=q.accepted.filter(x=>x.id!==quest.id);if(q.activeId===quest.id)q.activeId=null;
+    save(id,data);
+    return {reward:quest.reward,coins:data.coins,inventory:data.inventory,quickSlots:data.quickSlots,...publicState(id,data)};
+  })());
   function markRaidReturn(playerId){
-    try{
-      const data=load(String(playerId)),q=normalizeQuestState(data);q.lastRaidReturnAt=Date.now();save(String(playerId),data);return q.lastRaidReturnAt;
-    }catch(e){console.error('[quest raid return]',e);return 0;}
+    // Called in the same transaction as removing the verified raid session.
+    const id=String(playerId),data=load(id);data.quests.lastRaidReturnAt=Date.now();save(id,data);
+    return data.quests.lastRaidReturnAt;
   }
-
-  return Object.freeze({version:1,pickArtifact,markRaidReturn,artifactMeta,makeOffers});
+  return Object.freeze({version:2,pickArtifact,markRaidReturn,artifactMeta,makeOffers,inventoryQty});
 };
