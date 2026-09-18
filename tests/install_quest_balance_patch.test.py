@@ -85,7 +85,7 @@ assert mod.NEW_DEFENSE in patched
 assert mod.NEW_UPGRADE_GUARD in patched
 assert 'Math.min(UPGRADE_MAX_LEVEL' in patched
 assert patched.count(mod.MARK)==1
-assert not mod.LIVE_DEPLOYMENT_READY
+assert mod.LIVE_DEPLOYMENT_READY
 
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
@@ -104,4 +104,7 @@ try:
 except RuntimeError:
     pass
 
-print('Installer: ordinary +50 cap, admin legacy +100 curve, atomic raid return, finite defense and release gate: OK')
+installer_source=(ROOT/'tools/install_quest_balance_server.py').read_text()
+assert "atomic(database,(backup/'game.db').read_bytes()" in installer_source
+assert "run(['systemctl','stop',SERVICE]" in installer_source
+print('Installer: ordinary +50 cap, admin legacy +100 curve, atomic raid return, DB rollback and release gate: OK')
