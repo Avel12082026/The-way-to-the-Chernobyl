@@ -318,7 +318,7 @@
     }
     if (action === 'warehouse') { if (atBase() && !needsSync) { hide(); native.openScreen('warehouse'); } return; }
     if (action === 'remove' && editing) { queues[editing.side].delete(editing.name); editing = null; render(); return; }
-    if (source === 'buy' || source === 'sell') { queues[source].delete(name); if (editing?.side === source && editing?.name === name) editing = null; render(); message('Предмет возвращён обратно.'); return; }
+    if (source === 'buy' || source === 'sell') { queues[source].delete(name); if (editing?.side === source && editing?.name === name) editing = null; render(); message('Предмет возвращён обратно.'); if (typeof showItemInfoModal === 'function') showItemInfoModal(name); return; }
     if (source === 'stock' || source === 'inventory') stage(source, name, source === 'stock' ? 'buy' : 'sell');
   });
   el('tradeAuto').addEventListener('toggle', () => {
