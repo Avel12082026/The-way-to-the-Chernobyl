@@ -30,14 +30,16 @@ body.quest-pda-visible,body.trader-dialogue-visible{overflow:hidden!important}
 .trader-dialogue-body{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,31%);overflow:hidden}
 .trader-dialogue-copy{min-height:0;overflow:auto;padding:12px}
 #traderDialogueLine{margin:0 0 12px;padding:10px;border-left:3px solid #856f42;background:#0b0d09;color:#cfc4a5;line-height:1.45}
-.trader-dialogue-portrait{border-left:1px solid #574b34;background:#060806;overflow:hidden}
-.trader-dialogue-portrait img{width:100%;height:100%;min-height:260px;display:block;object-fit:cover;object-position:center top;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none}
+.trader-dialogue-portrait{border-left:1px solid #574b34;background:#060806;overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr) auto}
+.trader-dialogue-portrait img{width:100%;height:100%;min-height:230px;display:block;object-fit:cover;object-position:center top;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;pointer-events:none;filter:saturate(.78) contrast(1.08)}
+.trader-dialogue-portrait-meta{display:grid;gap:1px;padding:6px 8px;border-top:1px solid #66583b;background:linear-gradient(#171a13,#0a0d09);font-size:11px}
+.trader-dialogue-portrait-meta strong{color:#d4b85f;font-size:12px}.trader-dialogue-portrait-meta span{color:#9f987f}
 .dialogue-quest-list,#traderDialogueContent{display:grid;gap:6px}
 .dialogue-quest-offer,.dialogue-turnin,.dialogue-abandon{display:grid;gap:4px;padding:9px;border:1px solid #5f5438;background:#10120d}
 .dialogue-quest-offer strong,.dialogue-turnin strong,.dialogue-abandon strong{color:#d8bd72}
-.trader-dialogue-responses{display:grid;gap:3px;padding:7px;border-top:1px solid #66573b;background:#080a07}
-.trader-dialogue-responses button{min-height:42px;padding:8px 10px;text-align:left;border:1px solid #5b5037;background:linear-gradient(#1c2119,#10130f);color:#d7ceb5;font-weight:600}
-.trader-dialogue-responses button::before{content:'› ';color:#cfb263}
+.trader-dialogue-responses{display:grid;gap:2px;padding:8px 9px;border-top:2px solid #66573b;background:linear-gradient(#0b0d09,#050705);counter-reset:dialogue-choice}
+.trader-dialogue-responses button{counter-increment:dialogue-choice;min-height:40px;padding:7px 9px;text-align:left;border:0;border-bottom:1px solid #38382d;background:transparent;color:#d7ceb5;font-weight:600}
+.trader-dialogue-responses button::before{content:counter(dialogue-choice) '. ';color:#cfb263;font-weight:800}
 .trader-dialogue-responses button:active{background:#2b3123}
 @media(max-width:520px){
  .trader-dialogue-body{grid-template-columns:minmax(0,1fr) 104px}
@@ -45,3 +47,6 @@ body.quest-pda-visible,body.trader-dialogue-visible{overflow:hidden!important}
  .trader-dialogue-copy{padding:8px}
 }
 @media(max-width:350px){.trader-dialogue-body{grid-template-columns:1fr}.trader-dialogue-portrait{display:none}}
+
+/* Original trilogy dialogue composition: large NPC text pane, compact portrait card, numbered answer pane below. */
+#traderDialogueLine::before{content:'NPC';display:block;margin-bottom:4px;color:#b79a4c;font:700 10px/1 'Russo One',Arial,sans-serif;letter-spacing:.08em}
