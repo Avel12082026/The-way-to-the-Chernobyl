@@ -39,3 +39,25 @@ body.trader-portrait-visible #menuMusicPanel,body.trader-portrait-visible #menuM
   #leonovHubScreen .leonov-actions button,.trader-portrait-actions button{padding-left:2px!important;padding-right:2px!important;letter-spacing:0!important}
   .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:7.6px!important}
 }
+
+
+/* INTERACTION_POLISH_V1 */
+.modal{z-index:6000!important}
+#gameAlertModal,#gameConfirmModal,#itemInfoModal,#profileItemModal,#dmListModal,#chatPlayerActionsModal,#giftModal,#giftItemPickerModal{z-index:6500!important}
+#technicianScreen[data-diesel-upgrade-only="true"] .zr-hero{display:none!important}
+#technicianScreen[data-diesel-upgrade-only="true"] button[onclick*="openTechnicianTab"]{display:none!important}
+#technicianScreen[data-diesel-upgrade-only="true"]>div:has(>button[onclick*="openTechnicianTab"]){display:none!important}
+button[onclick*="showItemInfoModal"]{display:none!important}
+.pda-notification-host{position:relative!important}
+.pda-notification-dot{display:none;position:absolute;width:10px;height:10px;border-radius:50%;z-index:8;box-shadow:0 0 0 1px #000,0 0 7px currentColor;pointer-events:none}
+.pda-notification-dot.active{display:block}
+.pda-notification-dm{right:7px;top:7px;background:#42d66b;color:#42d66b}
+.pda-notification-parcel{right:21px;top:7px;background:#e6c229;color:#e6c229}
+.pda-notification-system{right:35px;top:7px;background:#46b8ff;color:#46b8ff}
+#bunkerPda .pda-notification-dot{width:calc(14 * var(--bunker-unit));height:calc(14 * var(--bunker-unit));top:4%;box-shadow:0 0 0 1px #000,0 0 calc(8 * var(--bunker-unit)) currentColor}
+#bunkerPda .pda-notification-dm{right:7%}
+#bunkerPda .pda-notification-parcel{right:25%}
+#bunkerPda .pda-notification-system{right:43%}
+#raidUtilityButtons{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px}
+#raidUtilityButtons>button{width:100%!important;margin:0!important;min-height:48px}
+#raidTelegramBtn{background:#34495e!important}
