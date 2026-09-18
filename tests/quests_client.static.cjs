@@ -9,7 +9,7 @@ for(const x of ['Взятые','Активные','Выполненные','data
 assert(q.includes("vendor==='leonov'")&&q.includes("vendor==='zhuchara'"));
 assert(css.includes('.quest-ready .quest-objective')&&css.includes('.trader-dialogue-responses'));
 assert(hubs.includes("openTraderDialogue('leonov')")&&hubs.includes("openTraderDialogue('zhuchara')")&&hubs.includes("openTraderDialogue('diesel')"));
-assert(balance.includes("if(tier<1||tier>8")&&balance.includes('catchChancePercent')&&balance.includes('if(lv<100)return 0'));
+assert(balance.includes("if(tier<1||tier>8")&&balance.includes('catchChancePercent')&&balance.includes('RESEARCH_UNLOCKS=[[4,135]')&&balance.includes('[14,570]'));
 assert(drag.includes('sanitizeDragCell')&&drag.includes("e.target.closest('#inventoryScreen [data-drag-item]')"));
 assert(drag.includes('stopImmediatePropagation()'));
 assert(dragCss.includes('INVENTORY_NATIVE_MENU_GUARD_V2'));
