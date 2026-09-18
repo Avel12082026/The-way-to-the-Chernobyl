@@ -26,7 +26,7 @@ const pick=(o,ks)=>Object.fromEntries(ks.filter(k=>o&&Object.hasOwn(o,k)).map(k=
 const report={
  counts:Object.fromEntries(names.map(n=>[n,Array.isArray(data[n])?data[n].length:data[n]])),
  weapons:Array.isArray(data.weapons)?data.weapons.map(x=>pick(x,['id','name','tier','dmg','price','unlockLevel','adminOnly'])):[],
- armor:Array.isArray(data.armorItems)?data.armorItems.map(x=>pick(x,['id','name','tier','armor','hitAbsorption','price','unlockLevel','isResearchSuit','isPremiumArmor','stats'])):[],
+ armor:Array.isArray(data.armorItems)?data.armorItems.map(x=>pick(x,['id','name','tier','armor','hitAbsorption','price','unlockLevel','adminOnly','isResearchSuit','isPremiumArmor','stats'])):[],
  artifacts:Array.isArray(data.artifacts)?data.artifacts.map(x=>pick(x,['id','name','tier','price','chance','rarity','type','stats','anomalyType','adminOnly'])):[],
  anomalies:Array.isArray(data.anomalies)?data.anomalies.map(x=>pick(x,['id','name','tier','type','artifactType','artifacts','chance','searchChance'])):[],
  mutants:Array.isArray(data.mutants)?data.mutants.map(x=>pick(x,['id','name','tier','hp','maxHp','health','damage','dmg','loot','chance','exp','reward'])):[],
