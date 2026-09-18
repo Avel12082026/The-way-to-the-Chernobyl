@@ -3,6 +3,7 @@ on:
   push:
     branches: [feature/quests-balance-20260919]
     paths:
+      - 'index.html'
       - 'inventory/**'
       - 'ui/quests.*'
       - 'ui/balance-tuning.js'
