@@ -24,6 +24,14 @@ function refreshWarehouse(items,invItems){
  groups.forEach(([id,names,from,to])=>{const grid=document.getElementById(id);grid.dataset.dropKind=to;
  [...grid.children].forEach((cell,i)=>{if(!names[i])return;cell.dataset.dragItem=names[i];cell.dataset.dragFrom=from;cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});});});
 }
+function removeWarehouseShortcutButtons(warehouse){
+ if(!warehouse)return;
+ const blocked=new Set(['ВЫЙТИ ИЗ СКЛАДА','ТЕХНИК ДИЗЕЛЬ','ЭКОЛОГ ЛЕОНОВ']);
+ warehouse.querySelectorAll('button').forEach(button=>{
+  const label=(button.textContent||'').replace(/\s+/g,' ').trim().toUpperCase();
+  if(blocked.has(label))button.remove();
+ });
+}
 function targetAt(x,y){return document.elementFromPoint(x,y)?.closest('[data-drop-kind]');}
 function paint(){
  if(!gesture?.active)return;
@@ -71,7 +79,7 @@ function init(){
  const help=document.createElement('p');help.id='inventoryDragHint';help.setAttribute('role','status');document.getElementById('inventoryGrid').before(help);hint();
  window.InventoryDrag={refresh,refreshWarehouse};
  const warehouse=document.getElementById('warehouseScreen');
- if(warehouse){const help=document.createElement('p');help.id='warehouseDragHint';help.textContent='Удерживай и перетаскивай между складом и рюкзаком — по 1 предмету. Касание — обычные действия.';help.setAttribute('role','status');document.getElementById('warehouseGrid').before(help);refreshWarehouse(Object.keys(player.warehouse||{}).filter(n=>player.warehouse[n]>0),Object.keys(player.inventory).filter(n=>player.inventory[n]>0));}
+ if(warehouse){removeWarehouseShortcutButtons(warehouse);const help=document.createElement('p');help.id='warehouseDragHint';help.textContent='Удерживай и перетаскивай между складом и рюкзаком — по 1 предмету. Касание — обычные действия.';help.setAttribute('role','status');document.getElementById('warehouseGrid').before(help);refreshWarehouse(Object.keys(player.warehouse||{}).filter(n=>player.warehouse[n]>0),Object.keys(player.inventory).filter(n=>player.inventory[n]>0));}
  const deposit=document.createElement('button');deposit.type='button';deposit.id='inventoryWarehouseDrop';deposit.dataset.dropKind='deposit';deposit.textContent='📦 На склад — перетащи сюда предмет';deposit.onclick=()=>{if(!raidActive&&!inventoryOpenedFromRaid)openScreen('warehouse');};document.getElementById('inventoryGrid').before(deposit);
  const items=Object.keys(player.inventory).filter(n=>player.inventory[n]>0&&n!=='Книга знаний');refresh(items);
  fetch(SERVER_URL+'/api/equipment/features').then(r=>r.ok?r.json():null).then(x=>{preciseArtifacts=x?.artifactSlotTarget===true;}).catch(()=>{});
