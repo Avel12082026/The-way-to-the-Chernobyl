@@ -5,8 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('installer',ROOT/'tools/install_quest_balance_server.py')
 mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
-source="""
-const UPGRADE_MAX_LEVEL = 100;
+source="""const UPGRADE_MAX_LEVEL = 100;
 const UPGRADE_BYTE_THRESHOLD = 50;
 const UPGRADE_MAX_BONUS_PCT_SERVER = 0.5;
 function getResearchSuitUnlockTierServer(level) {
@@ -21,13 +20,13 @@ const PVE_NPC_TIER_MULT = {1:1.37,2:0.97,3:1.05,4:1.08,5:1.14,6:1.05,7:0.97,8:0.
 expectedTier=Math.min(PVE_NPC_MAX_TIER,1+Math.floor(level/20));
 const name=a.artifacts[Math.floor(Math.random()*a.artifacts.length)];pveAddItem(data,name,1,true);found.push(name);
 const second=a.artifacts[Math.floor(Math.random()*a.artifacts.length)];pveAddItem(data,second,1,true);found.push(second);
-    db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
-    return res.json({success:true});
-});
-
-app.post('/api/raid/step'
+""" + mod.OLD_RAID_END + """
+""" + mod.OLD_DEFENSE + """
+""" + mod.OLD_UPGRADE_GUARD + """
+    const lvl = Math.max(0, Number(level) || 0);
 app.listen(PORT, () => {
 """
+
 patched,changed=mod.patch(source)
 assert changed
 assert 'const UPGRADE_MAX_LEVEL = 50;' in patched
@@ -39,8 +38,28 @@ assert '1:28,2:45' in patched
 assert 'earlyFloor' in patched
 assert 'Math.floor(level/40)' in patched
 assert patched.count('questBalance.pickArtifact')==2
-assert 'questBalance.markRaidReturn(playerId)' in patched
+assert mod.NEW_RAID_END in patched
+assert mod.NEW_DEFENSE in patched
+assert mod.NEW_UPGRADE_GUARD in patched
+assert 'Math.min(UPGRADE_MAX_LEVEL' in patched
 assert patched.count(mod.MARK)==1
+assert not mod.LIVE_DEPLOYMENT_READY
+
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
-print('quest server installer patch: OK')
+
+# Anchor ambiguity must fail closed.
+try:
+    mod.patch(source+"\n"+mod.OLD_DEFENSE)
+    raise AssertionError('ambiguous anchors accepted')
+except RuntimeError:
+    pass
+
+# Never auto-upgrade an old experimental server patch.
+try:
+    mod.patch('// QUEST_BALANCE_V1')
+    raise AssertionError('unreviewed V1 patch accepted')
+except RuntimeError:
+    pass
+
+print('Atomic raid return, finite defense, total +50 cap, read-only deployment gate and anchor rejection: OK')
