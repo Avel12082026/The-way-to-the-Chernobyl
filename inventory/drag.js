@@ -124,17 +124,13 @@ function init(){
  document.addEventListener('keydown',e=>{if(e.key==='Escape')cancel();});
  [screen,warehouse].filter(Boolean).forEach(el=>new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(el,{attributes:true,attributeFilter:['class']}));
  document.addEventListener('click',e=>{
-  const item=e.target.closest('#inventoryScreen [data-drag-item]');
-  if(item){
-   if(Date.now()<suppressUntil||busy){e.preventDefault();e.stopImmediatePropagation();return;}
-   // Inventory taps are handled by the cell, not by the underlying <img src=...>.
-   // This keeps item info while Android/Telegram never owns the image gesture.
+  const inventoryItem=e.target.closest('#inventoryScreen [data-drag-item]');
+  const warehouseItem=e.target.closest('#warehouseScreen [data-drag-item]');
+  // Preserve the game's existing short-tap behavior. Only swallow the synthetic
+  // click that follows a drag/hold, so it cannot also trigger the old item action.
+  if((inventoryItem||warehouseItem)&&(Date.now()<suppressUntil||busy)){
    e.preventDefault();e.stopImmediatePropagation();
-   const name=item.dataset.dragItem;
-   if(name&&typeof showItemInfoModal==='function')showItemInfoModal(name);
-   return;
   }
-  if((e.target.closest('#warehouseScreen'))&&(Date.now()<suppressUntil||busy)){e.preventDefault();e.stopImmediatePropagation();}
  },true);
  document.addEventListener('dragstart',e=>{if(e.target.closest('#inventoryScreen [data-drag-item],#warehouseScreen [data-drag-item]')){e.preventDefault();e.stopPropagation();}},true);
  document.addEventListener('contextmenu',e=>{
