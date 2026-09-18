@@ -57,6 +57,151 @@ module.exports=function installQuestBalance({
     return pool.at(-1).name;
   }
 
+  // One-time compatibility migration for the new global +50 equipment budget.
+  // It preserves every item and the player's armor-stat distribution; only excess
+  // legacy upgrade levels are compressed into the supported 0..50 range.
+  const UPGRADE_CAP=50, UPGRADE_BONUS_PER_LEVEL=0.005, UPGRADE_MAX_BONUS=0.25;
+  const weaponByName=new Map((SHOP_WEAPONS||[]).map(x=>[x.name,x]));
+  const armorByName=new Map((SHOP_ARMOR||[]).map(x=>[x.name,x]));
+  function gearParts(name){
+    const raw=String(name||'');
+    const suffix=(raw.match(/[\u200B\u200C]+$/)||[''])[0];
+    const visible=suffix?raw.slice(0,-suffix.length):raw;
+    const m=visible.match(/^(.*) \+(\d+)$/);
+    return {raw,baseName:m?m[1]:visible,level:m?Math.max(0,Number(m[2])||0):0,suffix};
+  }
+  function stableArmorKey(name){
+    const p=gearParts(name);return p.baseName+p.suffix;
+  }
+  function cappedGearName(name,forcedLevel=null){
+    const p=gearParts(name);
+    if(!weaponByName.has(p.baseName)&&!armorByName.has(p.baseName))return p.raw;
+    const level=Math.min(UPGRADE_CAP,Math.max(0,forcedLevel===null?p.level:Number(forcedLevel)||0));
+    return p.baseName+(level?(' +'+level):'')+p.suffix;
+  }
+  function upgradedStat(baseStat,level,ceiling=Infinity){
+    const lvl=Math.min(UPGRADE_CAP,Math.max(0,Number(level)||0));
+    const base=Number(baseStat)||0;
+    const pct=Math.min(UPGRADE_MAX_BONUS,lvl*UPGRADE_BONUS_PER_LEVEL);
+    const raw=base===0?Math.round(lvl):Math.round(base*(1+pct));
+    return Number.isFinite(ceiling)?Math.min(raw,ceiling):raw;
+  }
+  function nextCeiling(list,item,statKey){
+    if(!item||item.unlockLevel===undefined)return Infinity;
+    const candidates=list.filter(o=>!o.adminOnly&&!o.isPremiumArmor&&!o.isResearchSuit&&o.unlockLevel!==undefined&&o.unlockLevel>item.unlockLevel);
+    if(!candidates.length)return Infinity;
+    const minUnlock=Math.min(...candidates.map(o=>o.unlockLevel));
+    const next=candidates.filter(o=>o.unlockLevel===minUnlock).sort((a,b)=>(Number(a[statKey])||0)-(Number(b[statKey])||0))[0];
+    return Math.max(Number(item[statKey])||0,upgradedStat(Number(next[statKey])||0,20,nextCeiling(list,next,statKey)));
+  }
+  function compressUpgradeRecord(record){
+    if(!record||typeof record!=='object'||Array.isArray(record))return {record:{},changed:!!record,total:0};
+    const copy={...record};
+    const numeric=Object.entries(record).map(([key,value])=>[key,Math.max(0,Math.floor(Number(value)||0))]).filter(([,value])=>value>0);
+    const total=numeric.reduce((n,[,value])=>n+value,0);
+    if(total<=UPGRADE_CAP){
+      for(const [key,value] of numeric)copy[key]=value;
+      return {record:copy,changed:false,total};
+    }
+    const scaled=numeric.map(([key,value])=>{
+      const exact=value*UPGRADE_CAP/total;
+      return {key,value:Math.floor(exact),fraction:exact-Math.floor(exact)};
+    });
+    let remaining=UPGRADE_CAP-scaled.reduce((n,x)=>n+x.value,0);
+    scaled.sort((a,b)=>b.fraction-a.fraction||a.key.localeCompare(b.key));
+    for(let i=0;i<scaled.length&&remaining>0;i++,remaining--)scaled[i].value++;
+    for(const [key] of numeric)copy[key]=0;
+    for(const x of scaled)copy[x.key]=x.value;
+    return {record:copy,changed:true,total:UPGRADE_CAP};
+  }
+  function migrateBag(bag){
+    if(!bag||typeof bag!=='object'||Array.isArray(bag))return {bag:bag||{},changed:false};
+    const out={};let changed=false;
+    for(const [name,qty] of Object.entries(bag)){
+      const target=cappedGearName(name);
+      if(target!==name)changed=true;
+      out[target]=(Number(out[target])||0)+(Number(qty)||0);
+    }
+    return {bag:out,changed};
+  }
+  function migrateProfileForUpgradeCap(data){
+    if(!data||typeof data!=='object')return {data,changed:false,itemsClamped:0,recordsCompressed:0};
+    let changed=false,itemsClamped=0,recordsCompressed=0;
+    for(const key of ['inventory','warehouse']){
+      const before=data[key]||{},result=migrateBag(before);
+      if(result.changed){data[key]=result.bag;changed=true;itemsClamped++;}
+    }
+    data.armorUpgradeData=data.armorUpgradeData&&typeof data.armorUpgradeData==='object'?data.armorUpgradeData:{};
+    for(const key of Object.keys(data.armorUpgradeData)){
+      const result=compressUpgradeRecord(data.armorUpgradeData[key]);
+      if(result.changed){data.armorUpgradeData[key]=result.record;recordsCompressed++;changed=true;}
+    }
+    if(data.weapon&&typeof data.weapon.name==='string'){
+      const p=gearParts(data.weapon.name),base=weaponByName.get(p.baseName);
+      if(base){
+        const level=Math.min(UPGRADE_CAP,p.level),name=cappedGearName(data.weapon.name,level);
+        const dmg=upgradedStat(base.dmg,level,nextCeiling(SHOP_WEAPONS,base,'dmg'));
+        if(name!==data.weapon.name||Number(data.weapon.dmg)!==dmg){data.weapon={...data.weapon,name,tier:base.tier,dmg};changed=true;if(p.level>UPGRADE_CAP)itemsClamped++;}
+      }
+    }
+    if(data.armor&&typeof data.armor.name==='string'){
+      const p=gearParts(data.armor.name),base=armorByName.get(p.baseName);
+      if(base){
+        const stable=stableArmorKey(data.armor.name);
+        const rec=data.armorUpgradeData[stable]||{};
+        const total=Math.min(UPGRADE_CAP,Object.values(rec).reduce((n,x)=>n+Math.max(0,Math.floor(Number(x)||0)),0));
+        const level=Math.min(UPGRADE_CAP,Math.max(Math.min(p.level,UPGRADE_CAP),total));
+        const name=cappedGearName(data.armor.name,level);
+        const armor=upgradedStat(base.armor,rec.armor||0,nextCeiling(SHOP_ARMOR,base,'armor'));
+        const hitAbsorption=upgradedStat(base.hitAbsorption||0,rec.hitAbsorption||0,nextCeiling(SHOP_ARMOR,base,'hitAbsorption'));
+        if(name!==data.armor.name||Number(data.armor.armor)!==armor||Number(data.armor.hitAbsorption)!==hitAbsorption){
+          data.armor={...data.armor,name,tier:base.tier,armor,hitAbsorption};changed=true;if(p.level>UPGRADE_CAP)itemsClamped++;
+        }
+      }
+    }
+    return {data,changed,itemsClamped,recordsCompressed};
+  }
+
+  db.exec(`CREATE TABLE IF NOT EXISTS balance_migrations (
+    name TEXT PRIMARY KEY, applied_at INTEGER NOT NULL, details TEXT NOT NULL
+  )`);
+  function runUpgradeCapMigration(){
+    const migration='upgrade_cap_50_v1';
+    const old=db.prepare('SELECT details FROM balance_migrations WHERE name=?').get(migration);
+    if(old){try{return JSON.parse(old.details);}catch(_){return {alreadyApplied:true};}}
+    return db.transaction(()=>{
+      const rows=db.prepare('SELECT id,data FROM players').all();
+      let profilesChanged=0,itemsClamped=0,recordsCompressed=0;
+      for(const row of rows){
+        let data;try{data=JSON.parse(row.data||'{}');}catch(_){continue;}
+        const result=migrateProfileForUpgradeCap(data);
+        if(result.changed){
+          const update=db.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(data),row.id);
+          if(update.changes!==1)throw new Error('Не удалось перенести улучшения профиля '+row.id);
+          profilesChanged++;itemsClamped+=result.itemsClamped;recordsCompressed+=result.recordsCompressed;
+        }
+      }
+      // Market lots only store the item name; clamp their visible legacy +N too.
+      let marketLotsClamped=0;
+      try{
+        for(const row of db.prepare('SELECT id,item FROM market').all()){
+          const item=cappedGearName(row.item);
+          if(item!==row.item){
+            const update=db.prepare('UPDATE market SET item=? WHERE id=?').run(item,row.id);
+            if(update.changes!==1)throw new Error('Не удалось перенести рыночный лот '+row.id);
+            marketLotsClamped++;
+          }
+        }
+      }catch(error){
+        if(!/no such table: market/i.test(String(error&&error.message||error)))throw error;
+      }
+      const details={profilesScanned:rows.length,profilesChanged,itemsClamped,recordsCompressed,marketLotsClamped,cap:UPGRADE_CAP};
+      db.prepare('INSERT INTO balance_migrations(name,applied_at,details) VALUES(?,?,?)').run(migration,Date.now(),JSON.stringify(details));
+      return details;
+    })();
+  }
+  const upgradeMigration=runUpgradeCapMigration();
+
   // Durable receipt journal: completed/cancelled offers cannot be accepted twice.
   // History is paginated, never erased to keep the profile JSON small.
   db.exec(`CREATE TABLE IF NOT EXISTS quest_receipts (
@@ -247,5 +392,5 @@ module.exports=function installQuestBalance({
     const id=String(playerId),data=load(id);data.quests.lastRaidReturnAt=Date.now();save(id,data);
     return data.quests.lastRaidReturnAt;
   }
-  return Object.freeze({version:2,pickArtifact,markRaidReturn,artifactMeta,makeOffers,inventoryQty});
+  return Object.freeze({version:2,pickArtifact,markRaidReturn,artifactMeta,makeOffers,inventoryQty,migrateProfileForUpgradeCap,upgradeMigration});
 };
