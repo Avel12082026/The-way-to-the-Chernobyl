@@ -63,3 +63,23 @@ body.trade-menu-visible #menuMusicPanel,body.trade-menu-visible #menuMusicButton
 #tradeMenu::-webkit-scrollbar-track,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-track,#tradeMenu #tradeInventory::-webkit-scrollbar-track,#tradeMenu .trade-staging::-webkit-scrollbar-track{background:#171811;border-left:1px solid #51472f}
 #tradeMenu::-webkit-scrollbar-thumb,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-thumb,#tradeMenu #tradeInventory::-webkit-scrollbar-thumb,#tradeMenu .trade-staging::-webkit-scrollbar-thumb{min-height:58px;background:linear-gradient(#d5b56d,#8f733b);border:3px solid #171811;border-radius:10px;box-shadow:inset 0 0 0 1px #f3d98a66}
 #tradeMenu::-webkit-scrollbar-thumb:active,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-thumb:active,#tradeMenu #tradeInventory::-webkit-scrollbar-thumb:active,#tradeMenu .trade-staging::-webkit-scrollbar-thumb:active{background:linear-gradient(#eed083,#a78643)}
+
+/* TRADE_HOLD_WAREHOUSE_FIX_V1 */
+/* A trade cell owns the gesture, not the underlying image URL. */
+#tradeMenu [data-trade-source],
+#tradeMenu [data-trade-source] *,
+#itemInfoModal {
+  -webkit-touch-callout:none;
+}
+#tradeMenu [data-trade-source],
+#tradeMenu [data-trade-source] *,
+#itemInfoModal img {
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+/* Override the generic clickable-item rule only here; inventory/PDA taps stay intact. */
+#tradeMenu [data-trade-source] img,
+#itemInfoModal img {
+  pointer-events:none!important;
+}
