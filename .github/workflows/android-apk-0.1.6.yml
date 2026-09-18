@@ -1,0 +1,82 @@
+name: Build Android APK 0.1.6
+
+on:
+  push:
+    branches: [android/update-0.1.6-20260919]
+    paths:
+      - 'index.html'
+      - 'android/**'
+      - 'mobile/web/**'
+      - 'tools/build_mobile.py'
+      - 'images/**'
+      - 'icons/**'
+      - 'audio/**'
+      - 'inventory/**'
+      - 'ui/**'
+      - 'file_000000002bb08210800056ebfb1dce1f.png'
+      - '.github/workflows/android-apk-0.1.6.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-apk-0.1.6-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install Android SDK 35
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then SDKMANAGER="$(command -v sdkmanager)"; fi
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Build local game assets
+        run: python3 tools/build_mobile.py --download
+      - name: Validate bundled client
+        run: |
+          test -f android/app/src/main/assets/asset-manifest.json
+          test -f android/app/src/main/assets/ui/quests.js
+          test -f android/app/src/main/assets/ui/quests.css
+          test -f android/app/src/main/assets/ui/balance-tuning.js
+          test -f android/app/src/main/assets/inventory/drag.js
+          test -f android/app/src/main/assets/ui/trade-menu.js
+          node --check android/app/src/main/assets/ui/quests.js
+          node --check android/app/src/main/assets/ui/balance-tuning.js
+          node --check android/app/src/main/assets/inventory/drag.js
+          python3 - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('android/app/src/main/assets/asset-manifest.json')
+          d=json.loads(p.read_text())
+          assert len(d['files']) > 100
+          assert d['totalBytes'] > 1_000_000
+          names={x['path'] for x in d['files']}
+          for required in ('ui/quests.js','ui/quests.css','ui/balance-tuning.js','inventory/drag.js'):
+              assert required in names, required
+          print('Bundled files:',len(d['files']),'bytes:',d['totalBytes'])
+          PY
+      - name: Build unsigned release APK
+        run: gradle -p android --no-daemon assembleRelease
+      - name: Prepare artifact
+        run: |
+          test -s android/app/build/outputs/apk/release/app-release-unsigned.apk
+          mkdir -p apk-out
+          cp android/app/build/outputs/apk/release/app-release-unsigned.apk apk-out/The-way-to-the-Chernobyl-0.1.6-unsigned.apk
+          sha256sum apk-out/The-way-to-the-Chernobyl-0.1.6-unsigned.apk > apk-out/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chernobyl-android-0.1.6-unsigned
+          retention-days: 7
+          path: apk-out/
