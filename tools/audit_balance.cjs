@@ -32,12 +32,25 @@ const report={
  mutants:Array.isArray(data.mutants)?data.mutants.map(x=>pick(x,['id','name','tier','hp','maxHp','health','damage','dmg','loot','chance','exp','reward'])):[],
  functions
 };
-const research=report.armor.filter(x=>x.isResearchSuit);
+const research=report.armor.filter(x=>x.isResearchSuit&&!x.adminOnly);
 const normals=report.armor.filter(x=>!x.isResearchSuit&&!x.adminOnly&&!x.isPremiumArmor);
+const balanceWeapons=report.weapons.filter(x=>!x.adminOnly);
+const balanceArtifacts=report.artifacts.filter(x=>!x.adminOnly);
+report.balancePool={
+ weapons:balanceWeapons,
+ armor:[...normals,...research],
+ artifacts:balanceArtifacts
+};
+report.adminExcluded={
+ weapons:report.weapons.filter(x=>x.adminOnly).map(x=>x.name),
+ armor:report.armor.filter(x=>x.adminOnly).map(x=>x.name),
+ artifacts:report.artifacts.filter(x=>x.adminOnly).map(x=>x.name)
+};
 report.summary={
  researchSuits:research,
  normalArmorByUnlock:normals.sort((a,b)=>(a.unlockLevel??999)-(b.unlockLevel??999)).slice(0,40),
- weaponByUnlock:report.weapons.filter(x=>!x.adminOnly).sort((a,b)=>(a.unlockLevel??999)-(b.unlockLevel??999)),
+ weaponByUnlock:balanceWeapons.sort((a,b)=>(a.unlockLevel??999)-(b.unlockLevel??999)),
+ artifactByTier:balanceArtifacts.sort((a,b)=>(a.tier??0)-(b.tier??0)||(a.price??0)-(b.price??0)),
  mutantByTier:report.mutants.filter(x=>!String(x.name||'').startsWith('Самка ')).sort((a,b)=>(a.tier??0)-(b.tier??0))
 };
 fs.writeFileSync('balance-audit.json',JSON.stringify(report,null,2));
