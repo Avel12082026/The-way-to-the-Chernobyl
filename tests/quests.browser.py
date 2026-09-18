@@ -77,7 +77,7 @@ async def main():
     if not await page.evaluate("!!window.QuestSystem"):
       await page.add_style_tag(content=(ROOT/'ui/quests.css').read_text())
       await page.add_script_tag(content=(ROOT/'ui/quests.js').read_text())
-    await page.wait_for_function("window.QuestSystem?.version==='1.0.0'")
+    await page.wait_for_function("window.QuestSystem?.version==='1.1.0'")
     await page.evaluate("QuestSystem.sync()")
     await page.wait_for_timeout(80)
 
