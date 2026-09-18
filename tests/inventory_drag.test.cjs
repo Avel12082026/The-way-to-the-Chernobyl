@@ -1,5 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const code=fs.readFileSync('inventory/drag.js','utf8');
+assert(code.includes('removeWarehouseShortcutButtons(warehouse)'));
+assert(code.includes("'ВЫЙТИ ИЗ СКЛАДА','ТЕХНИК ДИЗЕЛЬ','ЭКОЛОГ ЛЕОНОВ'"));
 class El{
  constructor(){this.style={};this.dataset={};this.children=[];this.classes=new Set();this.classList={add:(...xs)=>xs.forEach(x=>this.classes.add(x)),remove:(...xs)=>xs.forEach(x=>this.classes.delete(x)),contains:x=>this.classes.has(x),toggle:(x,b)=>b?this.classes.add(x):this.classes.delete(x)};this.events={};this.scrollTop=0;this.innerHTML='';this.parentElement=null;}
  setAttribute(){} removeAttribute(){} before(){} append(){} remove(){} getBoundingClientRect(){return{top:0,bottom:800}}
