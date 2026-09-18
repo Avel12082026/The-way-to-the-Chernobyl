@@ -240,7 +240,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.2.0',
+    version:'1.3.0',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
@@ -474,10 +474,56 @@
     return '';
   }
 
+  let raidQuickHold=null;
+  let suppressRaidQuickClickUntil=0;
+  const RAID_QUICK_INFO_HOLD_MS=800;
+
+  function raidQuickItemName(cell){
+    const slots=[...document.querySelectorAll('#quickSlots .quick-slot')];
+    const index=slots.indexOf(cell);
+    return index>=0 && typeof player==='object' ? (player.quickSlots?.[index]||'') : '';
+  }
+  function clearRaidQuickHold(){
+    if(raidQuickHold?.timer)clearTimeout(raidQuickHold.timer);
+    raidQuickHold=null;
+  }
+  document.addEventListener('pointerdown',event=>{
+    const cell=event.target.closest?.('#quickSlots .quick-slot');
+    if(!cell||event.button!==0||event.isPrimary===false)return;
+    const name=raidQuickItemName(cell);
+    if(!name)return;
+    const hold={id:event.pointerId,cell,name,x:event.clientX,y:event.clientY,timer:null};
+    hold.timer=setTimeout(()=>{
+      if(raidQuickHold!==hold)return;
+      suppressRaidQuickClickUntil=Date.now()+900;
+      if(typeof showItemInfoModal==='function')showItemInfoModal(name);
+      try{window.Telegram?.WebApp?.HapticFeedback?.impactOccurred?.('light');}catch(_){}
+    },RAID_QUICK_INFO_HOLD_MS);
+    raidQuickHold=hold;
+  },true);
+  document.addEventListener('pointermove',event=>{
+    const hold=raidQuickHold;
+    if(!hold||hold.id!==event.pointerId)return;
+    if(Math.hypot(event.clientX-hold.x,event.clientY-hold.y)>10)clearRaidQuickHold();
+  },true);
+  document.addEventListener('pointerup',event=>{
+    if(raidQuickHold?.id===event.pointerId)clearRaidQuickHold();
+  },true);
+  document.addEventListener('pointercancel',clearRaidQuickHold,true);
+  document.addEventListener('contextmenu',event=>{
+    if(event.target.closest?.('#quickSlots .quick-slot')){
+      event.preventDefault();event.stopPropagation();
+    }
+  },true);
+
   document.addEventListener('click', event => {
+    const raidQuick=event.target.closest?.('#quickSlots .quick-slot');
+    if(raidQuick && Date.now()<suppressRaidQuickClickUntil){
+      event.preventDefault();event.stopImmediatePropagation();return;
+    }
     // Tap the actual item icon for information; tapping the surrounding trade cell keeps stage/remove behavior.
     const img = event.target.closest?.('img');
-    if (img && !img.closest('#tradeMenu,.trader-portrait-screen,.bunker-menu')) {
+    if (img && !img.closest('#tradeMenu,.trader-portrait-screen,.bunker-menu,#quickSlots')) {
       const name = itemNameFromIcon(img);
       if (name && typeof showItemInfoModal === 'function') {
         event.preventDefault(); event.stopImmediatePropagation();
