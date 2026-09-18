@@ -63,11 +63,12 @@ def patch(source):
     return Math.min(14, 4 + Math.floor((Math.max(1, Number(level) || 1) - 1) / 50));
 }"""
     new_research="""function getResearchSuitUnlockTierServer(level) {
-    // Исследовательский A открывается на 100-м уровне; далее новый вариант каждые 40 уровней.
-    // Так исследовательская линейка больше не перескакивает раннюю обычную броню.
+    // Каждый исследовательский костюм открывается не раньше обычной брони того же тира.
     const lv=Math.max(1,Number(level)||1);
-    if(lv<100)return 0;
-    return Math.min(14,4+Math.floor((lv-100)/40));
+    const unlocks=[[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];
+    let tier=0;
+    for(const [value,required] of unlocks)if(lv>=required)tier=value;
+    return tier;
 }"""
     if old_research not in text:
         # Compatibility with the older 25-level comment/body from the same server family.
