@@ -117,3 +117,14 @@
 #inventoryScreen #inventoryGrid [data-drag-item] a{
   pointer-events:none!important;
 }
+
+/* Also protect an empty cell, equipped item and the dialog opened after a tap. */
+#inventoryScreen :is(#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid) img,
+#warehouseScreen :is(#warehouseGrid,#warehouseInventoryGrid) img,
+#itemActionModal img {
+  pointer-events:none!important;
+  -webkit-touch-callout:none!important;
+  -webkit-user-drag:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+}
