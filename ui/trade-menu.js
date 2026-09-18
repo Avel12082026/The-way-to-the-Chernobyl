@@ -295,7 +295,8 @@
     if (id === 'leonov' && window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov();
     else if (id === 'zhuchara' && window.TraderHubs?.openZhuchara) window.TraderHubs.openZhuchara();
     else if (id === 'friendly') await native.closeFriendlyTrade();
-    else if (id === 'technician' && window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();\n    else if (id === 'technician') { technicianTab = 'upgrade'; native.openScreen('technician'); }
+    else if (id === 'technician' && window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();\n    else if (id === 'technician' && window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();
+    else if (id === 'technician') { technicianTab = 'upgrade'; native.openScreen('technician'); }
     else native.openScreen('main');
     if (returnFocus?.isConnected && !returnFocus.closest('[hidden]')) returnFocus.focus({preventScroll: true});
   }
