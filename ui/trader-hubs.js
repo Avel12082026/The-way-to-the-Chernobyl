@@ -297,10 +297,12 @@
   function renderBadges(state) {
     const hosts = [
       ensureBadges(document.getElementById('bunkerPda'),'main'),
-      ensureBadges(document.getElementById('kpkChatBtn'),'kpk')
+      ensureBadges(document.getElementById('kpkChatBtn'),'kpk'),
+      ensureBadges(document.getElementById('raidTelegramBtn'),'raid')
     ].filter(Boolean);
     for (const dots of hosts) for (const kind of ['dm','parcel','system']) {
       dots[kind].classList.toggle('active', !!state[kind]);
+      dots[kind].setAttribute('aria-hidden', String(!state[kind]));
     }
     const legacy = document.getElementById('kpkChatUnreadDot');
     if (legacy) legacy.style.display = 'none';
@@ -324,24 +326,30 @@
 
   async function checkPdaNotifications() {
     if (typeof player !== 'object' || !player?.nickname) return;
-    let dm=false, parcel=playerParcelUnread(), system=playerSystemUnread();
-    let latestDm=0, latestParcel=0, latestSystem=0;
+    if (window.__pdaNotificationPollBusy) return;
+    window.__pdaNotificationPollBusy = true;
+    let dm=previousState.dm, parcel=playerParcelUnread(), system=playerSystemUnread();
+    let latestDm=previousState.latestDm, latestParcel=previousState.latestParcel, latestSystem=previousState.latestSystem;
     try {
       const r = await fetch(`${SERVER_URL}/api/chat/dm/conversations`, {
         method:'POST', headers:{'Content-Type':'application/json'},
         body:JSON.stringify({initData:window.Telegram?.WebApp?.initData})
       });
+      if (!r.ok) throw new Error('DM poll HTTP ' + r.status);
       const list = await r.json();
+      if (!Array.isArray(list)) throw new Error('Invalid DM conversations');
       const myId = String(typeof getPlayerId === 'function' ? getPlayerId() : '');
       const incoming = (list || []).filter(c => String(c.lastSenderId)!==myId);
       dm = incoming.some(c => typeof isDmConvUnread === 'function' ? isDmConvUnread(c,myId) :
         Number(c.lastMessageAt||0) > Number(localStorage.getItem('pdaDmSeenAt')||0));
-      latestDm = Math.max(0,...incoming.map(c=>Number(new Date(c.lastMessageAt).getTime())||Number(c.lastMessageAt)||0));
+      latestDm = Math.max(previousState.latestDm,...incoming.map(c=>Number(new Date(c.lastMessageAt).getTime())||Number(c.lastMessageAt)||0));
     } catch (_) {}
 
     try {
       const r = await fetch(`${SERVER_URL}/api/chat/general?_=${Date.now()}`, {cache:'no-store'});
+      if (!r.ok) throw new Error('System poll HTTP ' + r.status);
       const messages = await r.json();
+      if (!Array.isArray(messages)) throw new Error('Invalid system messages');
       const sys = (messages || []).filter(m => m?.isSystem);
       const parcelRx = /подар|посыл|достав|получил.+(?:предмет|байт|жетон)/i;
       const pMsgs = sys.filter(m => parcelRx.test(String(m.text||'')));
@@ -373,9 +381,11 @@
     if (hasNewEvent) playPdaSound();
     previousState=next;
     notificationReady=true;
+    window.__pdaNotificationPollBusy = false;
   }
 
   function itemNameFromIcon(img) {
+    if (img.dataset.itemInfo) return img.dataset.itemInfo;
     const cell = img.closest('[data-trade-name],.slot,.belt-slot,.quick-slot,.shop-item');
     if (!cell) return '';
     if (cell.dataset?.tradeName) return cell.dataset.tradeName;
@@ -422,7 +432,7 @@
   document.addEventListener('click', event => {
     // Tap the actual item icon for information; tapping the surrounding trade cell keeps stage/remove behavior.
     const img = event.target.closest?.('img');
-    if (img && !img.closest('.trader-portrait-screen,.bunker-menu')) {
+    if (img && !img.closest('#tradeMenu,.trader-portrait-screen,.bunker-menu')) {
       const name = itemNameFromIcon(img);
       if (name && typeof showItemInfoModal === 'function') {
         event.preventDefault(); event.stopImmediatePropagation();

@@ -319,7 +319,10 @@
     if (action === 'warehouse') { if (atBase() && !needsSync) { hide(); native.openScreen('warehouse'); } return; }
     if (action === 'remove' && editing) { queues[editing.side].delete(editing.name); editing = null; render(); return; }
     if (source === 'buy' || source === 'sell') { queues[source].delete(name); if (editing?.side === source && editing?.name === name) editing = null; render(); message('Предмет возвращён обратно.'); if (typeof showItemInfoModal === 'function') showItemInfoModal(name); return; }
-    if (source === 'stock' || source === 'inventory') stage(source, name, source === 'stock' ? 'buy' : 'sell');
+    if (source === 'stock' || source === 'inventory') {
+      stage(source, name, source === 'stock' ? 'buy' : 'sell');
+      if (typeof showItemInfoModal === 'function') showItemInfoModal(name);
+    }
   });
   el('tradeAuto').addEventListener('toggle', () => {
     if (!el('tradeAuto').open || !['zhuchara', 'leonov'].includes(vendor)) return;
@@ -354,14 +357,14 @@
     frame = requestAnimationFrame(paint);
   }
   function begin() {
-    if (!gesture || gesture.scrolling || busy || needsSync) return;
+    if (!gesture || gesture.scrolling || busy || needsSync || !['stock', 'inventory'].includes(gesture.source)) return;
     gesture.active = true; ghost = gesture.node.cloneNode(true); ghost.className = 'trade-drag-ghost';
     ghost.removeAttribute('id'); ghost.setAttribute('aria-hidden', 'true'); document.body.append(ghost); paint();
   }
   root.addEventListener('pointerdown', e => {
-    const node = e.target.closest('[data-trade-source="stock"],[data-trade-source="inventory"]');
+    const node = e.target.closest('[data-trade-source]');
     if (!node || busy || needsSync || gesture || e.button !== 0 || !e.isPrimary) return;
-    gesture = {id: e.pointerId, node, source: node.dataset.tradeSource, name: node.dataset.tradeName, touch: e.pointerType === 'touch', x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, lastY: e.clientY, scroller: node.closest('#tradeStockScroll') || root};
+    gesture = {id: e.pointerId, node, source: node.dataset.tradeSource, name: node.dataset.tradeName, touch: e.pointerType === 'touch', x: e.clientX, y: e.clientY, startX: e.clientX, startY: e.clientY, lastY: e.clientY, scroller: node.closest('#tradeStockScroll,#tradeInventory,.trade-staging') || root};
     if (gesture.touch) gesture.timer = setTimeout(begin, 240);
   });
   document.addEventListener('pointermove', e => {
@@ -420,5 +423,5 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.2.0', open, refresh: render, openTechnicianUpgrade(){ if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.2.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
