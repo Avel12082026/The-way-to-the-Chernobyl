@@ -66,11 +66,11 @@ jobs:
       - name: Prepare artifact
         run: |
           test -s android/app/build/outputs/apk/release/app-release-unsigned.apk
-          mkdir -p .apk-out
-          cp android/app/build/outputs/apk/release/app-release-unsigned.apk .apk-out/The-way-to-the-Chernobyl-0.1.5-unsigned.apk
-          sha256sum .apk-out/The-way-to-the-Chernobyl-0.1.5-unsigned.apk > .apk-out/SHA256SUMS.txt
+          mkdir -p apk-out
+          cp android/app/build/outputs/apk/release/app-release-unsigned.apk apk-out/The-way-to-the-Chernobyl-0.1.5-unsigned.apk
+          sha256sum apk-out/The-way-to-the-Chernobyl-0.1.5-unsigned.apk > apk-out/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
           name: chernobyl-android-0.1.5-unsigned
           retention-days: 7
-          path: .apk-out/
+          path: apk-out/
