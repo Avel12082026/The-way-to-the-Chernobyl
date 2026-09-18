@@ -310,7 +310,7 @@ if(typeof oldUpdate==='function')window.updateUI=function(){const r=oldUpdate.ap
 const oldBattle=window.renderBattleButtons;
 if(typeof oldBattle==='function')window.renderBattleButtons=function(){const r=oldBattle.apply(this,arguments);queueMicrotask(renderTracker);return r;};
 
-new MutationObserver(()=>{ensurePdaButton();ensureTracker();renderTracker();}).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>{ensurePdaButton();ensureTracker();}).observe(document.body,{childList:true,subtree:true});
 ensurePdaButton();ensureTracker();
 setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
 
