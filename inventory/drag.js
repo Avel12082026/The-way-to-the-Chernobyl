@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 let screen, gesture=null, ghost=null, frame=0, busy=false, suppressUntil=0, preciseArtifacts=false;
-const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация.';
+const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация и действия.';
 function hint(text=instruction){const el=document.getElementById(screen?.id==='warehouseScreen'?'warehouseDragHint':'inventoryDragHint');if(el)el.textContent=text;}
 function kind(name){return getEquipSlotType(name)||(findArtifactDef(name)?'artifact':consumables.some(c=>c.name===name)?'quick':null);}
 function compatible(name,slot,from=gesture?.from||'inventory'){
@@ -133,9 +133,13 @@ function init(){
   }
  },true);
  document.addEventListener('dragstart',e=>{if(e.target.closest('#inventoryScreen [data-drag-item],#warehouseScreen [data-drag-item]')){e.preventDefault();e.stopPropagation();}},true);
+ // Capturing the native menu is independent of drag state and re-render timing.
+ // Item dialogs are siblings of the inventory, not descendants of it.
  document.addEventListener('contextmenu',e=>{
-  if(e.target.closest('#inventoryScreen [data-drag-item],#inventoryScreen #itemInfoModal,#warehouseScreen [data-drag-item]')||gesture){
-   e.preventDefault();e.stopImmediatePropagation();
+  const target=e.target?.closest?e.target:e.target?.parentElement;
+  if(target?.closest('input,textarea,[contenteditable="true"]'))return;
+  if(target?.closest('#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid,#warehouseGrid,#warehouseInventoryGrid,#itemActionModal,#itemInfoModal,.inventory-drag-ghost')||gesture){
+   e.preventDefault();e.stopPropagation();
   }
  },true);
 }
