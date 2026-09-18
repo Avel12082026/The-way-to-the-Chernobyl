@@ -4,9 +4,6 @@
   if (window.TraderHubs || !window.TradeMenu || typeof window.openScreen !== 'function') return;
 
   const nativeOpenScreen = window.openScreen;
-  // Full 864x1536 WebP portraits, split only to keep repository text uploads reliable.
-  const portraitParts = Object.freeze({zhuchara: 6, leonov: 7, diesel: 7});
-  const portraitPromises = new Map();
   const portraitLocks = new WeakMap();
   let zhucharaHub = null;
   let dieselHub = null;
@@ -15,50 +12,41 @@
     if (typeof showGameAlert === 'function') showGameAlert(text);
   };
 
-  function portraitData(key) {
-    if (portraitPromises.has(key)) return portraitPromises.get(key);
-    const total = portraitParts[key];
-    if (!total) return Promise.reject(new Error('Unknown portrait: ' + key));
-    const promise = Promise.all(Array.from({length: total}, (_, i) => {
-      const part = String(i).padStart(2, '0');
-      return fetch(`ui/portraits/${key}-${part}.b64?v=20260918-hd4`, {cache: 'force-cache'}).then(r => {
-        if (!r.ok) throw new Error(`${key} portrait chunk ${part}: HTTP ${r.status}`);
-        return r.text();
-      });
-    })).then(parts => 'data:image/webp;base64,' + parts.join('').replace(/\s+/g, ''))
-      .catch(err => {
-        portraitPromises.delete(key);
-        throw err;
-      });
-    portraitPromises.set(key, promise);
-    return promise;
+  function portraitSource(key) {
+    const b64 = window.TRADER_PORTRAIT_DATA?.[key];
+    return b64 ? 'data:image/webp;base64,' + b64 : '';
   }
 
   function bindPortrait(key, img) {
     if (!img) return Promise.resolve(false);
-    const current = portraitLocks.get(img);
-    if (current?.key === key) return current.promise;
-    const promise = portraitData(key).then(src => {
-      let restoring = false;
-      const keepSharp = () => {
-        if (restoring || img.getAttribute('src') === src) return;
-        restoring = true;
-        img.setAttribute('src', src);
-        restoring = false;
-      };
-      const observer = new MutationObserver(keepSharp);
-      observer.observe(img, {attributes: true, attributeFilter: ['src']});
-      img.decoding = 'async';
-      img.setAttribute('src', src);
-      img.dataset.portraitQuality = 'hd-864x1536-q80';
-      return img.decode?.().catch(() => {})?.then(() => true) ?? true;
-    }).catch(err => {
-      portraitLocks.delete(img);
-      console.error(`[${key} portrait]`, err);
+    const src = portraitSource(key);
+    if (!src) {
       img.alt = 'Изображение торговца не загрузилось';
-      return false;
+      return Promise.resolve(false);
+    }
+    const current = portraitLocks.get(img);
+    if (current?.key === key && img.getAttribute('src') === src) return current.promise;
+
+    let restoring = false;
+    const keepSharp = () => {
+      if (restoring || img.getAttribute('src') === src) return;
+      restoring = true;
+      img.setAttribute('src', src);
+      restoring = false;
+    };
+    const observer = new MutationObserver(keepSharp);
+    observer.observe(img, {attributes: true, attributeFilter: ['src']});
+    img.decoding = 'async';
+    img.setAttribute('src', src);
+    img.dataset.portraitQuality = 'hq-864x1536-q88';
+    const promise = (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => {
+      if (img.naturalWidth !== 864 || img.naturalHeight !== 1536) {
+        console.error('[Trader portrait size]', key, img.naturalWidth, img.naturalHeight);
+        return false;
+      }
+      return true;
     });
-    portraitLocks.set(img, {key, promise});
+    portraitLocks.set(img, {key, promise, observer});
     return promise;
   }
 
@@ -67,6 +55,7 @@
     if (!hub) return false;
     const nav = hub.querySelector('.leonov-actions');
     if (!nav) return false;
+
     hub.querySelector('.leonov-back')?.remove();
     if (!nav.querySelector('[data-leonov-action="talk"]')) {
       const talk = document.createElement('button');
@@ -105,11 +94,13 @@
     hub.hidden = true;
     hub.dataset.actionCount = String(actions.length);
     hub.setAttribute('aria-label', label);
+
     const img = document.createElement('img');
     img.id = id.replace('Screen', 'Artwork');
     img.className = 'trader-portrait-artwork';
     img.alt = label + ' за прилавком';
     img.draggable = false;
+
     const nav = document.createElement('nav');
     nav.className = 'trader-portrait-actions';
     nav.setAttribute('aria-label', 'Действия: ' + label);
@@ -130,7 +121,9 @@
     if (!hub) return;
     hub.hidden = true;
     hub.classList.remove('active');
-    if (![zhucharaHub, dieselHub].some(item => item && !item.hidden)) document.body.classList.remove('trader-portrait-visible');
+    if (![zhucharaHub, dieselHub].some(item => item && !item.hidden)) {
+      document.body.classList.remove('trader-portrait-visible');
+    }
   }
 
   function showHub(hub, key) {
@@ -144,25 +137,46 @@
 
   function ensureZhucharaHub() {
     if (zhucharaHub) return zhucharaHub;
-    zhucharaHub = createPortraitHub({id:'zhucharaHubScreen', label:'Торговец Жучара', key:'zhuchara', actions:[
-      {id:'trade', label:'Торговля'}, {id:'talk', label:'Говорить'}, {id:'back', label:'Назад'}
-    ]});
+    zhucharaHub = createPortraitHub({
+      id:'zhucharaHubScreen',
+      label:'Торговец Жучара',
+      key:'zhuchara',
+      actions:[
+        {id:'trade', label:'Торговля'},
+        {id:'talk', label:'Говорить'},
+        {id:'back', label:'Назад'}
+      ]
+    });
     zhucharaHub.addEventListener('click', event => {
       const button = event.target.closest('[data-trader-action]');
       if (!button) return;
       const action = button.dataset.traderAction;
-      if (action === 'trade') { hideZhuchara(); window.TradeMenu.open('zhuchara'); }
-      else if (action === 'talk') say('Жучара: В Зоне нет ненужного хлама. Есть лишь не та цена…');
-      else if (action === 'back') { hideZhuchara(); nativeOpenScreen('main'); }
+      if (action === 'trade') {
+        hideZhuchara();
+        window.TradeMenu.open('zhuchara');
+      } else if (action === 'talk') {
+        say('Жучара: В Зоне нет ненужного хлама. Есть лишь не та цена…');
+      } else if (action === 'back') {
+        hideZhuchara();
+        nativeOpenScreen('main');
+      }
     });
     return zhucharaHub;
   }
 
   function ensureDieselHub() {
     if (dieselHub) return dieselHub;
-    dieselHub = createPortraitHub({id:'dieselHubScreen', label:'Техник Дизель', key:'diesel', actions:[
-      {id:'trade', label:'Торговля'}, {id:'upgrade', label:'Улучшить'}, {id:'talk', label:'Говорить'}, {id:'back', label:'Назад'}
-    ]});
+    dieselHub = createPortraitHub({
+      id:'dieselHubScreen',
+      label:'Техник Дизель',
+      key:'diesel',
+      actions:[
+        {id:'trade', label:'Торговля'},
+        {id:'upgrade', label:'Улучшить'},
+        {id:'talk', label:'Говорить'},
+        {id:'back', label:'Назад'}
+      ]
+    });
     dieselHub.addEventListener('click', event => {
       const button = event.target.closest('[data-trader-action]');
       if (!button) return;
@@ -197,5 +211,10 @@
     return nativeOpenScreen.apply(this, arguments);
   };
 
-  window.TraderHubs = Object.freeze({version:'1.1.3', openZhuchara, hideZhuchara, openDiesel, hideDiesel, decorateLeonov, bindPortrait});
+  window.TraderHubs = Object.freeze({
+    version:'1.2.0',
+    openZhuchara, hideZhuchara,
+    openDiesel, hideDiesel,
+    decorateLeonov, bindPortrait
+  });
 })();
