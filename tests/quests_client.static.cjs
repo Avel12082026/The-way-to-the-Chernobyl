@@ -10,6 +10,7 @@ assert(q.includes("vendor==='leonov'")&&q.includes("vendor==='zhuchara'"));
 assert(css.includes('.quest-ready .quest-objective')&&css.includes('.trader-dialogue-responses'));
 assert(hubs.includes("openTraderDialogue('leonov')")&&hubs.includes("openTraderDialogue('zhuchara')")&&hubs.includes("openTraderDialogue('diesel')"));
 assert(balance.includes("if(tier<1||tier>8")&&balance.includes('catchChancePercent')&&balance.includes('RESEARCH_UNLOCKS=[[4,135]')&&balance.includes('[14,570]'));
+assert(balance.includes("artifacts.filter(a=>!a.adminOnly)")&&balance.includes("a.isResearchSuit&&!a.adminOnly"),'admin-only items must stay outside client balance tuning');
 assert(drag.includes('sanitizeDragCell')&&drag.includes("e.target.closest('#inventoryScreen [data-drag-item]')"));
 assert(drag.includes('stopImmediatePropagation()'));
 assert(dragCss.includes('INVENTORY_NATIVE_MENU_GUARD_V2'));
