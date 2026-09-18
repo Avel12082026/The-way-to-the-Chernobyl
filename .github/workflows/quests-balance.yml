@@ -15,6 +15,7 @@ on:
       - 'tests/artifact_balance.test.cjs'
       - 'tests/admin_balance_exclusion.test.cjs'
       - 'tools/audit_live_balance_readonly.py'
+      - 'tools/audit_market_upgrade_readonly.py'
       - 'tools/simulate_pve_balance.cjs'
       - 'tests/install_quest_balance_patch.test.py'
       - 'tests/inventory_drag.test.cjs'
@@ -41,6 +42,7 @@ jobs:
           node --check tools/simulate_pve_balance.cjs
           python3 -m py_compile tools/install_quest_balance_server.py
           python3 -m py_compile tools/audit_live_balance_readonly.py
+          python3 -m py_compile tools/audit_market_upgrade_readonly.py
       - name: Unit and static checks
         run: |
           node tests/quests_server.test.cjs
