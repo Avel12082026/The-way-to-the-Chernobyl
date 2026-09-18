@@ -11,8 +11,6 @@ TG="window.Telegram={WebApp:{initData:'offline-hq-test',initDataUnsafe:{user:{id
 async def main():
     state=dict(nickname='Тест',health=100,maxHealth=100,hunger=100,thirst=100,coins=999999,
                breedCredits=5,level=50,exp=0,radiation=0,inventory={},warehouse={})
-    portraits={k:(ROOT/'ui'/'portraits'/f'{k}-hq.b64').read_text().strip()
-               for k in ('zhuchara','leonov','diesel')}
     errors=[]
     async with async_playwright() as pw:
         browser=await pw.chromium.launch(executable_path=sys.argv[1] if len(sys.argv)>1 else None,
@@ -26,15 +24,10 @@ async def main():
             if path.endswith('/named-artifacts'): return []
             if '/faction' in path: return {'success':True,'faction':None}
             return []
-        async def portrait(key): return portraits[key]
         await page.expose_function('__hqFixture',fixture)
-        await page.expose_function('__hqPortrait',portrait)
         await page.evaluate(TG)
         await page.evaluate("""() => {window.fetch=async(input,init={})=>{
-          const u=new URL(typeof input==='string'?input:input.url,'http://offline.test');
-          const p=u.pathname;
-          const m=p.match(/\/ui\/portraits\/(zhuchara|leonov|diesel)-hq\.b64$/);
-          if(m){const body=await window.__hqPortrait(m[1]);return new Response(body,{status:200});}
+          const p=new URL(typeof input==='string'?input:input.url,'http://offline.test').pathname;
           const data=p.includes('/api/')?await window.__hqFixture(p,init.body?JSON.parse(init.body):{}):{};
           return new Response(JSON.stringify(data),{status:200,headers:{'Content-Type':'application/json'}});
         }}""")
@@ -45,13 +38,13 @@ async def main():
             code=TG if 'telegram-web-app.js' in src else (f.read_text() if f.is_file() else '')
             if 'defer' in m.group(0): code="document.addEventListener('DOMContentLoaded',()=>{"+code+"},{once:true});"
             return '<script>'+code+'</script>'
-        html=re.sub(r'<script\b[^>]*src="([^"]+)"[^>]*>\s*</script>',script,html)
+        html=re.sub(r'<script\b[^>]*src=["\']([^"\']+)["\'][^>]*>\s*</script>',script,html)
         def css(m):
             f=ROOT/m.group(1).split('?')[0]
             return '<style>'+f.read_text()+'</style>' if f.is_file() else ''
-        html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',css,html)
+        html=re.sub(r'<link\b[^>]*href=["\']([^"\']+)["\'][^>]*>',css,html)
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.wait_for_function("window.TraderHubs?.version==='1.2.0' && window.TradeMenu?.version==='1.1.0'")
+        await page.wait_for_function("window.TraderHubs?.version==='1.2.0' && window.TradeMenu?.version==='1.1.0' && window.TRADER_PORTRAIT_DATA?.diesel")
         await page.evaluate("(s)=>{Object.assign(player,s);updateUI();openScreen('main')}",state)
 
         async def dims(sel):
@@ -61,18 +54,18 @@ async def main():
         # Zhuchara: full-resolution source and one-row actions.
         await page.locator('#bunkerZhuchara').click()
         assert await page.locator('#zhucharaHubScreen').is_visible()
-        assert await dims('#zhucharaHubArtwork')==[864,1536,'hd-864x1536']
+        assert await dims('#zhucharaHubArtwork')==[864,1536,'hq-864x1536-q88']
         za=page.locator('#zhucharaHubScreen [data-trader-action]')
         assert await za.evaluate_all("(xs)=>xs.map(x=>x.dataset.traderAction)")==['trade','talk','back']
         ys=await za.evaluate_all("(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))")
         assert len(set(ys))==1,ys
         await page.screenshot(path=str(OUT/'zhuchara-hq.png'))
 
-        # Leonov: old tiny loader must never win over HQ portrait.
+        # Leonov: HQ module overrides the old tiny loader and always resolves.
         await page.locator('#zhucharaHubScreen [data-trader-action=back]').click()
         await page.locator('#bunkerLeonov').click()
         assert await page.locator('#leonovHubScreen').is_visible()
-        assert await dims('#leonovHubArtwork')==[864,1536,'hd-864x1536']
+        assert await dims('#leonovHubArtwork')==[864,1536,'hq-864x1536-q88']
         la=page.locator('#leonovHubScreen [data-leonov-action]')
         assert await la.evaluate_all("(xs)=>xs.map(x=>x.dataset.leonovAction)")==['selection','trade','talk','back']
         lys=await la.evaluate_all("(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))")
@@ -83,7 +76,7 @@ async def main():
         await page.evaluate("openScreen('main')")
         await page.locator('#bunkerDiesel').click()
         assert await page.locator('#dieselHubScreen').is_visible()
-        assert await dims('#dieselHubArtwork')==[864,1536,'hd-864x1536']
+        assert await dims('#dieselHubArtwork')==[864,1536,'hq-864x1536-q88']
         da=page.locator('#dieselHubScreen [data-trader-action]')
         assert await da.evaluate_all("(xs)=>xs.map(x=>x.dataset.traderAction)")==['trade','upgrade','talk','back']
         dys=await da.evaluate_all("(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))")
@@ -107,13 +100,13 @@ async def main():
                 await page.evaluate("(s)=>{openScreen('main');openScreen(s)}",target)
                 assert await page.locator(hub).is_visible()
                 assert not await page.evaluate("document.documentElement.scrollWidth>innerWidth")
-        assert not errors,errors
 
         css=(ROOT/'ui'/'trade-menu.css').read_text()
         assert 'width:22px' in css
         assert 'min-height:58px' in css
+        assert not errors,errors
         report={'status':'passed','portraits':['zhuchara 864x1536','leonov 864x1536','diesel 864x1536'],
-                'checks':['HQ natural dimensions','Leonov retry/HQ override','Diesel four actions',
+                'checks':['HQ natural dimensions','Leonov HQ override','Diesel four actions',
                           'Diesel trade back','Diesel upgrade','22px scrollbars','mobile/landscape overflow'],
                 'page_errors':errors}
         (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
