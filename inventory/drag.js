@@ -13,16 +13,28 @@ function compatible(name,slot,from=gesture?.from||'inventory'){
  if(slot.dataset.dropKind==='artifact'&&!preciseArtifacts)return Number(slot.dataset.dropIndex)===player.artifactSlots.findIndex(x=>!x);
  return true;
 }
+function sanitizeDragCell(cell,name){
+ if(!cell||!name)return;
+ cell.dataset.dragItem=name;
+ cell.style.webkitTouchCallout='none';
+ cell.querySelectorAll('a').forEach(el=>{
+  el.draggable=false;el.removeAttribute('href');el.removeAttribute('target');el.removeAttribute('download');
+  el.style.webkitTouchCallout='none';
+ });
+ cell.querySelectorAll('img').forEach(el=>{
+  el.draggable=false;el.style.webkitTouchCallout='none';el.style.webkitUserSelect='none';el.style.userSelect='none';
+ });
+}
 function refresh(items){
  if(!screen)return;
- [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]){cell.dataset.dragItem=items[i];cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});}});
+ [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i])sanitizeDragCell(cell,items[i]);});
  [...document.getElementById('quickSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind=i<3?['weapon','armor','detector'][i]:'quick';if(i>=3)cell.dataset.dropIndex=i-3;});
  [...document.getElementById('artifactSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind='artifact';cell.dataset.dropIndex=i;});
 }
 function refreshWarehouse(items,invItems){
  const groups=[['warehouseGrid',items,'warehouse','deposit'],['warehouseInventoryGrid',invItems,'inventory','withdraw']];
  groups.forEach(([id,names,from,to])=>{const grid=document.getElementById(id);grid.dataset.dropKind=to;
- [...grid.children].forEach((cell,i)=>{if(!names[i])return;cell.dataset.dragItem=names[i];cell.dataset.dragFrom=from;cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});});});
+ [...grid.children].forEach((cell,i)=>{if(!names[i])return;sanitizeDragCell(cell,names[i]);cell.dataset.dragFrom=from;});});
 }
 function removeWarehouseShortcutButtons(warehouse){
  if(!warehouse)return;
@@ -111,9 +123,25 @@ function init(){
  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')cancel();});
  [screen,warehouse].filter(Boolean).forEach(el=>new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(el,{attributes:true,attributeFilter:['class']}));
- document.addEventListener('click',e=>{if((e.target.closest('#inventoryScreen,#warehouseScreen'))&&(Date.now()<suppressUntil||busy)){e.preventDefault();e.stopImmediatePropagation();}},true);
- document.addEventListener('dragstart',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
- document.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]')||gesture){e.preventDefault();e.stopPropagation();}},true);
+ document.addEventListener('click',e=>{
+  const item=e.target.closest('#inventoryScreen [data-drag-item]');
+  if(item){
+   if(Date.now()<suppressUntil||busy){e.preventDefault();e.stopImmediatePropagation();return;}
+   // Inventory taps are handled by the cell, not by the underlying <img src=...>.
+   // This keeps item info while Android/Telegram never owns the image gesture.
+   e.preventDefault();e.stopImmediatePropagation();
+   const name=item.dataset.dragItem;
+   if(name&&typeof showItemInfoModal==='function')showItemInfoModal(name);
+   return;
+  }
+  if((e.target.closest('#warehouseScreen'))&&(Date.now()<suppressUntil||busy)){e.preventDefault();e.stopImmediatePropagation();}
+ },true);
+ document.addEventListener('dragstart',e=>{if(e.target.closest('#inventoryScreen [data-drag-item],#warehouseScreen [data-drag-item]')){e.preventDefault();e.stopPropagation();}},true);
+ document.addEventListener('contextmenu',e=>{
+  if(e.target.closest('#inventoryScreen [data-drag-item],#inventoryScreen #itemInfoModal,#warehouseScreen [data-drag-item]')||gesture){
+   e.preventDefault();e.stopImmediatePropagation();
+  }
+ },true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
