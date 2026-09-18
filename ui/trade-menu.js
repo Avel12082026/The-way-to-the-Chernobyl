@@ -83,7 +83,7 @@
   const el = id => root.querySelector('#' + id);
   const message = s => { el('tradeStatus').textContent = s; };
   const stock = () => new Map(vendors[vendor].stock().map(item => [item.name, item]));
-  const offerText = value => [value.coins ? `${money(value.coins)} Б` : '', value.tokens ? `${money(value.tokens)} жет.` : ''].filter(Boolean).join(' + ') || '0 Б';
+  const offerText = value => [value.coins ? `${money(value.coins)} сталбайтов` : '', value.tokens ? `${money(value.tokens)} сталкоинов` : ''].filter(Boolean).join(' + ') || '0 сталбайтов';
   const labelName = name => stripInvisibleSuffix(name);
 
   function cell(name, source, detail) {
@@ -132,7 +132,7 @@
     el('tradeHealth').textContent = '♥ ' + Math.round(number(player.health));
     el('tradeHunger').textContent = 'Сытость ' + Math.round(number(player.hunger));
     el('tradeThirst').textContent = 'Вода ' + Math.round(number(player.thirst));
-    el('tradeBalance').textContent = money(player.coins) + ' Б · ' + money(player.breedCredits) + ' жет.';
+    el('tradeBalance').textContent = money(player.coins) + ' сталбайтов · ' + money(player.breedCredits) + ' сталкоинов';
     const nextStock = JSON.stringify([vendor, [...goods].map(([name, item]) => [name, config.price(item)])]);
     if (nextStock !== stockSignature) {
       stockSignature = nextStock;
@@ -163,7 +163,7 @@
     const sellSum = [...queues.sell].reduce((sum, [name, qty]) => {
       const value = config.offer(name); sum.coins += value.coins * qty; sum.tokens += value.tokens * qty; return sum;
     }, {coins: 0, tokens: 0});
-    el('tradeBuyTotal').textContent = 'Итого: ' + money(buySum) + ' Б';
+    el('tradeBuyTotal').textContent = 'Итого: ' + money(buySum) + ' сталбайтов';
     el('tradeSellTotal').textContent = 'Итого: ' + offerText(sellSum);
     el('tradeBuy').disabled = busy || needsSync || !queues.buy.size || buySum > number(player.coins);
     el('tradeSell').disabled = busy || needsSync || !queues.sell.size;
