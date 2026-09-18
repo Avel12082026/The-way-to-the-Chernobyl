@@ -1,0 +1,22 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const html=fs.readFileSync('index.html','utf8');
+const quests=fs.readFileSync('ui/quests.js','utf8');
+const hubs=fs.readFileSync('ui/trader-hubs.js','utf8');
+const css=fs.readFileSync('ui/raid-kpk-polish.css','utf8');
+const raid=fs.readFileSync('ui/raid-kpk-polish.js','utf8');
+
+assert(html.includes('ui/raid-kpk-polish.css?v=20260919r1'));
+assert(html.includes('ui/raid-kpk-polish.js?v=20260919r1'));
+assert(html.includes('🪙 Сталбайты: ${data.coins ?? 0}'));
+assert(html.includes('🧬 Сталкоины: ${data.breedCredits ?? 0}'));
+assert(!html.includes('ПЕРСОНАЛЬНЫЙ ТЕРМИНАЛ'));
+assert(css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
+assert(css.includes('#raidVisualStage')&&css.includes('#raidUtilityButtons'));
+assert(quests.includes("const quick=document.getElementById('quickSlots')"));
+assert(raid.includes("anchor.insertAdjacentElement('afterend',log)"));
+assert(!quests.includes("response('Торговля','trade')"));
+assert(!quests.includes("response('Торговать','trade')"));
+assert(hubs.includes('RAID_QUICK_INFO_HOLD_MS=800'));
+assert(hubs.includes(".bunker-menu,#quickSlots"));
+console.log('five raid/PDA fixes static checks: OK');
