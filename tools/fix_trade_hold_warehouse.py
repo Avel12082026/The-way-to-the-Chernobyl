@@ -63,24 +63,24 @@ class Elements(HTMLParser):
         for match in re.finditer('\n', source): self.lines.append(match.end())
         self.nodes, self.stack = [], []
         self.feed(source)
-    def offset(self):
+    def source_offset(self):
         line, col = self.getpos()
         return self.lines[line - 1] + col
     def handle_starttag(self, tag, attrs):
-        node = dict(tag=tag, attrs=dict(attrs), start=self.offset(), end=None,
+        node = dict(tag=tag, attrs=dict(attrs), start=self.source_offset(), end=None,
                     parent=self.stack[-1] if self.stack else None, children=[])
         if self.stack: self.stack[-1]['children'].append(node)
         self.nodes.append(node)
         if tag not in self.VOID: self.stack.append(node)
-        else: node['end'] = self.offset() + len(self.get_starttag_text())
+        else: node['end'] = self.source_offset() + len(self.get_starttag_text())
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
         if tag not in self.VOID:
-            self.stack.pop()['end'] = self.offset() + len(self.get_starttag_text())
+            self.stack.pop()['end'] = self.source_offset() + len(self.get_starttag_text())
     def handle_endtag(self, tag):
         for i in range(len(self.stack) - 1, -1, -1):
             if self.stack[i]['tag'] == tag:
-                end = self.source.index('>', self.offset()) + 1
+                end = self.source.index('>', self.source_offset()) + 1
                 self.stack[i]['end'] = end
                 del self.stack[i:]
                 break
@@ -103,7 +103,7 @@ def remove_warehouse_buttons(source):
     if any(value != 1 for value in counts.values()):
         print(source[warehouse['start']:warehouse['end']])
         raise SystemExit('Unexpected warehouse controls: ' + repr(counts))
-    if not any(label(source, n) == 'назад' for n in buttons):
+    if not any(label(source, n) in ('назад', '← назад') for n in buttons):
         raise SystemExit('Refusing to remove navigation without keeping the top Back button')
     removals = list(targets)
     # Remove an empty navigation row too, rather than leaving its margins behind.
@@ -136,7 +136,7 @@ def main():
         if MARK not in content: content = content.rstrip() + '\n\n' + addition.lstrip()
         elif addition.strip() not in content: raise SystemExit('Conflicting existing guard: ' + str(asset))
         updates[asset] = content
-    # Validate everything before touching any client file.
+    # Validate the warehouse and asset markers before touching any client file.
     for asset, content in updates.items(): asset.write_text(content, encoding='utf-8')
     path.write_text(after, encoding='utf-8')
     runpy.run_path(str(ROOT / 'tools/install_trade_menu.py'), run_name='__main__')
