@@ -3,9 +3,15 @@
   'use strict';
   if (window.TraderHubs || !window.TradeMenu || typeof window.openScreen !== 'function') return;
 
-  // Quest UI is layered on top of the existing trader hubs so trading and upgrades
-  // keep their original routes. Loading it here also makes the same client work
-  // in Telegram and in the Android asset bundle.
+  // Balance + quest modules are layered on top of existing trader hubs so
+  // trading/upgrades keep their original routes in Telegram and Android.
+  if (!document.querySelector('script[data-zone-balance]')) {
+    const balanceScript = document.createElement('script');
+    balanceScript.src = 'ui/balance-tuning.js?v=20260919-1';
+    balanceScript.defer = true;
+    balanceScript.dataset.zoneBalance = '1';
+    document.head.append(balanceScript);
+  }
   if (!document.querySelector('script[data-zone-quests]')) {
     const questScript = document.createElement('script');
     questScript.src = 'ui/quests.js?v=20260919-1';
