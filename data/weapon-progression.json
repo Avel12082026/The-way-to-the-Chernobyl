@@ -1285,5 +1285,49 @@
       "caliber": "electromagnetic / fictional",
       "caliberFactor": 1.35
     }
+  ],
+  "researchReferences": [
+    {
+      "scope": "pistol",
+      "example": "Glock 17",
+      "fact": "9x19 mm",
+      "source": "GLOCK official technical data"
+    },
+    {
+      "scope": "automatic",
+      "example": "HK416",
+      "fact": "5.56x45 NATO; 790 m/s; 1250 J",
+      "source": "Heckler & Koch official technical data"
+    },
+    {
+      "scope": "automatic",
+      "example": "FN SCAR-H",
+      "fact": "7.62x51 NATO",
+      "source": "FN Herstal official technical data"
+    },
+    {
+      "scope": "shotgun",
+      "example": "Benelli M4",
+      "fact": "12 gauge; semi-auto ARGO",
+      "source": "Benelli official manual/specification"
+    },
+    {
+      "scope": "shotgun",
+      "example": "Remington 870",
+      "fact": "12 gauge family",
+      "source": "RemArms official manual"
+    },
+    {
+      "scope": "rifle",
+      "example": "Sako TRG-42",
+      "fact": ".338 Lapua Magnum option",
+      "source": "Sako official technical data"
+    },
+    {
+      "scope": "rifle",
+      "example": "Barrett M82A1",
+      "fact": ".50 BMG / 12.7x99; 10-round; official M33 velocity data",
+      "source": "Barrett official manual/FAQ"
+    }
   ]
 }
