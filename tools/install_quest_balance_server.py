@@ -4,13 +4,59 @@
 The installer is intentionally anchor-guarded: if the live server no longer matches
 known gameplay blocks, it stops before changing code.
 """
-import hashlib, os, shutil, sqlite3, subprocess, sys, tempfile, time, urllib.request
+import argparse, json, hashlib, os, shutil, sqlite3, subprocess, sys, tempfile, time, urllib.request
 from pathlib import Path
 
 SERVER=Path('/var/www/pocketzone/server.js')
 SERVICE='pocketzone.service'
 MODULE_NAME='quest-balance.cjs'
-MARK='// QUEST_BALANCE_V1'
+MARK='// QUEST_BALANCE_V2'
+# Release gate: deployment stays read-only until legacy +50 migration and economy simulations pass.
+LIVE_DEPLOYMENT_READY=False
+KNOWN_SERVER_SHA256={
+    '975ce098ce2853f2520be1a65c1806a7e7b06822ac437ea2ea8b096476f18068',
+    'c5d1bbec86d084d2aff46f94c9400a09e11ef9e96e3c65bb9c31821c17f9ad39',
+}
+OLD_RAID_END="""app.post('/api/raid/end',requireAuth,(req,res)=>{
+    const playerId=String(req.telegramUser.id),token=String(req.body?.raidToken||'');
+    const sess=raidSession(playerId,token);if(!sess)return res.json({success:false,error:'Рейд не найден'});
+    if(sess.pending_type)return res.json({success:false,error:'Сначала завершите текущую встречу'});
+    db.prepare('DELETE FROM raid_sessions WHERE player_id=?').run(playerId);
+    db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
+    return res.json({success:true});
+});"""
+NEW_RAID_END="""app.post('/api/raid/end',requireAuth,(req,res)=>{
+    const playerId=String(req.telegramUser.id),token=String(req.body?.raidToken||'');
+    try {
+        const result=db.transaction(()=>{
+            const sess=raidSession(playerId,token);
+            if(!sess)return {success:false,error:'Рейд не найден'};
+            if(sess.pending_type)return {success:false,error:'Сначала завершите текущую встречу'};
+            questBalance.markRaidReturn(playerId);
+            db.prepare('DELETE FROM raid_sessions WHERE player_id=? AND token=?').run(playerId,token);
+            db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
+            return {success:true};
+        })();
+        return res.json(result);
+    } catch(error) {
+        console.error('[/api/raid/end]',error);
+        return res.status(500).json({success:false,error:'Не удалось завершить рейд. Повторите попытку.'});
+    }
+});"""
+OLD_DEFENSE="""        const reduction=defense/(defense+100);
+        damage=Math.round(Math.max(0,(Number(payload.dmg)||0)*(1-reduction))*10)/10;"""
+NEW_DEFENSE="""        const safeDefense=Number.isFinite(defense)?defense:0;
+        // Negative resistance increases damage; it never creates a singularity or immunity.
+        const multiplier=safeDefense>=0?100/(100+safeDefense):1+Math.min(150,-safeDefense)/100;
+        damage=Math.round(Math.max(0,Number(payload.dmg)||0)*multiplier*10)/10;"""
+OLD_UPGRADE_GUARD="""    const statLevel = Number((data.armorUpgradeData[stableKey] && data.armorUpgradeData[stableKey][statKey]) || 0);
+    if (statLevel >= UPGRADE_MAX_LEVEL) return res.json({ success: false, error: 'Эта характеристика уже улучшена до максимума' });"""
+NEW_UPGRADE_GUARD="""    const upgradeRecord=data.armorUpgradeData[stableKey]||{};
+    const statLevel = Number(upgradeRecord[statKey]) || 0;
+    const totalUpgrades=Math.max(parsed.level,Object.values(upgradeRecord).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
+    if (totalUpgrades >= UPGRADE_MAX_LEVEL) return res.json({ success: false, error: 'Достигнут общий предел: 50 улучшений предмета' });
+    if (!isCoreStat && statKey!=='radiation' && !RAID_ANOMALIES.some(a=>'anomaly_'+a.name===statKey))
+        return res.json({success:false,error:'Неизвестная характеристика брони'});"""
 
 def run(args,**kw): return subprocess.run(args,check=True,**kw)
 def sha(data): return hashlib.sha256(data).hexdigest()
@@ -50,6 +96,7 @@ def make_db_backup(database,target):
         dst.close();src.close()
 
 def patch(source):
+    if '// QUEST_BALANCE_V1' in source: raise RuntimeError('Обнаружен старый экспериментальный патч. Требуется отдельная миграция; автоматическая замена запрещена.')
     if MARK in source: return source,False
     text=source
 
@@ -126,12 +173,13 @@ def patch(source):
         'взвешенный выбор бонусного артефакта'
     )
 
-    text=replace_once(
-        text,
-        "    db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);\n    return res.json({success:true});\n});\n\napp.post('/api/raid/step'",
-        "    db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);\n    questBalance.markRaidReturn(playerId);\n    return res.json({success:true});\n});\n\napp.post('/api/raid/step'",
-        'отметка возвращения из рейда'
-    )
+    text=replace_once(text,OLD_RAID_END,NEW_RAID_END,'атомарное возвращение из рейда')
+    text=replace_once(text,OLD_DEFENSE,NEW_DEFENSE,'отрицательная защита без бессмертия')
+    text=replace_once(text,OLD_UPGRADE_GUARD,NEW_UPGRADE_GUARD,'общий бюджет 50 улучшений брони')
+    text=replace_once(text,
+        '    const lvl = Math.max(0, Number(level) || 0);',
+        '    const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Number(level) || 0));',
+        'ограничение уровня в расчёте характеристик')
 
     insertion="""const questBalance = require('./quest-balance.cjs')({
     app,db,requireAuth,rateLimit,
@@ -145,20 +193,29 @@ def patch(source):
 def health():
     try:
         with urllib.request.urlopen('http://127.0.0.1:3000/api/quests/version',timeout=3) as r:
-            body=r.read().decode('utf-8','replace')
-            return r.status==200 and '"success":true' in body and '"version":2' in body
+            body=json.load(r)
+            return r.status==200 and body.get('success') is True and body.get('version')==2
     except Exception:
         return False
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('module',nargs='?',default='/tmp/quest-balance.cjs')
+    parser.add_argument('--install',action='store_true',help='Установить только после прохождения release gate')
+    parser.add_argument('--dry-run',action='store_true',help='Проверить без изменения кода, профилей и службы')
+    args=parser.parse_args()
+    if args.install and not LIVE_DEPLOYMENT_READY:
+        raise RuntimeError('Установка пока закрыта: не завершена миграция старых улучшений и итоговая симуляция баланса. Используйте --dry-run.')
     if os.geteuid()!=0: raise RuntimeError('Запустите установщик от root на сервере.')
     server=SERVER.resolve(strict=True)
-    module_source=Path(sys.argv[1] if len(sys.argv)>1 else '/tmp/quest-balance.cjs').resolve(strict=True)
+    module_source=Path(args.module).resolve(strict=True)
     raw=server.read_bytes();source=raw.decode('utf-8')
+    if sha(raw) not in KNOWN_SERVER_SHA256 and MARK not in source:
+        raise RuntimeError('Версия server.js не совпадает с проверенной. Ничего не изменено.')
     new_source,changed=patch(source)
     module_raw=module_source.read_bytes()
 
-    if not changed and health():
+    if not changed and (server.parent/MODULE_NAME).is_file() and (server.parent/MODULE_NAME).read_bytes()==module_raw and health():
         print('Уже установлено; API заданий отвечает.');return
 
     pid,cwd,database=process_check(server)
@@ -166,6 +223,68 @@ def main():
         p=Path(td);(p/'server.js').write_text(new_source);(p/MODULE_NAME).write_bytes(module_raw)
         run(['node','--check',str(p/'server.js')],timeout=30)
         run(['node','--check',str(p/MODULE_NAME)],timeout=30)
+
+    if args.dry_run or not args.install:
+        source_db=sqlite3.connect(database.as_uri()+'?mode=ro',uri=True,timeout=10)
+        try:
+            summary={'profiles':0,'profilesWithUpgradesOver50':0,'profilesWithEquippedArtifacts':0}
+            import re
+            for (raw_data,) in source_db.execute('SELECT data FROM players'):
+                data=json.loads(raw_data);summary['profiles']+=1
+                names=list((data.get('inventory') or {}).keys())+list((data.get('warehouse') or {}).keys())
+                names += [str((data.get(k) or {}).get('name','')) for k in ('weapon','armor')]
+                over=any(int(m.group(1))>50 for name in names if (m:=re.search(r' \+(\d+)[\u200B\u200C]*
+    backup=server.parent/('BACKUP_BEFORE_QUEST_BALANCE_'+stamp);backup.mkdir(mode=0o700)
+    shutil.copy2(server,backup/'server.js')
+    existing=server.parent/MODULE_NAME
+    if existing.exists():shutil.copy2(existing,backup/MODULE_NAME)
+    make_db_backup(database,backup/'game.db');os.chmod(backup/'game.db',0o600)
+
+    if server.read_bytes()!=raw:
+        raise RuntimeError('server.js изменился во время проверки; установка остановлена.')
+    owner=server.stat()
+    def atomic(path,content,mode):
+        fd,name=tempfile.mkstemp(prefix='.quest-stage-',dir=path.parent)
+        try:
+            with os.fdopen(fd,'wb') as h:h.write(content);h.flush();os.fsync(h.fileno())
+            os.chown(name,owner.st_uid,owner.st_gid);os.chmod(name,mode);os.replace(name,path)
+        finally:
+            if os.path.exists(name):os.unlink(name)
+    try:
+        atomic(existing,module_raw,0o644)
+        atomic(server,new_source.encode('utf-8'),owner.st_mode & 0o777)
+        run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
+        for _ in range(25):
+            if health():
+                process_check(server)
+                print('Код установлен, API заданий версии 2 отвечает. Проверьте клиентскую версию перед допуском игроков.')
+                print('Резервная копия:',backup)
+                print('server.js SHA-256:',sha(server.read_bytes()))
+                return
+            time.sleep(1)
+        raise RuntimeError('Новый API не ответил после перезапуска')
+    except Exception as error:
+        atomic(server,raw,(backup/'server.js').stat().st_mode & 0o777)
+        if (backup/MODULE_NAME).exists():atomic(existing,(backup/MODULE_NAME).read_bytes(),0o644)
+        elif existing.exists():existing.unlink()
+        try:run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
+        except Exception:pass
+        raise RuntimeError('Установка не подтверждена. Старый код восстановлен. База не откатывалась. '+str(error))
+
+if __name__=='__main__':
+    try:main()
+    except Exception as e:
+        print('СТОП:',e)
+        sys.exit(1)
+,name)))
+                over=over or any(sum(max(0,float(v)) for v in stats.values() if isinstance(v,(int,float)))>50 for stats in (data.get('armorUpgradeData') or {}).values() if isinstance(stats,dict))
+                summary['profilesWithUpgradesOver50']+=int(over)
+                summary['profilesWithEquippedArtifacts']+=int(any(data.get('artifactSlots') or []))
+            summary['activeRaids']=source_db.execute('SELECT COUNT(*) FROM raid_sessions').fetchone()[0]
+        finally:source_db.close()
+        print(json.dumps({'mode':'READ_ONLY','syntax':'passed','releaseReady':LIVE_DEPLOYMENT_READY,'sourceSha256':sha(raw),'patchedSha256':sha(new_source.encode()),'summary':summary},ensure_ascii=False,indent=2))
+        print('Файлы, игровые профили и служба не изменялись. Это проверка, не установка.')
+        return
 
     stamp=time.strftime('%Y%m%d_%H%M%S')+'_'+str(os.getpid())
     backup=server.parent/('BACKUP_BEFORE_QUEST_BALANCE_'+stamp);backup.mkdir(mode=0o700)
