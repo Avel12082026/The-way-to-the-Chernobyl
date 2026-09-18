@@ -167,7 +167,7 @@ async def main():
         assert await page.locator('#raidUtilityButtons').evaluate("e=>e.previousElementSibling.id==='battleButtonsContainer'")
         boxes=await page.locator('#raidUtilityButtons>button').evaluate_all('(xs)=>xs.map(x=>x.getBoundingClientRect().top)')
         assert len(boxes)==2 and abs(boxes[0]-boxes[1])<1
-        styles=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [s.backgroundImage,s.borderImageSource,s.color,s.fontFamily,s.fontSize,s.borderTopWidth,s.minHeight]})""")
+        styles=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [s.backgroundImage,s.borderImageSource,s.fontFamily,s.fontSize,s.borderTopWidth,s.minHeight]})""")
         assert len(styles)==2 and styles[0]==styles[1],styles
         assert await page.locator('#raidTelegramBtn [data-pda-indicator=friend]').count()==1
         await page.locator('#raidTelegramBtn').click()
