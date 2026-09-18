@@ -7,6 +7,7 @@ const bunkerHtml=fs.readFileSync('ui/bunker-menu.html','utf8');
 const bunkerJs=fs.readFileSync('ui/bunker-menu.js','utf8');
 const trade=fs.readFileSync('ui/trade-menu.js','utf8');
 const index=fs.readFileSync('index.html','utf8');
+const combatCatalog=fs.readFileSync('images/combat/catalog.json','utf8');
 
 for (const [from,to] of [
   ['Жетоны сталкера','Сталкоины'],
@@ -50,5 +51,12 @@ assert(trade.includes('сталбайтов · '), 'trade balance Stalbytes labe
 assert(trade.includes('сталкоинов'), 'trade balance Stalcoins label missing');
 assert(!trade.includes(" + ' Б · '"), 'old trade balance abbreviation remains');
 assert(!trade.includes(" + ' жет.'"), 'old Stalker-token abbreviation remains');
+
+for (const bad of ['Псевдо собака','Пси собака','Электро химера']) {
+  assert(!combatCatalog.includes(bad), 'source spelling still contains: '+bad);
+}
+for (const good of ['Псевдособака','Пси-собака','Электрохимера']) {
+  assert(combatCatalog.includes(good), 'corrected mutant spelling missing: '+good);
+}
 
 console.log('PASS: terminology and player market client requirements');
