@@ -103,13 +103,18 @@ function call(path,body={}){
    warehouse:{'Админ-броня +100':1},
    weapon:{name:'Админ-пушка +100',tier:14,dmg:999999},
    armor:{name:'Админ-броня +100',tier:14,armor:9999,hitAbsorption:9999},
-   armorUpgradeData:{}
+   armorUpgradeData:{
+     'Юность':{armor:80,hitAbsorption:20},
+     'Админ-броня':{armor:100,hitAbsorption:100}
+   }
  });
  assert.equal(migrated.data.inventory['ПМ +50'],1);
  assert.equal(migrated.data.inventory['Админ-пушка +100'],1);
  assert.equal(migrated.data.warehouse['Админ-броня +100'],1);
  assert.equal(migrated.data.weapon.name,'Админ-пушка +100');
  assert.equal(migrated.data.armor.name,'Админ-броня +100');
+ assert.equal(Object.values(migrated.data.armorUpgradeData['Юность']).reduce((a,b)=>a+b,0),50);
+ assert.deepEqual(migrated.data.armorUpgradeData['Админ-броня'],{armor:100,hitAbsorption:100});
 
  let r=await call('/api/quests/offers',{vendor:'diesel'});assert.equal(r.code,200);assert(r.body.offers.length>0);assert(r.body.offers.every(q=>weapons.some(w=>w.name===q.itemName&&!w.adminOnly)));
  const offer=r.body.offers[0];
