@@ -1,0 +1,76 @@
+const assert=require('node:assert/strict');
+const install=require('../server_patches/quest-balance.cjs');
+
+class FakeDB{
+  constructor(data){this.rows=new Map([['p1',{data:JSON.stringify(data)}]]);}
+  prepare(sql){
+    if(sql.startsWith('SELECT data FROM players'))return{get:id=>this.rows.get(id)};
+    if(sql.startsWith('UPDATE players SET data='))return{run:(data,_last,id)=>{this.rows.set(id,{data});return{changes:1};}};
+    throw new Error('Unexpected SQL: '+sql);
+  }
+  transaction(fn){return(...args)=>fn(...args);}
+}
+const routes={},app={
+  post(path,...handlers){routes[path]=handlers.at(-1);},
+  get(path,...handlers){routes[path]=handlers.at(-1);}
+};
+const weapons=[
+ {name:'ПМ',tier:1,price:200,unlockLevel:1},
+ {name:'АК-74',tier:2,price:1000,unlockLevel:50},
+ {name:'СВД',tier:3,price:3000,unlockLevel:100}
+];
+const armor=[
+ {name:'Юность',tier:1,price:200,unlockLevel:1},
+ {name:'Беркут',tier:2,price:1500,unlockLevel:50},
+ {name:'СЕВА',tier:3,price:4000,unlockLevel:100}
+];
+const artifacts=[
+ {name:'А1',tier:1,price:100,stats:{health:4,hunger:-3}},
+ {name:'А2',tier:1,price:200,stats:{health:4,hunger:-3}},
+ {name:'А3',tier:1,price:300,stats:{health:4,hunger:-3}}
+];
+const loot=[{name:'Хвост',price:200},{name:'Ухо',price:500}];
+const mutants=[{name:'Тушкан',tier:0,loot:'Хвост'},{name:'Пёс',tier:1,loot:'Ухо'}];
+const anomalies=[{id:1,name:'Жарка',tier:1,artifacts:['А1','А2','А3']}];
+const data={level:120,coins:0,inventory:{},quests:{}};
+const db=new FakeDB(data);
+function sell(name){
+ const all=[...weapons,...armor,...artifacts,...loot];const item=all.find(x=>x.name===name);
+ const category=weapons.includes(item)?'weapon':armor.includes(item)?'armor':artifacts.includes(item)?'artifact':'loot';
+ return{price:Math.max(1,Math.round((item?.price||10)*.5)),category};
+}
+const api=install({
+ app,db,requireAuth:(_q,_s,n)=>n(),rateLimit:()=>((_q,_s,n)=>n()),
+ SHOP_WEAPONS:weapons,SHOP_ARMOR:armor,SHOP_ARTIFACTS:artifacts,SHOP_MUTANT_LOOT:loot,
+ PVE_MUTANTS:mutants,RAID_ANOMALIES:anomalies,resolveSellPriceServer:sell,
+ parseGearNameServer:n=>({baseName:String(n).replace(/\s+\+\d+$/,'')})
+});
+assert.equal(api.version,1);
+assert.equal(api.artifactMeta.get('А1').weight,18);
+assert.equal(api.artifactMeta.get('А3').weight,2);
+assert(artifacts[2].stats.health>artifacts[0].stats.health,'rarer artifact must have stronger positive stat');
+assert(Math.abs(artifacts[2].stats.hunger)<Math.abs(artifacts[0].stats.hunger),'rarer artifact must have softer drawback');
+
+function call(path,body={}){
+ const req={telegramUser:{id:'p1'},body};
+ const res={code:200,status(n){this.code=n;return this;},json(v){this.body=v;return v;}};
+ const out=routes[path](req,res);return Promise.resolve(out).then(()=>res);
+}
+(async()=>{
+ let r=await call('/api/quests/offers',{vendor:'diesel'});assert.equal(r.code,200);assert(r.body.offers.length>0);assert(r.body.offers.every(q=>weapons.some(w=>w.name===q.itemName)));
+ const offer=r.body.offers[0];
+ r=await call('/api/quests/accept',{vendor:'diesel',questId:offer.id});assert.equal(r.body.accepted.length,1);
+ r=await call('/api/quests/activate',{questId:offer.id});assert.equal(r.body.activeId,offer.id);
+ // Item without a post-accept raid return cannot be handed in.
+ let stored=JSON.parse(db.rows.get('p1').data);stored.inventory[offer.itemName]=1;db.rows.set('p1',{data:JSON.stringify(stored)});
+ r=await call('/api/quests/turn-in',{vendor:'diesel',questId:offer.id});assert.equal(r.code,400);assert.match(r.body.error,/рейд/);
+ await new Promise(r=>setTimeout(r,2));api.markRaidReturn('p1');
+ r=await call('/api/quests/turn-in',{vendor:'diesel',questId:offer.id});assert.equal(r.code,200);assert.equal(r.body.completedCount,1);
+ assert(r.body.reward>sell(offer.itemName).price*1.02,'quest reward must exceed best ordinary sale');
+ assert.equal(r.body.inventory[offer.itemName],undefined);
+ // Leonov never asks for armor or guns.
+ r=await call('/api/quests/offers',{vendor:'leonov'});assert(r.body.offers.every(q=>artifacts.some(a=>a.name===q.itemName)||loot.some(l=>l.name===q.itemName)));
+ // Zhuchara only asks for armor.
+ r=await call('/api/quests/offers',{vendor:'zhuchara'});assert(r.body.offers.every(q=>armor.some(a=>a.name===q.itemName)));
+ console.log('quests server: OK');
+})().catch(e=>{console.error(e);process.exitCode=1});
