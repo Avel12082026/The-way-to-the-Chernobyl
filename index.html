@@ -908,11 +908,11 @@ button:active {filter:brightness(1.18);}
     <div id="bunkerThirst" class="bunker-vital bunker-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span class="bunker-vital-text"><span id="thirst">0</span><span id="bunkerThirstMax"> / 100</span></span></div>
     <div id="bunkerHealth" class="bunker-vital bunker-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span class="bunker-vital-text"><span id="health">0</span><span id="bunkerHealthMax"> / 100</span></span></div>
     <section class="bunker-resources" aria-label="Ресурсы персонажа">
-      <div class="bunker-resource"><span>Байты</span><span id="coins">0</span></div>
-      <div class="bunker-resource"><span>Жетоны сталкера</span><span id="breedCreditsHeader">0</span></div>
-      <div class="bunker-resource"><span>Книги знаний</span><span id="knowledgeBooksHeader">0</span></div>
+      <div class="bunker-resource"><span>Сталбайты</span><span id="coins">0</span></div>
+      <div class="bunker-resource"><span>Сталкоины</span><span id="breedCreditsHeader">0</span></div>
+      <div class="bunker-resource"><span>Опыт+</span><span id="knowledgeBooksHeader">0</span></div>
     </section>
-    <button id="bunkerReadBook" class="bunker-read-book" type="button" onclick="BunkerMenu.readBook()" aria-label="Прочитать книгу знаний">Прочитать</button>
+    <button id="bunkerReadBook" class="bunker-read-book" type="button" onclick="BunkerMenu.readBook()" aria-label="Использовать Опыт+">Прочитать</button>
     <p id="bunkerMessage" class="bunker-message" role="status" hidden></p>
     <!-- Preserve legacy updateUI/profile targets; these do not occupy layout space. -->
     <div hidden aria-hidden="true"><span id="level">1</span><span id="nicknameCreditsHeader">0</span><span id="zrPlayerName"></span><span id="zrPlayerFaction"></span></div>
@@ -923,7 +923,7 @@ button:active {filter:brightness(1.18);}
 <div class="screen" id="chatScreen" aria-label="Телеграммка">
 <div class="zr-topbar">
 <h3 class="zr-title">Телеграммка</h3>
-<button class="back-btn" id="chatBackToKpkBtn" type="button" onclick="openScreen('kpk')">Назат</button>
+<button class="back-btn" id="chatBackToKpkBtn" type="button" onclick="openScreen('kpk')">Назад</button>
 </div>
 <div id="embeddedChatWidget" style="display:none; flex-direction:column; min-height:0; height:100%; box-sizing:border-box;">
 <h4 style="margin:0 0 4px; color:#cdbd8f; font-family:'Russo One',sans-serif; text-transform:uppercase; letter-spacing:1px; font-size:13px; flex-shrink:0;">💬 Чат</h4>
@@ -1171,7 +1171,7 @@ button:active {filter:brightness(1.18);}
 <option value="detector">Детектор</option>
 <option value="bodypart">Часть тела мутанта</option>
 <option value="knowledgebook">Книга знаний</option>
-<option value="breedcredits">Жетоны сталкера</option>
+<option value="breedcredits">Сталкоины</option>
 <option value="nicknamecredits">Жетоны смены ника</option>
 <option value="perk">Перк</option>
 </select>
@@ -8069,8 +8069,9 @@ function startBattle(enemy) {
 })();
 
 </script>
-<script src="ui/bunker-menu.js?v=a8a4913b0793"></script>
-<script src="ui/trade-menu.js?v=d38941710d3c"></script>
+<script src="ui/bunker-menu.js?v=c5bf69bb6190"></script>
+<script src="ui/trade-menu.js?v=b2639f2eb6fa"></script>
+<script src="ui/terminology-market.js?v=dee1feb88986"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
 <script src="ui/trader-hubs.js?v=0661ddee1554"></script>
 
