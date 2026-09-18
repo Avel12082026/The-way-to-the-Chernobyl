@@ -146,7 +146,7 @@ def health():
     try:
         with urllib.request.urlopen('http://127.0.0.1:3000/api/quests/version',timeout=3) as r:
             body=r.read().decode('utf-8','replace')
-            return r.status==200 and '"success":true' in body and '"version":1' in body
+            return r.status==200 and '"success":true' in body and '"version":2' in body
     except Exception:
         return False
 
