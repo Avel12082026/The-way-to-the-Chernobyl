@@ -13,6 +13,7 @@ async def main():
     state = dict(nickname='Тест',health=103,maxHealth=150,hunger=80,thirst=80,level=600,
                  exp=0,radiation=0,coins=9999999,breedCredits=50,inventory={},warehouse={})
     writes, errors, checks = [], [], []
+    placeholder_images = set()
     images = {p.name:p for p in ROOT.rglob('*') if p.is_file() and p.suffix.lower() in ('.png','.webp','.jpg','.jpeg','.svg')}
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(executable_path=sys.argv[1] if len(sys.argv)>1 else None,args=['--no-sandbox','--disable-dev-shm-usage'])
@@ -21,6 +22,11 @@ async def main():
             name = Path(unquote(urlsplit(route.request.url).path)).name
             f = images.get(name)
             if f: await route.fulfill(body=f.read_bytes(),content_type=mimetypes.guess_type(f.name)[0] or 'image/png')
+            elif Path(name).suffix.lower() in ('.png','.jpg','.jpeg','.webp'):
+                # Some icons exist only on the game server, never reach that server in a test.
+                # A real image element with a deterministic fixture still exercises native hit testing.
+                placeholder_images.add(name)
+                await route.fulfill(body='<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="gray"/><text x="12" y="54">TEST</text></svg>',content_type='image/svg+xml')
             else: await route.abort()
         await context.route('**/*',resource)
         page = await context.new_page()
@@ -160,6 +166,7 @@ async def main():
         assert not errors,errors
         assert not writes,writes
         report=dict(status='passed',checks=checks,context_menu_events=len(menus),page_errors=errors,live_player_writes=0,
+                    placeholder_images=sorted(placeholder_images),
                     not_verified='Native Android/Telegram bottom-sheet rendering on a physical phone; Chromium touch emulation and cancellable event tests used')
         (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
         print(json.dumps(report,ensure_ascii=False));await browser.close()
