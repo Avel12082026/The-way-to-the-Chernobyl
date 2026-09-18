@@ -56,7 +56,7 @@
     const books = Math.max(0, finite(player.inventory?.['Книга знаний']));
     text('knowledgeBooksHeader', books);
     const bookBtn = document.getElementById('bunkerReadBook');
-    if (bookBtn) bookBtn.title = books ? `Прочитать книгу знаний (осталось ${books})` : 'Нет книг знаний';
+    if (bookBtn) bookBtn.title = books ? `Использовать Опыт+ (осталось ${books})` : 'Опыт+ отсутствует';
     for (const el of main.querySelectorAll('.bunker-resource > span[id]')) {
       const size = Math.max(11, 21 - Math.max(0, el.textContent.length - 6) * 1.5);
       el.style.fontSize = `calc(${size} * var(--bunker-unit))`;
