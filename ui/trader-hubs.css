@@ -8,15 +8,20 @@
   min-width:0!important;min-height:46px!important;padding:6px 3px!important;
   font-size:clamp(8px,2.45vw,13px)!important;line-height:1.05!important;white-space:nowrap!important;
 }
+#leonovHubScreen .leonov-hub-artwork{
+  object-fit:cover!important;object-position:center top!important;image-rendering:auto!important;
+  filter:none!important;transform:none!important;backface-visibility:hidden;
+}
 
 .trader-portrait-screen[hidden]{display:none!important}
 .trader-portrait-screen{position:fixed;inset:0;z-index:1600;background:#050605;overflow:hidden;isolation:isolate}
 .trader-portrait-screen.active{display:block}
-.trader-portrait-artwork{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.trader-portrait-artwork{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;image-rendering:auto;filter:none;transform:none;backface-visibility:hidden;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .trader-portrait-actions{
   position:absolute;left:2.5%;right:2.5%;bottom:max(10px,env(safe-area-inset-bottom));z-index:2;
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;
 }
+.trader-portrait-screen[data-action-count="4"] .trader-portrait-actions{grid-template-columns:repeat(4,minmax(0,1fr))}
 .trader-portrait-actions button{
   min-width:0;min-height:46px;margin:0;padding:7px 4px;border:2px solid #9b7b4d;border-radius:4px;
   background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.98));color:#ead7a9;
@@ -24,6 +29,7 @@
   letter-spacing:.15px;text-shadow:0 1px 2px #000;box-shadow:inset 0 0 0 1px #d0ad6522,0 2px 8px #0009;
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
+.trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:clamp(8px,2.35vw,13px);padding-left:2px;padding-right:2px;white-space:nowrap}
 .trader-portrait-actions button:active{transform:scale(.98);opacity:.86}
 .trader-portrait-actions button:focus-visible{outline:2px solid #e4c477;outline-offset:2px}
 body.trader-portrait-visible{overflow:hidden!important}
@@ -31,4 +37,5 @@ body.trader-portrait-visible #menuMusicPanel,body.trader-portrait-visible #menuM
 @media(max-width:340px){
   #leonovHubScreen .leonov-actions,.trader-portrait-actions{gap:2px!important;left:1.5%!important;right:1.5%!important}
   #leonovHubScreen .leonov-actions button,.trader-portrait-actions button{padding-left:2px!important;padding-right:2px!important;letter-spacing:0!important}
+  .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:7.6px!important}
 }

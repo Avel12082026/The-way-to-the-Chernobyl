@@ -1,15 +1,54 @@
-/* Portrait entry screens for NPC traders. Keep trading itself in TradeMenu. */
+/* Full-resolution portrait entry screens for NPC traders. Trading stays in TradeMenu. */
 (() => {
   'use strict';
   if (window.TraderHubs || !window.TradeMenu || typeof window.openScreen !== 'function') return;
 
   const nativeOpenScreen = window.openScreen;
+  const portraitLocks = new WeakMap();
   let zhucharaHub = null;
-  let zhucharaImagePromise = null;
+  let dieselHub = null;
 
   const say = text => {
     if (typeof showGameAlert === 'function') showGameAlert(text);
   };
+
+  function portraitSource(key) {
+    const b64 = window.TRADER_PORTRAIT_DATA?.[key];
+    return b64 ? 'data:image/webp;base64,' + b64 : '';
+  }
+
+  function bindPortrait(key, img) {
+    if (!img) return Promise.resolve(false);
+    const src = portraitSource(key);
+    if (!src) {
+      img.alt = 'Изображение торговца не загрузилось';
+      return Promise.resolve(false);
+    }
+    const current = portraitLocks.get(img);
+    if (current?.key === key && img.getAttribute('src') === src) return current.promise;
+
+    let restoring = false;
+    const keepSharp = () => {
+      if (restoring || img.getAttribute('src') === src) return;
+      restoring = true;
+      img.setAttribute('src', src);
+      restoring = false;
+    };
+    const observer = new MutationObserver(keepSharp);
+    observer.observe(img, {attributes: true, attributeFilter: ['src']});
+    img.decoding = 'async';
+    img.setAttribute('src', src);
+    img.dataset.portraitQuality = 'hq-864x1536-q88';
+    const promise = (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => {
+      if (img.naturalWidth !== 864 || img.naturalHeight !== 1536) {
+        console.error('[Trader portrait size]', key, img.naturalWidth, img.naturalHeight);
+        return false;
+      }
+      return true;
+    });
+    portraitLocks.set(img, {key, promise, observer});
+    return promise;
+  }
 
   function decorateLeonov() {
     const hub = document.getElementById('leonovHubScreen');
@@ -33,6 +72,7 @@
       nav.append(back);
     }
     hub.dataset.bottomActions = 'ready';
+    bindPortrait('leonov', hub.querySelector('#leonovHubArtwork'));
     return true;
   }
 
@@ -47,42 +87,70 @@
   new MutationObserver(() => decorateLeonov()).observe(document.body, {childList:true, subtree:true});
   decorateLeonov();
 
-  function loadZhucharaImage(img) {
-    if (img.src) return Promise.resolve();
-    if (!zhucharaImagePromise) {
-      zhucharaImagePromise = fetch('ui/zhuchara-portrait.webp.b64?v=20260918').then(r => {
-        if (!r.ok) throw new Error('Zhuchara portrait HTTP ' + r.status);
-        return r.text();
-      }).then(b64 => b64.replace(/\s+/g, ''));
+  function createPortraitHub({id, label, key, actions}) {
+    const hub = document.createElement('section');
+    hub.id = id;
+    hub.className = 'trader-portrait-screen';
+    hub.hidden = true;
+    hub.dataset.actionCount = String(actions.length);
+    hub.setAttribute('aria-label', label);
+
+    const img = document.createElement('img');
+    img.id = id.replace('Screen', 'Artwork');
+    img.className = 'trader-portrait-artwork';
+    img.alt = label + ' за прилавком';
+    img.draggable = false;
+
+    const nav = document.createElement('nav');
+    nav.className = 'trader-portrait-actions';
+    nav.setAttribute('aria-label', 'Действия: ' + label);
+    for (const action of actions) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.traderAction = action.id;
+      button.textContent = action.label;
+      nav.append(button);
     }
-    return zhucharaImagePromise.then(b64 => {
-      img.src = 'data:image/webp;base64,' + b64;
-    }).catch(err => {
-      console.error('[Zhuchara portrait]', err);
-      img.alt = 'Изображение Жучары не загрузилось';
-    });
+    hub.append(img, nav);
+    document.body.append(hub);
+    bindPortrait(key, img);
+    return hub;
+  }
+
+  function hideHub(hub) {
+    if (!hub) return;
+    hub.hidden = true;
+    hub.classList.remove('active');
+    if (![zhucharaHub, dieselHub].some(item => item && !item.hidden)) {
+      document.body.classList.remove('trader-portrait-visible');
+    }
+  }
+
+  function showHub(hub, key) {
+    nativeOpenScreen('main');
+    hub.hidden = false;
+    hub.classList.add('active');
+    document.body.classList.add('trader-portrait-visible');
+    bindPortrait(key, hub.querySelector('.trader-portrait-artwork'));
+    return hub;
   }
 
   function ensureZhucharaHub() {
     if (zhucharaHub) return zhucharaHub;
-    const hub = document.createElement('section');
-    hub.id = 'zhucharaHubScreen';
-    hub.className = 'trader-portrait-screen';
-    hub.hidden = true;
-    hub.setAttribute('aria-label', 'Торговец Жучара');
-    hub.innerHTML = `
-      <img id="zhucharaHubArtwork" class="trader-portrait-artwork" alt="Торговец Жучара за прилавком" draggable="false">
-      <nav class="trader-portrait-actions" aria-label="Действия у Жучары">
-        <button type="button" data-zhuchara-action="trade">Торговля</button>
-        <button type="button" data-zhuchara-action="talk">Говорить</button>
-        <button type="button" data-zhuchara-action="back">Назад</button>
-      </nav>`;
-    document.body.append(hub);
-    zhucharaHub = hub;
-    hub.addEventListener('click', event => {
-      const button = event.target.closest('[data-zhuchara-action]');
+    zhucharaHub = createPortraitHub({
+      id:'zhucharaHubScreen',
+      label:'Торговец Жучара',
+      key:'zhuchara',
+      actions:[
+        {id:'trade', label:'Торговля'},
+        {id:'talk', label:'Говорить'},
+        {id:'back', label:'Назад'}
+      ]
+    });
+    zhucharaHub.addEventListener('click', event => {
+      const button = event.target.closest('[data-trader-action]');
       if (!button) return;
-      const action = button.dataset.zhucharaAction;
+      const action = button.dataset.traderAction;
       if (action === 'trade') {
         hideZhuchara();
         window.TradeMenu.open('zhuchara');
@@ -93,38 +161,60 @@
         nativeOpenScreen('main');
       }
     });
-    loadZhucharaImage(hub.querySelector('#zhucharaHubArtwork'));
-    return hub;
+    return zhucharaHub;
   }
 
-  function hideZhuchara() {
-    if (!zhucharaHub) return;
-    zhucharaHub.hidden = true;
-    zhucharaHub.classList.remove('active');
-    document.body.classList.remove('trader-portrait-visible');
+  function ensureDieselHub() {
+    if (dieselHub) return dieselHub;
+    dieselHub = createPortraitHub({
+      id:'dieselHubScreen',
+      label:'Техник Дизель',
+      key:'diesel',
+      actions:[
+        {id:'trade', label:'Торговля'},
+        {id:'upgrade', label:'Улучшить'},
+        {id:'talk', label:'Говорить'},
+        {id:'back', label:'Назад'}
+      ]
+    });
+    dieselHub.addEventListener('click', event => {
+      const button = event.target.closest('[data-trader-action]');
+      if (!button) return;
+      const action = button.dataset.traderAction;
+      if (action === 'trade') {
+        hideDiesel();
+        window.TradeMenu.open('technician');
+      } else if (action === 'upgrade') {
+        hideDiesel();
+        nativeOpenScreen('technician');
+        if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
+      } else if (action === 'talk') {
+        say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
+      } else if (action === 'back') {
+        hideDiesel();
+        nativeOpenScreen('main');
+      }
+    });
+    return dieselHub;
   }
 
-  function openZhuchara() {
-    const hub = ensureZhucharaHub();
-    // Keep the regular main menu underneath the fixed portrait screen.
-    nativeOpenScreen('main');
-    hub.hidden = false;
-    hub.classList.add('active');
-    document.body.classList.add('trader-portrait-visible');
-    loadZhucharaImage(hub.querySelector('#zhucharaHubArtwork'));
-    return hub;
-  }
+  function hideZhuchara() { hideHub(zhucharaHub); }
+  function hideDiesel() { hideHub(dieselHub); }
+  function openZhuchara() { return showHub(ensureZhucharaHub(), 'zhuchara'); }
+  function openDiesel() { return showHub(ensureDieselHub(), 'diesel'); }
 
   window.openScreen = function(screen) {
     if (screen === 'shop') return openZhuchara();
+    if (screen === 'technician') return openDiesel();
     if (zhucharaHub && !zhucharaHub.hidden) hideZhuchara();
+    if (dieselHub && !dieselHub.hidden) hideDiesel();
     return nativeOpenScreen.apply(this, arguments);
   };
 
   window.TraderHubs = Object.freeze({
-    version: '1.0.1',
-    openZhuchara,
-    hideZhuchara,
-    decorateLeonov
+    version:'1.2.0',
+    openZhuchara, hideZhuchara,
+    openDiesel, hideDiesel,
+    decorateLeonov, bindPortrait
   });
 })();

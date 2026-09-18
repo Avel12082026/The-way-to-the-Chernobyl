@@ -1,6 +1,6 @@
 /* Match the existing inventory's metal cells; never use a static screenshot as UI. */
 #tradeMenu[hidden],#tradeMenu [hidden]{display:none!important}
-#tradeMenu{position:fixed;inset:0;z-index:999;overflow:auto;overscroll-behavior:contain;box-sizing:border-box;background:#070a08;color:#d5c7a2;padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));font:12px/1.3 'Segoe UI',Arial,sans-serif;scrollbar-width:thin}
+#tradeMenu{position:fixed;inset:0;z-index:999;overflow:auto;overscroll-behavior:contain;box-sizing:border-box;background:#070a08;color:#d5c7a2;padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));font:12px/1.3 'Segoe UI',Arial,sans-serif;scrollbar-width:auto}
 #tradeMenu *{box-sizing:border-box}
 #tradeMenu .trade-shell{max-width:720px;min-height:100%;margin:auto;padding:5px;border:5px solid transparent;border-image:var(--zr-frame) 10 stretch;background:linear-gradient(130deg,#0b0d0bf3,#15130feb),var(--zr-metal) center/380px}
 #tradeMenu h2,#tradeMenu h3,#tradeMenu p{margin:0}
@@ -15,7 +15,7 @@
 #tradeMenu .trade-vitals{display:flex;flex-wrap:wrap;gap:5px 12px;padding:7px 0 4px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
 #tradeHealth{color:#e25c59}#tradeHunger{color:#d1a44f}#tradeThirst{color:#58acc9}#tradeBalance{color:#dbbd71;margin-left:auto}
 #tradeMenu .trade-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;min-width:0}
-#tradeMenu .trade-stock-scroll{max-height:min(36dvh,320px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 0 3px}
+#tradeMenu .trade-stock-scroll{max-height:min(36dvh,320px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:auto;padding:1px 0 3px}
 #tradeMenu .trade-cell,#tradeMenu .trade-empty{aspect-ratio:1;min-height:0!important;min-width:0!important;overflow:hidden;position:relative;border:3px solid transparent!important;border-image:var(--zr-button-frame) 7 stretch!important;background:linear-gradient(#0d130bc9,#080c0be0),var(--zr-metal) center/200px!important}
 #tradeMenu .trade-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 2px 10px!important;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;font-size:12px!important}
 #tradeMenu .trade-cell img{width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain;pointer-events:none}
@@ -50,10 +50,16 @@ body.trade-menu-visible #menuMusicPanel,body.trade-menu-visible #menuMusicButton
 #tradeMenu button.trade-cell>span.trade-cell-name{font:9px/1.05 Arial,sans-serif!important;overflow:hidden;overflow-wrap:anywhere;max-height:100%;text-align:center;color:#bab49e}
 #tradeMenu .trade-cell img{min-width:0!important;margin:0!important;border:0!important;background:transparent!important}
 
-
 /* TRADE_V2_SCROLL_GRIDS */
 /* Merchant and player inventories expose the same 7x3 viewport, then scroll. */
-#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:min(24dvh,210px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:1px 0 3px;align-content:start}
+#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:min(24dvh,210px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:auto;padding:1px 0 3px;align-content:start;scrollbar-gutter:stable}
 /* Both staging lists remain compact and independently scroll when more positions are queued. */
-#tradeMenu .trade-staging{max-height:min(18dvh,150px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;align-content:start}
+#tradeMenu .trade-staging{max-height:min(18dvh,150px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:auto;align-content:start;scrollbar-gutter:stable}
 @media(min-width:600px){#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory{max-height:246px}#tradeMenu .trade-staging{max-height:166px}}
+
+/* TRADE_TOUCH_SCROLLBARS: larger, high-contrast thumbs with a wider touch target. */
+#tradeMenu,#tradeMenu .trade-stock-scroll,#tradeMenu #tradeInventory,#tradeMenu .trade-staging{scrollbar-color:#c6a35d #171811;scrollbar-width:auto}
+#tradeMenu::-webkit-scrollbar,#tradeMenu .trade-stock-scroll::-webkit-scrollbar,#tradeMenu #tradeInventory::-webkit-scrollbar,#tradeMenu .trade-staging::-webkit-scrollbar{width:22px;height:22px}
+#tradeMenu::-webkit-scrollbar-track,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-track,#tradeMenu #tradeInventory::-webkit-scrollbar-track,#tradeMenu .trade-staging::-webkit-scrollbar-track{background:#171811;border-left:1px solid #51472f}
+#tradeMenu::-webkit-scrollbar-thumb,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-thumb,#tradeMenu #tradeInventory::-webkit-scrollbar-thumb,#tradeMenu .trade-staging::-webkit-scrollbar-thumb{min-height:58px;background:linear-gradient(#d5b56d,#8f733b);border:3px solid #171811;border-radius:10px;box-shadow:inset 0 0 0 1px #f3d98a66}
+#tradeMenu::-webkit-scrollbar-thumb:active,#tradeMenu .trade-stock-scroll::-webkit-scrollbar-thumb:active,#tradeMenu #tradeInventory::-webkit-scrollbar-thumb:active,#tradeMenu .trade-staging::-webkit-scrollbar-thumb:active{background:linear-gradient(#eed083,#a78643)}
