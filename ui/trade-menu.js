@@ -99,8 +99,12 @@
     const fallback = document.createElement('span');
     fallback.className = 'trade-cell-name'; fallback.textContent = labelName(name);
     fallback.hidden = !!button.querySelector('img'); button.append(fallback);
+    button.querySelectorAll('a').forEach(link => {
+      link.removeAttribute('href'); link.removeAttribute('target'); link.removeAttribute('download');
+      link.tabIndex = -1; link.style.webkitTouchCallout = 'none';
+    });
     button.querySelectorAll('img').forEach(img => {
-      img.draggable = false; img.alt = '';
+      img.draggable = false; img.alt = ''; img.style.webkitTouchCallout = 'none';
       img.addEventListener('error', () => { fallback.hidden = false; });
     });
     const caption = document.createElement('span');
@@ -375,7 +379,17 @@
     suppressUntil = Date.now() + 650;
     const name = g.name;
     cleanup();
-    if (name && typeof showItemInfoModal === 'function') showItemInfoModal(name);
+    if (name && typeof showItemInfoModal === 'function') {
+      showItemInfoModal(name);
+      // The hold that opened the modal is still physically down on Android.
+      // Strip native image/link actions so Chrome/Telegram cannot show
+      // "Open in / Download / Copy link" over the in-game information window.
+      document.getElementById('itemInfoModal')?.querySelectorAll('img,a').forEach(node => {
+        node.draggable = false;
+        node.removeAttribute?.('href'); node.removeAttribute?.('target'); node.removeAttribute?.('download');
+        node.style.webkitTouchCallout = 'none';
+      });
+    }
   }
   root.addEventListener('pointerdown', e => {
     const node = e.target.closest('[data-trade-source="stock"],[data-trade-source="inventory"]');
@@ -416,7 +430,13 @@
   window.addEventListener('blur', cancel);
   document.addEventListener('visibilitychange', () => { if (document.hidden) cancel(); });
   root.addEventListener('dragstart', e => e.preventDefault());
-  root.addEventListener('contextmenu', e => { if (e.target.closest('[data-trade-source]')) e.preventDefault(); });
+  document.addEventListener('contextmenu', e => {
+    if (root.hidden) return;
+    if (e.target.closest('#tradeMenu,#itemInfoModal')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
   root.addEventListener('keydown', e => {
     if (e.key === 'Escape') { e.preventDefault(); if (gesture) cancel(); else void back(); }
     if (e.key === 'Tab') {
@@ -448,7 +468,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
