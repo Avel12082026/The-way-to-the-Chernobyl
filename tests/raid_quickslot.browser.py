@@ -65,7 +65,6 @@ async def main():
 
     # Normal tap must use the medkit and must not open information.
     await slot.tap()
-    await page.wait_for_function("window.__quickTapDone===true",{timeout:1000}) if False else None
     await page.wait_for_timeout(180)
     assert len(writes)==1,writes
     assert writes[0][1]=='Аптечка армейская'
