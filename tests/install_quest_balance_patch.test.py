@@ -33,7 +33,7 @@ assert changed
 assert 'const UPGRADE_MAX_LEVEL = 50;' in patched
 assert 'const UPGRADE_BYTE_THRESHOLD = 25;' in patched
 assert 'const UPGRADE_MAX_BONUS_PCT_SERVER = 0.25;' in patched
-assert 'if(lv<100)return 0;' in patched
+assert 'const unlocks=[[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];' in patched
 assert '1:240,2:480' in patched
 assert '1:28,2:45' in patched
 assert 'earlyFloor' in patched
