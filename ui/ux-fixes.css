@@ -1,0 +1,36 @@
+/* 2026-09-18 interaction and notification fixes. */
+body .modal{z-index:10000}
+body .modal.active{z-index:12000!important}
+#gameAlertModal.active,#itemInfoModal.active,#profileItemModal.active,#gameConfirmModal.active{z-index:13000!important}
+body .modal.active .modal-content{position:relative;z-index:1}
+
+.legacy-item-info-button{display:none!important}
+
+.pda-notify-host{position:relative!important}
+.pda-notify-badges{
+  position:absolute;top:5px;right:6px;z-index:20;display:flex;gap:3px;
+  pointer-events:none;filter:drop-shadow(0 1px 2px #000);
+}
+.pda-notify-dot{display:block;width:10px;height:10px;border-radius:50%;border:1px solid #0b0d09;box-shadow:0 0 0 1px #ffffff22}
+.pda-notify-dot[hidden]{display:none!important}
+.pda-notify-personal{background:#e74c3c}
+.pda-notify-parcel{background:#e6c229}
+.pda-notify-system{background:#42c6e8}
+#bunkerPda .pda-notify-badges{top:4%;right:5%}
+#kpkChatBtn .pda-notify-badges{top:7px;right:9px}
+
+#raidUtilityButtons.raid-utility-buttons{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:8px;margin-top:8px;width:100%;
+}
+#raidUtilityButtons .raid-utility-button{
+  width:100%!important;min-width:0!important;min-height:46px!important;margin:0!important;
+  background:#8a7a4a!important;color:#fff!important;
+}
+#raidTelegramBtn{background:#273b31!important}
+#raidTelegramBtn .pda-notify-badges{top:5px;right:7px}
+
+@media(max-width:340px){
+  #raidUtilityButtons{gap:5px!important}
+  #raidUtilityButtons .raid-utility-button{font-size:11px!important;padding:7px 4px!important}
+}
