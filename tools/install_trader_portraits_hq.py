@@ -11,6 +11,7 @@ assets=[
     ('css','ui/trader-hubs.css'),
     ('js','ui/bunker-menu.js'),
     ('js','ui/trade-menu.js'),
+    ('js','ui/trader-portrait-data.js'),
     ('js','ui/trader-hubs.js'),
 ]
 for kind,rel in assets:
@@ -38,8 +39,10 @@ for kind,rel in assets:
 # Trade must load after bunker; trader hubs must load after trade.
 if s.index('ui/trade-menu.js') < s.index('ui/bunker-menu.js'):
     raise SystemExit('Trade menu must load after bunker menu')
-if s.index('ui/trader-hubs.js') < s.index('ui/trade-menu.js'):
-    raise SystemExit('Trader hubs must load after trade menu')
+if s.index('ui/trader-portrait-data.js') < s.index('ui/trade-menu.js'):
+    raise SystemExit('Portrait data must load after trade menu')
+if s.index('ui/trader-hubs.js') < s.index('ui/trader-portrait-data.js'):
+    raise SystemExit('Trader hubs must load after portrait data')
 
 p.write_text(s,encoding='utf-8')
 print('HQ trader portrait cache-busting installed')
