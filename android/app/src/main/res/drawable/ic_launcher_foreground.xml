@@ -1,1 +1,11 @@
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/game_logo" android:gravity="fill" android:filter="true"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path
+        android:fillColor="#CBB55B"
+        android:fillType="evenOdd"
+        android:pathData="M54,14A40,40 0,1 0,54,94A40,40 0,1 0,54,14M54,34A20,20 0,1 1,54,74A20,20 0,1 1,54,34"/>
+    <path android:fillColor="#CBB55B" android:pathData="M54,54 L42,20 L66,20 Z"/>
+    <path android:fillColor="#CBB55B" android:pathData="M54,54 L84,72 L72,91 Z"/>
+    <path android:fillColor="#CBB55B" android:pathData="M54,54 L24,72 L36,91 Z"/>
+</vector>
