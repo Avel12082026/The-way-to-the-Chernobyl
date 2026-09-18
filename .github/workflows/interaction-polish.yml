@@ -8,6 +8,8 @@ on:
       - 'ui/trader-hubs.css'
       - 'ui/trade-menu.js'
       - 'ui/pda-notification.mp3.b64'
+      - 'tools/fix_interaction_regressions.py'
+      - 'tests/interaction_regressions.browser.py'
       - 'tests/interaction_polish.static.cjs'
       - '.github/workflows/interaction-polish.yml'
   workflow_dispatch:
@@ -15,25 +17,49 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: interaction-polish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate:
+    if: github.ref == 'refs/heads/ui/interaction-notifications-20260918'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Syntax and regression checks
+      - name: Apply exact corrections and check idempotence
+        run: |
+          python tools/fix_interaction_regressions.py
+          sha256sum index.html ui/trade-menu.js ui/trader-hubs.js ui/trader-hubs.css > /tmp/interaction.sha256
+          python tools/fix_interaction_regressions.py
+          sha256sum --check /tmp/interaction.sha256
+      - name: Syntax and existing regression checks
         run: |
           node --check ui/trader-hubs.js
           node --check ui/trade-menu.js
           node tests/interaction_polish.static.cjs
-      - name: Refresh cache-busting versions
-        run: python tools/bump_interaction_assets.py
-      - name: Commit refreshed index
+          node tests/chat_pda_structure.cjs
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Full client mouse and touch tests without live player writes
+        run: python tests/interaction_regressions.browser.py
+      - name: Attach browser report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interaction-regressions-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: .validation/interaction-regressions/
+      - name: Commit only the tested client files to the working branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html ui/trade-menu.js ui/trader-hubs.js ui/trader-hubs.css
           if ! git diff --cached --quiet; then
-            git commit -m "Refresh interaction asset cache versions"
+            git commit -m "Apply browser-verified item tap, scrolling and PDA corrections"
             git push origin HEAD:ui/interaction-notifications-20260918
           fi
