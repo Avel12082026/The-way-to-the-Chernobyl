@@ -7,7 +7,7 @@ module.exports=function installWeaponProgression(ctx){
   if(!Array.isArray(SHOP_WEAPONS)||!Array.isArray(PVE_MUTANTS))
     throw new Error('weapon progression: missing live catalogues');
 
-  const DATA=require('./weapon-progression.json');
+  let DATA;try{DATA=require('./weapon-progression.json');}catch(_){DATA=require('../data/weapon-progression.json');}
   const byName=new Map(DATA.entries.map(x=>[x.name,x]));
   const adminSnapshot=new Map(SHOP_WEAPONS.filter(w=>w.adminOnly).map(w=>[w.name,JSON.stringify(w)]));
 
