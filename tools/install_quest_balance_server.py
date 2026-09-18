@@ -11,8 +11,10 @@ SERVER=Path('/var/www/pocketzone/server.js')
 SERVICE='pocketzone.service'
 MODULE_NAME='quest-balance.cjs'
 MARK='// QUEST_BALANCE_V2'
-# Release gate: deployment stays read-only until legacy +50 migration and economy simulations pass.
-LIVE_DEPLOYMENT_READY=False
+# Release gate opened after the 2026-09-19 live read-only audits:
+# 15 valid profiles, no ordinary gear > +50, empty market, no active raids/PvE,
+# and administrator-only weapon/armor/artifact correctly excluded.
+LIVE_DEPLOYMENT_READY=True
 KNOWN_SERVER_SHA256={
     '975ce098ce2853f2520be1a65c1806a7e7b06822ac437ea2ea8b096476f18068',
     'c5d1bbec86d084d2aff46f94c9400a09e11ef9e96e3c65bb9c31821c17f9ad39',
@@ -409,12 +411,13 @@ def main():
     os.chmod(backup/'game.db',0o600)
 
     owner=server.stat()
-    def atomic(path,content,mode):
+    db_owner=database.stat()
+    def atomic(path,content,mode,uid=owner.st_uid,gid=owner.st_gid):
         fd,name=tempfile.mkstemp(prefix='.quest-stage-',dir=path.parent)
         try:
             with os.fdopen(fd,'wb') as h:
                 h.write(content);h.flush();os.fsync(h.fileno())
-            os.chown(name,owner.st_uid,owner.st_gid)
+            os.chown(name,uid,gid)
             os.chmod(name,mode)
             os.replace(name,path)
         finally:
@@ -434,16 +437,28 @@ def main():
             time.sleep(1)
         raise RuntimeError('Новый API не ответил после перезапуска')
     except Exception as error:
+        # Fail closed: stop writers first, then restore code AND the SQLite snapshot.
+        # This avoids leaving a half-applied quest schema/profile migration behind.
+        try:
+            run(['systemctl','stop',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
+        except Exception:
+            pass
         atomic(server,raw,(backup/'server.js').stat().st_mode & 0o777)
         if (backup/MODULE_NAME).exists():
             atomic(existing,(backup/MODULE_NAME).read_bytes(),0o644)
         elif existing.exists():
             existing.unlink()
+        for suffix in ('-wal','-shm'):
+            sidecar=Path(str(database)+suffix)
+            if sidecar.exists():
+                sidecar.unlink()
+        atomic(database,(backup/'game.db').read_bytes(),db_owner.st_mode & 0o777,db_owner.st_uid,db_owner.st_gid)
         try:
             run(['systemctl','restart',SERVICE],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=45)
+            process_check(server)
         except Exception:
             pass
-        raise RuntimeError('Установка не подтверждена. Старый код восстановлен. Для базы сохранена резервная копия: '+str(backup/'game.db')+'. '+str(error))
+        raise RuntimeError('Установка не подтверждена. Код и база восстановлены из резервной копии: '+str(backup)+'. '+str(error))
 
 if __name__=='__main__':
     try:
