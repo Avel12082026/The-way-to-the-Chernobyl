@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
 let screen, gesture=null, ghost=null, frame=0, busy=false, suppressUntil=0, preciseArtifacts=false;
-const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация.';
+const instruction='Зажми предмет и перетащи в подсвеченный слот. Короткое касание — информация и действия.';
 function hint(text=instruction){const el=document.getElementById(screen?.id==='warehouseScreen'?'warehouseDragHint':'inventoryDragHint');if(el)el.textContent=text;}
 function kind(name){return getEquipSlotType(name)||(findArtifactDef(name)?'artifact':consumables.some(c=>c.name===name)?'quick':null);}
 function compatible(name,slot,from=gesture?.from||'inventory'){
@@ -13,16 +13,28 @@ function compatible(name,slot,from=gesture?.from||'inventory'){
  if(slot.dataset.dropKind==='artifact'&&!preciseArtifacts)return Number(slot.dataset.dropIndex)===player.artifactSlots.findIndex(x=>!x);
  return true;
 }
+function sanitizeDragCell(cell,name){
+ if(!cell||!name)return;
+ cell.dataset.dragItem=name;
+ cell.style.webkitTouchCallout='none';
+ cell.querySelectorAll('a').forEach(el=>{
+  el.draggable=false;el.removeAttribute('href');el.removeAttribute('target');el.removeAttribute('download');
+  el.style.webkitTouchCallout='none';
+ });
+ cell.querySelectorAll('img').forEach(el=>{
+  el.draggable=false;el.style.webkitTouchCallout='none';el.style.webkitUserSelect='none';el.style.userSelect='none';
+ });
+}
 function refresh(items){
  if(!screen)return;
- [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i]){cell.dataset.dragItem=items[i];cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});}});
+ [...document.getElementById('inventoryGrid').children].forEach((cell,i)=>{if(items[i])sanitizeDragCell(cell,items[i]);});
  [...document.getElementById('quickSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind=i<3?['weapon','armor','detector'][i]:'quick';if(i>=3)cell.dataset.dropIndex=i-3;});
  [...document.getElementById('artifactSlotsGrid').children].forEach((cell,i)=>{cell.dataset.dropKind='artifact';cell.dataset.dropIndex=i;});
 }
 function refreshWarehouse(items,invItems){
  const groups=[['warehouseGrid',items,'warehouse','deposit'],['warehouseInventoryGrid',invItems,'inventory','withdraw']];
  groups.forEach(([id,names,from,to])=>{const grid=document.getElementById(id);grid.dataset.dropKind=to;
- [...grid.children].forEach((cell,i)=>{if(!names[i])return;cell.dataset.dragItem=names[i];cell.dataset.dragFrom=from;cell.querySelectorAll('img,a').forEach(el=>{el.draggable=false;el.removeAttribute('href');});});});
+ [...grid.children].forEach((cell,i)=>{if(!names[i])return;sanitizeDragCell(cell,names[i]);cell.dataset.dragFrom=from;});});
 }
 function removeWarehouseShortcutButtons(warehouse){
  if(!warehouse)return;
@@ -111,9 +123,25 @@ function init(){
  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel();});
  document.addEventListener('keydown',e=>{if(e.key==='Escape')cancel();});
  [screen,warehouse].filter(Boolean).forEach(el=>new MutationObserver(()=>{if(!screen.classList.contains('active'))cancel();}).observe(el,{attributes:true,attributeFilter:['class']}));
- document.addEventListener('click',e=>{if((e.target.closest('#inventoryScreen,#warehouseScreen'))&&(Date.now()<suppressUntil||busy)){e.preventDefault();e.stopImmediatePropagation();}},true);
- document.addEventListener('dragstart',e=>{if(e.target.closest('[data-drag-item]'))e.preventDefault();});
- document.addEventListener('contextmenu',e=>{if(e.target.closest('[data-drag-item]')||gesture){e.preventDefault();e.stopPropagation();}},true);
+ document.addEventListener('click',e=>{
+  const inventoryItem=e.target.closest('#inventoryScreen [data-drag-item]');
+  const warehouseItem=e.target.closest('#warehouseScreen [data-drag-item]');
+  // Preserve the game's existing short-tap behavior. Only swallow the synthetic
+  // click that follows a drag/hold, so it cannot also trigger the old item action.
+  if((inventoryItem||warehouseItem)&&(Date.now()<suppressUntil||busy)){
+   e.preventDefault();e.stopImmediatePropagation();
+  }
+ },true);
+ document.addEventListener('dragstart',e=>{if(e.target.closest('#inventoryScreen [data-drag-item],#warehouseScreen [data-drag-item]')){e.preventDefault();e.stopPropagation();}},true);
+ // Capturing the native menu is independent of drag state and re-render timing.
+ // Item dialogs are siblings of the inventory, not descendants of it.
+ document.addEventListener('contextmenu',e=>{
+  const target=e.target?.closest?e.target:e.target?.parentElement;
+  if(target?.closest('input,textarea,[contenteditable="true"]'))return;
+  if(target?.closest('#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid,#warehouseGrid,#warehouseInventoryGrid,#itemActionModal,#itemInfoModal,.inventory-drag-ghost')||gesture){
+   e.preventDefault();e.stopPropagation();
+  }
+ },true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

@@ -100,3 +100,31 @@
   white-space: nowrap;
   border: 0 !important;
 }
+
+
+/* INVENTORY_NATIVE_MENU_GUARD_V2
+   The cell owns the gesture. Nested image/link URLs never receive Android long-press actions. */
+#inventoryScreen #inventoryGrid [data-drag-item],
+#inventoryScreen #inventoryGrid [data-drag-item] *,
+#warehouseScreen [data-drag-item],
+#warehouseScreen [data-drag-item] *{
+  -webkit-touch-callout:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+  -webkit-user-drag:none!important;
+}
+#inventoryScreen #inventoryGrid [data-drag-item] img,
+#inventoryScreen #inventoryGrid [data-drag-item] a{
+  pointer-events:none!important;
+}
+
+/* Also protect an empty cell, equipped item and the dialog opened after a tap. */
+#inventoryScreen :is(#inventoryGrid,#quickSlotsGrid,#artifactSlotsGrid) img,
+#warehouseScreen :is(#warehouseGrid,#warehouseInventoryGrid) img,
+#itemActionModal img {
+  pointer-events:none!important;
+  -webkit-touch-callout:none!important;
+  -webkit-user-drag:none!important;
+  -webkit-user-select:none!important;
+  user-select:none!important;
+}

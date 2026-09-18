@@ -66,7 +66,8 @@ button[onclick*="showItemInfoModal"]{display:none!important}
 /* Do not displace the absolutely positioned PDA hotspot when adding badges. */
 #mainMenu #bunkerPda.pda-notification-host{position:absolute!important}
 /* Item images must receive taps outside the trade grid as well. */
-img[data-item-info],#inventoryScreen #inventoryGrid [data-drag-item] img[data-item-info],#warehouseScreen [data-drag-item] img[data-item-info]{pointer-events:auto!important;cursor:pointer}
+img[data-item-info]{pointer-events:auto!important;cursor:pointer}
+#inventoryScreen #inventoryGrid [data-drag-item] img[data-item-info],#warehouseScreen [data-drag-item] img[data-item-info]{pointer-events:none!important;cursor:default}
 /* Info and speech remain above portrait screens and stacked picker dialogs. */
 #gameAlertModal,#gameConfirmModal{z-index:100010!important}
 #itemInfoModal,#profileItemModal{z-index:100020!important}
