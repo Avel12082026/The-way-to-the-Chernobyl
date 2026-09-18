@@ -37,6 +37,17 @@ module.exports=function installQuestBalance({
   }
   rebalanceArtifacts();
 
+  // Research suits are specialized anomaly gear, not a cheap shortcut around the
+  // normal armor curve. Price each one slightly above the cheapest normal armor
+  // of the same tier; its physical armor remains lower while anomaly protection is higher.
+  for(const suit of (SHOP_ARMOR||[]).filter(a=>a.isResearchSuit)){
+    const same=(SHOP_ARMOR||[]).filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===Number(suit.tier));
+    if(same.length){
+      const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
+      suit.price=Math.round(floor*1.10);
+    }
+  }
+
   function pickArtifact(names){
     const pool=(Array.isArray(names)?names:[]).map(name=>({name,weight:Number(artifactMeta.get(name)?.weight)||1}));
     if(!pool.length)return null;
