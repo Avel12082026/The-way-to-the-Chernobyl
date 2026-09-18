@@ -62,6 +62,8 @@ module.exports=function installQuestBalance({
   // legacy upgrade levels are compressed into the supported 0..50 range.
   const UPGRADE_CAP=50, UPGRADE_BONUS_PER_LEVEL=0.005, UPGRADE_MAX_BONUS=0.25;
   // Admin-only gear is deliberately outside the player balance model and migration.
+  const adminWeaponNames=new Set((SHOP_WEAPONS||[]).filter(x=>x.adminOnly).map(x=>x.name));
+  const adminArmorNames=new Set((SHOP_ARMOR||[]).filter(x=>x.adminOnly).map(x=>x.name));
   const weaponByName=new Map((SHOP_WEAPONS||[]).filter(x=>!x.adminOnly).map(x=>[x.name,x]));
   const armorByName=new Map((SHOP_ARMOR||[]).filter(x=>!x.adminOnly).map(x=>[x.name,x]));
   function gearParts(name){
@@ -134,6 +136,7 @@ module.exports=function installQuestBalance({
     }
     data.armorUpgradeData=data.armorUpgradeData&&typeof data.armorUpgradeData==='object'?data.armorUpgradeData:{};
     for(const key of Object.keys(data.armorUpgradeData)){
+      if(adminArmorNames.has(gearParts(key).baseName))continue;
       const result=compressUpgradeRecord(data.armorUpgradeData[key]);
       if(result.changed){data.armorUpgradeData[key]=result.record;recordsCompressed++;changed=true;}
     }
