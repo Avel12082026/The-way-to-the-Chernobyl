@@ -11,7 +11,7 @@ module.exports=function installQuestBalance({
 
   const vendors=new Set(['leonov','zhuchara','diesel']);
   const regularAnomalies=(RAID_ANOMALIES||[]).filter(a=>Number(a.tier)>=1&&Number(a.tier)<=8&&!a.isNamedArtifactAnomaly);
-  const artifactByName=new Map((SHOP_ARTIFACTS||[]).map(a=>[a.name,a]));
+  const artifactByName=new Map((SHOP_ARTIFACTS||[]).filter(a=>!a.adminOnly).map(a=>[a.name,a]));
   const artifactMeta=new Map();
 
   function rebalanceArtifacts(){
@@ -40,7 +40,7 @@ module.exports=function installQuestBalance({
   // Research suits are specialized anomaly gear, not a cheap shortcut around the
   // normal armor curve. Price each one slightly above the cheapest normal armor
   // of the same tier; its physical armor remains lower while anomaly protection is higher.
-  for(const suit of (SHOP_ARMOR||[]).filter(a=>a.isResearchSuit)){
+  for(const suit of (SHOP_ARMOR||[]).filter(a=>a.isResearchSuit&&!a.adminOnly)){
     const same=(SHOP_ARMOR||[]).filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===Number(suit.tier));
     if(same.length){
       const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
@@ -49,7 +49,7 @@ module.exports=function installQuestBalance({
   }
 
   function pickArtifact(names){
-    const pool=(Array.isArray(names)?names:[]).map(name=>({name,weight:Number(artifactMeta.get(name)?.weight)||1}));
+    const pool=(Array.isArray(names)?names:[]).filter(name=>artifactMeta.has(name)).map(name=>({name,weight:Number(artifactMeta.get(name)?.weight)||1}));
     if(!pool.length)return null;
     const total=pool.reduce((n,x)=>n+x.weight,0);
     let roll=Math.random()*total;
@@ -61,8 +61,9 @@ module.exports=function installQuestBalance({
   // It preserves every item and the player's armor-stat distribution; only excess
   // legacy upgrade levels are compressed into the supported 0..50 range.
   const UPGRADE_CAP=50, UPGRADE_BONUS_PER_LEVEL=0.005, UPGRADE_MAX_BONUS=0.25;
-  const weaponByName=new Map((SHOP_WEAPONS||[]).map(x=>[x.name,x]));
-  const armorByName=new Map((SHOP_ARMOR||[]).map(x=>[x.name,x]));
+  // Admin-only gear is deliberately outside the player balance model and migration.
+  const weaponByName=new Map((SHOP_WEAPONS||[]).filter(x=>!x.adminOnly).map(x=>[x.name,x]));
+  const armorByName=new Map((SHOP_ARMOR||[]).filter(x=>!x.adminOnly).map(x=>[x.name,x]));
   function gearParts(name){
     const raw=String(name||'');
     const suffix=(raw.match(/[\u200B\u200C]+$/)||[''])[0];
