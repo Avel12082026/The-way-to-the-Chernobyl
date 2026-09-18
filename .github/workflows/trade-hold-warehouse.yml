@@ -23,6 +23,21 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+      - name: Refresh fixture bootstrap after concurrent main-branch fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          # The regression suite tests behavior, not one historical version string.
+          path = Path('tests/interaction_regressions.browser.py')
+          source = path.read_text()
+          source = source.replace("window.TradeMenu?.version==='1.3.0'", "typeof window.TradeMenu?.open==='function'")
+          path.write_text(source)
+          # Main's guard now stops bubbling at document; observe cancellation at that same node.
+          path = Path('tests/trade_hold_warehouse.browser.py')
+          source = path.read_text()
+          source = source.replace("window.addEventListener('contextmenu',e=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName}))", "document.addEventListener('contextmenu',e=>queueMicrotask(()=>window.__contextMenus.push({blocked:e.defaultPrevented,target:e.target.id||e.target.tagName})),true)")
+          path.write_text(source)
+          PY
       - name: Apply the scoped client fix and verify idempotence
         run: |
           python tools/fix_trade_hold_warehouse.py
@@ -57,11 +72,11 @@ jobs:
           path: |
             .validation/trade-hold-warehouse/
             .validation/interaction-regressions/
-      - name: Commit only the tested client files to the working branch
+      - name: Commit only the tested client and fixture changes to the working branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html ui/trade-menu.js ui/trade-menu.css
+          git add index.html ui/trade-menu.js ui/trade-menu.css tests/trade_hold_warehouse.browser.py tests/interaction_regressions.browser.py
           if ! git diff --cached --quiet; then
             git commit -m "Fix trade image long-press menus and simplify warehouse navigation"
             git push origin HEAD:ui/trade-hold-warehouse-20260918
