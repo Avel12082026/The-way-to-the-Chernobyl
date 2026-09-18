@@ -39,3 +39,10 @@ body.trader-portrait-visible #menuMusicPanel,body.trader-portrait-visible #menuM
   #leonovHubScreen .leonov-actions button,.trader-portrait-actions button{padding-left:2px!important;padding-right:2px!important;letter-spacing:0!important}
   .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:7.6px!important}
 }
+
+
+/* DIESEL_UPGRADE_ONLY: the portrait hub owns trading; this screen contains upgrades only. */
+#technicianScreen.diesel-upgrade-only > .zr-hero{display:none!important}
+#technicianScreen.diesel-upgrade-only > .zr-balance + div{display:none!important}
+#technicianScreen.diesel-upgrade-only .zr-topbar .zr-title > img{display:none!important}
+#technicianScreen.diesel-upgrade-only #technicianItems{margin-top:8px}
