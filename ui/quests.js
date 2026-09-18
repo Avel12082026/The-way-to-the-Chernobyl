@@ -154,10 +154,12 @@ function ensurePdaButton(){
   }
 }
 function ensureTracker(){
-  const battle=document.getElementById('battleButtonsContainer');
-  if(!battle)return;
-  if(!tracker.isConnected)battle.insertAdjacentElement('afterend',tracker);
-  else if(tracker.previousElementSibling!==battle)battle.insertAdjacentElement('afterend',tracker);
+  const quick=document.getElementById('quickSlots');
+  if(!quick)return;
+  if(!tracker.isConnected)quick.insertAdjacentElement('afterend',tracker);
+  else if(tracker.previousElementSibling!==quick)quick.insertAdjacentElement('afterend',tracker);
+  const log=document.getElementById('raidLog');
+  if(log&&tracker.nextElementSibling!==log)tracker.insertAdjacentElement('afterend',log);
 }
 
 function questCard(q,mode){
@@ -328,7 +330,6 @@ function renderDialogue(vendor,mode='root'){
     responses.append(response('Какая у тебя есть работа?','offers'));
     if(ready.length)responses.append(response('Я принёс то, что ты просил.','turnin'));
     if(mine.length)responses.append(response('Хочу отказаться от задания.','abandon'));
-    responses.append(response('Торговля','trade'));
     responses.append(response('Поговорим в другой раз.','close'));
   }
   lockActions();
@@ -352,12 +353,7 @@ dialogue.addEventListener('click',e=>{
   const b=e.target.closest('[data-dialogue-action]');if(!b)return;
   const action=b.dataset.dialogueAction;
   if(action==='close')closeDialogue();
-  else if(action==='trade'){
-    const vendor=dialogueVendor;
-    closeDialogue();
-    const id=vendor==='diesel'?'technician':vendor;
-    if(window.TradeMenu?.open)window.TradeMenu.open(id);
-  }
+
   else if(action==='root'){++viewEpoch;renderDialogue(dialogueVendor,'root');}
   else if(action==='offers')fetchOffers(dialogueVendor);
   else if(action==='turnin')renderDialogue(dialogueVendor,'turnin');
@@ -384,7 +380,7 @@ ensurePdaButton();ensureTracker();
 setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
 
 window.QuestSystem=Object.freeze({
-  version:'1.1.0',openPda,closePda,openTraderDialogue,closeDialogue,sync,
+  version:'1.2.0',openPda,closePda,openTraderDialogue,closeDialogue,sync,
   get state(){return state;},hasRequired:completeNow
 });
 sync().catch(()=>{});

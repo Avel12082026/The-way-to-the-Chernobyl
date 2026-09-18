@@ -1,0 +1,125 @@
+/* Raid/PDA layout requested for the compact mobile client. */
+#kpkScreen .zr-pda-banner{display:none!important}
+#kpkScreen .kpk-two-column-tabs,
+#kpkScreen .zr-pda-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+#kpkScreen .zr-pda-tabs>button{
+  grid-column:auto!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  min-height:48px;
+  white-space:normal;
+}
+#kpkScreen #kpkChatBtn{grid-column:auto!important}
+
+#raidScreen.active{padding-top:0!important}
+#raidScreen>div:first-child{padding-top:0!important}
+#raidVisualStage{
+  width:100%;
+  height:clamp(300px,52dvh,540px);
+  min-height:300px;
+  background:#000;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  margin:0 0 8px;
+  border:1px solid #2b291f;
+  box-sizing:border-box;
+}
+#raidVisualStage #combatScene,
+#raidVisualStage #anomalyScene{
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  border-radius:0!important;
+  border:0!important;
+}
+#raidVisualStage #combatScene canvas{max-height:100%;object-fit:contain;background:#000}
+
+#raidScreen .raid-vitals-row{
+  display:block!important;
+  margin:0 0 4px!important;
+}
+#raidScreen .raid-vitals-row>div{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:6px!important;
+  font-size:clamp(15px,4.4vw,21px)!important;
+}
+#raidScreen .raid-vitals-row>div>span{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  border:1px solid #4a4230;
+  background:#090c09;
+  box-shadow:inset 0 0 14px #000;
+  white-space:nowrap;
+}
+#raidMetersRow{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  align-items:end;
+  margin:0 0 6px;
+}
+#raidMetersRow>#raidExpTrack,
+#raidMetersRow>div{
+  margin:0!important;
+  min-width:0;
+}
+#raidMetersRow>div>div:first-child{display:none!important}
+#raidMetersRow #raidExpTrack,
+#raidMetersRow #raidRadiationTrack{height:24px!important;border-radius:0!important}
+#raidMetersRow .meter-text{font-size:12px!important;font-weight:800}
+#raidScreen .raid-detector-hidden{
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  overflow:hidden!important;clip-path:inset(50%)!important;
+  margin:0!important;padding:0!important;
+}
+#raidNavButtons{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin:6px 0!important;
+}
+#raidNavButtons>button{min-height:64px!important;margin:0!important}
+#battleButtonsContainer{margin:0!important}
+#raidUtilityButtons{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin:8px 0!important;
+}
+#raidUtilityButtons>button{
+  width:100%!important;
+  min-width:0!important;
+  min-height:54px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  background:#302d25!important;
+  border:2px solid #65583c!important;
+  color:#d5c69d!important;
+  font-weight:800!important;
+}
+#raidScreen #quickSlots{margin:6px 0!important}
+#activeQuestRaidTracker{margin:8px 0 0!important}
+#raidLog{
+  margin:8px 0 0!important;
+  max-height:150px;
+  overflow:auto;
+  order:initial!important;
+}
+@media(max-width:420px){
+  #raidVisualStage{height:clamp(280px,48dvh,450px);min-height:280px}
+  #raidScreen .raid-vitals-row>div{gap:4px!important}
+  #raidScreen .raid-vitals-row>div>span{min-height:48px}
+  #raidNavButtons>button{min-height:58px!important;padding:8px 4px!important}
+}
