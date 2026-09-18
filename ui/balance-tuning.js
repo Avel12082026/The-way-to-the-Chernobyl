@@ -5,10 +5,25 @@ if (window.GameBalanceTuning) return;
 const CATCH_MIN=2;
 const CATCH_MAX=18;
 
+const RESEARCH_UNLOCKS=[[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];
 function researchTier(level){
   const lv=Math.max(1,Number(level)||1);
-  if(lv<100)return 0;
-  return Math.min(14,4+Math.floor((lv-100)/40));
+  let tier=0;
+  for(const [value,required] of RESEARCH_UNLOCKS)if(lv>=required)tier=value;
+  return tier;
+}
+function rebalanceResearchPrices(){
+  if(typeof armorItems==='undefined')return [];
+  const normal=armorItems.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
+  const changed=[];
+  for(const suit of armorItems.filter(a=>a.isResearchSuit)){
+    const same=normal.filter(a=>Number(a.tier)===Number(suit.tier));
+    if(!same.length)continue;
+    const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
+    const price=Math.round(floor*1.10);
+    suit.price=price;changed.push({name:suit.name,tier:suit.tier,price});
+  }
+  return changed;
 }
 
 function rebalanceArtifacts(){
@@ -48,6 +63,7 @@ function rebalanceArtifacts(){
 }
 
 const artifactModel=rebalanceArtifacts();
+const researchPrices=rebalanceResearchPrices();
 
 // Replace only the research-suit availability gate. Normal armor progression is preserved.
 try{window.getResearchSuitUnlockTier=researchTier;}catch(_){}
@@ -79,6 +95,7 @@ window.GameBalanceTuning=Object.freeze({
   maxUpgradeBonusPct:0.25,
   byteUpgradeThreshold:25,
   researchTier,
+  researchPrices,
   artifactModel
 });
 })();
