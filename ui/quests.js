@@ -4,9 +4,9 @@ if (window.QuestSystem) return;
 
 const API = '/api/quests';
 const vendorMeta = {
-  leonov:{name:'Леонов', title:'Эколог Леонов', kind:'артефакты и части мутантов'},
-  zhuchara:{name:'Жучара', title:'Торговец Жучара', kind:'броню'},
-  diesel:{name:'Дизель', title:'Техник Дизель', kind:'оружие'}
+  leonov:{name:'Леонов', title:'Эколог Леонов', role:'Эколог', kind:'артефакты и части мутантов'},
+  zhuchara:{name:'Жучара', title:'Торговец Жучара', role:'Торговец', kind:'броню'},
+  diesel:{name:'Дизель', title:'Техник Дизель', role:'Техник', kind:'оружие'}
 };
 let state={accepted:[],activeId:null,completed:[],completedCount:0,completedNextCursor:null};
 let offers={};
@@ -128,7 +128,10 @@ dialogue.id='traderQuestDialogue';dialogue.hidden=true;dialogue.innerHTML=`
     <p id="traderDialogueLine"></p>
     <div id="traderDialogueContent"></div>
    </div>
-   <div class="trader-dialogue-portrait"><img id="traderDialoguePortrait" alt="" draggable="false"></div>
+   <aside class="trader-dialogue-portrait">
+    <img id="traderDialoguePortrait" alt="" draggable="false">
+    <div class="trader-dialogue-portrait-meta"><strong id="traderDialoguePortraitName"></strong><span id="traderDialoguePortraitRole"></span></div>
+   </aside>
   </div>
   <nav id="traderDialogueResponses" class="trader-dialogue-responses" aria-label="Ответы сталкера"></nav>
  </div>`;
@@ -282,6 +285,8 @@ function renderDialogue(vendor,mode='root'){
   const meta=vendorMeta[vendor];if(!meta)return;
   dialogue.hidden=false;document.body.classList.add('trader-dialogue-visible');
   document.getElementById('traderDialogueName').textContent=meta.title;
+  document.getElementById('traderDialoguePortraitName').textContent=meta.name;
+  document.getElementById('traderDialoguePortraitRole').textContent=meta.role;
   const img=document.getElementById('traderDialoguePortrait');img.src=portraitFor(vendor);img.alt=meta.title;
   const line=document.getElementById('traderDialogueLine');
   const content=document.getElementById('traderDialogueContent');content.replaceChildren();
