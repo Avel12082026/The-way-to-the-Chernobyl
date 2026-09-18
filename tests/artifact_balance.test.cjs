@@ -17,6 +17,8 @@ vm.runInContext(fs.readFileSync('ui/balance-tuning.js','utf8'),ctx);
 const model=ctx.GameBalanceTuning.artifactModel;
 assert(model.length>=70,'expected regular artifact model');
 assert(model.every(x=>x.tier>=1&&x.tier<=8),'tier-9 named artifacts must stay outside rebalance');
+const balancedNames=new Set(model.map(x=>x.name));
+for(const admin of artifacts.filter(a=>a.adminOnly))assert(!balancedNames.has(admin.name),'admin artifact entered balance model: '+admin.name);
 assert.equal(ctx.GameBalanceTuning.researchTier(134),0);
 assert.equal(ctx.GameBalanceTuning.researchTier(135),4);
 assert.equal(ctx.GameBalanceTuning.researchTier(174),4);
@@ -38,7 +40,7 @@ for(const row of researchPrices){
 const byName=new Map(artifacts.map(a=>[a.name,a]));
 const tierStrength=new Map();
 for(const anomaly of anomalies.filter(a=>a.tier>=1&&a.tier<=8)){
-  const defs=anomaly.artifacts.map(n=>byName.get(n)).filter(Boolean).sort((a,b)=>a.price-b.price);
+  const defs=anomaly.artifacts.map(n=>byName.get(n)).filter(a=>a&&!a.adminOnly).sort((a,b)=>a.price-b.price);
   assert(defs.length>=8,anomaly.name);
   for(let i=1;i<defs.length;i++){
     assert(defs[i].catchChancePercent<=defs[i-1].catchChancePercent+1e-9,anomaly.name+' chance');
