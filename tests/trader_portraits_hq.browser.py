@@ -72,8 +72,11 @@ async def main():
         assert len(set(lys))==1,lys
         await page.screenshot(path=str(OUT/'leonov-hq.png'))
 
+        # Leave Leonov through his real Back control, then open Diesel from the bunker.
+        await page.locator('#leonovHubScreen [data-leonov-action=back]').click()
+        assert await page.locator('#mainMenu').is_visible()
+
         # Diesel: own HQ hub with four requested buttons.
-        await page.evaluate("openScreen('main')")
         await page.locator('#bunkerDiesel').click()
         assert await page.locator('#dieselHubScreen').is_visible()
         assert await dims('#dieselHubArtwork')==[864,1536,'hq-864x1536-q88']
