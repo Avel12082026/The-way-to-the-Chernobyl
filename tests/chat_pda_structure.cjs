@@ -13,7 +13,7 @@ assert.equal(count('id="chatBackToKpkBtn"'), 1);
 assert(!html.includes('mainMenuChatSlot'), 'Main-menu chat slot must be removed');
 assert(!html.includes('raidChatSlot'), 'Raid chat slot must be removed');
 assert.match(html, /id="kpkChatBtn"[^>]*onclick="openScreen\('chat'\)"[^>]*>Телеграммка/);
-assert.match(html, /id="chatBackToKpkBtn"[^>]*onclick="openScreen\('kpk'\)"[^>]*>Назат/);
+assert.match(html, /id="chatBackToKpkBtn"[^>]*onclick="openScreen\('kpk'\)"[^>]*>Назад/);
 assert(html.indexOf('id="chatScreen"') < html.indexOf('id="embeddedChatWidget"'));
 const startup = html.match(/function initChatOnFirstLoad\(\) \{([\s\S]*?)\n    \}/)[1];
 assert(!startup.includes('openChatTab'), 'Do not load/mark messages read on startup');
