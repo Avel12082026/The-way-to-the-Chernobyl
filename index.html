@@ -766,8 +766,8 @@ button:active {filter:brightness(1.18);}
 <script src="images/anomaly/scene.js?v=5"></script>
 <link rel="stylesheet" href="audio/menu-music.css?v=2">
 <script defer src="audio/menu-music.js?v=2"></script>
-<link rel="stylesheet" href="inventory/drag.css?v=3">
-<script defer src="inventory/drag.js?v=3"></script>
+<link rel="stylesheet" href="inventory/drag.css?v=20260919q1">
+<script defer src="inventory/drag.js?v=20260919q1"></script>
 <script defer src="mobile/account-link.js"></script>
 
 <style id="chat-pda-navigation-20260917">
@@ -804,7 +804,7 @@ button:active {filter:brightness(1.18);}
 </style>
 <link rel="stylesheet" href="ui/bunker-menu.css?v=1">
 <link rel="stylesheet" href="ui/trade-menu.css?v=6b99d9115767">
-<link rel="stylesheet" href="ui/trader-hubs.css?v=77f4674811ae">
+<link rel="stylesheet" href="ui/trader-hubs.css?v=20260919q1">
 </head>
 <body>
 <div class="admin-btn" id="adminBtn" onclick="adminClickCounter()"></div>
@@ -6362,9 +6362,9 @@ function startBattle(enemy) {
     // Исследовательские комбинезоны начинаются с тира 4 (а не 1) и идут до 14 — 11 тиров,
     // раскрываются по уровню с тем же шагом плотности, что и детекторы
     function getResearchSuitUnlockTier(level) {
-        // Исследовательские комбинезоны открываются каждые 25 уровней игрока: A (тир 4) доступен
-        // с самого начала, B — с 25 уровня, C — с 50, ..., K (тир 14, самый мощный) — с 250 уровня.
-        return Math.min(14, 4 + Math.floor((Math.max(1, Number(level) || 1) - 1) / 50));
+        const lv = Math.max(1, Number(level) || 1);
+        if (lv < 100) return 0;
+        return Math.min(14, 4 + Math.floor((lv - 100) / 40));
     }
 
     function openScientistsBuyView() {
@@ -7602,7 +7602,7 @@ function startBattle(enemy) {
     }
 
     // ===== ТЕХНИК: улучшение и продажа снаряжения =====
-    const UPGRADE_MAX_LEVEL = 100;
+    const UPGRADE_MAX_LEVEL = 50; // BALANCE_20260919_V1
 
     // Раньше каждый уровень улучшения давал ПЛОСКИЙ +1 к характеристике (максимум +100 при полной
     // прокачке) — а разница между соседними по силе видами оружия/брони часто всего +1..+30.
@@ -7610,7 +7610,7 @@ function startBattle(enemy) {
     // тиров вперёд, и покупать что-то новее становилось бессмысленно. Теперь бонус — ПРОЦЕНТ от
     // БАЗОВОЙ характеристики самого предмета, с потолком +50% на 100 уровне улучшения — так
     // прокачка всегда остаётся ощутимой, но никогда не обгоняет прогресс по тирам на много шагов вперёд
-    const UPGRADE_MAX_BONUS_PCT = 0.5;
+    const UPGRADE_MAX_BONUS_PCT = 0.25;
     function getUpgradedStat(baseStat, level, ceiling) {
         const lvl = Math.max(0, Number(level) || 0);
         const base = Number(baseStat) || 0;
@@ -7641,7 +7641,7 @@ function startBattle(enemy) {
         const nextValueAt20 = getUpgradedStat(Number(nextItem[statKey]) || 0, 20, nextCeiling);
         return Math.max((Number(item[statKey]) || 0), nextValueAt20);
     }
-    const UPGRADE_BYTE_THRESHOLD = 50; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
+    const UPGRADE_BYTE_THRESHOLD = 25; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
 
     // Стоимость улучшения В БАЙТАХ для перехода С уровня currentLevel на currentLevel+1 (только 0-49) —
     // растёт с каждым уровнем, а не фиксированная сумма
@@ -8071,7 +8071,7 @@ function startBattle(enemy) {
 <script src="ui/trade-menu.js?v=df71084cb139"></script>
 <script src="ui/terminology-market.js?v=cd42e2a7acba"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
-<script src="ui/trader-hubs.js?v=0661ddee1554"></script>
+<script src="ui/trader-hubs.js?v=20260919q1"></script>
 
 </body>
 </html>
