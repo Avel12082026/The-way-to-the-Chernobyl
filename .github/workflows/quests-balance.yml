@@ -13,6 +13,8 @@ on:
       - 'tools/apply_balance_client.py'
       - 'tests/quests_*'
       - 'tests/artifact_balance.test.cjs'
+      - 'tests/admin_balance_exclusion.test.cjs'
+      - 'tools/audit_live_balance_readonly.py'
       - 'tests/install_quest_balance_patch.test.py'
       - 'tests/inventory_drag.test.cjs'
       - '.github/workflows/quests-balance.yml'
@@ -36,11 +38,13 @@ jobs:
           node --check ui/trader-hubs.js
           node --check server_patches/quest-balance.cjs
           python3 -m py_compile tools/install_quest_balance_server.py
+          python3 -m py_compile tools/audit_live_balance_readonly.py
       - name: Unit and static checks
         run: |
           node tests/quests_server.test.cjs
           node tests/quests_client.static.cjs
           node tests/artifact_balance.test.cjs
+          node tests/admin_balance_exclusion.test.cjs
           node tests/inventory_drag.test.cjs
           python3 tests/install_quest_balance_patch.test.py
           git diff --check
