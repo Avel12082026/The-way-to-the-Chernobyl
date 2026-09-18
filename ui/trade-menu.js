@@ -72,7 +72,7 @@
         <section><h3>К покупке</h3><div id="tradeBuySlots" class="trade-staging" data-trade-drop="buy" aria-label="Слоты покупки"></div><p id="tradeBuyTotal"></p></section>
         <section><h3>К продаже</h3><div id="tradeSellSlots" class="trade-staging" data-trade-drop="sell" aria-label="Слоты продажи"></div><p id="tradeSellTotal"></p></section>
       </div>
-      <div id="tradeEditor" hidden><span id="tradeItemName"></span><label>Количество <input id="tradeQuantity" type="number" inputmode="numeric" min="1" step="1"></label><button type="button" data-trade-action="info">Информация</button><button type="button" data-trade-action="remove">Убрать</button></div>
+      <div id="tradeEditor" hidden><span id="tradeItemName"></span><label>Количество <input id="tradeQuantity" type="number" inputmode="numeric" min="1" step="1"></label><button type="button" data-trade-action="remove">Убрать</button></div>
       <p id="tradeStatus" role="status" aria-live="polite"></p><button type="button" id="tradeResync" data-trade-action="sync" hidden>Проверить состояние на сервере</button>
       <h3>Рюкзак игрока</h3><div id="tradeInventory" class="trade-grid" aria-label="Рюкзак игрока"></div>
       <button type="button" id="tradeWarehouse" data-trade-action="warehouse" data-trade-drop="warehouse">На склад — перетащи сюда предмет</button>
@@ -319,8 +319,19 @@
     if (action === 'warehouse') { if (atBase() && !needsSync) { hide(); native.openScreen('warehouse'); } return; }
     if (action === 'info' && editing) return showItemInfoModal(editing.name);
     if (action === 'remove' && editing) { queues[editing.side].delete(editing.name); editing = null; render(); return; }
-    if (source === 'buy' || source === 'sell') { editing = {side: source, name}; render(); return; }
-    if (source === 'stock' || source === 'inventory') stage(source, name, source === 'stock' ? 'buy' : 'sell');
+    if (source === 'buy' || source === 'sell') {
+      queues[source].delete(name);
+      if (editing?.side === source && editing?.name === name) editing = null;
+      render();
+      if (typeof showItemInfoModal === 'function') showItemInfoModal(name);
+      message(source === 'buy' ? 'Товар возвращён торговцу.' : 'Товар возвращён в рюкзак.');
+      return;
+    }
+    if (source === 'stock' || source === 'inventory') {
+      const side = source === 'stock' ? 'buy' : 'sell';
+      if (stage(source, name, side) && typeof showItemInfoModal === 'function') showItemInfoModal(name);
+      return;
+    }
   });
   el('tradeAuto').addEventListener('toggle', () => {
     if (!el('tradeAuto').open || !['zhuchara', 'leonov'].includes(vendor)) return;
@@ -421,5 +432,5 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.1.0', open, refresh: render});
+  window.TradeMenu = Object.freeze({version: '1.2.0', open, refresh: render});
 })();
