@@ -272,6 +272,7 @@ function renderDialogue(vendor,mode='root'){
     responses.append(response('Какая у тебя есть работа?','offers'));
     if(ready.length)responses.append(response('Я принёс то, что ты просил.','turnin'));
     if(mine.length)responses.append(response('Хочу отказаться от задания.','abandon'));
+    responses.append(response('Торговля','trade'));
     responses.append(response('Поговорим в другой раз.','close'));
   }
 }
@@ -293,6 +294,12 @@ dialogue.addEventListener('click',e=>{
   const b=e.target.closest('[data-dialogue-action]');if(!b)return;
   const action=b.dataset.dialogueAction;
   if(action==='close')closeDialogue();
+  else if(action==='trade'){
+    const vendor=dialogueVendor;
+    closeDialogue();
+    const id=vendor==='diesel'?'technician':vendor;
+    if(window.TradeMenu?.open)window.TradeMenu.open(id);
+  }
   else if(action==='root')renderDialogue(dialogueVendor,'root');
   else if(action==='offers')fetchOffers(dialogueVendor);
   else if(action==='turnin')renderDialogue(dialogueVendor,'turnin');
