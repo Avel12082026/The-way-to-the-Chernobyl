@@ -53,8 +53,10 @@ OLD_UPGRADE_GUARD="""    const statLevel = Number((data.armorUpgradeData[stableK
     if (statLevel >= UPGRADE_MAX_LEVEL) return res.json({ success: false, error: 'Эта характеристика уже улучшена до максимума' });"""
 NEW_UPGRADE_GUARD="""    const upgradeRecord=data.armorUpgradeData[stableKey]||{};
     const statLevel = Number(upgradeRecord[statKey]) || 0;
+    const adminBalanceExcluded=!!armorBase.adminOnly;
     const totalUpgrades=Math.max(parsed.level,Object.values(upgradeRecord).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
-    if (totalUpgrades >= UPGRADE_MAX_LEVEL) return res.json({ success: false, error: 'Достигнут общий предел: 50 улучшений предмета' });
+    if (adminBalanceExcluded ? statLevel >= 100 : totalUpgrades >= UPGRADE_MAX_LEVEL)
+        return res.json({ success: false, error: adminBalanceExcluded ? 'Администраторская характеристика уже улучшена до максимума' : 'Достигнут общий предел: 50 улучшений предмета' });
     if (!isCoreStat && statKey!=='radiation' && !RAID_ANOMALIES.some(a=>'anomaly_'+a.name===statKey))
         return res.json({success:false,error:'Неизвестная характеристика брони'});"""
 
@@ -103,6 +105,86 @@ def patch(source):
     text=replace_once(text,'const UPGRADE_MAX_LEVEL = 100;','const UPGRADE_MAX_LEVEL = 50;','лимит улучшения')
     text=replace_once(text,'const UPGRADE_BYTE_THRESHOLD = 50;','const UPGRADE_BYTE_THRESHOLD = 25;','порог валюты улучшения')
     text=replace_once(text,'const UPGRADE_MAX_BONUS_PCT_SERVER = 0.5;','const UPGRADE_MAX_BONUS_PCT_SERVER = 0.25;','максимальный бонус улучшения')
+    # Администраторские оружие/броня не входят в баланс игроков:
+    # для них сохраняются старые +100 и максимум +50%, без потолков соседнего предмета.
+    text=replace_once(
+        text,
+        'function getUpgradedStatServer(baseStat, level, ceiling) {',
+        """function getUpgradedStatServer(baseStat, level, ceiling, adminOnly = false) {
+    if (adminOnly) {
+        const legacyLevel = Math.max(0, Number(level) || 0);
+        const legacyBase = Number(baseStat) || 0;
+        const legacyPct = Math.min(0.5, legacyLevel * 0.005);
+        return legacyBase === 0 ? Math.round(legacyLevel) : Math.round(legacyBase * (1 + legacyPct));
+    }""",
+        'отдельная кривая админ-снаряжения'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(base.armor, u.armor || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'armor'))",
+        "getUpgradedStatServer(base.armor, u.armor || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'armor'), !!base.adminOnly)",
+        'админ-броня пулестойкость'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'hitAbsorption'))",
+        "getUpgradedStatServer(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'hitAbsorption'), !!base.adminOnly)",
+        'админ-броня гашение'
+    )
+    text=replace_once(
+        text,
+        "stats[key] = getUpgradedStatServer(stats[key] || 0, u[key]);",
+        "stats[key] = getUpgradedStatServer(stats[key] || 0, u[key], undefined, !!base.adminOnly);",
+        'админ-броня прочие характеристики'
+    )
+    text=replace_once(
+        text,
+        "        if (parsed.level >= UPGRADE_MAX_LEVEL) return res.json({ success: false, error: 'Этот предмет уже улучшен до максимума' });\n        const weaponCeiling = getNextItemCeilingServer(SHOP_WEAPONS, weaponBase, 'dmg');",
+        "        const weaponMaxLevel=weaponBase.adminOnly?100:UPGRADE_MAX_LEVEL;\n        if (parsed.level >= weaponMaxLevel) return res.json({ success: false, error: 'Этот предмет уже улучшен до максимума' });\n        const weaponCeiling = weaponBase.adminOnly ? Infinity : getNextItemCeilingServer(SHOP_WEAPONS, weaponBase, 'dmg');",
+        'лимит админ-оружия'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(weaponBase.dmg, parsed.level, weaponCeiling) >= weaponCeiling",
+        "getUpgradedStatServer(weaponBase.dmg, parsed.level, weaponCeiling, !!weaponBase.adminOnly) >= weaponCeiling",
+        'потолок админ-оружия'
+    )
+    text=replace_once(
+        text,
+        '        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;',
+        '        const usesTokens = parsed.level >= (weaponBase.adminOnly ? 50 : UPGRADE_BYTE_THRESHOLD);',
+        'валюта админ-оружия'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(weaponBase.dmg, newLevel, weaponCeiling)",
+        "getUpgradedStatServer(weaponBase.dmg, newLevel, weaponCeiling, !!weaponBase.adminOnly)",
+        'урон админ-оружия после улучшения'
+    )
+    text=replace_once(
+        text,
+        '    if (isCoreStat) {\n        armorStatCeiling = getNextItemCeilingServer(SHOP_ARMOR, armorBase, statKey);',
+        '    if (isCoreStat && !adminBalanceExcluded) {\n        armorStatCeiling = getNextItemCeilingServer(SHOP_ARMOR, armorBase, statKey);',
+        'потолок админ-брони'
+    )
+    text=replace_once(
+        text,
+        '    const usesTokens = statLevel >= UPGRADE_BYTE_THRESHOLD;',
+        '    const usesTokens = statLevel >= (adminBalanceExcluded ? 50 : UPGRADE_BYTE_THRESHOLD);',
+        'валюта админ-брони'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(weapon.dmg,parsed.level,ceiling)",
+        "getUpgradedStatServer(weapon.dmg,parsed.level,ceiling,!!weapon.adminOnly)",
+        'экипировка админ-оружия'
+    )
+    text=replace_once(
+        text,
+        "getUpgradedStatServer(base.dmg, parsed.level, ceiling)",
+        "getUpgradedStatServer(base.dmg, parsed.level, ceiling, !!base.adminOnly)",
+        'проверка экипированного админ-оружия'
+    )
 
     old_research="""function getResearchSuitUnlockTierServer(level) {
     // Исследовательские комбинезоны открываются каждые 25 уровней игрока — та же логика,
