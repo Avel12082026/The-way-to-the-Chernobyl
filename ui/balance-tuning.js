@@ -27,7 +27,7 @@ function rebalanceArtifacts(){
       const posBase=2.5*tier+1.5;
       const negBase=1.2*tier+1;
       const pos=Math.max(1,Math.round(posBase*(0.90+0.25*rarity)));
-      const neg=Math.max(1,Math.round(negBase*(1.05-0.35*rarity)));
+      const neg=Math.max(1,Math.ceil(negBase*(1.20-0.50*rarity)));
       const stats={};
       for(const [key,value] of Object.entries(def.stats||{})){
         const num=Number(value)||0;
