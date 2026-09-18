@@ -1,0 +1,72 @@
+name: Isolated inventory callout hotfix
+on:
+  push:
+    branches: [hotfix/inventory-callout-20260919]
+    paths: ['.github/workflows/publish-inventory-guard.yml','tools/inventory-callout-hardening.patch']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: inventory-callout-hotfix
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: hotfix/inventory-callout-20260919}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Apply only inventory changes from immutable review snapshot
+        run: |
+          git fetch --depth=1 origin 9e1913c1563ba9a8a05a5a3dfd4bffdee7cecc7b
+          for path in inventory/drag.js inventory/drag.css ui/trader-hubs.css tests/inventory_native_menu.browser.py; do
+            git show 9e1913c1563ba9a8a05a5a3dfd4bffdee7cecc7b:"$path" > "$path"
+          done
+          git apply --check tools/inventory-callout-hardening.patch
+          git apply tools/inventory-callout-hardening.patch
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,re
+          expected={
+            'inventory/drag.js':'f062fa86b8f03660b7f051b8bfbfac6574d3ede9c3b08e9a1b1591326de7a01c',
+            'inventory/drag.css':'6fd2457e471c6db548989d9570ffce75dc5a347e6dc4fd7ceaa35d68ea7d0e61',
+            'ui/trader-hubs.css':'a8168cff821f33ec08547abd8583cdfd5a40b2d18a5e4d8921ca645d25533bdc',
+            'tests/inventory_native_menu.browser.py':'b1c4fc2e7ac99c52fc391c770578afb7475e9fd151c40df8ced6fca32b21e291'}
+          for p,digest in expected.items():
+              assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==digest,p
+          p=Path('index.html');text=p.read_text()
+          for name in ('inventory/drag.js','inventory/drag.css','ui/trader-hubs.css'):
+              pattern=re.escape(name)+r'(?:\?[^"\s<>]*)?'
+              text,n=re.subn(pattern,name+'?v=20260919-inventory3',text)
+              assert n>=1,name
+          assert 'ui/quests.js' not in text,'Do not deploy unfinished quests or balance with this hotfix'
+          p.write_text(text)
+          PY
+      - name: Install browser test dependencies
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Verify actions, touch drag, and trade hold
+        run: |
+          node --check inventory/drag.js
+          node tests/inventory_drag.test.cjs
+          python3 tests/inventory_native_menu.browser.py
+          git diff --check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: inventory-callout-validation
+          path: .validation/inventory-native-menu/report.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Commit verified files on hotfix branch only
+        run: |
+          git config user.name 'Avel12082026'
+          git config user.email 'avelsvobodniy@gmail.com'
+          git add index.html inventory/drag.js inventory/drag.css ui/trader-hubs.css tests/inventory_native_menu.browser.py
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Fix inventory native image menu without changing trade or game balance'
+          git push origin HEAD:hotfix/inventory-callout-20260919
