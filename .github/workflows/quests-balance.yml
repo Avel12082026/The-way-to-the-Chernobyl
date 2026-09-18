@@ -36,5 +36,6 @@ jobs:
         run: |
           node tests/quests_server.test.cjs
           node tests/quests_client.static.cjs
+          node tests/artifact_balance.test.cjs
           node tests/inventory_drag.test.cjs
           git diff --check
