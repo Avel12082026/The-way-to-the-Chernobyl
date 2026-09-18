@@ -1,0 +1,32 @@
+name: Quest integration review snapshot
+on:
+  push:
+    branches: [feature/quests-balance-20260919]
+    paths: ['.github/workflows/quest-review-snapshot.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - name: Archive tracked source and tests
+        run: |
+          python3 - <<'PY'
+          import subprocess, pathlib, zipfile
+          files=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with zipfile.ZipFile('quest-review-source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name in files:
+                  p=pathlib.Path(name)
+                  if p.is_file() and not name.startswith('asset_sources/') and p.suffix.lower() in {'.js','.cjs','.py','.css','.html','.json','.md','.yml','.xml'}:
+                      z.write(p,name)
+              z.writestr('REVIEW_SOURCE_SHA.txt',subprocess.check_output(['git','rev-parse','HEAD']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quest-review-source
+          path: quest-review-source.zip
+          if-no-files-found: error
+          retention-days: 7
