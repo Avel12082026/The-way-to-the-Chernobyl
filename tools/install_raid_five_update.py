@@ -10,6 +10,7 @@ SERVER_BEFORE='7d481279dc1b6eb7c2425fa8a8a905270a917d64369dc5eefe944f37b4dc6759'
 QUEST_BEFORE='ef7289b956a1969846d9be25e28693c2d5a28e8b5d0443f44ec1fd3fd1a51308'
 # Filled by the release packager after the exact files have passed tests.
 SERVER_AFTER_V1='5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14'
+SERVER_AFTER_V2='04914f6f51609b13dcedf94fa614b855509955956214aac69a7755e22d08b64b'
 SERVER_MARK='// RAID_SURVIVAL_20260920_V3'
 QUEST_AFTER='c05194aa0f71c549320df6f0c55f2fa917f2f9f1a146a25150dd4963c976aadd'
 MODULE_HASH='d3b00a34ac2706a2e29c3b35c6930813f016494aa47f1f2e292394b4777b3e91'
@@ -31,7 +32,7 @@ def prepare(root,payload):
     server_hash=digest(before['server.js'])
     server_text=before['server.js'].decode()
     trusted_post_v2=(SERVER_MARK in server_text and 'artifactRadiation:beltHazard.radiationProtection' in server_text and 'RaidSurvival.travelCost' in server_text)
-    if server_hash not in (SERVER_BEFORE,SERVER_AFTER_V1) and not trusted_post_v2:
+    if server_hash not in (SERVER_BEFORE,SERVER_AFTER_V1,SERVER_AFTER_V2) and not trusted_post_v2:
         raise RuntimeError('server.js изменился с проверенной версии. Ничего не установлено. SHA='+server_hash)
     if digest(before['quest-balance.cjs']) not in (QUEST_BEFORE,QUEST_AFTER):
         raise RuntimeError('quest-balance.cjs изменился с проверенной версии. Ничего не установлено. SHA='+digest(before['quest-balance.cjs']))
