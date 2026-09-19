@@ -48,6 +48,13 @@ async def main():
         await page.wait_for_function("document.getElementById('smokerHubArtwork')?.naturalWidth>0")
         size=await page.locator('#smokerHubArtwork').evaluate("(e)=>[e.naturalWidth,e.naturalHeight]")
         assert size[0]>0 and size[1]>0,size
+        await page.wait_for_function("document.getElementById('smokerHubBackdrop')?.naturalWidth>0")
+        backdrop_size=await page.locator('#smokerHubBackdrop').evaluate("(e)=>[e.naturalWidth,e.naturalHeight]")
+        assert backdrop_size==size,(backdrop_size,size)
+        object_fit=await page.locator('#smokerHubArtwork').evaluate("(e)=>getComputedStyle(e).objectFit")
+        assert object_fit=='contain',object_fit
+        backdrop_filter=await page.locator('#smokerHubBackdrop').evaluate("(e)=>getComputedStyle(e).filter")
+        assert 'blur(' in backdrop_filter,backdrop_filter
 
         buttons=page.locator('#smokerHubScreen .smoker-actions button')
         actions=await buttons.evaluate_all("(xs)=>xs.map(x=>x.dataset.smokerAction)")
@@ -71,7 +78,7 @@ async def main():
         assert await page.locator('#mainMenu').is_visible()
         assert await page.evaluate("window.__openedScreen")=='main'
         assert not errors,errors
-        print({'status':'passed','portrait':size,'actions':actions,'labels':labels})
+        print({'status':'passed','portrait':size,'objectFit':object_fit,'backdrop':backdrop_size,'actions':actions,'labels':labels})
         await browser.close()
 
 asyncio.run(main())
