@@ -41,6 +41,12 @@ jobs:
                   p.parent.mkdir(parents=True,exist_ok=True)
                   p.write_text(content,encoding='utf-8')
               print('Materialized 12 reviewed source/test files; hashes verified')
+          p=Path('tests/raid_five.browser.py')
+          s=p.read_text()
+          anchor="        if path.endswith('/equipment/features'):return {'artifactSlotTarget':True}\n"
+          if "if path.endswith('/named-artifacts'):return []" not in s:
+              assert s.count(anchor)==1
+              p.write_text(s.replace(anchor,anchor+"        if path.endswith('/named-artifacts'):return []\n"))
           PY
           python3 tools/apply_raid_five_client.py
           python3 - <<'PY'
