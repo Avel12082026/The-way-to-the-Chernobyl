@@ -58,3 +58,9 @@ with tempfile.TemporaryDirectory() as td:
     p=Path(td)/'server.js';p.write_text(patched,encoding='utf-8')
     subprocess.run(['node','--check',str(p)],check=True)
 print('PASS: raid survival server patch')
+
+
+# Regression: the installer health loop intentionally calls run(..., check=False).
+# The wrapper must not inject a second check= argument.
+probe=MOD.run(['python3','-c','import sys; sys.exit(3)'],check=False,capture_output=True)
+assert probe.returncode==3

@@ -109,7 +109,7 @@ def patch(source):
     return text,True
 
 def run(cmd,**kw):
-    kw.setdefault("check",True)
+    kw.setdefault('check',True)
     return subprocess.run(cmd,**kw)
 
 def main():
