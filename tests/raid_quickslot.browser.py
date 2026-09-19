@@ -110,14 +110,16 @@ async def main():
 
     # Default navigation stays as before when there is no encounter.
     await page.evaluate("document.getElementById('itemInfoModal').classList.remove('active');currentEnemy=null;currentAnomaly=null;clearBattleUiAndRestoreNav();RaidKpkPolish.apply()")
-    idle_visual=await page.locator('#raidVisualStage').evaluate("""e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {w:Math.round(r.width),h:Math.round(r.height),bg:s.backgroundImage}}""")
+    idle_visual=await page.locator('#raidVisualStage').evaluate("""e=>{const r=e.getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height)}}""")
     assert idle_visual['h']>0,idle_visual
     assert abs(idle_visual['w']/idle_visual['h']-1.5)<0.03,idle_visual
-    assert 'backgrounds/' in idle_visual['bg'],idle_visual
-    first_bg=idle_visual['bg']
+    idle_img=page.locator('#raidIdleScene')
+    assert await idle_img.is_visible()
+    first_bg=await idle_img.get_attribute('src')
+    assert first_bg and 'backgrounds/' in first_bg,first_bg
     await page.evaluate("document.getElementById('raidLog').textContent='Фон должен смениться после шага';")
     await page.wait_for_timeout(30)
-    second_bg=await page.locator('#raidVisualStage').evaluate("e=>getComputedStyle(e).backgroundImage")
+    second_bg=await idle_img.get_attribute('src')
     assert second_bg!=first_bg,(first_bg,second_bg)
     idle_log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
     assert 82 <= idle_log_h <= 230,idle_log_h
@@ -141,6 +143,7 @@ async def main():
     style_js="e=>{const s=getComputedStyle(e);return [s.backgroundImage,s.backgroundColor,s.borderTopColor,s.borderTopWidth,s.fontFamily,s.fontSize,s.fontWeight,s.textTransform]}"
     assert await backpack.evaluate(style_js)==await bypass.evaluate(style_js)
     await page.evaluate("updateAnomalyScene();RaidKpkPolish.apply()")
+    assert await page.locator('#raidIdleScene').is_visible()
     await page.wait_for_timeout(50)
     if await page.locator('#anomalyScene').is_visible():
       native_scene=await page.evaluate("""()=>{
@@ -159,6 +162,22 @@ async def main():
       assert native_scene['handObjectFit'] in (None,'contain'),native_scene
       log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
       assert 82 <= log_h <= 230,log_h
+
+    # Real anomaly bypass must restore the persistent lower-button captions.
+    await page.evaluate("""async()=>{
+      raidActive=true;raidSessionToken='offline-test';
+      currentEnemy=null;
+      const a=anomalies[0];
+      currentAnomaly={...a,attemptsUsed:0,resolved:false,_foundNames:[],_searchPending:false};
+      renderAnomalyButtons();RaidKpkPolish.apply();
+      await bypassAnomaly();
+      RaidKpkPolish.apply();
+    }""")
+    await page.wait_for_timeout(50)
+    bypass_labels=await page.locator('#raidUtilityButtons .raid-utility-label').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [e.textContent,s.color,s.webkitTextFillColor,s.display,s.visibility,s.opacity]})""")
+    assert [x[0] for x in bypass_labels]==['Рюкзак','Телеграммка'],bypass_labels
+    assert all(x[1] not in ('rgba(0, 0, 0, 0)','transparent') and x[2] not in ('rgba(0, 0, 0, 0)','transparent') and x[3]!='none' and x[4]=='visible' and float(x[5])>0 for x in bypass_labels),bypass_labels
+    assert await page.locator('#raidIdleScene').is_visible()
 
     # Combat likewise replaces navigation with the original attack/escape pair.
     await page.evaluate("""()=>{

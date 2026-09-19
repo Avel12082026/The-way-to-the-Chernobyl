@@ -38,7 +38,8 @@
   height:auto;
   min-height:0;
   aspect-ratio:3/2;
-  background:#000 var(--raid-idle-bg,url("../images/anomaly/background.jpg")) center/contain no-repeat;
+  position:relative;
+  background:#000;
   overflow:hidden;
   display:flex;
   align-items:flex-start;
@@ -47,8 +48,24 @@
   border:1px solid #2b291f;
   box-sizing:border-box;
 }
+#raidIdleScene{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  background:#000;
+  pointer-events:none;
+  user-select:none;
+}
+#raidIdleScene[hidden]{display:none!important}
 #raidVisualStage #combatScene,
 #raidVisualStage #anomalyScene{
+  position:relative!important;
+  z-index:1!important;
   width:100%!important;
   max-width:100%!important;
   height:auto!important;
@@ -176,7 +193,8 @@
   justify-content:center!important;
   padding:0 6px!important;
   box-sizing:border-box!important;
-  color:var(--raid-utility-text-color,#fff)!important;
+  color:#d5c69d!important;
+  -webkit-text-fill-color:#d5c69d!important;
   font-family:var(--raid-utility-font-family,inherit)!important;
   font-size:var(--raid-utility-font-size,12px)!important;
   font-weight:var(--raid-utility-font-weight,700)!important;
