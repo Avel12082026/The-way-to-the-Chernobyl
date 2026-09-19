@@ -43,7 +43,7 @@ NEW_HAZARD_CALL="""            const beltHazard=pveBeltHazardProtection(data);
                 artifactAnomaly:beltHazard.anomaly,
                 artifactRadiation:beltHazard.radiation,
                 artifactDerivedScale:1+factionHazardPct/100
-            });"""
+            },Math.random);"""
 
 def once(source,old,new):
     if source.count(old)!=1:
