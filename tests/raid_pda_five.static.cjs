@@ -27,3 +27,9 @@ assert(!quests.includes("response('Торговать','trade')"));
 assert(hubs.includes('RAID_QUICK_INFO_HOLD_MS=800'));
 assert(hubs.includes(".bunker-menu,#quickSlots"));
 console.log('five raid/PDA fixes static checks: OK');
+
+assert(css.includes('#raidMetersRow>.raid-radiation-wrapper>.raid-radiation-label'),'EXP fill visibility selector missing');
+assert(css.includes('#activeQuestRaidTracker')&&css.includes('overflow-y:auto!important'),'quest tracker must scroll');
+assert(raid.includes("version:'1.4.0'"));
+const balance=fs.readFileSync('ui/balance-tuning.js','utf8');
+assert(balance.includes('Можно использовать с уровня:')&&balance.includes('Средняя цена:'),'item info reference metadata missing');

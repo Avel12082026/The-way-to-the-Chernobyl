@@ -42,4 +42,9 @@ function search(data,anomaly,gear={},rng=Math.random){
   // actual travel/combat turn after leaving the anomaly, allowing use of an antirad.
   return {anomalyDmg,radiationAdded:round(data.radiation-oldRad),radiationDose,searchDmg:0};
 }
-module.exports=Object.freeze({version:VERSION,travelCost:2,ANOMALY_KEYS,DAMAGE,DOSE,environmentalUpgrades,search});
+function radiationDamage(data){
+  const damage=round(clamp(finite(data.radiation),0,100)*0.15);
+  data.health=round(Math.max(0,finite(data.health)-damage));
+  return damage;
+}
+module.exports=Object.freeze({version:VERSION,travelCost:2,ANOMALY_KEYS,DAMAGE,DOSE,environmentalUpgrades,search,radiationDamage});

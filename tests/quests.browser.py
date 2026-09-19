@@ -10,8 +10,11 @@ TG="window.Telegram={WebApp:{initData:'offline-test',initDataUnsafe:{user:{id:10
 async def main():
   player_state=dict(nickname='Тест',health=100,maxHealth=100,hunger=100,thirst=100,level=160,exp=0,radiation=0,
                     coins=10000,breedCredits=0,inventory={},warehouse={})
-  accepted=[dict(id='q1',vendor='leonov',title='Артефакт для исследований',itemName='Медуза',qty=1,reward=400,acceptedAt=1)]
-  qstate=dict(accepted=accepted,activeId=None,completed=[dict(id='done1',vendor='diesel',title='Оружие для заказа',itemName='ПМ',qty=1,reward=300)],completedCount=1)
+  accepted=[
+    dict(id='q1',vendor='leonov',title='Артефакт для исследований',itemName='Медуза',qty=1,reward=400,acceptedAt=1),
+    dict(id='q2',vendor='diesel',title='Оружие для мастерской',itemName='ПМ',qty=1,reward=300,acceptedAt=1)
+  ]
+  qstate=dict(accepted=accepted,activeIds=['q2'],activeId='q2',completed=[dict(id='done1',vendor='diesel',title='Оружие для заказа',itemName='ПМ',qty=1,reward=300)],completedCount=1)
   offers={
     'leonov':[dict(id='lo1',vendor='leonov',title='Образец мутанта',itemName='Ухо слепого пса',qty=1,reward=800)],
     'zhuchara':[dict(id='zh1',vendor='zhuchara',title='Броня для заказа',itemName='Комбинезон Комбат',qty=1,reward=1200)],
@@ -31,20 +34,25 @@ async def main():
       if path.endswith('/quests/state'):return {'success':True,**qstate}
       if path.endswith('/quests/offers'):return {'success':True,'offers':offers.get(payload.get('vendor'),[])}
       if path.endswith('/quests/activate'):
-        qstate['activeId']=payload.get('questId');return {'success':True,**qstate}
+        qid=payload.get('questId');qstate.setdefault('activeIds',[])
+        if qid not in qstate['activeIds']: qstate['activeIds'].append(qid)
+        qstate['activeId']=qstate['activeIds'][0] if qstate['activeIds'] else None
+        return {'success':True,**qstate}
       if path.endswith('/quests/accept'):
         vendor=payload.get('vendor');found=next((x for x in offers.get(vendor,[]) if x['id']==payload.get('questId')),None)
         if found and not any(x['id']==found['id'] for x in qstate['accepted']):qstate['accepted'].append(found.copy())
         return {'success':True,**qstate}
       if path.endswith('/quests/abandon'):
         qstate['accepted']=[x for x in qstate['accepted'] if x['id']!=payload.get('questId')]
-        if qstate['activeId']==payload.get('questId'):qstate['activeId']=None
+        qstate['activeIds']=[x for x in qstate.get('activeIds',[]) if x!=payload.get('questId')]
+        qstate['activeId']=qstate['activeIds'][0] if qstate['activeIds'] else None
         return {'success':True,**qstate}
       if path.endswith('/quests/turn-in'):
         q=next(x for x in qstate['accepted'] if x['id']==payload.get('questId'))
         qstate['accepted']=[x for x in qstate['accepted'] if x['id']!=q['id']]
         qstate['completed'].append(q);qstate['completedCount']+=1
-        if qstate['activeId']==q['id']:qstate['activeId']=None
+        qstate['activeIds']=[x for x in qstate.get('activeIds',[]) if x!=q['id']]
+        qstate['activeId']=qstate['activeIds'][0] if qstate['activeIds'] else None
         player_state['inventory'].pop(q['itemName'],None);player_state['coins']+=q['reward']
         return {'success':True,'reward':q['reward'],'coins':player_state['coins'],'inventory':player_state['inventory'],**qstate}
       if '/api/' in path:return {'success':True}
@@ -98,17 +106,21 @@ async def main():
     await page.wait_for_timeout(80)
     await page.locator('[data-quest-tab="active"]').click()
     assert await page.locator('#questPdaList [data-quest-id="q1"]').count()==1
+    assert await page.locator('#questPdaList [data-quest-id="q2"]').count()==1
+    assert await page.evaluate("QuestSystem.state.activeIds.length")==2
 
     # Tracker appears below the quick slots; combat history is below the tracker.
     await page.evaluate("document.querySelector('[data-quest-action=pda-back]').click();openScreen('raid');renderBattleButtons();RaidKpkPolish.apply()")
     tracker=page.locator('#activeQuestRaidTracker');await tracker.wait_for(state='visible')
     assert await tracker.evaluate("e=>e.previousElementSibling?.id")=='quickSlots'
     assert await tracker.evaluate("e=>e.nextElementSibling?.id")=='raidLog'
+    assert await tracker.locator('.raid-quest-track-item').count()==2
+    assert await tracker.evaluate("e=>getComputedStyle(e).overflowY") in ('auto','scroll')
     assert not await tracker.evaluate("e=>e.classList.contains('quest-ready')")
     await page.evaluate("player.inventory['Медуза']=1;updateUI()");await page.wait_for_timeout(80)
-    assert await tracker.evaluate("e=>e.classList.contains('quest-ready')")
+    assert await tracker.locator('.raid-quest-track-item[data-quest-id="q1"]').evaluate("e=>e.classList.contains('quest-ready')")
     await page.evaluate("delete player.inventory['Медуза'];updateUI()");await page.wait_for_timeout(80)
-    assert not await tracker.evaluate("e=>e.classList.contains('quest-ready')")
+    assert not await tracker.locator('.raid-quest-track-item[data-quest-id="q1"]').evaluate("e=>e.classList.contains('quest-ready')")
 
     # Trader talk opens the STALKER-like dialogue and category-specific offer.
     await page.evaluate("TraderHubs.openZhuchara()")

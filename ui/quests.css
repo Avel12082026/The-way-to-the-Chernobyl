@@ -57,3 +57,8 @@ body.trader-dialogue-visible #gameAlertModal,
 body.trader-dialogue-visible #gameConfirmModal{
   z-index:100060!important;
 }
+
+#activeQuestRaidTracker .raid-quest-track-item{display:grid;gap:2px;padding:5px 2px;border-bottom:1px solid #3f3a2a}
+#activeQuestRaidTracker .raid-quest-track-item:last-child{border-bottom:0}
+#activeQuestRaidTracker .raid-quest-track-item strong{color:#d7bb70}
+#activeQuestRaidTracker .raid-quest-track-item.quest-ready .quest-objective{color:#6fe17b!important;font-weight:700}

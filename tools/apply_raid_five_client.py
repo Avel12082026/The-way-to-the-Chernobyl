@@ -61,7 +61,7 @@ function activeQuest(){return activeQuests()[0]||null;}""")
   if(signature===trackerSignature&&!tracker.hidden)return;trackerSignature=signature;
   const scroll=tracker.scrollTop;
   tracker.hidden=false;tracker.className=rows.every(completeNow)?'quest-ready':'';
-  tracker.innerHTML=rows.map(q=>`<article class="raid-quest-entry${completeNow(q)?' quest-ready':''}" data-quest-id="${esc(q.id)}"><strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span></article>`).join('');
+  tracker.innerHTML=rows.map(q=>`<article class="raid-quest-entry raid-quest-track-item${completeNow(q)?' quest-ready':''}" data-quest-id="${esc(q.id)}"><strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span></article>`).join('');
   tracker.scrollTop=scroll;
 }
 """+s[b:]

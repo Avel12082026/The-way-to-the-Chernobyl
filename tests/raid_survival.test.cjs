@@ -2,6 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const {DatabaseSync}=require('node:sqlite');
 const model=require('../server_patches/raid-survival.cjs');
+const fullDose={health:200,radiation:100};assert.equal(model.radiationDamage(fullDose),15);assert.equal(fullDose.health,185);
 const rows=[];
 for(let tier=1;tier<=9;tier++){
   const d={health:1000,radiation:0,anomalyResist:{},radiationResist:0};
@@ -58,9 +59,9 @@ for(const n of [1,2,3]){
   for(let i=0;i<n;i++){last=call('/api/raid/anomaly/search');assert.equal(last.success,true);assert.equal(last.searchDmg,0);total+=last.anomalyDmg;assert.equal(last.state.health,Math.round((1000-total)*10)/10);}
   const rad=state().radiation;assert(rad>0);
   assert.equal(call(n===3?'/api/raid/anomaly/finish':'/api/raid/anomaly/bypass').success,true);
-  const before=state().health;const step=call('/api/raid/step');assert.equal(step.success,true);assert.equal(step.radiationDamage,rad);assert.equal(step.state.health,Math.round((before-rad)*10)/10);
+  const before=state().health,doseDamage=Math.round(rad*0.15*10)/10;const step=call('/api/raid/step');assert.equal(step.success,true);assert.equal(step.radiationDamage,doseDamage);assert.equal(step.state.health,Math.round((before-doseDamage)*10)/10);
   assert.equal(step.state.hunger,98);assert.equal(step.state.thirst,98);
-  const second=call('/api/raid/step');assert.equal(second.radiationDamage,rad);assert.equal(second.state.hunger,96);
+  const second=call('/api/raid/step');assert.equal(second.radiationDamage,doseDamage);assert.equal(second.state.hunger,96);
 }
 setup();let contaminated=state();contaminated.radiation=100;raw.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(contaminated),'1');
 assert.equal(call('/api/raid/anomaly/search').died,false);

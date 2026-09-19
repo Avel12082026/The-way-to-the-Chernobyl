@@ -16,6 +16,13 @@ def build(source):
         MARK+"\nconst RaidSurvival=require('./raid-survival.cjs');\n\nfunction pveArtifactTurnEffects(data) {")
     s=once(s,'        data.health=Math.round(Math.max(0,(Number(data.health)||0)-netLeak)*10)/10;\n        if(data.radiation>=100) data.health=0;',
         '        // Leakage adds contamination only; pveRadiationDamage handles the later turn once.')
+    old_radiation="""function pveRadiationDamage(data) {
+    const rad=Math.max(0,Number(data.radiation)||0);
+    if(rad<=0) return 0;
+    data.health=Math.round(Math.max(0,(Number(data.health)||0)-rad)*10)/10;
+    return rad;
+}"""
+    s=once(s,old_radiation,"function pveRadiationDamage(data) {\n    return RaidSurvival.radiationDamage(data);\n}")
     for key in ('hunger','thirst'):
         maxkey='max'+key.title()
         old=f'data.{key}=Math.max(0,Math.min(Number(data.{maxkey})||100,(Number(data.{key})||0)-5));'

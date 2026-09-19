@@ -9,9 +9,9 @@ SERVICE='pocketzone.service'
 SERVER_BEFORE='7d481279dc1b6eb7c2425fa8a8a905270a917d64369dc5eefe944f37b4dc6759'
 QUEST_BEFORE='ef7289b956a1969846d9be25e28693c2d5a28e8b5d0443f44ec1fd3fd1a51308'
 # Filled by the release packager after the exact files have passed tests.
-SERVER_AFTER='242fcc9378de56874468efe0d95c5dd1df584f98879a6e9c3b064828bc9cc276'
+SERVER_AFTER='5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14'
 QUEST_AFTER='c05194aa0f71c549320df6f0c55f2fa917f2f9f1a146a25150dd4963c976aadd'
-MODULE_HASH='ceb6389170455fd07568fc4e41cfdfb3ef89764ee2485b058e8cc6b8228733e8'
+MODULE_HASH='96cf3687a21bd8d7e6e79f9ce4deb082b900703d1f929f74a3f9023ed781a1a4'
 def digest(b):return hashlib.sha256(b).hexdigest()
 def run(args,**kw):return subprocess.run(args,check=True,timeout=45,**kw)
 def atomic(path,content,st=None):

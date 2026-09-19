@@ -117,14 +117,17 @@ function call(path,body={}){
  assert.deepEqual(migrated.data.armorUpgradeData['Админ-броня'],{armor:100,hitAbsorption:100});
 
  let r=await call('/api/quests/offers',{vendor:'diesel'});assert.equal(r.code,200);assert(r.body.offers.length>0);assert(r.body.offers.every(q=>weapons.some(w=>w.name===q.itemName&&!w.adminOnly)));
- const offer=r.body.offers[0];
+ const offer=r.body.offers[0],offer2=r.body.offers[1];
  r=await call('/api/quests/accept',{vendor:'diesel',questId:offer.id});assert.equal(r.body.accepted.length,1);
- r=await call('/api/quests/activate',{questId:offer.id});assert.equal(r.body.activeId,offer.id);
+ r=await call('/api/quests/accept',{vendor:'diesel',questId:offer2.id});assert.equal(r.body.accepted.length,2);
+ r=await call('/api/quests/activate',{questId:offer.id});assert.deepEqual(r.body.activeIds,[offer.id]);
+ r=await call('/api/quests/activate',{questId:offer2.id});assert.deepEqual(r.body.activeIds,[offer.id,offer2.id]);
  // An item already owned when/after the quest is accepted can be handed in immediately at base.
  let stored=JSON.parse(db.rows.get('p1').data);stored.inventory[offer.itemName]=1;db.rows.set('p1',{data:JSON.stringify(stored)});
  r=await call('/api/quests/turn-in',{vendor:'diesel',questId:offer.id});assert.equal(r.code,200);assert.equal(r.body.completedCount,1);
  assert(r.body.reward>sell(offer.itemName).price*1.02,'quest reward must exceed best ordinary sale');
  assert.equal(r.body.inventory[offer.itemName],undefined);
+ assert.deepEqual(r.body.activeIds,[offer2.id]);
  // Leonov never asks for armor or guns.
  r=await call('/api/quests/offers',{vendor:'leonov'});assert(r.body.offers.every(q=>artifacts.some(a=>a.name===q.itemName&&!a.adminOnly)||loot.some(l=>l.name===q.itemName)));
  // Zhuchara only asks for armor.
