@@ -188,7 +188,7 @@ async def main():
     await page.evaluate("""()=>{
       raidActive=true;raidSessionToken='offline-test';currentEnemy=null;
       currentAnomaly={...anomalies[0],attemptsUsed:1,resolved:true,_foundNames:['Медуза'],_searchPending:false};
-      clearBattleUiAndRestoreNav();RaidKpkPolish.apply();
+      returnToRaid();RaidKpkPolish.apply();
     }""")
     assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
     resolved_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
