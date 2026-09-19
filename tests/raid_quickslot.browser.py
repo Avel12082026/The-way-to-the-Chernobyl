@@ -87,8 +87,44 @@ async def main():
     assert await page.locator('#raidUtilityButtons > button').count()==2
     labels=[x.strip() for x in await page.locator('#raidUtilityButtons > button').all_text_contents()]
     assert 'Рюкзак' in labels[0] and labels[1]=='Телеграммка',labels
+
+    # The whole raid viewport is fixed: only the combat history itself may scroll.
+    overflow=await page.locator('#raidScreen').evaluate("e=>getComputedStyle(e).overflowY")
+    assert overflow=='hidden',overflow
+    await page.evaluate("document.getElementById('raidScreen').scrollTop=120;RaidKpkPolish.apply()")
+    assert await page.locator('#raidScreen').evaluate("e=>e.scrollTop")==0
+
+    # Default navigation stays as before when there is no encounter.
+    await page.evaluate("document.getElementById('itemInfoModal').classList.remove('active');currentEnemy=null;currentAnomaly=null;clearBattleUiAndRestoreNav();RaidKpkPolish.apply()")
+    nav=page.locator('#raidNavButtons')
+    assert await nav.evaluate("e=>getComputedStyle(e).display")!='none'
+    nav_labels=[x.strip() for x in await nav.locator('button').all_text_contents()]
+    assert any('Идти дальше' in x for x in nav_labels) and any('Вернуться с рейда' in x for x in nav_labels),nav_labels
+
+    # Anomaly replaces the two navigation buttons with the original search/bypass actions.
+    await page.evaluate("""()=>{
+      currentEnemy=null;
+      const a=anomalies[0];
+      currentAnomaly={...a,attemptsUsed:0,resolved:false,_foundNames:[],_searchPending:false};
+      renderAnomalyButtons();RaidKpkPolish.apply();
+    }""")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    anomaly_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
+    assert any('Поиск артефакта' in x for x in anomaly_labels) and any('Обойти аномалию' in x for x in anomaly_labels),anomaly_labels
+
+    # Combat likewise replaces navigation with the original attack/escape pair.
+    await page.evaluate("""()=>{
+      currentAnomaly=null;
+      currentEnemy={name:'Тушкан',tier:1,hp:100,maxHp:100,battleToken:'test-battle',friendly:false};
+      battleTurn=0;renderBattleButtons();RaidKpkPolish.apply();
+    }""")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    combat_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
+    assert any('Атаковать' in x for x in combat_labels) and any('Сбежать' in x for x in combat_labels),combat_labels
+    assert await page.locator('#raidScreen').evaluate("e=>e.scrollTop")==0
+
     assert not errors,errors
-    print(json.dumps({'status':'passed','tapUses':writes,'holdMs':800,'utilityButtons':labels},ensure_ascii=False))
+    print(json.dumps({'status':'passed','tapUses':writes,'holdMs':800,'utilityButtons':labels,'anomalyButtons':anomaly_labels,'combatButtons':combat_labels,'raidOverflow':overflow},ensure_ascii=False))
     await browser.close()
 
 asyncio.run(main())
