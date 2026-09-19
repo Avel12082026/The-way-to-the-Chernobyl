@@ -81,7 +81,7 @@ def patch_buy(block):
         re.M)
     block,n=partial.subn(new_check,block,count=1)
     if n!=1:
-        old=re.search(r"^\s*if \(\(buyerData\.coins \|\| 0\) < lot\.price\) return res\.json\(\{ success: false, error: '[^']+' \}\);\s*$",block,re.M)
+        old=re.search(r"^\s*if \(\(buyerData\.coins \|\| 0\) < lot\.price\) return res\.json\(\{ success: false, error: '[^']+' \}\);(?:\s*//[^\n]*)?\s*$",block,re.M)
         if not old: raise ValueError('не найдена проверка баланса market/buy')
         block=block[:old.start()]+new_check+block[old.end():]
 
