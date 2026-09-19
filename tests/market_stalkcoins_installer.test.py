@@ -56,7 +56,8 @@ assert "buyerData.breedCredits" in patched
 assert "sellerData.breedCredits" in patched
 assert "Недостаточно сталкоинов" in patched
 assert "Недостаточно сталбайтов" in patched
-assert patched.count(MOD.MARKER)>=2
+assert MOD.SELL_MARKER in patched
+assert MOD.BUY_MARKER in patched
 assert MOD.build(patched)==patched
 
 with tempfile.TemporaryDirectory() as td:
@@ -64,3 +65,20 @@ with tempfile.TemporaryDirectory() as td:
     subprocess.run(['node','--check',str(p)],check=True)
 
 print('PASS: guarded server market Stalcoin patch')
+
+
+# Regression: the old installer used one V1 marker as an early-return guard.
+# A partially installed route with that marker must now be repaired rather than accepted.
+BROKEN_V1=SOURCE.replace(
+    "const currency = 'bytes'; // old forced currency",
+    "const currency = 'bytes'; // MARKET_STALKCOINS_V1 stale marker"
+).replace(
+    "if ((buyerData.coins || 0) < lot.price) return res.json({ success: false, error: 'Недостаточно Байт' });",
+    "if ((buyerData.coins || 0) < lot.price) return res.json({ success: false, error: 'Недостаточно Байт' }); // MARKET_STALKCOINS_V1 stale marker"
+)
+repaired=MOD.build(BROKEN_V1)
+assert "currency: requestedCurrency" in repaired
+assert "requestedCurrency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" in repaired
+assert "buyerData.breedCredits = (Number(buyerData.breedCredits) || 0) - lot.price" in repaired
+assert "sellerData.breedCredits = (Number(sellerData.breedCredits) || 0) + lot.price" in repaired
+assert MOD.build(repaired)==repaired
