@@ -68,6 +68,7 @@ function setup(attempt=0,health=1000,artifactSlots=[]){
   raw.prepare('INSERT OR REPLACE INTO raid_sessions VALUES(?,?,?,?,0)').run('1','raid','anomaly',JSON.stringify({name:'Жарка',tier:1,attemptsUsed:attempt,artifacts:['Медуза']}));
 }
 function call(url,body={}){const res={status(){return this;},json(v){this.value=v;return v;}};routes[url]({telegramUser:{id:'1'},body:{raidToken:'raid',...body}},res);return res.value;}
+const delta1=(a,b)=>Math.round((a-b)*10)/10;
 for(const n of [1,2,3]){
   setup();let total=0,last;
   for(let i=0;i<n;i++){last=call('/api/raid/anomaly/search');assert.equal(last.success,true);assert.equal(last.searchDmg,0);total+=last.anomalyDmg;assert.equal(last.state.health,Math.round((1000-total)*10)/10);}
@@ -79,21 +80,21 @@ for(const n of [1,2,3]){
 }
 setup();const routeNeutral=call('/api/raid/anomaly/search');
 setup(0,1000,['Медуза']);const routeProtected=call('/api/raid/anomaly/search');
-assert.equal(routeNeutral.anomalyDmg-routeProtected.anomalyDmg,2,'Медуза Жарка +2 removes exactly 2 HP damage');
+assert.equal(delta1(routeNeutral.anomalyDmg,routeProtected.anomalyDmg),2,'Медуза Жарка +2 removes exactly 2 HP damage');
 setup(0,1000,['Льдинка']);const routeVulnerable=call('/api/raid/anomaly/search');
-assert.equal(routeVulnerable.anomalyDmg-routeNeutral.anomalyDmg,3,'Льдинка Жарка -3 adds exactly 3 HP damage');
+assert.equal(delta1(routeVulnerable.anomalyDmg,routeNeutral.anomalyDmg),3,'Льдинка Жарка -3 adds exactly 3 HP damage');
 setup(0,1000,['Хрусталик']);const routeRadProtected=call('/api/raid/anomaly/search');
-assert.equal(routeNeutral.radiationAdded-routeRadProtected.radiationAdded,3,'Хрусталик radiation +3 removes exactly 3 dose');
+assert.equal(delta1(routeNeutral.radiationAdded,routeRadProtected.radiationAdded),3,'Хрусталик radiation +3 removes exactly 3 dose');
 
 raw.prepare('INSERT INTO named_artifacts VALUES(?,?,?,?,?,?)').run(101,'Именной тест',1,'1',Date.now(),JSON.stringify({'anomaly_Жарка':3,radiation:3}));
 setup(0,1000,['Именной тест']);const routeNamed=call('/api/raid/anomaly/search');
-assert.equal(routeNeutral.anomalyDmg-routeNamed.anomalyDmg,3,'named artifact +3 protection is applied from DB stats');
-assert.equal(routeNeutral.radiationAdded-routeNamed.radiationAdded,3,'named artifact +3 radiation is applied from DB stats');
+assert.equal(delta1(routeNeutral.anomalyDmg,routeNamed.anomalyDmg),3,'named artifact +3 protection is applied from DB stats');
+assert.equal(delta1(routeNeutral.radiationAdded,routeNamed.radiationAdded),3,'named artifact +3 radiation is applied from DB stats');
 
 raw.prepare('INSERT INTO crafted_artifacts VALUES(?,?,?,?,?)').run('Гибрид тест',JSON.stringify({'anomaly_Жарка':-4,radiation:-2}),8,100,7);
 setup(0,1000,['Гибрид тест']);const routeCrafted=call('/api/raid/anomaly/search');
-assert.equal(routeCrafted.anomalyDmg-routeNeutral.anomalyDmg,4,'crafted artifact -4 protection adds exactly 4 HP damage');
-assert.equal(routeCrafted.radiationAdded-routeNeutral.radiationAdded,2,'crafted artifact radiation -2 adds exactly 2 dose');
+assert.equal(delta1(routeCrafted.anomalyDmg,routeNeutral.anomalyDmg),4,'crafted artifact -4 protection adds exactly 4 HP damage');
+assert.equal(delta1(routeCrafted.radiationAdded,routeNeutral.radiationAdded),2,'crafted artifact radiation -2 adds exactly 2 dose');
 
 setup();let contaminated=state();contaminated.radiation=100;raw.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(contaminated),'1');
 assert.equal(call('/api/raid/anomaly/search').died,false);
