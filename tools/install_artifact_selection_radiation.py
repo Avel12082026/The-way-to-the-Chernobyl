@@ -54,7 +54,11 @@ def prepare(root,payload):
     installed=root/MODULE_NAME
     if MARK in source:
         patched=source
-        if "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap})" not in source:
+        merge_calls=(
+            "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap:perStatCap})",
+            "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap:cap})",
+        )
+        if not any(call in source for call in merge_calls):
             raise RuntimeError('Обнаружен неполный патч селекции радиации')
     else:
         server_hash=digest(before)
