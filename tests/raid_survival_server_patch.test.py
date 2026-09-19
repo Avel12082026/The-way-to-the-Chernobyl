@@ -53,6 +53,7 @@ assert 'pveAnomalyExposureServer' in patched
 assert 'upgradeLevel*2.2' in patched
 assert 'damage=[0,10,16,24,34,46,60,76,94,230]' in patched
 assert 'artifactSpecific' in patched and 'artifactRadiation' in patched
+assert 'serverArtifactDef(name)' in patched and 'effectiveArmor' in patched
 assert 'data.health=Math.round(Math.max(0,(Number(data.health)||0)-netLeak)' not in patched
 again,changed2=MOD.patch(patched)
 assert not changed2 and again==patched
