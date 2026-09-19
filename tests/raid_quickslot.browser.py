@@ -177,6 +177,20 @@ async def main():
       log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
       assert 82 <= log_h <= 230,log_h
 
+    # A resolved anomaly is still a pending server encounter until /anomaly/finish.
+    # Generic raid navigation must never replace its one-button completion state.
+    await page.evaluate("""()=>{
+      raidActive=true;raidSessionToken='offline-test';currentEnemy=null;
+      currentAnomaly={...anomalies[0],attemptsUsed:1,resolved:true,_foundNames:['Медуза'],_searchPending:false};
+      clearBattleUiAndRestoreNav();RaidKpkPolish.apply();
+    }""")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    resolved_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
+    assert len(resolved_labels)==1 and 'Идти дальше' in resolved_labels[0],resolved_labels
+    await page.evaluate("raidStep();RaidKpkPolish.apply()")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    assert await page.locator('#battleButtonsContainer button').filter(has_text='Идти дальше').count()==1
+
     # Real anomaly bypass must restore the persistent lower-button captions.
     await page.evaluate("""async()=>{
       raidActive=true;raidSessionToken='offline-test';
