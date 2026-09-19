@@ -9,9 +9,9 @@ SERVICE='pocketzone.service'
 SERVER_BEFORE='7d481279dc1b6eb7c2425fa8a8a905270a917d64369dc5eefe944f37b4dc6759'
 QUEST_BEFORE='ef7289b956a1969846d9be25e28693c2d5a28e8b5d0443f44ec1fd3fd1a51308'
 # Filled by the release packager after the exact files have passed tests.
-SERVER_AFTER='5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14'
+SERVER_AFTER='29a413cf02ac883aa271dfb5c679a9777e40ff305033be058a980d40eaccce4e'
 QUEST_AFTER='c05194aa0f71c549320df6f0c55f2fa917f2f9f1a146a25150dd4963c976aadd'
-MODULE_HASH='96cf3687a21bd8d7e6e79f9ce4deb082b900703d1f929f74a3f9023ed781a1a4'
+MODULE_HASH='59ab9bc1378590e1987b073fbd82125d4b6706587cae7fc1bef49b209b8c90ca'
 def digest(b):return hashlib.sha256(b).hexdigest()
 def run(args,**kw):return subprocess.run(args,check=True,timeout=45,**kw)
 def atomic(path,content,st=None):
@@ -58,7 +58,7 @@ def endpoint(path):
 def healthy():
     try:
         raid=endpoint('/api/raid/survival-version');quests=endpoint('/api/quests/version');market=endpoint('/api/market')
-        return raid.get('success') is True and raid.get('version')=='20260920.1' and raid.get('travelCost')==2 and quests.get('multiActive') is True and isinstance(market,list)
+        return raid.get('success') is True and raid.get('version')=='20260920.2' and raid.get('travelCost')==2 and quests.get('multiActive') is True and isinstance(market,list)
     except Exception:return False
 def service(action):run(['systemctl',action,SERVICE],stdout=subprocess.DEVNULL)
 def deploy(root,before,updates,control=service,probe=healthy,wait_seconds=40):
@@ -110,7 +110,7 @@ def main():
             print('OK: эта версия уже установлена; повторный перезапуск не требуется');return
         backup=deploy(root,before,updates)
         run(['systemctl','is-active','--quiet',SERVICE])
-        print('OK: выживание 20260920.1; расход 2/2; несколько активных заданий; API рынка отвечает')
+        print('OK: выживание 20260920.2; расход 2/2; точные эффекты артефактов; несколько активных заданий; API рынка отвечает')
         print('Резервная копия кода:',backup)
         print('server.js SHA-256:',digest((root/'server.js').read_bytes()))
 if __name__=='__main__':
