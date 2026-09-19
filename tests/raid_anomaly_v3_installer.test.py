@@ -20,7 +20,8 @@ with tempfile.TemporaryDirectory() as td:
         before,updates=mod.prepare(root,payload)
         assert before['server.js']==source
         assert mod.MARK.encode() in updates['server.js']
-        assert b'artifactAnomaly:beltHazard.anomaly' in updates['server.js']
+        assert b'artifactRadiation:beltHazard.radiationProtection' in updates['server.js']
+        assert b'Math.abs(Number(st.radiationLeak)||0)' in updates['server.js']
         assert mod.digest(updates['raid-survival.cjs'])==mod.MODULE_HASH
 
         (root/'server.js').write_bytes(updates['server.js'])
@@ -50,4 +51,4 @@ with tempfile.TemporaryDirectory() as td:
     assert (root/'game.db').read_bytes()==b'untouched DB'
     assert calls==['stop','start','stop','start']
 
-print('PASS: anomaly V3 prepare/idempotency and code-only rollback; DB preserved')
+print('PASS: anomaly V3 prepare/idempotency, radiation split and code-only rollback; DB preserved')

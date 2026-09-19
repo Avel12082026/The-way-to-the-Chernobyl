@@ -8,14 +8,15 @@ from patch_raid_survival import build, MARK
 ROOT=Path('/var/www/pocketzone')
 SERVICE='pocketzone.service'
 
-# Exact server.js versions reviewed by the previous raid-survival release:
-# pristine owner-supplied server and the already-installed 20260920.1 server.
+# Exact server.js versions reviewed by the raid-survival releases:
+# pristine owner source, 20260920.1, and the installed 20260920.2 build.
 KNOWN_SERVER_INPUTS={
     '7d481279dc1b6eb7c2425fa8a8a905270a917d64369dc5eefe944f37b4dc6759',
     '5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14',
+    '04914f6f51609b13dcedf94fa614b855509955956214aac69a7755e22d08b64b',
 }
-MODULE_HASH='ceaccb323384261387d73a9a3753d51df72603fd1fe718dbe3e0840890214427'
-VERSION='20260920.2'
+MODULE_HASH='d3b00a34ac2706a2e29c3b35c6930813f016494aa47f1f2e292394b4777b3e91'
+VERSION='20260920.3'
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 
@@ -51,8 +52,8 @@ def prepare(root,payload):
     # server.js contains the complete new guarded patch.
     installed_module=root/'raid-survival.cjs'
     if MARK in source:
-        if "artifactAnomaly:beltHazard.anomaly" not in source:
-            raise RuntimeError('Обнаружен неполный RAID_SURVIVAL_20260920_V2')
+        if "artifactRadiation:beltHazard.radiationProtection" not in source or "Math.abs(Number(st.radiationLeak)||0)" not in source:
+            raise RuntimeError('Обнаружен неполный RAID_SURVIVAL_20260920_V3')
         if installed_module.exists() and digest(installed_module.read_bytes())==MODULE_HASH:
             new={'server.js':before,'raid-survival.cjs':module}
         else:
@@ -165,7 +166,7 @@ def main():
         backup=deploy(root,before,updates)
         run(['systemctl','is-active','--quiet',SERVICE])
         print('OK: RAID_ANOMALY_V3 '+VERSION+' установлен')
-        print('Урон аномалий усилен по тирам; поясные +/- защиты применяются линейно к аномалиям и радиации')
+        print('Радиозащита отделена от эффекта Радиация +N; вредная радиация начисляется каждый ход и гасится суммарной радиозащитой')
         print('Резервная копия кода:',backup)
         print('server.js SHA-256:',digest((root/'server.js').read_bytes()))
 
