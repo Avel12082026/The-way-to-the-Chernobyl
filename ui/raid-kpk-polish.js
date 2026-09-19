@@ -159,7 +159,7 @@ function paintRaidIdleBackground(idle){
 }
 function syncRaidIdleVisibility(visual,idle){
   if(!visual||!idle)return;
-  idle.hidden=!!visibleRaidScene(visual);
+  idle.hidden=false;
 }
 function observeRaidLogForBackground(log,visual,idle){
   if(!log||!visual||!idle)return;
