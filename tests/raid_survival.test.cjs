@@ -22,6 +22,20 @@ assert.equal(run({researchSuit:true,upgrades:{armor:50}})[0].anomalyDmg,ordinary
 const neg={health:1000,radiation:0,radiationResist:-100,anomalyResist:{Жарка:-100}};
 const negative=model.search(neg,{tier:1,name:'Жарка'},{},()=>.5);assert(negative.anomalyDmg>6&&Number.isFinite(neg.health));
 
+assert.equal(model.DAMAGE[1],10,'tier-1 direct anomaly damage was raised');
+assert.equal(model.DAMAGE[8],94,'tier-8 direct anomaly damage was raised');
+const exactHazard=(anomalyStat=0,radiationStat=0)=>{
+  const d={health:1000,radiation:0,radiationResist:radiationStat,anomalyResist:{Жарка:anomalyStat}};
+  return model.search(d,{tier:3,name:'Жарка'},{
+    artifactAnomaly:{Жарка:anomalyStat},artifactRadiation:radiationStat,artifactDerivedScale:1
+  },()=>.5);
+};
+const exactNeutral=exactHazard(),exactProtected=exactHazard(3,3),exactVulnerable=exactHazard(-3,-3);
+assert.equal(exactNeutral.anomalyDmg-exactProtected.anomalyDmg,3,'belt +3 anomaly protection is exactly -3 HP');
+assert.equal(exactVulnerable.anomalyDmg-exactNeutral.anomalyDmg,3,'belt -3 anomaly protection is exactly +3 HP');
+assert.equal(exactNeutral.radiationDose-exactProtected.radiationDose,3,'belt +3 radiation is exactly -3 dose');
+assert.equal(exactVulnerable.radiationDose-exactNeutral.radiationDose,3,'belt -3 radiation is exactly +3 dose');
+
 // Execute the actual patched production route bodies against a fresh in-memory SQLite DB.
 const raw=new DatabaseSync(':memory:');
 raw.exec(`CREATE TABLE players(id TEXT PRIMARY KEY,data TEXT,last_seen INTEGER);
@@ -49,8 +63,8 @@ const env={require:n=>{assert.equal(n,'./raid-survival.cjs');return model;},cons
 };
 vm.createContext(env);vm.runInContext(fixture.helpers+'\n'+code,env);
 function state(){return JSON.parse(raw.prepare('SELECT data FROM players WHERE id=?').get('1').data);}
-function setup(attempt=0,health=1000){
-  raw.prepare('INSERT OR REPLACE INTO players VALUES(?,?,0)').run('1',JSON.stringify({health,maxHealth:1000,hunger:100,thirst:100,radiation:0,level:1,luck:0,inventory:{},stats:{},artifactSlots:[],armor:{name:'Комбинезон Юность'},armorUpgradeData:{}}));
+function setup(attempt=0,health=1000,artifactSlots=[]){
+  raw.prepare('INSERT OR REPLACE INTO players VALUES(?,?,0)').run('1',JSON.stringify({health,maxHealth:1000,hunger:100,thirst:100,radiation:0,level:1,luck:0,inventory:{},stats:{},artifactSlots,armor:{name:'Комбинезон Юность'},armorUpgradeData:{}}));
   raw.prepare('INSERT OR REPLACE INTO raid_sessions VALUES(?,?,?,?,0)').run('1','raid','anomaly',JSON.stringify({name:'Жарка',tier:1,attemptsUsed:attempt,artifacts:['Медуза']}));
 }
 function call(url,body={}){const res={status(){return this;},json(v){this.value=v;return v;}};routes[url]({telegramUser:{id:'1'},body:{raidToken:'raid',...body}},res);return res.value;}
@@ -63,6 +77,14 @@ for(const n of [1,2,3]){
   assert.equal(step.state.hunger,98);assert.equal(step.state.thirst,98);
   const second=call('/api/raid/step');assert.equal(second.radiationDamage,doseDamage);assert.equal(second.state.hunger,96);
 }
+setup();const routeNeutral=call('/api/raid/anomaly/search');
+setup(0,1000,['Медуза']);const routeProtected=call('/api/raid/anomaly/search');
+assert.equal(routeNeutral.anomalyDmg-routeProtected.anomalyDmg,2,'Медуза Жарка +2 removes exactly 2 HP damage');
+setup(0,1000,['Льдинка']);const routeVulnerable=call('/api/raid/anomaly/search');
+assert.equal(routeVulnerable.anomalyDmg-routeNeutral.anomalyDmg,3,'Льдинка Жарка -3 adds exactly 3 HP damage');
+setup(0,1000,['Хрусталик']);const routeRadProtected=call('/api/raid/anomaly/search');
+assert.equal(routeNeutral.radiationAdded-routeRadProtected.radiationAdded,3,'Хрусталик radiation +3 removes exactly 3 dose');
+
 setup();let contaminated=state();contaminated.radiation=100;raw.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(contaminated),'1');
 assert.equal(call('/api/raid/anomaly/search').died,false);
 assert.equal(state().radiation,100);
@@ -72,5 +94,5 @@ assert.equal(call('/api/raid/step').radiationDamage,0);
 setup(3);const unchanged=JSON.stringify(state());assert.equal(call('/api/raid/anomaly/search').success,false);assert.equal(JSON.stringify(state()),unchanged);
 setup(0,1);assert.equal(call('/api/raid/anomaly/search').died,true);
 assert.equal(raw.prepare('SELECT COUNT(*) AS n FROM raid_sessions').get().n,0);
-console.log('PASS: tiers 1–9; armor/artifact protection; delayed radiation after 1/2/3 searches; antirad; no duplicate/dead search; travel -2/-2');
+console.log('PASS: stronger tiers 1–9; exact signed belt anomaly/radiation stats; armor protection; delayed radiation; antirad; no duplicate/dead search; travel -2/-2');
 console.log(JSON.stringify({tier9:{ordinary:ordinary[0],research50:upgraded[0]},tiers:rows},null,2));
