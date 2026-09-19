@@ -16,9 +16,11 @@
   let stockSignature = '', bagSignature = '';
   const number = x => Number.isFinite(Number(x)) ? Number(x) : 0;
   const count = name => Math.max(0, Math.floor(number(player.inventory?.[name])));
+  const reservedForSale = name => Math.max(0, Math.floor(number(queues.sell.get(name))));
+  const availableCount = name => Math.max(0, count(name) - reservedForSale(name));
   const money = n => Math.round(number(n)).toLocaleString('ru-RU');
   const atBase = () => !raidActive && !inventoryOpenedFromRaid && vendor !== 'friendly';
-  const ownedNames = () => Object.keys(player.inventory || {}).filter(n => count(n));
+  const ownedNames = () => Object.keys(player.inventory || {}).filter(n => availableCount(n));
   const artifact = name => findArtifactDef(name);
   const vendors = {
     zhuchara: {
@@ -74,7 +76,7 @@
       </div>
       <div id="tradeEditor" hidden><span id="tradeItemName"></span><label>Количество <input id="tradeQuantity" type="number" inputmode="numeric" min="1" step="1"></label><button type="button" data-trade-action="remove">Убрать</button></div>
       <p id="tradeStatus" role="status" aria-live="polite"></p><button type="button" id="tradeResync" data-trade-action="sync" hidden>Проверить состояние на сервере</button>
-      <h3>Рюкзак игрока</h3><div id="tradeInventory" class="trade-grid" aria-label="Рюкзак игрока"></div>
+      <h3>Рюкзак игрока</h3><div id="tradeInventory" class="trade-grid" data-trade-drop="inventory" aria-label="Рюкзак игрока"></div>
       <button type="button" id="tradeWarehouse" data-trade-action="warehouse" data-trade-drop="warehouse">На склад — перетащи сюда предмет</button>
       <p id="tradeWarehouseNote" hidden>Склад доступен только на базе.</p>
       <details id="tradeAuto" hidden><summary>Автозакупка расходников</summary><div id="tradeAutoBody"></div></details>
@@ -146,12 +148,12 @@
     }
     el('tradeStockNote').hidden = goods.size > 0;
     el('tradeStockNote').textContent = 'У этого торговца сейчас нет доступных товаров.';
-    const nextBag = JSON.stringify([vendor, ownedNames().map(name => [name, count(name), config.accepts(name)])]);
+    const nextBag = JSON.stringify([vendor, ownedNames().map(name => [name, availableCount(name), config.accepts(name)])]);
     if (nextBag !== bagSignature) {
       bagSignature = nextBag;
       const grid = el('tradeInventory'); grid.replaceChildren();
       for (const name of ownedNames()) {
-        const button = cell(name, 'inventory', '×' + count(name));
+        const button = cell(name, 'inventory', '×' + availableCount(name));
         if (!config.accepts(name)) { button.classList.add('trade-not-accepted'); button.title += ' · Торговец не принимает'; }
         grid.append(button);
       }
@@ -187,6 +189,7 @@
   }
   function compatible(source, target) {
     return (source === 'stock' && target === 'buy') || (source === 'inventory' && target === 'sell') ||
+      (source === 'sell' && target === 'inventory') ||
       (source === 'inventory' && target === 'warehouse' && atBase());
   }
   function stage(source, name, side) {
@@ -369,7 +372,7 @@
     frame = requestAnimationFrame(paint);
   }
   function begin() {
-    if (!gesture || gesture.scrolling || busy || needsSync || !['stock', 'inventory'].includes(gesture.source)) return;
+    if (!gesture || gesture.scrolling || busy || needsSync || !['stock', 'inventory', 'sell'].includes(gesture.source)) return;
     gesture.active = true; ghost = gesture.node.cloneNode(true); ghost.className = 'trade-drag-ghost';
     ghost.removeAttribute('id'); ghost.setAttribute('aria-hidden', 'true'); document.body.append(ghost); paint();
   }
@@ -392,7 +395,7 @@
     }
   }
   root.addEventListener('pointerdown', e => {
-    const node = e.target.closest('[data-trade-source="stock"],[data-trade-source="inventory"]');
+    const node = e.target.closest('[data-trade-source="stock"],[data-trade-source="inventory"],[data-trade-source="sell"]');
     if (!node || busy || needsSync || gesture || e.button !== 0 || !e.isPrimary) return;
     gesture = {
       id: e.pointerId, node, source: node.dataset.tradeSource, name: node.dataset.tradeName,
@@ -423,6 +426,13 @@
     if (!g.active) return;
     suppressUntil = Date.now() + 500;
     if (!target || !compatible(g.source, target)) return message('Перетаскивание отменено. Предмет остался на месте.');
+    if (g.source === 'sell' && target === 'inventory') {
+      queues.sell.delete(g.name);
+      if (editing?.side === 'sell' && editing?.name === g.name) editing = null;
+      render();
+      message('Предмет и зарезервированное количество возвращены в инвентарь.');
+      return;
+    }
     if (target === 'warehouse') void deposit(g.name); else stage(g.source, g.name, target);
   });
   const cancel = () => { if (gesture) suppressUntil = Date.now() + 500; cleanup(); };
@@ -468,7 +478,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.2', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */

@@ -96,7 +96,7 @@ async def main():
         html=html.replace(artwork.name+'?v=0503d3b544d1','data:image/png;base64,'+base64.b64encode(artwork.read_bytes()).decode())
         await context.route('**/*',lambda route:route.abort())
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.wait_for_function("window.TradeMenu?.version==='1.0.0' && document.getElementById('coins').textContent==='100000'")
+        await page.wait_for_function("typeof window.TradeMenu?.open==='function' && document.getElementById('coins').textContent==='100000'")
         data = await page.evaluate("({catalog:getShopCatalog(),artifact:artifacts.find(a=>!a.adminOnly).name,gear:weapons[0].name,detector:detectors[0].name,medkit:consumables.find(c=>c.type==='medkit').name})")
         prices.update({item['name']:item['price'] for item in data['catalog']})
         a,b=data['catalog'][0]['name'],data['catalog'][1]['name']
@@ -111,8 +111,8 @@ async def main():
             await item(source,name).click()
         async def clear(side):
             for name in await page.locator(f'#tradeMenu [data-trade-source={side}]').evaluate_all('(nodes)=>nodes.map(n=>n.dataset.tradeName)'):
+                # Clicking a staged cell returns it immediately; no editor/remove round-trip is required.
                 await click(side,name)
-                await page.locator('[data-trade-action=remove]').click()
         async def drag(source,name,target,touch=False,cancel=False):
             node=item(source,name)
             await node.scroll_into_view_if_needed()
@@ -135,8 +135,10 @@ async def main():
                 if cancel: await page.keyboard.press('Escape')
                 await page.mouse.up()
             await page.wait_for_timeout(550)
-        # Real menu hotspot, not a test-only entry point.
+        # Real menu hotspot: current client opens Zhuchara's portrait hub before the shared trade screen.
         await page.locator('#bunkerZhuchara').click()
+        if await page.locator('#zhucharaHubScreen').is_visible():
+            await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
         assert await page.locator('#tradeMenu').is_visible()
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='zhuchara'
         assert len(writes())==0
@@ -147,12 +149,33 @@ async def main():
         snapshot=await page.evaluate('JSON.stringify(player.inventory)')
         await drag('stock',a,'buy')
         assert await item('buy',a).count()==1, 'Mouse drag must stage the item'
+        # A one-of-one item disappears from the bag while it is reserved for sale, but player.inventory is still untouched.
+        await click('inventory',data['gear'])
+        assert await item('sell',data['gear']).count()==1
+        assert await item('inventory',data['gear']).count()==0
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+        await click('sell',data['gear'])
+        assert await item('sell',data['gear']).count()==0
+        assert await item('inventory',data['gear']).count()==1
+        assert (await item('inventory',data['gear']).inner_text()).endswith('×1')
+
+        # Stack quantities are projected in the bag: staged amount is hidden, returning it restores the count.
         await drag('inventory',b,'sell',touch=True)
         assert await item('sell',b).count()==1, 'Touch hold/drag must stage the item'
+        assert (await item('inventory',b).inner_text()).endswith('×9')
         assert len(writes())==0
         assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
         await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
         assert (await item('sell',b).inner_text()).endswith('×3')
+        assert (await item('inventory',b).inner_text()).endswith('×7')
+        await drag('sell',b,'inventory')
+        assert await item('sell',b).count()==0
+        assert (await item('inventory',b).inner_text()).endswith('×10')
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+        await click('inventory',b)
+        await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
+        assert (await item('sell',b).inner_text()).endswith('×3')
+        assert (await item('inventory',b).inner_text()).endswith('×7')
         await page.locator('#tradeQuantity').fill('999');await page.locator('#tradeQuantity').press('Tab')
         assert await page.locator('#tradeQuantity').input_value()=='3'
         await page.locator('#tradeBuy').evaluate('(b)=>{b.click();b.click()}')
@@ -201,8 +224,9 @@ async def main():
         await drag('inventory',b,'warehouse',touch=True)
         assert writes()[-1]['path'].endswith('/warehouse/transfer')
         assert writes()[-1]['payload']['direction']=='deposit'
-        # Leonov: real hub action when the current 1.2 module is present.
+        # Leonov: close Zhuchara's portrait hub, then enter Leonov through the real hotspot.
         await page.locator('[data-trade-action=back]').click()
+        await page.evaluate("openScreen('main')")
         await page.locator('#bunkerLeonov').click()
         if await page.locator('[data-leonov-action=trade]').count():
             await page.locator('[data-leonov-action=selection]').click()
@@ -216,30 +240,32 @@ async def main():
             await page.evaluate('openScientistsBuyView()')
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='leonov'
         assert await page.locator('#tradeMenu [onclick="doBreedArtifacts()"]:visible').count()==0
-        assert await item('stock',data['detector']).count()==1
+        assert await item('stock',data['detector']).count()==0
         assert await item('stock',data['gear']).count()==0
         await click('inventory',named)
-        assert '50 жет.' in await page.locator('#tradeSellTotal').inner_text()
+        assert '50 сталкоинов' in await page.locator('#tradeSellTotal').inner_text()
         await page.locator('#tradeSell').click();await page.wait_for_timeout(250)
         assert writes()[-1]['path'].endswith('/scientists/sell')
         assert await page.evaluate('player.breedCredits')==57
         await click('stock',data['medkit']);await page.locator('#tradeBuy').click();await page.wait_for_timeout(250)
         assert writes()[-1]['payload']['vendor']=='leonov'
-        # Diesel remains equipment-only; upgrades are preserved separately.
-        await page.evaluate("openScreen('technician');openTechnicianTab('sell')")
+        # Diesel sells detectors; enter trading through the current portrait hub.
+        await page.evaluate("openScreen('technician')")
+        if await page.locator('#dieselHubScreen').is_visible():
+            await page.locator('#dieselHubScreen [data-trader-action=trade]').click()
+        else:
+            await page.evaluate("openTechnicianTab('sell')")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='technician'
-        assert await page.locator('#tradeStock .trade-cell').count()==0
-        assert await page.locator('#tradeBuy').is_disabled()
+        assert await item('stock',data['detector']).count()==1
         await click('inventory',a)
         assert await item('sell',a).count()==0
         await click('inventory',data['gear'])
         await page.locator('#tradeSell').click();await page.wait_for_timeout(250)
         assert writes()[-1]['payload']['vendor']=='technician'
         await page.locator('[data-trade-action=back]').click()
-        assert await page.locator('#technicianScreen').is_visible()
-        assert await page.evaluate('technicianTab')=='upgrade'
+        assert await page.locator('#dieselHubScreen').is_visible()
         # All friendly-faction encounters use the same view, with no warehouse in a raid.
-        await page.evaluate("raidActive=true;currentEnemy={name:'Тестовый сталкер',faction:{name:'Сталкеры'},friendly:true};openFriendlyTrade()")
+        await page.evaluate("openScreen('main');raidActive=true;currentEnemy={name:'Тестовый сталкер',faction:{name:'Сталкеры'},friendly:true};openFriendlyTrade()")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='friendly'
         assert await page.locator('#tradeWarehouse').is_disabled()
         await click('stock',a)
@@ -249,13 +275,15 @@ async def main():
         assert not await page.locator('#tradeMenu').is_visible()
         # Named/admin artifacts are not confused with each other or static artifacts.
         await page.evaluate("player.inventory[artifacts.find(a=>a.adminOnly).name]=1;updateUI();openScreen('shop')")
+        if await page.locator('#zhucharaHubScreen').is_visible():
+            await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
         assert await page.locator('#tradeInventory .trade-cell').count()>0
         # No item name can create markup in the UI.
         assert await page.locator('#tradeInventory img[src=x]').count()==0
         # Empty inventory, affordability and exact numeric guards.
         await page.evaluate("player.inventory={};player.coins=0;updateUI()")
         assert await page.locator('#tradeInventory .trade-cell').count()==0
-        assert await page.locator('#tradeInventory .trade-empty').count()==14
+        assert await page.locator('#tradeInventory .trade-empty').count()==21
         await click('stock',a)
         assert await page.locator('#tradeBuy').is_disabled()
         n=len(writes())
@@ -275,6 +303,8 @@ async def main():
         for width,height in [(320,568),(360,800),(390,844),(412,915),(844,390)]:
             await page.set_viewport_size({'width':width,'height':height})
             await page.evaluate("openScreen('main');openScreen('shop')")
+            if await page.locator('#zhucharaHubScreen').is_visible():
+                await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
             await page.wait_for_timeout(80)
             report=await page.evaluate("""() => {
                 const root=document.getElementById('tradeMenu'),buy=document.getElementById('tradeBuy').getBoundingClientRect(),sell=document.getElementById('tradeSell').getBoundingClientRect(),row=root.querySelector('.trade-actions').getBoundingClientRect();
