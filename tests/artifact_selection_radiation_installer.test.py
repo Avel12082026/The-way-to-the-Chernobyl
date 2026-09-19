@@ -45,7 +45,7 @@ with tempfile.TemporaryDirectory() as td:
         before,updates=mod.prepare(root,payload)
         assert before['server.js']==SOURCE
         assert mod.MARK.encode() in updates['server.js']
-        assert b'ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap})' in updates['server.js']
+        assert b'ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap:perStatCap})' in updates['server.js']
         assert mod.digest(updates[mod.MODULE_NAME])==mod.MODULE_HASH
 
         (root/'server.js').write_bytes(updates['server.js'])
