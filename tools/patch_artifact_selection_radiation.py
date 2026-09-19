@@ -5,6 +5,7 @@ import re, sys
 
 MARK='// ARTIFACT_SELECTION_RADIATION_20260920_V1'
 REQUIRE="const ArtifactSelectionRadiation=require('./artifact-selection-radiation.cjs');"
+VERSION_ROUTE="app.get('/api/artifact-selection/version',(_req,res)=>res.json({success:true,version:ArtifactSelectionRadiation.version}));"
 ROUTE="app.post('/api/artifacts/breed'"
 
 MERGE_RE=re.compile(
@@ -37,6 +38,7 @@ def build(source):
         required=(
             "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap})",
             REQUIRE,
+            VERSION_ROUTE,
         )
         if any(x not in source for x in required):
             raise ValueError('Неполный патч селекции радиации; установка остановлена')
@@ -59,7 +61,7 @@ def build(source):
     if "const mergedStats=ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap});" not in patched_route:
         raise ValueError('Не удалось вставить новую формулу селекции')
 
-    prefix=MARK+"\n"+REQUIRE+"\n"
+    prefix=MARK+"\n"+REQUIRE+"\n"+VERSION_ROUTE+"\n"
     return source[:start]+prefix+patched_route+source[end:]
 
 if __name__=='__main__':
