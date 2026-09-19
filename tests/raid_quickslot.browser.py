@@ -59,6 +59,10 @@ async def main():
     html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',lambda m:'<style>'+(ROOT/m[1].split('?')[0]).read_text()+'</style>' if (ROOT/m[1].split('?')[0]).is_file() else '',html)
     await page.set_content(html,wait_until='domcontentloaded')
     await page.wait_for_function("typeof player==='object' && window.TraderHubs?.version==='1.3.0' && window.RaidKpkPolish")
+    # Dynamic balance module is network-isolated in this browser fixture; inject the real file explicitly.
+    if not await page.evaluate("!!window.GameBalanceTuning"):
+      await page.add_script_tag(content=(ROOT/'ui/balance-tuning.js').read_text())
+    await page.wait_for_function("window.GameBalanceTuning?.version==='1.1.0'")
     await page.evaluate("(s)=>{Object.assign(player,s);openScreen('raid');renderQuickSlots();RaidKpkPolish.apply();}",state)
     slot=page.locator('#quickSlots .quick-slot').first
     await slot.wait_for(state='visible')
