@@ -55,6 +55,62 @@ def patch_sell(block):
     return block
 
 def patch_buy(block):
+    # Current live server uses buyer/seller; older archived server family uses buyerData/sellerData.
+    if "const buyer = safeParsePlayerData" in block and "const seller = safeParsePlayerData" in block:
+        healthy = all(token in block for token in (
+            "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'",
+            "buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price",
+            "seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price",
+            "Недостаточно сталкоинов",
+            "Недостаточно сталбайтов",
+        ))
+        if healthy:
+            return block
+        old_check="""            if ((Number(buyer.coins)||0) < lot.price) {
+                const e=new Error('NO_COINS'); e.userMessage='Недостаточно Байт'; throw e;
+            }"""
+        new_check="""            const marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'; // MARKET_STALKCOINS_BUY_V2
+            const buyerBalance = marketCurrency === 'stalkcoins'
+                ? (Number(buyer.breedCredits) || 0)
+                : (Number(buyer.coins) || 0);
+            if (buyerBalance < lot.price) {
+                const e=new Error('NO_MARKET_FUNDS');
+                e.userMessage=marketCurrency === 'stalkcoins' ? 'Недостаточно сталкоинов' : 'Недостаточно сталбайтов';
+                throw e;
+            }"""
+        if "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" not in block:
+            if block.count(old_check)!=1:
+                raise ValueError('не найдена проверка баланса текущего market/buy')
+            block=block.replace(old_check,new_check,1)
+        old_debit="            buyer.coins=(Number(buyer.coins)||0)-lot.price;"
+        new_debit="""            if (marketCurrency === 'stalkcoins') {
+                buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price;
+            } else {
+                buyer.coins=(Number(buyer.coins)||0)-lot.price;
+            }"""
+        if "buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price" not in block:
+            if block.count(old_debit)!=1: raise ValueError('не найдено списание валюты текущего market/buy')
+            block=block.replace(old_debit,new_debit,1)
+        old_credit="            seller.coins=(Number(seller.coins)||0)+lot.price;"
+        new_credit="""            if (marketCurrency === 'stalkcoins') {
+                seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price;
+            } else {
+                seller.coins=(Number(seller.coins)||0)+lot.price;
+            }"""
+        if "seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price" not in block:
+            if block.count(old_credit)!=1: raise ValueError('не найдено начисление продавцу текущего market/buy')
+            block=block.replace(old_credit,new_credit,1)
+        required=(
+            "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'",
+            "buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price",
+            "seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price",
+            "Недостаточно сталкоинов","Недостаточно сталбайтов"
+        )
+        if not all(token in block for token in required):
+            raise ValueError('текущий market/buy после патча не использует валюту лота во всех операциях')
+        return block
+
+    # Older route shape.
     healthy = all(token in block for token in (
         "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'",
         "buyerData.breedCredits = (Number(buyerData.breedCredits) || 0) - lot.price",
@@ -73,7 +129,6 @@ def patch_buy(block):
         return res.json({ success: false, error: marketCurrency === 'stalkcoins' ? 'Недостаточно сталкоинов' : 'Недостаточно сталбайтов' });
     }"""
 
-    # Repair either the original bytes-only balance check or a partially-installed V1 block.
     partial=re.compile(
         r"^[ \t]*const marketCurrency\s*=.*?\n"
         r"[\s\S]*?^[ \t]*if \(buyerBalance < lot\.price\) \{\n"
@@ -121,12 +176,18 @@ def build(source):
     _,_,buy_check=route_slice(source,BUY_START,BUY_END)
     if "requestedCurrency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" not in sell_check:
         raise ValueError('проверка market/sell не пройдена')
-    for token in (
-        "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'",
-        "buyerData.breedCredits = (Number(buyerData.breedCredits) || 0) - lot.price",
-        "sellerData.breedCredits = (Number(sellerData.breedCredits) || 0) + lot.price",
-    ):
-        if token not in buy_check: raise ValueError('проверка market/buy не пройдена: '+token)
+    if "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" not in buy_check:
+        raise ValueError('проверка market/buy не пройдена: валюта лота')
+    current_ok=(
+        "buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price" in buy_check and
+        "seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price" in buy_check
+    )
+    legacy_ok=(
+        "buyerData.breedCredits = (Number(buyerData.breedCredits) || 0) - lot.price" in buy_check and
+        "sellerData.breedCredits = (Number(sellerData.breedCredits) || 0) + lot.price" in buy_check
+    )
+    if not (current_ok or legacy_ok):
+        raise ValueError('проверка market/buy не пройдена: списание/начисление сталкоинов')
     return source
 
 def main():

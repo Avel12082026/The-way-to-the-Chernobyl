@@ -82,3 +82,56 @@ assert "requestedCurrency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" in repaired
 assert "buyerData.breedCredits = (Number(buyerData.breedCredits) || 0) - lot.price" in repaired
 assert "sellerData.breedCredits = (Number(sellerData.breedCredits) || 0) + lot.price" in repaired
 assert MOD.build(repaired)==repaired
+
+
+# Current production route shape captured from the active server on 2026-09-19.
+LIVE_SOURCE=r"""
+try { db.exec(`ALTER TABLE market ADD COLUMN currency TEXT DEFAULT 'bytes'`); } catch (e) {}
+function x(){ const data={breedCredits:1}; return data; }
+app.post('/api/market/sell', requireAuth, rateLimit('market-sell', 20, 10000), (req, res) => {
+    try {
+        const sellerId = String(req.telegramUser.id);
+        const { item, quantity, price } = req.body;
+        const qty = parseInt(quantity, 10);
+        const prc = parseInt(price, 10);
+        const currency = 'bytes'; // продажа за Telegram Stars убрана — рынок работает только на Байтах
+        db.prepare('INSERT INTO market (seller_id, seller_username, item, quantity, price, currency, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+          .run(sellerId, null, item, qty, prc, currency, Date.now());
+        return res.json({success:true});
+    } catch(e) { return res.json({success:false}); }
+});
+app.post('/api/market/cancel', requireAuth, (req,res)=>res.json({success:true}));
+app.post('/api/market/buy', requireAuth, (req, res) => {
+    const buyerId = String(req.telegramUser.id);
+    const lotId = Number(req.body.lotId);
+    try {
+        const tx = db.transaction(() => {
+            const lot = db.prepare('SELECT * FROM market WHERE id = ?').get(lotId);
+            const br = db.prepare('SELECT data FROM players WHERE id = ?').get(buyerId);
+            const sr = db.prepare('SELECT data FROM players WHERE id = ?').get(lot.seller_id);
+            const buyer = safeParsePlayerData(br.data);
+            const seller = safeParsePlayerData(sr.data);
+            if ((Number(buyer.coins)||0) < lot.price) {
+                const e=new Error('NO_COINS'); e.userMessage='Недостаточно Байт'; throw e;
+            }
+            buyer.coins=(Number(buyer.coins)||0)-lot.price;
+            buyer.inventory=buyer.inventory||{};
+            seller.coins=(Number(seller.coins)||0)+lot.price;
+            return {ok:true};
+        });
+        return res.json(tx());
+    } catch(e) { return res.json({success:false,error:e.userMessage||'Ошибка'}); }
+});
+// ===== ГЛОБАЛЬНЫЙ РЕЕСТР
+"""
+live=MOD.build(LIVE_SOURCE)
+assert "currency: requestedCurrency" in live
+assert "marketCurrency = lot.currency === 'stalkcoins' ? 'stalkcoins' : 'bytes'" in live
+assert "buyer.breedCredits=(Number(buyer.breedCredits)||0)-lot.price" in live
+assert "seller.breedCredits=(Number(seller.breedCredits)||0)+lot.price" in live
+assert "Недостаточно сталкоинов" in live and "Недостаточно сталбайтов" in live
+assert MOD.build(live)==live
+with tempfile.TemporaryDirectory() as td:
+    p=Path(td)/'server.js';p.write_text(live,encoding='utf-8')
+    subprocess.run(['node','--check',str(p)],check=True)
+print('PASS: current live market route shape')
