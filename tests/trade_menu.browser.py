@@ -159,6 +159,15 @@ async def main():
         assert await item('inventory',data['gear']).count()==1
         assert (await item('inventory',data['gear']).inner_text()).endswith('×1')
 
+        # Mobile path: a staged ×1 item can be touch-dragged back into the backpack.
+        await click('inventory',data['gear'])
+        assert await item('inventory',data['gear']).count()==0
+        await drag('sell',data['gear'],'inventory',touch=True)
+        assert await item('sell',data['gear']).count()==0
+        assert await item('inventory',data['gear']).count()==1
+        assert (await item('inventory',data['gear']).inner_text()).endswith('×1')
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+
         # Stack quantities are projected in the bag: staged amount is hidden, returning it restores the count.
         await drag('inventory',b,'sell',touch=True)
         assert await item('sell',b).count()==1, 'Touch hold/drag must stage the item'
@@ -175,6 +184,20 @@ async def main():
         await click('inventory',b)
         await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
         assert (await item('sell',b).inner_text()).endswith('×3')
+        assert (await item('inventory',b).inner_text()).endswith('×7')
+
+        # Reserving the entire stack hides it completely; returning restores the complete stack.
+        await page.locator('#tradeQuantity').fill('10');await page.locator('#tradeQuantity').press('Tab')
+        assert (await item('sell',b).inner_text()).endswith('×10')
+        assert await item('inventory',b).count()==0
+        await drag('sell',b,'inventory',touch=True)
+        assert await item('sell',b).count()==0
+        assert (await item('inventory',b).inner_text()).endswith('×10')
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+
+        # Re-stage ×3 for the existing sell/validation path.
+        await click('inventory',b)
+        await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
         assert (await item('inventory',b).inner_text()).endswith('×7')
         await page.locator('#tradeQuantity').fill('999');await page.locator('#tradeQuantity').press('Tab')
         assert await page.locator('#tradeQuantity').input_value()=='3'
