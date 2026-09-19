@@ -50,6 +50,7 @@ async def main():
             await page.add_style_tag(content=(ROOT/'ui/quests.css').read_text())
             await page.add_script_tag(content=(ROOT/'ui/quests.js').read_text())
         await page.evaluate('QuestSystem.sync()')
+        assert await page.locator('#activeQuestRaidTracker').is_hidden()
         await page.evaluate('QuestSystem.openPda()')
         await page.locator('#questPdaList [data-quest-id="q1"]').click()
         await page.locator('#questPdaDetails [data-quest-action=activate]').click()
