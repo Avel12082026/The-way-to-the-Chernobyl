@@ -8,10 +8,25 @@ REQUIRE="const ArtifactSelectionRadiation=require('./artifact-selection-radiatio
 VERSION_ROUTE="app.get('/api/artifact-selection/version',(_req,res)=>res.json({success:true,version:ArtifactSelectionRadiation.version}));"
 ROUTE="app.post('/api/artifacts/breed'"
 
-MERGE_RE=re.compile(
-    r"(?P<indent>[ \t]*)const\s+allKeys\s*=\s*new\s+Set\(\[\.\.\.Object\.keys\(a1\.stats\),\s*\.\.\.Object\.keys\(a2\.stats\)\]\);\s*"
-    r"const\s+mergedStats\s*=\s*\{\};\s*"
-    r"allKeys\.forEach\(key\s*=>\s*\{[\s\S]*?\n(?P=indent)\}\);"
+MERGE_PATTERNS=(
+    (
+        re.compile(
+            r"(?P<indent>[ \t]*)const\s+allKeys\s*=\s*new\s+Set\(\[\.\.\.Object\.keys\(a1\.stats\),\s*\.\.\.Object\.keys\(a2\.stats\)\]\);\s*"
+            r"const\s+mergedStats\s*=\s*\{\};\s*"
+            r"allKeys\.forEach\(key\s*=>\s*\{[\s\S]*?\n(?P=indent)\}\);"
+        ),
+        'mergedStats',
+        'perStatCap',
+    ),
+    (
+        re.compile(
+            r"(?P<indent>[ \t]*)const\s+keys\s*=\s*new\s+Set\(\[\.\.\.Object\.keys\(a1\.stats\|\|\{\}\),\s*\.\.\.Object\.keys\(a2\.stats\|\|\{\}\)\]\);\s*"
+            r"const\s+stats\s*=\s*\{\};\s*"
+            r"for\s*\(const\s+key\s+of\s+keys\)\s*\{[\s\S]*?\n(?P=indent)\}"
+        ),
+        'stats',
+        'cap',
+    ),
 )
 
 def route_slice(source):
