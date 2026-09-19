@@ -91,7 +91,11 @@ async def main():
   await page.wait_for_timeout(120)
   assert await page.locator('#smokerHubScreen').is_visible()
   assert await page.locator('#smokerHubArtwork').evaluate('(e)=>e.naturalWidth') > 0
-  assert await page.locator('#smokerHubScreen .smoker-actions button').all_inner_texts() == ['Говорить','Назад']
+  smoker_buttons=page.locator('#smokerHubScreen .smoker-actions button')
+  smoker_actions=await smoker_buttons.evaluate_all("(xs)=>xs.map(x=>x.dataset.smokerAction)")
+  smoker_labels=await smoker_buttons.evaluate_all("(xs)=>xs.map(x=>x.textContent.trim())")
+  assert smoker_actions==['talk','back'],smoker_actions
+  assert smoker_labels==['Говорить','Назад'],smoker_labels
   await page.locator('#smokerHubScreen [data-smoker-action="talk"]').click()
   assert await page.locator('#smokerTalkBubble').is_visible()
   assert 'Я слушаю' in await page.locator('#smokerTalkBubble').inner_text()
