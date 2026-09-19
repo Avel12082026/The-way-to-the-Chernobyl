@@ -1,10 +1,42 @@
 name: Raid survival five fixes
 on:
   push:
-    branches: [fix/raid-survival-items-multiquests-20260920]
+    branches: [main, fix/raid-survival-items-multiquests-20260920]
+    paths:
+      - 'index.html'
+      - 'ui/quests.*'
+      - 'ui/item-reference.js'
+      - 'ui/balance-tuning.js'
+      - 'ui/raid-kpk-polish.*'
+      - 'ui/trader-hubs.js'
+      - 'server_patches/raid-survival.cjs'
+      - 'server_patches/quest-balance.cjs'
+      - 'tools/*raid*five*'
+      - 'tools/patch_raid_survival.py'
+      - 'tests/raid*'
+      - 'tests/quests*'
+      - 'tests/item_reference.test.cjs'
+      - 'tests/fixtures/raid-survival-live.json'
+      - '.github/workflows/raid-survival-five.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'ui/quests.*'
+      - 'ui/item-reference.js'
+      - 'ui/balance-tuning.js'
+      - 'ui/raid-kpk-polish.*'
+      - 'server_patches/raid-survival.cjs'
+      - 'server_patches/quest-balance.cjs'
+      - 'tools/*raid*five*'
+      - 'tools/patch_raid_survival.py'
+      - 'tests/raid*'
+      - 'tests/quests*'
+      - 'tests/item_reference.test.cjs'
+      - 'tests/fixtures/raid-survival-live.json'
+      - '.github/workflows/raid-survival-five.yml'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: raid-survival-five-${{ github.ref }}
   cancel-in-progress: true
@@ -14,38 +46,14 @@ jobs:
     timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
       - uses: actions/setup-node@v4
         with: {node-version: '22'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - name: Integrate reviewed parallel main without replacing unrelated changes
+      - name: Verify applied source and prepare isolated route fixture
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          python3 - <<'PY'
-          import subprocess as sp
-          from pathlib import Path
-          MAIN='181d1622f73eeeced7b3c49b0b7dc3d2fe978aa4'
-          actual=sp.check_output(['git','ls-remote','origin','refs/heads/main'],text=True).split()[0]
-          assert actual==MAIN,('Main moved again; manual review required',actual)
-          ours=sp.check_output(['git','rev-parse','HEAD'],text=True).strip()
-          # These files implement exactly the same feature; retain the reviewed
-          # batch/deactivation/hash-guarded superset. New main tests and CSS stay.
-          retain={'index.html','server_patches/quest-balance.cjs','ui/quests.js','ui/raid-kpk-polish.css','ui/raid-kpk-polish.js','ui/trader-hubs.js'}
-          tests={'tests/quests.browser.py','tests/raid_pda_five.static.cjs'}
-          r=sp.run(['git','merge','--no-commit','--no-ff',MAIN])
-          unresolved=set(sp.check_output(['git','diff','--name-only','--diff-filter=U'],text=True).splitlines())
-          assert unresolved<=retain|tests,('Unreviewed merge conflicts',unresolved)
-          for name in sorted(retain):
-              sp.run(['git','checkout',ours,'--',name],check=True)
-          for name in sorted(tests):
-              sp.run(['git','checkout',MAIN,'--',name],check=True)
-          assert not sp.check_output(['git','diff','--name-only','--diff-filter=U'],text=True).strip()
-          PY
-          python3 tools/reconcile_raid_five_review.py
           python3 tools/apply_raid_five_client.py
-          git diff --check
+          git diff --exit-code
           python3 - <<'PY'
           import sys,json,hashlib
           from pathlib import Path
@@ -58,7 +66,7 @@ jobs:
           Path('.validation').mkdir(exist_ok=True)
           Path('.validation/raid-survival-fixture.js').write_text(build(f['source']))
           PY
-      - name: Syntax, SQLite routes, migration and rollback regressions
+      - name: Syntax, real SQLite routes, migration and rollback tests
         run: |
           node --check server_patches/raid-survival.cjs
           node --check server_patches/quest-balance.cjs
@@ -76,6 +84,7 @@ jobs:
           node tests/raid_pda_five.static.cjs
           node tests/admin_balance_exclusion.test.cjs
           python3 tests/raid_survival_server_patch.test.py
+          git diff --check
       - name: Install Chromium
         run: |
           python -m pip install playwright==1.57.0 > /tmp/playwright-install.log 2>&1
@@ -93,10 +102,3 @@ jobs:
           include-hidden-files: true
           retention-days: 7
           path: .validation/raid-five/
-      - name: Publish tested integration to this branch only
-        if: success() && github.ref == 'refs/heads/fix/raid-survival-items-multiquests-20260920'
-        run: |
-          git add -u
-          git commit -m 'Integrate parallel multi-quest work; preserve radiation rate and strengthen validation'
-          git push origin HEAD:fix/raid-survival-items-multiquests-20260920
-          git rev-parse HEAD
