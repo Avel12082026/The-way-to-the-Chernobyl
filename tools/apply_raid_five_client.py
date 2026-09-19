@@ -84,7 +84,6 @@ def patch_css(s):
     s=once(s,'#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}', '#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;touch-action:pan-y;display:block;scrollbar-width:thin}')
     s+='''\n/* '''+MARK+''' */
 #raidExpTrack>.expBarFill{display:block!important;visibility:visible!important;opacity:1!important;z-index:0}
-#raidExpTrack>.meter-text{position:relative;z-index:1}
 #raidScreen #activeQuestRaidTracker:not([hidden]){display:block!important}
 #activeQuestRaidTracker .raid-quest-entry{display:grid;gap:2px}
 #activeQuestRaidTracker .raid-quest-entry+.raid-quest-entry{margin-top:6px;padding-top:6px;border-top:1px solid #65583c}
