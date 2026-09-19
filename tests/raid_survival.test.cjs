@@ -125,6 +125,13 @@ assert.equal(positiveLeakTurn.turnEffects.radiationRaw,5,'positive legacy radiat
 assert.equal(positiveLeakTurn.turnEffects.netLeak,5);
 assert.equal(state().radiation,5);
 
+raw.prepare('INSERT INTO crafted_artifacts VALUES(?,?,?,?,?)').run('Радиация плюс тест 2',JSON.stringify({radiationLeak:-4}),3,100,1);
+setup(0,1000,['Радиация плюс тест','Радиация плюс тест 2','Хрусталик']);const stackedRadiationTurn=quietTurnAfterBypass();
+assert.equal(stackedRadiationTurn.turnEffects.radiationRaw,9,'harmful Radiation +N stacks across equipped artifacts');
+assert.equal(stackedRadiationTurn.turnEffects.radiationProtection,3,'Radioprotection remains a separate summed defensive stat');
+assert.equal(stackedRadiationTurn.turnEffects.netLeak,6,'Radioprotection subtracts from the total per-turn Radiation +N');
+assert.equal(state().radiation,6,'stacked harmful radiation is applied once per player turn after radioprotection');
+
 raw.prepare('INSERT INTO named_artifacts VALUES(?,?,?,?,?,?)').run(101,'Именной тест',1,'1',Date.now(),JSON.stringify({'anomaly_Жарка':3,radiation:3}));
 setup(0,1000,['Именной тест']);const routeNamed=call('/api/raid/anomaly/search');
 assert.equal(delta1(routeNeutral.anomalyDmg,routeNamed.anomalyDmg),3,'named artifact +3 protection is applied from DB stats');
