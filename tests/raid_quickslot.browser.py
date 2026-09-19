@@ -81,6 +81,15 @@ async def main():
     await page.wait_for_timeout(120)
     await cdp.detach()
     assert len(writes)==1,writes
+    info_text=await page.locator('#itemInfoModalBody').inner_text()
+    assert 'Можно использовать с уровня:' in info_text,info_text
+    assert 'Средняя цена:' in info_text,info_text
+    await page.locator('#itemInfoModal button').last.click()
+
+    # EXP must have a visible green fill in raid, not only a changing number.
+    await page.evaluate("player.exp=Math.floor(expNeededForLevel(player.level)/2);updateUI();RaidKpkPolish.apply()")
+    exp_fill=await page.locator('#raidExpTrack .expBarFill').evaluate("""e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {display:s.display,width:r.width,track:e.parentElement.getBoundingClientRect().width}}""")
+    assert exp_fill['display']!='none' and exp_fill['width']>0 and exp_fill['width']<exp_fill['track'],exp_fill
 
     # Screenshot layout invariants.
     assert await page.locator('#raidVisualStage').count()==1

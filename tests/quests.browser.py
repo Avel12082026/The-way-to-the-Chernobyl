@@ -118,9 +118,9 @@ async def main():
     assert await tracker.evaluate("e=>getComputedStyle(e).overflowY") in ('auto','scroll')
     assert not await tracker.evaluate("e=>e.classList.contains('quest-ready')")
     await page.evaluate("player.inventory['Медуза']=1;updateUI()");await page.wait_for_timeout(80)
-    assert await tracker.evaluate("e=>e.classList.contains('quest-ready')")
+    assert await tracker.locator('.raid-quest-track-item').first.evaluate("e=>e.classList.contains('quest-ready')")
     await page.evaluate("delete player.inventory['Медуза'];updateUI()");await page.wait_for_timeout(80)
-    assert not await tracker.evaluate("e=>e.classList.contains('quest-ready')")
+    assert not await tracker.locator('.raid-quest-track-item').first.evaluate("e=>e.classList.contains('quest-ready')")
 
     # Trader talk opens the STALKER-like dialogue and category-specific offer.
     await page.evaluate("TraderHubs.openZhuchara()")
