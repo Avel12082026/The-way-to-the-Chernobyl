@@ -224,8 +224,9 @@ async def main():
         await drag('inventory',b,'warehouse',touch=True)
         assert writes()[-1]['path'].endswith('/warehouse/transfer')
         assert writes()[-1]['payload']['direction']=='deposit'
-        # Leonov: real hub action when the current 1.2 module is present.
+        # Leonov: close Zhuchara's portrait hub, then enter Leonov through the real hotspot.
         await page.locator('[data-trade-action=back]').click()
+        await page.evaluate("openScreen('main')")
         await page.locator('#bunkerLeonov').click()
         if await page.locator('[data-leonov-action=trade]').count():
             await page.locator('[data-leonov-action=selection]').click()
