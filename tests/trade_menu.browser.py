@@ -96,7 +96,7 @@ async def main():
         html=html.replace(artwork.name+'?v=0503d3b544d1','data:image/png;base64,'+base64.b64encode(artwork.read_bytes()).decode())
         await context.route('**/*',lambda route:route.abort())
         await page.set_content(html,wait_until='domcontentloaded')
-        await page.wait_for_function("window.TradeMenu?.version==='1.0.0' && document.getElementById('coins').textContent==='100000'")
+        await page.wait_for_function("typeof window.TradeMenu?.open==='function' && document.getElementById('coins').textContent==='100000'")
         data = await page.evaluate("({catalog:getShopCatalog(),artifact:artifacts.find(a=>!a.adminOnly).name,gear:weapons[0].name,detector:detectors[0].name,medkit:consumables.find(c=>c.type==='medkit').name})")
         prices.update({item['name']:item['price'] for item in data['catalog']})
         a,b=data['catalog'][0]['name'],data['catalog'][1]['name']
@@ -147,12 +147,33 @@ async def main():
         snapshot=await page.evaluate('JSON.stringify(player.inventory)')
         await drag('stock',a,'buy')
         assert await item('buy',a).count()==1, 'Mouse drag must stage the item'
+        # A one-of-one item disappears from the bag while it is reserved for sale, but player.inventory is still untouched.
+        await click('inventory',data['gear'])
+        assert await item('sell',data['gear']).count()==1
+        assert await item('inventory',data['gear']).count()==0
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+        await click('sell',data['gear'])
+        assert await item('sell',data['gear']).count()==0
+        assert await item('inventory',data['gear']).count()==1
+        assert (await item('inventory',data['gear']).inner_text()).endswith('×1')
+
+        # Stack quantities are projected in the bag: staged amount is hidden, returning it restores the count.
         await drag('inventory',b,'sell',touch=True)
         assert await item('sell',b).count()==1, 'Touch hold/drag must stage the item'
+        assert (await item('inventory',b).inner_text()).endswith('×9')
         assert len(writes())==0
         assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
         await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
         assert (await item('sell',b).inner_text()).endswith('×3')
+        assert (await item('inventory',b).inner_text()).endswith('×7')
+        await drag('sell',b,'inventory')
+        assert await item('sell',b).count()==0
+        assert (await item('inventory',b).inner_text()).endswith('×10')
+        assert await page.evaluate('JSON.stringify(player.inventory)')==snapshot
+        await click('inventory',b)
+        await page.locator('#tradeQuantity').fill('3');await page.locator('#tradeQuantity').press('Tab')
+        assert (await item('sell',b).inner_text()).endswith('×3')
+        assert (await item('inventory',b).inner_text()).endswith('×7')
         await page.locator('#tradeQuantity').fill('999');await page.locator('#tradeQuantity').press('Tab')
         assert await page.locator('#tradeQuantity').input_value()=='3'
         await page.locator('#tradeBuy').evaluate('(b)=>{b.click();b.click()}')
