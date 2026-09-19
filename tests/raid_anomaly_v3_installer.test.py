@@ -32,6 +32,29 @@ with tempfile.TemporaryDirectory() as td:
     finally:
         mod.KNOWN_SERVER_INPUTS=known
 
+# Regression for the exact failure seen on an already-installed 20260920.2 server:
+# the /api/raid/step handler may not have pveRadiationDamage(data) immediately after
+# pveArtifactTurnEffects(data). The V2 -> V3 upgrade must still insert the recompute
+# into the raid-step handler without touching the anomaly-search call site.
+v3_source=mod.build(fixture['source'])
+import patch_raid_survival as patch
+v2_source=(v3_source
+    .replace(patch.MARK,patch.OLD_MARK_V2,1)
+    .replace(patch.BELT_HELPER,patch.BELT_HELPER_V2,1)
+    .replace(patch.NEW_HAZARD_CALL,patch.V2_HAZARD_CALL,1)
+    .replace(patch.TURN_EFFECTS_V3,patch.TURN_EFFECTS_V2,1)
+    .replace("            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);\n            const turnEffects=pveArtifactTurnEffects(data);",
+             "            const turnEffects=pveArtifactTurnEffects(data);",1))
+step_old="            const turnEffects=pveArtifactTurnEffects(data);\n            const radiationDamage=pveRadiationDamage(data);"
+step_variant="            const turnEffects=pveArtifactTurnEffects(data);\n            const radiationDamage=RaidSurvival.radiationDamage(data);"
+assert step_old in v2_source
+v2_source=v2_source.replace(step_old,step_variant,1)
+upgraded_variant=mod.build(v2_source)
+step_new="            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);\n            const turnEffects=pveArtifactTurnEffects(data);"
+assert step_new in upgraded_variant
+assert patch.MARK in upgraded_variant and patch.OLD_MARK_V2 not in upgraded_variant
+assert upgraded_variant.count(step_new)==1
+
 with tempfile.TemporaryDirectory() as td:
     root=Path(td)
     (root/'server.js').write_bytes(b'old server')
