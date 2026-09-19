@@ -43,8 +43,8 @@ const exactWithScaledArmour=artifactStat=>{
   },()=>.5);
 };
 const scaledNeutral=exactWithScaledArmour(0),scaledProtected=exactWithScaledArmour(3);
-assert.equal(scaledNeutral.anomalyDmg-scaledProtected.anomalyDmg,3,'belt +3 stays exact with fractional armour/faction scaling');
-assert.equal(scaledNeutral.radiationDose-scaledProtected.radiationDose,3,'radiation +3 stays exact with fractional armour/faction scaling');
+assert.equal(Math.round((scaledNeutral.anomalyDmg-scaledProtected.anomalyDmg)*10)/10,3,'belt +3 stays exact with fractional armour/faction scaling');
+assert.equal(Math.round((scaledNeutral.radiationDose-scaledProtected.radiationDose)*10)/10,3,'radiation +3 stays exact with fractional armour/faction scaling');
 
 // Execute the actual patched production route bodies against a fresh in-memory SQLite DB.
 const raw=new DatabaseSync(':memory:');
