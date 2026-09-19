@@ -59,7 +59,8 @@ jobs:
           from pathlib import Path
           sys.path.insert(0,'tools')
           from patch_raid_survival import build
-          from install_raid_five_update import QUEST_AFTER,MODULE_HASH
+          from install_raid_five_update import QUEST_AFTER
+from install_raid_anomaly_v3_update import MODULE_HASH
           assert hashlib.sha256(Path('server_patches/quest-balance.cjs').read_bytes()).hexdigest()==QUEST_AFTER
           assert hashlib.sha256(Path('server_patches/raid-survival.cjs').read_bytes()).hexdigest()==MODULE_HASH
           f=json.loads(Path('tests/fixtures/raid-survival-live.json').read_text())
@@ -74,11 +75,12 @@ jobs:
           node --check ui/quests.js
           node --check ui/raid-kpk-polish.js
           node --check .validation/raid-survival-fixture.js
-          python3 -m py_compile tools/apply_raid_five_client.py tools/patch_raid_survival.py tools/install_raid_five_update.py tests/raid_five.browser.py
+          python3 -m py_compile tools/apply_raid_five_client.py tools/patch_raid_survival.py tools/install_raid_five_update.py tools/install_raid_anomaly_v3_update.py tests/raid_five.browser.py tests/raid_anomaly_v3_installer.test.py
           node tests/raid_survival.test.cjs
           node tests/quests_multi.test.cjs
           node tests/item_reference.test.cjs
           python3 tests/raid_five_installer.test.py
+          python3 tests/raid_anomaly_v3_installer.test.py
           node tests/quests_server.test.cjs
           node tests/quests_client.static.cjs
           node tests/raid_pda_five.static.cjs
