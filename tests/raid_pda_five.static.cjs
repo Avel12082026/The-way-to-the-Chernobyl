@@ -7,7 +7,7 @@ const css=fs.readFileSync('ui/raid-kpk-polish.css','utf8');
 const raid=fs.readFileSync('ui/raid-kpk-polish.js','utf8');
 
 assert(html.includes('ui/raid-kpk-polish.css?v=20260920-five1'));
-assert(html.includes('ui/raid-kpk-polish.js?v=20260920-hazard3'));
+assert(html.includes('ui/raid-kpk-polish.js?v=20260920-five1'));
 assert(html.includes('🪙 Сталбайты: ${data.coins ?? 0}'));
 assert(html.includes('🧬 Сталкоины: ${data.breedCredits ?? 0}'));
 assert(!html.includes('ПЕРСОНАЛЬНЫЙ ТЕРМИНАЛ'));
@@ -30,7 +30,9 @@ console.log('five raid/PDA fixes static checks: OK');
 
 assert(css.includes('#raidMetersRow>.raid-radiation-wrapper>.raid-radiation-label'),'EXP fill visibility selector missing');
 assert(css.includes('#activeQuestRaidTracker')&&css.includes('overflow-y:auto!important'),'quest tracker must scroll');
-assert(raid.includes("version:'1.4.2'"));
-assert(raid.includes('restorePendingAnomalyUi'),'resolved anomaly reconciliation missing');
+assert(raid.includes("version:'1.4.0'"));
+assert(html.includes("if(!raidActive||!raidSessionToken||currentEnemy||currentAnomaly||currentLuckyFind)return;"),'raid step must stay blocked while any anomaly encounter is pending');
+assert(html.includes("} else if (currentAnomaly) {\n            renderAnomalyButtons();"),'return-to-raid must restore resolved anomaly completion UI');
+assert(html.includes("if(currentAnomaly){showGameAlert('Сначала завершите аномалию.');return;}"),'raid end must remain blocked until anomaly finish clears server pending state');
 const balance=fs.readFileSync('ui/balance-tuning.js','utf8');
 assert(balance.includes('Можно использовать с уровня:')&&balance.includes('Средняя цена:'),'item info reference metadata missing');
