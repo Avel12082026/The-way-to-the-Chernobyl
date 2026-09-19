@@ -131,8 +131,22 @@ async def main():
     await page.evaluate("updateAnomalyScene();RaidKpkPolish.apply()")
     await page.wait_for_timeout(50)
     if await page.locator('#anomalyScene').is_visible():
-      fill=await page.evaluate("""()=>{const v=document.getElementById('raidVisualStage').getBoundingClientRect(),s=document.getElementById('anomalyScene').getBoundingClientRect();return [Math.round(v.height),Math.round(s.height),Math.round(s.top-v.top)]}""")
-      assert abs(fill[0]-fill[1])<=2 and abs(fill[2])<=2,fill
+      native_scene=await page.evaluate("""()=>{
+        const v=document.getElementById('raidVisualStage').getBoundingClientRect();
+        const s=document.getElementById('anomalyScene').getBoundingClientRect();
+        const hand=document.querySelector('#anomalyScene .anomaly-hand');
+        const hs=hand?getComputedStyle(hand):null;
+        return {
+          stageH:Math.round(v.height),sceneH:Math.round(s.height),sceneW:Math.round(s.width),
+          top:Math.round(s.top-v.top),handObjectFit:hs?.objectFit||null
+        };
+      }""")
+      assert abs(native_scene['stageH']-native_scene['sceneH'])<=2,native_scene
+      assert abs(native_scene['top'])<=2,native_scene
+      assert abs(native_scene['sceneW']/native_scene['sceneH']-1.5)<0.03,native_scene
+      assert native_scene['handObjectFit'] in (None,'contain'),native_scene
+      log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
+      assert log_h>=120,log_h
 
     # Combat likewise replaces navigation with the original attack/escape pair.
     await page.evaluate("""()=>{

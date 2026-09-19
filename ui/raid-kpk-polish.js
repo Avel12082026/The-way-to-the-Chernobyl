@@ -125,15 +125,7 @@ function scheduleRaidHistoryBalance(raid,visual,log){
   if(raidBalanceFrame)cancelAnimationFrame(raidBalanceFrame);
   raidBalanceFrame=requestAnimationFrame(()=>{
     raidBalanceFrame=0;
-    const scene=visibleRaidScene(visual);
-    if(!scene){
-      log.style.setProperty('--raid-log-extra','0px');
-      return;
-    }
-    const current=Math.max(0,parseFloat(getComputedStyle(log).getPropertyValue('--raid-log-extra'))||0);
-    const spare=visual.clientHeight-scene.offsetHeight;
-    const next=Math.max(0,current+spare);
-    log.style.setProperty('--raid-log-extra',`${Math.round(next)}px`);
+    log.style.setProperty('--raid-log-extra','0px');
   });
 }
 
@@ -226,5 +218,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.1',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.2',apply,applyRaidLayout,applyPdaLayout});
 })();

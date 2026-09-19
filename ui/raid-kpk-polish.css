@@ -34,13 +34,13 @@
 }
 #raidVisualStage{
   width:100%;
-  flex:1 1 0;
+  flex:0 0 auto;
   height:auto;
   min-height:0;
   background:#000;
   overflow:hidden;
   display:flex;
-  align-items:stretch;
+  align-items:flex-start;
   justify-content:center;
   margin:0 0 4px;
   border:1px solid #2b291f;
@@ -50,21 +50,21 @@
 #raidVisualStage #anomalyScene{
   width:100%!important;
   max-width:100%!important;
-  height:100%!important;
+  height:auto!important;
   min-height:0!important;
-  aspect-ratio:auto!important;
+  aspect-ratio:3/2!important;
   margin:0!important;
   border-radius:0!important;
   border:0!important;
-  background-size:cover!important;
-  background-position:center!important;
 }
 #raidVisualStage #combatScene canvas{
+  display:block!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
+  max-width:100%!important;
   max-height:none!important;
-  aspect-ratio:auto!important;
-  object-fit:cover!important;
+  aspect-ratio:3/2!important;
+  object-fit:contain!important;
   background:#000;
 }
 
@@ -194,10 +194,10 @@
 #activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}
 #raidLog{
   --raid-log-extra:0px;
-  flex:0 1 clamp(118px,19dvh,190px)!important;
-  height:clamp(118px,19dvh,190px)!important;
-  min-height:104px!important;
-  max-height:210px!important;
+  flex:1 1 0!important;
+  height:auto!important;
+  min-height:132px!important;
+  max-height:none!important;
   margin:4px 0 0!important;
   overflow-y:auto!important;
   overflow-x:hidden!important;
@@ -216,17 +216,17 @@
   #battleButtonsContainer button{min-height:50px!important;padding:7px 4px!important}
   #raidUtilityButtons>button{min-height:44px!important}
   #raidLog{
-    flex-basis:clamp(112px,18dvh,176px)!important;
-    height:clamp(112px,18dvh,176px)!important;
-    min-height:100px!important;
-    max-height:190px!important;
+    flex:1 1 0!important;
+    height:auto!important;
+    min-height:120px!important;
+    max-height:none!important;
   }
 }
 @media(max-height:650px){
   #raidLog{
-    flex-basis:88px!important;
-    height:88px!important;
-    min-height:80px!important;
-    max-height:96px!important;
+    flex:1 1 0!important;
+    height:auto!important;
+    min-height:86px!important;
+    max-height:none!important;
   }
 }
