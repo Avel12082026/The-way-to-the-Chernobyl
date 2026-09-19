@@ -143,7 +143,7 @@ async def main():
     style_js="e=>{const s=getComputedStyle(e);return [s.backgroundImage,s.backgroundColor,s.borderTopColor,s.borderTopWidth,s.fontFamily,s.fontSize,s.fontWeight,s.textTransform]}"
     assert await backpack.evaluate(style_js)==await bypass.evaluate(style_js)
     await page.evaluate("updateAnomalyScene();RaidKpkPolish.apply()")
-    assert await page.locator('#raidIdleScene').is_hidden()
+    assert await page.locator('#raidIdleScene').is_visible()
     await page.wait_for_timeout(50)
     if await page.locator('#anomalyScene').is_visible():
       native_scene=await page.evaluate("""()=>{
