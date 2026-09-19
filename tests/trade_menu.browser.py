@@ -249,8 +249,12 @@ async def main():
         assert await page.evaluate('player.breedCredits')==57
         await click('stock',data['medkit']);await page.locator('#tradeBuy').click();await page.wait_for_timeout(250)
         assert writes()[-1]['payload']['vendor']=='leonov'
-        # Diesel sells detectors; upgrades remain a separate route.
-        await page.evaluate("openScreen('technician');openTechnicianTab('sell')")
+        # Diesel sells detectors; enter trading through the current portrait hub.
+        await page.evaluate("openScreen('technician')")
+        if await page.locator('#dieselHubScreen').is_visible():
+            await page.locator('#dieselHubScreen [data-trader-action=trade]').click()
+        else:
+            await page.evaluate("openTechnicianTab('sell')")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='technician'
         assert await item('stock',data['detector']).count()==1
         await click('inventory',a)
