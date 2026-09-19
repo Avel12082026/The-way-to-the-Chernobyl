@@ -4,24 +4,98 @@ on:
     branches: [fix/raid-survival-items-multiquests-20260920]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: raid-survival-five-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  audit:
+  validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
-      - name: Read real item and progression functions
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Materialize integrity-checked source bundle
         run: |
           python3 - <<'PY'
-          from pathlib import Path
-          import re
-          s=Path('index.html').read_text()
-          names=re.findall(r'function\s+(\w+)\s*\(',s)
-          print('ITEM FUNCTIONS:',[n for n in names if any(k in n.lower() for k in ['item','unlock','sellprice','buyprice'])])
-          for n in ['showItemInfoModal','openItemActionModal','getItemStatsHtml','getItemStatsHTML','getDetectorUnlockTier','getResearchSuitUnlockTier','getSellPrice']:
-              m=re.search(r'function\s+'+n+r'\s*\(',s)
-              if not m:continue
-              end=re.search(r'\n    (?:async )?function ',s[m.end():])
-              text=s[m.start():m.end()+end.start() if end else m.start()+6000]
-              print('\n=== '+n+' ===\n'+text[:9000])
+          from pathlib import Path, PurePosixPath
+          import base64,hashlib,json,lzma
+          staging=Path('tools/raid-five-stage')
+          if staging.exists():
+              parts=sorted(staging.glob('part-*.b64'))
+              assert [p.name for p in parts]==[f'part-{i:02}.b64' for i in range(6)]
+              data=base64.b64decode(''.join(p.read_text().strip() for p in parts),validate=True)
+              assert hashlib.sha256(data).hexdigest()=='ebd20048bc6d7a9fa98591408a8ddc9262f30efe4f76503173507eecdf9322e1'
+              raw=lzma.decompress(data)
+              assert hashlib.sha256(raw).hexdigest()=='c73cc7c3bda34afc1729379732e7ba9a12503c6302262b9ab414951962919628'
+              files=json.loads(raw)
+              allowed={'server_patches/raid-survival.cjs','ui/item-reference.js','tools/apply_raid_five_client.py','tools/patch_raid_survival.py','tools/install_raid_five_update.py','tests/raid_survival.test.cjs','tests/quests_multi.test.cjs','tests/item_reference.test.cjs','tests/raid_five.browser.py','tests/raid_five_installer.test.py','tests/fixtures/raid-survival-live.json','RAID_FIVE_UPDATE_20260920.md'}
+              assert set(files)==allowed
+              for name,content in files.items():
+                  p=Path(name)
+                  assert not PurePosixPath(name).is_absolute() and '..' not in p.parts and not p.is_symlink()
+                  assert isinstance(content,str)
+                  p.parent.mkdir(parents=True,exist_ok=True)
+                  p.write_text(content,encoding='utf-8')
+              print('Materialized 12 reviewed source/test files; hashes verified')
           PY
+          python3 tools/apply_raid_five_client.py
+          python3 - <<'PY'
+          import sys,json
+          from pathlib import Path
+          sys.path.insert(0,'tools')
+          from patch_raid_survival import build
+          f=json.loads(Path('tests/fixtures/raid-survival-live.json').read_text())
+          Path('.validation').mkdir(exist_ok=True)
+          Path('.validation/raid-survival-fixture.js').write_text(build(f['source']))
+          PY
+      - name: Syntax, real SQLite routes, migration and rollback tests
+        run: |
+          node --check server_patches/raid-survival.cjs
+          node --check server_patches/quest-balance.cjs
+          node --check ui/item-reference.js
+          node --check ui/quests.js
+          node --check ui/raid-kpk-polish.js
+          node --check .validation/raid-survival-fixture.js
+          python3 -m py_compile tools/apply_raid_five_client.py tools/patch_raid_survival.py tools/install_raid_five_update.py tests/raid_five.browser.py
+          node tests/raid_survival.test.cjs
+          node tests/quests_multi.test.cjs
+          node tests/item_reference.test.cjs
+          python3 tests/raid_five_installer.test.py
+          node tests/quests_server.test.cjs
+          node tests/quests_client.static.cjs
+          node tests/raid_pda_five.static.cjs
+          node tests/admin_balance_exclusion.test.cjs
+          git diff --check
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Mobile browser regressions
+        run: |
+          python tests/quests.browser.py
+          python tests/raid_quickslot.browser.py
+          python tests/raid_five.browser.py
+      - name: Attach reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raid-five-validation
+          include-hidden-files: true
+          retention-days: 7
+          path: .validation/raid-five/
+      - name: Commit tested plaintext sources to this branch only
+        if: success() && github.ref == 'refs/heads/fix/raid-survival-items-multiquests-20260920'
+        run: |
+          if [ -d tools/raid-five-stage ]; then git rm -r tools/raid-five-stage; fi
+          git add index.html server_patches/quest-balance.cjs server_patches/raid-survival.cjs ui/item-reference.js ui/quests.js ui/raid-kpk-polish.css ui/raid-kpk-polish.js ui/trader-hubs.js tools/apply_raid_five_client.py tools/patch_raid_survival.py tools/install_raid_five_update.py tests/raid_survival.test.cjs tests/quests_multi.test.cjs tests/item_reference.test.cjs tests/raid_five.browser.py tests/raid_five_installer.test.py tests/fixtures/raid-survival-live.json tests/quests.browser.py tests/raid_pda_five.static.cjs RAID_FIVE_UPDATE_20260920.md
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Implement five tested raid, item reference and multi-quest fixes'
+            git push origin HEAD:fix/raid-survival-items-multiquests-20260920
+          fi
+          git rev-parse HEAD
