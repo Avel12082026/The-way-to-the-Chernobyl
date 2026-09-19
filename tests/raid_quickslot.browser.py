@@ -92,6 +92,7 @@ async def main():
 
     # EXP must have a visible green fill in raid, not only a changing number.
     await page.evaluate("player.exp=Math.floor(expNeededForLevel(player.level)/2);updateUI();RaidKpkPolish.apply()")
+    await page.wait_for_timeout(350)  # allow the real 0.3 s width transition to finish
     exp_fill=await page.locator('#raidExpTrack .expBarFill').evaluate("""e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {display:s.display,width:r.width,track:e.parentElement.getBoundingClientRect().width}}""")
     assert exp_fill['display']!='none' and exp_fill['width']>0 and exp_fill['width']<exp_fill['track'],exp_fill
 
