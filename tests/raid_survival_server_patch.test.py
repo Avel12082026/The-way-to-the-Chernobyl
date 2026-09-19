@@ -49,8 +49,12 @@ assert MOD.MARK in patched
 assert '-2));' in patched and '-5));' not in patched
 assert 'rad*0.15' in patched
 assert 'searchDmg=0' in patched
-assert 'pveAnomalyExposureServer' in patched
-assert 'upgradeLevel*2.2' in patched
+assert 'pveAnomalyExposureServer(playerId,data,a)' in patched
+assert 'pveBeltHazardProtection' in patched
+assert 'serverRecomputeArtifactDerived(playerId,data)' in patched
+assert 'const damage=[0,10,16,24,34,46,60,76,94,230];' in patched
+assert 'rawAnomaly-armorSpecific-researchAnomalyBonus-artifactSpecific' in patched
+assert 'rawRadiation-armorRadiation-researchRadBonus-artifactRadiation' in patched
 assert 'damage=[0,10,16,24,34,46,60,76,94,230]' in patched
 assert 'artifactSpecific' in patched and 'artifactRadiation' in patched
 assert 'serverArtifactDef(name)' in patched and 'effectiveArmor' in patched
@@ -70,7 +74,7 @@ assert 'pveAnomalyExposureServer(playerId,data,a)' in upgraded
 with tempfile.TemporaryDirectory() as td:
     p=Path(td)/'server.js';p.write_text(patched,encoding='utf-8')
     subprocess.run(['node','--check',str(p)],check=True)
-print('PASS: raid survival server patch')
+print('PASS: raid survival V3 server patch with exact signed belt hazard effects')
 
 
 # Regression: the installer health loop intentionally calls run(..., check=False).
