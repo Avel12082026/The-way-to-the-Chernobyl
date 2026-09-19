@@ -109,7 +109,8 @@ def patch(source):
     return text,True
 
 def run(cmd,**kw):
-    return subprocess.run(cmd,check=True,**kw)
+    kw.setdefault('check',True)
+    return subprocess.run(cmd,**kw)
 
 def main():
     ap=argparse.ArgumentParser()
