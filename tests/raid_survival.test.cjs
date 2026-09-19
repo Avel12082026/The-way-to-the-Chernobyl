@@ -73,8 +73,8 @@ const env={require:n=>{assert.equal(n,'./raid-survival.cjs');return model;},cons
 };
 vm.createContext(env);vm.runInContext(fixture.helpers+'\n'+code,env);
 function state(){return JSON.parse(raw.prepare('SELECT data FROM players WHERE id=?').get('1').data);}
-function setup(attempt=0,health=1000,artifactSlots=[]){
-  raw.prepare('INSERT OR REPLACE INTO players VALUES(?,?,0)').run('1',JSON.stringify({health,maxHealth:1000,hunger:100,thirst:100,radiation:0,level:1,luck:0,inventory:{},stats:{},artifactSlots,armor:{name:'Комбинезон Юность'},armorUpgradeData:{}}));
+function setup(attempt=0,health=1000,artifactSlots=[],armorName='Комбинезон Юность',radiation=0){
+  raw.prepare('INSERT OR REPLACE INTO players VALUES(?,?,0)').run('1',JSON.stringify({health,maxHealth:1000,hunger:100,thirst:100,radiation,level:1,luck:0,inventory:{},stats:{},artifactSlots,armor:{name:armorName},armorUpgradeData:{}}));
   raw.prepare('INSERT OR REPLACE INTO raid_sessions VALUES(?,?,?,?,0)').run('1','raid','anomaly',JSON.stringify({name:'Жарка',tier:1,attemptsUsed:attempt,artifacts:['Медуза']}));
 }
 function call(url,body={}){const res={status(){return this;},json(v){this.value=v;return v;}};routes[url]({telegramUser:{id:'1'},body:{raidToken:'raid',...body}},res);return res.value;}
@@ -94,7 +94,36 @@ assert.equal(delta1(routeNeutral.anomalyDmg,routeProtected.anomalyDmg),2,'Мед
 setup(0,1000,['Льдинка']);const routeVulnerable=call('/api/raid/anomaly/search');
 assert.equal(delta1(routeVulnerable.anomalyDmg,routeNeutral.anomalyDmg),3,'Льдинка Жарка -3 adds exactly 3 HP damage');
 setup(0,1000,['Хрусталик']);const routeRadProtected=call('/api/raid/anomaly/search');
-assert.equal(delta1(routeNeutral.radiationAdded,routeRadProtected.radiationAdded),3,'Хрусталик radiation +3 removes exactly 3 dose');
+assert.equal(delta1(routeNeutral.radiationAdded,routeRadProtected.radiationAdded),3,'Хрусталик radioprotection +3 removes exactly 3 dose');
+
+// «Радиозащита +N» and harmful «Радиация +N» are deliberately different mechanics.
+// radiationLeak is a legacy storage key, but either sign must remain harmful and add contamination each turn.
+function quietTurnAfterBypass(){
+  assert.equal(call('/api/raid/anomaly/bypass').success,true);
+  return call('/api/raid/step');
+}
+setup(0,1000,['Жемчужина']);const radiationTurn=quietTurnAfterBypass();
+assert.equal(radiationTurn.turnEffects.radiationRaw,3,'Жемчужина shows/acts as Radiation +3 per turn');
+assert.equal(radiationTurn.turnEffects.radiationProtection,0);
+assert.equal(radiationTurn.turnEffects.netLeak,3);
+assert.equal(state().radiation,3,'harmful Radiation +3 raises the meter by 3 on the player turn');
+
+setup(0,1000,['Жемчужина','Хрусталик']);const protectedTurn=quietTurnAfterBypass();
+assert.equal(protectedTurn.turnEffects.radiationRaw,3);
+assert.equal(protectedTurn.turnEffects.radiationProtection,3,'Хрусталик supplies Radioprotection +3');
+assert.equal(protectedTurn.turnEffects.netLeak,0);
+assert.equal(state().radiation,0,'belt radioprotection offsets equal per-turn artifact radiation');
+
+setup(0,1000,['Жемчужина'],'Исследовательский комбинезон A');const armorProtectedTurn=quietTurnAfterBypass();
+assert(armorProtectedTurn.turnEffects.radiationProtection>=12,'armour radioprotection participates in per-turn radiation defense');
+assert.equal(armorProtectedTurn.turnEffects.netLeak,0);
+assert.equal(state().radiation,0,'armour radioprotection offsets artifact radiation');
+
+raw.prepare('INSERT INTO crafted_artifacts VALUES(?,?,?,?,?)').run('Радиация плюс тест',JSON.stringify({radiationLeak:5}),3,100,1);
+setup(0,1000,['Радиация плюс тест']);const positiveLeakTurn=quietTurnAfterBypass();
+assert.equal(positiveLeakTurn.turnEffects.radiationRaw,5,'positive legacy radiationLeak cannot flip into protection');
+assert.equal(positiveLeakTurn.turnEffects.netLeak,5);
+assert.equal(state().radiation,5);
 
 raw.prepare('INSERT INTO named_artifacts VALUES(?,?,?,?,?,?)').run(101,'Именной тест',1,'1',Date.now(),JSON.stringify({'anomaly_Жарка':3,radiation:3}));
 setup(0,1000,['Именной тест']);const routeNamed=call('/api/raid/anomaly/search');
@@ -115,5 +144,5 @@ assert.equal(call('/api/raid/step').radiationDamage,0);
 setup(3);const unchanged=JSON.stringify(state());assert.equal(call('/api/raid/anomaly/search').success,false);assert.equal(JSON.stringify(state()),unchanged);
 setup(0,1);assert.equal(call('/api/raid/anomaly/search').died,true);
 assert.equal(raw.prepare('SELECT COUNT(*) AS n FROM raid_sessions').get().n,0);
-console.log('PASS: stronger tiers 1–9; exact signed belt anomaly/radiation stats; armor protection; delayed radiation; antirad; no duplicate/dead search; travel -2/-2');
+console.log('PASS: stronger tiers 1–9; exact belt anomaly/radioprotection stats; harmful Radiation +N every turn; armor radioprotection; delayed radiation; antirad; no duplicate/dead search; travel -2/-2');
 console.log(JSON.stringify({tier9:{ordinary:ordinary[0],research50:upgraded[0]},tiers:rows},null,2));
