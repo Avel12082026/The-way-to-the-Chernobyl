@@ -7,9 +7,9 @@ from patch_artifact_selection_radiation import build, MARK
 
 ROOT=Path('/var/www/pocketzone')
 SERVICE='pocketzone.service'
-VERSION='20260920.1'
+VERSION='20260920.2'
 MODULE_NAME='artifact-selection-radiation.cjs'
-MODULE_HASH='3f0dbc10a18b3fbce20cbbb7c49ccc39b63c850d67e9766e7ccf6160c90ab57f'
+MODULE_HASH='254abd009cfb296baec86c6f3a53fab01bb77a6e2f83e618436608f1173abf57'
 
 # Exact live server.js after the confirmed RAID_ANOMALY_V3 20260920.3 install.
 KNOWN_SERVER_INPUTS={
@@ -164,7 +164,7 @@ def main():
         backup=deploy(root,before,updates)
         run(['systemctl','is-active','--quiet',SERVICE])
         print('OK: ARTIFACT_SELECTION_RADIATION '+VERSION+' установлен')
-        print('Радиация +N уменьшается на 1 при селекции и исчезает на нуле; Радиозащита остаётся отдельным положительным свойством')
+        print('Радиация +N уменьшается на 1 и исчезает на нуле; Радиозащита при каждой селекции увеличивается на 1 от сильнейшего родителя')
         print('Резервная копия кода:',backup)
         print('server.js SHA-256:',digest((root/'server.js').read_bytes()))
 

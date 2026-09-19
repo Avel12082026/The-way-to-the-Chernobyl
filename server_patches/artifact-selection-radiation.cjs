@@ -6,7 +6,7 @@
  * - "radiationLeak" is the legacy storage key for the harmful visible "Radiation +N" effect.
  * - Harmful radiation improves toward zero by exactly 1 on each selection step and disappears at zero.
  * - Harmful radiation never flips into a protective stat.
- * - Radioprotection remains a separate positive property and follows the normal positive-stat merge/cap.
+ * - Radioprotection remains separate and, when inherited, grows by exactly 1 per selection step.
  */
 
 const finite = value => Number.isFinite(Number(value)) ? Number(value) : 0;
@@ -33,10 +33,13 @@ function mergeStats(firstStats, secondStats, options = {}) {
     }
 
     if (key === 'radiation') {
-      // "radiation" is only Radioprotection. Old malformed negative values are not
-      // allowed to become harmful radiation or cancel valid Radioprotection.
-      const protection = Math.max(0, v1) + Math.max(0, v2);
-      if (protection > 0) merged.radiation = Math.min(Math.round(protection), perStatCap);
+      // "radiation" is only Radioprotection. Selection improves the strongest
+      // inherited protection by exactly 1, without exponential parent summing.
+      // Old malformed negative values are ignored and never become harmful radiation.
+      const protection = Math.max(0, v1, v2);
+      if (protection > 0) {
+        merged.radiation = Math.min(Math.round(protection) + 1, perStatCap);
+      }
       continue;
     }
 
@@ -54,4 +57,4 @@ function mergeStats(firstStats, secondStats, options = {}) {
   return merged;
 }
 
-module.exports = Object.freeze({ version: '20260920.1', mergeStats });
+module.exports = Object.freeze({ version: '20260920.2', mergeStats });
