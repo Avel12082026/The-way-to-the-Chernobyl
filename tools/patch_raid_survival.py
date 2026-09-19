@@ -37,13 +37,30 @@ OLD_HAZARD_CALL="""            const hazard=RaidSurvival.search(data,a,{
 NEW_HAZARD_CALL="""            const beltHazard=pveBeltHazardProtection(data);
             const factionHazardPct=typeof pveFactionBonuses==='function'
                 ? (Number(pveFactionBonuses(playerId,data,null).anomalyRadResistPct)||0) : 0;
+            const factionHazardScale=Math.max(0,1+factionHazardPct/100);
+            let armorHazard=null;
+            if(armorName&&typeof getArmorEffectiveStatsServer==='function'){
+                const effective=getArmorEffectiveStatsServer(armorName,data);
+                if(effective&&effective.stats&&typeof effective.stats==='object'){
+                    armorHazard={radiation:0,anomaly:{}};
+                    for(const [key,raw] of Object.entries(effective.stats)){
+                        const value=(Number(raw)||0)*factionHazardScale;
+                        if(key==='radiation')armorHazard.radiation+=value;
+                        else if(key.startsWith('anomaly_')){
+                            const anomalyName=key.slice('anomaly_'.length);
+                            armorHazard.anomaly[anomalyName]=(Number(armorHazard.anomaly[anomalyName])||0)+value;
+                        }
+                    }
+                }
+            }
             const hazard=RaidSurvival.search(data,a,{
                 researchSuit:!!(armorDef&&armorDef.isResearchSuit),
                 adminSuit:!!(armorDef&&armorDef.adminOnly),
                 upgrades:(data.armorUpgradeData||{})[getStableArmorKeyServer(armorName)]||{},
                 artifactAnomaly:beltHazard.anomaly,
                 artifactRadiation:beltHazard.radiation,
-                artifactDerivedScale:1+factionHazardPct/100
+                artifactDerivedScale:factionHazardScale,
+                ...(armorHazard?{armourAnomaly:armorHazard.anomaly,armourRadiation:armorHazard.radiation}:{})
             },Math.random);"""
 
 def once(source,old,new):
