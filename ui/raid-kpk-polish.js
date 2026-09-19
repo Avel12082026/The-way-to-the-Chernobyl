@@ -269,9 +269,67 @@ function applyPdaLayout(){
   if(tabs)tabs.classList.add('kpk-two-column-tabs');
 }
 
+let raidEncounterGuardsInstalled=false;
+function hasPendingAnomalyClient(){
+  try{
+    return typeof currentAnomaly!=='undefined'&&!!currentAnomaly&&
+      !(typeof currentEnemy!=='undefined'&&!!currentEnemy);
+  }catch(_){return false;}
+}
+function restorePendingAnomalyUi(){
+  if(!hasPendingAnomalyClient())return false;
+  const nav=document.getElementById('raidNavButtons');
+  const battle=document.getElementById('battleButtonsContainer');
+  const buttons=Array.from(battle?.querySelectorAll('button')||[]);
+  const resolved=!!currentAnomaly.resolved;
+  const hasExpected=resolved
+    ? buttons.some(button=>/Идти\\s+дальше/i.test(button.textContent||''))
+    : buttons.some(button=>/Поиск\\s+артефакта/i.test(button.textContent||''))&&
+      buttons.some(button=>/Обойти\\s+аномалию/i.test(button.textContent||''));
+  const navVisible=!!nav&&getComputedStyle(nav).display!=='none';
+  if((!hasExpected||navVisible)&&typeof renderAnomalyButtons==='function')renderAnomalyButtons();
+  return true;
+}
+function installRaidEncounterGuards(){
+  if(raidEncounterGuardsInstalled)return;
+  raidEncounterGuardsInstalled=true;
+
+  if(typeof clearBattleUiAndRestoreNav==='function'){
+    const nativeClear=clearBattleUiAndRestoreNav;
+    window.clearBattleUiAndRestoreNav=function(){
+      if(restorePendingAnomalyUi()){applyRaidLayout();return;}
+      return nativeClear.apply(this,arguments);
+    };
+  }
+  if(typeof raidStep==='function'){
+    const nativeStep=raidStep;
+    window.raidStep=function(){
+      if(restorePendingAnomalyUi()){applyRaidLayout();return;}
+      return nativeStep.apply(this,arguments);
+    };
+  }
+  if(typeof endRaid==='function'){
+    const nativeEnd=endRaid;
+    window.endRaid=function(){
+      if(hasPendingAnomalyClient()){
+        restorePendingAnomalyUi();
+        if(typeof showGameAlert==='function'){
+          showGameAlert(currentAnomaly.resolved
+            ? 'Сначала подтвердите завершение аномалии кнопкой «Идти дальше».'
+            : 'Сначала завершите аномалию.');
+        }
+        applyRaidLayout();
+        return;
+      }
+      return nativeEnd.apply(this,arguments);
+    };
+  }
+}
+
 function apply(){
   applyRaidLayout();
   applyPdaLayout();
+  restorePendingAnomalyUi();
 }
 
 let applyQueued=false;
@@ -281,13 +339,14 @@ const observer=new MutationObserver(()=>{
   queueMicrotask(()=>{applyQueued=false;apply();});
 });
 function init(){
+  installRaidEncounterGuards();
   apply();
   observer.observe(document.body,{childList:true,subtree:true});
   window.addEventListener('resize',applyRaidLayout,{passive:true});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.4.0',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.4.1',apply,applyRaidLayout,applyPdaLayout});
 })();
 
 // RAID_FIVE_20260920_V1
