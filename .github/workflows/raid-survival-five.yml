@@ -1,0 +1,27 @@
+name: Raid survival five fixes
+on:
+  push:
+    branches: [fix/raid-survival-items-multiquests-20260920]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read real item and progression functions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text()
+          names=re.findall(r'function\s+(\w+)\s*\(',s)
+          print('ITEM FUNCTIONS:',[n for n in names if any(k in n.lower() for k in ['item','unlock','sellprice','buyprice'])])
+          for n in ['showItemInfoModal','openItemActionModal','getItemStatsHtml','getItemStatsHTML','getDetectorUnlockTier','getResearchSuitUnlockTier','getSellPrice']:
+              m=re.search(r'function\s+'+n+r'\s*\(',s)
+              if not m:continue
+              end=re.search(r'\n    (?:async )?function ',s[m.end():])
+              text=s[m.start():m.end()+end.start() if end else m.start()+6000]
+              print('\n=== '+n+' ===\n'+text[:9000])
+          PY
