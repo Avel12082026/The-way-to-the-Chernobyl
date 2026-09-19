@@ -6,8 +6,8 @@ const hubs=fs.readFileSync('ui/trader-hubs.js','utf8');
 const css=fs.readFileSync('ui/raid-kpk-polish.css','utf8');
 const raid=fs.readFileSync('ui/raid-kpk-polish.js','utf8');
 
-assert(html.includes('ui/raid-kpk-polish.css?v=20260920r9'));
-assert(html.includes('ui/raid-kpk-polish.js?v=20260920r9'));
+assert(html.includes('ui/raid-kpk-polish.css?v=20260920-five1'));
+assert(html.includes('ui/raid-kpk-polish.js?v=20260920-five1'));
 assert(html.includes('🪙 Сталбайты: ${data.coins ?? 0}'));
 assert(html.includes('🧬 Сталкоины: ${data.breedCredits ?? 0}'));
 assert(!html.includes('ПЕРСОНАЛЬНЫЙ ТЕРМИНАЛ'));
@@ -28,8 +28,8 @@ assert(hubs.includes('RAID_QUICK_INFO_HOLD_MS=800'));
 assert(hubs.includes(".bunker-menu,#quickSlots"));
 console.log('five raid/PDA fixes static checks: OK');
 
-assert(css.includes('#raidMetersRow>div:not(#raidExpTrack)>div:first-child'),'EXP fill visibility selector missing');
+assert(css.includes('#raidMetersRow>.raid-radiation-wrapper>.raid-radiation-label'),'EXP fill visibility selector missing');
 assert(css.includes('#activeQuestRaidTracker')&&css.includes('overflow-y:auto!important'),'quest tracker must scroll');
-assert(raid.includes("version:'1.3.6'"));
+assert(raid.includes("version:'1.4.0'"));
 const balance=fs.readFileSync('ui/balance-tuning.js','utf8');
 assert(balance.includes('Можно использовать с уровня:')&&balance.includes('Средняя цена:'),'item info reference metadata missing');

@@ -144,7 +144,7 @@
   margin:0!important;
   min-width:0;
 }
-#raidMetersRow>div:not(#raidExpTrack)>div:first-child{display:none!important}
+#raidMetersRow>.raid-radiation-wrapper>.raid-radiation-label{display:none!important}
 #raidMetersRow #raidExpTrack,
 #raidMetersRow #raidRadiationTrack{height:20px!important;border-radius:0!important}
 #raidMetersRow .meter-text{font-size:11px!important;font-weight:800}
@@ -209,7 +209,7 @@
   pointer-events:none!important;
 }
 #raidScreen #quickSlots{margin:4px 0!important;flex:0 0 auto}
-#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:96px;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch}
+#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;touch-action:pan-y;display:block;scrollbar-width:thin}
 #raidLog{
   --raid-log-extra:0px;
   flex:0 1 clamp(130px,18dvh,230px)!important;
@@ -248,3 +248,13 @@
     max-height:104px!important;
   }
 }
+
+/* RAID_FIVE_20260920_V1 */
+#raidExpTrack>.expBarFill{display:block!important;visibility:visible!important;opacity:1!important;z-index:0}
+#raidScreen #activeQuestRaidTracker:not([hidden]){display:block!important}
+#activeQuestRaidTracker .raid-quest-entry{display:grid;gap:2px}
+#activeQuestRaidTracker .raid-quest-entry+.raid-quest-entry{margin-top:6px;padding-top:6px;border-top:1px solid #65583c}
+#activeQuestRaidTracker .raid-quest-entry.quest-ready .quest-objective{color:#6fe17b!important}
+.item-reference{display:grid;gap:5px;margin:8px 0;padding:8px;border:1px solid #65583c;background:#10140e;color:#d5c9a8;font:13px/1.45 Arial,sans-serif}
+.item-reference .item-reference-level{font-weight:700;color:#dfca84}
+.item-reference .item-reference-market{font-size:12px;color:#b5b29f}

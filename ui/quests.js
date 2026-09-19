@@ -8,7 +8,7 @@ const vendorMeta = {
   zhuchara:{name:'Жучара', title:'Торговец Жучара', role:'Торговец', kind:'броню'},
   diesel:{name:'Дизель', title:'Техник Дизель', role:'Техник', kind:'оружие'}
 };
-let state={accepted:[],activeIds:[],activeId:null,completed:[],completedCount:0,completedNextCursor:null};
+let state={accepted:[],activeId:null,activeIds:[],multiActive:false,completed:[],completedCount:0,completedNextCursor:null};
 let offers={};
 let syncPromise=null, mutationPending=false, dialogueMode='root', viewEpoch=0, stateEpoch=0;
 let selectedDetails=null, pdaSignature='', trackerSignature='', dialogueSignature='';
@@ -37,9 +37,9 @@ function haveQty(itemName, baseOnly=false){
   },0);
 }
 function completeNow(q){return haveQty(q.itemName,q.baseOnly)>=Number(q.qty||1);}
-function activeQuestIds(){return Array.isArray(state.activeIds)?state.activeIds:state.activeId?[state.activeId]:[];}
-function isActiveQuest(q){return !!q&&activeQuestIds().includes(q.id);}
-function activeQuests(){const ids=new Set(activeQuestIds());return state.accepted.filter(q=>ids.has(q.id));}
+function isActive(id){return state.activeIds.includes(id);}
+function activeQuests(){return state.activeIds.map(id=>state.accepted.find(q=>q.id===id)).filter(Boolean);}
+function activeQuest(){return activeQuests()[0]||null;}
 function vendorName(id){return vendorMeta[id]?.name||id;}
 function objective(q){
   const have=haveQty(q.itemName,q.baseOnly),qty=Number(q.qty||1);
@@ -62,8 +62,9 @@ async function api(path,body={}){
 }
 function applyState(data){
   if(!Array.isArray(data.accepted)||!Array.isArray(data.completed))throw new Error('Ответ сервера заданий неполон. Обнови список.');
-  const activeIds=Array.isArray(data.activeIds)?data.activeIds.filter(id=>data.accepted.some(q=>q.id===id)):(data.activeId?[data.activeId]:[]);
-  state={accepted:data.accepted,activeIds:[...new Set(activeIds)],activeId:activeIds[0]||null,completed:data.completed,
+  const valid=new Set(data.accepted.map(q=>q.id));
+  const activeIds=[...new Set(Array.isArray(data.activeIds)?data.activeIds:(data.activeId?[data.activeId]:[]))].filter(id=>valid.has(id));
+  state={accepted:data.accepted,activeId:activeIds[0]||null,activeIds,multiActive:Array.isArray(data.activeIds),completed:data.completed,
     completedCount:Math.max(0,Number(data.completedCount)||0),completedNextCursor:data.completedNextCursor??null};
 }
 function sync(){
@@ -103,7 +104,7 @@ async function write(path,body,after){
 }
 
 const style=document.createElement('link');
-style.rel='stylesheet';style.href='ui/quests.css?v=20260920-4';document.head.append(style);
+style.rel='stylesheet';style.href='ui/quests.css?v=20260920-five1';document.head.append(style);
 
 const pda=document.createElement('section');
 pda.id='questPdaScreen';pda.hidden=true;pda.innerHTML=`
@@ -189,8 +190,9 @@ function showQuestDetails(q,mode){
    <p class="quest-objective">${esc(mode==='completed'?'Передано: '+q.itemName+' × '+q.qty:objective(q))}</p>
    <p>${esc(rewardText(q))}</p>
    ${mode==='completed'?'<p>Выполнено: '+esc(new Date(q.completedAt||0).toLocaleString('ru-RU'))+'</p>':'<p class="quest-note">Передай предмет заказчику в разговоре. '+(q.baseOnly?'По этому заказу принимаются вещи без улучшений.':'')+'</p>'}
-   ${mode==='accepted'&&!isActiveQuest(q)?'<button type="button" data-write-action="activate" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
-   ${mode!=='completed'&&isActiveQuest(q)?'<p class="quest-priority">Активное задание</p>':''}
+   ${mode==='accepted'&&!isActive(q.id)?'<button type="button" data-write-action="activate" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
+   ${mode!=='completed'&&isActive(q.id)?'<p class="quest-priority">Активное задание</p>':''}
+   ${mode!=='completed'&&isActive(q.id)&&state.multiActive?'<button type="button" data-write-action="deactivate" data-quest-action="deactivate" data-quest-id="'+esc(q.id)+'">Деактивировать</button>':''}
   `;
 }
 function renderPda(){
@@ -203,13 +205,17 @@ function renderPda(){
   list.replaceChildren();
   const details=document.getElementById('questPdaDetails');
   let rows=[];
-  if(activeTab==='accepted')rows=state.accepted.filter(q=>!isActiveQuest(q));
+  if(activeTab==='accepted')rows=state.accepted.filter(q=>!isActive(q.id));
   else if(activeTab==='active')rows=activeQuests();
   else rows=state.completed;
   if(!rows.length){
     const empty=document.createElement('p');empty.className='quest-empty';
-    empty.textContent=activeTab==='accepted'?'Неактивных взятых заданий нет.':activeTab==='active'?'Активных заданий нет.':'Выполненных заданий пока нет.';
+    empty.textContent=activeTab==='accepted'?'Взятых заданий нет.':activeTab==='active'?'Активных заданий нет.':'Выполненных заданий пока нет.';
     list.append(empty);selectedDetails=null;details.hidden=true;lockActions();return;
+  }
+  if(activeTab==='accepted'&&rows.length>1&&state.multiActive){
+    const all=document.createElement('button');all.type='button';all.dataset.writeAction='activate-all';
+    all.dataset.questAction='activate-all';all.textContent='Активировать все взятые';list.append(all);
   }
   rows.forEach(q=>list.append(questCard(q,activeTab)));
   if(activeTab==='completed'&&state.completedNextCursor){
@@ -228,14 +234,10 @@ function renderTracker(){
   if(!rows.length||!tracker.isConnected){tracker.hidden=true;return;}
   const signature=JSON.stringify(rows.map(q=>[q,haveQty(q.itemName,q.baseOnly)]));
   if(signature===trackerSignature&&!tracker.hidden)return;trackerSignature=signature;
+  const scroll=tracker.scrollTop;
   tracker.hidden=false;tracker.className=rows.every(completeNow)?'quest-ready':'';
-  tracker.replaceChildren();
-  rows.forEach(q=>{
-    const item=document.createElement('article');
-    item.className='raid-quest-track-item'+(completeNow(q)?' quest-ready':'');
-    item.innerHTML=`<strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span>`;
-    tracker.append(item);
-  });
+  tracker.innerHTML=rows.map(q=>`<article class="raid-quest-entry raid-quest-track-item${completeNow(q)?' quest-ready':''}" data-quest-id="${esc(q.id)}"><strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span></article>`).join('');
+  tracker.scrollTop=scroll;
 }
 function renderAll(){renderPda();renderTracker();if(!dialogue.hidden&&dialogueVendor)renderDialogue(dialogueVendor,dialogueMode);}
 
@@ -246,6 +248,12 @@ function openPda(){
 function closePda(){selectedDetails=null;document.getElementById('questPdaDetails').hidden=true;pda.hidden=true;document.body.classList.remove('quest-pda-visible');}
 
 async function activate(id){return write('/activate',{questId:id},()=>{activeTab='active';selectedDetails=null;document.getElementById('questPdaDetails').hidden=true;});}
+async function activateAll(){
+  const questIds=state.accepted.filter(q=>!isActive(q.id)).map(q=>q.id);
+  if(!questIds.length)return;
+  return write('/activate',{questIds},()=>{activeTab='active';selectedDetails=null;document.getElementById('questPdaDetails').hidden=true;});
+}
+async function deactivate(id){return write('/deactivate',{questId:id},()=>{selectedDetails=null;document.getElementById('questPdaDetails').hidden=true;});}
 async function fetchOffers(vendor){
   const epoch=viewEpoch;
   try{
@@ -356,6 +364,8 @@ pda.addEventListener('click',e=>{
   if(b.dataset.questAction==='pda-back')closePda();
   else if(b.dataset.questAction==='details-close'){selectedDetails=null;document.getElementById('questPdaDetails').hidden=true;}
   else if(b.dataset.questAction==='activate')activate(b.dataset.questId);
+  else if(b.dataset.questAction==='activate-all')activateAll();
+  else if(b.dataset.questAction==='deactivate')deactivate(b.dataset.questId);
 });
 dialogue.addEventListener('click',e=>{
   const b=e.target.closest('[data-dialogue-action]');if(!b)return;
@@ -393,3 +403,5 @@ window.QuestSystem=Object.freeze({
 });
 sync().catch(()=>{});
 })();
+
+// RAID_FIVE_20260920_V1

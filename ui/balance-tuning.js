@@ -107,7 +107,7 @@ if(typeof nativeInfo==='function'){
       const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
       const meta=itemReferenceMeta(name);
       const body=document.getElementById('itemInfoModalBody');
-      if(body&&!body.querySelector('.item-reference-meta')){
+      if(body&&!window.ItemReference&&!body.querySelector('.item-reference-meta')){
         const box=document.createElement('div');
         box.className='item-reference-meta';
         box.style.cssText='font-size:12px;color:#cfc7aa;margin:0 0 10px;background:#111;padding:8px;border:1px solid #4a4230;border-radius:6px;';

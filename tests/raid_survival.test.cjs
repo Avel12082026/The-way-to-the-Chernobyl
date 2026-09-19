@@ -1,0 +1,76 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const {DatabaseSync}=require('node:sqlite');
+const model=require('../server_patches/raid-survival.cjs');
+const fullDose={health:200,radiation:100};assert.equal(model.radiationDamage(fullDose),15);assert.equal(fullDose.health,185);
+const rows=[];
+for(let tier=1;tier<=9;tier++){
+  const d={health:1000,radiation:0,anomalyResist:{},radiationResist:0};
+  const x=model.search(d,{name:'Жарка',tier},{},()=>.5);rows.push(x);
+  assert.equal(x.searchDmg,0);assert.equal(d.health,1000-x.anomalyDmg);
+  assert(Number.isFinite(d.health)&&Number.isFinite(d.radiation));
+  if(tier>1){assert(x.anomalyDmg>rows[tier-2].anomalyDmg);assert(x.radiationDose>rows[tier-2].radiationDose);}
+}
+const protection=Object.fromEntries(model.ANOMALY_KEYS.map(k=>[k,120]));
+const run=(gear,rad=90)=>{const d={health:1000,radiation:rad,radiationResist:120,anomalyResist:protection};return [model.search(d,{tier:9,name:'Смерч'},gear,()=>.5),d];};
+const ordinary=run({}),baseResearch=run({researchSuit:true}),upgraded=run({researchSuit:true,upgrades:{radiation:25,'anomaly_Жарка':25}});
+assert.equal(ordinary[0].anomalyDmg,baseResearch[0].anomalyDmg);
+assert(upgraded[0].anomalyDmg<ordinary[0].anomalyDmg/2);
+assert(upgraded[0].radiationDose<ordinary[0].radiationDose/2);
+assert.equal(ordinary[1].radiation,100);assert(ordinary[1].health>0,'full contamination is not instant death during search');
+assert.equal(run({researchSuit:true,upgrades:{armor:50}})[0].anomalyDmg,ordinary[0].anomalyDmg);
+const neg={health:1000,radiation:0,radiationResist:-100,anomalyResist:{Жарка:-100}};
+const negative=model.search(neg,{tier:1,name:'Жарка'},{},()=>.5);assert(negative.anomalyDmg>6&&Number.isFinite(neg.health));
+
+// Execute the actual patched production route bodies against a fresh in-memory SQLite DB.
+const raw=new DatabaseSync(':memory:');
+raw.exec(`CREATE TABLE players(id TEXT PRIMARY KEY,data TEXT,last_seen INTEGER);
+CREATE TABLE raid_sessions(player_id TEXT PRIMARY KEY,token TEXT,pending_type TEXT,pending_payload TEXT,updated_at INTEGER);
+CREATE TABLE pve_battles(player_id TEXT,token TEXT);
+CREATE TABLE named_artifacts(id INTEGER,artifact_name TEXT,anomaly_index INTEGER,claimed_by TEXT,claimed_at INTEGER,stats TEXT);
+CREATE TABLE crafted_artifacts(name TEXT,stats TEXT,tier INTEGER,price INTEGER,gen INTEGER);`);
+const db={prepare:s=>raw.prepare(s),transaction:fn=>(...args)=>{raw.exec('BEGIN');try{const v=fn(...args);raw.exec('COMMIT');return v;}catch(e){raw.exec('ROLLBACK');throw e;}}};
+const routes={},app={post:(url,...handlers)=>routes[url]=handlers.at(-1),get(){},listen(){}};
+const fixture=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/raid-survival-live.json'),'utf8'));
+function catalogue(name,local){
+  if(!fs.existsSync('index.html'))return JSON.parse(fs.readFileSync(local,'utf8'));
+  const html=fs.readFileSync('index.html','utf8'),m=html.match(new RegExp('const '+name+' = (\\[[\\s\\S]*?\\n    \\]);'));
+  assert(m,'catalogue '+name);return vm.runInNewContext(m[1],{});
+}
+fixture.armor=catalogue('armorItems','SHOP_ARMOR.json');
+fixture.artifacts=catalogue('artifacts','SHOP_ARTIFACTS.json');
+const code=fs.readFileSync(process.env.RAID_PATCHED_FIXTURE||'.validation/raid-survival-fixture.js','utf8');
+const math=Object.create(Math);math.random=()=>.999; // no loot; movement produces a quiet event
+const env={require:n=>{assert.equal(n,'./raid-survival.cjs');return model;},console,Math:math,Date,JSON,Number,Set,Map,db,app,PORT:0,
+  requireAuth(){},rateLimit:()=>()=>{},safeParsePlayerData:JSON.parse,SHOP_ARMOR:fixture.armor,SHOP_ARTIFACTS:fixture.artifacts,
+  UPGRADE_MAX_LEVEL:50,UPGRADE_MAX_BONUS_PCT_SERVER:.25,
+  pveFactionBonuses:()=>({anomalyRadResistPct:0,artifactFindChancePct:0}),pveIsEquippedArmor:()=>false,
+  raidState:d=>d,questBalance:{pickArtifact:n=>n[0]},pveAddItem:(d,n,q)=>{d.inventory[n]=(d.inventory[n]||0)+q;},pveBaseName:n=>n,
+};
+vm.createContext(env);vm.runInContext(fixture.helpers+'\n'+code,env);
+function state(){return JSON.parse(raw.prepare('SELECT data FROM players WHERE id=?').get('1').data);}
+function setup(attempt=0,health=1000){
+  raw.prepare('INSERT OR REPLACE INTO players VALUES(?,?,0)').run('1',JSON.stringify({health,maxHealth:1000,hunger:100,thirst:100,radiation:0,level:1,luck:0,inventory:{},stats:{},artifactSlots:[],armor:{name:'Комбинезон Юность'},armorUpgradeData:{}}));
+  raw.prepare('INSERT OR REPLACE INTO raid_sessions VALUES(?,?,?,?,0)').run('1','raid','anomaly',JSON.stringify({name:'Жарка',tier:1,attemptsUsed:attempt,artifacts:['Медуза']}));
+}
+function call(url,body={}){const res={status(){return this;},json(v){this.value=v;return v;}};routes[url]({telegramUser:{id:'1'},body:{raidToken:'raid',...body}},res);return res.value;}
+for(const n of [1,2,3]){
+  setup();let total=0,last;
+  for(let i=0;i<n;i++){last=call('/api/raid/anomaly/search');assert.equal(last.success,true);assert.equal(last.searchDmg,0);total+=last.anomalyDmg;assert.equal(last.state.health,Math.round((1000-total)*10)/10);}
+  const rad=state().radiation;assert(rad>0);
+  assert.equal(call(n===3?'/api/raid/anomaly/finish':'/api/raid/anomaly/bypass').success,true);
+  const before=state().health,doseDamage=Math.round(rad*0.15*10)/10;const step=call('/api/raid/step');assert.equal(step.success,true);assert.equal(step.radiationDamage,doseDamage);assert.equal(step.state.health,Math.round((before-doseDamage)*10)/10);
+  assert.equal(step.state.hunger,98);assert.equal(step.state.thirst,98);
+  const second=call('/api/raid/step');assert.equal(second.radiationDamage,doseDamage);assert.equal(second.state.hunger,96);
+}
+setup();let contaminated=state();contaminated.radiation=100;raw.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(contaminated),'1');
+assert.equal(call('/api/raid/anomaly/search').died,false);
+assert.equal(state().radiation,100);
+call('/api/raid/anomaly/bypass');
+contaminated=state();env.pveApplyConsumableServer(contaminated,{type:'antirad',radiationRemove:100});raw.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(contaminated),'1');
+assert.equal(call('/api/raid/step').radiationDamage,0);
+setup(3);const unchanged=JSON.stringify(state());assert.equal(call('/api/raid/anomaly/search').success,false);assert.equal(JSON.stringify(state()),unchanged);
+setup(0,1);assert.equal(call('/api/raid/anomaly/search').died,true);
+assert.equal(raw.prepare('SELECT COUNT(*) AS n FROM raid_sessions').get().n,0);
+console.log('PASS: tiers 1–9; armor/artifact protection; delayed radiation after 1/2/3 searches; antirad; no duplicate/dead search; travel -2/-2');
+console.log(JSON.stringify({tier9:{ordinary:ordinary[0],research50:upgraded[0]},tiers:rows},null,2));

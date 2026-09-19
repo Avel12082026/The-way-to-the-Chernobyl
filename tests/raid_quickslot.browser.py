@@ -86,8 +86,8 @@ async def main():
     await cdp.detach()
     assert len(writes)==1,writes
     info_text=await page.locator('#itemInfoModalBody').inner_text()
-    assert 'Можно использовать с уровня:' in info_text,info_text
-    assert 'Средняя цена:' in info_text,info_text
+    assert 'Уровень использования:' in info_text,info_text
+    assert 'Средняя цена рынка' in info_text,info_text
     await page.locator('#itemInfoModal button').last.click()
 
     # EXP must have a visible green fill in raid, not only a changing number.
