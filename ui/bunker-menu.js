@@ -121,6 +121,7 @@
     el.className = 'smoker-hub-screen';
     el.setAttribute('aria-label', 'Сталкер за столом');
     el.innerHTML = `
+      <img id="smokerHubBackdrop" class="smoker-hub-backdrop" alt="" aria-hidden="true" draggable="false">
       <img id="smokerHubArtwork" class="smoker-hub-artwork" alt="Сталкер сидит за столом и курит" draggable="false">
       <p id="smokerTalkBubble" class="smoker-talk-bubble" role="status" hidden></p>
       <nav class="smoker-actions" aria-label="Действия со сталкером">
@@ -143,8 +144,11 @@
           return response.text();
         })
         .then(b64 => {
+          const src = 'data:image/webp;base64,' + b64.trim();
           const image = document.getElementById('smokerHubArtwork');
-          if (image) image.src = 'data:image/webp;base64,' + b64.trim();
+          const backdrop = document.getElementById('smokerHubBackdrop');
+          if (image) image.src = src;
+          if (backdrop) backdrop.src = src;
         })
         .catch(() => {
           const image = document.getElementById('smokerHubArtwork');
@@ -672,6 +676,6 @@
     }
   });
 
-  window.BunkerMenu = {version: '1.3.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker};
+  window.BunkerMenu = {version: '1.4.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker};
   layout();
 })();
