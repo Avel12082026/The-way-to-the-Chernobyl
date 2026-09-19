@@ -135,8 +135,10 @@ async def main():
                 if cancel: await page.keyboard.press('Escape')
                 await page.mouse.up()
             await page.wait_for_timeout(550)
-        # Real menu hotspot, not a test-only entry point.
+        # Real menu hotspot: current client opens Zhuchara's portrait hub before the shared trade screen.
         await page.locator('#bunkerZhuchara').click()
+        if await page.locator('#zhucharaHubScreen').is_visible():
+            await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
         assert await page.locator('#tradeMenu').is_visible()
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='zhuchara'
         assert len(writes())==0
