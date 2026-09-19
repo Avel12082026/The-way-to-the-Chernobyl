@@ -1209,7 +1209,7 @@ button:active {filter:brightness(1.18);}
         health: 100, hunger: 100, thirst: 100, maxHunger: 100, maxThirst: 100, coins: 0, level: 1, exp: 0,
         vitality: 0, agility: 0, strength: 0, accuracy: 0, intellect: 0, luck: 0,
         radiation: 0, // 0-100, растёт от поиска артефактов в аномалиях; снимается спецаптечками
-        radiationResist: 0, // от надетых артефактов — снижает получаемую радиацию при поиске
+        radiationResist: 0, // радиозащита от надетых артефактов и брони — снижает получаемую радиацию
         anomalyResist: {}, // от надетых артефактов/брони — {имя аномалии: число} снижает риск при поиске именно в этой аномалии
         weapon: { name: 'Beretta 21A Bobcat', tier: 1, dmg: 80 },
         armor: { name: 'Комбинезон Юность', tier: 1, armor: 5, hitAbsorption: 3 },
@@ -2759,7 +2759,7 @@ button:active {filter:brightness(1.18);}
     function recomputeArtifactResistances() {
         if (!Array.isArray(player.artifactSlots)) return;
         player.radiationResist = 0;
-        player.radiationLeakTotal = 0; // суммарная "утечка" радиации от надетых артефактов (за ход)
+        player.radiationLeakTotal = 0; // суммарный вредный эффект «Радиация +N» от надетых артефактов за ход
         player.anomalyResist = {};
         // Именные артефакты тира 9 — особый случай, дают бонус к перкам и Пулестойкости/Гашению
         // ударов напрямую (обычные артефакты так не умеют — это исключительно их привилегия)
@@ -2769,9 +2769,11 @@ button:active {filter:brightness(1.18);}
             if (!statsObj) return;
             Object.keys(statsObj).forEach(stat => {
                 if (stat === 'radiation') {
-                    player.radiationResist += statsObj.radiation; // всегда положительное — чистая защита
+                    // Внутренний ключ radiation у защитных характеристик отображается игроку как «Радиозащита +N».
+                    player.radiationResist += Number(statsObj.radiation) || 0;
                 } else if (stat === 'radiationLeak') {
-                    player.radiationLeakTotal += -statsObj.radiationLeak; // хранится отрицательно, переводим в положительную "силу утечки"
+                    // Знак служебного radiationLeak больше не меняет смысл эффекта: это всегда «Радиация +N».
+                    player.radiationLeakTotal += Math.abs(Number(statsObj.radiationLeak) || 0);
                 } else if (stat.startsWith('anomaly_')) {
                     const anomalyName = stat.slice('anomaly_'.length);
                     player.anomalyResist[anomalyName] = (player.anomalyResist[anomalyName] || 0) + statsObj[stat];
@@ -6021,26 +6023,19 @@ function startBattle(enemy) {
 
     // ===== ИНФОРМАЦИЯ О ПРЕДМЕТЕ (для модалок инвентаря/техника) =====
     const STAT_LABELS = {
-        health: 'макс. здоровье', hunger: 'сытость', thirst: 'жажда', radiation: 'защита от радиации',
+        health: 'макс. здоровье', hunger: 'сытость', thirst: 'жажда', radiation: 'радиозащита',
         radiationLeak: 'радиация',
         vitality: 'живучесть', agility: 'ловкость', strength: 'сила', accuracy: 'меткость',
         intellect: 'интеллект', luck: 'удача', bulletResist: 'пулестойкость', hitAbsorption: 'гашение ударов'
     };
     // Ключи вида "anomaly_ИмяАномалии" генерируются динамически (аномалий много и добавляются) —
-    // для них подпись строится налету, а не хранится в статичном словаре
-    // Единое форматирование строки эффекта стата артефакта — с особым случаем для radiationLeak:
-    // хранится ОТРИЦАТЕЛЬНО внутри (та же логика улучшения при скрещивании, что у любого негативного
-    // стата), но показывается игроку как "Радиация +N" (понятная формулировка "плохого" эффекта),
-    // в предупреждающем цвете, а не зелёном — несмотря на видимый "+"
+    // для них подпись строится налету, а не хранится в статичном словаре.
+    // «Радиозащита +N» и «Радиация +N» — два разных эффекта. radiationLeak остаётся служебным
+    // ключом совместимости со старыми артефактами, но при любом знаке всегда означает вредную радиацию.
     function formatStatEffect(stat, val) {
         if (stat === 'radiationLeak') {
-            if (val < 0) {
-                return `<span style="color:#e67e22;">+${-val}</span> к параметру «радиация» <span style="color:#888; font-size:11px;">(вредный эффект — прибавляет радиацию)</span>`;
-            }
-            // После достаточного числа улучшений при селекции это свойство "переворачивается" из
-            // вредного в полезное (см. doBreedArtifacts) — становится защитой от радиации, а не её
-            // источником, и продолжает расти с каждым поколением как обычный положительный стат
-            return `<span style="color:#27ae60;">+${val}</span> к параметру «радиация» <span style="color:#888; font-size:11px;">(полезный эффект — снижает получаемую радиацию)</span>`;
+            const amount = Math.abs(Number(val) || 0);
+            return `<span style="color:#e67e22;">+${amount}</span> к параметру «радиация» <span style="color:#888; font-size:11px;">(вредный эффект — каждый ход прибавляет радиацию)</span>`;
         }
         const sign = val >= 0 ? '+' : '';
         const color = val >= 0 ? '#27ae60' : '#c0392b';
