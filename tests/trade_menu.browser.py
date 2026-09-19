@@ -111,8 +111,8 @@ async def main():
             await item(source,name).click()
         async def clear(side):
             for name in await page.locator(f'#tradeMenu [data-trade-source={side}]').evaluate_all('(nodes)=>nodes.map(n=>n.dataset.tradeName)'):
+                # Clicking a staged cell returns it immediately; no editor/remove round-trip is required.
                 await click(side,name)
-                await page.locator('[data-trade-action=remove]').click()
         async def drag(source,name,target,touch=False,cancel=False):
             node=item(source,name)
             await node.scroll_into_view_if_needed()
