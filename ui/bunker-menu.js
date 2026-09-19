@@ -12,6 +12,8 @@
   let frame = 0;
   let leonovScreen = null;
   let leonovImageLoaded = false;
+  let smokerScreen = null;
+  let smokerImageLoaded = false;
 
   const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
   const clamp = (v, low, high) => Math.max(low, Math.min(high, v));
@@ -110,6 +112,69 @@
       if (btn) btn.disabled = false;
       refresh();
     }
+  }
+
+  function ensureSmokerScreen() {
+    if (smokerScreen) return smokerScreen;
+    const el = document.createElement('section');
+    el.id = 'smokerHubScreen';
+    el.className = 'smoker-hub-screen';
+    el.setAttribute('aria-label', 'Сталкер за столом');
+    el.innerHTML = `
+      <img id="smokerHubArtwork" class="smoker-hub-artwork" alt="Сталкер сидит за столом и курит" draggable="false">
+      <p id="smokerTalkBubble" class="smoker-talk-bubble" role="status" hidden></p>
+      <nav class="smoker-actions" aria-label="Действия со сталкером">
+        <button type="button" data-smoker-action="talk">Говорить</button>
+        <button type="button" data-smoker-action="back">Назад</button>
+      </nav>`;
+    document.body.appendChild(el);
+    smokerScreen = el;
+    el.addEventListener('click', ev => {
+      const btn = ev.target.closest('[data-smoker-action]');
+      if (!btn) return;
+      if (btn.dataset.smokerAction === 'back') return closeSmoker();
+      if (btn.dataset.smokerAction === 'talk') talkSmoker();
+    });
+    if (!smokerImageLoaded) {
+      smokerImageLoaded = true;
+      fetch('ui/smoker-portrait.webp.b64?v=0325614230e4')
+        .then(response => {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.text();
+        })
+        .then(b64 => {
+          const image = document.getElementById('smokerHubArtwork');
+          if (image) image.src = 'data:image/webp;base64,' + b64.trim();
+        })
+        .catch(() => {
+          const image = document.getElementById('smokerHubArtwork');
+          if (image) image.alt = 'Не удалось загрузить изображение сталкера';
+        });
+    }
+    return el;
+  }
+
+  function openSmoker() {
+    const el = ensureSmokerScreen();
+    const bubble = document.getElementById('smokerTalkBubble');
+    if (bubble) bubble.hidden = true;
+    el.classList.add('active');
+    document.body.classList.add('smoker-hub-visible');
+  }
+
+  function closeSmoker() {
+    if (smokerScreen) smokerScreen.classList.remove('active');
+    document.body.classList.remove('smoker-hub-visible');
+    const bubble = document.getElementById('smokerTalkBubble');
+    if (bubble) bubble.hidden = true;
+    if (typeof openScreen === 'function') openScreen('main');
+  }
+
+  function talkSmoker() {
+    const bubble = document.getElementById('smokerTalkBubble');
+    if (!bubble) return;
+    bubble.textContent = 'Сталкер затягивается сигаретой: «Ну, говори. Я слушаю.»';
+    bubble.hidden = false;
   }
 
   function ensureLeonovScreen() {
@@ -607,6 +672,6 @@
     }
   });
 
-  window.BunkerMenu = {version: '1.2.0', refresh, enterRaid, readBook, openLeonov, closeLeonov};
+  window.BunkerMenu = {version: '1.3.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker};
   layout();
 })();

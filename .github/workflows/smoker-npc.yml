@@ -1,0 +1,51 @@
+name: Smoking stalker NPC
+on:
+  push:
+    branches: [main, feature/smoker-npc-20260920]
+    paths:
+      - 'index.html'
+      - 'ui/bunker-menu.*'
+      - 'ui/smoker-portrait.webp.b64'
+      - 'tests/smoker_npc.test.cjs'
+      - 'tests/smoker_npc.browser.py'
+      - '.github/workflows/smoker-npc.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'ui/bunker-menu.*'
+      - 'ui/smoker-portrait.webp.b64'
+      - 'tests/smoker_npc.test.cjs'
+      - 'tests/bunker_menu.browser.py'
+      - '.github/workflows/smoker-npc.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Syntax and static checks
+        run: |
+          node --check ui/bunker-menu.js
+          node tests/smoker_npc.test.cjs
+          node tests/leonov_requirements.test.cjs
+          python3 -m py_compile tests/smoker_npc.browser.py
+          git diff --check
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Smoking stalker browser regression
+        run: python tests/smoker_npc.browser.py
+      - name: Attach bunker screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoker-npc-validation
+          retention-days: 7
+          path: .validation/smoker-npc/
