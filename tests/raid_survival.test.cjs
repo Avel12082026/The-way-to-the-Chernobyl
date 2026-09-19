@@ -35,6 +35,16 @@ assert.equal(exactNeutral.anomalyDmg-exactProtected.anomalyDmg,3,'belt +3 anomal
 assert.equal(exactVulnerable.anomalyDmg-exactNeutral.anomalyDmg,3,'belt -3 anomaly protection is exactly +3 HP');
 assert.equal(exactNeutral.radiationDose-exactProtected.radiationDose,3,'belt +3 radiation is exactly -3 dose');
 assert.equal(exactVulnerable.radiationDose-exactNeutral.radiationDose,3,'belt -3 radiation is exactly +3 dose');
+const exactWithScaledArmour=artifactStat=>{
+  const d={health:1000,radiation:0,radiationResist:999,anomalyResist:{Жарка:999}};
+  return model.search(d,{tier:3,name:'Жарка'},{
+    artifactAnomaly:{Жарка:artifactStat},artifactRadiation:artifactStat,artifactDerivedScale:1.15,
+    armourAnomaly:{Жарка:7.25},armourRadiation:5.75
+  },()=>.5);
+};
+const scaledNeutral=exactWithScaledArmour(0),scaledProtected=exactWithScaledArmour(3);
+assert.equal(scaledNeutral.anomalyDmg-scaledProtected.anomalyDmg,3,'belt +3 stays exact with fractional armour/faction scaling');
+assert.equal(scaledNeutral.radiationDose-scaledProtected.radiationDose,3,'radiation +3 stays exact with fractional armour/faction scaling');
 
 // Execute the actual patched production route bodies against a fresh in-memory SQLite DB.
 const raw=new DatabaseSync(':memory:');
