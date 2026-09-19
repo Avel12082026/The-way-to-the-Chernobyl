@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Install raid survival tuning: delayed radiation damage, tier-scaled anomalies, -2 hunger/thirst."""
+"""Install/upgrade raid survival: stronger tier damage, exact signed belt protection, delayed radiation."""
 from pathlib import Path
 import argparse, os, shutil, subprocess, tempfile, time
 
 SERVICE='pocketzone.service'
-MARK='// RAID_SURVIVAL_V2'
+OLD_MARK='// RAID_SURVIVAL_V2'
+MARK='// RAID_SURVIVAL_V3'
 
 OLD_TURN_EFFECTS="""    const netLeak=Math.max(0,leak-radiationResist);
     if(netLeak>0){
@@ -52,7 +53,8 @@ OLD_ANOMALY="""            const rawRad=86+Math.floor(Math.random()*8),radRes=Ma
             if(anomalyDmg>0)data.health=Math.round(Math.max(0,data.health-anomalyDmg)*10)/10;
             const turnEffects=pveArtifactTurnEffects(data);
             if(data.radiation>=100)data.health=0;"""
-NEW_ANOMALY="""            const exposure=pveAnomalyExposureServer(data,a);
+NEW_ANOMALY="""            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);
+            const exposure=pveAnomalyExposureServer(playerId,data,a);
             const radiationAdded=exposure.radiationAdded;
             const anomalyDmg=exposure.anomalyDmg;
             const searchDmg=0; // radiation itself starts hurting only on later player turns
@@ -60,7 +62,7 @@ NEW_ANOMALY="""            const exposure=pveAnomalyExposureServer(data,a);
             if(anomalyDmg>0)data.health=Math.round(Math.max(0,(Number(data.health)||0)-anomalyDmg)*10)/10;
             const turnEffects=pveArtifactTurnEffects(data);"""
 
-HELPER="""// RAID_SURVIVAL_V2
+OLD_HELPER=r"""// RAID_SURVIVAL_V2
 function pveAnomalyExposureServer(data,a){
     const tier=Math.max(1,Math.min(9,Number(a&&a.tier)||1));
     const specific=Math.max(0,Number(data.anomalyResist&&data.anomalyResist[a.name])||0);
@@ -88,6 +90,84 @@ function pveAnomalyExposureServer(data,a){
 
 """
 
+HELPER=r"""// RAID_SURVIVAL_V3
+function pveBeltHazardProtection(data){
+    const anomaly={};
+    let radiation=0;
+    for(const name of (Array.isArray(data.artifactSlots)?data.artifactSlots:[])){
+        if(!name)continue;
+        const def=typeof serverArtifactDef==='function'?serverArtifactDef(name):null;
+        const stats=def&&def.stats&&typeof def.stats==='object'?def.stats:pveArtifactStatsForName(name);
+        if(!stats||typeof stats!=='object')continue;
+        for(const [key,raw] of Object.entries(stats)){
+            const value=Number(raw)||0;
+            if(key==='radiation')radiation+=value;
+            else if(key.startsWith('anomaly_')){
+                const anomalyName=key.slice('anomaly_'.length);
+                anomaly[anomalyName]=(Number(anomaly[anomalyName])||0)+value;
+            }
+        }
+    }
+    return {radiation,anomaly};
+}
+function pveAnomalyComposite(map,a,tier){
+    const source=map&&typeof map==='object'?map:{};
+    let value=Number(source[a&&a.name])||0;
+    if(tier>=9){
+        const keys=['Жарка','Электра','Воронка','Кислотный туман','Карусель','Мясорубка','Печка','Плазменная сфера'];
+        value+=keys.reduce((sum,key)=>sum+(Number(source[key])||0),0)/keys.length;
+    }
+    return value;
+}
+function pveAnomalyExposureServer(playerId,data,a){
+    const tier=Math.max(1,Math.min(9,Number(a&&a.tier)||1));
+    const belt=pveBeltHazardProtection(data);
+    const factionPct=typeof pveFactionBonuses==='function'
+        ? (Number(pveFactionBonuses(playerId,data,null).anomalyRadResistPct)||0) : 0;
+    const derivedScale=Math.max(0,1+factionPct/100);
+
+    const artifactSpecific=pveAnomalyComposite(belt.anomaly,a,tier);
+    const combinedSpecific=pveAnomalyComposite(data.anomalyResist,a,tier);
+    const artifactRadiation=Number(belt.radiation)||0;
+    const combinedRadiation=Number(data.radiationResist)||0;
+
+    const armorName=data.armor&&data.armor.name||'';
+    const parsedArmor=parseGearNameServer(armorName);
+    const effectiveArmor=armorName&&typeof getArmorEffectiveStatsServer==='function'
+        ? getArmorEffectiveStatsServer(armorName,data) : null;
+    const armorStats=effectiveArmor&&effectiveArmor.stats&&typeof effectiveArmor.stats==='object'
+        ? effectiveArmor.stats : null;
+    const armorSpecific=armorStats
+        ? pveAnomalyComposite(armorStats,a,tier)*derivedScale
+        : combinedSpecific-artifactSpecific*derivedScale;
+    const armorRadiation=armorStats
+        ? (Number(armorStats.radiation)||0)*derivedScale
+        : combinedRadiation-artifactRadiation*derivedScale;
+
+    const armorBase=SHOP_ARMOR.find(x=>x.name===parsedArmor.baseName);
+    const research=!!(armorBase&&armorBase.isResearchSuit);
+    const upgradeLevel=research?Math.max(0,Number(parsedArmor.level)||0):0;
+    const researchRadBonus=tier>=9?Math.min(75,upgradeLevel*1.5):0;
+    const researchAnomalyBonus=tier>=9?Math.min(110,upgradeLevel*2.2):0;
+
+    const damage=[0,10,16,24,34,46,60,76,94,230];
+    const dose=[0,6,10,14,18,23,28,34,40,120];
+    const variation=0.95+Math.max(0,Math.min(1,Number(Math.random())||0))*0.10;
+    const rawAnomaly=damage[tier]*variation;
+    const rawRadiation=dose[tier]*variation;
+
+    // Belt artifacts are intentionally outside armour scaling:
+    // +3 protection = exactly 3 less; -3 = exactly 3 more (until the natural zero floor).
+    const anomalyDmg=Math.round(Math.max(0,rawAnomaly-armorSpecific-researchAnomalyBonus-artifactSpecific)*10)/10;
+    const radiationAdded=Math.round(Math.max(0,rawRadiation-armorRadiation-researchRadBonus-artifactRadiation)*10)/10;
+    return {
+        radiationAdded,anomalyDmg,rawRadiation,rawAnomaly,research,upgradeLevel,
+        specific:combinedSpecific,radRes:combinedRadiation,artifactSpecific,artifactRadiation
+    };
+}
+
+"""
+
 def replace_once(text,old,new,label):
     n=text.count(old)
     if n!=1:
@@ -97,6 +177,18 @@ def replace_once(text,old,new,label):
 def patch(source):
     if MARK in source:
         return source,False
+
+    # Upgrade the previously installed V2 in place. No player/database data is touched.
+    if OLD_MARK in source:
+        text=replace_once(source,OLD_HELPER,HELPER,'обновление расчёта аномалий V2→V3')
+        text=replace_once(
+            text,
+            '            const exposure=pveAnomalyExposureServer(data,a);',
+            "            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);\n            const exposure=pveAnomalyExposureServer(playerId,data,a);",
+            'пересчёт экипированных артефактов'
+        )
+        return text,True
+
     text=source
     text=replace_once(text,OLD_TURN_EFFECTS,NEW_TURN_EFFECTS,'отложенный урон радиации')
     text=replace_once(text,OLD_RADIATION,NEW_RADIATION,'урон радиации за ход')
@@ -122,7 +214,7 @@ def main():
     source=old.decode('utf-8')
     new_text,changed=patch(source)
     if not changed:
-        print('RAID_SURVIVAL_V2 уже установлен.');return
+        print('RAID_SURVIVAL_V3 уже установлен.');return
     with tempfile.TemporaryDirectory(prefix='raid-survival-check-') as td:
         candidate=Path(td)/'server.js'
         candidate.write_text(new_text,encoding='utf-8')
@@ -131,7 +223,7 @@ def main():
             print('Совместимость рейдовых маршрутов и синтаксис подтверждены. Файлы не изменены.');return
     if os.geteuid()!=0:
         raise RuntimeError('Установку нужно запускать от root на сервере.')
-    backup=path.with_name(path.name+'.before-raid-survival-'+time.strftime('%Y%m%d_%H%M%S'))
+    backup=path.with_name(path.name+'.before-raid-survival-v3-'+time.strftime('%Y%m%d_%H%M%S'))
     shutil.copy2(path,backup)
     fd,tmp=tempfile.mkstemp(prefix='.raid-survival-',dir=path.parent)
     try:
@@ -149,7 +241,7 @@ def main():
             if state.stdout.strip()=='active':
                 probe=run(['curl','-fsS','--max-time','2','http://127.0.0.1:3000/api/market'],capture_output=True,check=False)
                 if probe.returncode==0:
-                    print('RAID_SURVIVAL_V2 установлен. Backup:',backup);return
+                    print('RAID_SURVIVAL_V3 установлен. Backup:',backup);return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления')
     except Exception:

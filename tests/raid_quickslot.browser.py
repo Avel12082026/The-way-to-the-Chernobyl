@@ -90,6 +90,8 @@ async def main():
     assert 'Средняя цена рынка' in info_text,info_text
     await page.locator('#itemInfoModal button').last.click()
 
+    print('RAID_QUICKSLOT_MARK loaded-and-quickslot-ok',flush=True)
+
     # EXP must have a visible green fill in raid, not only a changing number.
     await page.evaluate("player.exp=Math.floor(expNeededForLevel(player.level)/2);updateUI();RaidKpkPolish.apply()")
     await page.wait_for_timeout(350)  # allow the real 0.3 s width transition to finish
@@ -121,6 +123,8 @@ async def main():
     assert overflow=='hidden',overflow
     await page.evaluate("document.getElementById('raidScreen').scrollTop=120;RaidKpkPolish.apply()")
     assert await page.locator('#raidScreen').evaluate("e=>e.scrollTop")==0
+
+    print('RAID_QUICKSLOT_MARK layout-ok',flush=True)
 
     # Default navigation stays as before when there is no encounter.
     await page.evaluate("document.getElementById('itemInfoModal').classList.remove('active');currentEnemy=null;currentAnomaly=null;clearBattleUiAndRestoreNav();RaidKpkPolish.apply()")
@@ -177,6 +181,23 @@ async def main():
       log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
       assert 82 <= log_h <= 230,log_h
 
+    print('RAID_QUICKSLOT_MARK unresolved-anomaly-ok',flush=True)
+
+    # A resolved anomaly is still a pending server encounter until /anomaly/finish.
+    # Generic raid navigation must never replace its one-button completion state.
+    await page.evaluate("""()=>{
+      raidActive=true;raidSessionToken='offline-test';currentEnemy=null;
+      currentAnomaly={...anomalies[0],attemptsUsed:1,resolved:true,_foundNames:['Медуза'],_searchPending:false};
+      returnToRaid();RaidKpkPolish.apply();
+    }""")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    resolved_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
+    assert len(resolved_labels)==1 and 'Идти дальше' in resolved_labels[0],resolved_labels
+    await page.evaluate("RaidKpkPolish.apply()")
+    assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
+    assert await page.locator('#battleButtonsContainer button').filter(has_text='Идти дальше').count()==1
+    print('RAID_QUICKSLOT_MARK resolved-anomaly-ok',flush=True)
+
     # Real anomaly bypass must restore the persistent lower-button captions.
     await page.evaluate("""async()=>{
       raidActive=true;raidSessionToken='offline-test';
@@ -193,6 +214,8 @@ async def main():
     assert all(x[1] not in ('rgba(0, 0, 0, 0)','transparent') and x[2] not in ('rgba(0, 0, 0, 0)','transparent') and x[3]!='none' and x[4]=='visible' and float(x[5])>0 for x in bypass_labels),bypass_labels
     assert await page.locator('#raidIdleScene').is_visible()
 
+    print('RAID_QUICKSLOT_MARK bypass-ok',flush=True)
+
     # Combat likewise replaces navigation with the original attack/escape pair.
     await page.evaluate("""()=>{
       currentAnomaly=null;
@@ -203,6 +226,8 @@ async def main():
     combat_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
     assert any('Атаковать' in x for x in combat_labels) and any('Сбежать' in x for x in combat_labels),combat_labels
     assert await page.locator('#raidScreen').evaluate("e=>e.scrollTop")==0
+
+    print('RAID_QUICKSLOT_MARK combat-ok',flush=True)
 
     # Leaving a friendly NPC trader must never erase the persistent Backpack/Telegram labels.
     await page.evaluate("""async()=>{
@@ -215,6 +240,8 @@ async def main():
     after_npc=await page.locator('#raidUtilityButtons .raid-utility-label').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [e.textContent,s.display,s.visibility,s.opacity,s.color]})""")
     assert [x[0] for x in after_npc]==['Рюкзак','Телеграммка'],after_npc
     assert all(x[1]!='none' and x[2]=='visible' and float(x[3])>0 for x in after_npc),after_npc
+
+    print('RAID_QUICKSLOT_MARK friendly-ok',flush=True)
 
     # Ending/clearing a combat encounter must keep the same labels visible.
     await page.evaluate("""()=>{

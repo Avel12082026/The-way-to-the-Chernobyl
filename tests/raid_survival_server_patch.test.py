@@ -49,15 +49,32 @@ assert MOD.MARK in patched
 assert '-2));' in patched and '-5));' not in patched
 assert 'rad*0.15' in patched
 assert 'searchDmg=0' in patched
-assert 'pveAnomalyExposureServer' in patched
-assert 'upgradeLevel*2.2' in patched
+assert 'pveAnomalyExposureServer(playerId,data,a)' in patched
+assert 'pveBeltHazardProtection' in patched
+assert 'serverRecomputeArtifactDerived(playerId,data)' in patched
+assert 'const damage=[0,10,16,24,34,46,60,76,94,230];' in patched
+assert 'rawAnomaly-armorSpecific-researchAnomalyBonus-artifactSpecific' in patched
+assert 'rawRadiation-armorRadiation-researchRadBonus-artifactRadiation' in patched
+assert 'damage=[0,10,16,24,34,46,60,76,94,230]' in patched
+assert 'artifactSpecific' in patched and 'artifactRadiation' in patched
+assert 'serverArtifactDef(name)' in patched and 'effectiveArmor' in patched
 assert 'data.health=Math.round(Math.max(0,(Number(data.health)||0)-netLeak)' not in patched
 again,changed2=MOD.patch(patched)
 assert not changed2 and again==patched
+
+# The live server may already contain the previous V2 installer. It must upgrade in-place.
+legacy=patched.replace(MOD.HELPER,MOD.OLD_HELPER).replace(
+    "            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);\n            const exposure=pveAnomalyExposureServer(playerId,data,a);",
+    "            const exposure=pveAnomalyExposureServer(data,a);"
+)
+assert MOD.OLD_MARK in legacy and MOD.MARK not in legacy
+upgraded,upgrade_changed=MOD.patch(legacy)
+assert upgrade_changed and MOD.MARK in upgraded and MOD.OLD_MARK not in upgraded
+assert 'pveAnomalyExposureServer(playerId,data,a)' in upgraded
 with tempfile.TemporaryDirectory() as td:
     p=Path(td)/'server.js';p.write_text(patched,encoding='utf-8')
     subprocess.run(['node','--check',str(p)],check=True)
-print('PASS: raid survival server patch')
+print('PASS: raid survival V3 server patch with exact signed belt hazard effects')
 
 
 # Regression: the installer health loop intentionally calls run(..., check=False).
