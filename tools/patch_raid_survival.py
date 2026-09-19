@@ -11,7 +11,8 @@ BELT_HELPER=r"""function pveBeltHazardProtection(data) {
     let radiation=0;
     for(const name of (Array.isArray(data.artifactSlots)?data.artifactSlots:[])){
         if(!name) continue;
-        const stats=pveArtifactStatsForName(name);
+        const def=typeof serverArtifactDef==='function'?serverArtifactDef(name):null;
+        const stats=def&&def.stats&&typeof def.stats==='object'?def.stats:pveArtifactStatsForName(name);
         if(!stats||typeof stats!=='object') continue;
         for(const [key,raw] of Object.entries(stats)){
             const value=Number(raw)||0;
