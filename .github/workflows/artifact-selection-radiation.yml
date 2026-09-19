@@ -1,0 +1,42 @@
+name: Artifact selection radiation
+on:
+  push:
+    branches: [main, fix/artifact-selection-radiation-20260920]
+    paths:
+      - 'server_patches/artifact-selection-radiation.cjs'
+      - 'tools/patch_artifact_selection_radiation.py'
+      - 'tools/install_artifact_selection_radiation.py'
+      - 'tests/artifact_selection_radiation*'
+      - '.github/workflows/artifact-selection-radiation.yml'
+  pull_request:
+    paths:
+      - 'server_patches/artifact-selection-radiation.cjs'
+      - 'tools/patch_artifact_selection_radiation.py'
+      - 'tools/install_artifact_selection_radiation.py'
+      - 'tests/artifact_selection_radiation*'
+      - '.github/workflows/artifact-selection-radiation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Syntax
+        run: |
+          node --check server_patches/artifact-selection-radiation.cjs
+          python3 -m py_compile tools/patch_artifact_selection_radiation.py tools/install_artifact_selection_radiation.py tests/artifact_selection_radiation_patch.test.py tests/artifact_selection_radiation_installer.test.py
+      - name: Selection rules
+        run: node tests/artifact_selection_radiation.test.cjs
+      - name: Guarded server patch
+        run: python3 tests/artifact_selection_radiation_patch.test.py
+      - name: Installer rollback
+        run: python3 tests/artifact_selection_radiation_installer.test.py
+      - name: Whitespace
+        run: git diff --check
