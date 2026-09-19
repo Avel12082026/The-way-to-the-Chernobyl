@@ -12,7 +12,7 @@ QUEST_BEFORE='ef7289b956a1969846d9be25e28693c2d5a28e8b5d0443f44ec1fd3fd1a51308'
 SERVER_AFTER_V1='5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14'
 SERVER_MARK='// RAID_SURVIVAL_20260920_V2'
 QUEST_AFTER='c05194aa0f71c549320df6f0c55f2fa917f2f9f1a146a25150dd4963c976aadd'
-MODULE_HASH='59ab9bc1378590e1987b073fbd82125d4b6706587cae7fc1bef49b209b8c90ca'
+MODULE_HASH='ceaccb323384261387d73a9a3753d51df72603fd1fe718dbe3e0840890214427'
 def digest(b):return hashlib.sha256(b).hexdigest()
 def run(args,**kw):return subprocess.run(args,check=True,timeout=45,**kw)
 def atomic(path,content,st=None):
