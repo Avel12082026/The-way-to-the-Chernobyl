@@ -19,7 +19,7 @@ const RAID_BUTTON_CHROME_PROPS=[
   'border-left-width','border-left-style','border-left-color',
   'border-image-source','border-image-slice','border-image-width','border-image-outset','border-image-repeat',
   'border-top-left-radius','border-top-right-radius','border-bottom-right-radius','border-bottom-left-radius',
-  'box-shadow','color','font-family','font-size','font-weight','line-height','letter-spacing','text-shadow','text-transform',
+  'box-shadow','font-family','font-size','font-weight','line-height','letter-spacing','text-shadow','text-transform',
   'padding-top','padding-right','padding-bottom','padding-left','min-height','text-align'
 ];
 
@@ -35,7 +35,7 @@ function syncRaidUtilityChrome(raid,row){
   const computed=getComputedStyle(source);
   for(const target of Array.from(row.children)){
     if(!(target instanceof HTMLButtonElement))continue;
-    target.style.setProperty('--raid-utility-text-color',computed.color||'#fff');
+    target.style.setProperty('--raid-utility-text-color','#d5c69d');
     target.style.setProperty('--raid-utility-font-family',computed.fontFamily||'inherit');
     target.style.setProperty('--raid-utility-font-size',computed.fontSize||'12px');
     target.style.setProperty('--raid-utility-font-weight',computed.fontWeight||'700');
@@ -60,6 +60,7 @@ function setRaidUtilityLabel(button,label){
   if(!labelNode){
     labelNode=document.createElement('span');
     labelNode.className='raid-utility-label';
+    labelNode.id=button.id==='raidTelegramBtn'?'raidTelegramLabel':'raidBackpackLabel';
     button.prepend(labelNode);
   }
   if(labelNode.textContent!==label)labelNode.textContent=label;
@@ -136,21 +137,42 @@ const RAID_IDLE_BACKGROUNDS=[
 let raidIdleBackgroundIndex=0;
 let raidObservedLog=null;
 let raidLogBackgroundObserver=null;
-function paintRaidIdleBackground(visual){
-  if(!visual||!RAID_IDLE_BACKGROUNDS.length)return;
-  const url=RAID_IDLE_BACKGROUNDS[raidIdleBackgroundIndex%RAID_IDLE_BACKGROUNDS.length];
-  visual.style.setProperty('--raid-idle-bg',`url("${url}")`);
+function ensureRaidIdleScene(visual){
+  if(!visual)return null;
+  let idle=document.getElementById('raidIdleScene');
+  if(!idle){
+    idle=document.createElement('img');
+    idle.id='raidIdleScene';
+    idle.alt='Местность Зоны';
+    idle.draggable=false;
+    idle.decoding='async';
+    visual.prepend(idle);
+  }else if(idle.parentElement!==visual){
+    visual.prepend(idle);
+  }
+  return idle;
 }
-function observeRaidLogForBackground(log,visual){
-  if(!log||!visual)return;
-  paintRaidIdleBackground(visual);
+function paintRaidIdleBackground(idle){
+  if(!idle||!RAID_IDLE_BACKGROUNDS.length)return;
+  const url=RAID_IDLE_BACKGROUNDS[raidIdleBackgroundIndex%RAID_IDLE_BACKGROUNDS.length];
+  if(idle.getAttribute('src')!==url)idle.setAttribute('src',url);
+}
+function syncRaidIdleVisibility(visual,idle){
+  if(!visual||!idle)return;
+  idle.hidden=!!visibleRaidScene(visual);
+}
+function observeRaidLogForBackground(log,visual,idle){
+  if(!log||!visual||!idle)return;
+  paintRaidIdleBackground(idle);
+  syncRaidIdleVisibility(visual,idle);
   if(raidObservedLog===log)return;
   raidLogBackgroundObserver?.disconnect();
   raidObservedLog=log;
   raidLogBackgroundObserver=new MutationObserver(()=>{
-    if(visibleRaidScene(visual))return;
+    syncRaidIdleVisibility(visual,idle);
+    if(idle.hidden)return;
     raidIdleBackgroundIndex=(raidIdleBackgroundIndex+1)%RAID_IDLE_BACKGROUNDS.length;
-    paintRaidIdleBackground(visual);
+    paintRaidIdleBackground(idle);
   });
   raidLogBackgroundObserver.observe(log,{childList:true,characterData:true,subtree:true});
 }
@@ -194,10 +216,12 @@ function applyRaidLayout(){
     visual.setAttribute('aria-label','Визуализация рейда');
     shell.insertBefore(visual,head||shell.firstChild);
   }
+  const idle=ensureRaidIdleScene(visual);
   for(const id of ['combatScene','anomalyScene']){
     const el=document.getElementById(id);
     if(el&&el.parentElement!==visual)visual.append(el);
   }
+  syncRaidIdleVisibility(visual,idle);
 
   let meters=document.getElementById('raidMetersRow');
   if(!meters){
@@ -231,7 +255,7 @@ function applyRaidLayout(){
   const log=document.getElementById('raidLog');
   const anchor=(tracker&&tracker.isConnected)?tracker:quick;
   if(log&&anchor&&anchor.nextElementSibling!==log)anchor.insertAdjacentElement('afterend',log);
-  observeRaidLogForBackground(log,visual);
+  observeRaidLogForBackground(log,visual,idle);
   scheduleRaidHistoryBalance(raid,visual,log);
 }
 
@@ -261,5 +285,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.4',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.5',apply,applyRaidLayout,applyPdaLayout});
 })();
