@@ -65,7 +65,14 @@ async def main():
   assert await page.locator('#bunkerHealth').get_attribute('aria-valuemax') == '150'
   assert await page.locator('#bunkerHealth').get_attribute('aria-valuenow') == '89'
   assert '123 /' in await page.locator('#bunkerExperienceText').inner_text()
-  destinations = [('bunkerLeonov','scientists'),('bunkerZhuchara','shop'),('bunkerDiesel','technician'),('bunkerArena','arena'),('bunkerWarehouse','warehouse'),('bunkerInventory','inventory'),('bunkerPda','kpk')]
+  # Leonov has his own two-choice overlay instead of opening scientistsScreen directly.
+  await page.locator('#bunkerLeonov').click()
+  assert await page.locator('#leonovHubScreen').is_visible()
+  await page.locator('#leonovHubScreen [data-leonov-action="back"]').click()
+  await page.wait_for_timeout(40)
+  assert await page.locator('#mainMenu').is_visible()
+
+  destinations = [('bunkerZhuchara','shop'),('bunkerDiesel','technician'),('bunkerArena','arena'),('bunkerWarehouse','warehouse'),('bunkerInventory','inventory'),('bunkerPda','kpk')]
   for button, screen in destinations:
    await page.locator('#'+button).click()
    assert await page.locator('#'+screen+'Screen').is_visible(), screen
