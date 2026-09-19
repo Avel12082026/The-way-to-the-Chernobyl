@@ -86,7 +86,19 @@ async def main():
     assert await page.locator('#raidVisualStage').count()==1
     assert await page.locator('#raidUtilityButtons > button').count()==2
     labels=[x.strip() for x in await page.locator('#raidUtilityButtons > button').all_text_contents()]
-    assert 'Рюкзак' in labels[0] and labels[1]=='Телеграммка',labels
+    assert labels[0]=='Рюкзак' and labels[1]=='Телеграммка',labels
+    assert await page.locator('#raidUtilityButtons .raid-utility-label').count()==2
+    assert '🎒' not in labels[0]
+    vital_count=await page.locator('.raid-vital-chip').count()
+    assert vital_count==3,vital_count
+    vital_tops=await page.locator('.raid-vital-chip').evaluate_all('(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))')
+    assert max(vital_tops)-min(vital_tops)<=1,vital_tops
+    vital_bottom=await page.locator('.raid-vital-chip').first.evaluate('e=>e.getBoundingClientRect().bottom')
+    meters_top=await page.locator('#raidMetersRow').evaluate('e=>e.getBoundingClientRect().top')
+    assert 0 <= meters_top-vital_bottom <= 4,(vital_bottom,meters_top)
+    head_bg=await page.locator('.raid-vitals-row').evaluate("e=>getComputedStyle(e).backgroundImage")
+    assert head_bg=='none',head_bg
+    assert await page.locator('#raidLog').evaluate('e=>e.getBoundingClientRect().height')>=100
 
     # The whole raid viewport is fixed: only the combat history itself may scroll.
     overflow=await page.locator('#raidScreen').evaluate("e=>getComputedStyle(e).overflowY")
@@ -111,6 +123,15 @@ async def main():
     assert await nav.evaluate("e=>getComputedStyle(e).display")=='none'
     anomaly_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
     assert any('Поиск артефакта' in x for x in anomaly_labels) and any('Обойти аномалию' in x for x in anomaly_labels),anomaly_labels
+    bypass=page.locator('#battleButtonsContainer button').filter(has_text='Обойти аномалию').first
+    backpack=page.locator('#raidUtilityButtons>button').first
+    style_js="e=>{const s=getComputedStyle(e);return [s.backgroundImage,s.backgroundColor,s.borderTopColor,s.borderTopWidth,s.fontFamily,s.fontSize,s.fontWeight,s.textTransform]}"
+    assert await backpack.evaluate(style_js)==await bypass.evaluate(style_js)
+    await page.evaluate("updateAnomalyScene();RaidKpkPolish.apply()")
+    await page.wait_for_timeout(50)
+    if await page.locator('#anomalyScene').is_visible():
+      fill=await page.evaluate("""()=>{const v=document.getElementById('raidVisualStage').getBoundingClientRect(),s=document.getElementById('anomalyScene').getBoundingClientRect();return [Math.round(v.height),Math.round(s.height),Math.round(s.top-v.top)]}""")
+      assert abs(fill[0]-fill[1])<=2 and abs(fill[2])<=2,fill
 
     # Combat likewise replaces navigation with the original attack/escape pair.
     await page.evaluate("""()=>{
