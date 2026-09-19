@@ -72,7 +72,15 @@ async def main():
   await page.wait_for_timeout(40)
   assert await page.locator('#mainMenu').is_visible()
 
-  destinations = [('bunkerZhuchara','shop'),('bunkerDiesel','technician'),('bunkerArena','arena'),('bunkerWarehouse','warehouse'),('bunkerInventory','inventory'),('bunkerPda','kpk')]
+  # Zhuchara and Diesel also open portrait hubs before their trade screens.
+  for button, hub in [('bunkerZhuchara','zhucharaHubScreen'),('bunkerDiesel','dieselHubScreen')]:
+   await page.locator('#'+button).click()
+   assert await page.locator('#'+hub).is_visible(), hub
+   await page.locator('#'+hub+' [data-trader-action="back"]').click()
+   await page.wait_for_timeout(40)
+   assert await page.locator('#mainMenu').is_visible()
+
+  destinations = [('bunkerArena','arena'),('bunkerWarehouse','warehouse'),('bunkerInventory','inventory'),('bunkerPda','kpk')]
   for button, screen in destinations:
    await page.locator('#'+button).click()
    assert await page.locator('#'+screen+'Screen').is_visible(), screen
