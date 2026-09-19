@@ -60,7 +60,7 @@ jobs:
           sys.path.insert(0,'tools')
           from patch_raid_survival import build
           from install_raid_five_update import QUEST_AFTER
-from install_raid_anomaly_v3_update import MODULE_HASH
+          from install_raid_anomaly_v3_update import MODULE_HASH
           assert hashlib.sha256(Path('server_patches/quest-balance.cjs').read_bytes()).hexdigest()==QUEST_AFTER
           assert hashlib.sha256(Path('server_patches/raid-survival.cjs').read_bytes()).hexdigest()==MODULE_HASH
           f=json.loads(Path('tests/fixtures/raid-survival-live.json').read_text())
