@@ -128,13 +128,22 @@ function pveAnomalyExposureServer(playerId,data,a){
 
     const artifactSpecific=pveAnomalyComposite(belt.anomaly,a,tier);
     const combinedSpecific=pveAnomalyComposite(data.anomalyResist,a,tier);
-    const armorSpecific=combinedSpecific-artifactSpecific*derivedScale;
-
     const artifactRadiation=Number(belt.radiation)||0;
     const combinedRadiation=Number(data.radiationResist)||0;
-    const armorRadiation=combinedRadiation-artifactRadiation*derivedScale;
 
-    const parsedArmor=parseGearNameServer(data.armor&&data.armor.name||'');
+    const armorName=data.armor&&data.armor.name||'';
+    const parsedArmor=parseGearNameServer(armorName);
+    const effectiveArmor=armorName&&typeof getArmorEffectiveStatsServer==='function'
+        ? getArmorEffectiveStatsServer(armorName,data) : null;
+    const armorStats=effectiveArmor&&effectiveArmor.stats&&typeof effectiveArmor.stats==='object'
+        ? effectiveArmor.stats : null;
+    const armorSpecific=armorStats
+        ? pveAnomalyComposite(armorStats,a,tier)*derivedScale
+        : combinedSpecific-artifactSpecific*derivedScale;
+    const armorRadiation=armorStats
+        ? (Number(armorStats.radiation)||0)*derivedScale
+        : combinedRadiation-artifactRadiation*derivedScale;
+
     const armorBase=SHOP_ARMOR.find(x=>x.name===parsedArmor.baseName);
     const research=!!(armorBase&&armorBase.isResearchSuit);
     const upgradeLevel=research?Math.max(0,Number(parsedArmor.level)||0):0;
