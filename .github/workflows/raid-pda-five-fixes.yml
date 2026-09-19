@@ -1,7 +1,7 @@
 name: Validate raid and PDA five fixes
 on:
   push:
-    branches: [feature/raid-pda-five-fixes-20260919]
+    branches: [feature/raid-pda-five-fixes-20260919, fix/raid-no-scroll-dynamic-buttons-20260919]
     paths:
       - 'index.html'
       - 'ui/raid-kpk-polish.*'
