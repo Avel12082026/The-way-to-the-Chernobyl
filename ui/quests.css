@@ -50,3 +50,10 @@ body.quest-pda-visible,body.trader-dialogue-visible{overflow:hidden!important}
 
 /* Original trilogy dialogue composition: large NPC text pane, compact portrait card, numbered answer pane below. */
 #traderDialogueLine::before{content:'NPC';display:block;margin-bottom:4px;color:#b79a4c;font:700 10px/1 'Russo One',Arial,sans-serif;letter-spacing:.08em}
+
+
+/* Quest feedback must stay visible while the STALKER dialogue overlay is open. */
+body.trader-dialogue-visible #gameAlertModal,
+body.trader-dialogue-visible #gameConfirmModal{
+  z-index:100060!important;
+}

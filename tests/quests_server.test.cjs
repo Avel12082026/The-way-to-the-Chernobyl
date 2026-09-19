@@ -120,10 +120,8 @@ function call(path,body={}){
  const offer=r.body.offers[0];
  r=await call('/api/quests/accept',{vendor:'diesel',questId:offer.id});assert.equal(r.body.accepted.length,1);
  r=await call('/api/quests/activate',{questId:offer.id});assert.equal(r.body.activeId,offer.id);
- // Item without a post-accept raid return cannot be handed in.
+ // An item already owned when/after the quest is accepted can be handed in immediately at base.
  let stored=JSON.parse(db.rows.get('p1').data);stored.inventory[offer.itemName]=1;db.rows.set('p1',{data:JSON.stringify(stored)});
- r=await call('/api/quests/turn-in',{vendor:'diesel',questId:offer.id});assert.equal(r.code,400);assert.match(r.body.error,/рейд/);
- await new Promise(r=>setTimeout(r,2));api.markRaidReturn('p1');
  r=await call('/api/quests/turn-in',{vendor:'diesel',questId:offer.id});assert.equal(r.code,200);assert.equal(r.body.completedCount,1);
  assert(r.body.reward>sell(offer.itemName).price*1.02,'quest reward must exceed best ordinary sale');
  assert.equal(r.body.inventory[offer.itemName],undefined);
