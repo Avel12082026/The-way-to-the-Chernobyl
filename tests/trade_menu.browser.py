@@ -265,7 +265,7 @@ async def main():
         await page.locator('[data-trade-action=back]').click()
         assert await page.locator('#dieselHubScreen').is_visible()
         # All friendly-faction encounters use the same view, with no warehouse in a raid.
-        await page.evaluate("raidActive=true;currentEnemy={name:'Тестовый сталкер',faction:{name:'Сталкеры'},friendly:true};openFriendlyTrade()")
+        await page.evaluate("openScreen('main');raidActive=true;currentEnemy={name:'Тестовый сталкер',faction:{name:'Сталкеры'},friendly:true};openFriendlyTrade()")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='friendly'
         assert await page.locator('#tradeWarehouse').is_disabled()
         await click('stock',a)
@@ -275,6 +275,8 @@ async def main():
         assert not await page.locator('#tradeMenu').is_visible()
         # Named/admin artifacts are not confused with each other or static artifacts.
         await page.evaluate("player.inventory[artifacts.find(a=>a.adminOnly).name]=1;updateUI();openScreen('shop')")
+        if await page.locator('#zhucharaHubScreen').is_visible():
+            await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
         assert await page.locator('#tradeInventory .trade-cell').count()>0
         # No item name can create markup in the UI.
         assert await page.locator('#tradeInventory img[src=x]').count()==0
@@ -301,6 +303,8 @@ async def main():
         for width,height in [(320,568),(360,800),(390,844),(412,915),(844,390)]:
             await page.set_viewport_size({'width':width,'height':height})
             await page.evaluate("openScreen('main');openScreen('shop')")
+            if await page.locator('#zhucharaHubScreen').is_visible():
+                await page.locator('#zhucharaHubScreen [data-trader-action=trade]').click()
             await page.wait_for_timeout(80)
             report=await page.evaluate("""() => {
                 const root=document.getElementById('tradeMenu'),buy=document.getElementById('tradeBuy').getBoundingClientRect(),sell=document.getElementById('tradeSell').getBoundingClientRect(),row=root.querySelector('.trade-actions').getBoundingClientRect();
