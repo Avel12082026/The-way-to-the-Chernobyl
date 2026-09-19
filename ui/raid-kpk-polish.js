@@ -269,31 +269,9 @@ function applyPdaLayout(){
   if(tabs)tabs.classList.add('kpk-two-column-tabs');
 }
 
-function hasPendingAnomalyClient(){
-  try{
-    return typeof currentAnomaly!=='undefined'&&!!currentAnomaly&&
-      !(typeof currentEnemy!=='undefined'&&!!currentEnemy);
-  }catch(_){return false;}
-}
-function restorePendingAnomalyUi(){
-  if(!hasPendingAnomalyClient())return false;
-  const nav=document.getElementById('raidNavButtons');
-  const battle=document.getElementById('battleButtonsContainer');
-  const buttons=Array.from(battle?.querySelectorAll('button')||[]);
-  const resolved=!!currentAnomaly.resolved;
-  const hasExpected=resolved
-    ? buttons.some(button=>/Идти\\s+дальше/i.test(button.textContent||''))
-    : buttons.some(button=>/Поиск\\s+артефакта/i.test(button.textContent||''))&&
-      buttons.some(button=>/Обойти\\s+аномалию/i.test(button.textContent||''));
-  const navVisible=!!nav&&getComputedStyle(nav).display!=='none';
-  if((!hasExpected||navVisible)&&typeof renderAnomalyButtons==='function')renderAnomalyButtons();
-  return true;
-}
-
 function apply(){
   applyRaidLayout();
   applyPdaLayout();
-  restorePendingAnomalyUi();
 }
 
 let applyQueued=false;
@@ -309,7 +287,7 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.4.2',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.4.0',apply,applyRaidLayout,applyPdaLayout});
 })();
 
 // RAID_FIVE_20260920_V1
