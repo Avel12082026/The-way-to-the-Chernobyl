@@ -218,5 +218,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.2',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.3',apply,applyRaidLayout,applyPdaLayout});
 })();

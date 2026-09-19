@@ -99,7 +99,8 @@ async def main():
     assert 0 <= meters_top-vital_bottom <= 4,(vital_bottom,meters_top)
     head_bg=await page.locator('.raid-vitals-row').evaluate("e=>getComputedStyle(e).backgroundImage")
     assert head_bg=='none',head_bg
-    assert await page.locator('#raidLog').evaluate('e=>e.getBoundingClientRect().height')>=100
+    initial_log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
+    assert 82 <= initial_log_h <= 230,initial_log_h
 
     # The whole raid viewport is fixed: only the combat history itself may scroll.
     overflow=await page.locator('#raidScreen').evaluate("e=>getComputedStyle(e).overflowY")
@@ -109,6 +110,12 @@ async def main():
 
     # Default navigation stays as before when there is no encounter.
     await page.evaluate("document.getElementById('itemInfoModal').classList.remove('active');currentEnemy=null;currentAnomaly=null;clearBattleUiAndRestoreNav();RaidKpkPolish.apply()")
+    idle_visual=await page.locator('#raidVisualStage').evaluate("""e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {w:Math.round(r.width),h:Math.round(r.height),bg:s.backgroundImage}}""")
+    assert idle_visual['h']>0,idle_visual
+    assert abs(idle_visual['w']/idle_visual['h']-1.5)<0.03,idle_visual
+    assert 'background.jpg' in idle_visual['bg'],idle_visual
+    idle_log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
+    assert 82 <= idle_log_h <= 230,idle_log_h
     nav=page.locator('#raidNavButtons')
     assert await nav.evaluate("e=>getComputedStyle(e).display")!='none'
     nav_labels=[x.strip() for x in await nav.locator('button').all_text_contents()]
@@ -146,7 +153,7 @@ async def main():
       assert abs(native_scene['sceneW']/native_scene['sceneH']-1.5)<0.03,native_scene
       assert native_scene['handObjectFit'] in (None,'contain'),native_scene
       log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
-      assert log_h>=120,log_h
+      assert 82 <= log_h <= 230,log_h
 
     # Combat likewise replaces navigation with the original attack/escape pair.
     await page.evaluate("""()=>{
