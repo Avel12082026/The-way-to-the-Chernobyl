@@ -11,6 +11,36 @@ if(!Element.prototype.__raidNoScrollV1){
   };
 }
 
+const RAID_BUTTON_CHROME_PROPS=[
+  'background-color','background-image','background-position','background-size','background-repeat',
+  'border-top-width','border-top-style','border-top-color',
+  'border-right-width','border-right-style','border-right-color',
+  'border-bottom-width','border-bottom-style','border-bottom-color',
+  'border-left-width','border-left-style','border-left-color',
+  'border-image-source','border-image-slice','border-image-width','border-image-outset','border-image-repeat',
+  'border-top-left-radius','border-top-right-radius','border-bottom-right-radius','border-bottom-left-radius',
+  'box-shadow','color','font-family','font-size','font-weight','line-height','letter-spacing','text-shadow','text-transform',
+  'padding-top','padding-right','padding-bottom','padding-left'
+];
+
+function raidActionStyleSource(raid){
+  const encounterButtons=Array.from(raid.querySelectorAll('#battleButtonsContainer button'));
+  const preferred=encounterButtons.find(button=>/Обойти\s+аномалию|Сбежать/i.test(button.textContent||''));
+  return preferred||encounterButtons[0]||raid.querySelector('#raidNavButtons button');
+}
+
+function syncRaidUtilityChrome(raid,row){
+  const source=raidActionStyleSource(raid);
+  if(!source||!row)return;
+  const computed=getComputedStyle(source);
+  for(const target of Array.from(row.children)){
+    if(!(target instanceof HTMLButtonElement))continue;
+    for(const prop of RAID_BUTTON_CHROME_PROPS){
+      target.style.setProperty(prop,computed.getPropertyValue(prop),'important');
+    }
+  }
+}
+
 function ensureRaidUtilityRow(raid) {
   let row=document.getElementById('raidUtilityButtons');
   const backpack=raid.querySelector('button[onclick="openBackpackFromRaid()"]');
@@ -36,7 +66,32 @@ function ensureRaidUtilityRow(raid) {
     row.append(telegram);
   }
   if((backpack.textContent||'').trim()!=='🎒 Рюкзак')backpack.textContent='🎒 Рюкзак';
+  syncRaidUtilityChrome(raid,row);
   return row;
+}
+
+let raidBalanceFrame=0;
+function visibleRaidScene(visual){
+  return Array.from(visual.querySelectorAll('#combatScene,#anomalyScene')).find(el=>{
+    if(el.hidden||el.offsetHeight<=0)return false;
+    return getComputedStyle(el).display!=='none';
+  })||null;
+}
+function scheduleRaidHistoryBalance(raid,visual,log){
+  if(!raid||!visual||!log)return;
+  if(raidBalanceFrame)cancelAnimationFrame(raidBalanceFrame);
+  raidBalanceFrame=requestAnimationFrame(()=>{
+    raidBalanceFrame=0;
+    const scene=visibleRaidScene(visual);
+    if(!scene){
+      log.style.setProperty('--raid-log-extra','0px');
+      return;
+    }
+    const current=Math.max(0,parseFloat(getComputedStyle(log).getPropertyValue('--raid-log-extra'))||0);
+    const spare=visual.clientHeight-scene.offsetHeight;
+    const next=Math.max(0,current+spare);
+    log.style.setProperty('--raid-log-extra',`${Math.round(next)}px`);
+  });
 }
 
 function applyRaidLayout(){
@@ -98,6 +153,7 @@ function applyRaidLayout(){
   const log=document.getElementById('raidLog');
   const anchor=(tracker&&tracker.isConnected)?tracker:quick;
   if(log&&anchor&&anchor.nextElementSibling!==log)anchor.insertAdjacentElement('afterend',log);
+  scheduleRaidHistoryBalance(raid,visual,log);
 }
 
 function applyPdaLayout(){
@@ -122,8 +178,9 @@ const observer=new MutationObserver(()=>{
 function init(){
   apply();
   observer.observe(document.body,{childList:true,subtree:true});
+  window.addEventListener('resize',applyRaidLayout,{passive:true});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.1.0',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.2.0',apply,applyRaidLayout,applyPdaLayout});
 })();
