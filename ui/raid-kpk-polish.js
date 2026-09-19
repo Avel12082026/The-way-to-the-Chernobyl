@@ -2,6 +2,15 @@
 'use strict';
 if (window.RaidKpkPolish) return;
 
+const nativeScrollIntoView=Element.prototype.scrollIntoView;
+if(!Element.prototype.__raidNoScrollV1){
+  Object.defineProperty(Element.prototype,'__raidNoScrollV1',{value:true,configurable:true});
+  Element.prototype.scrollIntoView=function(){
+    if(this.closest?.('#raidScreen'))return;
+    return nativeScrollIntoView.apply(this,arguments);
+  };
+}
+
 function ensureRaidUtilityRow(raid) {
   let row=document.getElementById('raidUtilityButtons');
   const backpack=raid.querySelector('button[onclick="openBackpackFromRaid()"]');
@@ -35,6 +44,8 @@ function applyRaidLayout(){
   if(!raid)return;
   const shell=raid.firstElementChild;
   if(!shell)return;
+  raid.scrollTop=0;
+  shell.scrollTop=0;
 
   const head=raid.querySelector('.zr-raid-head');
   if(head){
@@ -114,5 +125,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.0.0',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.1.0',apply,applyRaidLayout,applyPdaLayout});
 })();
