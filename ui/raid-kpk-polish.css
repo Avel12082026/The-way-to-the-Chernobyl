@@ -38,7 +38,7 @@
   height:auto;
   min-height:0;
   aspect-ratio:3/2;
-  background:#000 url("../images/anomaly/background.jpg") center/contain no-repeat;
+  background:#000 var(--raid-idle-bg,url("../images/anomaly/background.jpg")) center/contain no-repeat;
   overflow:hidden;
   display:flex;
   align-items:flex-start;
@@ -167,8 +167,7 @@
 #raidUtilityButtons>button{
   isolation:isolate!important;
 }
-#raidUtilityButtons>button::before{
-  content:attr(data-raid-label)!important;
+#raidUtilityButtons .raid-utility-label{
   position:absolute!important;
   inset:0!important;
   z-index:3!important;

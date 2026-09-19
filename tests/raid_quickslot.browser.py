@@ -86,10 +86,10 @@ async def main():
     assert await page.locator('#raidVisualStage').count()==1
     assert await page.locator('#raidUtilityButtons > button').count()==2
     labels=[x.strip() for x in await page.locator('#raidUtilityButtons > button').all_text_contents()]
-    assert labels[0]=='' and labels[1]=='',labels
-    assert await page.locator('#raidUtilityButtons .raid-utility-label').count()==0
-    pseudo_labels=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>getComputedStyle(e,'::before').content.replace(/^['"]|['"]$/g,''))""")
-    assert pseudo_labels==['Рюкзак','Телеграммка'],pseudo_labels
+    assert labels==['Рюкзак','Телеграммка'],labels
+    assert await page.locator('#raidUtilityButtons .raid-utility-label').count()==2
+    label_styles=await page.locator('#raidUtilityButtons .raid-utility-label').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [s.display,s.visibility,s.opacity,e.textContent]})""")
+    assert all(x[0]!='none' and x[1]=='visible' and float(x[2])>0 and x[3] for x in label_styles),label_styles
     vital_count=await page.locator('.raid-vital-chip').count()
     assert vital_count==3,vital_count
     vital_tops=await page.locator('.raid-vital-chip').evaluate_all('(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))')
@@ -113,7 +113,12 @@ async def main():
     idle_visual=await page.locator('#raidVisualStage').evaluate("""e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {w:Math.round(r.width),h:Math.round(r.height),bg:s.backgroundImage}}""")
     assert idle_visual['h']>0,idle_visual
     assert abs(idle_visual['w']/idle_visual['h']-1.5)<0.03,idle_visual
-    assert 'background.jpg' in idle_visual['bg'],idle_visual
+    assert 'backgrounds/' in idle_visual['bg'],idle_visual
+    first_bg=idle_visual['bg']
+    await page.evaluate("document.getElementById('raidLog').textContent='Фон должен смениться после шага';")
+    await page.wait_for_timeout(30)
+    second_bg=await page.locator('#raidVisualStage').evaluate("e=>getComputedStyle(e).backgroundImage")
+    assert second_bg!=first_bg,(first_bg,second_bg)
     idle_log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
     assert 82 <= idle_log_h <= 230,idle_log_h
     nav=page.locator('#raidNavButtons')
@@ -174,7 +179,7 @@ async def main():
       await leaveFriendlyPeacefully();
       RaidKpkPolish.apply();
     }""")
-    after_npc=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e,'::before');return [s.content.replace(/^['"]|['"]$/g,''),s.display,s.visibility,s.opacity,s.color]})""")
+    after_npc=await page.locator('#raidUtilityButtons .raid-utility-label').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [e.textContent,s.display,s.visibility,s.opacity,s.color]})""")
     assert [x[0] for x in after_npc]==['Рюкзак','Телеграммка'],after_npc
     assert all(x[1]!='none' and x[2]=='visible' and float(x[3])>0 for x in after_npc),after_npc
 
@@ -184,7 +189,7 @@ async def main():
       battleTurn=0;renderBattleButtons();RaidKpkPolish.apply();
       currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();RaidKpkPolish.apply();
     }""")
-    after_battle=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e,'::before');return [s.content.replace(/^['"]|['"]$/g,''),s.display,s.visibility,s.opacity,s.color]})""")
+    after_battle=await page.locator('#raidUtilityButtons .raid-utility-label').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e);return [e.textContent,s.display,s.visibility,s.opacity,s.color]})""")
     assert [x[0] for x in after_battle]==['Рюкзак','Телеграммка'],after_battle
     assert all(x[1]!='none' and x[2]=='visible' and float(x[3])>0 for x in after_battle),after_battle
 

@@ -55,8 +55,14 @@ function setRaidUtilityLabel(button,label){
   button.setAttribute('aria-label',label);
   for(const node of Array.from(button.childNodes)){
     if(node.nodeType===Node.TEXT_NODE && node.textContent.trim())node.remove();
-    if(node.nodeType===Node.ELEMENT_NODE && node.classList?.contains('raid-utility-label'))node.remove();
   }
+  let labelNode=button.querySelector(':scope > .raid-utility-label');
+  if(!labelNode){
+    labelNode=document.createElement('span');
+    labelNode.className='raid-utility-label';
+    button.prepend(labelNode);
+  }
+  if(labelNode.textContent!==label)labelNode.textContent=label;
 }
 
 function syncRaidVitalBars(head){
@@ -111,6 +117,42 @@ function ensureRaidUtilityRow(raid) {
   setRaidUtilityLabel(telegram,'Телеграммка');
   syncRaidUtilityChrome(raid,row);
   return row;
+}
+
+const RAID_IDLE_BACKGROUNDS=[
+  'images/combat/backgrounds/boar/1.png',
+  'images/combat/backgrounds/chernobyl-dog/1.png',
+  'images/combat/backgrounds/flesh/1.png',
+  'images/combat/backgrounds/hinge/1.png',
+  'images/combat/backgrounds/isotope/1.png',
+  'images/combat/backgrounds/zombie/1.png',
+  'images/combat/backgrounds/boar/2.png',
+  'images/combat/backgrounds/chernobyl-dog/2.png',
+  'images/combat/backgrounds/flesh/2.png',
+  'images/combat/backgrounds/hinge/2.png',
+  'images/combat/backgrounds/isotope/2.png',
+  'images/combat/backgrounds/zombie/2.png'
+];
+let raidIdleBackgroundIndex=0;
+let raidObservedLog=null;
+let raidLogBackgroundObserver=null;
+function paintRaidIdleBackground(visual){
+  if(!visual||!RAID_IDLE_BACKGROUNDS.length)return;
+  const url=RAID_IDLE_BACKGROUNDS[raidIdleBackgroundIndex%RAID_IDLE_BACKGROUNDS.length];
+  visual.style.setProperty('--raid-idle-bg',`url("${url}")`);
+}
+function observeRaidLogForBackground(log,visual){
+  if(!log||!visual)return;
+  paintRaidIdleBackground(visual);
+  if(raidObservedLog===log)return;
+  raidLogBackgroundObserver?.disconnect();
+  raidObservedLog=log;
+  raidLogBackgroundObserver=new MutationObserver(()=>{
+    if(visibleRaidScene(visual))return;
+    raidIdleBackgroundIndex=(raidIdleBackgroundIndex+1)%RAID_IDLE_BACKGROUNDS.length;
+    paintRaidIdleBackground(visual);
+  });
+  raidLogBackgroundObserver.observe(log,{childList:true,characterData:true,subtree:true});
 }
 
 let raidBalanceFrame=0;
@@ -189,6 +231,7 @@ function applyRaidLayout(){
   const log=document.getElementById('raidLog');
   const anchor=(tracker&&tracker.isConnected)?tracker:quick;
   if(log&&anchor&&anchor.nextElementSibling!==log)anchor.insertAdjacentElement('afterend',log);
+  observeRaidLogForBackground(log,visual);
   scheduleRaidHistoryBalance(raid,visual,log);
 }
 
@@ -218,5 +261,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.3',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.4',apply,applyRaidLayout,applyPdaLayout});
 })();
