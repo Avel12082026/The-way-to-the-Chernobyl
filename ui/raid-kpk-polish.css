@@ -37,7 +37,8 @@
   flex:0 0 auto;
   height:auto;
   min-height:0;
-  background:#000;
+  aspect-ratio:3/2;
+  background:#000 url("../images/anomaly/background.jpg") center/contain no-repeat;
   overflow:hidden;
   display:flex;
   align-items:flex-start;
@@ -194,10 +195,10 @@
 #activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}
 #raidLog{
   --raid-log-extra:0px;
-  flex:1 1 0!important;
-  height:auto!important;
-  min-height:132px!important;
-  max-height:none!important;
+  flex:0 1 clamp(130px,18dvh,230px)!important;
+  height:clamp(130px,18dvh,230px)!important;
+  min-height:118px!important;
+  max-height:230px!important;
   margin:4px 0 0!important;
   overflow-y:auto!important;
   overflow-x:hidden!important;
@@ -216,17 +217,17 @@
   #battleButtonsContainer button{min-height:50px!important;padding:7px 4px!important}
   #raidUtilityButtons>button{min-height:44px!important}
   #raidLog{
-    flex:1 1 0!important;
-    height:auto!important;
-    min-height:120px!important;
-    max-height:none!important;
+    flex:0 1 clamp(118px,17dvh,190px)!important;
+    height:clamp(118px,17dvh,190px)!important;
+    min-height:110px!important;
+    max-height:190px!important;
   }
 }
 @media(max-height:650px){
   #raidLog{
-    flex:1 1 0!important;
-    height:auto!important;
-    min-height:86px!important;
-    max-height:none!important;
+    flex:0 1 92px!important;
+    height:92px!important;
+    min-height:82px!important;
+    max-height:104px!important;
   }
 }
