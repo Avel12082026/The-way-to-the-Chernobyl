@@ -35,30 +35,35 @@ def route_slice(source):
 def build(source):
     if MARK in source:
         start,end,route=route_slice(source)
-        required=(
-            "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap})",
-            REQUIRE,
-            VERSION_ROUTE,
+        merge_calls=(
+            "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap:perStatCap})",
+            "ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap:cap})",
         )
-        if any(x not in source for x in required):
+        required=(REQUIRE,VERSION_ROUTE)
+        if not any(x in source for x in merge_calls) or any(x not in source for x in required):
             raise ValueError('Неполный патч селекции радиации; установка остановлена')
         return source
 
     start,end,route=route_slice(source)
-    matches=list(MERGE_RE.finditer(route))
-    if len(matches)!=1:
+    candidates=[]
+    for pattern,output_name,cap_name in MERGE_PATTERNS:
+        for match in pattern.finditer(route):
+            candidates.append((match,output_name,cap_name))
+    if len(candidates)!=1:
         raise ValueError(
             'Не найден однозначный проверенный блок объединения характеристик в /api/artifacts/breed '
-            f'(найдено {len(matches)}). Ничего не изменено.'
+            f'(найдено {len(candidates)}). Ничего не изменено.'
         )
-    old=matches[0].group(0)
-    indent=matches[0].group('indent')
+    match,output_name,cap_name=candidates[0]
+    old=match.group(0)
+    indent=match.group('indent')
     new=(
-        indent+"const mergedStats=ArtifactSelectionRadiation.mergeStats("
-        "a1.stats,a2.stats,{perStatCap});"
+        indent+f"const {output_name}=ArtifactSelectionRadiation.mergeStats("
+        f"a1.stats,a2.stats,{{perStatCap:{cap_name}}});"
     )
     patched_route=route.replace(old,new,1)
-    if "const mergedStats=ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{perStatCap});" not in patched_route:
+    expected=f"const {output_name}=ArtifactSelectionRadiation.mergeStats(a1.stats,a2.stats,{{perStatCap:{cap_name}}});"
+    if expected not in patched_route:
         raise ValueError('Не удалось вставить новую формулу селекции')
 
     prefix=MARK+"\n"+REQUIRE+"\n"+VERSION_ROUTE+"\n"
