@@ -130,8 +130,9 @@
 #raidScreen #quickSlots{margin:4px 0!important;flex:0 0 auto}
 #activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}
 #raidLog{
-  flex:0 0 clamp(52px,10dvh,96px)!important;
-  height:clamp(52px,10dvh,96px)!important;
+  --raid-log-extra:0px;
+  flex:0 0 calc(clamp(52px,10dvh,96px) + var(--raid-log-extra))!important;
+  height:calc(clamp(52px,10dvh,96px) + var(--raid-log-extra))!important;
   min-height:52px!important;
   margin:4px 0 0!important;
   overflow-y:auto!important;
@@ -150,5 +151,9 @@
   #raidNavButtons>button,
   #battleButtonsContainer button{min-height:50px!important;padding:7px 4px!important}
   #raidUtilityButtons>button{min-height:44px!important}
-  #raidLog{flex-basis:56px!important;height:56px!important;min-height:56px!important}
+  #raidLog{
+    flex-basis:calc(56px + var(--raid-log-extra))!important;
+    height:calc(56px + var(--raid-log-extra))!important;
+    min-height:56px!important;
+  }
 }
