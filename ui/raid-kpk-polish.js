@@ -180,7 +180,7 @@ function observeRaidLogForBackground(log,visual,idle){
 let raidBalanceFrame=0;
 function visibleRaidScene(visual){
   return Array.from(visual.querySelectorAll('#combatScene,#anomalyScene')).find(el=>{
-    if(el.hidden||el.offsetHeight<=0)return false;
+    if(el.hidden)return false;
     return getComputedStyle(el).display!=='none';
   })||null;
 }
