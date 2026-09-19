@@ -144,7 +144,7 @@
   margin:0!important;
   min-width:0;
 }
-#raidMetersRow>div>div:first-child{display:none!important}
+#raidMetersRow>div:not(#raidExpTrack)>div:first-child{display:none!important}
 #raidMetersRow #raidExpTrack,
 #raidMetersRow #raidRadiationTrack{height:20px!important;border-radius:0!important}
 #raidMetersRow .meter-text{font-size:11px!important;font-weight:800}
@@ -209,7 +209,7 @@
   pointer-events:none!important;
 }
 #raidScreen #quickSlots{margin:4px 0!important;flex:0 0 auto}
-#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}
+#activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:96px;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch}
 #raidLog{
   --raid-log-extra:0px;
   flex:0 1 clamp(130px,18dvh,230px)!important;

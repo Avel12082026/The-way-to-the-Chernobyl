@@ -69,12 +69,54 @@ const researchPrices=rebalanceResearchPrices();
 // Replace only the research-suit availability gate. Normal armor progression is preserved.
 try{window.getResearchSuitUnlockTier=researchTier;}catch(_){}
 
+function itemReferenceMeta(name){
+  const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
+  const parsed=typeof parseGearName==='function'?parseGearName(clean):{baseName:clean,level:0};
+  const base=parsed?.baseName||clean;
+  let def=null, minLevel=1;
+  if(typeof weapons!=='undefined')def=weapons.find(x=>x.name===base)||def;
+  if(def){
+    minLevel=def.adminOnly?'Только администратор':Math.max(1,Number(def.unlockLevel)||1);
+  }else if(typeof armorItems!=='undefined'){
+    def=armorItems.find(x=>x.name===base)||def;
+    if(def){
+      if(def.adminOnly)minLevel='Только администратор';
+      else if(def.isResearchSuit){
+        const row=RESEARCH_UNLOCKS.find(([tier])=>Number(tier)===Number(def.tier));
+        minLevel=row?row[1]:1;
+      }else minLevel=Math.max(1,Number(def.unlockLevel)||1);
+    }
+  }
+  if(!def&&typeof detectors!=='undefined')def=detectors.find(x=>x.name===base)||def;
+  if(!def&&typeof consumables!=='undefined')def=consumables.find(x=>x.name===clean)||def;
+  if(!def&&typeof artifacts!=='undefined')def=artifacts.find(x=>x.name===clean||x.name===base)||def;
+  if(!def&&typeof findArtifactDef==='function')def=findArtifactDef(name)||def;
+  let price=Number(def?.price);
+  if((!Number.isFinite(price)||price<=0)&&typeof getSellPrice==='function'){
+    const sale=Number(getSellPrice(name));
+    if(Number.isFinite(sale)&&sale>0)price=Math.round(sale*2);
+  }
+  return {minLevel,price:Number.isFinite(price)&&price>0?Math.round(price):null};
+}
+
 const nativeInfo=window.showItemInfoModal;
 if(typeof nativeInfo==='function'){
   window.showItemInfoModal=function(name){
     const result=nativeInfo.apply(this,arguments);
     try{
       const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
+      const meta=itemReferenceMeta(name);
+      const body=document.getElementById('itemInfoModalBody');
+      if(body&&!body.querySelector('.item-reference-meta')){
+        const box=document.createElement('div');
+        box.className='item-reference-meta';
+        box.style.cssText='font-size:12px;color:#cfc7aa;margin:0 0 10px;background:#111;padding:8px;border:1px solid #4a4230;border-radius:6px;';
+        const levelText=typeof meta.minLevel==='number'?String(meta.minLevel):meta.minLevel;
+        const priceText=meta.price===null?'не определена':('≈ '+meta.price.toLocaleString('ru-RU')+' сталбайтов');
+        box.innerHTML='<div><b>Можно использовать с уровня:</b> '+levelText+'</div><div><b>Средняя цена:</b> '+priceText+'</div>';
+        const firstInfo=body.querySelector('div[style*="font-size:12px"]');
+        if(firstInfo)body.insertBefore(box,firstInfo);else body.append(box);
+      }
       const def=typeof artifacts!=='undefined'?artifacts.find(a=>a.name===clean):null;
       if(def&&!def.adminOnly&&Number(def.tier)<=8&&Number.isFinite(Number(def.catchChancePercent))){
         const body=document.getElementById('itemInfoModalBody');
@@ -91,7 +133,7 @@ if(typeof nativeInfo==='function'){
 }
 
 window.GameBalanceTuning=Object.freeze({
-  version:'1.0.0',
+  version:'1.1.0',
   maxUpgradeLevel:50,
   maxUpgradeBonusPct:0.25,
   byteUpgradeThreshold:25,
