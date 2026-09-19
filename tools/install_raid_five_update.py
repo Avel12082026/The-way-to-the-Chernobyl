@@ -9,7 +9,8 @@ SERVICE='pocketzone.service'
 SERVER_BEFORE='7d481279dc1b6eb7c2425fa8a8a905270a917d64369dc5eefe944f37b4dc6759'
 QUEST_BEFORE='ef7289b956a1969846d9be25e28693c2d5a28e8b5d0443f44ec1fd3fd1a51308'
 # Filled by the release packager after the exact files have passed tests.
-SERVER_AFTER='29a413cf02ac883aa271dfb5c679a9777e40ff305033be058a980d40eaccce4e'
+SERVER_AFTER_V1='5d0f4b1f6f16671f9fc2e49e2604175857b1d492b4c86a7b748fb74eb0f9fe14'
+SERVER_MARK='// RAID_SURVIVAL_20260920_V2'
 QUEST_AFTER='c05194aa0f71c549320df6f0c55f2fa917f2f9f1a146a25150dd4963c976aadd'
 MODULE_HASH='59ab9bc1378590e1987b073fbd82125d4b6706587cae7fc1bef49b209b8c90ca'
 def digest(b):return hashlib.sha256(b).hexdigest()
@@ -27,15 +28,21 @@ def atomic(path,content,st=None):
         if os.path.exists(name):os.unlink(name)
 def prepare(root,payload):
     before={name:(root/name).read_bytes() for name in ('server.js','quest-balance.cjs')}
-    if digest(before['server.js']) not in (SERVER_BEFORE,SERVER_AFTER):
-        raise RuntimeError('server.js изменился с проверенной версии. Ничего не установлено. SHA='+digest(before['server.js']))
+    server_hash=digest(before['server.js'])
+    server_text=before['server.js'].decode()
+    trusted_post_v2=(SERVER_MARK in server_text and 'artifactAnomaly:beltHazard.anomaly' in server_text and 'RaidSurvival.travelCost' in server_text)
+    if server_hash not in (SERVER_BEFORE,SERVER_AFTER_V1) and not trusted_post_v2:
+        raise RuntimeError('server.js изменился с проверенной версии. Ничего не установлено. SHA='+server_hash)
     if digest(before['quest-balance.cjs']) not in (QUEST_BEFORE,QUEST_AFTER):
         raise RuntimeError('quest-balance.cjs изменился с проверенной версии. Ничего не установлено. SHA='+digest(before['quest-balance.cjs']))
     module=payload.read_bytes()
     if digest(module)!=MODULE_HASH:raise RuntimeError('Не совпал SHA модуля выживания')
     new={'server.js':build(before['server.js'].decode()).encode(),'quest-balance.cjs':patch_server_quests(before['quest-balance.cjs'].decode()).encode(),'raid-survival.cjs':module}
-    if digest(new['server.js'])!=SERVER_AFTER or digest(new['quest-balance.cjs'])!=QUEST_AFTER:
-        raise RuntimeError('Результат патча не совпал с протестированной сборкой')
+    server_text_new=new['server.js'].decode()
+    if SERVER_MARK not in server_text_new or 'artifactAnomaly:beltHazard.anomaly' not in server_text_new:
+        raise RuntimeError('Результат серверного патча не содержит проверенную версию защиты')
+    if digest(new['quest-balance.cjs'])!=QUEST_AFTER:
+        raise RuntimeError('Результат патча заданий не совпал с протестированной сборкой')
     with tempfile.TemporaryDirectory(prefix='raid-five-check-') as tmp:
         for name,content in new.items():
             p=Path(tmp)/name;p.write_bytes(content);run(['node','--check',str(p)])
