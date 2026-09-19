@@ -100,7 +100,7 @@ async function write(path,body,after){
 }
 
 const style=document.createElement('link');
-style.rel='stylesheet';style.href='ui/quests.css?v=20260919-2';document.head.append(style);
+style.rel='stylesheet';style.href='ui/quests.css?v=20260919-3';document.head.append(style);
 
 const pda=document.createElement('section');
 pda.id='questPdaScreen';pda.hidden=true;pda.innerHTML=`
@@ -185,7 +185,7 @@ function showQuestDetails(q,mode){
    <p>Заказчик: ${esc(vendorMeta[q.vendor]?.title||vendorName(q.vendor))}</p>
    <p class="quest-objective">${esc(mode==='completed'?'Передано: '+q.itemName+' × '+q.qty:objective(q))}</p>
    <p>${esc(rewardText(q))}</p>
-   ${mode==='completed'?'<p>Выполнено: '+esc(new Date(q.completedAt||0).toLocaleString('ru-RU'))+'</p>':'<p class="quest-note">Вернись из рейда и передай предмет заказчику в разговоре. '+(q.baseOnly?'По этому заказу принимаются вещи без улучшений.':'')+'</p>'}
+   ${mode==='completed'?'<p>Выполнено: '+esc(new Date(q.completedAt||0).toLocaleString('ru-RU'))+'</p>':'<p class="quest-note">Передай предмет заказчику в разговоре. '+(q.baseOnly?'По этому заказу принимаются вещи без улучшений.':'')+'</p>'}
    ${mode==='accepted'&&q.id!==state.activeId?'<button type="button" data-write-action="activate" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
    ${mode!=='completed'&&q.id===state.activeId?'<p class="quest-priority">Приоритетное задание</p>':''}
   `;
@@ -380,7 +380,7 @@ ensurePdaButton();ensureTracker();
 setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
 
 window.QuestSystem=Object.freeze({
-  version:'1.2.0',openPda,closePda,openTraderDialogue,closeDialogue,sync,
+  version:'1.2.1',openPda,closePda,openTraderDialogue,closeDialogue,sync,
   get state(){return state;},hasRequired:completeNow
 });
 sync().catch(()=>{});

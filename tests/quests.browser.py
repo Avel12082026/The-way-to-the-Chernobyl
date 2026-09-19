@@ -77,7 +77,7 @@ async def main():
     if not await page.evaluate("!!window.QuestSystem"):
       await page.add_style_tag(content=(ROOT/'ui/quests.css').read_text())
       await page.add_script_tag(content=(ROOT/'ui/quests.js').read_text())
-    await page.wait_for_function("window.QuestSystem?.version==='1.2.0'")
+    await page.wait_for_function("window.QuestSystem?.version==='1.2.1'")
     await page.evaluate("QuestSystem.sync()")
     await page.wait_for_timeout(80)
 
@@ -118,8 +118,25 @@ async def main():
     assert await dialog.get_by_role('button',name='Торговля').count()==0
     work=page.get_by_role('button',name='Какая у тебя есть работа?');await work.click();await page.wait_for_timeout(80)
     assert await dialog.get_by_text('Комбинезон Комбат').count()>=1
+    # The requested item already exists before accepting the quest.
+    await page.evaluate("player.inventory['Комбинезон Комбат']=1;updateUI()")
     take=dialog.get_by_role('button',name='Взять задание');await take.click();await page.wait_for_timeout(80)
     assert await page.evaluate("QuestSystem.state.accepted.some(q=>q.id==='zh1')")
+    await dialog.get_by_role('button',name='Назад').click();await page.wait_for_timeout(50)
+    ready=dialog.get_by_role('button',name='Я принёс то, что ты просил.')
+    assert await ready.is_visible()
+    await ready.click();await page.wait_for_timeout(40)
+    give=dialog.get_by_role('button',name='Отдать и получить награду')
+    assert await give.is_visible()
+    await give.click();await page.wait_for_timeout(80)
+    assert not await page.evaluate("QuestSystem.state.accepted.some(q=>q.id==='zh1')")
+    assert await page.evaluate("player.inventory['Комбинезон Комбат']||0")==0
+    # Quest feedback modal must be above the still-open dialogue.
+    alert=page.locator('#gameAlertModal')
+    assert await alert.is_visible()
+    z=await page.evaluate("""()=>[Number(getComputedStyle(document.getElementById('gameAlertModal')).zIndex)||0,Number(getComputedStyle(document.getElementById('traderQuestDialogue')).zIndex)||0]""")
+    assert z[0]>z[1],z
+    await alert.locator('button').click()
 
     # Completed tab count/list remains available.
     await page.evaluate("QuestSystem.closeDialogue();QuestSystem.openPda()");await page.wait_for_timeout(50)

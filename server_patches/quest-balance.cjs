@@ -379,7 +379,8 @@ module.exports=function installQuestBalance({
     if(!record||record.status!=='accepted')throw new Error('Этот заказ уже закрыт или не найден');
     const quest=JSON.parse(record.payload); // authoritative receipt, never client reward/quantity
     if(!q.accepted.some(x=>x.id===quest.id)||quest.vendor!==body.vendor)throw new Error('Это задание другого торговца');
-    if(q.lastRaidReturnAt<=quest.acceptedAt)throw new Error('Сначала вернись из рейда после получения задания');
+    // Existing inventory is valid quest progress. A player who already has the requested
+    // item may hand it in immediately at base; only the actual inventory and base checks matter.
     if(inventoryQty(data,quest)<quest.qty)throw new Error('Нужных предметов без улучшений пока недостаточно');
     consume(data,quest);
     const coins=data.coins+quest.reward;if(!Number.isSafeInteger(coins))throw new Error('Лимит валюты: обратитесь к администратору');
