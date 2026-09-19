@@ -32,7 +32,9 @@ async def main():
    return []
   await page.expose_function('__apiFixture', api_fixture)
   await page.evaluate(TG)
-  await page.evaluate("() => { window.fetch = async(input,init) => { const url = new URL(typeof input === 'string' ? input : input.url, 'http://offline.test'); const data = url.pathname.includes('/api/') ? await window.__apiFixture(url.pathname) : {}; return new Response(JSON.stringify(data), {status:200,headers:{'Content-Type':'application/json'}}); }; }")
+  smoker_b64=(ROOT/'ui/smoker-portrait.webp.b64').read_text().strip()
+  await page.evaluate('(b64)=>{window.__smokerPortraitB64=b64}',smoker_b64)
+  await page.evaluate("() => { window.fetch = async(input,init) => { const url = new URL(typeof input === 'string' ? input : input.url, 'http://offline.test'); if(url.pathname.endsWith('/ui/smoker-portrait.webp.b64')||url.pathname.endsWith('/smoker-portrait.webp.b64')) return new Response(window.__smokerPortraitB64,{status:200,headers:{'Content-Type':'text/plain'}}); const data = url.pathname.includes('/api/') ? await window.__apiFixture(url.pathname) : {}; return new Response(JSON.stringify(data), {status:200,headers:{'Content-Type':'application/json'}}); }; }")
   # Inline local modules/styles/artwork; no external navigation or API access.
   html=(ROOT/'index.html').read_text()
   def script(m):
@@ -55,7 +57,7 @@ async def main():
    await page.screenshot(path=str(OUT/'init-error.png'))
    raise
   assert await page.locator('#bunkerArtwork').evaluate('(e)=>e.naturalWidth') == 941
-  assert await page.locator('#mainMenu .bunker-hotspot').count() == 8
+  assert await page.locator('#mainMenu .bunker-hotspot').count() == 9
   assert await page.locator('#mainMenu .zr-nav, #mainMenu .zr-main-header').count() == 0
   assert not await page.locator('#embeddedChatWidget').is_visible()
   assert not await page.locator('#menuMusicPanel').is_visible()
@@ -70,6 +72,18 @@ async def main():
    assert not await page.locator('#mainMenu').is_visible()
    await page.evaluate("openScreen('main')")
    await page.wait_for_timeout(40)
+  await page.locator('#bunkerSmoker').click()
+  await page.wait_for_timeout(120)
+  assert await page.locator('#smokerHubScreen').is_visible()
+  assert await page.locator('#smokerHubArtwork').evaluate('(e)=>e.naturalWidth') > 0
+  assert await page.locator('#smokerHubScreen .smoker-actions button').all_inner_texts() == ['Говорить','Назад']
+  await page.locator('#smokerHubScreen [data-smoker-action="talk"]').click()
+  assert await page.locator('#smokerTalkBubble').is_visible()
+  assert 'Я слушаю' in await page.locator('#smokerTalkBubble').inner_text()
+  await page.locator('#smokerHubScreen [data-smoker-action="back"]').click()
+  await page.wait_for_timeout(40)
+  assert await page.locator('#mainMenu').is_visible()
+  assert not await page.locator('#smokerHubScreen').is_visible()
   await page.locator('#bunkerPda').click()
   await page.locator('#kpkChatBtn').click()
   assert await page.locator('#chatScreen').is_visible()
@@ -146,8 +160,8 @@ async def main():
   await page.wait_for_timeout(100)
   read=await page.locator('#bunkerReadBook').bounding_box()
   assert read and read['height']<25 and read['y']+read['height']<844,read
-  result={'status':'passed','offline':True,'live_player_writes':0,'navigation_destinations':8,'viewports':reports,'raid_requests':2,'book_requests':2,'page_errors':errors,'checks':['eight transparent non-overlapping hotspots','PDA chat and return','server rejection','raid double-tap guard','book success/zero/network failure/double-tap guard','zero and full meters','maxHealth=150','large balances','same-row XP/radiation','portrait and landscape']}
+  result={'status':'passed','offline':True,'live_player_writes':0,'navigation_destinations':9,'viewports':reports,'raid_requests':2,'book_requests':2,'page_errors':errors,'checks':['nine transparent non-overlapping hotspots','PDA chat and return','server rejection','raid double-tap guard','book success/zero/network failure/double-tap guard','zero and full meters','maxHealth=150','large balances','same-row XP/radiation','portrait and landscape']}
   (OUT/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
-  print('PASS: full-client bunker menu; 8 destinations; 6 viewports; live HUD; server-authoritative books and raid; 0 page errors')
+  print('PASS: full-client bunker menu; 9 hotspots including smoking stalker portrait; 6 viewports; live HUD; server-authoritative books and raid; 0 page errors')
   await browser.close()
 asyncio.run(main())
