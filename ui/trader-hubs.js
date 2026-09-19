@@ -14,7 +14,7 @@
   }
   if (!document.querySelector('script[data-zone-quests]')) {
     const questScript = document.createElement('script');
-    questScript.src = 'ui/quests.js?v=20260919-3';
+    questScript.src = 'ui/quests.js?v=20260920-five1';
     questScript.defer = true;
     questScript.dataset.zoneQuests = '1';
     document.head.append(questScript);

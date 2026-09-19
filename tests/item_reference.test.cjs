@@ -1,0 +1,10 @@
+'use strict';
+const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
+const ctx={console,MutationObserver:class{observe(){}},document:{body:{}},weapons:[{name:'ПМ',unlockLevel:1,price:200}],armorItems:[{name:'Научный',isResearchSuit:true,tier:4,price:5000},{name:'Броня',unlockLevel:70,price:400}],detectors:[{name:'Детектор',tier:3,price:600}],consumables:[{name:'Хлеб',price:26}],mutants:[],parseGearName:n=>({baseName:n.replace(/[\u200B\u200C]+$/,'').replace(/ \+\d+$/,''),level:Number((n.match(/ \+(\d+)/)||[])[1])||0}),findArtifactDef:()=>null};
+ctx.window=ctx;vm.createContext(ctx);vm.runInContext(fs.readFileSync('ui/item-reference.js','utf8'),ctx);
+const api=ctx.ItemReference;
+assert.equal(api.describe('Научный +2').level,135);assert.equal(api.describe('Броня').level,70);assert.equal(api.describe('Детектор').level,1);assert.match(api.describe('Детектор').purchase,/40/);
+const lots=[{item:'ПМ',price:100,quantity:2,currency:'bytes'},{item:'ПМ',price:100,quantity:1,currency:'bytes'},{item:'ПМ',price:3,quantity:1,currency:'stalkcoins'},{item:'ПМ +1',price:999,quantity:1,currency:'bytes'},{item:'ПМ',price:500,quantity:0,currency:'bytes'}];
+const q=api.meanFor('ПМ\u200b',lots);assert.equal(q.length,2);assert.equal(q.find(x=>x.currency==='bytes').value,200/3);assert.equal(q.find(x=>x.currency==='stalkcoins').value,3);
+assert.equal(api.meanFor('Гибрид\u200b',[{item:'Гибрид\u200c',price:30,quantity:1,currency:'bytes'}]).length,0);
+console.log('PASS: item use level, purchase/use distinction, per-item weighted means, separate currencies, upgrade/hybrid identity');

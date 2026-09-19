@@ -230,6 +230,8 @@ function applyRaidLayout(){
   }
   const exp=document.getElementById('raidExpTrack');
   const radiation=document.getElementById('raidRadiationTrack')?.parentElement;
+  radiation?.classList.add('raid-radiation-wrapper');
+  if(radiation?.firstElementChild?.id!=='raidRadiationTrack')radiation?.firstElementChild?.classList.add('raid-radiation-label');
   if(exp&&exp.parentElement!==meters)meters.append(exp);
   if(radiation&&radiation.parentElement!==meters)meters.append(radiation);
   if(head&&meters.parentElement!==shell)head.insertAdjacentElement('afterend',meters);
@@ -285,5 +287,7 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.5',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.4.0',apply,applyRaidLayout,applyPdaLayout});
 })();
+
+// RAID_FIVE_20260920_V1
