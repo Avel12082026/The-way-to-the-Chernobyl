@@ -20,7 +20,7 @@ const RAID_BUTTON_CHROME_PROPS=[
   'border-image-source','border-image-slice','border-image-width','border-image-outset','border-image-repeat',
   'border-top-left-radius','border-top-right-radius','border-bottom-right-radius','border-bottom-left-radius',
   'box-shadow','color','font-family','font-size','font-weight','line-height','letter-spacing','text-shadow','text-transform',
-  'padding-top','padding-right','padding-bottom','padding-left'
+  'padding-top','padding-right','padding-bottom','padding-left','min-height','text-align'
 ];
 
 function raidActionStyleSource(raid){
@@ -38,6 +38,44 @@ function syncRaidUtilityChrome(raid,row){
     for(const prop of RAID_BUTTON_CHROME_PROPS){
       target.style.setProperty(prop,computed.getPropertyValue(prop),'important');
     }
+  }
+}
+
+function setRaidUtilityLabel(button,label){
+  if(!button)return;
+  let labelNode=button.querySelector(':scope > .raid-utility-label');
+  for(const node of Array.from(button.childNodes)){
+    if(node.nodeType===Node.TEXT_NODE && node.textContent.trim())node.remove();
+  }
+  if(!labelNode){
+    labelNode=document.createElement('span');
+    labelNode.className='raid-utility-label';
+    button.prepend(labelNode);
+  }
+  if(labelNode.textContent!==label)labelNode.textContent=label;
+}
+
+function syncRaidVitalBars(head){
+  const defs=[
+    ['raidHealthMini','health','maxHealth','health'],
+    ['raidHungerMini','hunger','maxHunger','hunger'],
+    ['raidThirstMini','thirst','maxThirst','thirst']
+  ];
+  for(const [id,key,maxKey,kind] of defs){
+    const value=document.getElementById(id);
+    const chip=value?.parentElement;
+    if(!chip)continue;
+    chip.classList.add('raid-vital-chip','raid-vital-'+kind);
+    let current=Number(window.player?.[key]);
+    if(!Number.isFinite(current))current=Number(value.textContent)||0;
+    let max=Number(window.player?.[maxKey]);
+    if(!Number.isFinite(max)||max<=0)max=100;
+    const pct=Math.max(0,Math.min(100,current/max*100));
+    chip.style.setProperty('--raid-vital-fill',pct.toFixed(2)+'%');
+    chip.setAttribute('role','progressbar');
+    chip.setAttribute('aria-valuemin','0');
+    chip.setAttribute('aria-valuemax',String(max));
+    chip.setAttribute('aria-valuenow',String(Math.max(0,current)));
   }
 }
 
@@ -65,7 +103,8 @@ function ensureRaidUtilityRow(raid) {
     });
     row.append(telegram);
   }
-  if((backpack.textContent||'').trim()!=='🎒 Рюкзак')backpack.textContent='🎒 Рюкзак';
+  setRaidUtilityLabel(backpack,'Рюкзак');
+  setRaidUtilityLabel(telegram,'Телеграммка');
   syncRaidUtilityChrome(raid,row);
   return row;
 }
@@ -107,6 +146,7 @@ function applyRaidLayout(){
     head.classList.add('raid-vitals-row');
     const title=head.querySelector('h3');
     if(title)title.hidden=true;
+    syncRaidVitalBars(head);
   }
 
   let visual=document.getElementById('raidVisualStage');
@@ -182,5 +222,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.2.0',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.0',apply,applyRaidLayout,applyPdaLayout});
 })();
