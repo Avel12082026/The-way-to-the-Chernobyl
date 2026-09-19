@@ -36,10 +36,16 @@ function search(data,anomaly,gear={},rng=Math.random){
   // then apply the raw belt value linearly, preserving the exact stat contract.
   const artifactAnomaly=anomalyValue(gear.artifactAnomaly,anomaly,tier);
   const combinedAnomaly=anomalyValue(data.anomalyResist,anomaly,tier);
-  const armourAnomaly=combinedAnomaly-artifactAnomaly*artifactScale;
+  const explicitArmourAnomaly=gear.armourAnomaly&&typeof gear.armourAnomaly==='object';
+  const armourAnomaly=explicitArmourAnomaly
+    ? anomalyValue(gear.armourAnomaly,anomaly,tier)
+    : combinedAnomaly-artifactAnomaly*artifactScale;
 
   const artifactRadiation=finite(gear.artifactRadiation);
-  const armourRadiation=finite(data.radiationResist)-artifactRadiation*artifactScale;
+  const explicitArmourRadiation=Object.prototype.hasOwnProperty.call(gear,'armourRadiation');
+  const armourRadiation=explicitArmourRadiation
+    ? finite(gear.armourRadiation)
+    : finite(data.radiationResist)-artifactRadiation*artifactScale;
 
   const upgrades=environmentalUpgrades(gear.upgrades);
   const severe=tier===9;
