@@ -18,24 +18,16 @@ jobs:
         with: {node-version: '22'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - name: Finalize hidden-state regression guard
+      - name: Preserve original EXP caption geometry
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          old='#raidScreen #activeQuestRaidTracker{display:block!important}'
-          new='#raidScreen #activeQuestRaidTracker:not([hidden]){display:block!important}'
+          line='#raidExpTrack>.meter-text{position:relative;z-index:1}\n'
           for name in ['ui/raid-kpk-polish.css','tools/apply_raid_five_client.py']:
               p=Path(name);s=p.read_text()
-              if old in s:
-                  assert s.count(old)==1
-                  p.write_text(s.replace(old,new))
-              else:assert new in s
-          p=Path('tests/raid_five.browser.py');s=p.read_text()
-          anchor="        await page.evaluate('QuestSystem.sync()')\n"
-          addition="        assert await page.locator('#activeQuestRaidTracker').is_hidden()\n"
-          if addition not in s:
-              assert s.count(anchor)==1
-              p.write_text(s.replace(anchor,anchor+addition))
+              if line in s:
+                  assert s.count(line)==1
+                  p.write_text(s.replace(line,''))
           PY
           python3 tools/apply_raid_five_client.py
           git diff --check
@@ -82,14 +74,14 @@ jobs:
           include-hidden-files: true
           retention-days: 7
           path: .validation/raid-five/
-      - name: Commit tested plaintext sources to this branch only
+      - name: Commit tested caption preservation to this branch only
         if: success() && github.ref == 'refs/heads/fix/raid-survival-items-multiquests-20260920'
         run: |
-          git add ui/raid-kpk-polish.css tools/apply_raid_five_client.py tests/raid_five.browser.py
+          git add ui/raid-kpk-polish.css tools/apply_raid_five_client.py
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'Preserve hidden state of an empty multi-quest tracker'
+            git commit -m 'Keep the approved EXP text placement unchanged'
             git push origin HEAD:fix/raid-survival-items-multiquests-20260920
           fi
           git rev-parse HEAD
