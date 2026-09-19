@@ -1,6 +1,6 @@
 'use strict';
 // Environmental balance. All values are calculated by the server, never by the client.
-const VERSION='20260920.2';
+const VERSION='20260920.3';
 const ANOMALY_KEYS=Object.freeze(['Жарка','Электра','Воронка','Кислотный туман','Карусель','Мясорубка','Печка','Плазменная сфера']);
 // Direct HP damage grows sharply with anomaly tier. Tier 9 remains a separate end-game wall.
 const DAMAGE=Object.freeze([0,10,16,24,34,46,60,76,94,230]);
@@ -41,11 +41,13 @@ function search(data,anomaly,gear={},rng=Math.random){
     ? anomalyValue(gear.armourAnomaly,anomaly,tier)
     : combinedAnomaly-artifactAnomaly*artifactScale;
 
-  const artifactRadiation=finite(gear.artifactRadiation);
+  // artifactRadiation is the internal protective stat shown to players as «Радиозащита».
+  // Harmful «Радиация +N» is handled separately by the server's per-turn artifact effects.
+  const artifactRadiationProtection=finite(gear.artifactRadiation);
   const explicitArmourRadiation=Object.prototype.hasOwnProperty.call(gear,'armourRadiation');
   const armourRadiation=explicitArmourRadiation
     ? finite(gear.armourRadiation)
-    : finite(data.radiationResist)-artifactRadiation*artifactScale;
+    : finite(data.radiationResist)-artifactRadiationProtection*artifactScale;
 
   const upgrades=environmentalUpgrades(gear.upgrades);
   const severe=tier===9;
@@ -58,7 +60,7 @@ function search(data,anomaly,gear={},rng=Math.random){
   const anomalyDmg=round(Math.max(0,armourAdjustedDamage-artifactAnomaly));
 
   const armourAdjustedDose=DOSE[tier]*variation()*reduction(armourRadiation,scale,cap);
-  const radiationDose=round(Math.max(0,armourAdjustedDose-artifactRadiation));
+  const radiationDose=round(Math.max(0,armourAdjustedDose-artifactRadiationProtection));
 
   const oldRad=clamp(finite(data.radiation),0,100);
   data.radiation=round(clamp(oldRad+radiationDose,0,100));
@@ -71,7 +73,8 @@ function search(data,anomaly,gear={},rng=Math.random){
     radiationDose,
     searchDmg:0,
     artifactAnomaly,
-    artifactRadiation
+    artifactRadiation:artifactRadiationProtection,
+    artifactRadiationProtection
   };
 }
 function radiationDamage(data){
