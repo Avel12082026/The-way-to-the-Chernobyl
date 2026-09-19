@@ -240,7 +240,7 @@ async def main():
             await page.evaluate('openScientistsBuyView()')
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='leonov'
         assert await page.locator('#tradeMenu [onclick="doBreedArtifacts()"]:visible').count()==0
-        assert await item('stock',data['detector']).count()==1
+        assert await item('stock',data['detector']).count()==0
         assert await item('stock',data['gear']).count()==0
         await click('inventory',named)
         assert '50 жет.' in await page.locator('#tradeSellTotal').inner_text()
@@ -249,11 +249,10 @@ async def main():
         assert await page.evaluate('player.breedCredits')==57
         await click('stock',data['medkit']);await page.locator('#tradeBuy').click();await page.wait_for_timeout(250)
         assert writes()[-1]['payload']['vendor']=='leonov'
-        # Diesel remains equipment-only; upgrades are preserved separately.
+        # Diesel sells detectors; upgrades remain a separate route.
         await page.evaluate("openScreen('technician');openTechnicianTab('sell')")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='technician'
-        assert await page.locator('#tradeStock .trade-cell').count()==0
-        assert await page.locator('#tradeBuy').is_disabled()
+        assert await item('stock',data['detector']).count()==1
         await click('inventory',a)
         assert await item('sell',a).count()==0
         await click('inventory',data['gear'])
