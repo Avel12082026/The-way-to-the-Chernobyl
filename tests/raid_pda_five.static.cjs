@@ -6,8 +6,8 @@ const hubs=fs.readFileSync('ui/trader-hubs.js','utf8');
 const css=fs.readFileSync('ui/raid-kpk-polish.css','utf8');
 const raid=fs.readFileSync('ui/raid-kpk-polish.js','utf8');
 
-assert(html.includes('ui/raid-kpk-polish.css?v=20260919r3'));
-assert(html.includes('ui/raid-kpk-polish.js?v=20260919r3'));
+assert(html.includes('ui/raid-kpk-polish.css?v=20260919r4'));
+assert(html.includes('ui/raid-kpk-polish.js?v=20260919r4'));
 assert(html.includes('🪙 Сталбайты: ${data.coins ?? 0}'));
 assert(html.includes('🧬 Сталкоины: ${data.breedCredits ?? 0}'));
 assert(!html.includes('ПЕРСОНАЛЬНЫЙ ТЕРМИНАЛ'));

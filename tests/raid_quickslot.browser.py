@@ -86,9 +86,10 @@ async def main():
     assert await page.locator('#raidVisualStage').count()==1
     assert await page.locator('#raidUtilityButtons > button').count()==2
     labels=[x.strip() for x in await page.locator('#raidUtilityButtons > button').all_text_contents()]
-    assert labels[0]=='Рюкзак' and labels[1]=='Телеграммка',labels
-    assert await page.locator('#raidUtilityButtons .raid-utility-label').count()==2
-    assert '🎒' not in labels[0]
+    assert labels[0]=='' and labels[1]=='',labels
+    assert await page.locator('#raidUtilityButtons .raid-utility-label').count()==0
+    pseudo_labels=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>getComputedStyle(e,'::before').content.replace(/^['"]|['"]$/g,''))""")
+    assert pseudo_labels==['Рюкзак','Телеграммка'],pseudo_labels
     vital_count=await page.locator('.raid-vital-chip').count()
     assert vital_count==3,vital_count
     vital_tops=await page.locator('.raid-vital-chip').evaluate_all('(xs)=>xs.map(x=>Math.round(x.getBoundingClientRect().top))')
@@ -143,6 +144,28 @@ async def main():
     combat_labels=[x.strip() for x in await page.locator('#battleButtonsContainer button').all_text_contents()]
     assert any('Атаковать' in x for x in combat_labels) and any('Сбежать' in x for x in combat_labels),combat_labels
     assert await page.locator('#raidScreen').evaluate("e=>e.scrollTop")==0
+
+    # Leaving a friendly NPC trader must never erase the persistent Backpack/Telegram labels.
+    await page.evaluate("""async()=>{
+      currentEnemy=null;currentAnomaly=null;isFriendlyEncounterActive=false;
+      startFriendlyEncounter({name:'Макс Скай',faction:{name:'Свобода'}});
+      RaidKpkPolish.apply();
+      await leaveFriendlyPeacefully();
+      RaidKpkPolish.apply();
+    }""")
+    after_npc=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e,'::before');return [s.content.replace(/^['"]|['"]$/g,''),s.display,s.visibility,s.opacity,s.color]})""")
+    assert [x[0] for x in after_npc]==['Рюкзак','Телеграммка'],after_npc
+    assert all(x[1]!='none' and x[2]=='visible' and float(x[3])>0 for x in after_npc),after_npc
+
+    # Ending/clearing a combat encounter must keep the same labels visible.
+    await page.evaluate("""()=>{
+      currentEnemy={name:'Тушкан',tier:1,hp:100,maxHp:100,battleToken:'label-regression',friendly:false};
+      battleTurn=0;renderBattleButtons();RaidKpkPolish.apply();
+      currentEnemy=null;battleTurn=0;clearBattleUiAndRestoreNav();RaidKpkPolish.apply();
+    }""")
+    after_battle=await page.locator('#raidUtilityButtons>button').evaluate_all("""xs=>xs.map(e=>{const s=getComputedStyle(e,'::before');return [s.content.replace(/^['"]|['"]$/g,''),s.display,s.visibility,s.opacity,s.color]})""")
+    assert [x[0] for x in after_battle]==['Рюкзак','Телеграммка'],after_battle
+    assert all(x[1]!='none' and x[2]=='visible' and float(x[3])>0 for x in after_battle),after_battle
 
     assert not errors,errors
     print(json.dumps({'status':'passed','tapUses':writes,'holdMs':800,'utilityButtons':labels,'anomalyButtons':anomaly_labels,'combatButtons':combat_labels,'raidOverflow':overflow},ensure_ascii=False))
