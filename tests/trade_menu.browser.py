@@ -263,8 +263,7 @@ async def main():
         await page.locator('#tradeSell').click();await page.wait_for_timeout(250)
         assert writes()[-1]['payload']['vendor']=='technician'
         await page.locator('[data-trade-action=back]').click()
-        assert await page.locator('#technicianScreen').is_visible()
-        assert await page.evaluate('technicianTab')=='upgrade'
+        assert await page.locator('#dieselHubScreen').is_visible()
         # All friendly-faction encounters use the same view, with no warehouse in a raid.
         await page.evaluate("raidActive=true;currentEnemy={name:'Тестовый сталкер',faction:{name:'Сталкеры'},friendly:true};openFriendlyTrade()")
         assert await page.locator('#tradeMenu').get_attribute('data-vendor')=='friendly'
