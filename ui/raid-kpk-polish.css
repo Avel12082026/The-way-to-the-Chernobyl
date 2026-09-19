@@ -163,10 +163,32 @@
   color:#d5c69d!important;
   font-weight:800!important;
 }
-#raidUtilityButtons .raid-utility-label{
-  position:relative;
-  z-index:1;
-  pointer-events:none;
+#raidUtilityButtons>button{
+  isolation:isolate!important;
+}
+#raidUtilityButtons>button::before{
+  content:attr(data-raid-label)!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:3!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 6px!important;
+  box-sizing:border-box!important;
+  color:var(--raid-utility-text-color,#fff)!important;
+  font-family:var(--raid-utility-font-family,inherit)!important;
+  font-size:var(--raid-utility-font-size,12px)!important;
+  font-weight:var(--raid-utility-font-weight,700)!important;
+  line-height:var(--raid-utility-line-height,normal)!important;
+  letter-spacing:var(--raid-utility-letter-spacing,normal)!important;
+  text-shadow:var(--raid-utility-text-shadow,none)!important;
+  text-transform:var(--raid-utility-text-transform,uppercase)!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:none!important;
 }
 #raidScreen #quickSlots{margin:4px 0!important;flex:0 0 auto}
 #activeQuestRaidTracker{margin:4px 0 0!important;flex:0 0 auto;max-height:72px;overflow:hidden}

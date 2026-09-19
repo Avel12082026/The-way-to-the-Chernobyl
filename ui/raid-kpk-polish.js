@@ -35,6 +35,14 @@ function syncRaidUtilityChrome(raid,row){
   const computed=getComputedStyle(source);
   for(const target of Array.from(row.children)){
     if(!(target instanceof HTMLButtonElement))continue;
+    target.style.setProperty('--raid-utility-text-color',computed.color||'#fff');
+    target.style.setProperty('--raid-utility-font-family',computed.fontFamily||'inherit');
+    target.style.setProperty('--raid-utility-font-size',computed.fontSize||'12px');
+    target.style.setProperty('--raid-utility-font-weight',computed.fontWeight||'700');
+    target.style.setProperty('--raid-utility-line-height',computed.lineHeight||'normal');
+    target.style.setProperty('--raid-utility-letter-spacing',computed.letterSpacing||'normal');
+    target.style.setProperty('--raid-utility-text-shadow',computed.textShadow||'none');
+    target.style.setProperty('--raid-utility-text-transform',computed.textTransform||'uppercase');
     for(const prop of RAID_BUTTON_CHROME_PROPS){
       target.style.setProperty(prop,computed.getPropertyValue(prop),'important');
     }
@@ -43,16 +51,12 @@ function syncRaidUtilityChrome(raid,row){
 
 function setRaidUtilityLabel(button,label){
   if(!button)return;
-  let labelNode=button.querySelector(':scope > .raid-utility-label');
+  button.dataset.raidLabel=label;
+  button.setAttribute('aria-label',label);
   for(const node of Array.from(button.childNodes)){
     if(node.nodeType===Node.TEXT_NODE && node.textContent.trim())node.remove();
+    if(node.nodeType===Node.ELEMENT_NODE && node.classList?.contains('raid-utility-label'))node.remove();
   }
-  if(!labelNode){
-    labelNode=document.createElement('span');
-    labelNode.className='raid-utility-label';
-    button.prepend(labelNode);
-  }
-  if(labelNode.textContent!==label)labelNode.textContent=label;
 }
 
 function syncRaidVitalBars(head){
@@ -222,5 +226,5 @@ function init(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 
-window.RaidKpkPolish=Object.freeze({version:'1.3.0',apply,applyRaidLayout,applyPdaLayout});
+window.RaidKpkPolish=Object.freeze({version:'1.3.1',apply,applyRaidLayout,applyPdaLayout});
 })();
