@@ -18,3 +18,7 @@ console.log('quest/inventory client static checks: OK');
 assert(!q.includes('Сначала вернись из рейда после получения задания'),'client must not require a post-accept raid');
 assert(!q.includes('Вернись из рейда и передай предмет заказчику'),'PDA note must allow immediate hand-in');
 assert(css.includes('body.trader-dialogue-visible #gameAlertModal')&&css.includes('z-index:100060!important'),'quest alerts must render above trader dialogue');
+
+assert(q.includes('activeIds')&&q.includes('activeQuests()'),'multiple active quests missing');
+assert(q.includes('raid-quest-track-item'),'multi-quest raid tracker missing');
+assert(css.includes('.raid-quest-track-item'),'multi-quest tracker styles missing');

@@ -8,7 +8,7 @@ const vendorMeta = {
   zhuchara:{name:'Жучара', title:'Торговец Жучара', role:'Торговец', kind:'броню'},
   diesel:{name:'Дизель', title:'Техник Дизель', role:'Техник', kind:'оружие'}
 };
-let state={accepted:[],activeId:null,completed:[],completedCount:0,completedNextCursor:null};
+let state={accepted:[],activeIds:[],activeId:null,completed:[],completedCount:0,completedNextCursor:null};
 let offers={};
 let syncPromise=null, mutationPending=false, dialogueMode='root', viewEpoch=0, stateEpoch=0;
 let selectedDetails=null, pdaSignature='', trackerSignature='', dialogueSignature='';
@@ -37,7 +37,9 @@ function haveQty(itemName, baseOnly=false){
   },0);
 }
 function completeNow(q){return haveQty(q.itemName,q.baseOnly)>=Number(q.qty||1);}
-function activeQuest(){return state.accepted.find(q=>q.id===state.activeId)||null;}
+function activeQuestIds(){return Array.isArray(state.activeIds)?state.activeIds:state.activeId?[state.activeId]:[];}
+function isActiveQuest(q){return !!q&&activeQuestIds().includes(q.id);}
+function activeQuests(){const ids=new Set(activeQuestIds());return state.accepted.filter(q=>ids.has(q.id));}
 function vendorName(id){return vendorMeta[id]?.name||id;}
 function objective(q){
   const have=haveQty(q.itemName,q.baseOnly),qty=Number(q.qty||1);
@@ -60,7 +62,8 @@ async function api(path,body={}){
 }
 function applyState(data){
   if(!Array.isArray(data.accepted)||!Array.isArray(data.completed))throw new Error('Ответ сервера заданий неполон. Обнови список.');
-  state={accepted:data.accepted,activeId:data.activeId||null,completed:data.completed,
+  const activeIds=Array.isArray(data.activeIds)?data.activeIds.filter(id=>data.accepted.some(q=>q.id===id)):(data.activeId?[data.activeId]:[]);
+  state={accepted:data.accepted,activeIds:[...new Set(activeIds)],activeId:activeIds[0]||null,completed:data.completed,
     completedCount:Math.max(0,Number(data.completedCount)||0),completedNextCursor:data.completedNextCursor??null};
 }
 function sync(){
@@ -100,7 +103,7 @@ async function write(path,body,after){
 }
 
 const style=document.createElement('link');
-style.rel='stylesheet';style.href='ui/quests.css?v=20260919-3';document.head.append(style);
+style.rel='stylesheet';style.href='ui/quests.css?v=20260920-4';document.head.append(style);
 
 const pda=document.createElement('section');
 pda.id='questPdaScreen';pda.hidden=true;pda.innerHTML=`
@@ -186,8 +189,8 @@ function showQuestDetails(q,mode){
    <p class="quest-objective">${esc(mode==='completed'?'Передано: '+q.itemName+' × '+q.qty:objective(q))}</p>
    <p>${esc(rewardText(q))}</p>
    ${mode==='completed'?'<p>Выполнено: '+esc(new Date(q.completedAt||0).toLocaleString('ru-RU'))+'</p>':'<p class="quest-note">Передай предмет заказчику в разговоре. '+(q.baseOnly?'По этому заказу принимаются вещи без улучшений.':'')+'</p>'}
-   ${mode==='accepted'&&q.id!==state.activeId?'<button type="button" data-write-action="activate" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
-   ${mode!=='completed'&&q.id===state.activeId?'<p class="quest-priority">Приоритетное задание</p>':''}
+   ${mode==='accepted'&&!isActiveQuest(q)?'<button type="button" data-write-action="activate" data-quest-action="activate" data-quest-id="'+esc(q.id)+'">Активировать</button>':''}
+   ${mode!=='completed'&&isActiveQuest(q)?'<p class="quest-priority">Активное задание</p>':''}
   `;
 }
 function renderPda(){
@@ -200,12 +203,12 @@ function renderPda(){
   list.replaceChildren();
   const details=document.getElementById('questPdaDetails');
   let rows=[];
-  if(activeTab==='accepted')rows=state.accepted.filter(q=>q.id!==state.activeId);
-  else if(activeTab==='active'){const q=activeQuest();rows=q?[q]:[];}
+  if(activeTab==='accepted')rows=state.accepted.filter(q=>!isActiveQuest(q));
+  else if(activeTab==='active')rows=activeQuests();
   else rows=state.completed;
   if(!rows.length){
     const empty=document.createElement('p');empty.className='quest-empty';
-    empty.textContent=activeTab==='accepted'?'Взятых заданий нет.':activeTab==='active'?'Приоритетное задание не выбрано.':'Выполненных заданий пока нет.';
+    empty.textContent=activeTab==='accepted'?'Неактивных взятых заданий нет.':activeTab==='active'?'Активных заданий нет.':'Выполненных заданий пока нет.';
     list.append(empty);selectedDetails=null;details.hidden=true;lockActions();return;
   }
   rows.forEach(q=>list.append(questCard(q,activeTab)));
@@ -221,13 +224,18 @@ function renderPda(){
 }
 function renderTracker(){
   ensureTracker();
-  const q=activeQuest();
-  if(!q||!tracker.isConnected){tracker.hidden=true;return;}
-  const ready=completeNow(q);
-  const signature=JSON.stringify([q,haveQty(q.itemName,q.baseOnly)]);
+  const rows=activeQuests();
+  if(!rows.length||!tracker.isConnected){tracker.hidden=true;return;}
+  const signature=JSON.stringify(rows.map(q=>[q,haveQty(q.itemName,q.baseOnly)]));
   if(signature===trackerSignature&&!tracker.hidden)return;trackerSignature=signature;
-  tracker.hidden=false;tracker.className=ready?'quest-ready':'';
-  tracker.innerHTML=`<strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span>`;
+  tracker.hidden=false;tracker.className=rows.every(completeNow)?'quest-ready':'';
+  tracker.replaceChildren();
+  rows.forEach(q=>{
+    const item=document.createElement('article');
+    item.className='raid-quest-track-item'+(completeNow(q)?' quest-ready':'');
+    item.innerHTML=`<strong>Задание: ${esc(q.title||q.itemName)}</strong><span class="quest-objective">${esc(objective(q))}</span><span>Отнести: ${esc(vendorName(q.vendor))}</span>`;
+    tracker.append(item);
+  });
 }
 function renderAll(){renderPda();renderTracker();if(!dialogue.hidden&&dialogueVendor)renderDialogue(dialogueVendor,dialogueMode);}
 
@@ -380,7 +388,7 @@ ensurePdaButton();ensureTracker();
 setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
 
 window.QuestSystem=Object.freeze({
-  version:'1.2.1',openPda,closePda,openTraderDialogue,closeDialogue,sync,
+  version:'1.3.0',openPda,closePda,openTraderDialogue,closeDialogue,sync,
   get state(){return state;},hasRequired:completeNow
 });
 sync().catch(()=>{});

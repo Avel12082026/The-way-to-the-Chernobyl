@@ -220,7 +220,11 @@ module.exports=function installQuestBalance({
   function normalizeQuestState(data){
     const q=data.quests&&typeof data.quests==='object'&&!Array.isArray(data.quests)?data.quests:{};
     q.accepted=Array.isArray(q.accepted)?q.accepted.filter(x=>x&&typeof x.id==='string'):[];
-    q.activeId=q.accepted.some(x=>x.id===q.activeId)?q.activeId:null;
+    const acceptedIds=new Set(q.accepted.map(x=>x.id));
+    q.activeIds=Array.isArray(q.activeIds)?q.activeIds.filter(id=>acceptedIds.has(id)):[];
+    if(q.activeId&&acceptedIds.has(q.activeId)&&!q.activeIds.includes(q.activeId))q.activeIds.unshift(q.activeId);
+    q.activeIds=[...new Set(q.activeIds)];
+    q.activeId=q.activeIds[0]||null;
     q.lastRaidReturnAt=integer(q.lastRaidReturnAt);
     data.quests=q;return q;
   }
@@ -330,7 +334,7 @@ module.exports=function installQuestBalance({
   function publicState(playerId,data){
     const q=normalizeQuestState(data);
     const count=db.prepare("SELECT COUNT(*) AS n FROM quest_receipts WHERE player_id=? AND status='completed'").get(playerId).n;
-    return {accepted:q.accepted.map(x=>({...x,have:inventoryQty(data,x)})),activeId:q.activeId,
+    return {accepted:q.accepted.map(x=>({...x,have:inventoryQty(data,x)})),activeIds:[...q.activeIds],activeId:q.activeIds[0]||null,
       ...history(playerId),completedCount:Number(count),lastRaidReturnAt:q.lastRaidReturnAt};
   }
   const limiter=(name,max=30)=>rateLimit('quests-'+name,max,10000);
@@ -363,7 +367,7 @@ module.exports=function installQuestBalance({
   endpoint('/activate',(id,body)=>db.transaction(()=>{
     const data=load(id),q=normalizeQuestState(data);
     if(!q.accepted.some(x=>x.id===body.questId))throw new Error('Задание не найдено');
-    if(q.activeId!==body.questId){q.activeId=body.questId;save(id,data);}
+    if(!q.activeIds.includes(body.questId)){q.activeIds.push(body.questId);q.activeId=q.activeIds[0]||null;save(id,data);}
     return publicState(id,data);
   })());
   endpoint('/abandon',(id,body)=>db.transaction(()=>{
@@ -371,7 +375,7 @@ module.exports=function installQuestBalance({
     if(!quest||quest.vendor!==body.vendor)throw new Error('Отказаться можно только в разговоре с заказчиком');
     const result=db.prepare("UPDATE quest_receipts SET status='abandoned' WHERE player_id=? AND quest_id=? AND status='accepted'").run(id,quest.id);
     if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
-    q.accepted=q.accepted.filter(x=>x.id!==quest.id);if(q.activeId===quest.id)q.activeId=null;
+    q.accepted=q.accepted.filter(x=>x.id!==quest.id);q.activeIds=q.activeIds.filter(x=>x!==quest.id);q.activeId=q.activeIds[0]||null;
     save(id,data);return publicState(id,data);
   })());
   endpoint('/turn-in',(id,body)=>db.transaction(()=>{
@@ -388,7 +392,7 @@ module.exports=function installQuestBalance({
     const done={...quest,completedAt:Date.now()};
     const result=db.prepare("UPDATE quest_receipts SET status='completed',payload=? WHERE player_id=? AND quest_id=? AND status='accepted'").run(JSON.stringify(done),id,quest.id);
     if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
-    q.accepted=q.accepted.filter(x=>x.id!==quest.id);if(q.activeId===quest.id)q.activeId=null;
+    q.accepted=q.accepted.filter(x=>x.id!==quest.id);q.activeIds=q.activeIds.filter(x=>x!==quest.id);q.activeId=q.activeIds[0]||null;
     save(id,data);
     return {reward:quest.reward,coins:data.coins,inventory:data.inventory,quickSlots:data.quickSlots,...publicState(id,data)};
   })());
