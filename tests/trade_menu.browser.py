@@ -283,7 +283,7 @@ async def main():
         # Empty inventory, affordability and exact numeric guards.
         await page.evaluate("player.inventory={};player.coins=0;updateUI()")
         assert await page.locator('#tradeInventory .trade-cell').count()==0
-        assert await page.locator('#tradeInventory .trade-empty').count()==14
+        assert await page.locator('#tradeInventory .trade-empty').count()==21
         await click('stock',a)
         assert await page.locator('#tradeBuy').is_disabled()
         n=len(writes())
