@@ -40,4 +40,5 @@ assert(balance.includes('Можно использовать с уровня:')&
 assert(html.includes("radiation: 'радиозащита'"),'radiation protection must be labelled Радиозащита');
 assert(html.includes('Math.abs(Number(statsObj.radiationLeak) || 0)'),'artifact Radiation +N must remain harmful regardless of stored sign');
 assert(html.includes('каждый ход прибавляет радиацию'),'artifact Radiation +N description must state the per-turn effect');
+assert(html.includes('Радиозащита ${sign}${value}')&&html.includes('Радиация +${amount}'),'artifact info must show distinct Radioprotection +N and Radiation +N effects');
 assert(!html.includes('полезный эффект — снижает получаемую радиацию'),'harmful radiation must never flip into protection in item info');
