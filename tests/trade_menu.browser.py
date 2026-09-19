@@ -243,7 +243,7 @@ async def main():
         assert await item('stock',data['detector']).count()==0
         assert await item('stock',data['gear']).count()==0
         await click('inventory',named)
-        assert '50 жет.' in await page.locator('#tradeSellTotal').inner_text()
+        assert '50 сталкоинов' in await page.locator('#tradeSellTotal').inner_text()
         await page.locator('#tradeSell').click();await page.wait_for_timeout(250)
         assert writes()[-1]['path'].endswith('/scientists/sell')
         assert await page.evaluate('player.breedCredits')==57
