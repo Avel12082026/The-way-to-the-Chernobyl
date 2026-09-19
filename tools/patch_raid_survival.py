@@ -206,12 +206,23 @@ def add_step_recompute(source):
         return source
     return once(source,STEP_TURN_OLD,STEP_TURN_NEW)
 
+def normalize_saved_radiation_leak(source):
+    # Full production server.js keeps a derived field for client state. The isolated
+    # route fixture does not contain this helper, so normalize it when present.
+    old="else if(stat==='radiationLeak') data.radiationLeakTotal+=-v;"
+    new="else if(stat==='radiationLeak') data.radiationLeakTotal+=Math.abs(v);"
+    if old in source:
+        if source.count(old)!=1:
+            raise ValueError('Неоднозначный пересчёт radiationLeakTotal')
+        return source.replace(old,new,1)
+    return source
+
 def upgrade_v2(source):
     s=once(source,OLD_MARK_V2,MARK)
     s=once(s,BELT_HELPER_V2,BELT_HELPER)
     s=once(s,V2_HAZARD_CALL,NEW_HAZARD_CALL)
     s=turn_effects_v3(s)
-    return add_step_recompute(s)
+    return normalize_saved_radiation_leak(add_step_recompute(s))
 
 def upgrade_v1(source):
     anchor=OLD_MARK_V1+"\nconst RaidSurvival=require('./raid-survival.cjs');\n\nfunction pveArtifactTurnEffects(data) {"
@@ -219,7 +230,7 @@ def upgrade_v1(source):
     s=once(source,anchor,replacement)
     s=once(s,OLD_HAZARD_CALL,NEW_HAZARD_CALL)
     s=turn_effects_v3(s)
-    return add_step_recompute(s)
+    return normalize_saved_radiation_leak(add_step_recompute(s))
 
 def build(source):
     if MARK in source:
@@ -269,7 +280,7 @@ def build(source):
     s=add_step_recompute(s)
     # Read-only capability used by the updater to wait for this exact process/version.
     s=once(s,"app.listen(PORT, () => {", "app.get('/api/raid/survival-version',(_req,res)=>res.json({success:true,version:RaidSurvival.version,travelCost:RaidSurvival.travelCost}));\n\napp.listen(PORT, () => {")
-    return s
+    return normalize_saved_radiation_leak(s)
 
 if __name__=='__main__':
     p=Path(sys.argv[1]);out=Path(sys.argv[2]);out.write_text(build(p.read_text(encoding='utf-8')),encoding='utf-8')
