@@ -202,9 +202,29 @@ def turn_effects_v3(source):
     raise ValueError('Не найден проверенный блок эффектов артефактов за ход')
 
 def add_step_recompute(source):
+    # Patch only the /api/raid/step handler. Production server.js can legitimately
+    # differ in the statement immediately after pveArtifactTurnEffects(), so do not
+    # require an exact two-line block here.
     if STEP_TURN_NEW in source:
         return source
-    return once(source,STEP_TURN_OLD,STEP_TURN_NEW)
+    route="app.post('/api/raid/step'"
+    try:
+        start=source.index(route)
+    except ValueError as exc:
+        raise ValueError('Не найден маршрут /api/raid/step для пересчёта радиозащиты') from exc
+    end=source.find("\napp.post(",start+len(route))
+    if end<0:
+        end=len(source)
+    block=source[start:end]
+    needle="            const turnEffects=pveArtifactTurnEffects(data);"
+    if block.count(needle)!=1:
+        raise ValueError('Не найден однозначный ход рейда для пересчёта радиозащиты')
+    replacement=(
+        "            if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);\n"
+        +needle
+    )
+    block=block.replace(needle,replacement,1)
+    return source[:start]+block+source[end:]
 
 def normalize_saved_radiation_leak(source):
     # Full production server.js keeps a derived field for client state. The isolated
