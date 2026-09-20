@@ -14,6 +14,10 @@
   let leonovImageLoaded = false;
   let smokerScreen = null;
   let smokerImageLoaded = false;
+  let zoneMapScreen = null;
+  let zoneMapImageLoaded = false;
+  let zoneMapOrigin = 'camp';
+  let zoneMapPoints = [];
 
   const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
   const clamp = (v, low, high) => Math.max(low, Math.min(high, v));
@@ -86,18 +90,177 @@
     if (!frame) frame = requestAnimationFrame(layout);
   }
 
-  async function enterRaid() {
+  function renderZoneMapPoints() {
+    const layer = document.getElementById('zoneMapPoints');
+    if (!layer) return;
+    layer.replaceChildren();
+    for (const point of zoneMapPoints) {
+      const x = clamp(finite(point.x), 0, 100);
+      const y = clamp(finite(point.y), 0, 100);
+      const kind = ['camp', 'raid', 'enemy', 'anomaly', 'mutant'].includes(point.kind) ? point.kind : 'raid';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'zone-map-point zone-map-point-' + kind;
+      button.dataset.zonePoint = point.id || kind;
+      button.dataset.zoneKind = kind;
+      button.style.left = x + '%';
+      button.style.top = y + '%';
+      button.setAttribute('aria-label', point.label || kind);
+      button.innerHTML = '<span class="zone-map-point-icon" aria-hidden="true"></span><span class="zone-map-point-label"></span>';
+      button.querySelector('.zone-map-point-icon').textContent = point.icon || '●';
+      button.querySelector('.zone-map-point-label').textContent = point.label || kind;
+      button.addEventListener('click', () => activateZoneMapPoint(point));
+      layer.appendChild(button);
+    }
+  }
+
+  function ensureZoneMapScreen() {
+    if (zoneMapScreen) return zoneMapScreen;
+    const el = document.createElement('section');
+    el.id = 'zoneMapScreen';
+    el.className = 'zone-map-screen screen';
+    el.setAttribute('aria-label', 'Карта Зоны');
+    el.innerHTML = `
+      <div class="zone-map-frame">
+        <img id="zoneMapArtwork" class="zone-map-artwork" alt="Карта Зоны" draggable="false">
+        <div id="zoneMapPoints" class="zone-map-points" aria-label="Точки на карте"></div>
+      </div>
+      <div class="zone-map-title">КАРТА ЗОНЫ</div>
+      <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>
+      <button class="zone-map-continue" type="button" data-zone-map-action="continue">Продолжить рейд</button>`;
+    document.body.appendChild(el);
+    zoneMapScreen = el;
+    el.addEventListener('click', event => {
+      const action = event.target.closest('[data-zone-map-action]')?.dataset.zoneMapAction;
+      if (action === 'back') closeZoneMap();
+      if (action === 'continue') continueFromZoneMap();
+    });
+    if (!zoneMapImageLoaded) {
+      zoneMapImageLoaded = true;
+      fetch('ui/zone-map.webp.b64?v=20260920-map1')
+        .then(response => {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.text();
+        })
+        .then(b64 => {
+          const image = document.getElementById('zoneMapArtwork');
+          if (image) image.src = 'data:image/webp;base64,' + b64.trim();
+        })
+        .catch(() => {
+          const image = document.getElementById('zoneMapArtwork');
+          if (image) image.alt = 'Не удалось загрузить карту Зоны';
+        });
+    }
+    renderZoneMapPoints();
+    return el;
+  }
+
+  function openZoneMap(origin = '') {
+    if (typeof currentEnemy !== 'undefined' && currentEnemy) {
+      if (typeof showGameAlert === 'function') showGameAlert('Сначала завершите текущую встречу.');
+      return;
+    }
+    if (typeof currentAnomaly !== 'undefined' && currentAnomaly) {
+      if (typeof showGameAlert === 'function') showGameAlert('Сначала завершите аномалию.');
+      return;
+    }
+    zoneMapOrigin = origin || ((typeof raidActive !== 'undefined' && raidActive) ? 'raid' : 'camp');
+    const el = ensureZoneMapScreen();
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+    main.style.display = 'none';
+    const chat = document.getElementById('embeddedChatWidget');
+    if (chat) chat.style.display = 'none';
+    el.classList.add('active');
+    document.body.classList.add('zone-map-visible');
+    const continueButton = el.querySelector('.zone-map-continue');
+    if (continueButton) {
+      continueButton.textContent = (typeof raidActive !== 'undefined' && raidActive) ? 'Вернуться в рейд' : 'Войти в Зону';
+    }
+    renderZoneMapPoints();
+  }
+
+  function hideZoneMap() {
+    if (zoneMapScreen) zoneMapScreen.classList.remove('active');
+    document.body.classList.remove('zone-map-visible');
+  }
+
+  function closeZoneMap() {
+    hideZoneMap();
+    if (zoneMapOrigin === 'raid' && typeof raidActive !== 'undefined' && raidActive && typeof returnToRaid === 'function') {
+      return returnToRaid();
+    }
+    if (typeof openScreen === 'function') openScreen('main');
+  }
+
+  async function continueFromZoneMap() {
+    hideZoneMap();
+    if (typeof raidActive !== 'undefined' && raidActive) {
+      if (typeof returnToRaid === 'function') returnToRaid();
+      return;
+    }
     if (enteringRaid || readingBook) return;
     enteringRaid = true;
     const btn = document.getElementById('bunkerRaid');
     if (btn) btn.disabled = true;
     try {
-      await startRaid();
+      if (typeof startRaid === 'function') await startRaid();
     } finally {
       enteringRaid = false;
       if (btn) btn.disabled = false;
       scheduleLayout();
     }
+  }
+
+  async function activateZoneMapPoint(point) {
+    const kind = point?.kind || 'raid';
+    if (kind === 'camp') {
+      hideZoneMap();
+      if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
+        await endRaid();
+      } else if (typeof openScreen === 'function') {
+        openScreen('main');
+      }
+      return;
+    }
+
+    // The exact map coordinates and deterministic encounter routing will be filled
+    // from the annotated map. Until then a configured non-camp marker safely enters
+    // or resumes the existing raid without inventing a server encounter.
+    window.__zoneMapRequestedPoint = point ? {...point} : null;
+    await continueFromZoneMap();
+  }
+
+  function setZoneMapPoints(points) {
+    if (!Array.isArray(points)) return;
+    zoneMapPoints = points
+      .filter(point => point && Number.isFinite(Number(point.x)) && Number.isFinite(Number(point.y)))
+      .map(point => ({
+        ...point,
+        x: clamp(Number(point.x), 0, 100),
+        y: clamp(Number(point.y), 0, 100)
+      }));
+    renderZoneMapPoints();
+  }
+
+  function patchRaidMapButton() {
+    const nav = document.getElementById('raidNavButtons');
+    if (!nav) return;
+    const button = [...nav.querySelectorAll('button')].find(btn =>
+      btn.id === 'raidMapBtn' ||
+      btn.getAttribute('onclick') === 'endRaid()' ||
+      /Вернуться с рейда|Открыть карту/i.test(btn.textContent || '')
+    );
+    if (!button) return;
+    button.id = 'raidMapBtn';
+    button.removeAttribute('onclick');
+    button.textContent = 'Открыть карту';
+    button.style.background = '#8a7a4a';
+    button.onclick = () => openZoneMap('raid');
+  }
+
+  async function enterRaid() {
+    if (enteringRaid || readingBook) return;
+    openZoneMap('camp');
   }
 
   async function readBook() {
@@ -676,6 +839,17 @@
     }
   });
 
-  window.BunkerMenu = {version: '1.4.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker};
+  patchRaidMapButton();
+  const raidNav = document.getElementById('raidNavButtons');
+  if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
+  window.ZoneMap = Object.freeze({
+    version: '0.1.0',
+    open: openZoneMap,
+    close: closeZoneMap,
+    continueRaid: continueFromZoneMap,
+    setPoints: setZoneMapPoints,
+    get points() { return zoneMapPoints.map(point => ({...point})); }
+  });
+  window.BunkerMenu = {version: '1.5.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
