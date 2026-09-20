@@ -33,10 +33,22 @@ async def main():
         await page.add_style_tag(content=css)
         await page.evaluate("""(mapB64)=>{
           window.__mapB64=mapB64;
-          window.__calls={start:0,back:0,end:0,open:[]};
+          window.__calls={start:0,back:0,end:0,open:[],alerts:[],fetches:[]};
           window.raidActive=false;
           window.currentEnemy=null;
           window.currentAnomaly=null;
+          window.player={level:1};
+          window.weapons=[
+            {name:'starter',starterGear:true,unlockLevel:1},
+            ...Array.from({length:9},(_,i)=>({name:'p'+i,unlockLevel:20+i*20})),
+            {name:'Дробовик test',unlockLevel:220}
+          ];
+          window.armorItems=Array.from({length:10},(_,i)=>({name:'a'+i,unlockLevel:1+i*10}));
+          window.getShopCatalog=()=>[
+            ...weapons.slice(0,11).map(x=>({...x,category:'weapon'})),
+            ...armorItems.map(x=>({...x,category:'armor'})),
+            {name:'Аптечка',category:'consumable'}
+          ];
           window.startRaid=async()=>{window.__calls.start++;window.raidActive=true;};
           window.returnToRaid=()=>{window.__calls.back++;document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));document.getElementById('raidScreen').classList.add('active');};
           window.endRaid=async()=>{window.__calls.end++;window.raidActive=false;window.openScreen('main');};
@@ -45,16 +57,18 @@ async def main():
             document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
             document.getElementById('mainMenu').style.display=name==='main'?'block':'none';
           };
-          window.fetch=async(input)=>{
+          window.showGameAlert=(msg)=>window.__calls.alerts.push(String(msg));
+          window.fetch=async(input,init={})=>{
             const url=String(input);
             if(url.includes('zone-map.webp.b64'))return new Response(window.__mapB64,{status:200,headers:{'Content-Type':'text/plain'}});
-            return new Response('',{status:404});
+            window.__calls.fetches.push({url,body:init.body?JSON.parse(init.body):null});
+            return new Response(JSON.stringify({success:true}),{status:200,headers:{'Content-Type':'application/json'}});
           };
         }""",map_b64)
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.5.0' && window.ZoneMap?.version==='0.1.0'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.6.0' && window.ZoneMap?.version==='0.2.0'")
 
-        # Bunker door opens the map without starting a raid.
+        # Bunker door opens the annotated map without starting a raid.
         await page.locator('#bunkerRaid').click()
         zone=page.locator('#zoneMapScreen')
         assert await zone.is_visible()
@@ -62,42 +76,53 @@ async def main():
         await page.wait_for_function("document.getElementById('zoneMapArtwork')?.naturalWidth>0")
         size=await page.locator('#zoneMapArtwork').evaluate("(e)=>[e.naturalWidth,e.naturalHeight]")
         assert size==[600,1036],size
-        assert await page.locator('#zoneMapPoints .zone-map-point').count()==0
-        assert await page.locator('.zone-map-continue').inner_text()=='Войти в Зону'
+        assert await page.locator('#zoneMapPoints .zone-map-point').count()==11
+        assert await page.locator('.zone-map-continue').count()==0
+        kinds=await page.locator('#zoneMapPoints .zone-map-point').evaluate_all("(xs)=>xs.map(x=>x.dataset.zoneKind)")
+        assert kinds.count('enemy')==4 and kinds.count('mutant')==3 and kinds.count('anomaly')==2 and kinds.count('camp')==1 and kinds.count('transition')==1,kinds
+        invis=await page.locator('[data-zone-point=enemy-1]').evaluate("(e)=>({bg:getComputedStyle(e).backgroundColor,opacity:getComputedStyle(e).opacity})")
+        assert invis['bg']=='rgba(0, 0, 0, 0)' and float(invis['opacity'])<0.01,invis
 
-        # Temporary fallback keeps the current raid playable until the annotated points arrive.
-        await page.locator('.zone-map-continue').click()
+        # Enemy point starts a raid and selects human-enemy-only routing.
+        await page.locator('[data-zone-point=enemy-1]').click()
         assert await page.evaluate("window.__calls.start")==1
+        assert await page.evaluate("ZoneMap.routeKind")=='enemy'
         assert not await zone.is_visible()
 
-        # Existing raid navigation is renamed and opens the same map without ending the raid.
-        await page.evaluate("raidActive=true;document.getElementById('raidScreen').classList.add('active')")
+        # Open map from an active raid, switch to mutants, and resume the same raid.
+        await page.evaluate("document.getElementById('raidScreen').classList.add('active')")
         map_btn=page.locator('#raidMapBtn')
         assert await map_btn.inner_text()=='Открыть карту'
         await map_btn.click()
         assert await zone.is_visible()
-        assert await page.evaluate("window.__calls.end")==0
-        assert await page.locator('.zone-map-continue').inner_text()=='Вернуться в рейд'
-        await page.locator('.zone-map-continue').click()
+        await page.locator('[data-zone-point=mutant-1]').click()
+        assert await page.evaluate("ZoneMap.routeKind")=='mutant'
         assert await page.evaluate("window.__calls.back")==1
+        assert await page.evaluate("window.__calls.end")==0
 
-        # Typed point engine is ready for the user's later annotated coordinates.
-        points=[
-          {'id':'camp','kind':'camp','label':'Лагерь','x':10,'y':90,'icon':'C'},
-          {'id':'enemy','kind':'enemy','label':'Враги','x':30,'y':55,'icon':'E'},
-          {'id':'anomaly','kind':'anomaly','label':'Аномалия','x':50,'y':45,'icon':'A'},
-          {'id':'mutant','kind':'mutant','label':'Мутанты','x':70,'y':35,'icon':'M'}
-        ]
-        await page.evaluate("(points)=>ZoneMap.setPoints(points)",points)
-        assert await page.locator('#zoneMapPoints .zone-map-point').count()==4
-        kinds=await page.locator('#zoneMapPoints .zone-map-point').evaluate_all("(xs)=>xs.map(x=>x.dataset.zoneKind)")
-        assert kinds==['camp','enemy','anomaly','mutant'],kinds
+        # Routed raid steps go to the dedicated server endpoint and carry the marker type.
+        await page.evaluate("""()=>fetch('/api/raid/step',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({raidToken:'r'})})""")
+        routed=await page.evaluate("window.__calls.fetches.at(-1)")
+        assert routed['url'].endswith('/api/raid/zone-step'),routed
+        assert routed['body']['zoneKind']=='mutant',routed
 
-        # Camp ends an active raid, which is the only route back to traders from the map.
-        await page.evaluate("raidActive=true;ZoneMap.open('raid')")
-        await page.locator('[data-zone-point=camp]').click()
+        # Transition remains locked while there is only one location.
+        await page.evaluate("ZoneMap.open('raid')")
+        await page.locator('[data-zone-point=transition-1]').click()
+        assert await zone.is_visible()
+        assert (await page.evaluate("window.__calls.alerts.at(-1)"))=='Локация ещё не открыта сталкерами.'
+
+        # Current location merchant catalogue is capped to first ten weapons and armor.
+        catalog=await page.evaluate("getShopCatalog()")
+        weapon_count=sum(1 for x in catalog if x.get('category')=='weapon')
+        armor_count=sum(1 for x in catalog if x.get('category')=='armor')
+        assert weapon_count==10 and armor_count==10,(weapon_count,armor_count)
+
+        # Camp ends an active raid and returns to the trader hub.
+        await page.locator('[data-zone-point=camp-1]').click()
         assert await page.evaluate("window.__calls.end")==1
         assert await page.locator('#mainMenu').is_visible()
+        assert await page.evaluate("ZoneMap.routeKind")==''
 
         assert not errors,errors
         print(json.dumps({'status':'passed','map':size,'kinds':kinds,'calls':await page.evaluate('window.__calls')},ensure_ascii=False))
