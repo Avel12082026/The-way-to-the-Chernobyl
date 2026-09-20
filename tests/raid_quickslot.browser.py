@@ -144,7 +144,7 @@ async def main():
     nav=page.locator('#raidNavButtons')
     assert await nav.evaluate("e=>getComputedStyle(e).display")!='none'
     nav_labels=[x.strip() for x in await nav.locator('button').all_text_contents()]
-    assert any('Идти дальше' in x for x in nav_labels) and any('Вернуться с рейда' in x for x in nav_labels),nav_labels
+    assert any('Идти дальше' in x for x in nav_labels) and any('Открыть карту' in x for x in nav_labels),nav_labels
 
     # Anomaly replaces the two navigation buttons with the original search/bypass actions.
     await page.evaluate("""()=>{

@@ -1,0 +1,49 @@
+name: Zone map navigation
+on:
+  push:
+    branches: [main, feature/zone-map-navigation-20260920]
+    paths:
+      - 'index.html'
+      - 'ui/bunker-menu.*'
+      - 'ui/zone-map.webp.b64'
+      - 'tests/zone_map_navigation*'
+      - 'tests/smoker_npc.test.cjs'
+      - 'tests/raid_quickslot.browser.py'
+      - '.github/workflows/zone-map-navigation.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'ui/bunker-menu.*'
+      - 'ui/zone-map.webp.b64'
+      - 'tests/zone_map_navigation*'
+      - 'tests/smoker_npc.test.cjs'
+      - 'tests/raid_quickslot.browser.py'
+      - '.github/workflows/zone-map-navigation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Static and syntax checks
+        run: |
+          node --check ui/bunker-menu.js
+          node tests/zone_map_navigation.test.cjs
+          node tests/smoker_npc.test.cjs
+          python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py
+          git diff --check
+      - name: Install Chromium
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Zone map browser regression
+        run: python tests/zone_map_navigation.browser.py
+      - name: Existing raid regression
+        run: python tests/raid_quickslot.browser.py
