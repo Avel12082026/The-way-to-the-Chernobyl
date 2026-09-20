@@ -38,6 +38,7 @@ async def main():
           window.currentEnemy=null;
           window.currentAnomaly=null;
           window.player={level:1};
+          window.expNeededForLevel=()=>100;
           window.weapons=[
             {name:'starter',starterGear:true,unlockLevel:1},
             ...Array.from({length:9},(_,i)=>({name:'p'+i,unlockLevel:20+i*20})),
@@ -60,7 +61,7 @@ async def main():
           window.showGameAlert=(msg)=>window.__calls.alerts.push(String(msg));
           window.fetch=async(input,init={})=>{
             const url=String(input);
-            const mapMatch=url.match(/zone-map-v2-(\d{2})\.b64/);
+            const mapMatch=url.match(/zone-map-v2-(\\d{2})\\.b64/);
             if(mapMatch)return new Response(window.__mapParts[Number(mapMatch[1])],{status:200,headers:{'Content-Type':'text/plain'}});
             window.__calls.fetches.push({url,body:init.body?JSON.parse(init.body):null});
             return new Response(JSON.stringify({success:true}),{status:200,headers:{'Content-Type':'application/json'}});
