@@ -61,7 +61,7 @@ async def main():
         assert await page.evaluate("window.__calls.start")==0
         await page.wait_for_function("document.getElementById('zoneMapArtwork')?.naturalWidth>0")
         size=await page.locator('#zoneMapArtwork').evaluate("(e)=>[e.naturalWidth,e.naturalHeight]")
-        assert size==[890,1536],size
+        assert size==[600,1036],size
         assert await page.locator('#zoneMapPoints .zone-map-point').count()==0
         assert await page.locator('.zone-map-continue').inner_text()=='Войти в Зону'
 
