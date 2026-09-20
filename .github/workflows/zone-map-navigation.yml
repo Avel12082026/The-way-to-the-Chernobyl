@@ -7,6 +7,8 @@ on:
       - 'ui/bunker-menu.*'
       - 'ui/zone-map.webp.b64'
       - 'tests/zone_map_navigation*'
+      - 'tests/zone_map_server_patch.test.py'
+      - 'tools/install_zone_map_routing_server.py'
       - 'tests/smoker_npc.test.cjs'
       - 'tests/raid_quickslot.browser.py'
       - '.github/workflows/zone-map-navigation.yml'
@@ -16,6 +18,8 @@ on:
       - 'ui/bunker-menu.*'
       - 'ui/zone-map.webp.b64'
       - 'tests/zone_map_navigation*'
+      - 'tests/zone_map_server_patch.test.py'
+      - 'tools/install_zone_map_routing_server.py'
       - 'tests/smoker_npc.test.cjs'
       - 'tests/raid_quickslot.browser.py'
       - '.github/workflows/zone-map-navigation.yml'
@@ -37,7 +41,8 @@ jobs:
           node --check ui/bunker-menu.js
           node tests/zone_map_navigation.test.cjs
           node tests/smoker_npc.test.cjs
-          python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py
+          python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py tools/install_zone_map_routing_server.py tests/zone_map_server_patch.test.py
+          python3 tests/zone_map_server_patch.test.py
           git diff --check
       - name: Install Chromium
         run: |
