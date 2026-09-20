@@ -78,27 +78,28 @@ body.smoker-hub-visible{overflow:hidden!important;}
 body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton,body.smoker-hub-visible .admin-btn{display:none!important;}
 
 
-/* Zone map. Marker coordinates are percentages of the original 890×1536 artwork. */
+/* Zone map. Each location keeps its native aspect ratio and is fitted without cropping. */
 #zoneMapScreen.zone-map-screen{
   display:none;position:fixed;inset:0;z-index:1650;overflow:hidden;
   align-items:center;justify-content:center;background:#050605;
 }
 #zoneMapScreen.active{display:flex;}
 #zoneMapScreen .zone-map-frame{
-  position:relative;flex:none;
-  width:min(100vw,calc(100dvh * 890 / 1536));
-  height:min(100dvh,calc(100vw * 1536 / 890));
-  max-width:100vw;max-height:100dvh;aspect-ratio:890/1536;
-  overflow:hidden;background:#111;
+  position:absolute;inset:0;width:100vw;height:100dvh;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;background:#050605;
+}
+#zoneMapScreen .zone-map-canvas{
+  position:relative;flex:none;max-width:100vw;max-height:100dvh;
+  overflow:hidden;background:#050605;
 }
 #zoneMapScreen .zone-map-artwork{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:fill;
-  user-select:none;-webkit-user-drag:none;pointer-events:none;
+  position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  image-rendering:auto;user-select:none;-webkit-user-drag:none;pointer-events:none;
 }
 #zoneMapScreen .zone-map-points{position:absolute;inset:0;z-index:2;pointer-events:none;}
 #zoneMapScreen .zone-map-point{
   position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
-  width:13%;height:10%;min-width:48px;min-height:48px;max-width:82px;max-height:82px;
+  width:13%;height:10%;min-width:48px;min-height:48px;max-width:104px;max-height:104px;
   padding:0;border:0;border-radius:22px;background:transparent;color:transparent;
   box-shadow:none;font:0/0 Arial,sans-serif;text-align:center;opacity:.001;
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;
@@ -109,7 +110,7 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 #zoneMapScreen .zone-map-point:focus-visible,
 #zoneMapScreen .zone-map-back:focus-visible{outline:2px solid #f0cf78;outline-offset:2px;opacity:1;}
 #zoneMapScreen .zone-map-back{
-  position:absolute;z-index:5;left:4%;top:max(12px,env(safe-area-inset-top));
+  position:fixed;z-index:5;left:max(10px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top));
   min-height:42px;padding:8px 12px;border:1px solid #92794a;border-radius:5px;
   background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.97));
   color:#ead7a9;font:700 12px/1.1 'Russo One',Arial,sans-serif;
