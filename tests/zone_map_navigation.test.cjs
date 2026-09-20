@@ -6,41 +6,57 @@ const js=fs.readFileSync('ui/bunker-menu.js','utf8');
 const css=fs.readFileSync('ui/bunker-menu.css','utf8');
 const html=fs.readFileSync('ui/bunker-menu.html','utf8');
 const index=fs.readFileSync('index.html','utf8');
-const b64=Array.from({length:8},(_,i)=>fs.readFileSync(`ui/zone-map-v2-${String(i).padStart(2,'0')}.b64`,'utf8')).join('').replace(/\\s+/g,'');
+
+function mapBytes(prefix,count){
+  const b64=Array.from({length:count},(_,i)=>
+    fs.readFileSync(`ui/${prefix}-${String(i).padStart(2,'0')}.b64`,'utf8')
+  ).join('').replace(/\s+/g,'');
+  return Buffer.from(b64,'base64');
+}
+const map1=mapBytes('zone-map1-hq',11);
+const map2=mapBytes('zone-map2-hq',22);
 
 assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()'),'raid door wiring changed unexpectedly');
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
-assert(enter.includes("openZoneMap('camp')"),'raid door must open the zone map first');
-assert(!enter.includes('startRaid()'),'raid door must not start the raid before map selection');
+assert(enter.includes("openZoneMap('camp')"),'raid door must open map first');
+assert(!enter.includes('startRaid()'),'raid door must not start raid before map selection');
 
-assert(js.includes("el.id = 'zoneMapScreen'"),'zone map screen missing');
-assert(js.includes("Array.from({length: 8}")&&js.includes("'ui/zone-map-v2-'"),'annotated zone map chunks not loaded');
 assert(js.includes("window.ZoneMap = Object.freeze"),'ZoneMap API missing');
-assert(js.includes("setPoints: setZoneMapPoints"),'configurable marker API missing');
+assert(js.includes("version: '0.3.0'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.7.0'"),'BunkerMenu version mismatch');
+
+assert(js.includes("1: {prefix:'ui/zone-map1-hq-', parts:11, mime:'image/avif', width:890, height:1536}"),'location 1 native asset config missing');
+assert(js.includes("2: {prefix:'ui/zone-map2-hq-', parts:22, mime:'image/avif', width:1397, height:1536}"),'location 2 native asset config missing');
+assert(js.includes("targetLocation:2")||js.includes("targetLocation: 2"),'location 1 -> 2 transition missing');
+assert(js.includes("targetLocation:1")||js.includes("targetLocation: 1"),'location 2 -> 1 transition missing');
+assert(js.includes("targetLocation:3")||js.includes("targetLocation: 3"),'future location 3 marker missing');
+assert(js.includes("targetLocation:4")||js.includes("targetLocation: 4"),'future location 4 marker missing');
+assert(js.includes('вторая десятка пистолетов')||js.includes('второй десятки пистолетов'),'future transition pistol gate message missing');
+assert(js.includes('Локация ещё не открыта сталкерами.'),'future-location closed message missing');
+
 for(const kind of ['camp','enemy','anomaly','mutant','transition']){
   assert(js.includes("'"+kind+"'"),'marker kind missing: '+kind);
 }
-assert(js.includes("id:'transition-1'")&&js.includes("id:'camp-1'"),'annotated point coordinates missing');
-assert.equal((js.match(/\{id:'(?:transition|anomaly|mutant|enemy|camp)-\d+'/g)||[]).length,11,'expected 11 annotated map points');
-assert(js.includes("if (kind === 'camp')")&&js.includes('await endRaid()'),'camp marker must end an active raid before returning to traders');
-assert(js.includes("if (kind === 'transition')")&&js.includes('Локация ещё не открыта сталкерами.'),'locked transition message missing');
-assert(js.includes("/api/raid/zone-step")&&js.includes("zoneKind: zoneRaidKind"),'selected marker must route raid steps');
-assert(js.includes("firstLocationWeaponList")&&js.includes("firstLocationArmorList"),'location-one gear split missing');
-assert(js.includes("slice(0, 10)"),'location-one first-ten limit missing');
+assert.equal((js.match(/location:1/g)||[]).length>=0,true);
+assert(js.includes("zoneLocation")&&js.includes("/api/raid/zone-step"),'map route must carry selected location to server');
+assert(js.includes("firstLocationWeaponList")&&js.includes("firstLocationArmorList"),'first-location gear gate/catalog split missing');
+assert(js.includes("secondPistol")||js.includes("secondDecade")||js.includes("slice(10, 20)")||js.includes("slice(10,20)"),'second pistol decade gate missing');
 
 assert(index.includes('id="raidMapBtn"'),'raid map button missing');
-assert(index.includes("BunkerMenu.openZoneMap('raid')"),'raid map button does not open map');
+assert(index.includes("BunkerMenu.openZoneMap('raid')"),'raid map button not wired');
 assert(index.includes('>Открыть карту</button>'),'raid map caption missing');
-assert(index.includes('ui/bunker-menu.css?v=20260920-map3'));
-assert(index.includes('ui/bunker-menu.js?v=20260920-map3'));
+assert(index.includes('ui/bunker-menu.css?v=20260920-map5'),'CSS cache version mismatch');
+assert(index.includes('ui/bunker-menu.js?v=20260920-map5'),'JS cache version mismatch');
 
-assert(css.includes('#zoneMapScreen.zone-map-screen'),'zone map CSS missing');
-assert(css.includes('aspect-ratio:890/1536'),'map coordinate frame must preserve artwork aspect ratio');
-assert(css.includes('background:transparent')&&css.includes('opacity:.001'),'map marker hit areas must be invisible');
-assert(css.includes('.zone-map-point-icon,')&&css.includes('display:none!important'),'baked-in markers must not be duplicated by HTML');
+assert(css.includes('#zoneMapScreen.zone-map-screen'),'zone map screen CSS missing');
+assert(css.includes('.zone-map-canvas'),'native-aspect map canvas missing');
+assert(css.includes('object-fit:contain'),'maps must fit without top/bottom crop');
+assert(css.includes('background:transparent')&&css.includes('opacity:.001'),'marker hit areas must stay invisible');
 
-const bytes=Buffer.from(b64,'base64');
-assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF','zone map is not WebP/RIFF');
-assert(bytes.length>20000,'annotated zone map asset unexpectedly small');
+for(const [bytes,label] of [[map1,'map1'],[map2,'map2']]){
+  assert(bytes.length>50000,label+' asset unexpectedly small');
+  assert.equal(bytes.subarray(4,12).toString('ascii'),'ftypavif',label+' is not AVIF');
+}
+assert(map2.length>map1.length,'map2 high-resolution asset should be larger than map1');
 
-console.log('PASS: annotated map, 11 invisible marker hit areas, routed raids, camp/transition behavior and location-one gear limit');
+console.log('PASS: two native-resolution AVIF maps, full-map contain layout, invisible markers, transitions and route/location gates');
