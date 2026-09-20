@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[1]
 async def main():
     js=(ROOT/'ui/bunker-menu.js').read_text(encoding='utf-8')
     css=(ROOT/'ui/bunker-menu.css').read_text(encoding='utf-8')
-    map_b64=(ROOT/'ui/zone-map.webp.b64').read_text(encoding='utf-8').strip()
+    map_parts=[(ROOT/f'ui/zone-map-v2-{i:02d}.b64').read_text(encoding='utf-8').strip() for i in range(8)]
     errors=[]
 
     async with async_playwright() as pw:
@@ -31,8 +31,8 @@ async def main():
           <div id="embeddedChatWidget"></div>
         </body></html>''')
         await page.add_style_tag(content=css)
-        await page.evaluate("""(mapB64)=>{
-          window.__mapB64=mapB64;
+        await page.evaluate("""(mapParts)=>{
+          window.__mapParts=mapParts;
           window.__calls={start:0,back:0,end:0,open:[],alerts:[],fetches:[]};
           window.raidActive=false;
           window.currentEnemy=null;
@@ -60,11 +60,12 @@ async def main():
           window.showGameAlert=(msg)=>window.__calls.alerts.push(String(msg));
           window.fetch=async(input,init={})=>{
             const url=String(input);
-            if(url.includes('zone-map.webp.b64'))return new Response(window.__mapB64,{status:200,headers:{'Content-Type':'text/plain'}});
+            const mapMatch=url.match(/zone-map-v2-(\d{2})\.b64/);
+            if(mapMatch)return new Response(window.__mapParts[Number(mapMatch[1])],{status:200,headers:{'Content-Type':'text/plain'}});
             window.__calls.fetches.push({url,body:init.body?JSON.parse(init.body):null});
             return new Response(JSON.stringify({success:true}),{status:200,headers:{'Content-Type':'application/json'}});
           };
-        }""",map_b64)
+        }""",map_parts)
         await page.add_script_tag(content=js)
         await page.wait_for_function("window.BunkerMenu?.version==='1.6.0' && window.ZoneMap?.version==='0.2.0'")
 
@@ -75,7 +76,7 @@ async def main():
         assert await page.evaluate("window.__calls.start")==0
         await page.wait_for_function("document.getElementById('zoneMapArtwork')?.naturalWidth>0")
         size=await page.locator('#zoneMapArtwork').evaluate("(e)=>[e.naturalWidth,e.naturalHeight]")
-        assert size==[600,1036],size
+        assert size==[360,622],size
         assert await page.locator('#zoneMapPoints .zone-map-point').count()==11
         assert await page.locator('.zone-map-continue').count()==0
         kinds=await page.locator('#zoneMapPoints .zone-map-point').evaluate_all("(xs)=>xs.map(x=>x.dataset.zoneKind)")
