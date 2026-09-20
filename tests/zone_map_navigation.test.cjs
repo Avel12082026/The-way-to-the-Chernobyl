@@ -6,7 +6,7 @@ const js=fs.readFileSync('ui/bunker-menu.js','utf8');
 const css=fs.readFileSync('ui/bunker-menu.css','utf8');
 const html=fs.readFileSync('ui/bunker-menu.html','utf8');
 const index=fs.readFileSync('index.html','utf8');
-const b64=fs.readFileSync('ui/zone-map.webp.b64','utf8').trim();
+const b64=Array.from({length:8},(_,i)=>fs.readFileSync(`ui/zone-map-v2-${String(i).padStart(2,'0')}.b64`,'utf8')).join('').replace(/\\s+/g,'');
 
 assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()'),'raid door wiring changed unexpectedly');
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
@@ -14,7 +14,7 @@ assert(enter.includes("openZoneMap('camp')"),'raid door must open the zone map f
 assert(!enter.includes('startRaid()'),'raid door must not start the raid before map selection');
 
 assert(js.includes("el.id = 'zoneMapScreen'"),'zone map screen missing');
-assert(js.includes("fetch('ui/zone-map.webp.b64?v=20260920-map2')"),'annotated zone map artwork not loaded');
+assert(js.includes("Array.from({length: 8}")&&js.includes("'ui/zone-map-v2-'"),'annotated zone map chunks not loaded');
 assert(js.includes("window.ZoneMap = Object.freeze"),'ZoneMap API missing');
 assert(js.includes("setPoints: setZoneMapPoints"),'configurable marker API missing');
 for(const kind of ['camp','enemy','anomaly','mutant','transition']){
@@ -31,8 +31,8 @@ assert(js.includes("slice(0, 10)"),'location-one first-ten limit missing');
 assert(index.includes('id="raidMapBtn"'),'raid map button missing');
 assert(index.includes("BunkerMenu.openZoneMap('raid')"),'raid map button does not open map');
 assert(index.includes('>Открыть карту</button>'),'raid map caption missing');
-assert(index.includes('ui/bunker-menu.css?v=20260920-map2'));
-assert(index.includes('ui/bunker-menu.js?v=20260920-map2'));
+assert(index.includes('ui/bunker-menu.css?v=20260920-map3'));
+assert(index.includes('ui/bunker-menu.js?v=20260920-map3'));
 
 assert(css.includes('#zoneMapScreen.zone-map-screen'),'zone map CSS missing');
 assert(css.includes('aspect-ratio:890/1536'),'map coordinate frame must preserve artwork aspect ratio');
