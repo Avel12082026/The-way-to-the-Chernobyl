@@ -11,15 +11,15 @@ source=r"""
 const crypto=require('crypto');
 const SHOP_WEAPONS=[
  {name:'Пистолет 1',starterGear:true,unlockLevel:1},{name:'Пистолет 2',unlockLevel:2},
- {name:'Пистолет 3',unlockLevel:3},{name:'Пистолет 4',unlockLevel:4},
- {name:'Пистолет 5',unlockLevel:5},{name:'Пистолет 6',unlockLevel:6},
- {name:'Пистолет 7',unlockLevel:7},{name:'Пистолет 8',unlockLevel:8},
- {name:'Пистолет 9',unlockLevel:9},{name:'Пистолет 10',unlockLevel:10},
- {name:'Пистолет 11',unlockLevel:200},{name:'Дробовик test',unlockLevel:500}
+ {name:'Пистолет 3',unlockLevel:3},{name:'Пистолет 4',unlockLevel:4},{name:'Пистолет 5',unlockLevel:5},
+ {name:'Пистолет 6',unlockLevel:6},{name:'Пистолет 7',unlockLevel:7},{name:'Пистолет 8',unlockLevel:8},
+ {name:'Пистолет 9',unlockLevel:9},{name:'Пистолет 10',unlockLevel:10},{name:'Пистолет 11',unlockLevel:220},
+ {name:'Дробовик test',unlockLevel:500}
 ];
 const SHOP_ARMOR=Array.from({length:12},(_,i)=>({name:'a'+i,unlockLevel:i+1}));
 const RAID_ANOMALIES=[{name:'A1',tier:1},{name:'A2',tier:2}];
-const app={post(){},listen(){}};
+const PVE_MUTANTS=[{name:'m1',tier:1,hp:200},{name:'m2',tier:3,hp:400}];
+const app={post(){},get(){},listen(){}};
 const db={},requireAuth=()=>{},rateLimit=()=>()=>{};
 function raidSession(){}
 function safeParsePlayerData(){}
@@ -27,9 +27,7 @@ function pveArtifactTurnEffects(){}
 function pveRadiationDamage(){}
 function pveApplyDeathNow(){}
 function raidState(){}
-function raidCreateNpcPayload(){return {name:'npc',tier:1,faction:'x'};}
-function raidEncounterTier(){}
-function raidCreateMutantPayload(){return {name:'m',tier:3,hp:100,dmg:10};}
+function raidCreateNpcPayload(){return {name:'npc',tier:1,faction:'x',hp:1,dmg:1};}
 app.post('/api/shop/buy',(req,res)=>{});
 app.post('/api/raid/step',(req,res)=>{});
 app.listen(3000);
@@ -37,30 +35,35 @@ app.listen(3000);
 
 patched,changed=mod.patch(source)
 assert changed
-assert mod.ROUTE_MARK in patched
-assert mod.SHOP_MARK in patched
+for marker in (mod.ROUTE_MARK,mod.SHOP_MARK):
+    assert marker in patched
+assert "app.get('/api/zone-map/:location'" in patched
+assert "zone-map1.jpg" in patched and "zone-map2.jpg" in patched
 assert "app.post('/api/raid/zone-step'" in patched
-assert 'zoneLocation' in patched
-assert "['enemy','mutant','anomaly']" in patched
-assert 'Бандиты' in patched, 'location 2 human enemies must be bandits'
-assert 'npc.tier=zoneTier' in patched, 'human enemy tier must follow the active location'
-assert 'hp:480,dmg:45' in patched and 'hp:240,dmg:28' in patched, 'human tier stats missing'
-assert 'sourceTier' in patched, 'location tier presentation must preserve original mutant tier'
-assert 'RAID_ANOMALIES' in patched and 'zoneTier' in patched
-assert 'slice(0,10)' in patched or 'slice(0, 10)' in patched
-assert 'Этот ствол продаётся на другой локации' in patched
-assert 'Этот костюм продаётся на другой локации' in patched
-assert 'первые 10' in patched.lower() or 'first' in patched.lower() or 'location' in patched.lower()
+assert "const zoneTier=zoneLocation" in patched
+assert "ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45}})" in patched
+assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
+assert "sourceTier" in patched and "tier:zoneTier" in patched
+assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in patched
+assert "zoneMapLocationUnlocked" in patched
+assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
+assert "Этот ствол продаётся на другой локации" in patched
+assert "Этот костюм продаётся на другой локации" in patched
 
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
 
-# The checked-in installer must know how to upgrade the V1 already installed on the live server.
-installer=path.read_text(encoding='utf-8')
-assert "ZONE_MAP_ROUTING_V1" in installer
-assert "ZONE_MAP_ROUTING_V2" in installer
-assert "zoneLocation" in installer
-assert "Бандиты" in installer
-assert "sourceTier" in installer
+# The live server currently has V1. The installer must replace that route block with V2.
+v1=source.replace(
+    "app.listen(3000);",
+    mod.SHOP_GUARD + mod.OLD_ROUTE_MARK +
+    "\napp.post('/api/raid/zone-step',(req,res)=>{});\napp.listen(3000);"
+)
+upgraded,changed3=mod.patch(v1)
+assert changed3
+assert mod.ROUTE_MARK in upgraded
+assert mod.OLD_ROUTE_MARK not in upgraded
+assert mod.SHOP_MARK in upgraded
+assert "app.get('/api/zone-map/:location'" in upgraded
 
-print('PASS: V2 installer is idempotent; location 1/2 routed tiers, map2 Bandits, exact anomaly tiering and location-one shop guard are present')
+print('PASS: V2 map installer is idempotent/upgradable; tiers 1/2, map2 Bandits, exact anomaly tiers, image routes and location-one shop limits are present')
