@@ -43,6 +43,8 @@ assert "app.post('/api/raid/zone-step'" in patched
 assert 'zoneLocation' in patched
 assert "['enemy','mutant','anomaly']" in patched
 assert 'Бандиты' in patched, 'location 2 human enemies must be bandits'
+assert 'npc.tier=zoneTier' in patched, 'human enemy tier must follow the active location'
+assert 'hp:480,dmg:45' in patched and 'hp:240,dmg:28' in patched, 'human tier stats missing'
 assert 'sourceTier' in patched, 'location tier presentation must preserve original mutant tier'
 assert 'RAID_ANOMALIES' in patched and 'zoneTier' in patched
 assert 'slice(0,10)' in patched or 'slice(0, 10)' in patched
