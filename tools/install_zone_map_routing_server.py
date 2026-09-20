@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Install deterministic zone-map raid routing and location-one shop limits."""
+"""Install/upgrade map-routed raids for two locations and the first-location shop limits."""
 from pathlib import Path
 import argparse, os, shutil, subprocess, tempfile, time
 
 SERVICE='pocketzone.service'
-ROUTE_MARK='// ZONE_MAP_ROUTING_V1'
+OLD_ROUTE_MARK='// ZONE_MAP_ROUTING_V1'
+ROUTE_MARK='// ZONE_MAP_ROUTING_V2'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
@@ -33,18 +34,74 @@ app.post('/api/shop/buy',(req,res,next)=>{
 
 """
 
-ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V1
+ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V2
+function zoneMapPistolListServer(){
+    const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
+    const start=list.findIndex(item=>item&&item.starterGear);
+    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик\b/i.test(String(item&&item.name||''))):-1;
+    const group=start>=0?list.slice(start,end>start?end:list.length):list;
+    return group.filter(item=>item&&!item.adminOnly);
+}
+const ZONE_MAP_PISTOLS_SERVER=zoneMapPistolListServer();
+const ZONE_MAP_FIRST_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(0,10);
+const ZONE_MAP_FIRST_ARMOR_SERVER=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+    .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor).slice(0,10);
+
+function zoneMapListUnlocked(data,list,count){
+    const level=Math.max(1,Number(data&&data.level)||1);
+    return list.length>=count&&list.every(item=>level>=Number(item.unlockLevel||0));
+}
+function zoneMapLocationUnlocked(data,location){
+    if(location===1)return true;
+    if(location===2)return zoneMapListUnlocked(data,ZONE_MAP_FIRST_PISTOLS_SERVER,10)&&
+        zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
+    return false;
+}
+function zoneMapNpcPayload(data,zoneTier,zoneLocation){
+    const forcedLevel=zoneTier<=1?1:1+(zoneTier-1)*40;
+    const npc=raidCreateNpcPayload({...data,level:forcedLevel});
+    if(!npc)return null;
+    npc.tier=zoneTier;
+    if(zoneLocation===2)npc.faction='Бандиты';
+    return npc;
+}
+function zoneMapMutantPayload(data,zoneTier){
+    const list=(Array.isArray(PVE_MUTANTS)?PVE_MUTANTS:[]).filter(m=>m&&!m.adminOnly);
+    let pool=[];
+    if(zoneTier<=1){
+        pool=list.filter(m=>[0,1].includes(Number(m.tier)||0));
+    }else{
+        const internalTiers=[...new Set(list.map(m=>Number(m.tier)||0).filter(t=>t>1))].sort((a,b)=>a-b);
+        const internalTier=internalTiers[Math.min(internalTiers.length-1,Math.max(0,zoneTier-2))];
+        pool=list.filter(m=>(Number(m.tier)||0)===internalTier);
+    }
+    if(!pool.length)return null;
+    const pick=pool[Math.floor(Math.random()*pool.length)];
+    const baseHp=Math.max(1,Number(pick.hp)||1);
+    const floor=zoneTier<=1?240:zoneTier===2?420:0;
+    const hp=Math.max(baseHp,floor);
+    return {...pick,sourceTier:Number(pick.tier)||0,tier:zoneTier,kind:'mutant',
+        hp,enemyHp:hp,maxEnemyHp:hp,medkitsUsed:0};
+}
+
 app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),(req,res)=>{
     const playerId=String(req.telegramUser.id),token=String(req.body?.raidToken||'');
     const zoneKind=String(req.body?.zoneKind||'');
+    const zoneLocation=Number(req.body?.zoneLocation||1);
     if(!['enemy','mutant','anomaly'].includes(zoneKind))
         return res.status(400).json({success:false,error:'Неизвестная точка на карте'});
+    if(![1,2].includes(zoneLocation))
+        return res.status(400).json({success:false,error:'Неизвестная локация'});
     try{
         const tx=db.transaction(()=>{
             const sess=raidSession(playerId,token);if(!sess)return{success:false,error:'Рейд не найден'};
             if(sess.pending_type)return{success:false,error:'Сначала завершите текущую встречу'};
             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);if(!row)return{success:false,error:'Игрок не найден'};
             const data=safeParsePlayerData(row.data);
+            if(!zoneMapLocationUnlocked(data,zoneLocation))
+                return{success:false,error:'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.'};
+
+            const zoneTier=zoneLocation;
             data.hunger=Math.max(0,Math.min(Number(data.maxHunger)||100,(Number(data.hunger)||0)-2));
             data.thirst=Math.max(0,Math.min(Number(data.maxThirst)||100,(Number(data.thirst)||0)-2));
             if(typeof serverRecomputeArtifactDerived==='function')serverRecomputeArtifactDerived(playerId,data);
@@ -58,40 +115,37 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
                 db.prepare('DELETE FROM raid_sessions WHERE player_id=?').run(playerId);
                 db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
-                return{success:true,died:true,state:raidState(data),event:{type:'none'},turnEffects,radiationDamage,starvationDamage,zoneKind};
+                return{success:true,died:true,state:raidState(data),event:{type:'none'},turnEffects,radiationDamage,starvationDamage,zoneKind,zoneLocation,zoneTier};
             }
 
             let event={type:'none'},pendingType=null,pendingPayload=null;
             const roll=Math.random();
 
             if(zoneKind==='enemy'&&roll<0.30){
-                const npc=raidCreateNpcPayload(data);
+                const npc=zoneMapNpcPayload(data,zoneTier,zoneLocation);
                 if(npc){
-                    npc.faction='Бандиты';
                     const battleToken=crypto.randomBytes(24).toString('hex');
                     db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
                     db.prepare('INSERT INTO pve_battles(player_id,token,enemy_kind,enemy_key,payload,started_at) VALUES(?,?,?,?,?,?)')
-                      .run(playerId,battleToken,'npc',`Бандиты:${npc.tier}:${npc.name}`,JSON.stringify(npc),Date.now());
+                      .run(playerId,battleToken,'npc',`${npc.faction}:${npc.tier}:${npc.name}`,JSON.stringify(npc),Date.now());
                     pendingType='battle';pendingPayload=JSON.stringify({battleToken});
-                    event={type:'battle',enemy:{...npc,battleToken,faction:{name:'Бандиты'}}};
+                    event={type:'battle',enemy:{...npc,battleToken,faction:{name:npc.faction}}};
                 }
             }else if(zoneKind==='anomaly'&&roll<0.30){
-                const encounterTier=raidEncounterTier(data);
-                const hasT9=data.detector&&data.detector.name==='ВИЗИРЬ';
-                const pool=RAID_ANOMALIES.filter(a=>Number(a.tier)<=encounterTier&&(!a.isNamedArtifactAnomaly||hasT9));
+                const pool=(Array.isArray(RAID_ANOMALIES)?RAID_ANOMALIES:[])
+                    .filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly);
                 if(pool.length){
                     const a=pool[Math.floor(Math.random()*pool.length)];
-                    const payload={...a,attemptsUsed:0,resolved:false};
-                    pendingType='anomaly';pendingPayload=JSON.stringify(payload);
-                    event={type:'anomaly',anomaly:payload};
+                    const payload={...a,tier:zoneTier,attemptsUsed:0,resolved:false};
+                    pendingType='anomaly';pendingPayload=JSON.stringify(payload);event={type:'anomaly',anomaly:payload};
                 }
             }else if(zoneKind==='mutant'&&roll<0.20){
-                const mutant=raidCreateMutantPayload(data);
+                const mutant=zoneMapMutantPayload(data,zoneTier);
                 if(mutant){
                     const battleToken=crypto.randomBytes(24).toString('hex');
                     db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
                     db.prepare('INSERT INTO pve_battles(player_id,token,enemy_kind,enemy_key,payload,started_at) VALUES(?,?,?,?,?,?)')
-                      .run(playerId,battleToken,'mutant',mutant.name,JSON.stringify(mutant),Date.now());
+                      .run(playerId,battleToken,'mutant',`location:${zoneLocation}:${mutant.name}`,JSON.stringify(mutant),Date.now());
                     pendingType='battle';pendingPayload=JSON.stringify({battleToken});
                     event={type:'battle',enemy:{...mutant,battleToken}};
                 }
@@ -100,7 +154,7 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
             db.prepare('UPDATE raid_sessions SET pending_type=?,pending_payload=?,updated_at=? WHERE player_id=? AND token=?')
               .run(pendingType,pendingPayload,Date.now(),playerId,token);
             db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
-            return{success:true,died:false,state:raidState(data),event,turnEffects,radiationDamage,starvationDamage,zoneKind};
+            return{success:true,died:false,state:raidState(data),event,turnEffects,radiationDamage,starvationDamage,zoneKind,zoneLocation,zoneTier};
         });
         return res.json(tx());
     }catch(e){
@@ -119,19 +173,36 @@ def insert_before_one(text, anchors, block, label):
     anchor=matches[0]
     return text.replace(anchor,block+anchor,1)
 
+def upgrade_route(text):
+    start=text.find(OLD_ROUTE_MARK)
+    if start<0:
+        raise RuntimeError('Маркер старого маршрута карты не найден.')
+    listen=text.find('app.listen(',start)
+    if listen<0:
+        raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
+    return text[:start]+ZONE_ROUTE+text[listen:]
+
 def patch(source):
-    has_route=ROUTE_MARK in source
+    has_v2=ROUTE_MARK in source
+    has_v1=OLD_ROUTE_MARK in source
     has_shop=SHOP_MARK in source
-    if has_route and has_shop:
+
+    if has_v2:
+        if not has_shop: raise RuntimeError('Маршрут V2 есть, но защита магазина отсутствует.')
         return source,False
-    if has_route!=has_shop:
-        raise RuntimeError('Обнаружена частичная установка карты. Автоматическое продолжение запрещено.')
-    text=insert_before_one(
-        source,
-        ["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""],
-        SHOP_GUARD,
-        'маршрут покупки'
-    )
+
+    if has_v1:
+        if not has_shop: raise RuntimeError('Обнаружена частичная установка V1. Автоматическое продолжение запрещено.')
+        return upgrade_route(source),True
+
+    text=source
+    if not has_shop:
+        text=insert_before_one(
+            text,
+            ["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""],
+            SHOP_GUARD,
+            'маршрут покупки'
+        )
     text=insert_before_one(text,["app.listen("],ZONE_ROUTE,'app.listen')
     return text,True
 
@@ -149,23 +220,23 @@ def main():
     source=old.decode('utf-8')
     new_text,changed=patch(source)
     if not changed:
-        print('ZONE_MAP_ROUTING_V1 уже установлен.')
+        print('ZONE_MAP_ROUTING_V2 уже установлен.')
         return
 
-    with tempfile.TemporaryDirectory(prefix='zone-map-routing-check-') as td:
+    with tempfile.TemporaryDirectory(prefix='zone-map-routing-v2-check-') as td:
         candidate=Path(td)/'server.js'
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Совместимость маршрутов карты и синтаксис подтверждены. Файлы не изменены.')
+            print('Совместимость двух локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
         raise RuntimeError('Установку нужно запускать от root на сервере.')
 
-    backup=path.with_name(path.name+'.before-zone-map-routing-'+time.strftime('%Y%m%d_%H%M%S'))
+    backup=path.with_name(path.name+'.before-zone-map-routing-v2-'+time.strftime('%Y%m%d_%H%M%S'))
     shutil.copy2(path,backup)
-    fd,tmp=tempfile.mkstemp(prefix='.zone-map-routing-',dir=path.parent)
+    fd,tmp=tempfile.mkstemp(prefix='.zone-map-routing-v2-',dir=path.parent)
     try:
         with os.fdopen(fd,'w',encoding='utf-8') as h:
             h.write(new_text);h.flush();os.fsync(h.fileno())
@@ -181,7 +252,7 @@ def main():
             if state.stdout.strip()=='active':
                 probe=run(['curl','-fsS','--max-time','2','http://127.0.0.1:3000/api/market'],capture_output=True,check=False)
                 if probe.returncode==0:
-                    print('ZONE_MAP_ROUTING_V1 установлен. Backup:',backup)
+                    print('ZONE_MAP_ROUTING_V2 установлен. Backup:',backup)
                     return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления')
@@ -192,8 +263,7 @@ def main():
         raise
 
 if __name__=='__main__':
-    try:
-        main()
+    try: main()
     except Exception as e:
         print('СТОП:',e)
         raise SystemExit(1)
