@@ -225,14 +225,18 @@
     });
     if (!zoneMapImageLoaded) {
       zoneMapImageLoaded = true;
-      fetch('ui/zone-map.webp.b64?v=20260920-map2')
-        .then(response => {
+      const mapParts = Array.from({length: 8}, (_, index) =>
+        'ui/zone-map-v2-' + String(index).padStart(2, '0') + '.b64?v=20260920-map3'
+      );
+      Promise.all(mapParts.map(url =>
+        fetch(url).then(response => {
           if (!response.ok) throw new Error('HTTP ' + response.status);
           return response.text();
         })
-        .then(b64 => {
+      ))
+        .then(parts => {
           const image = document.getElementById('zoneMapArtwork');
-          if (image) image.src = 'data:image/webp;base64,' + b64.trim();
+          if (image) image.src = 'data:image/webp;base64,' + parts.join('').replace(/\\s+/g, '');
         })
         .catch(() => {
           const image = document.getElementById('zoneMapArtwork');
