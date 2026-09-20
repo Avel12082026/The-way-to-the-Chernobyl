@@ -17,40 +17,39 @@
   let zoneMapScreen = null;
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
-  const zoneMapDataUrls = new Map();
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
   const ZONE_MAP_ASSETS = Object.freeze({
-    1: {prefix:'ui/zone-map1-hq-', parts:4, mime:'image/jpeg', width:890, height:1536},
-    2: {prefix:'ui/zone-map2-hq-', parts:7, mime:'image/jpeg', width:1397, height:1536}
+    1: {path:'/api/zone-map/1', width:890, height:1536},
+    2: {path:'/api/zone-map/2', width:1397, height:1536}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
-      {id:'transition-to-2',kind:'transition',label:'Переход на локацию 2',x:43.993,y:4.252,targetLocation:2,unlock:'first-location-gear'},
-      {id:'anomaly-1-1',kind:'anomaly',label:'Аномалия',x:91.055,y:5.294},
-      {id:'mutant-1-1',kind:'mutant',label:'Мутанты',x:20.966,y:13.195},
-      {id:'enemy-1-1',kind:'enemy',label:'NPC',x:60.565,y:27.781},
-      {id:'mutant-1-2',kind:'mutant',label:'Мутанты',x:39.019,y:33.505},
-      {id:'mutant-1-3',kind:'mutant',label:'Мутанты',x:93.841,y:31.251},
-      {id:'enemy-1-2',kind:'enemy',label:'NPC',x:56.982,y:58.814},
-      {id:'enemy-1-3',kind:'enemy',label:'NPC',x:91.821,y:58.561},
-      {id:'camp-1',kind:'camp',label:'Лагерь сталкеров',x:8.171,y:70.085},
-      {id:'anomaly-1-2',kind:'anomaly',label:'Аномалия',x:74.865,y:82.818},
-      {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.280,y:90.733}
+      {id:'transition-to-2',kind:'transition',label:'Переход на локацию 2',x:44.28,y:4.07,targetLocation:2,unlock:'first-location-gear'},
+      {id:'anomaly-1-1',kind:'anomaly',label:'Аномалия',x:90.88,y:5.24},
+      {id:'mutant-1-1',kind:'mutant',label:'Мутанты',x:20.97,y:13.14},
+      {id:'enemy-1-1',kind:'enemy',label:'NPC',x:60.50,y:27.78},
+      {id:'mutant-1-2',kind:'mutant',label:'Мутанты',x:39.14,y:33.41},
+      {id:'mutant-1-3',kind:'mutant',label:'Мутанты',x:93.86,y:31.25},
+      {id:'enemy-1-2',kind:'enemy',label:'NPC',x:56.56,y:58.74},
+      {id:'enemy-1-3',kind:'enemy',label:'NPC',x:91.70,y:58.36},
+      {id:'camp-1',kind:'camp',label:'Лагерь сталкеров',x:8.17,y:69.91},
+      {id:'anomaly-1-2',kind:'anomaly',label:'Аномалия',x:74.88,y:82.55},
+      {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.30,y:90.71}
     ],
     2: [
-      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.063,y:6.097,targetLocation:3,unlock:'second-pistol-decade',future:true},
-      {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:14.108,y:13.929},
-      {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:92.651,y:8.104},
-      {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:85.323,y:39.120},
-      {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:22.221,y:43.931},
-      {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:45.835,y:43.544},
-      {id:'transition-future-left',kind:'transition',label:'Переход на будущую локацию',x:5.844,y:49.230,targetLocation:4,unlock:'second-pistol-decade',future:true},
-      {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:91.372,y:68.208},
-      {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:6.636,y:78.715},
-      {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:44.824,y:86.391},
-      {id:'transition-to-1',kind:'transition',label:'Переход на локацию 1',x:64.836,y:91.970,targetLocation:1,unlock:'none'}
+      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.08,y:6.00,targetLocation:3,unlock:'second-pistol-decade',future:true},
+      {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:14.07,y:13.91},
+      {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:92.62,y:8.06},
+      {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:85.41,y:39.08},
+      {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:22.19,y:43.79},
+      {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:45.82,y:43.49},
+      {id:'transition-future-left',kind:'transition',label:'Переход на будущую локацию',x:5.86,y:49.15,targetLocation:4,unlock:'second-pistol-decade',future:true},
+      {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:91.36,y:68.31},
+      {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:6.77,y:78.73},
+      {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:44.78,y:86.31},
+      {id:'transition-to-1',kind:'transition',label:'Переход на локацию 1',x:64.87,y:92.11,targetLocation:1,unlock:'none'}
     ]
   });
 
@@ -261,49 +260,31 @@
     }
   }
 
-  function fitZoneMapCanvas(width, height) {
+  function fitZoneMapCanvas() {
     const canvas = document.getElementById('zoneMapCanvas');
-    if (!canvas || !width || !height) return;
-    const ratio = width / height;
-    canvas.style.aspectRatio = width + ' / ' + height;
-    canvas.style.width = `min(100vw, calc(100dvh * ${ratio}))`;
-    canvas.style.height = `min(100dvh, calc(100vw / ${ratio}))`;
+    if (!canvas) return;
+    canvas.style.width = '100vw';
+    canvas.style.height = '100dvh';
+    canvas.style.aspectRatio = 'auto';
   }
 
-  async function loadZoneMapArtwork(location) {
+  function loadZoneMapArtwork(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
     const image = document.getElementById('zoneMapArtwork');
     if (!image) return;
     const seq = ++zoneMapLoadSeq;
-    fitZoneMapCanvas(config.width, config.height);
+    fitZoneMapCanvas();
     image.alt = `Карта Зоны — локация ${location}`;
-    try {
-      let src = zoneMapDataUrls.get(location);
-      if (!src) {
-        const urls = Array.from({length: config.parts}, (_, index) =>
-          config.prefix + String(index).padStart(2, '0') + '.b64?v=20260920-map4'
-        );
-        const parts = await Promise.all(urls.map(url =>
-          fetch(url).then(response => {
-            if (!response.ok) throw new Error('HTTP ' + response.status);
-            return response.text();
-          })
-        ));
-        src = 'data:' + config.mime + ';base64,' + parts.join('').replace(/\s+/g, '');
-        zoneMapDataUrls.set(location, src);
-      }
+    image.onload = () => {
       if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
-      image.onload = () => {
-        if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
-        fitZoneMapCanvas(image.naturalWidth || config.width, image.naturalHeight || config.height);
-      };
-      image.src = src;
-      if (image.complete && image.naturalWidth) fitZoneMapCanvas(image.naturalWidth, image.naturalHeight);
-    } catch (_) {
-      if (seq !== zoneMapLoadSeq) return;
+      fitZoneMapCanvas();
+    };
+    image.onerror = () => {
+      if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
       image.removeAttribute('src');
       image.alt = 'Не удалось загрузить карту Зоны';
-    }
+    };
+    image.src = `${SERVER_URL}${config.path}?v=20260920-map5`;
   }
 
   function ensureZoneMapScreen() {
@@ -1050,7 +1031,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.3.0',
+    version: '0.4.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1063,6 +1044,6 @@
     firstLocationToSecondReady,
     secondPistolDecadeReady
   });
-  window.BunkerMenu = {version: '1.7.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.8.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
