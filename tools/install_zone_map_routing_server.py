@@ -35,6 +35,15 @@ app.post('/api/shop/buy',(req,res,next)=>{
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V2
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg'});
+app.get('/api/zone-map/:location',(req,res)=>{
+    const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
+    if(!file)return res.status(404).end();
+    return res.sendFile(require('path').join(process.cwd(),'ui',file),err=>{
+        if(err&&!res.headersSent)res.status(err.statusCode||404).end();
+    });
+});
+
 function zoneMapPistolListServer(){
     const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
     const start=list.findIndex(item=>item&&item.starterGear);
@@ -216,6 +225,14 @@ def main():
     ap.add_argument('--check',action='store_true')
     args=ap.parse_args()
     path=args.server.resolve(strict=True)
+    root=path.parent
+    assets=[root/'ui'/'zone-map1.jpg',root/'ui'/'zone-map2.jpg']
+    for asset in assets:
+        if not asset.is_file():
+            raise RuntimeError(f'Не найдена карта: {asset}. Сначала распакуйте архив карт в /var/www/pocketzone/ui.')
+        raw_asset=asset.read_bytes()
+        if len(raw_asset)<50000 or raw_asset[:2]!=b'\\xff\\xd8':
+            raise RuntimeError(f'Файл карты повреждён или слишком мал: {asset}')
     old=path.read_bytes()
     source=old.decode('utf-8')
     new_text,changed=patch(source)
