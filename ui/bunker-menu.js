@@ -17,7 +17,98 @@
   let zoneMapScreen = null;
   let zoneMapImageLoaded = false;
   let zoneMapOrigin = 'camp';
-  let zoneMapPoints = [];
+  const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v1';
+  const NEXT_LOCATION_ENABLED = false;
+  const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
+  let zoneRaidKind = '';
+  try {
+    const saved = localStorage.getItem(ZONE_ROUTE_STORAGE) || '';
+    zoneRaidKind = zoneRouteKinds.has(saved) ? saved : '';
+  } catch (_) {}
+  let zoneMapPoints = [
+    {id:'transition-1',kind:'transition',label:'Переход на другую локацию',x:43.993,y:4.252},
+    {id:'anomaly-1',kind:'anomaly',label:'Аномалия',x:91.055,y:5.294},
+    {id:'mutant-1',kind:'mutant',label:'Мутанты',x:20.966,y:13.195},
+    {id:'enemy-1',kind:'enemy',label:'Бандиты',x:60.565,y:27.781},
+    {id:'mutant-2',kind:'mutant',label:'Мутанты',x:39.019,y:33.505},
+    {id:'mutant-3',kind:'mutant',label:'Мутанты',x:93.841,y:31.251},
+    {id:'enemy-2',kind:'enemy',label:'Бандиты',x:56.982,y:58.814},
+    {id:'enemy-3',kind:'enemy',label:'Бандиты',x:91.821,y:58.561},
+    {id:'camp-1',kind:'camp',label:'Лагерь сталкеров',x:8.171,y:70.085},
+    {id:'anomaly-2',kind:'anomaly',label:'Аномалия',x:74.865,y:82.818},
+    {id:'enemy-4',kind:'enemy',label:'Бандиты',x:18.280,y:90.733}
+  ];
+
+  function setZoneRaidKind(kind) {
+    zoneRaidKind = zoneRouteKinds.has(kind) ? kind : '';
+    window.__zoneRaidKind = zoneRaidKind;
+    try {
+      if (zoneRaidKind) localStorage.setItem(ZONE_ROUTE_STORAGE, zoneRaidKind);
+      else localStorage.removeItem(ZONE_ROUTE_STORAGE);
+    } catch (_) {}
+  }
+
+  function firstLocationWeaponList() {
+    if (typeof weapons === 'undefined' || !Array.isArray(weapons)) return [];
+    const start = weapons.findIndex(item => item && item.starterGear);
+    const end = start >= 0
+      ? weapons.findIndex((item, index) => index > start && /^Дробовик\b/i.test(String(item?.name || '')))
+      : -1;
+    const group = start >= 0 ? weapons.slice(start, end > start ? end : weapons.length) : weapons;
+    return group.filter(item => item && !item.adminOnly).slice(0, 10);
+  }
+
+  function firstLocationArmorList() {
+    if (typeof armorItems === 'undefined' || !Array.isArray(armorItems)) return [];
+    return armorItems.filter(item => item && !item.adminOnly && !item.isResearchSuit && !item.isPremiumArmor).slice(0, 10);
+  }
+
+  function nextLocationProgressReady() {
+    if (typeof player !== 'object' || !player) return false;
+    const gear = [...firstLocationWeaponList(), ...firstLocationArmorList()];
+    return gear.length >= 20 && gear.every(item => Number(player.level) >= Number(item.unlockLevel || 0));
+  }
+
+  function patchLocationOneShopCatalog() {
+    const native = window.getShopCatalog;
+    if (typeof native !== 'function' || native.__zoneLocationOneLimited) return;
+    const weaponNames = new Set(firstLocationWeaponList().map(item => item.name));
+    const armorNames = new Set(firstLocationArmorList().map(item => item.name));
+    const limited = function() {
+      return native().filter(item => {
+        if (item?.category === 'weapon') return weaponNames.has(item.name);
+        if (item?.category === 'armor') return armorNames.has(item.name);
+        return true;
+      });
+    };
+    limited.__zoneLocationOneLimited = true;
+    limited.__zoneLocationOneNative = native;
+    window.getShopCatalog = limited;
+  }
+
+  function patchZoneRaidFetch() {
+    if (window.__zoneRaidFetchPatched || typeof window.fetch !== 'function') return;
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = function(input, init) {
+      const url = typeof input === 'string' ? input : (input && input.url) || '';
+      if (zoneRaidKind && /\/api\/raid\/step(?:\?|$)/.test(url) && (!input || typeof input === 'string')) {
+        const nextUrl = url.replace('/api/raid/step', '/api/raid/zone-step');
+        let body = {};
+        try { body = JSON.parse(init?.body || '{}'); } catch (_) {}
+        return nativeFetch(nextUrl, {
+          ...(init || {}),
+          headers: {...(init?.headers || {}), 'Content-Type':'application/json'},
+          body: JSON.stringify({...body, zoneKind: zoneRaidKind})
+        });
+      }
+      return nativeFetch(input, init);
+    };
+    window.__zoneRaidFetchPatched = true;
+  }
+
+  patchLocationOneShopCatalog();
+  patchZoneRaidFetch();
+  window.__zoneRaidKind = zoneRaidKind;
 
   const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
   const clamp = (v, low, high) => Math.max(low, Math.min(high, v));
@@ -97,7 +188,7 @@
     for (const point of zoneMapPoints) {
       const x = clamp(finite(point.x), 0, 100);
       const y = clamp(finite(point.y), 0, 100);
-      const kind = ['camp', 'raid', 'enemy', 'anomaly', 'mutant'].includes(point.kind) ? point.kind : 'raid';
+      const kind = ['camp', 'enemy', 'anomaly', 'mutant', 'transition'].includes(point.kind) ? point.kind : 'enemy';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'zone-map-point zone-map-point-' + kind;
@@ -125,19 +216,16 @@
         <img id="zoneMapArtwork" class="zone-map-artwork" alt="Карта Зоны" draggable="false">
         <div id="zoneMapPoints" class="zone-map-points" aria-label="Точки на карте"></div>
       </div>
-      <div class="zone-map-title">КАРТА ЗОНЫ</div>
-      <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>
-      <button class="zone-map-continue" type="button" data-zone-map-action="continue">Продолжить рейд</button>`;
+      <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>`;
     document.body.appendChild(el);
     zoneMapScreen = el;
     el.addEventListener('click', event => {
       const action = event.target.closest('[data-zone-map-action]')?.dataset.zoneMapAction;
       if (action === 'back') closeZoneMap();
-      if (action === 'continue') continueFromZoneMap();
     });
     if (!zoneMapImageLoaded) {
       zoneMapImageLoaded = true;
-      fetch('ui/zone-map.webp.b64?v=20260920-map1')
+      fetch('ui/zone-map.webp.b64?v=20260920-map2')
         .then(response => {
           if (!response.ok) throw new Error('HTTP ' + response.status);
           return response.text();
@@ -172,10 +260,6 @@
     if (chat) chat.style.display = 'none';
     el.classList.add('active');
     document.body.classList.add('zone-map-visible');
-    const continueButton = el.querySelector('.zone-map-continue');
-    if (continueButton) {
-      continueButton.textContent = (typeof raidActive !== 'undefined' && raidActive) ? 'Вернуться в рейд' : 'Войти в Зону';
-    }
     renderZoneMapPoints();
   }
 
@@ -212,8 +296,9 @@
   }
 
   async function activateZoneMapPoint(point) {
-    const kind = point?.kind || 'raid';
+    const kind = point?.kind || '';
     if (kind === 'camp') {
+      setZoneRaidKind('');
       hideZoneMap();
       if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
         await endRaid();
@@ -222,10 +307,20 @@
       }
       return;
     }
-
-    // The exact map coordinates and deterministic encounter routing will be filled
-    // from the annotated map. Until then a configured non-camp marker safely enters
-    // or resumes the existing raid without inventing a server encounter.
+    if (kind === 'transition') {
+      if (!NEXT_LOCATION_ENABLED) {
+        if (typeof showGameAlert === 'function') showGameAlert('Локация ещё не открыта сталкерами.');
+        return;
+      }
+      if (!nextLocationProgressReady()) {
+        if (typeof showGameAlert === 'function') showGameAlert('Переход откроется после того, как будут доступны первые 10 стволов и первые 10 костюмов.');
+        return;
+      }
+      if (typeof showGameAlert === 'function') showGameAlert('Следующая локация пока не подключена.');
+      return;
+    }
+    if (!zoneRouteKinds.has(kind)) return;
+    setZoneRaidKind(kind);
     window.__zoneMapRequestedPoint = point ? {...point} : null;
     await continueFromZoneMap();
   }
@@ -843,13 +938,16 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.1.0',
+    version: '0.2.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
     setPoints: setZoneMapPoints,
-    get points() { return zoneMapPoints.map(point => ({...point})); }
+    get points() { return zoneMapPoints.map(point => ({...point})); },
+    get routeKind() { return zoneRaidKind; },
+    setRoute: setZoneRaidKind,
+    nextLocationProgressReady
   });
-  window.BunkerMenu = {version: '1.5.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.6.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
