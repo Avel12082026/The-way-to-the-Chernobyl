@@ -15,29 +15,54 @@
   let smokerScreen = null;
   let smokerImageLoaded = false;
   let zoneMapScreen = null;
-  let zoneMapImageLoaded = false;
   let zoneMapOrigin = 'camp';
-  const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v1';
-  const NEXT_LOCATION_ENABLED = false;
+  let zoneMapLoadSeq = 0;
+  const zoneMapDataUrls = new Map();
+  const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
+  const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
+  const ZONE_MAP_ASSETS = Object.freeze({
+    1: {prefix:'ui/zone-map1-hq-', parts:4, mime:'image/jpeg', width:890, height:1536},
+    2: {prefix:'ui/zone-map2-hq-', parts:7, mime:'image/jpeg', width:1397, height:1536}
+  });
+  const ZONE_MAP_POINTS = Object.freeze({
+    1: [
+      {id:'transition-to-2',kind:'transition',label:'Переход на локацию 2',x:43.993,y:4.252,targetLocation:2,unlock:'first-location-gear'},
+      {id:'anomaly-1-1',kind:'anomaly',label:'Аномалия',x:91.055,y:5.294},
+      {id:'mutant-1-1',kind:'mutant',label:'Мутанты',x:20.966,y:13.195},
+      {id:'enemy-1-1',kind:'enemy',label:'NPC',x:60.565,y:27.781},
+      {id:'mutant-1-2',kind:'mutant',label:'Мутанты',x:39.019,y:33.505},
+      {id:'mutant-1-3',kind:'mutant',label:'Мутанты',x:93.841,y:31.251},
+      {id:'enemy-1-2',kind:'enemy',label:'NPC',x:56.982,y:58.814},
+      {id:'enemy-1-3',kind:'enemy',label:'NPC',x:91.821,y:58.561},
+      {id:'camp-1',kind:'camp',label:'Лагерь сталкеров',x:8.171,y:70.085},
+      {id:'anomaly-1-2',kind:'anomaly',label:'Аномалия',x:74.865,y:82.818},
+      {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.280,y:90.733}
+    ],
+    2: [
+      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.063,y:6.097,targetLocation:3,unlock:'second-pistol-decade',future:true},
+      {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:14.108,y:13.929},
+      {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:92.651,y:8.104},
+      {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:85.323,y:39.120},
+      {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:22.221,y:43.931},
+      {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:45.835,y:43.544},
+      {id:'transition-future-left',kind:'transition',label:'Переход на будущую локацию',x:5.844,y:49.230,targetLocation:4,unlock:'second-pistol-decade',future:true},
+      {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:91.372,y:68.208},
+      {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:6.636,y:78.715},
+      {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:44.824,y:86.391},
+      {id:'transition-to-1',kind:'transition',label:'Переход на локацию 1',x:64.836,y:91.970,targetLocation:1,unlock:'none'}
+    ]
+  });
+
   let zoneRaidKind = '';
+  let zoneLocation = 1;
   try {
-    const saved = localStorage.getItem(ZONE_ROUTE_STORAGE) || '';
-    zoneRaidKind = zoneRouteKinds.has(saved) ? saved : '';
+    const savedKind = localStorage.getItem(ZONE_ROUTE_STORAGE) || '';
+    zoneRaidKind = zoneRouteKinds.has(savedKind) ? savedKind : '';
+    const savedLocation = Number(localStorage.getItem(ZONE_LOCATION_STORAGE) || 1);
+    zoneLocation = ZONE_MAP_ASSETS[savedLocation] ? savedLocation : 1;
   } catch (_) {}
-  let zoneMapPoints = [
-    {id:'transition-1',kind:'transition',label:'Переход на другую локацию',x:43.993,y:4.252},
-    {id:'anomaly-1',kind:'anomaly',label:'Аномалия',x:91.055,y:5.294},
-    {id:'mutant-1',kind:'mutant',label:'Мутанты',x:20.966,y:13.195},
-    {id:'enemy-1',kind:'enemy',label:'Бандиты',x:60.565,y:27.781},
-    {id:'mutant-2',kind:'mutant',label:'Мутанты',x:39.019,y:33.505},
-    {id:'mutant-3',kind:'mutant',label:'Мутанты',x:93.841,y:31.251},
-    {id:'enemy-2',kind:'enemy',label:'Бандиты',x:56.982,y:58.814},
-    {id:'enemy-3',kind:'enemy',label:'Бандиты',x:91.821,y:58.561},
-    {id:'camp-1',kind:'camp',label:'Лагерь сталкеров',x:8.171,y:70.085},
-    {id:'anomaly-2',kind:'anomaly',label:'Аномалия',x:74.865,y:82.818},
-    {id:'enemy-4',kind:'enemy',label:'Бандиты',x:18.280,y:90.733}
-  ];
+  let zoneMapPoints = ZONE_MAP_POINTS[zoneLocation].map(point => ({...point}));
 
   function setZoneRaidKind(kind) {
     zoneRaidKind = zoneRouteKinds.has(kind) ? kind : '';
@@ -48,14 +73,37 @@
     } catch (_) {}
   }
 
-  function firstLocationWeaponList() {
+  function setZoneLocation(location, persist = true) {
+    const next = ZONE_MAP_ASSETS[Number(location)] ? Number(location) : 1;
+    zoneLocation = next;
+    zoneMapPoints = ZONE_MAP_POINTS[next].map(point => ({...point}));
+    window.__zoneLocation = zoneLocation;
+    if (persist) {
+      try { localStorage.setItem(ZONE_LOCATION_STORAGE, String(zoneLocation)); } catch (_) {}
+    }
+    if (zoneMapScreen) {
+      renderZoneMapPoints();
+      loadZoneMapArtwork(zoneLocation);
+    }
+    return zoneLocation;
+  }
+
+  function pistolWeaponList() {
     if (typeof weapons === 'undefined' || !Array.isArray(weapons)) return [];
     const start = weapons.findIndex(item => item && item.starterGear);
     const end = start >= 0
       ? weapons.findIndex((item, index) => index > start && /^Дробовик\b/i.test(String(item?.name || '')))
       : -1;
     const group = start >= 0 ? weapons.slice(start, end > start ? end : weapons.length) : weapons;
-    return group.filter(item => item && !item.adminOnly).slice(0, 10);
+    return group.filter(item => item && !item.adminOnly);
+  }
+
+  function firstLocationWeaponList() {
+    return pistolWeaponList().slice(0, 10);
+  }
+
+  function secondPistolDecade() {
+    return pistolWeaponList().slice(10, 20);
   }
 
   function firstLocationArmorList() {
@@ -63,10 +111,17 @@
     return armorItems.filter(item => item && !item.adminOnly && !item.isResearchSuit && !item.isPremiumArmor).slice(0, 10);
   }
 
-  function nextLocationProgressReady() {
-    if (typeof player !== 'object' || !player) return false;
-    const gear = [...firstLocationWeaponList(), ...firstLocationArmorList()];
-    return gear.length >= 20 && gear.every(item => Number(player.level) >= Number(item.unlockLevel || 0));
+  function gearUnlocked(list, expectedCount) {
+    if (typeof player !== 'object' || !player || list.length < expectedCount) return false;
+    return list.every(item => Number(player.level) >= Number(item.unlockLevel || 0));
+  }
+
+  function firstLocationToSecondReady() {
+    return gearUnlocked(firstLocationWeaponList(), 10) && gearUnlocked(firstLocationArmorList(), 10);
+  }
+
+  function secondPistolDecadeReady() {
+    return gearUnlocked(secondPistolDecade(), 10);
   }
 
   function patchLocationOneShopCatalog() {
@@ -98,7 +153,7 @@
         return nativeFetch(nextUrl, {
           ...(init || {}),
           headers: {...(init?.headers || {}), 'Content-Type':'application/json'},
-          body: JSON.stringify({...body, zoneKind: zoneRaidKind})
+          body: JSON.stringify({...body, zoneKind: zoneRaidKind, zoneLocation})
         });
       }
       return nativeFetch(input, init);
@@ -109,6 +164,7 @@
   patchLocationOneShopCatalog();
   patchZoneRaidFetch();
   window.__zoneRaidKind = zoneRaidKind;
+  window.__zoneLocation = zoneLocation;
 
   const finite = (v, fallback = 0) => Number.isFinite(Number(v)) ? Number(v) : fallback;
   const clamp = (v, low, high) => Math.max(low, Math.min(high, v));
@@ -205,6 +261,51 @@
     }
   }
 
+  function fitZoneMapCanvas(width, height) {
+    const canvas = document.getElementById('zoneMapCanvas');
+    if (!canvas || !width || !height) return;
+    const ratio = width / height;
+    canvas.style.aspectRatio = width + ' / ' + height;
+    canvas.style.width = `min(100vw, calc(100dvh * ${ratio}))`;
+    canvas.style.height = `min(100dvh, calc(100vw / ${ratio}))`;
+  }
+
+  async function loadZoneMapArtwork(location) {
+    const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
+    const image = document.getElementById('zoneMapArtwork');
+    if (!image) return;
+    const seq = ++zoneMapLoadSeq;
+    fitZoneMapCanvas(config.width, config.height);
+    image.alt = `Карта Зоны — локация ${location}`;
+    try {
+      let src = zoneMapDataUrls.get(location);
+      if (!src) {
+        const urls = Array.from({length: config.parts}, (_, index) =>
+          config.prefix + String(index).padStart(2, '0') + '.b64?v=20260920-map4'
+        );
+        const parts = await Promise.all(urls.map(url =>
+          fetch(url).then(response => {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.text();
+          })
+        ));
+        src = 'data:' + config.mime + ';base64,' + parts.join('').replace(/\s+/g, '');
+        zoneMapDataUrls.set(location, src);
+      }
+      if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
+      image.onload = () => {
+        if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
+        fitZoneMapCanvas(image.naturalWidth || config.width, image.naturalHeight || config.height);
+      };
+      image.src = src;
+      if (image.complete && image.naturalWidth) fitZoneMapCanvas(image.naturalWidth, image.naturalHeight);
+    } catch (_) {
+      if (seq !== zoneMapLoadSeq) return;
+      image.removeAttribute('src');
+      image.alt = 'Не удалось загрузить карту Зоны';
+    }
+  }
+
   function ensureZoneMapScreen() {
     if (zoneMapScreen) return zoneMapScreen;
     const el = document.createElement('section');
@@ -213,8 +314,10 @@
     el.setAttribute('aria-label', 'Карта Зоны');
     el.innerHTML = `
       <div class="zone-map-frame">
-        <img id="zoneMapArtwork" class="zone-map-artwork" alt="Карта Зоны" draggable="false">
-        <div id="zoneMapPoints" class="zone-map-points" aria-label="Точки на карте"></div>
+        <div id="zoneMapCanvas" class="zone-map-canvas">
+          <img id="zoneMapArtwork" class="zone-map-artwork" alt="Карта Зоны" draggable="false">
+          <div id="zoneMapPoints" class="zone-map-points" aria-label="Точки на карте"></div>
+        </div>
       </div>
       <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>`;
     document.body.appendChild(el);
@@ -223,27 +326,8 @@
       const action = event.target.closest('[data-zone-map-action]')?.dataset.zoneMapAction;
       if (action === 'back') closeZoneMap();
     });
-    if (!zoneMapImageLoaded) {
-      zoneMapImageLoaded = true;
-      const mapParts = Array.from({length: 8}, (_, index) =>
-        'ui/zone-map-v2-' + String(index).padStart(2, '0') + '.b64?v=20260920-map3'
-      );
-      Promise.all(mapParts.map(url =>
-        fetch(url).then(response => {
-          if (!response.ok) throw new Error('HTTP ' + response.status);
-          return response.text();
-        })
-      ))
-        .then(parts => {
-          const image = document.getElementById('zoneMapArtwork');
-          if (image) image.src = 'data:image/webp;base64,' + parts.join('').replace(/\\s+/g, '');
-        })
-        .catch(() => {
-          const image = document.getElementById('zoneMapArtwork');
-          if (image) image.alt = 'Не удалось загрузить карту Зоны';
-        });
-    }
     renderZoneMapPoints();
+    loadZoneMapArtwork(zoneLocation);
     return el;
   }
 
@@ -265,6 +349,7 @@
     el.classList.add('active');
     document.body.classList.add('zone-map-visible');
     renderZoneMapPoints();
+    loadZoneMapArtwork(zoneLocation);
   }
 
   function hideZoneMap() {
@@ -303,6 +388,7 @@
     const kind = point?.kind || '';
     if (kind === 'camp') {
       setZoneRaidKind('');
+      setZoneLocation(1);
       hideZoneMap();
       if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
         await endRaid();
@@ -311,21 +397,41 @@
       }
       return;
     }
+
     if (kind === 'transition') {
-      if (!NEXT_LOCATION_ENABLED) {
+      const target = Number(point?.targetLocation || 0);
+      if (target === 1) {
+        setZoneRaidKind('');
+        setZoneLocation(1);
+        return;
+      }
+      if (target === 2) {
+        if (!firstLocationToSecondReady()) {
+          if (typeof showGameAlert === 'function') {
+            showGameAlert('Переход на вторую локацию откроется, когда будут доступны первые 10 пистолетов и первые 10 костюмов.');
+          }
+          return;
+        }
+        setZoneRaidKind('');
+        setZoneLocation(2);
+        return;
+      }
+      if (point?.future) {
+        if (!secondPistolDecadeReady()) {
+          if (typeof showGameAlert === 'function') {
+            showGameAlert('Переход откроется, когда станет доступна вторая десятка пистолетов.');
+          }
+          return;
+        }
         if (typeof showGameAlert === 'function') showGameAlert('Локация ещё не открыта сталкерами.');
         return;
       }
-      if (!nextLocationProgressReady()) {
-        if (typeof showGameAlert === 'function') showGameAlert('Переход откроется после того, как будут доступны первые 10 стволов и первые 10 костюмов.');
-        return;
-      }
-      if (typeof showGameAlert === 'function') showGameAlert('Следующая локация пока не подключена.');
       return;
     }
+
     if (!zoneRouteKinds.has(kind)) return;
     setZoneRaidKind(kind);
-    window.__zoneMapRequestedPoint = point ? {...point} : null;
+    window.__zoneMapRequestedPoint = point ? {...point, location: zoneLocation} : null;
     await continueFromZoneMap();
   }
 
@@ -359,6 +465,8 @@
 
   async function enterRaid() {
     if (enteringRaid || readingBook) return;
+    setZoneRaidKind('');
+    setZoneLocation(1);
     openZoneMap('camp');
   }
 
@@ -942,16 +1050,19 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.2.0',
+    version: '0.3.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
     setPoints: setZoneMapPoints,
     get points() { return zoneMapPoints.map(point => ({...point})); },
     get routeKind() { return zoneRaidKind; },
+    get location() { return zoneLocation; },
     setRoute: setZoneRaidKind,
-    nextLocationProgressReady
+    setLocation: setZoneLocation,
+    firstLocationToSecondReady,
+    secondPistolDecadeReady
   });
-  window.BunkerMenu = {version: '1.6.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.7.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
