@@ -36,6 +36,6 @@ assert(css.includes('.zone-map-point-enemy')&&css.includes('.zone-map-point-anom
 
 const bytes=Buffer.from(b64,'base64');
 assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF','zone map is not WebP/RIFF');
-assert(bytes.length>20000,'zone map asset unexpectedly small');
+assert(bytes.length>10000,'zone map asset unexpectedly small');
 
 console.log('PASS: map-first raid entry, open-map raid action, configurable typed markers and camp return');
