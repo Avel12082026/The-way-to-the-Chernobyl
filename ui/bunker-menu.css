@@ -98,44 +98,22 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 #zoneMapScreen .zone-map-points{position:absolute;inset:0;z-index:2;pointer-events:none;}
 #zoneMapScreen .zone-map-point{
   position:absolute;transform:translate(-50%,-50%);pointer-events:auto;
-  min-width:42px;min-height:42px;padding:5px 7px;border:1px solid #a68a54;
-  border-radius:999px;background:rgba(17,19,14,.90);color:#f1d99a;
-  box-shadow:0 2px 10px #000b,inset 0 0 0 1px #d7bd7433;
-  font:700 12px/1.05 Arial,sans-serif;text-align:center;
-  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  width:13%;height:10%;min-width:48px;min-height:48px;max-width:82px;max-height:82px;
+  padding:0;border:0;border-radius:22px;background:transparent;color:transparent;
+  box-shadow:none;font:0/0 Arial,sans-serif;text-align:center;opacity:.001;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer;
 }
-#zoneMapScreen .zone-map-point-icon{display:block;font-size:20px;line-height:1;}
-#zoneMapScreen .zone-map-point-label{
-  position:absolute;left:50%;top:calc(100% + 5px);transform:translateX(-50%);
-  min-width:max-content;padding:3px 6px;border-radius:4px;background:#0b0d0bd9;
-  color:#ead7a9;font:700 10px/1.1 Arial,sans-serif;text-shadow:0 1px 2px #000;
-}
-#zoneMapScreen .zone-map-point-camp{border-color:#c4a75d;}
-#zoneMapScreen .zone-map-point-enemy{border-color:#ad5751;}
-#zoneMapScreen .zone-map-point-anomaly{border-color:#6da7bd;}
-#zoneMapScreen .zone-map-point-mutant{border-color:#8d7b55;}
-#zoneMapScreen .zone-map-point:active{transform:translate(-50%,-50%) scale(.94);}
+#zoneMapScreen .zone-map-point-icon,
+#zoneMapScreen .zone-map-point-label{display:none!important;}
+#zoneMapScreen .zone-map-point:active{transform:translate(-50%,-50%);}
 #zoneMapScreen .zone-map-point:focus-visible,
-#zoneMapScreen .zone-map-back:focus-visible,
-#zoneMapScreen .zone-map-continue:focus-visible{outline:2px solid #f0cf78;outline-offset:2px;}
-#zoneMapScreen .zone-map-title{
-  position:absolute;z-index:4;top:max(12px,env(safe-area-inset-top));left:50%;
-  transform:translateX(-50%);padding:7px 12px;border:1px solid #74623e;
-  background:#0d0f0ddb;color:#e6d2a1;font:700 14px/1 'Russo One',Arial,sans-serif;
-  letter-spacing:.8px;white-space:nowrap;pointer-events:none;
-}
-#zoneMapScreen .zone-map-back,
-#zoneMapScreen .zone-map-continue{
-  position:absolute;z-index:5;min-height:42px;padding:8px 12px;
-  border:1px solid #92794a;border-radius:5px;
+#zoneMapScreen .zone-map-back:focus-visible{outline:2px solid #f0cf78;outline-offset:2px;opacity:1;}
+#zoneMapScreen .zone-map-back{
+  position:absolute;z-index:5;left:4%;top:max(12px,env(safe-area-inset-top));
+  min-height:42px;padding:8px 12px;border:1px solid #92794a;border-radius:5px;
   background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.97));
   color:#ead7a9;font:700 12px/1.1 'Russo One',Arial,sans-serif;
   box-shadow:0 2px 9px #000a;text-shadow:0 1px 2px #000;
-}
-#zoneMapScreen .zone-map-back{left:4%;top:max(12px,env(safe-area-inset-top));}
-#zoneMapScreen .zone-map-continue{
-  left:4%;right:4%;bottom:max(18px,env(safe-area-inset-bottom));width:92%;
-  min-height:50px;font-size:14px;
 }
 body.zone-map-visible{overflow:hidden!important;}
 body.zone-map-visible #menuMusicPanel,
