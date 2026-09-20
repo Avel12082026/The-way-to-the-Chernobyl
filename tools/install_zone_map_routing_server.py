@@ -66,11 +66,17 @@ function zoneMapLocationUnlocked(data,location){
         zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
     return false;
 }
+const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45}});
 function zoneMapNpcPayload(data,zoneTier,zoneLocation){
     const forcedLevel=zoneTier<=1?1:1+(zoneTier-1)*40;
     const npc=raidCreateNpcPayload({...data,level:forcedLevel});
     if(!npc)return null;
+    const stats=ZONE_MAP_NPC_STATS[zoneTier]||ZONE_MAP_NPC_STATS[1];
     npc.tier=zoneTier;
+    npc.hp=stats.hp;
+    npc.enemyHp=stats.hp;
+    npc.maxEnemyHp=stats.hp;
+    npc.dmg=stats.dmg;
     if(zoneLocation===2)npc.faction='Бандиты';
     return npc;
 }
