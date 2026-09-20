@@ -237,7 +237,7 @@ def main():
         if not asset.is_file():
             raise RuntimeError(f'Не найдена карта: {asset}. Сначала распакуйте архив карт в /var/www/pocketzone/ui.')
         raw_asset=asset.read_bytes()
-        if len(raw_asset)<50000 or raw_asset[:2]!=b'\\xff\\xd8':
+        if len(raw_asset)<50000 or raw_asset[:2]!=b'\xff\xd8':
             raise RuntimeError(f'Файл карты повреждён или слишком мал: {asset}')
     old=path.read_bytes()
     source=old.decode('utf-8')
