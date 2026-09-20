@@ -66,4 +66,8 @@ assert mod.OLD_ROUTE_MARK not in upgraded
 assert mod.SHOP_MARK in upgraded
 assert "app.get('/api/zone-map/:location'" in upgraded
 
+installer=path.read_text(encoding='utf-8')
+assert r"raw_asset[:2]!=b'\xff\xd8'" in installer
+assert r"raw_asset[:2]!=b'\\xff\\xd8'" not in installer
+
 print('PASS: V2 map installer is idempotent/upgradable; tiers 1/2, map2 Bandits, exact anomaly tiers, image routes and location-one shop limits are present')
