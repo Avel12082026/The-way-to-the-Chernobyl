@@ -21,6 +21,10 @@ function buildWeaponProgressionServer(list){
     const rifles=regular.slice(rifleStart,pistolStart);
     const pistols=regular.slice(pistolStart,shotgunStart);
     const shotguns=regular.slice(shotgunStart);
+    // Live SHOP_WEAPONS historically did not carry starterGear on Beretta.
+    // Restore that canonical marker so the already-installed map gates also
+    // recognise the pistol block correctly.
+    if(pistols[0]&&!pistols[0].starterGear)pistols[0].starterGear=true;
     if(automatics.length!==29||rifles.length!==29||pistols.length!==29||shotguns.length!==29)
         throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: ожидалось по 29 стволов каждого класса');
     const ordered=[...pistols,...shotguns,...automatics,...rifles];
