@@ -1582,9 +1582,9 @@ button:active {filter:brightness(1.18);}
     // каждый следующий открывается через 3 уровня: 1, 4, 7, ... 346.
     function buildWeaponProgressionOrder(list = weapons) {
         const regular = list.filter(w => w && !w.adminOnly);
-        const rifleStart = regular.findIndex(w => /^Винтовка\b/i.test(String(w?.name || '')));
+        const rifleStart = regular.findIndex(w => /^Винтовка(?:\s|$)/i.test(String(w?.name || '')));
         const pistolStart = regular.findIndex(w => !!w?.starterGear);
-        const shotgunStart = regular.findIndex(w => /^Дробовик\b/i.test(String(w?.name || '')));
+        const shotgunStart = regular.findIndex(w => /^Дробовик(?:\s|$)/i.test(String(w?.name || '')));
         if (rifleStart < 0 || pistolStart < 0 || shotgunStart < 0 ||
             !(rifleStart < pistolStart && pistolStart < shotgunStart)) {
             console.error('[weapon progression] Не удалось определить границы классов оружия.');
@@ -7679,9 +7679,9 @@ function startBattle(enemy) {
     function getWeaponDamageClass(list, item) {
         if (!Array.isArray(list) || !item || item.adminOnly) return '';
         const index = list.indexOf(item);
-        const rifleStart = list.findIndex(o => /^Винтовка\b/i.test(String(o?.name || '')));
+        const rifleStart = list.findIndex(o => /^Винтовка(?:\s|$)/i.test(String(o?.name || '')));
         const pistolStart = list.findIndex(o => !!o?.starterGear);
-        const shotgunStart = list.findIndex(o => /^Дробовик\b/i.test(String(o?.name || '')));
+        const shotgunStart = list.findIndex(o => /^Дробовик(?:\s|$)/i.test(String(o?.name || '')));
         if (index < 0 || rifleStart < 0 || pistolStart < 0 || shotgunStart < 0) return '';
         if (index < rifleStart) return 'automatic';
         if (index < pistolStart) return 'rifle';
