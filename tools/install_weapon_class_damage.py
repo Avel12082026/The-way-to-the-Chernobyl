@@ -7,26 +7,33 @@ SERVICE='pocketzone.service'
 MARK='// WEAPON_CLASS_DAMAGE_V1'
 
 BLOCK=r"""// WEAPON_CLASS_DAMAGE_V1
-const WEAPON_CLASS_DAMAGE_MULTIPLIERS=Object.freeze({
-    pistol:1.00,
-    shotgun:1.25,
-    automatic:1.50,
-    rifle:1.75
-});
-function weaponDamageClassServer(list,item){
-    if(!Array.isArray(list)||!item||item.adminOnly)return'';
+const WEAPON_DAMAGE_BASE=80;
+const WEAPON_DAMAGE_GROWTH=1.05;
+function weaponDamageForProgressionIndexServer(index){
+    return Math.round(WEAPON_DAMAGE_BASE*Math.pow(WEAPON_DAMAGE_GROWTH,index));
+}
+function weaponDamageProgressionIndexServer(list,item){
+    if(!Array.isArray(list)||!item||item.adminOnly)return-1;
     const regular=list.filter(w=>w&&!w.adminOnly);
     const classSize=29;
-    if(regular.length!==classSize*4)return'';
+    if(regular.length!==classSize*4)return-1;
     const pistolStart=regular.findIndex(o=>!!(o&&o.starterGear)||String(o&&o.name||'')==='Beretta 21A Bobcat'||Number(o&&o.id)===86);
     if(pistolStart!==classSize*2)
         throw new Error('WEAPON_CLASS_DAMAGE_V1: нарушена структура каталога оружия');
     const index=regular.indexOf(item);
+    if(index<0)return-1;
+    if(index<classSize)return classSize*2+index;
+    if(index<classSize*2)return classSize*3+(index-classSize);
+    if(index<classSize*3)return index-classSize*2;
+    return classSize+(index-classSize*3);
+}
+function weaponDamageClassServer(list,item){
+    const index=weaponDamageProgressionIndexServer(list,item);
     if(index<0)return'';
-    if(index<classSize)return'automatic';
-    if(index<classSize*2)return'rifle';
-    if(index<classSize*3)return'pistol';
-    return'shotgun';
+    if(index<29)return'pistol';
+    if(index<58)return'shotgun';
+    if(index<87)return'automatic';
+    return'rifle';
 }
 (function applyWeaponClassDamageServer(){
     const regular=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(w=>w&&!w.adminOnly);
@@ -34,10 +41,10 @@ function weaponDamageClassServer(list,item){
         throw new Error('WEAPON_CLASS_DAMAGE_V1: ожидалось 116 обычных стволов, найдено '+regular.length);
     const counts={pistol:0,shotgun:0,automatic:0,rifle:0};
     for(const weapon of regular){
+        const progressionIndex=weaponDamageProgressionIndexServer(SHOP_WEAPONS,weapon);
         const cls=weaponDamageClassServer(SHOP_WEAPONS,weapon);
-        const mult=WEAPON_CLASS_DAMAGE_MULTIPLIERS[cls];
-        if(!mult)throw new Error('WEAPON_CLASS_DAMAGE_V1: неизвестный класс '+String(weapon&&weapon.name||''));
-        weapon.dmg=Math.round((Number(weapon.dmg)||0)*mult);
+        if(progressionIndex<0||!cls)throw new Error('WEAPON_CLASS_DAMAGE_V1: неизвестный класс '+String(weapon&&weapon.name||''));
+        weapon.dmg=weaponDamageForProgressionIndexServer(progressionIndex);
         counts[cls]++;
     }
     if(counts.pistol!==29||counts.shotgun!==29||counts.automatic!==29||counts.rifle!==29)
@@ -68,7 +75,7 @@ def run(cmd,**kw):
 
 def patch(source):
     if MARK in source:
-        required=('WEAPON_CLASS_DAMAGE_MULTIPLIERS','getWeaponClassNextCeilingServer','weaponDamageClassServer')
+        required=('WEAPON_DAMAGE_BASE','weaponDamageForProgressionIndexServer','getWeaponClassNextCeilingServer','weaponDamageClassServer')
         if not all(x in source for x in required):
             raise RuntimeError('Маркер баланса оружия есть, но патч неполный.')
         return source,False,0
@@ -135,7 +142,7 @@ def main():
                           capture_output=True,check=False)
                 if probe.returncode==0:
                     print('WEAPON_CLASS_DAMAGE_V1 установлен. Backup:',backup)
-                    print('Множители: пистолеты x1.00; дробовики x1.25; автоматы x1.50; винтовки x1.75.')
+                    print('Урон: пистолеты 80–314; дробовики 329–1291; автоматы 1355–5313; винтовки 5579–21871.')
                     return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления.')
