@@ -113,6 +113,60 @@ raidCreateNpcPayload=function(data){
 """
 
 VICTORY_MIDDLEWARE=r"""// NPC_WEAPON_LOOT_WINDOW_V1
+const NPC_CONSUMABLE_LOOT_NAMES=Object.freeze([
+    'Хлеб','Тушенка','Вода','Энергетик',
+    'Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'
+]);
+const NPC_REGULAR_ARMOR_SERVER=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+    .filter(a=>a&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
+const NPC_LOOT_TRACKED_NAMES_SERVER=new Set([
+    ...WEAPON_PROGRESSION_NAMES_SERVER,
+    ...NPC_REGULAR_ARMOR_SERVER.map(a=>a.name),
+    ...NPC_CONSUMABLE_LOOT_NAMES
+]);
+
+function npcLootDropChanceServer(tier){
+    const t=Math.max(1,Math.min(14,Number(tier)||1));
+    // Tier 1: 36%; tier 14: 12.6%. Most NPC kills still yield no item.
+    return Math.max(0.12,0.36-(t-1)*0.018);
+}
+function npcLootMedkitServer(tier){
+    const t=Math.max(1,Math.min(14,Number(tier)||1));
+    if(t<=4)return'Аптечка гражданская';
+    if(t<=9)return'Аптечка армейская';
+    return'Аптечка научная';
+}
+function npcLootConsumableServer(tier){
+    const roll=Math.random();
+    if(roll<0.22)return npcLootMedkitServer(tier);
+    if(roll<0.48)return Math.random()<0.60?'Хлеб':'Тушенка';
+    if(roll<0.70)return'Вода';
+    if(roll<0.88)return'Энергетик';
+    return'Антирад';
+}
+function npcLootArmorServer(tier){
+    if(!NPC_REGULAR_ARMOR_SERVER.length)return null;
+    const shift=Math.floor(Math.random()*3)-1;
+    const target=Math.max(1,Math.min(14,(Number(tier)||1)+shift));
+    let pool=NPC_REGULAR_ARMOR_SERVER.filter(a=>Number(a.tier)===target);
+    if(!pool.length){
+        const distance=Math.min(...NPC_REGULAR_ARMOR_SERVER.map(a=>Math.abs((Number(a.tier)||1)-target)));
+        pool=NPC_REGULAR_ARMOR_SERVER.filter(a=>Math.abs((Number(a.tier)||1)-target)===distance);
+    }
+    return pool[Math.floor(Math.random()*pool.length)]||null;
+}
+function npcLootPickServer(ctx){
+    // Conditional on a successful item roll: 75% consumable, 15% weapon, 10% armor.
+    const categoryRoll=Math.random();
+    if(categoryRoll<0.75)
+        return{kind:'consumable',name:npcLootConsumableServer(ctx.tier)};
+    if(categoryRoll<0.90&&ctx.weapon)
+        return{kind:'weapon',name:ctx.weapon.name};
+    const armor=npcLootArmorServer(ctx.tier);
+    if(armor)return{kind:'armor',name:armor.name};
+    return{kind:'consumable',name:npcLootConsumableServer(ctx.tier)};
+}
+
 app.post('/api/pve/victory',requireAuth,(req,res,next)=>{
     let ctx=null;
     try{
@@ -127,15 +181,18 @@ app.post('/api/pve/victory',requireAuth,(req,res,next)=>{
                 const before=safeParsePlayerData(row.data);
                 const requested=WEAPON_PROGRESSION_BY_NAME_SERVER.get(String(payload.weaponDrop||payload.weaponName||''))?.weapon
                     ||weaponProgressionNpcWeaponServer(before);
-                if(requested){
-                    const snapshot={};
-                    const inv=before.inventory||{};
-                    for(const w of WEAPON_PROGRESSION_SERVER)snapshot[w.name]=Number(inv[w.name])||0;
-                    ctx={playerId,weapon:requested,before:snapshot};
-                }
+                const snapshot={};
+                const inv=before.inventory||{};
+                for(const name of NPC_LOOT_TRACKED_NAMES_SERVER)snapshot[name]=Number(inv[name])||0;
+                ctx={
+                    playerId,
+                    weapon:requested||null,
+                    tier:Math.max(1,Math.min(14,Number(payload.tier)||1)),
+                    before:snapshot
+                };
             }
         }
-    }catch(e){console.error('[npc weapon loot pre]',e);}
+    }catch(e){console.error('[npc loot pre]',e);}
 
     if(!ctx)return next();
     const sendJson=res.json.bind(res);
@@ -146,34 +203,55 @@ app.post('/api/pve/victory',requireAuth,(req,res,next)=>{
             if(row){
                 const data=safeParsePlayerData(row.data);
                 data.inventory=data.inventory||{};
-                // Любой старый случайный оружейный дроп от NPC заменяем одним оружием
-                // из окна: оружие игрока по прогрессии, на 1 позицию слабее или сильнее.
-                for(const w of WEAPON_PROGRESSION_SERVER){
-                    const before=Number(ctx.before[w.name])||0;
-                    const now=Number(data.inventory[w.name])||0;
+
+                // Remove legacy guaranteed/random NPC gear/consumable drops first.
+                for(const name of NPC_LOOT_TRACKED_NAMES_SERVER){
+                    const before=Number(ctx.before[name])||0;
+                    const now=Number(data.inventory[name])||0;
                     if(now>before){
-                        if(before>0)data.inventory[w.name]=before;
-                        else delete data.inventory[w.name];
+                        if(before>0)data.inventory[name]=before;
+                        else delete data.inventory[name];
                     }
                 }
-                data.inventory[ctx.weapon.name]=(Number(data.inventory[ctx.weapon.name])||0)+1;
+
+                const chance=npcLootDropChanceServer(ctx.tier);
+                let drop=null;
+                if(Math.random()<chance){
+                    drop=npcLootPickServer(ctx);
+                    if(drop&&drop.name)
+                        data.inventory[drop.name]=(Number(data.inventory[drop.name])||0)+1;
+                }
+
                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
                   .run(JSON.stringify(data),Date.now(),ctx.playerId);
 
                 if(body.state&&typeof body.state==='object')
                     body.state={...body.state,inventory:{...data.inventory}};
+
                 const rewards=Array.isArray(body.rewards)?body.rewards:[];
                 body.rewards=rewards.filter(line=>
-                    ![...WEAPON_PROGRESSION_NAMES_SERVER].some(name=>String(line).includes(name))
+                    ![...NPC_LOOT_TRACKED_NAMES_SERVER].some(name=>String(line).includes(name))
                 );
-                body.rewards.push('Оружие с NPC: '+ctx.weapon.name);
-                body.npcWeaponDrop={
-                    name:ctx.weapon.name,
-                    progressionIndex:Number(ctx.weapon.progressionIndex)||0,
-                    unlockLevel:Number(ctx.weapon.unlockLevel)||1
+                if(drop&&drop.name){
+                    const label=drop.kind==='weapon'?'Оружие':drop.kind==='armor'?'Броня':'Припасы';
+                    body.rewards.push(label+' с NPC: '+drop.name);
+                }
+                body.npcLootDrop={
+                    dropped:!!(drop&&drop.name),
+                    kind:drop&&drop.kind||null,
+                    name:drop&&drop.name||null,
+                    npcTier:ctx.tier,
+                    itemChance:chance
                 };
+                if(drop&&drop.kind==='weapon'){
+                    body.npcWeaponDrop={
+                        name:drop.name,
+                        progressionIndex:Number(ctx.weapon&&ctx.weapon.progressionIndex)||0,
+                        unlockLevel:Number(ctx.weapon&&ctx.weapon.unlockLevel)||1
+                    };
+                }else delete body.npcWeaponDrop;
             }
-        }catch(e){console.error('[npc weapon loot post]',e);}
+        }catch(e){console.error('[npc loot post]',e);}
         return sendJson(body);
     };
     return next();
@@ -201,6 +279,8 @@ def patch(source):
 
     if 'const SHOP_WEAPONS' not in source:
         raise RuntimeError('Не найден SHOP_WEAPONS.')
+    if 'const SHOP_ARMOR' not in source:
+        raise RuntimeError('Не найден SHOP_ARMOR.')
     if 'function raidCreateNpcPayload' not in source:
         raise RuntimeError('Не найдена raidCreateNpcPayload.')
     if 'pve_battles' not in source:
@@ -262,7 +342,7 @@ def main():
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Прогрессия оружия подтверждена: новый ствол каждые 3 уровня; пистолеты → дробовики → автоматы → винтовки; NPC получает текущую ступень по уровню игрока ±1. Файлы не изменены.')
+            print('Прогрессия оружия и редкий NPC-лут подтверждены: оружие каждые 3 уровня; NPC ±1 ступень; шанс предмета падает с тиром. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
@@ -288,7 +368,7 @@ def main():
                           capture_output=True,check=False)
                 if probe.returncode==0:
                     print('WEAPON_UNLOCK_EVERY_3_LEVELS_V1 установлен. Backup:',backup)
-                    print('Открытие: уровни 1,4,7,...,346. NPC: оружейная ступень по уровню игрока ±1.')
+                    print('Открытие: уровни 1,4,7,...,346. NPC: оружейная ступень по уровню игрока ±1; предметный лут редкий и убывает с тиром.')
                     return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления.')
