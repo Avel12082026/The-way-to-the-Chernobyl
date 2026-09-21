@@ -23,7 +23,13 @@ with tempfile.TemporaryDirectory() as td:
         if relative=='ui/bunker-menu.css':
             return b"#rostokCampScreen.rostok-camp-screen{}\n"
         if relative=='tools/install_zone_map_routing_server.py':
-            return ("# // ZONE_MAP_ROUTING_V4\n# "+mod.MAP_SHA+"\n# "+mod.BAR_SHA+"\n").encode()
+            return (
+                "# // ZONE_MAP_ROUTING_V4\n"
+                "# "+mod.MAP_SHA+"\n"
+                "# "+mod.BAR_SHA+"\n"
+                "def patch(source):\n"
+                "    return source, False\n"
+            ).encode()
         raise AssertionError(relative)
     mod.fetch=fake_fetch
 
