@@ -33,10 +33,10 @@ assert mod.MARK in patched
 assert "String(o&&o.name||'')==='Beretta 21A Bobcat'" in patched
 assert 'const classSize=29' in patched
 assert "pistolStart!==classSize*2" in patched
-assert 'pistol:1.00' in patched
-assert 'shotgun:1.25' in patched
-assert 'automatic:1.50' in patched
-assert 'rifle:1.75' in patched
+assert 'const WEAPON_DAMAGE_BASE=80' in patched
+assert 'const WEAPON_DAMAGE_GROWTH=1.05' in patched
+assert 'weaponDamageForProgressionIndexServer' in patched
+assert 'weaponDamageProgressionIndexServer' in patched
 assert 'getWeaponClassNextCeilingServer(SHOP_WEAPONS' in patched
 assert 'getNextItemCeilingServer(SHOP_ARMOR' in patched
 
@@ -49,8 +49,14 @@ if(weaponDamageClassServer(SHOP_WEAPONS,auto)!=='automatic')throw new Error('aut
 if(weaponDamageClassServer(SHOP_WEAPONS,rifle)!=='rifle')throw new Error('rifle class');
 if(weaponDamageClassServer(SHOP_WEAPONS,pistol)!=='pistol')throw new Error('pistol class');
 if(weaponDamageClassServer(SHOP_WEAPONS,shotgun)!=='shotgun')throw new Error('shotgun class');
-if(pistol.dmg!==100||shotgun.dmg!==125||auto.dmg!==150||rifle.dmg!==175)
-  throw new Error('damage multipliers '+[pistol.dmg,shotgun.dmg,auto.dmg,rifle.dmg].join(','));
+if(pistol.dmg!==80||shotgun.dmg!==329||auto.dmg!==1355||rifle.dmg!==5579)
+  throw new Error('damage progression '+[pistol.dmg,shotgun.dmg,auto.dmg,rifle.dmg].join(','));
+const regular=SHOP_WEAPONS.filter(w=>!w.adminOnly);
+const ordered=[...regular.slice(58,87),...regular.slice(87,116),...regular.slice(0,29),...regular.slice(29,58)];
+for(let i=1;i<ordered.length;i++){
+  if(!(ordered[i-1].dmg<ordered[i].dmg))throw new Error('damage not strictly increasing at '+i);
+}
+if(ordered[115].dmg!==21871)throw new Error('final rifle damage '+ordered[115].dmg);
 console.log('RUNTIME PASS');
 """
 with tempfile.TemporaryDirectory() as td:
@@ -59,4 +65,4 @@ with tempfile.TemporaryDirectory() as td:
     proc=subprocess.run(['node',str(candidate)],check=True,capture_output=True,text=True)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: weapon class damage installer starts on live-like catalog without starterGear and keeps class hierarchy')
+print('PASS: weapon damage strictly increases through pistols, shotguns, automatics and rifles')
