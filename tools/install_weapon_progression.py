@@ -12,7 +12,7 @@ CORE=r"""// WEAPON_UNLOCK_EVERY_3_LEVELS_V1
 function buildWeaponProgressionServer(list){
     const regular=(Array.isArray(list)?list:[]).filter(w=>w&&!w.adminOnly);
     const rifleStart=regular.findIndex(w=>/^Винтовка(?:\s|$)/i.test(String(w&&w.name||'')));
-    const pistolStart=regular.findIndex(w=>!!(w&&w.starterGear));
+    const pistolStart=regular.findIndex(w=>!!(w&&w.starterGear)||String(w&&w.name||'')==='Beretta 21A Bobcat'||Number(w&&w.id)===86);
     const shotgunStart=regular.findIndex(w=>/^Дробовик(?:\s|$)/i.test(String(w&&w.name||'')));
     if(rifleStart<0||pistolStart<0||shotgunStart<0||
        !(rifleStart<pistolStart&&pistolStart<shotgunStart))
@@ -93,6 +93,14 @@ raidCreateNpcPayload=function(data){
     if(!npc)return npc;
     const weapon=weaponProgressionNpcWeaponServer(data);
     if(weapon){
+        npc.weapon={
+            id:weapon.id,
+            name:weapon.name,
+            dmg:Number(weapon.dmg)||0,
+            tier:Number(weapon.tier)||1,
+            unlockLevel:Number(weapon.unlockLevel)||1,
+            progressionIndex:Number(weapon.progressionIndex)||0
+        };
         npc.weaponName=weapon.name;
         npc.weaponDrop=weapon.name;
         npc.weaponProgressionIndex=Number(weapon.progressionIndex)||0;
@@ -198,6 +206,17 @@ def patch(source):
         raise RuntimeError('Не найдена таблица pve_battles в серверной логике.')
 
     text=source
+
+    # Старый маршрут первой локации ограничивал Жучару первыми 10 пистолетами.
+    # Новая общая прогрессия оружия это ограничение отменяет: у торговца открывается
+    # следующий ствол каждые 3 уровня вплоть до винтовок. Ограничение брони сохраняется.
+    old_location_weapon_guard="""    if(category==='weapon'&&!ZONE_MAP_LOCATION1_WEAPONS.has(name))
+        return res.status(400).json({success:false,error:'Этот ствол продаётся на другой локации'});
+"""
+    if old_location_weapon_guard in text:
+        text=text.replace(old_location_weapon_guard,'',1)
+    elif '// ZONE_MAP_LOCATION1_SHOP_V1' in text and 'Этот ствол продаётся на другой локации' in text:
+        raise RuntimeError('Не удалось безопасно снять старое ограничение оружия у Жучары.')
 
     shop_anchor=find_first(
         text,
