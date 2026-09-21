@@ -58,10 +58,11 @@ assert "npc.tier=zoneTier" in patched
 assert "sourceTier" in patched and "tier:zoneTier" in patched
 assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in patched
 
-# Location-one trader restriction remains intact.
+# Location-one armor restriction remains, but weapon stock follows global progression.
 assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
-assert "Этот ствол продаётся на другой локации" in patched
+assert "Этот ствол продаётся на другой локации" not in patched
 assert "Этот костюм продаётся на другой локации" in patched
+assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
 
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
