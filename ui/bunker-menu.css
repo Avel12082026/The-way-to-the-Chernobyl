@@ -93,7 +93,7 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 }
 #zoneMapScreen .zone-map-title{
   color:#ead7a9;font:700 18px/1 'Russo One',Arial,sans-serif;
-  letter-spacing:1.2px;text-transform:uppercase;text-shadow:0 2px 3px #000;
+  letter-spacing:1.2px;text-shadow:0 2px 3px #000;
   pointer-events:none;
 }
 #zoneMapScreen .zone-map-frame{
