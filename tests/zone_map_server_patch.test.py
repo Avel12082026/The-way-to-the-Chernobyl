@@ -41,7 +41,7 @@ assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
-assert "4:'zone-map4.png'" in patched
+assert "4:'zone-map4.jpg'" in patched
 assert "4:'rostok-bar.png'" in patched
 assert "if(![1,2,3,4].includes(zoneLocation))" in patched
 assert "const zoneTier=zoneLocation" in patched
@@ -88,13 +88,13 @@ upgraded,changed3=mod.patch(v3)
 assert changed3
 assert mod.ROUTE_MARK in upgraded
 assert "// ZONE_MAP_ROUTING_V3" not in upgraded
-assert "4:'zone-map4.png'" in upgraded
+assert "4:'zone-map4.jpg'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
-assert "(root/'ui'/'zone-map4.png',b'\\x89PNG')" in installer
+assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8')" in installer
 assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG')" in installer
 assert "Совместимость четырёх локаций" in installer
 
