@@ -217,9 +217,9 @@ def upgrade_route(text):
     error_anchor="console.error('[/api/raid/zone-step]'"
     error_pos=text.find(error_anchor,start)
     if error_pos>=0:
-        route_end=text.find("\n});",error_pos)
+        route_end=text.find("});",error_pos)
         if route_end>=0:
-            route_end+=len("\n});")
+            route_end+=len("});")
             return text[:start]+ZONE_ROUTE+text[route_end:]
     listen=text.find('app.listen(',start)
     if listen<0:
