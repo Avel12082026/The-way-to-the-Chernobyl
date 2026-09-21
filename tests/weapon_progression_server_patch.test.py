@@ -157,7 +157,11 @@ console.log('RUNTIME PASS');
 with tempfile.TemporaryDirectory() as td:
     candidate=Path(td)/'server.js'
     candidate.write_text(runtime,encoding='utf-8')
-    proc=subprocess.run(['node',str(candidate)],check=True,capture_output=True,text=True)
+    proc=subprocess.run(['node',str(candidate)],capture_output=True,text=True)
+    if proc.returncode!=0:
+        raise AssertionError(
+            'node runtime failed\\nSTDOUT:\\n'+proc.stdout+'\\nSTDERR:\\n'+proc.stderr
+        )
     assert 'RUNTIME PASS' in proc.stdout
 
 print('PASS: 3-level weapon progression and rare tier-dependent NPC loot execute end-to-end')
