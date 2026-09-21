@@ -297,7 +297,7 @@
     image.alt = `Карта Зоны — ${ZONE_MAP_NAMES[location] || ('локация ' + location)}`;
     image.onload = () => {
       if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
-      fitZoneMapCanvas(image.naturalWidth || config.width, image.naturalHeight || config.height);
+      fitZoneMapCanvas(config.width, config.height);
     };
     image.onerror = () => {
       if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
@@ -1117,7 +1117,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.5.0',
+    version: '0.5.1',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1130,6 +1130,6 @@
     firstLocationToSecondReady,
     secondPistolDecadeReady
   });
-  window.BunkerMenu = {version: '1.9.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.9.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
