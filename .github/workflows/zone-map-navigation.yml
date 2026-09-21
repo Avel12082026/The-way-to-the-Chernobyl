@@ -17,6 +17,7 @@ on:
       - 'tools/install_zone_map_routing_server.py'
       - 'tools/install_rostok_location.py'
       - 'tests/rostok_location_installer.test.py'
+      - 'tests/rostok_server_only.test.py'
       - 'ROSTOK_ASSET_MANIFEST.json'
       - 'tests/smoker_npc.test.cjs'
       - 'tests/raid_quickslot.browser.py'
@@ -56,8 +57,9 @@ jobs:
           node tests/smoker_npc.test.cjs
           python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py tools/install_zone_map_routing_server.py tests/zone_map_server_patch.test.py
           python3 -m py_compile tools/install_svalka_map2.py tests/svalka_map_asset.test.py
-          python3 -m py_compile tools/install_rostok_location.py tests/rostok_location_installer.test.py
+          python3 -m py_compile tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/rostok_server_only.test.py
           python3 tests/rostok_location_installer.test.py
+          python3 tests/rostok_server_only.test.py
           python3 tests/svalka_map_asset.test.py
           python3 tests/zone_map_server_patch.test.py
           git diff --check
