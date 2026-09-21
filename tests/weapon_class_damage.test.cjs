@@ -21,12 +21,16 @@ for(const entry of Object.entries({automatics,rifles,pistols,shotguns})){
   assert(group.every(w=>!w.adminOnly),name+' contains admin weapon');
 }
 
-for(let i=0;i<29;i++){
-  const p=pistols[i].dmg,s=shotguns[i].dmg,a=automatics[i].dmg,r=rifles[i].dmg;
-  assert(p<s && s<a && a<r,'damage class hierarchy broken at rung '+(i+1)+': '+[p,s,a,r].join(','));
-  assert.equal(s,Math.round(p*1.25),'shotgun multiplier rung '+(i+1));
-  assert.equal(a,Math.round(p*1.50),'automatic multiplier rung '+(i+1));
-  assert.equal(r,Math.round(p*1.75),'rifle multiplier rung '+(i+1));
+const byLevel=group=>new Map(group.map(w=>[Number(w.unlockLevel),w]));
+const pm=byLevel(pistols),sm=byLevel(shotguns),am=byLevel(automatics),rm=byLevel(rifles);
+const common=[...pm.keys()].filter(level=>sm.has(level)&&am.has(level)&&rm.has(level)).sort((a,b)=>a-b);
+assert.equal(common.length,28,'expected 28 shared progression levels');
+for(const level of common){
+  const p=pm.get(level).dmg,s=sm.get(level).dmg,a=am.get(level).dmg,r=rm.get(level).dmg;
+  assert(p<s && s<a && a<r,'damage class hierarchy broken at unlock '+level+': '+[p,s,a,r].join(','));
+  assert.equal(s,Math.round(p*1.25),'shotgun multiplier at unlock '+level);
+  assert.equal(a,Math.round(p*1.50),'automatic multiplier at unlock '+level);
+  assert.equal(r,Math.round(p*1.75),'rifle multiplier at unlock '+level);
 }
 assert.equal(admin.name,'Убиваю взглядом');
 assert.equal(admin.dmg,6660,'admin-only weapon must not be rebalanced');
@@ -37,6 +41,6 @@ assert(html.includes('getWeaponDamageClass(list, o) === weaponClass'),'upgrade c
 
 console.log(JSON.stringify({
   status:'passed',
-  first:{pistol:pistols[0].dmg,shotgun:shotguns[0].dmg,automatic:automatics[0].dmg,rifle:rifles[0].dmg},
-  last:{pistol:pistols[28].dmg,shotgun:shotguns[28].dmg,automatic:automatics[28].dmg,rifle:rifles[28].dmg}
+  unlock20:{pistol:pm.get(20).dmg,shotgun:sm.get(20).dmg,automatic:am.get(20).dmg,rifle:rm.get(20).dmg},
+  unlock580:{pistol:pm.get(580).dmg,shotgun:sm.get(580).dmg,automatic:am.get(580).dmg,rifle:rm.get(580).dmg}
 },null,2));
