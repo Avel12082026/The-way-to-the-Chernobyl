@@ -11,22 +11,20 @@ VICTORY_MARK='// NPC_WEAPON_LOOT_WINDOW_V1'
 CORE=r"""// WEAPON_UNLOCK_EVERY_3_LEVELS_V1
 function buildWeaponProgressionServer(list){
     const regular=(Array.isArray(list)?list:[]).filter(w=>w&&!w.adminOnly);
-    const rifleStart=regular.findIndex(w=>/^Винтовка(?:\s|$)/i.test(String(w&&w.name||'')));
+    const classSize=29;
+    if(regular.length!==classSize*4)
+        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: ожидалось 116 обычных стволов');
     const pistolStart=regular.findIndex(w=>!!(w&&w.starterGear)||String(w&&w.name||'')==='Beretta 21A Bobcat'||Number(w&&w.id)===86);
-    const shotgunStart=regular.findIndex(w=>/^Дробовик(?:\s|$)/i.test(String(w&&w.name||'')));
-    if(rifleStart<0||pistolStart<0||shotgunStart<0||
-       !(rifleStart<pistolStart&&pistolStart<shotgunStart))
-        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: не удалось определить классы оружия');
-    const automatics=regular.slice(0,rifleStart);
-    const rifles=regular.slice(rifleStart,pistolStart);
-    const pistols=regular.slice(pistolStart,shotgunStart);
-    const shotguns=regular.slice(shotgunStart);
+    if(pistolStart!==classSize*2)
+        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: нарушена структура каталога оружия');
+    const automatics=regular.slice(0,classSize);
+    const rifles=regular.slice(classSize,classSize*2);
+    const pistols=regular.slice(classSize*2,classSize*3);
+    const shotguns=regular.slice(classSize*3,classSize*4);
     // Live SHOP_WEAPONS historically did not carry starterGear on Beretta.
     // Restore that canonical marker so the already-installed map gates also
     // recognise the pistol block correctly.
     if(pistols[0]&&!pistols[0].starterGear)pistols[0].starterGear=true;
-    if(automatics.length!==29||rifles.length!==29||pistols.length!==29||shotguns.length!==29)
-        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: ожидалось по 29 стволов каждого класса');
     const ordered=[...pistols,...shotguns,...automatics,...rifles];
     ordered.forEach((weapon,index)=>{
         weapon.progressionIndex=index;
