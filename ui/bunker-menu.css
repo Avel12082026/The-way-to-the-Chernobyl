@@ -78,6 +78,54 @@ body.smoker-hub-visible{overflow:hidden!important;}
 body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton,body.smoker-hub-visible .admin-btn{display:none!important;}
 
 
+/* Rostok safe camp: original 941x1672 artwork with the same three survival meters used at Cordon. */
+#rostokCampScreen.rostok-camp-screen{
+  display:none;position:fixed;inset:0;z-index:1660;overflow:hidden;
+  place-items:center;background:#080a08;
+}
+#rostokCampScreen.active{display:grid;}
+#rostokCampScreen .rostok-camp-scene{
+  position:relative;width:100%;height:100%;overflow:hidden;flex:none;
+  --bunker-unit:1px;--bunker-vunit:1px;
+}
+#rostokCampScreen .rostok-camp-artwork{
+  position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;
+  image-rendering:auto;pointer-events:none;user-select:none;-webkit-user-drag:none;
+}
+#rostokCampScreen .rostok-camp-back{
+  position:absolute;z-index:4;left:3%;top:max(12px,env(safe-area-inset-top));
+  min-height:40px;padding:8px 12px;border:1px solid #92794a;border-radius:5px;
+  background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.97));
+  color:#ead7a9;font:700 12px/1.1 'Russo One',Arial,sans-serif;
+  box-shadow:0 2px 9px #000a;text-shadow:0 1px 2px #000;
+}
+#rostokCampScreen .rostok-vital{
+  position:absolute;z-index:3;left:8.9%;width:30.1%;height:1.23%;overflow:hidden;
+  border-radius:calc(12 * var(--bunker-unit));background:#0c1110;
+  border:calc(1 * var(--bunker-unit)) solid #625c44;pointer-events:none;
+  box-shadow:0 1px 4px #000b;
+}
+#rostokCampScreen .rostok-hunger{top:91.00%;}
+#rostokCampScreen .rostok-thirst{top:93.51%;}
+#rostokCampScreen .rostok-health{top:96.02%;}
+#rostokCampScreen .rostok-vital .bunker-vital-fill{
+  position:absolute;inset:0 auto 0 0;width:0;height:100%;border-radius:inherit;
+}
+#rostokCampScreen .rostok-hunger .bunker-vital-fill{background:linear-gradient(90deg,#ad7930,#e2b953);}
+#rostokCampScreen .rostok-thirst .bunker-vital-fill{background:linear-gradient(90deg,#167999,#47c3e9);}
+#rostokCampScreen .rostok-health .bunker-vital-fill{background:linear-gradient(90deg,#9f3434,#de655b);}
+#rostokCampScreen .rostok-vital-text{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:#fff6e0;font:600 calc(17 * var(--bunker-unit))/1 Arial,sans-serif;
+  text-shadow:0 1px 2px #000,1px 0 2px #000;
+}
+#rostokCampScreen .rostok-camp-back:focus-visible{outline:2px solid #e4c477;outline-offset:2px;}
+body.rostok-camp-visible{overflow:hidden!important;}
+body.rostok-camp-visible #menuMusicPanel,
+body.rostok-camp-visible #menuMusicButton,
+body.rostok-camp-visible .admin-btn{display:none!important;}
+
+
 /* Zone map. Artwork keeps its original aspect ratio; the map itself is never stretched. */
 #zoneMapScreen.zone-map-screen{
   display:none;position:fixed;inset:0;z-index:1650;overflow:hidden;
