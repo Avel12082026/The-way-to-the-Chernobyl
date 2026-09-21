@@ -27,7 +27,7 @@ app.post('/api/shop/buy',(req,res,next)=>{
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V4
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.png'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.jpg'});
 const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
@@ -257,7 +257,7 @@ def main():
         (root/'ui'/'zone-map1.jpg',b'\xff\xd8'),
         (root/'ui'/'zone-map2.jpg',b'\xff\xd8'),
         (root/'ui'/'zone-map3.jpg',b'\xff\xd8'),
-        (root/'ui'/'zone-map4.png',b'\x89PNG'),
+        (root/'ui'/'zone-map4.jpg',b'\xff\xd8'),
         (root/'ui'/'rostok-bar.png',b'\x89PNG'),
     ]
     for asset,signature in assets:
