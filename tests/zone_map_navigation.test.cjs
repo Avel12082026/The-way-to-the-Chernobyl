@@ -11,13 +11,23 @@ assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()')
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
-assert(js.includes("version: '0.6.1'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.10.2'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка',3:'НИИ Агропром'})"),'three map titles missing');
+assert(js.includes("version: '0.6.2'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.10.3'"),'BunkerMenu version mismatch');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром'})"),'three map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
-assert(js.includes("2: {path:'/api/zone-map/2', width:1397, height:1536}"),'location 2 asset missing');
+assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
-assert(js.includes('20260921-map11'),'map image cache key missing');
+assert(js.includes('20260921-map13'),'map image cache key missing');
+
+const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
+assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must keep bottom/left/top transition markers');
+assert.equal((loc2Block.match(/kind:'enemy'/g)||[]).length,3,'Svalka bandit marker count changed');
+assert.equal((loc2Block.match(/kind:'mutant'/g)||[]).length,3,'Svalka mutant marker count changed');
+assert.equal((loc2Block.match(/kind:'anomaly'/g)||[]).length,2,'Svalka anomaly marker count changed');
+assert(loc2Block.includes("id:'transition-to-1'")&&loc2Block.includes("label:'Переход на Кордон'"),'Svalka bottom -> Kordon transition missing');
+assert(loc2Block.includes("x:62.82,y:71.62,targetLocation:1"),'new Svalka bottom transition hotspot is not aligned');
+assert(loc2Block.includes("x:10.50,y:47.49,targetLocation:3"),'new Svalka left transition hotspot is not aligned');
+assert(loc2Block.includes("id:'transition-future-top'")&&loc2Block.includes("future:true"),'Svalka top transition must remain future/inactive');
 
 assert(js.includes("id:'transition-to-3'")&&js.includes("label:'Переход на НИИ Агропром'"),'Svalka -> NII Agroprom transition missing');
 assert(js.includes("targetLocation:3,unlock:'last-nine-pistols'"),'NII Agroprom transition must use last-nine gate');
@@ -37,8 +47,8 @@ assert.equal((loc3Block.match(/kind:'camp'/g)||[]).length,0,'NII Agroprom must n
 assert(js.includes('await travelToZoneLocation(3)'),'NII Agroprom transition must use loading screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
 assert(!js.includes("if (item?.category === 'weapon') return weaponNames.has(item.name);"),'zone shop must not cap weapon stock at first ten pistols');
-assert(index.includes('ui/bunker-menu.css?v=20260921-map12'),'CSS cache version mismatch');
-assert(index.includes('ui/bunker-menu.js?v=20260921-map12'),'JS cache version mismatch');
+assert(index.includes('ui/bunker-menu.css?v=20260921-map13'),'CSS cache version mismatch');
+assert(index.includes('ui/bunker-menu.js?v=20260921-map13'),'JS cache version mismatch');
 
 const zoneCss=css.slice(css.indexOf('/* Zone map.'));
 assert(zoneCss.includes('object-fit:contain'),'maps must keep original proportions');
