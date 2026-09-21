@@ -71,7 +71,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.10.1' && window.ZoneMap?.version==='0.6.1'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.10.2' && window.ZoneMap?.version==='0.6.1'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -149,7 +149,7 @@ async def main():
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
 
         catalog=await page.evaluate('getShopCatalog()')
-        assert sum(x.get('category')=='weapon' for x in catalog)==10
+        assert sum(x.get('category')=='weapon' for x in catalog)==30
         assert sum(x.get('category')=='armor' for x in catalog)==10
 
         assert not errors,errors
