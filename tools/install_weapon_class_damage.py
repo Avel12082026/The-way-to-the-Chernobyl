@@ -15,16 +15,17 @@ const WEAPON_CLASS_DAMAGE_MULTIPLIERS=Object.freeze({
 });
 function weaponDamageClassServer(list,item){
     if(!Array.isArray(list)||!item||item.adminOnly)return'';
-    const index=list.indexOf(item);
-    const rifleStart=list.findIndex(o=>/^Винтовка(?:\s|$)/i.test(String(o&&o.name||'')));
-    const pistolStart=list.findIndex(o=>!!(o&&o.starterGear)||String(o&&o.name||'')==='Beretta 21A Bobcat'||Number(o&&o.id)===86);
-    const shotgunStart=list.findIndex(o=>/^Дробовик(?:\s|$)/i.test(String(o&&o.name||'')));
-    if(index<0||rifleStart<0||pistolStart<0||shotgunStart<0)return'';
-    if(!(rifleStart<pistolStart&&pistolStart<shotgunStart))
-        throw new Error('Нарушен порядок классов оружия в SHOP_WEAPONS');
-    if(index<rifleStart)return'automatic';
-    if(index<pistolStart)return'rifle';
-    if(index<shotgunStart)return'pistol';
+    const regular=list.filter(w=>w&&!w.adminOnly);
+    const classSize=29;
+    if(regular.length!==classSize*4)return'';
+    const pistolStart=regular.findIndex(o=>!!(o&&o.starterGear)||String(o&&o.name||'')==='Beretta 21A Bobcat'||Number(o&&o.id)===86);
+    if(pistolStart!==classSize*2)
+        throw new Error('WEAPON_CLASS_DAMAGE_V1: нарушена структура каталога оружия');
+    const index=regular.indexOf(item);
+    if(index<0)return'';
+    if(index<classSize)return'automatic';
+    if(index<classSize*2)return'rifle';
+    if(index<classSize*3)return'pistol';
     return'shotgun';
 }
 (function applyWeaponClassDamageServer(){
