@@ -17,7 +17,7 @@ assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'С
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:1397, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
-assert(js.includes('20260921-map12'),'map image cache key missing');
+assert(js.includes('20260921-map11'),'map image cache key missing');
 
 assert(js.includes("id:'transition-to-3'")&&js.includes("label:'Переход на НИИ Агропром'"),'Svalka -> NII Agroprom transition missing');
 assert(js.includes("targetLocation:3,unlock:'last-nine-pistols'"),'NII Agroprom transition must use last-nine gate');
