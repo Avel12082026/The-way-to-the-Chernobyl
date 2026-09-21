@@ -94,8 +94,9 @@ assert mod.SHOP_MARK in upgraded
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
-assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8')" in installer
-assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG')" in installer
+assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8','017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa')" in installer
+assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c')" in installer
+assert "Файл локации изменён или пережат" in installer
 assert "Совместимость четырёх локаций" in installer
 
 print('PASS: V4 installer upgrades V3 and adds Rostok map/camp, second-decade gate, Mercenary NPCs and tier-4 routing')
