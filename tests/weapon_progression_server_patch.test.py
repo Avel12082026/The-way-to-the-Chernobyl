@@ -15,8 +15,9 @@ const SHOP_WEAPONS=[
  ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'P'+(i+1),dmg:50+i,unlockLevel:30+i})),
  ...Array.from({length:29},(_,i)=>({id:4000+i,name:i===0?'Remington 870':'S'+(i+1),dmg:75+i,unlockLevel:40+i}))
 ];
+const SHOP_ARMOR=Array.from({length:14},(_,i)=>({id:5000+i,name:'Броня T'+(i+1),tier:i+1,armor:10+i,hitAbsorption:5+i,unlockLevel:1+i*40}));
 let playerData={level:31,weapon:{name:'Пистолет P11'},inventory:{}};
-const battleRow={enemy_kind:'npc',payload:JSON.stringify({weaponDrop:'Пистолет P12',weaponName:'Пистолет P12'})};
+const battleRow={enemy_kind:'npc',payload:JSON.stringify({tier:1,weaponDrop:'Пистолет P12',weaponName:'Пистолет P12'})};
 const PVE_SCHEMA='pve_battles';
 const db={prepare(sql){
   if(sql.startsWith('SELECT enemy_kind,payload FROM pve_battles'))return{get(){return battleRow}};
@@ -75,6 +76,10 @@ for text in [
     "const shift=Math.floor(Math.random()*3)-1",
     "npc.weaponDrop=weapon.name",
     "npc.weapon={",
+    "npcLootDropChanceServer",
+    "npcLootMedkitServer",
+    "NPC_CONSUMABLE_LOOT_NAMES",
+    "Припасы",
     "Оружие с NPC:",
     "Это оружие откроется на ",
 ]:
@@ -93,7 +98,7 @@ again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
 
 # Execute the patched fixture, not only node --check. This catches live startup errors
-# and verifies that victory loot replaces the legacy random weapon with the NPC ±1 weapon.
+# and verifies rare tier-dependent NPC loot plus the ±1 weapon progression window.
 runtime=patched+r"""
 if(WEAPON_PROGRESSION_SERVER.length!==116)throw new Error('bad progression length');
 if(WEAPON_PROGRESSION_SERVER[0].name!=='Beretta 21A Bobcat')throw new Error('bad first pistol');
@@ -114,6 +119,12 @@ for(const pair of [[0.0,9],[0.5,10],[0.999,11]]){
 }
 Math.random=oldRandom;
 
+if(!(npcLootDropChanceServer(1)>npcLootDropChanceServer(14)))throw new Error('loot chance must fall with tier');
+if(!(npcLootDropChanceServer(1)<0.5&&npcLootDropChanceServer(14)<0.5))throw new Error('most NPC kills must yield no item');
+if(npcLootMedkitServer(1)!=='Аптечка гражданская')throw new Error('low tier medkit');
+if(npcLootMedkitServer(6)!=='Аптечка армейская')throw new Error('mid tier medkit');
+if(npcLootMedkitServer(12)!=='Аптечка научная')throw new Error('high tier medkit');
+
 // Run all registered /api/pve/victory middleware/routes in Express order.
 const flat=routes['/api/pve/victory'].flat();
 const req={telegramUser:{id:'1'},body:{battleToken:'battle-1'}};
@@ -124,14 +135,20 @@ const res={
 };
 let cursor=0;
 function next(){const fn=flat[cursor++];if(fn)return fn(req,res,next)}
+// Successful item roll followed by the weapon category (0.75..0.90).
+const lootRolls=[0.0,0.80];
+let lootCursor=0;
+Math.random=()=>lootRolls[Math.min(lootCursor++,lootRolls.length-1)];
 next();
+Math.random=oldRandom;
 
 const expected=WEAPON_PROGRESSION_SERVER[11].name;
 const wrong=WEAPON_PROGRESSION_SERVER[50].name;
 if((Number(playerData.inventory[expected])||0)!==1)throw new Error('expected NPC weapon not awarded');
 if(Number(playerData.inventory[wrong])||0)throw new Error('legacy random weapon not removed');
 if(!responseBody||responseBody.success!==true)throw new Error('victory response lost');
-if(!responseBody.npcWeaponDrop||responseBody.npcWeaponDrop.name!==expected)throw new Error('NPC drop metadata wrong');
+if(!responseBody.npcLootDrop||!responseBody.npcLootDrop.dropped||responseBody.npcLootDrop.kind!=='weapon')throw new Error('NPC rare loot metadata wrong');
+if(!responseBody.npcWeaponDrop||responseBody.npcWeaponDrop.name!==expected)throw new Error('NPC weapon metadata wrong');
 if(!responseBody.rewards.some(x=>String(x).includes('Оружие с NPC: '+expected)))throw new Error('reward line missing');
 if(responseBody.rewards.some(x=>String(x).includes(wrong)))throw new Error('old random reward line survived');
 
@@ -143,4 +160,4 @@ with tempfile.TemporaryDirectory() as td:
     proc=subprocess.run(['node',str(candidate)],check=True,capture_output=True,text=True)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: live-like 3-level progression, global trader stock and NPC ±1 victory loot are executed end-to-end')
+print('PASS: 3-level weapon progression and rare tier-dependent NPC loot execute end-to-end')
