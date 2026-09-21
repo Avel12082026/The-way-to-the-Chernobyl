@@ -20,7 +20,9 @@ assert "2: {path:'/api/zone-map/2', width:864, height:1536}" in js
 assert "id:'transition-to-1'" in js and "label:'Переход на Кордон'" in js
 assert "x:62.82,y:71.62,targetLocation:1" in js
 assert "x:10.50,y:47.49,targetLocation:3" in js
-assert "id:'transition-future-top'" in js and "future:true" in js
-assert '20260921-map13' in js
+assert "id:'transition-to-4'" in js and "label:'Переход на Россток'" in js
+assert "x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'" in js
+assert "transition-future-top" not in js
+assert '20260922-rostok1' in js
 
-print('PASS: full-resolution 864x1536 Svalka artwork, hotspots and inactive top transition verified')
+print('PASS: full-resolution 864x1536 Svalka artwork, hotspots and active top transition to Rostok verified')
