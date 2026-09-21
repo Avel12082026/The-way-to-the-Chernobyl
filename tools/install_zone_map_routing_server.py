@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Install/upgrade map-routed raids for four locations and the first-location shop limits."""
 from pathlib import Path
-import argparse, os, shutil, subprocess, tempfile, time
+import argparse, hashlib, os, shutil, subprocess, tempfile, time
 
 SERVICE='pocketzone.service'
 OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')
@@ -263,18 +263,22 @@ def main():
     path=args.server.resolve(strict=True)
     root=path.parent
     assets=[
-        (root/'ui'/'zone-map1.jpg',b'\xff\xd8'),
-        (root/'ui'/'zone-map2.jpg',b'\xff\xd8'),
-        (root/'ui'/'zone-map3.jpg',b'\xff\xd8'),
-        (root/'ui'/'zone-map4.jpg',b'\xff\xd8'),
-        (root/'ui'/'rostok-bar.png',b'\x89PNG'),
+        (root/'ui'/'zone-map1.jpg',b'\xff\xd8',None),
+        (root/'ui'/'zone-map2.jpg',b'\xff\xd8',None),
+        (root/'ui'/'zone-map3.jpg',b'\xff\xd8',None),
+        # Rostok assets are copied byte-for-byte. The checksums deliberately reject
+        # any rescale/re-encode/recompression before the server update is applied.
+        (root/'ui'/'zone-map4.jpg',b'\xff\xd8','017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa'),
+        (root/'ui'/'rostok-bar.png',b'\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'),
     ]
-    for asset,signature in assets:
+    for asset,signature,expected_sha256 in assets:
         if not asset.is_file():
             raise RuntimeError(f'Не найден файл локации: {asset}. Сначала скопируйте его в /var/www/pocketzone/ui.')
         raw_asset=asset.read_bytes()
         if len(raw_asset)<50000 or not raw_asset.startswith(signature):
             raise RuntimeError(f'Файл локации повреждён или слишком мал: {asset}')
+        if expected_sha256 and hashlib.sha256(raw_asset).hexdigest()!=expected_sha256:
+            raise RuntimeError(f'Файл локации изменён или пережат: {asset}. Нужен исходный файл без перекодирования.')
     old=path.read_bytes()
     source=old.decode('utf-8')
     new_text,changed=patch(source)
