@@ -87,27 +87,29 @@ def main():
     ap.add_argument('--base',required=True,help='Pinned raw GitHub base URL for one commit')
     ap.add_argument('--root',default='/var/www/pocketzone',type=Path)
     ap.add_argument('--check',action='store_true')
+    ap.add_argument('--server-only',action='store_true',help='Update server.js only; static client is hosted separately')
     args=ap.parse_args()
 
     root=args.root.resolve(strict=True)
     server=(root/'server.js').resolve(strict=True)
-    client=(root/'index.html').resolve(strict=True)
+    client=None if args.server_only else (root/'index.html').resolve(strict=True)
 
     old_server=server.read_bytes()
-    old_client=client.read_bytes()
+    old_client=None if args.server_only else client.read_bytes()
     new_server,status=apply_patches(old_server.decode('utf-8'),args.base)
-    new_client=fetch(args.base,'index.html')
-
-    client_text=new_client.decode('utf-8')
-    client_required=(
-        'WEAPON_CLASS_DAMAGE_V1',
-        'WEAPON_UNLOCK_EVERY_3_LEVELS_V1',
-        'strict progression damage',
-        'const unlockWeaponsByLevel',
-    )
-    missing=[x for x in client_required if x not in client_text]
-    if missing:
-        raise RuntimeError('Клиент из выбранного коммита не содержит: '+', '.join(missing))
+    new_client=None
+    if not args.server_only:
+        new_client=fetch(args.base,'index.html')
+        client_text=new_client.decode('utf-8')
+        client_required=(
+            'WEAPON_CLASS_DAMAGE_V1',
+            'WEAPON_UNLOCK_EVERY_3_LEVELS_V1',
+            'strict progression damage',
+            'const unlockWeaponsByLevel',
+        )
+        missing=[x for x in client_required if x not in client_text]
+        if missing:
+            raise RuntimeError('Клиент из выбранного коммита не содержит: '+', '.join(missing))
 
     with tempfile.TemporaryDirectory(prefix='combat-bundle-check-') as td:
         candidate=Path(td)/'server.js'
@@ -118,7 +120,7 @@ def main():
     for item in status:print(' -',item)
 
     if args.check:
-        print('CHECK OK: server.js и index.html не изменены.')
+        print('CHECK OK: server.js не изменён.' if args.server_only else 'CHECK OK: server.js и index.html не изменены.')
         return
 
     if os.geteuid()!=0:
@@ -128,18 +130,22 @@ def main():
     backup=root/('BACKUP_BEFORE_COMBAT_BALANCE_'+stamp)
     backup.mkdir()
     (backup/'server.js').write_bytes(old_server)
-    (backup/'index.html').write_bytes(old_client)
     shutil.copystat(server,backup/'server.js')
-    shutil.copystat(client,backup/'index.html')
+    if not args.server_only:
+        (backup/'index.html').write_bytes(old_client)
+        shutil.copystat(client,backup/'index.html')
 
     server_stat=server.stat()
-    client_stat=client.stat()
+    client_stat=None if args.server_only else client.stat()
     try:
-        if server.read_bytes()!=old_server or client.read_bytes()!=old_client:
-            raise RuntimeError('Файлы изменились во время проверки; установка остановлена.')
+        if server.read_bytes()!=old_server:
+            raise RuntimeError('server.js изменился во время проверки; установка остановлена.')
+        if not args.server_only and client.read_bytes()!=old_client:
+            raise RuntimeError('index.html изменился во время проверки; установка остановлена.')
 
         atomic_write(server,new_server.encode('utf-8'),server_stat)
-        atomic_write(client,new_client,client_stat)
+        if not args.server_only:
+            atomic_write(client,new_client,client_stat)
 
         run(['node','--check',str(server)],timeout=30)
         run(['systemctl','restart',SERVICE],timeout=45)
@@ -150,7 +156,7 @@ def main():
                 probe=run(['curl','-fsS','--max-time','3','http://127.0.0.1:3000/api/market'],
                           capture_output=True,check=False)
                 if probe.returncode==0:
-                    print('COMBAT BALANCE BUNDLE установлен.')
+                    print('COMBAT BALANCE BUNDLE установлен' + (' (server-only).' if args.server_only else '.'))
                     print('Backup:',backup)
                     print('Включено: урон классов; оружие каждые 3 уровня; NPC ±1 ступень; редкий NPC-лут; адаптивные NPC/мутанты с учётом оружия, брони и артефактов.')
                     return
@@ -158,7 +164,8 @@ def main():
         raise RuntimeError('Сервер не подтвердил запуск после пакетного обновления.')
     except Exception:
         shutil.copy2(backup/'server.js',server)
-        shutil.copy2(backup/'index.html',client)
+        if not args.server_only and (backup/'index.html').is_file():
+            shutil.copy2(backup/'index.html',client)
         run(['systemctl','restart',SERVICE],check=False,timeout=45)
         raise
 
