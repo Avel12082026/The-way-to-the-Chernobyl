@@ -15,13 +15,24 @@ const SHOP_WEAPONS=[
  ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'Пистолет P'+(i+1),dmg:50+i,unlockLevel:30+i})),
  ...Array.from({length:29},(_,i)=>({id:4000+i,name:'Дробовик S'+(i+1),dmg:75+i,unlockLevel:40+i}))
 ];
+let playerData={level:31,weapon:{name:'Пистолет P11'},inventory:{}};
+const battleRow={enemy_kind:'npc',payload:JSON.stringify({weaponDrop:'Пистолет P12',weaponName:'Пистолет P12'})};
 const PVE_SCHEMA='pve_battles';
-const db={prepare(){return{get(){return null},run(){return{changes:1}}}}};
+const db={prepare(sql){
+  if(sql.startsWith('SELECT enemy_kind,payload FROM pve_battles'))return{get(){return battleRow}};
+  if(sql.startsWith('SELECT data FROM players'))return{get(){return{data:JSON.stringify(playerData)}}};
+  if(sql.startsWith('UPDATE players SET data='))return{run(data){playerData=JSON.parse(data);return{changes:1}}};
+  return{get(){return null},run(){return{changes:1}}};
+}};
 const requireAuth=(_q,_s,n)=>n();
 function safeParsePlayerData(x){return JSON.parse(x)}
 function parseGearNameServer(name){return {baseName:String(name||'').replace(/\s+\+\d+$/,'')}}
 function raidCreateNpcPayload(data){return {name:'npc',tier:1};}
-const app={post(){},listen(){}};
+const routes={};
+const app={
+  post(path,...handlers){(routes[path]||(routes[path]=[])).push(handlers)},
+  listen(){}
+};
 
 // ZONE_MAP_LOCATION1_SHOP_V1
 const ZONE_MAP_LOCATION1_WEAPONS=new Set();
@@ -38,7 +49,12 @@ app.post('/api/shop/buy',(req,res,next)=>{
 
 app.post('/api/shop/buy',(req,res)=>{});
 app.post('/api/raid/step',(req,res)=>{});
-app.post('/api/pve/victory',(req,res)=>{});
+app.post('/api/pve/victory',(req,res)=>{
+  // Simulate legacy victory code dropping an unrelated random weapon.
+  const wrong=WEAPON_PROGRESSION_SERVER[50].name;
+  playerData.inventory[wrong]=(Number(playerData.inventory[wrong])||0)+1;
+  return res.json({success:true,state:{inventory:{...playerData.inventory}},rewards:['Старый случайный дроп: '+wrong]});
+});
 app.listen(3000);
 """
 
@@ -74,7 +90,8 @@ assert patched.index(mod.VICTORY_MARK)<patched.index("app.post('/api/pve/victory
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
 
-# Execute the patched fixture, not only node --check. This catches live startup errors.
+# Execute the patched fixture, not only node --check. This catches live startup errors
+# and verifies that victory loot replaces the legacy random weapon with the NPC ±1 weapon.
 runtime=patched+r"""
 if(WEAPON_PROGRESSION_SERVER.length!==116)throw new Error('bad progression length');
 if(WEAPON_PROGRESSION_SERVER[0].name!=='Beretta 21A Bobcat')throw new Error('bad first pistol');
@@ -85,7 +102,8 @@ if(WEAPON_PROGRESSION_SERVER[58].unlockLevel!==175)throw new Error('bad automati
 if(WEAPON_PROGRESSION_SERVER[87].unlockLevel!==262)throw new Error('bad rifle start');
 if(WEAPON_PROGRESSION_SERVER[115].unlockLevel!==346)throw new Error('bad final unlock');
 if(!WEAPON_PROGRESSION_SERVER[0].starterGear)throw new Error('starter marker not restored');
-const player={level:40,weapon:{name:WEAPON_PROGRESSION_SERVER[10].name}};
+
+const player={level:31,weapon:{name:WEAPON_PROGRESSION_SERVER[10].name}};
 const oldRandom=Math.random;
 for(const pair of [[0.0,9],[0.5,10],[0.999,11]]){
   Math.random=()=>pair[0];
@@ -93,6 +111,28 @@ for(const pair of [[0.0,9],[0.5,10],[0.999,11]]){
   if(w.progressionIndex!==pair[1])throw new Error('NPC window broken '+pair);
 }
 Math.random=oldRandom;
+
+// Run all registered /api/pve/victory middleware/routes in Express order.
+const flat=routes['/api/pve/victory'].flat();
+const req={telegramUser:{id:'1'},body:{battleToken:'battle-1'}};
+let responseBody=null;
+const res={
+  json(body){responseBody=body;return body},
+  status(){return this}
+};
+let cursor=0;
+function next(){const fn=flat[cursor++];if(fn)return fn(req,res,next)}
+next();
+
+const expected=WEAPON_PROGRESSION_SERVER[11].name;
+const wrong=WEAPON_PROGRESSION_SERVER[50].name;
+if((Number(playerData.inventory[expected])||0)!==1)throw new Error('expected NPC weapon not awarded');
+if(Number(playerData.inventory[wrong])||0)throw new Error('legacy random weapon not removed');
+if(!responseBody||responseBody.success!==true)throw new Error('victory response lost');
+if(!responseBody.npcWeaponDrop||responseBody.npcWeaponDrop.name!==expected)throw new Error('NPC drop metadata wrong');
+if(!responseBody.rewards.some(x=>String(x).includes('Оружие с NPC: '+expected)))throw new Error('reward line missing');
+if(responseBody.rewards.some(x=>String(x).includes(wrong)))throw new Error('old random reward line survived');
+
 console.log('RUNTIME PASS');
 """
 with tempfile.TemporaryDirectory() as td:
@@ -101,4 +141,4 @@ with tempfile.TemporaryDirectory() as td:
     proc=subprocess.run(['node',str(candidate)],check=True,capture_output=True,text=True)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: live-like 3-level progression starts without starterGear; trader stock is global; NPC weapon/drop stays at player ±1')
+print('PASS: live-like 3-level progression, global trader stock and NPC ±1 victory loot are executed end-to-end')
