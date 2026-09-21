@@ -110,7 +110,8 @@ if(WEAPON_PROGRESSION_SERVER[87].unlockLevel!==262)throw new Error('bad rifle st
 if(WEAPON_PROGRESSION_SERVER[115].unlockLevel!==346)throw new Error('bad final unlock');
 if(!WEAPON_PROGRESSION_SERVER[0].starterGear)throw new Error('starter marker not restored');
 
-// NPC tier is locked to player level; equipping a far stronger gun must not move the ±1 window.\nconst player={level:31,weapon:{name:WEAPON_PROGRESSION_SERVER[100].name}};
+// NPC tier is locked to player level; equipping a far stronger gun must not move the ±1 window.
+const player={level:31,weapon:{name:WEAPON_PROGRESSION_SERVER[100].name}};
 const oldRandom=Math.random;
 for(const pair of [[0.0,9],[0.5,10],[0.999,11]]){
   Math.random=()=>pair[0];
