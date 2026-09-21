@@ -1,0 +1,39 @@
+name: Weapon progression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_progression.py'
+      - 'tests/weapon_progression.test.cjs'
+      - 'tests/weapon_progression_server_patch.test.py'
+      - '.github/workflows/weapon-progression.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_progression.py'
+      - 'tests/weapon_progression.test.cjs'
+      - 'tests/weapon_progression_server_patch.test.py'
+      - '.github/workflows/weapon-progression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Validate progression
+        run: |
+          node tests/weapon_progression.test.cjs
+          python3 -m py_compile tools/install_weapon_progression.py tests/weapon_progression_server_patch.test.py
+          python3 tests/weapon_progression_server_patch.test.py
+          git diff --check
