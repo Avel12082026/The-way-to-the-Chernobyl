@@ -16,8 +16,8 @@ const SHOP_WEAPONS=[
  ...Array.from({length:29},(_,i)=>({id:4000+i,name:i===0?'Remington 870':'S'+(i+1),dmg:75+i,unlockLevel:40+i}))
 ];
 const SHOP_ARMOR=Array.from({length:14},(_,i)=>({id:5000+i,name:'Броня T'+(i+1),tier:i+1,armor:10+i,hitAbsorption:5+i,unlockLevel:1+i*40}));
-let playerData={level:31,weapon:{name:'Пистолет P11'},inventory:{}};
-const battleRow={enemy_kind:'npc',payload:JSON.stringify({tier:1,weaponDrop:'Пистолет P12',weaponName:'Пистолет P12'})};
+let playerData={level:31,weapon:{name:'P11'},inventory:{}};
+const battleRow={enemy_kind:'npc',payload:JSON.stringify({tier:1,weaponDrop:'P12',weaponName:'P12'})};
 const PVE_SCHEMA='pve_battles';
 const db={prepare(sql){
   if(sql.startsWith('SELECT enemy_kind,payload FROM pve_battles'))return{get(){return battleRow}};
@@ -80,7 +80,7 @@ for text in [
     "npcLootMedkitServer",
     "NPC_CONSUMABLE_LOOT_NAMES",
     "Припасы",
-    "Оружие с NPC:",
+    "label+' с NPC: '+drop.name",
     "Это оружие откроется на ",
 ]:
     assert text in patched,text
