@@ -11,9 +11,9 @@ VICTORY_MARK='// NPC_WEAPON_LOOT_WINDOW_V1'
 CORE=r"""// WEAPON_UNLOCK_EVERY_3_LEVELS_V1
 function buildWeaponProgressionServer(list){
     const regular=(Array.isArray(list)?list:[]).filter(w=>w&&!w.adminOnly);
-    const rifleStart=regular.findIndex(w=>/^Винтовка\b/i.test(String(w&&w.name||'')));
+    const rifleStart=regular.findIndex(w=>/^Винтовка(?:\s|$)/i.test(String(w&&w.name||'')));
     const pistolStart=regular.findIndex(w=>!!(w&&w.starterGear));
-    const shotgunStart=regular.findIndex(w=>/^Дробовик\b/i.test(String(w&&w.name||'')));
+    const shotgunStart=regular.findIndex(w=>/^Дробовик(?:\s|$)/i.test(String(w&&w.name||'')));
     if(rifleStart<0||pistolStart<0||shotgunStart<0||
        !(rifleStart<pistolStart&&pistolStart<shotgunStart))
         throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: не удалось определить классы оружия');
