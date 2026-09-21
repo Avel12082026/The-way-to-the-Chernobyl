@@ -87,13 +87,17 @@ def main():
     ap.add_argument('--map',required=True,type=Path,help='Exact original Rostok map file')
     ap.add_argument('--bar',required=True,type=Path,help='Exact original 100 RADS bar file')
     ap.add_argument('--check',action='store_true')
+    ap.add_argument('--server-only',action='store_true',help='Install server routing and Rostok assets only; Telegram client is hosted separately')
     args=ap.parse_args()
 
     root=args.root.resolve(strict=True)
     if os.geteuid()!=0 and not args.check:
         raise RuntimeError('Установку нужно запускать от root на сервере.')
     ui=root/'ui';index=root/'index.html';server=root/'server.js'
-    for p in (ui,index,server,ui/'bunker-menu.js',ui/'bunker-menu.css'):
+    required=[ui,server]
+    if not args.server_only:
+        required.extend([index,ui/'bunker-menu.js',ui/'bunker-menu.css'])
+    for p in required:
         if not p.exists(): raise RuntimeError('Не найден обязательный файл: '+str(p))
 
     map_data=validate_asset(args.map.resolve(strict=True),MAP_SHA,MAP_SIZE,'Карта Росстока')
@@ -111,8 +115,11 @@ def main():
     if '// ZONE_MAP_ROUTING_V4' not in installer_text or MAP_SHA not in installer_text or BAR_SHA not in installer_text:
         raise RuntimeError('Серверный установщик не соответствует пакету Росстока.')
 
-    index_old=index.read_bytes()
-    index_new=bump_cache(bump_cache(index_old.decode('utf-8'),'bunker-menu.css'),'bunker-menu.js').encode('utf-8')
+    index_old=None
+    index_new=None
+    if not args.server_only:
+        index_old=index.read_bytes()
+        index_new=bump_cache(bump_cache(index_old.decode('utf-8'),'bunker-menu.css'),'bunker-menu.js').encode('utf-8')
 
     if args.check:
         with tempfile.TemporaryDirectory(prefix='rostok-check-') as td:
@@ -120,13 +127,15 @@ def main():
             run(['node','--check',str(p)],timeout=30)
             q=Path(td)/'server-installer.py';q.write_bytes(server_installer)
             run(['python3','-m','py_compile',str(q)],timeout=30)
-        print('CHECK OK: Россток, исходные изображения и установщики проверены; сервер не изменён.')
+        print('CHECK OK: Россток, исходные изображения и установщики проверены; сервер не изменён.' + (' Режим server-only.' if args.server_only else ''))
         return
 
     stamp=time.strftime('%Y%m%d_%H%M%S')
     backup=root/f'BACKUP_BEFORE_ROSTOK_{stamp}'
     backup.mkdir()
-    tracked=[ui/'bunker-menu.js',ui/'bunker-menu.css',index,server,ui/'zone-map4.jpg',ui/'rostok-bar.png']
+    tracked=[server,ui/'zone-map4.jpg',ui/'rostok-bar.png']
+    if not args.server_only:
+        tracked=[ui/'bunker-menu.js',ui/'bunker-menu.css',index]+tracked
     existed={}
     for p in tracked:
         existed[p]=p.exists()
@@ -135,11 +144,11 @@ def main():
     try:
         write_atomic(ui/'zone-map4.jpg',map_data)
         write_atomic(ui/'rostok-bar.png',bar_data)
-        write_atomic(ui/'bunker-menu.js',client_js)
-        write_atomic(ui/'bunker-menu.css',client_css)
-        write_atomic(index,index_new)
-
-        run(['node','--check',str(ui/'bunker-menu.js')],timeout=30)
+        if not args.server_only:
+            write_atomic(ui/'bunker-menu.js',client_js)
+            write_atomic(ui/'bunker-menu.css',client_css)
+            write_atomic(index,index_new)
+            run(['node','--check',str(ui/'bunker-menu.js')],timeout=30)
         with tempfile.TemporaryDirectory(prefix='rostok-server-') as td:
             installer=Path(td)/'install_zone_map_routing_server.py'
             installer.write_bytes(server_installer)
@@ -157,7 +166,7 @@ def main():
         if sha256((ui/'zone-map4.jpg').read_bytes())!=MAP_SHA or sha256((ui/'rostok-bar.png').read_bytes())!=BAR_SHA:
             raise RuntimeError('Контрольная сумма изображения изменилась после установки.')
 
-        print('РОССТОК УСТАНОВЛЕН.')
+        print('РОССТОК УСТАНОВЛЕН' + (' (server-only).' if args.server_only else '.'))
         print('Карта 865x1536 и бар 941x1672 сохранены байт-в-байт, без пережатия.')
         print('Backup:',backup)
     except Exception:
