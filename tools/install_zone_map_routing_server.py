@@ -207,20 +207,100 @@ def insert_before_one(text, anchors, block, label):
     anchor=matches[0]
     return text.replace(anchor,block+anchor,1)
 
+def _find_handler_block_end(text,route_start):
+    route_anchor="app.post('/api/raid/zone-step'"
+    route_pos=text.find(route_anchor,route_start)
+    if route_pos<0:
+        route_anchor='app.post("/api/raid/zone-step"'
+        route_pos=text.find(route_anchor,route_start)
+    if route_pos<0:
+        return -1
+
+    arrow=text.find('=>',route_pos)
+    if arrow<0:
+        return -1
+    brace=text.find('{',arrow)
+    if brace<0:
+        return -1
+
+    depth=0
+    quote=None
+    escape=False
+    line_comment=False
+    block_comment=False
+    i=brace
+    while i<len(text):
+        ch=text[i]
+        nxt=text[i+1] if i+1<len(text) else ''
+
+        if line_comment:
+            if ch=='\n':
+                line_comment=False
+            i+=1
+            continue
+        if block_comment:
+            if ch=='*' and nxt=='/':
+                block_comment=False
+                i+=2
+                continue
+            i+=1
+            continue
+        if quote:
+            if escape:
+                escape=False
+            elif ch=='\\':
+                escape=True
+            elif ch==quote:
+                quote=None
+            i+=1
+            continue
+
+        if ch=='/' and nxt=='/':
+            line_comment=True
+            i+=2
+            continue
+        if ch=='/' and nxt=='*':
+            block_comment=True
+            i+=2
+            continue
+        if ch in ("'",'"','`'):
+            quote=ch
+            i+=1
+            continue
+        if ch=='{':
+            depth+=1
+        elif ch=='}':
+            depth-=1
+            if depth==0:
+                j=i+1
+                while j<len(text) and text[j] in ' \t\r\n':
+                    j+=1
+                if text.startswith(');',j):
+                    return j+2
+                if text.startswith(')',j):
+                    j+=1
+                    while j<len(text) and text[j] in ' \t\r\n':
+                        j+=1
+                    if j<len(text) and text[j]==';':
+                        j+=1
+                    return j
+                return i+1
+        i+=1
+    return -1
+
 def upgrade_route(text):
     matches=[mark for mark in OLD_ROUTE_MARKS if mark in text]
     if len(matches)!=1:
         raise RuntimeError(f'Ожидался один старый маршрут карты, найдено {len(matches)}.')
     start=text.find(matches[0])
-    # Replace only the old zone-routing block. Do not discard unrelated patches that
-    # may have been appended later between the route and app.listen.
-    error_anchor="console.error('[/api/raid/zone-step]'"
-    error_pos=text.find(error_anchor,start)
-    if error_pos>=0:
-        route_end=text.find("});",error_pos)
-        if route_end>=0:
-            route_end+=len("});")
-            return text[:start]+ZONE_ROUTE+text[route_end:]
+
+    # Replace exactly the old /api/raid/zone-step handler. The previous implementation
+    # searched for the first literal "});" after console.error(), but a nested
+    # res.status(...).json({...}); contains the same bytes and can leave a stray brace.
+    route_end=_find_handler_block_end(text,start)
+    if route_end>=0:
+        return text[:start]+ZONE_ROUTE+text[route_end:]
+
     listen=text.find('app.listen(',start)
     if listen<0:
         raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
