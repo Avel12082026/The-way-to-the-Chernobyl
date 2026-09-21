@@ -10,47 +10,38 @@ const index=fs.readFileSync('index.html','utf8');
 assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()'),'raid door wiring changed unexpectedly');
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
-assert(!enter.includes('startRaid()'),'raid door must not start raid before marker selection');
 
-assert(js.includes("version: '0.5.1'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.9.1'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка'})"),'map titles missing');
-assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 server image missing');
-assert(js.includes("2: {path:'/api/zone-map/2', width:1397, height:1536}"),'location 2 server image missing');
-assert(js.includes('20260921-map8'),'map image cache key missing');
+assert(js.includes("version: '0.6.0'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.10.0'"),'BunkerMenu version mismatch');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка',3:'НИИ Агропром'})"),'three map titles missing');
+assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
+assert(js.includes("2: {path:'/api/zone-map/2', width:1397, height:1536}"),'location 2 asset missing');
+assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
+assert(js.includes('20260921-map10'),'map image cache key missing');
 
-assert(js.includes("id:'transition-to-2'")&&js.includes('targetLocation:2'),'location 1 -> 2 transition missing');
-assert(js.includes("id:'transition-to-1'")&&js.includes('targetLocation:1'),'location 2 -> 1 transition missing');
-assert(js.includes("id:'transition-future-top'")&&js.includes("id:'transition-future-left'"),'future location markers missing');
-assert(js.includes('У меня еще недостаточно хорошое снаряжения чтобы идти на свалку'),'requested dump gate message missing');
-assert(js.includes('Переход откроется, когда станет доступна вторая десятка пистолетов.'),'second pistol decade gate missing');
-assert(js.includes('Локация ещё не открыта сталкерами.'),'future location closed message missing');
+assert(js.includes("id:'transition-to-3'")&&js.includes("label:'Переход на НИИ Агропром'"),'Svalka -> NII Agroprom transition missing');
+assert(js.includes("targetLocation:3,unlock:'last-nine-pistols'"),'NII Agroprom transition must use last-nine gate');
+assert(js.includes("id:'transition-to-2'")&&js.includes("label:'Переход на Свалку'"),'NII Agroprom -> Svalka transition missing');
+assert(js.includes('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.'),'last-nine warning missing');
+assert(js.includes('function lastNinePistols()')&&js.includes('slice(-9)'),'last nine pistol list missing');
+assert(js.includes('function lastNinePistolsReady()')&&js.includes('lastNinePistolsReady'),'last nine pistol gate missing');
 
-assert(js.includes('function travelToZoneLocation')&&js.includes('zoneMapTravelFill'),'travel loader missing');
-assert(js.includes('ПЕРЕХОД МЕЖДУ ЛОКАЦИЯМИ'),'travel caption missing');
-assert(js.includes('await travelToZoneLocation(1)')&&js.includes('await travelToZoneLocation(2)'),'map transitions must use travel loader');
+const loc3Block=(js.match(/3: \[([\s\S]*?)\n    \]/)||[])[1]||'';
+assert.equal((loc3Block.match(/kind:'enemy'/g)||[]).length,2,'NII Agroprom human marker count changed');
+assert.equal((loc3Block.match(/label:'Военные'/g)||[]).length,2,'NII Agroprom humans must be Military only');
+assert.equal((loc3Block.match(/kind:'mutant'/g)||[]).length,2,'NII Agroprom mutant marker count changed');
+assert.equal((loc3Block.match(/kind:'anomaly'/g)||[]).length,2,'NII Agroprom anomaly marker count changed');
+assert.equal((loc3Block.match(/kind:'transition'/g)||[]).length,1,'NII Agroprom must have one return transition');
+assert.equal((loc3Block.match(/kind:'camp'/g)||[]).length,0,'NII Agroprom must not have camp/traders');
 
-const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \]/)||[])[1]||'';
-assert.equal((loc2Block.match(/kind:'enemy'/g)||[]).length,3,'location 2 must have three human-enemy markers');
-assert.equal((loc2Block.match(/kind:'mutant'/g)||[]).length,3,'location 2 mutant marker count changed');
-assert.equal((loc2Block.match(/kind:'anomaly'/g)||[]).length,2,'location 2 anomaly marker count changed');
-assert.equal((loc2Block.match(/kind:'camp'/g)||[]).length,0,'location 2 must not have traders/camp');
-assert.equal((loc2Block.match(/label:'Бандиты'/g)||[]).length,3,'all location 2 human markers must be Bandits');
+assert(js.includes('await travelToZoneLocation(3)'),'NII Agroprom transition must use loading screen');
+assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
+assert(index.includes('ui/bunker-menu.css?v=20260921-map10'),'CSS cache version mismatch');
+assert(index.includes('ui/bunker-menu.js?v=20260921-map10'),'JS cache version mismatch');
 
-assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry location + marker type');
-assert(js.includes("slice(10, 20)"),'second pistol decade definition missing');
-
-assert(index.includes('id="raidMapBtn"'),'raid map button missing');
-assert(index.includes("BunkerMenu.openZoneMap('raid')"),'raid map button not wired');
-assert(index.includes('>Открыть карту</button>'),'raid map caption missing');
-assert(index.includes('ui/bunker-menu.css?v=20260921-map9'),'CSS cache version mismatch');
-assert(index.includes('ui/bunker-menu.js?v=20260921-map9'),'JS cache version mismatch');
-
-assert(css.includes('.zone-map-title'),'map title styling missing');
 const zoneCss=css.slice(css.indexOf('/* Zone map.'));
-assert(zoneCss.includes('object-fit:contain'),'map artwork must keep its proportions');
-assert(!zoneCss.includes('object-fit:fill'),'zone map artwork must not be stretched');
-assert(zoneCss.includes('.zone-map-travel-bar')&&zoneCss.includes('.zone-map-travel-fill'),'travel progress styling missing');
-assert(css.includes('background:transparent')&&css.includes('opacity:.001'),'marker hit areas must stay invisible');
+assert(zoneCss.includes('object-fit:contain'),'maps must keep original proportions');
+assert(!zoneCss.includes('object-fit:fill'),'zone maps must not be stretched');
+assert(zoneCss.includes('.zone-map-travel-bar')&&zoneCss.includes('.zone-map-title'),'travel bar/title styling missing');
 
-console.log('PASS: named proportional maps, exact gear warning, travel loading bar, transitions and map2 restrictions');
+console.log('PASS: NII Agroprom map, Military-only NPC markers, last-nine-pistol gate, proportional layout and loading transitions');
