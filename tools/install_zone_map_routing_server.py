@@ -63,11 +63,14 @@ function zoneMapLocationUnlocked(data,location){
 const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45}});
 function zoneMapNpcPayload(data,zoneTier,zoneLocation){
     const forcedLevel=zoneTier<=1?1:1+(zoneTier-1)*40;
-    const npc=raidCreateNpcPayload({...data,level:forcedLevel});
-    if(!npc)return null;
-    const stats=ZONE_MAP_NPC_STATS[zoneTier];
+    const rawNpc=raidCreateNpcPayload({...data,level:forcedLevel});
+    if(!rawNpc)return null;
+    const npc=typeof pveAdaptiveNpcPayloadServer==='function'
+        ?pveAdaptiveNpcPayloadServer(data,rawNpc):rawNpc;
     npc.tier=zoneTier;
-    if(stats){
+    // Compatibility fallback when the adaptive PvE patch has not been installed yet.
+    const stats=ZONE_MAP_NPC_STATS[zoneTier];
+    if(typeof pveAdaptiveNpcPayloadServer!=='function'&&stats){
         npc.hp=stats.hp;
         npc.enemyHp=stats.hp;
         npc.maxEnemyHp=stats.hp;
@@ -92,8 +95,10 @@ function zoneMapMutantPayload(data,zoneTier){
     const baseHp=Math.max(1,Number(pick.hp)||1);
     const floor=zoneTier<=1?240:zoneTier===2?420:0;
     const hp=Math.max(baseHp,floor);
-    return {...pick,sourceTier:Number(pick.tier)||0,tier:zoneTier,kind:'mutant',
+    const payload={...pick,sourceTier:Number(pick.tier)||0,tier:zoneTier,kind:'mutant',
         hp,enemyHp:hp,maxEnemyHp:hp,medkitsUsed:0};
+    return typeof pveAdaptiveMutantPayloadServer==='function'
+        ?pveAdaptiveMutantPayloadServer(data,payload):payload;
 }
 
 app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),(req,res)=>{
