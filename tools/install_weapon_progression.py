@@ -48,9 +48,8 @@ function weaponProgressionBaseNameServer(value){
     return raw.replace(/\s+\+\d+$/,'').trim();
 }
 function weaponProgressionPlayerIndexServer(data){
-    const equipped=weaponProgressionBaseNameServer(data&&data.weapon);
-    const found=WEAPON_PROGRESSION_BY_NAME_SERVER.get(equipped);
-    if(found)return found.index;
+    // NPC progression follows the player's level, not the currently equipped gun.
+    // One new progression step opens every 3 player levels.
     const level=Math.max(1,Number(data&&data.level)||1);
     return Math.max(0,Math.min(WEAPON_PROGRESSION_SERVER.length-1,Math.floor((level-1)/3)));
 }
