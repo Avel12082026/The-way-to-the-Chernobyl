@@ -25,5 +25,7 @@ assert "write_atomic(ui/'zone-map4.jpg',map_data)" in source
 assert "write_atomic(ui/'rostok-bar.png',bar_data)" in source
 assert 'API вернул изменённое изображение' in source
 assert 'без пережатия' in source
+assert "ap.add_argument('--server-only'" in source
+assert "if not args.server_only:" in source
 
 print('PASS: Rostok installer preserves exact approved map/bar bytes and bumps client cache atomically')
