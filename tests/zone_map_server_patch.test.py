@@ -81,7 +81,8 @@ v3=source.replace(
     mod.SHOP_GUARD +
     "// ZONE_MAP_ROUTING_V3\n"
     "const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg'});\n"
-    "app.post('/api/raid/zone-step',(req,res)=>{});\n"
+    "app.post('/api/raid/zone-step',(req,res)=>{try{}catch(e){console.error('[/api/raid/zone-step]',e);}});\n"
+    "const LATER_PATCH_SHOULD_SURVIVE=true;\n"
     "app.listen(3000);"
 )
 upgraded,changed3=mod.patch(v3)
@@ -91,6 +92,7 @@ assert "// ZONE_MAP_ROUTING_V3" not in upgraded
 assert "4:'zone-map4.jpg'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
+assert "const LATER_PATCH_SHOULD_SURVIVE=true;" in upgraded
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
