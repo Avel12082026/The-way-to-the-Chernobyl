@@ -127,7 +127,21 @@ def main():
             run(['node','--check',str(p)],timeout=30)
             q=Path(td)/'server-installer.py';q.write_bytes(server_installer)
             run(['python3','-m','py_compile',str(q)],timeout=30)
-        print('CHECK OK: Россток, исходные изображения и установщики проверены; сервер не изменён.' + (' Режим server-only.' if args.server_only else ''))
+
+            # Dry-run the actual V3->V4 patch against the live server.js before
+            # touching any server file or asset. This catches shape differences
+            # in previously installed route blocks.
+            ns={'__name__':'rostok_zone_route_dry_run','__file__':str(q)}
+            exec(compile(server_installer.decode('utf-8'),str(q),'exec'),ns,ns)
+            patch_fn=ns.get('patch')
+            if not callable(patch_fn):
+                raise RuntimeError('В серверном установщике не найдена patch().')
+            live_source=server.read_text(encoding='utf-8')
+            candidate_text,_changed=patch_fn(live_source)
+            candidate=Path(td)/'server.candidate.js'
+            candidate.write_text(candidate_text,encoding='utf-8')
+            run(['node','--check',str(candidate)],timeout=30)
+        print('CHECK OK: Россток, изображения и реальная миграция server.js V3→V4 проверены; сервер не изменён.' + (' Режим server-only.' if args.server_only else ''))
         return
 
     stamp=time.strftime('%Y%m%d_%H%M%S')
