@@ -270,12 +270,46 @@ def find_first(text,anchors,label):
     found.sort(key=lambda x:x[0])
     return found[0][1]
 
+def _replace_installed_block(text,mark,route,new_block,route_occurrence,label):
+    start=text.find(mark)
+    if start<0:
+        raise RuntimeError(f'{label}: маркер не найден.')
+    pos=start
+    found=-1
+    for _ in range(route_occurrence):
+        found=text.find(route,pos)
+        if found<0:
+            raise RuntimeError(f'{label}: не удалось найти границу старого блока.')
+        pos=found+len(route)
+    return text[:start]+new_block+text[found:]
+
 def patch(source):
     marks=[MARK in source,NPC_MARK in source,VICTORY_MARK in source]
     if any(marks):
         if not all(marks):
             raise RuntimeError('Обнаружена частичная установка прогрессии оружия.')
-        return source,False
+        current_required=(
+            'const classSize=29',
+            'weapon.unlockLevel=1+index*3',
+            'npcLootDropChanceServer',
+            'NPC_CONSUMABLE_LOOT_NAMES',
+            'weaponProgressionPlayerIndexServer(data)'
+        )
+        if all(x in source for x in current_required):
+            return source,False
+
+        # Upgrade the earlier V1 blocks in place while preserving original routes.
+        text=source
+        text=_replace_installed_block(
+            text,MARK,"app.post('/api/shop/buy'",CORE,2,'прогрессия магазина'
+        )
+        text=_replace_installed_block(
+            text,NPC_MARK,"app.post('/api/raid/step'",NPC_WRAP,1,'оружие NPC'
+        )
+        text=_replace_installed_block(
+            text,VICTORY_MARK,"app.post('/api/pve/victory'",VICTORY_MIDDLEWARE,2,'лут NPC'
+        )
+        return text,True
 
     if 'const SHOP_WEAPONS' not in source:
         raise RuntimeError('Не найден SHOP_WEAPONS.')
