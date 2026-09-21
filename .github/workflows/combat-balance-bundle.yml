@@ -1,0 +1,77 @@
+name: Combat balance bundle
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_class_damage.py'
+      - 'tools/install_weapon_progression.py'
+      - 'tools/install_pve_adaptive_balance.py'
+      - 'tools/install_combat_balance_bundle.py'
+      - 'tools/install_zone_map_routing_server.py'
+      - 'tools/simulate_pve_balance.cjs'
+      - 'tests/weapon_class_damage.test.cjs'
+      - 'tests/weapon_class_damage_server_patch.test.py'
+      - 'tests/weapon_progression.test.cjs'
+      - 'tests/weapon_progression_server_patch.test.py'
+      - 'tests/pve_adaptive_balance_server_patch.test.py'
+      - 'tests/combat_balance_bundle.test.py'
+      - 'tests/zone_map_server_patch.test.py'
+      - '.github/workflows/combat-balance-bundle.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_class_damage.py'
+      - 'tools/install_weapon_progression.py'
+      - 'tools/install_pve_adaptive_balance.py'
+      - 'tools/install_combat_balance_bundle.py'
+      - 'tools/install_zone_map_routing_server.py'
+      - 'tools/simulate_pve_balance.cjs'
+      - 'tests/weapon_class_damage.test.cjs'
+      - 'tests/weapon_class_damage_server_patch.test.py'
+      - 'tests/weapon_progression.test.cjs'
+      - 'tests/weapon_progression_server_patch.test.py'
+      - 'tests/pve_adaptive_balance_server_patch.test.py'
+      - 'tests/combat_balance_bundle.test.py'
+      - 'tests/zone_map_server_patch.test.py'
+      - '.github/workflows/combat-balance-bundle.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Syntax
+        run: |
+          node --check tools/simulate_pve_balance.cjs
+          python3 -m py_compile tools/install_weapon_class_damage.py
+          python3 -m py_compile tools/install_weapon_progression.py
+          python3 -m py_compile tools/install_pve_adaptive_balance.py
+          python3 -m py_compile tools/install_combat_balance_bundle.py
+          python3 -m py_compile tests/weapon_class_damage_server_patch.test.py
+          python3 -m py_compile tests/weapon_progression_server_patch.test.py
+          python3 -m py_compile tests/pve_adaptive_balance_server_patch.test.py
+          python3 -m py_compile tests/combat_balance_bundle.test.py
+      - name: Weapon balance
+        run: |
+          node tests/weapon_class_damage.test.cjs
+          node tests/weapon_progression.test.cjs
+          python3 tests/weapon_class_damage_server_patch.test.py
+          python3 tests/weapon_progression_server_patch.test.py
+      - name: PvE and bundle
+        run: |
+          python3 tests/pve_adaptive_balance_server_patch.test.py
+          python3 tests/combat_balance_bundle.test.py
+          python3 tests/zone_map_server_patch.test.py
+          node tools/simulate_pve_balance.cjs
+          git diff --check
