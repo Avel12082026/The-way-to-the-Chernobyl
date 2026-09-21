@@ -19,13 +19,14 @@
   let zoneMapLoadSeq = 0;
   let zoneMapTravelling = false;
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка',3:'НИИ Агропром'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
   const ZONE_MAP_ASSETS = Object.freeze({
     1: {path:'/api/zone-map/1', width:890, height:1536},
-    2: {path:'/api/zone-map/2', width:1397, height:1536}
+    2: {path:'/api/zone-map/2', width:1397, height:1536},
+    3: {path:'/api/zone-map/3', width:863, height:1536}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -42,17 +43,26 @@
       {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.30,y:90.71}
     ],
     2: [
-      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.08,y:6.00,targetLocation:3,unlock:'second-pistol-decade',future:true},
+      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.08,y:6.00,targetLocation:4,unlock:'second-pistol-decade',future:true},
       {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:14.07,y:13.91},
       {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:92.62,y:8.06},
       {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:85.41,y:39.08},
       {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:22.19,y:43.79},
       {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:45.82,y:43.49},
-      {id:'transition-future-left',kind:'transition',label:'Переход на будущую локацию',x:5.86,y:49.15,targetLocation:4,unlock:'second-pistol-decade',future:true},
+      {id:'transition-to-3',kind:'transition',label:'Переход на НИИ Агропром',x:5.86,y:49.15,targetLocation:3,unlock:'last-nine-pistols'},
       {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:91.36,y:68.31},
       {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:6.77,y:78.73},
       {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:44.78,y:86.31},
       {id:'transition-to-1',kind:'transition',label:'Переход на локацию 1',x:64.87,y:92.11,targetLocation:1,unlock:'none'}
+    ],
+    3: [
+      {id:'anomaly-3-1',kind:'anomaly',label:'Аномалия',x:9.85,y:34.57},
+      {id:'anomaly-3-2',kind:'anomaly',label:'Аномалия',x:82.27,y:36.95},
+      {id:'enemy-3-1',kind:'enemy',label:'Военные',x:48.15,y:40.82},
+      {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:93.51,y:42.28,targetLocation:2,unlock:'none'},
+      {id:'mutant-3-1',kind:'mutant',label:'Мутанты',x:42.41,y:52.57},
+      {id:'enemy-3-2',kind:'enemy',label:'Военные',x:16.86,y:59.57},
+      {id:'mutant-3-2',kind:'mutant',label:'Мутанты',x:83.95,y:60.64}
     ]
   });
 
@@ -110,6 +120,10 @@
     return pistolWeaponList().slice(10, 20);
   }
 
+  function lastNinePistols() {
+    return pistolWeaponList().slice(-9);
+  }
+
   function firstLocationArmorList() {
     if (typeof armorItems === 'undefined' || !Array.isArray(armorItems)) return [];
     return armorItems.filter(item => item && !item.adminOnly && !item.isResearchSuit && !item.isPremiumArmor).slice(0, 10);
@@ -126,6 +140,10 @@
 
   function secondPistolDecadeReady() {
     return gearUnlocked(secondPistolDecade(), 10);
+  }
+
+  function lastNinePistolsReady() {
+    return gearUnlocked(lastNinePistols(), 9);
   }
 
   function patchLocationOneShopCatalog() {
@@ -276,7 +294,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260921-map8`;
+    return `${SERVER_URL}${config.path}?v=20260921-map10`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -474,13 +492,23 @@
         return;
       }
       if (target === 2) {
-        if (!firstLocationToSecondReady()) {
+        if (zoneLocation === 1 && !firstLocationToSecondReady()) {
           if (typeof showGameAlert === 'function') {
             showGameAlert('У меня еще недостаточно хорошое снаряжения чтобы идти на свалку');
           }
           return;
         }
         await travelToZoneLocation(2);
+        return;
+      }
+      if (target === 3) {
+        if (!lastNinePistolsReady()) {
+          if (typeof showGameAlert === 'function') {
+            showGameAlert('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.');
+          }
+          return;
+        }
+        await travelToZoneLocation(3);
         return;
       }
       if (point?.future) {
@@ -1117,7 +1145,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.5.1',
+    version: '0.6.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1128,8 +1156,9 @@
     setRoute: setZoneRaidKind,
     setLocation: setZoneLocation,
     firstLocationToSecondReady,
-    secondPistolDecadeReady
+    secondPistolDecadeReady,
+    lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.9.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.10.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
