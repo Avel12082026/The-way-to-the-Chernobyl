@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory() as td:
     mod.validate_asset=lambda path,sha,size,kind: path.read_bytes()
     def fake_fetch(base,relative):
         if relative=='ui/bunker-menu.js':
-            return b"// 4:'Rostok' placeholder\n// id:'transition-to-4'\n// id:'camp-4'\n"
+            return "// 4:'Россток'\n// id:'transition-to-4'\n// id:'camp-4'\n".encode('utf-8')
         if relative=='ui/bunker-menu.css':
             return b"#rostokCampScreen.rostok-camp-screen{}\n"
         if relative=='tools/install_zone_map_routing_server.py':
