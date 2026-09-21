@@ -46,6 +46,20 @@ assert.equal(order[86].unlockLevel,259);
 assert.equal(order[87].unlockLevel,262);
 assert.equal(order[115].unlockLevel,346);
 
+const unlockedAt=level=>order.filter(w=>level>=w.unlockLevel);
+assert.equal(unlockedAt(1).length,1);
+assert.equal(unlockedAt(3).length,1);
+assert.equal(unlockedAt(4).length,2);
+assert.equal(unlockedAt(85).length,29);
+assert(unlockedAt(85).every(w=>w.progressionClass==='pistol'));
+assert.equal(unlockedAt(88).length,30);
+assert.equal(unlockedAt(88).at(-1).progressionClass,'shotgun');
+assert.equal(unlockedAt(175).length,59);
+assert.equal(unlockedAt(175).at(-1).progressionClass,'automatic');
+assert.equal(unlockedAt(262).length,88);
+assert.equal(unlockedAt(262).at(-1).progressionClass,'rifle');
+assert.equal(unlockedAt(346).length,116);
+
 assert(html.includes('const unlockWeaponsByLevel = () => WEAPON_PROGRESSION_ORDER.filter'));
 assert(html.includes('player.level >= (w.unlockLevel || 0)'));
 
