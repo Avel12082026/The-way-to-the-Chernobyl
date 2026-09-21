@@ -84,7 +84,8 @@ assert mod.SHOP_MARK in upgraded
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2')" in installer
-assert "zone-map3.jpg" in installer\nassert "(root/'ui'/'zone-map3.jpg',b'\\xff\\xd8')" in installer
+assert "zone-map3.jpg" in installer
+assert "(root/'ui'/'zone-map3.jpg',b'\\xff\\xd8')" in installer
 assert "Совместимость трёх локаций" in installer
 
 print('PASS: V3 installer upgrades live V2 and adds NII Agroprom, last-nine-pistol gate, Military-only NPCs and tier-3 routing')
