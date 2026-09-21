@@ -9,14 +9,6 @@ ROUTE_MARK='// ZONE_MAP_ROUTING_V3'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
-function zoneMapLocation1WeaponNames(){
-    const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
-    const start=list.findIndex(item=>item&&item.starterGear);
-    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик(?:\s|$)/i.test(String(item&&item.name||''))):-1;
-    const group=start>=0?list.slice(start,end>start?end:list.length):list;
-    return new Set(group.filter(item=>item&&!item.adminOnly).slice(0,10).map(item=>item.name));
-}
-const ZONE_MAP_LOCATION1_WEAPONS=zoneMapLocation1WeaponNames();
 const ZONE_MAP_LOCATION1_ARMOR=new Set(
     (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
       .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
@@ -25,8 +17,8 @@ const ZONE_MAP_LOCATION1_ARMOR=new Set(
 app.post('/api/shop/buy',(req,res,next)=>{
     if(String(req.body?.vendor||'')!=='zhuchara')return next();
     const category=String(req.body?.category||''),name=String(req.body?.name||'');
-    if(category==='weapon'&&!ZONE_MAP_LOCATION1_WEAPONS.has(name))
-        return res.status(400).json({success:false,error:'Этот ствол продаётся на другой локации'});
+    // Weapon stock follows the global 3-level progression; only the old armor
+    // restriction remains location-specific.
     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
         return res.status(400).json({success:false,error:'Этот костюм продаётся на другой локации'});
     return next();
@@ -46,7 +38,7 @@ app.get('/api/zone-map/:location',(req,res)=>{
 
 function zoneMapPistolListServer(){
     const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
-    const start=list.findIndex(item=>item&&item.starterGear);
+    const start=list.findIndex(item=>!!(item&&item.starterGear)||String(item&&item.name||'')==='Beretta 21A Bobcat'||Number(item&&item.id)===86);
     const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик(?:\s|$)/i.test(String(item&&item.name||''))):-1;
     const group=start>=0?list.slice(start,end>start?end:list.length):list;
     return group.filter(item=>item&&!item.adminOnly);
