@@ -212,6 +212,15 @@ def upgrade_route(text):
     if len(matches)!=1:
         raise RuntimeError(f'Ожидался один старый маршрут карты, найдено {len(matches)}.')
     start=text.find(matches[0])
+    # Replace only the old zone-routing block. Do not discard unrelated patches that
+    # may have been appended later between the route and app.listen.
+    error_anchor="console.error('[/api/raid/zone-step]'"
+    error_pos=text.find(error_anchor,start)
+    if error_pos>=0:
+        route_end=text.find("\n});",error_pos)
+        if route_end>=0:
+            route_end+=len("\n});")
+            return text[:start]+ZONE_ROUTE+text[route_end:]
     listen=text.find('app.listen(',start)
     if listen<0:
         raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
