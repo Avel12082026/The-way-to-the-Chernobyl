@@ -17,7 +17,7 @@ function weaponDamageClassServer(list,item){
     if(!Array.isArray(list)||!item||item.adminOnly)return'';
     const index=list.indexOf(item);
     const rifleStart=list.findIndex(o=>/^Винтовка(?:\s|$)/i.test(String(o&&o.name||'')));
-    const pistolStart=list.findIndex(o=>!!(o&&o.starterGear));
+    const pistolStart=list.findIndex(o=>!!(o&&o.starterGear)||String(o&&o.name||'')==='Beretta 21A Bobcat'||Number(o&&o.id)===86);
     const shotgunStart=list.findIndex(o=>/^Дробовик(?:\s|$)/i.test(String(o&&o.name||'')));
     if(index<0||rifleStart<0||pistolStart<0||shotgunStart<0)return'';
     if(!(rifleStart<pistolStart&&pistolStart<shotgunStart))
