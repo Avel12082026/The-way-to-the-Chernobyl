@@ -15,6 +15,7 @@ function safeParsePlayerData(x){return JSON.parse(x)}
 function parseGearNameServer(name){return {baseName:name}}
 function raidCreateNpcPayload(data){return {name:'npc',tier:1};}
 const app={post(){},listen(){}};
+app.post('/api/shop/buy',(req,res,next)=>next());
 app.post('/api/shop/buy',(req,res)=>{});
 app.post('/api/raid/step',(req,res)=>{});
 app.post('/api/pve/victory',(req,res)=>{});
