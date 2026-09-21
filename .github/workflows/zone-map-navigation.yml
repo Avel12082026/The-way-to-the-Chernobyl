@@ -9,6 +9,9 @@ on:
       - 'ui/zone-map-v2-*.b64'
       - 'ui/zone-map2-hq-*.b64'
       - 'ui/zone-map1-hq-*.b64'
+      - 'tests/svalka_map_asset.test.py'
+      - 'tools/install_svalka_map2.py'
+      - 'ui/zone-map2-v13.jpg'
       - 'tests/zone_map_navigation*'
       - 'tests/zone_map_server_patch.test.py'
       - 'tools/install_zone_map_routing_server.py'
@@ -46,6 +49,8 @@ jobs:
           node tests/zone_map_navigation.test.cjs
           node tests/smoker_npc.test.cjs
           python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py tools/install_zone_map_routing_server.py tests/zone_map_server_patch.test.py
+          python3 -m py_compile tools/install_svalka_map2.py tests/svalka_map_asset.test.py
+          python3 tests/svalka_map_asset.test.py
           python3 tests/zone_map_server_patch.test.py
           git diff --check
       - name: Install Chromium
