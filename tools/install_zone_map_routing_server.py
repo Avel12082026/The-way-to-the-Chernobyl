@@ -12,7 +12,7 @@ SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
 function zoneMapLocation1WeaponNames(){
     const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
     const start=list.findIndex(item=>item&&item.starterGear);
-    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик\b/i.test(String(item&&item.name||''))):-1;
+    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик(?:\s|$)/i.test(String(item&&item.name||''))):-1;
     const group=start>=0?list.slice(start,end>start?end:list.length):list;
     return new Set(group.filter(item=>item&&!item.adminOnly).slice(0,10).map(item=>item.name));
 }
@@ -47,7 +47,7 @@ app.get('/api/zone-map/:location',(req,res)=>{
 function zoneMapPistolListServer(){
     const list=Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[];
     const start=list.findIndex(item=>item&&item.starterGear);
-    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик\b/i.test(String(item&&item.name||''))):-1;
+    const end=start>=0?list.findIndex((item,index)=>index>start&&/^Дробовик(?:\s|$)/i.test(String(item&&item.name||''))):-1;
     const group=start>=0?list.slice(start,end>start?end:list.length):list;
     return group.filter(item=>item&&!item.adminOnly);
 }
