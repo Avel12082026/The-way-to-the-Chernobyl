@@ -94,6 +94,40 @@ assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
 assert "const LATER_PATCH_SHOULD_SURVIVE=true;" in upgraded
 
+# Regression for the real live-server tail: nested res.status(...).json({...});
+# appears before the route's own closing }); and must not be mistaken for it.
+v3_live=source.replace(
+    "app.listen(3000);",
+    mod.SHOP_GUARD +
+    "// ZONE_MAP_ROUTING_V3\n"
+    "const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg'});\n"
+    "app.post('/api/raid/zone-step',requireAuth,(req,res)=>{\n"
+    "  try{\n"
+    "    if(req.body?.zoneKind==='enemy'){return res.json({success:true,event:{type:'battle'}});}\n"
+    "    return res.json({success:true,event:{type:'none'}});\n"
+    "  }catch(e){\n"
+    "    console.error('[/api/raid/zone-step]',e);\n"
+    "    return res.status(500).json({success:false,error:'Ошибка шага рейда по карте'});\n"
+    "  }\n"
+    "});\n"
+    "const PVE_ADAPTIVE_COMBAT_V1=true;\n"
+    "app.listen(3000);"
+)
+upgraded_live,changed_live=mod.patch(v3_live)
+assert changed_live
+assert mod.ROUTE_MARK in upgraded_live
+assert "// ZONE_MAP_ROUTING_V3" not in upgraded_live
+assert "const PVE_ADAPTIVE_COMBAT_V1=true;" in upgraded_live
+assert upgraded_live.count("app.post('/api/raid/zone-step'")==1
+assert "Ошибка шага рейда по карте'});\n  }\n});" not in upgraded_live
+
+# The migrated live-like candidate must remain valid JavaScript.
+import subprocess,tempfile
+with tempfile.TemporaryDirectory() as td:
+    candidate=Path(td)/'server.js'
+    candidate.write_text(upgraded_live,encoding='utf-8')
+    subprocess.run(['node','--check',str(candidate)],check=True,capture_output=True,text=True)
+
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
 assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8','017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa')" in installer
