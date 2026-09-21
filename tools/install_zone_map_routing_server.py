@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse, os, shutil, subprocess, tempfile, time
 
 SERVICE='pocketzone.service'
-OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V3')
+OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2')
 ROUTE_MARK='// ZONE_MAP_ROUTING_V3'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 
