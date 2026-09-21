@@ -35,7 +35,7 @@ app.post('/api/shop/buy',(req,res,next)=>{
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V3
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.png'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
     if(!file)return res.status(404).end();
@@ -246,7 +246,7 @@ def main():
     assets=[
         (root/'ui'/'zone-map1.jpg',b'\xff\xd8'),
         (root/'ui'/'zone-map2.jpg',b'\xff\xd8'),
-        (root/'ui'/'zone-map3.png',b'\x89PNG\r\n\x1a\n'),
+        (root/'ui'/'zone-map3.jpg',b'\xff\xd8'),
     ]
     for asset,signature in assets:
         if not asset.is_file():
