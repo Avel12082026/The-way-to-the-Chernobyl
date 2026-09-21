@@ -9,10 +9,10 @@ mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
 source=r"""
 const SHOP_WEAPONS=[
- ...Array.from({length:29},(_,i)=>({id:1000+i,name:'Автомат A'+(i+1),dmg:100+i,unlockLevel:175+i*3})),
- ...Array.from({length:29},(_,i)=>({id:2000+i,name:'Винтовка R'+(i+1),dmg:100+i,unlockLevel:262+i*3})),
- ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'Пистолет P'+(i+1),dmg:100+i,unlockLevel:1+i*3})),
- ...Array.from({length:29},(_,i)=>({id:4000+i,name:'Дробовик S'+(i+1),dmg:100+i,unlockLevel:88+i*3}))
+ ...Array.from({length:29},(_,i)=>({id:1000+i,name:i===0?'АКС-74У':'A'+(i+1),dmg:100+i,unlockLevel:175+i*3})),
+ ...Array.from({length:29},(_,i)=>({id:2000+i,name:i===0?'СВД':'R'+(i+1),dmg:100+i,unlockLevel:262+i*3})),
+ ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'P'+(i+1),dmg:100+i,unlockLevel:1+i*3})),
+ ...Array.from({length:29},(_,i)=>({id:4000+i,name:i===0?'Remington 870':'S'+(i+1),dmg:100+i,unlockLevel:88+i*3}))
 ];
 const SHOP_ARMOR=[];
 function getUpgradedStatServer(baseStat,level,ceiling){ return baseStat; }
@@ -31,6 +31,8 @@ assert changed
 assert replaced==1
 assert mod.MARK in patched
 assert "String(o&&o.name||'')==='Beretta 21A Bobcat'" in patched
+assert 'const classSize=29' in patched
+assert "pistolStart!==classSize*2" in patched
 assert 'pistol:1.00' in patched
 assert 'shotgun:1.25' in patched
 assert 'automatic:1.50' in patched
