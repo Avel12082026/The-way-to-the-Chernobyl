@@ -1576,6 +1576,42 @@ button:active {filter:brightness(1.18);}
         { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 6660, price: 666000, adminOnly: true }
     ];
 
+    // WEAPON_UNLOCK_EVERY_3_LEVELS_V1
+    // Последовательность продажи/лут-прогрессии: 29 пистолетов → 29 дробовиков →
+    // 29 автоматов/пулемётов → 29 винтовок. Первый ствол доступен с 1 уровня,
+    // каждый следующий открывается через 3 уровня: 1, 4, 7, ... 346.
+    function buildWeaponProgressionOrder(list = weapons) {
+        const regular = list.filter(w => w && !w.adminOnly);
+        const rifleStart = regular.findIndex(w => /^Винтовка\b/i.test(String(w?.name || '')));
+        const pistolStart = regular.findIndex(w => !!w?.starterGear);
+        const shotgunStart = regular.findIndex(w => /^Дробовик\b/i.test(String(w?.name || '')));
+        if (rifleStart < 0 || pistolStart < 0 || shotgunStart < 0 ||
+            !(rifleStart < pistolStart && pistolStart < shotgunStart)) {
+            console.error('[weapon progression] Не удалось определить границы классов оружия.');
+            return regular.slice().sort((a,b)=>(Number(a.unlockLevel)||0)-(Number(b.unlockLevel)||0));
+        }
+        const automatics = regular.slice(0, rifleStart);
+        const rifles = regular.slice(rifleStart, pistolStart);
+        const pistols = regular.slice(pistolStart, shotgunStart);
+        const shotguns = regular.slice(shotgunStart);
+        const ordered = [...pistols, ...shotguns, ...automatics, ...rifles];
+        if (ordered.length !== 116 ||
+            pistols.length !== 29 || shotguns.length !== 29 ||
+            automatics.length !== 29 || rifles.length !== 29) {
+            console.error('[weapon progression] Неожиданное количество оружия по классам.');
+        }
+        return ordered;
+    }
+    const WEAPON_PROGRESSION_ORDER = buildWeaponProgressionOrder(weapons);
+    WEAPON_PROGRESSION_ORDER.forEach((weapon, index) => {
+        weapon.progressionIndex = index;
+        weapon.unlockLevel = 1 + index * 3;
+        weapon.progressionClass =
+            index < 29 ? 'pistol' :
+            index < 58 ? 'shotgun' :
+            index < 87 ? 'automatic' : 'rifle';
+    });
+
     // ===== БРОНЯ =====
     const armorItems = [
         { id: 1, name: "Комбинезон Юность", tier: 1, armor: 5, price: 130, unlockLevel: 1, starterGear: true, stats: {"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1}, hitAbsorption: 3 },
@@ -7154,14 +7190,12 @@ function startBattle(enemy) {
             return player.level >= (a.unlockLevel || 0);
         });
 
-        // Оружие теперь открывается СТРОГО по уровню игрока (unlockLevel), не по тиру снаряжения —
-        // каждые 5 уровней открывается ровно 1 новый ствол. Порядок открытия: сначала все 29 пистолетов
-        // (от слабого к сильному), затем все 29 дробовиков, затем все 29 автоматов, затем все 29 винтовок.
-        // Полностью весь арсенал открывается на 580 уровне.
-        const unlockWeaponsByLevel = () => weapons.filter(w => {
-            if (w.adminOnly) return false;
-            return player.level >= (w.unlockLevel || 0);
-        });
+        // Оружие открывается строго по новой прогрессии: один новый ствол каждые 3 уровня.
+        // Порядок: 29 пистолетов → 29 дробовиков → 29 автоматов/пулемётов → 29 винтовок.
+        // Первый ствол — 1 уровень, последний — 346 уровень.
+        const unlockWeaponsByLevel = () => WEAPON_PROGRESSION_ORDER.filter(w =>
+            player.level >= (w.unlockLevel || 0)
+        );
 
         return [
             // У Торговца Жучары аптечки (включая "Антирад") стоят на 1% дороже базовой цены —
