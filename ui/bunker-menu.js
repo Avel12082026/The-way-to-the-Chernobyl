@@ -14,19 +14,21 @@
   let leonovImageLoaded = false;
   let smokerScreen = null;
   let smokerImageLoaded = false;
+  let rostokCampScreen = null;
   let zoneMapScreen = null;
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
   let zoneMapTravelling = false;
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
   const ZONE_MAP_ASSETS = Object.freeze({
     1: {path:'/api/zone-map/1', width:890, height:1536},
     2: {path:'/api/zone-map/2', width:864, height:1536},
-    3: {path:'/api/zone-map/3', width:863, height:1536}
+    3: {path:'/api/zone-map/3', width:863, height:1536},
+    4: {path:'/api/zone-map/4', width:865, height:1536}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -43,7 +45,7 @@
       {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.30,y:90.71}
     ],
     2: [
-      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade',future:true},
+      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'},
       {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:18.70,y:28.69},
       {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:87.03,y:25.38},
       {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:81.06,y:42.12},
@@ -63,6 +65,21 @@
       {id:'mutant-3-1',kind:'mutant',label:'Мутанты',x:42.41,y:52.57},
       {id:'enemy-3-2',kind:'enemy',label:'Военные',x:16.86,y:59.57},
       {id:'mutant-3-2',kind:'mutant',label:'Мутанты',x:83.95,y:60.64}
+    ],
+    4: [
+      {id:'transition-4-future-top',kind:'transition',label:'Переход на будущую локацию',x:38.61,y:5.21,future:true},
+      {id:'anomaly-4-1',kind:'anomaly',label:'Аномалия',x:25.90,y:13.35},
+      {id:'anomaly-4-2',kind:'anomaly',label:'Аномалия',x:72.72,y:18.49},
+      {id:'enemy-4-1',kind:'enemy',label:'Наёмники',x:20.46,y:30.86},
+      {id:'enemy-4-2',kind:'enemy',label:'Наёмники',x:41.04,y:32.62},
+      {id:'camp-4',kind:'camp',label:'Бар «100 RADS»',x:65.32,y:37.76},
+      {id:'enemy-4-3',kind:'enemy',label:'Наёмники',x:20.81,y:41.28},
+      {id:'mutant-4-1',kind:'mutant',label:'Мутанты',x:35.38,y:69.99},
+      {id:'transition-4-future-left',kind:'transition',label:'Переход на будущую локацию',x:6.94,y:78.78,future:true},
+      {id:'anomaly-4-3',kind:'anomaly',label:'Аномалия',x:71.91,y:82.36},
+      {id:'mutant-4-2',kind:'mutant',label:'Мутанты',x:20.92,y:86.13},
+      {id:'mutant-4-3',kind:'mutant',label:'Мутанты',x:45.66,y:88.80},
+      {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:93.76,y:89.32,targetLocation:2,unlock:'none'}
     ]
   });
 
@@ -259,6 +276,75 @@
     if (!frame) frame = requestAnimationFrame(layout);
   }
 
+  function refreshRostokCamp() {
+    if (!rostokCampScreen || typeof player !== 'object' || !player) return;
+    for (const [key, label] of [['health', 'Здоровье'], ['hunger', 'Сытость'], ['thirst', 'Жажда']]) {
+      const name = key[0].toUpperCase() + key.slice(1);
+      const max = Math.max(1, finite(player['max' + name], 100));
+      const value = Math.max(0, finite(player[key]));
+      meter('rostok' + name, value, max, label);
+      text('rostok' + name + 'Text', Math.round(value) + ' / ' + Math.round(max));
+    }
+  }
+
+  function layoutRostokCamp() {
+    if (!rostokCampScreen || !rostokCampScreen.classList.contains('active')) return;
+    const campScene = document.getElementById('rostokCampScene');
+    if (!campScene) return;
+    const viewport = window.visualViewport;
+    const w = viewport ? viewport.width : window.innerWidth;
+    const h = viewport ? viewport.height : window.innerHeight;
+    const ratio = 941 / 1672;
+    const width = w <= h ? w : h * ratio;
+    campScene.style.width = width + 'px';
+    campScene.style.height = h + 'px';
+    campScene.style.setProperty('--bunker-unit', width / 941 + 'px');
+    campScene.style.setProperty('--bunker-vunit', h / 1672 + 'px');
+    refreshRostokCamp();
+  }
+
+  function ensureRostokCampScreen() {
+    if (rostokCampScreen) return rostokCampScreen;
+    const el = document.createElement('section');
+    el.id = 'rostokCampScreen';
+    el.className = 'rostok-camp-screen screen';
+    el.setAttribute('aria-label', 'Россток — бар 100 RADS');
+    el.innerHTML = `
+      <div id="rostokCampScene" class="rostok-camp-scene">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-rostok1" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
+        <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
+        <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
+        <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
+      </div>`;
+    document.body.appendChild(el);
+    rostokCampScreen = el;
+    el.addEventListener('click', event => {
+      if (event.target.closest('[data-rostok-action="map"]')) closeRostokCamp();
+    });
+    window.addEventListener('resize', layoutRostokCamp);
+    window.visualViewport?.addEventListener('resize', layoutRostokCamp);
+    return el;
+  }
+
+  function openRostokCamp() {
+    const el = ensureRostokCampScreen();
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+    main.style.display = 'none';
+    const chat = document.getElementById('embeddedChatWidget');
+    if (chat) chat.style.display = 'none';
+    el.classList.add('active');
+    document.body.classList.add('rostok-camp-visible');
+    requestAnimationFrame(layoutRostokCamp);
+  }
+
+  function closeRostokCamp() {
+    if (rostokCampScreen) rostokCampScreen.classList.remove('active');
+    document.body.classList.remove('rostok-camp-visible');
+    setZoneLocation(4);
+    openZoneMap('camp');
+  }
+
   function renderZoneMapPoints() {
     const layer = document.getElementById('zoneMapPoints');
     if (!layer) return;
@@ -294,7 +380,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260921-map13`;
+    return `${SERVER_URL}${config.path}?v=20260922-rostok1`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -475,6 +561,14 @@
     const kind = point?.kind || '';
     if (kind === 'camp') {
       setZoneRaidKind('');
+      if (zoneLocation === 4) {
+        hideZoneMap();
+        if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
+          await endRaid();
+        }
+        openRostokCamp();
+        return;
+      }
       setZoneLocation(1);
       hideZoneMap();
       if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
@@ -509,6 +603,16 @@
           return;
         }
         await travelToZoneLocation(3);
+        return;
+      }
+      if (target === 4) {
+        if (!secondPistolDecadeReady()) {
+          if (typeof showGameAlert === 'function') {
+            showGameAlert('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.');
+          }
+          return;
+        }
+        await travelToZoneLocation(4);
         return;
       }
       if (point?.future) {
@@ -1159,6 +1263,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.10.3', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.11.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp};
   layout();
 })();
