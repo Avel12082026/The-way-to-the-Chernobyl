@@ -262,7 +262,7 @@ def main():
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Прогрессия оружия подтверждена: новый ствол каждые 3 уровня; пистолеты → дробовики → автоматы → винтовки; NPC ±1 позиция. Файлы не изменены.')
+            print('Прогрессия оружия подтверждена: новый ствол каждые 3 уровня; пистолеты → дробовики → автоматы → винтовки; NPC получает текущую ступень по уровню игрока ±1. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
@@ -288,7 +288,7 @@ def main():
                           capture_output=True,check=False)
                 if probe.returncode==0:
                     print('WEAPON_UNLOCK_EVERY_3_LEVELS_V1 установлен. Backup:',backup)
-                    print('Открытие: уровни 1,4,7,...,346. NPC: текущая позиция оружия игрока ±1.')
+                    print('Открытие: уровни 1,4,7,...,346. NPC: оружейная ступень по уровню игрока ±1.')
                     return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления.')
