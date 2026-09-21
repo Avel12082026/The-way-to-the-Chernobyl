@@ -73,20 +73,65 @@ def run(cmd,**kw):
     kw.setdefault('check',True)
     return subprocess.run(cmd,**kw)
 
+def _remove_installed_damage_block(source):
+    start=source.find(MARK)
+    if start<0:
+        return source
+    fn=source.find('function getWeaponClassNextCeilingServer',start)
+    if fn<0:
+        raise RuntimeError('Старый маркер баланса найден, но конец блока не распознан.')
+    brace=source.find('{',fn)
+    if brace<0:
+        raise RuntimeError('Не найдено тело getWeaponClassNextCeilingServer.')
+    depth=0
+    end=None
+    quote=None
+    escape=False
+    for i in range(brace,len(source)):
+        ch=source[i]
+        if quote:
+            if escape:
+                escape=False
+            elif ch=='\\':
+                escape=True
+            elif ch==quote:
+                quote=None
+            continue
+        if ch in ("'",'"','`'):
+            quote=ch
+            continue
+        if ch=='{':
+            depth+=1
+        elif ch=='}':
+            depth-=1
+            if depth==0:
+                end=i+1
+                break
+    if end is None:
+        raise RuntimeError('Не удалось определить конец старого блока баланса оружия.')
+    while end<len(source) and source[end] in '\r\n \t':
+        end+=1
+    return source[:start]+source[end:]
+
 def patch(source):
     if MARK in source:
         required=('WEAPON_DAMAGE_BASE','weaponDamageForProgressionIndexServer','getWeaponClassNextCeilingServer','weaponDamageClassServer')
-        if not all(x in source for x in required):
-            raise RuntimeError('Маркер баланса оружия есть, но патч неполный.')
-        return source,False,0
+        if all(x in source for x in required):
+            return source,False,0
+        # Upgrade the previous V1 multiplier implementation in place.
+        source=_remove_installed_damage_block(source)
 
     if 'const SHOP_WEAPONS' not in source:
         raise RuntimeError('Не найден SHOP_WEAPONS.')
     if 'getNextItemCeilingServer' not in source:
         raise RuntimeError('Не найдена серверная логика потолка улучшений.')
 
-    pattern=r'getNextItemCeilingServer\(\s*SHOP_WEAPONS\s*,'
-    text,n=re.subn(pattern,'getWeaponClassNextCeilingServer(SHOP_WEAPONS,',source)
+    existing=len(re.findall(r'getWeaponClassNextCeilingServer\(\s*SHOP_WEAPONS\s*,',source))
+    text=source
+    n=existing
+    if not existing:
+        pattern=r'getNextItemCeilingServer\(\s*SHOP_WEAPONS\s*,'
+        text,n=re.subn(pattern,'getWeaponClassNextCeilingServer(SHOP_WEAPONS,',source)
     if n<1:
         raise RuntimeError('Не найдены вызовы потолка улучшения оружия.')
 
