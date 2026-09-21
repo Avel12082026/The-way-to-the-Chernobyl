@@ -15,32 +15,35 @@ const pistols=weapons.slice(58,87);
 const shotguns=weapons.slice(87,116);
 const admin=weapons[116];
 
-for(const entry of Object.entries({automatics,rifles,pistols,shotguns})){
-  const name=entry[0],group=entry[1];
+for(const [name,group] of Object.entries({automatics,rifles,pistols,shotguns})){
   assert.equal(group.length,29,name+' must contain 29 weapons');
   assert(group.every(w=>!w.adminOnly),name+' contains admin weapon');
 }
 
-const byLevel=group=>new Map(group.map(w=>[Number(w.unlockLevel),w]));
-const pm=byLevel(pistols),sm=byLevel(shotguns),am=byLevel(automatics),rm=byLevel(rifles);
-const common=[...pm.keys()].filter(level=>sm.has(level)&&am.has(level)&&rm.has(level)).sort((a,b)=>a-b);
-assert.equal(common.length,28,'expected 28 shared progression levels');
-for(const level of common){
-  const p=pm.get(level).dmg,s=sm.get(level).dmg,a=am.get(level).dmg,r=rm.get(level).dmg;
-  assert(p<s && s<a && a<r,'damage class hierarchy broken at unlock '+level+': '+[p,s,a,r].join(','));
-  assert.equal(s,Math.round(p*1.25),'shotgun multiplier at unlock '+level);
-  assert.equal(a,Math.round(p*1.50),'automatic multiplier at unlock '+level);
-  assert.equal(r,Math.round(p*1.75),'rifle multiplier at unlock '+level);
+const progression=[...pistols,...shotguns,...automatics,...rifles];
+assert.equal(progression.length,116);
+for(let i=0;i<progression.length;i++){
+  const expected=Math.round(80*Math.pow(1.05,i));
+  assert.equal(progression[i].dmg,expected,'damage progression index '+i);
+  if(i>0)assert(progression[i].dmg>progression[i-1].dmg,'damage must strictly increase at '+i);
 }
+assert(Math.max(...pistols.map(w=>w.dmg))<Math.min(...shotguns.map(w=>w.dmg)),'pistols must be below shotguns');
+assert(Math.max(...shotguns.map(w=>w.dmg))<Math.min(...automatics.map(w=>w.dmg)),'shotguns must be below automatics');
+assert(Math.max(...automatics.map(w=>w.dmg))<Math.min(...rifles.map(w=>w.dmg)),'automatics must be below rifles');
+
 assert.equal(admin.name,'Убиваю взглядом');
 assert.equal(admin.dmg,6660,'admin-only weapon must not be rebalanced');
 
 assert(html.includes('WEAPON_CLASS_DAMAGE_V1'),'client balance marker missing');
 assert(html.includes('function getWeaponDamageClass(list, item)'),'weapon class helper missing');
+assert(html.includes('if (item.progressionClass) return String(item.progressionClass);'),'weapon class helper must use progression class');
 assert(html.includes('getWeaponDamageClass(list, o) === weaponClass'),'upgrade ceiling must stay inside weapon class');
 
+const range=group=>({min:group[0].dmg,max:group.at(-1).dmg});
 console.log(JSON.stringify({
   status:'passed',
-  unlock20:{pistol:pm.get(20).dmg,shotgun:sm.get(20).dmg,automatic:am.get(20).dmg,rifle:rm.get(20).dmg},
-  unlock580:{pistol:pm.get(580).dmg,shotgun:sm.get(580).dmg,automatic:am.get(580).dmg,rifle:rm.get(580).dmg}
+  pistol:range(pistols),
+  shotgun:range(shotguns),
+  automatic:range(automatics),
+  rifle:range(rifles)
 },null,2));
