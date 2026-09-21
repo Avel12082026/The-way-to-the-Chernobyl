@@ -149,11 +149,11 @@
   function patchLocationOneShopCatalog() {
     const native = window.getShopCatalog;
     if (typeof native !== 'function' || native.__zoneLocationOneLimited) return;
-    const weaponNames = new Set(firstLocationWeaponList().map(item => item.name));
     const armorNames = new Set(firstLocationArmorList().map(item => item.name));
     const limited = function() {
       return native().filter(item => {
-        if (item?.category === 'weapon') return weaponNames.has(item.name);
+        // Оружие больше не режем первыми 10 пистолетами: торговец открывает
+        // весь оружейный ряд по общей прогрессии раз в 3 уровня.
         if (item?.category === 'armor') return armorNames.has(item.name);
         return true;
       });
@@ -1159,6 +1159,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.10.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.10.2', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
