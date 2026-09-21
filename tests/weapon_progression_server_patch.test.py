@@ -97,6 +97,30 @@ assert patched.index(mod.VICTORY_MARK)<patched.index("app.post('/api/pve/victory
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
 
+legacy_core=r"""// WEAPON_UNLOCK_EVERY_3_LEVELS_V1
+const LEGACY_WEAPON_PROGRESSION=true;
+app.post('/api/shop/buy',requireAuth,(req,res,next)=>next());
+
+"""
+legacy_npc=r"""// NPC_WEAPON_PROGRESS_WINDOW_V1
+const LEGACY_NPC_WEAPON=true;
+
+"""
+legacy_victory=r"""// NPC_WEAPON_LOOT_WINDOW_V1
+app.post('/api/pve/victory',requireAuth,(req,res,next)=>next());
+
+"""
+legacy=patched.replace(mod.CORE,legacy_core,1).replace(mod.NPC_WRAP,legacy_npc,1).replace(mod.VICTORY_MIDDLEWARE,legacy_victory,1)
+upgraded,changed3=mod.patch(legacy)
+assert changed3
+assert 'npcLootDropChanceServer' in upgraded
+assert 'const classSize=29' in upgraded
+assert upgraded.count(mod.MARK)==1
+assert upgraded.count(mod.NPC_MARK)==1
+assert upgraded.count(mod.VICTORY_MARK)==1
+assert 'LEGACY_WEAPON_PROGRESSION' not in upgraded
+assert 'LEGACY_NPC_WEAPON' not in upgraded
+
 # Execute the patched fixture, not only node --check. This catches live startup errors
 # and verifies rare tier-dependent NPC loot plus the ±1 weapon progression window.
 runtime=patched+r"""
