@@ -9,6 +9,7 @@ mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
 source=r"""
 const SHOP_WEAPONS=[];
+const PVE_SCHEMA='pve_battles';
 const db={prepare(){return{get(){return null},run(){return{changes:1}}}}};
 const requireAuth=(_q,_s,n)=>n();
 function safeParsePlayerData(x){return JSON.parse(x)}
