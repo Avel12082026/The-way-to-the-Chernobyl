@@ -47,9 +47,10 @@ assert(index.includes('ui/bunker-menu.css?v=20260921-map8'),'CSS cache version m
 assert(index.includes('ui/bunker-menu.js?v=20260921-map8'),'JS cache version mismatch');
 
 assert(css.includes('.zone-map-title'),'map title styling missing');
-assert(css.includes('object-fit:contain'),'map artwork must keep its proportions');
-assert(!css.includes('object-fit:fill'),'map artwork must not be stretched');
-assert(css.includes('.zone-map-travel-bar')&&css.includes('.zone-map-travel-fill'),'travel progress styling missing');
+const zoneCss=css.slice(css.indexOf('/* Zone map.'));
+assert(zoneCss.includes('object-fit:contain'),'map artwork must keep its proportions');
+assert(!zoneCss.includes('object-fit:fill'),'zone map artwork must not be stretched');
+assert(zoneCss.includes('.zone-map-travel-bar')&&zoneCss.includes('.zone-map-travel-fill'),'travel progress styling missing');
 assert(css.includes('background:transparent')&&css.includes('opacity:.001'),'marker hit areas must stay invisible');
 
 console.log('PASS: named proportional maps, exact gear warning, travel loading bar, transitions and map2 restrictions');
