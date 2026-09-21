@@ -106,7 +106,7 @@
     if (typeof weapons === 'undefined' || !Array.isArray(weapons)) return [];
     const start = weapons.findIndex(item => item && item.starterGear);
     const end = start >= 0
-      ? weapons.findIndex((item, index) => index > start && /^Дробовик\b/i.test(String(item?.name || '')))
+      ? weapons.findIndex((item, index) => index > start && /^Дробовик(?:\s|$)/i.test(String(item?.name || '')))
       : -1;
     const group = start >= 0 ? weapons.slice(start, end > start ? end : weapons.length) : weapons;
     return group.filter(item => item && !item.adminOnly);
