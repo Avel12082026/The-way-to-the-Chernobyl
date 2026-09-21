@@ -17,6 +17,7 @@ on:
       - 'tests/weapon_progression_server_patch.test.py'
       - 'tests/pve_adaptive_balance_server_patch.test.py'
       - 'tests/combat_balance_bundle.test.py'
+      - 'tests/combat_balance_server_only.test.py'
       - 'tests/zone_map_server_patch.test.py'
       - '.github/workflows/combat-balance-bundle.yml'
   pull_request:
@@ -62,6 +63,7 @@ jobs:
           python3 -m py_compile tests/weapon_progression_server_patch.test.py
           python3 -m py_compile tests/pve_adaptive_balance_server_patch.test.py
           python3 -m py_compile tests/combat_balance_bundle.test.py
+          python3 -m py_compile tests/combat_balance_server_only.test.py
       - name: Weapon balance
         run: |
           node tests/weapon_class_damage.test.cjs
@@ -72,6 +74,7 @@ jobs:
         run: |
           python3 tests/pve_adaptive_balance_server_patch.test.py
           python3 tests/combat_balance_bundle.test.py
+          python3 tests/combat_balance_server_only.test.py
           python3 tests/zone_map_server_patch.test.py
           node tools/simulate_pve_balance.cjs
           git diff --check
