@@ -10,10 +10,10 @@ mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 # Live-like catalogue: server historically has no starterGear on Beretta.
 source=r"""
 const SHOP_WEAPONS=[
- ...Array.from({length:29},(_,i)=>({id:1000+i,name:'Автомат A'+(i+1),dmg:100+i,unlockLevel:10+i})),
- ...Array.from({length:29},(_,i)=>({id:2000+i,name:'Винтовка R'+(i+1),dmg:200+i,unlockLevel:20+i})),
- ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'Пистолет P'+(i+1),dmg:50+i,unlockLevel:30+i})),
- ...Array.from({length:29},(_,i)=>({id:4000+i,name:'Дробовик S'+(i+1),dmg:75+i,unlockLevel:40+i}))
+ ...Array.from({length:29},(_,i)=>({id:1000+i,name:i===0?'АКС-74У':'A'+(i+1),dmg:100+i,unlockLevel:10+i})),
+ ...Array.from({length:29},(_,i)=>({id:2000+i,name:i===0?'СВД':'R'+(i+1),dmg:200+i,unlockLevel:20+i})),
+ ...Array.from({length:29},(_,i)=>({id:i===0?86:3000+i,name:i===0?'Beretta 21A Bobcat':'P'+(i+1),dmg:50+i,unlockLevel:30+i})),
+ ...Array.from({length:29},(_,i)=>({id:4000+i,name:i===0?'Remington 870':'S'+(i+1),dmg:75+i,unlockLevel:40+i}))
 ];
 let playerData={level:31,weapon:{name:'Пистолет P11'},inventory:{}};
 const battleRow={enemy_kind:'npc',payload:JSON.stringify({weaponDrop:'Пистолет P12',weaponName:'Пистолет P12'})};
@@ -65,6 +65,8 @@ assert mod.NPC_MARK in patched
 assert mod.VICTORY_MARK in patched
 
 for text in [
+    "const classSize=29",
+    "pistolStart!==classSize*2",
     "weapon.unlockLevel=1+index*3",
     "const ordered=[...pistols,...shotguns,...automatics,...rifles]",
     "String(w&&w.name||'')==='Beretta 21A Bobcat'",
@@ -103,7 +105,7 @@ if(WEAPON_PROGRESSION_SERVER[87].unlockLevel!==262)throw new Error('bad rifle st
 if(WEAPON_PROGRESSION_SERVER[115].unlockLevel!==346)throw new Error('bad final unlock');
 if(!WEAPON_PROGRESSION_SERVER[0].starterGear)throw new Error('starter marker not restored');
 
-const player={level:31,weapon:{name:WEAPON_PROGRESSION_SERVER[10].name}};
+// NPC tier is locked to player level; equipping a far stronger gun must not move the ±1 window.\nconst player={level:31,weapon:{name:WEAPON_PROGRESSION_SERVER[100].name}};
 const oldRandom=Math.random;
 for(const pair of [[0.0,9],[0.5,10],[0.999,11]]){
   Math.random=()=>pair[0];
