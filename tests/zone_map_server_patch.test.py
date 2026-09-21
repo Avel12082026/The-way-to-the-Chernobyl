@@ -40,7 +40,7 @@ assert changed
 assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert "app.get('/api/zone-map/:location'" in patched
-assert "3:'zone-map3.png'" in patched
+assert "3:'zone-map3.jpg'" in patched
 assert "if(![1,2,3].includes(zoneLocation))" in patched
 assert "const zoneTier=zoneLocation" in patched
 
@@ -79,12 +79,12 @@ upgraded,changed3=mod.patch(v2)
 assert changed3
 assert mod.ROUTE_MARK in upgraded
 assert "// ZONE_MAP_ROUTING_V2" not in upgraded
-assert "3:'zone-map3.png'" in upgraded
+assert "3:'zone-map3.jpg'" in upgraded
 assert mod.SHOP_MARK in upgraded
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2')" in installer
-assert "b'\\x89PNG\\r\\n\\x1a\\n'" in installer
+assert "zone-map3.jpg" in installer\nassert "(root/'ui'/'zone-map3.jpg',b'\\xff\\xd8')" in installer
 assert "Совместимость трёх локаций" in installer
 
 print('PASS: V3 installer upgrades live V2 and adds NII Agroprom, last-nine-pistol gate, Military-only NPCs and tier-3 routing')
