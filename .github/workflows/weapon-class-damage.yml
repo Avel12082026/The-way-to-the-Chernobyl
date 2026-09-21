@@ -1,0 +1,39 @@
+name: Weapon class damage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_class_damage.py'
+      - 'tests/weapon_class_damage.test.cjs'
+      - 'tests/weapon_class_damage_server_patch.test.py'
+      - '.github/workflows/weapon-class-damage.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'tools/install_weapon_class_damage.py'
+      - 'tests/weapon_class_damage.test.cjs'
+      - 'tests/weapon_class_damage_server_patch.test.py'
+      - '.github/workflows/weapon-class-damage.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Validate hierarchy and installer
+        run: |
+          node tests/weapon_class_damage.test.cjs
+          python3 -m py_compile tools/install_weapon_class_damage.py tests/weapon_class_damage_server_patch.test.py
+          python3 tests/weapon_class_damage_server_patch.test.py
+          git diff --check
