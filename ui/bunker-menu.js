@@ -17,6 +17,9 @@
   let zoneMapScreen = null;
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
+  let zoneMapTravelling = false;
+  const ZONE_TRAVEL_MS = 4500;
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
@@ -81,6 +84,8 @@
       try { localStorage.setItem(ZONE_LOCATION_STORAGE, String(zoneLocation)); } catch (_) {}
     }
     if (zoneMapScreen) {
+      const title = document.getElementById('zoneMapTitle');
+      if (title) title.textContent = ZONE_MAP_NAMES[zoneLocation] || ('Локация ' + zoneLocation);
       renderZoneMapPoints();
       loadZoneMapArtwork(zoneLocation);
     }
@@ -260,12 +265,27 @@
     }
   }
 
-  function fitZoneMapCanvas() {
+  function fitZoneMapCanvas(width, height) {
     const canvas = document.getElementById('zoneMapCanvas');
-    if (!canvas) return;
-    canvas.style.width = '100vw';
-    canvas.style.height = '100dvh';
-    canvas.style.aspectRatio = 'auto';
+    if (!canvas || !width || !height) return;
+    const ratio = Number(width) / Number(height);
+    canvas.style.aspectRatio = width + ' / ' + height;
+    canvas.style.width = `min(100vw, calc((100dvh - 52px) * ${ratio}))`;
+    canvas.style.height = `min(calc(100dvh - 52px), calc(100vw / ${ratio}))`;
+  }
+
+  function zoneMapAssetUrl(location) {
+    const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
+    return `${SERVER_URL}${config.path}?v=20260921-map8`;
+  }
+
+  function preloadZoneMapArtwork(location) {
+    return new Promise(resolve => {
+      const probe = new Image();
+      probe.onload = () => resolve(true);
+      probe.onerror = () => resolve(false);
+      probe.src = zoneMapAssetUrl(location);
+    });
   }
 
   function loadZoneMapArtwork(location) {
@@ -273,18 +293,73 @@
     const image = document.getElementById('zoneMapArtwork');
     if (!image) return;
     const seq = ++zoneMapLoadSeq;
-    fitZoneMapCanvas();
-    image.alt = `Карта Зоны — локация ${location}`;
+    fitZoneMapCanvas(config.width, config.height);
+    image.alt = `Карта Зоны — ${ZONE_MAP_NAMES[location] || ('локация ' + location)}`;
     image.onload = () => {
       if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
-      fitZoneMapCanvas();
+      fitZoneMapCanvas(image.naturalWidth || config.width, image.naturalHeight || config.height);
     };
     image.onerror = () => {
       if (seq !== zoneMapLoadSeq || zoneLocation !== location) return;
       image.removeAttribute('src');
       image.alt = 'Не удалось загрузить карту Зоны';
     };
-    image.src = `${SERVER_URL}${config.path}?v=20260920-map5`;
+    image.src = zoneMapAssetUrl(location);
+  }
+
+  function zoneTravelDuration() {
+    const override = Number(window.__zoneMapTravelMs);
+    return Number.isFinite(override) && override >= 0 ? override : ZONE_TRAVEL_MS;
+  }
+
+  function setZoneTravelProgress(value) {
+    const pct = clamp(Math.round(Number(value) || 0), 0, 100);
+    const fill = document.getElementById('zoneMapTravelFill');
+    const text = document.getElementById('zoneMapTravelPercent');
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = pct + '%';
+  }
+
+  async function travelToZoneLocation(targetLocation) {
+    if (zoneMapTravelling) return;
+    const target = Number(targetLocation);
+    if (!ZONE_MAP_ASSETS[target] || target === zoneLocation) return;
+
+    const el = ensureZoneMapScreen();
+    const overlay = document.getElementById('zoneMapTravel');
+    const route = document.getElementById('zoneMapTravelRoute');
+    const fromName = ZONE_MAP_NAMES[zoneLocation] || ('Локация ' + zoneLocation);
+    const toName = ZONE_MAP_NAMES[target] || ('Локация ' + target);
+    const duration = zoneTravelDuration();
+    zoneMapTravelling = true;
+
+    if (route) route.textContent = fromName + ' → ' + toName;
+    setZoneTravelProgress(0);
+    el.classList.add('travelling');
+    if (overlay) overlay.hidden = false;
+
+    const started = performance.now();
+    let raf = 0;
+    const animate = now => {
+      const elapsed = Math.max(0, now - started);
+      const progress = duration <= 0 ? 95 : Math.min(95, (elapsed / duration) * 95);
+      setZoneTravelProgress(progress);
+      if (elapsed < duration) raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+
+    const preload = preloadZoneMapArtwork(target);
+    if (duration > 0) await new Promise(resolve => setTimeout(resolve, duration));
+    await preload;
+    cancelAnimationFrame(raf);
+    setZoneTravelProgress(100);
+    await new Promise(resolve => setTimeout(resolve, duration > 0 ? 220 : 0));
+
+    setZoneRaidKind('');
+    setZoneLocation(target);
+    if (overlay) overlay.hidden = true;
+    el.classList.remove('travelling');
+    zoneMapTravelling = false;
   }
 
   function ensureZoneMapScreen() {
@@ -294,13 +369,26 @@
     el.className = 'zone-map-screen screen';
     el.setAttribute('aria-label', 'Карта Зоны');
     el.innerHTML = `
+      <header class="zone-map-header">
+        <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>
+        <div id="zoneMapTitle" class="zone-map-title">${ZONE_MAP_NAMES[zoneLocation] || ('Локация ' + zoneLocation)}</div>
+      </header>
       <div class="zone-map-frame">
         <div id="zoneMapCanvas" class="zone-map-canvas">
           <img id="zoneMapArtwork" class="zone-map-artwork" alt="Карта Зоны" draggable="false">
           <div id="zoneMapPoints" class="zone-map-points" aria-label="Точки на карте"></div>
         </div>
       </div>
-      <button class="zone-map-back" type="button" data-zone-map-action="back">← Назад</button>`;
+      <div id="zoneMapTravel" class="zone-map-travel" hidden>
+        <div class="zone-map-travel-panel">
+          <div class="zone-map-travel-caption">ПЕРЕХОД МЕЖДУ ЛОКАЦИЯМИ</div>
+          <div id="zoneMapTravelRoute" class="zone-map-travel-route"></div>
+          <div class="zone-map-travel-bar" role="progressbar" aria-label="Загрузка карты">
+            <div id="zoneMapTravelFill" class="zone-map-travel-fill"></div>
+          </div>
+          <div id="zoneMapTravelPercent" class="zone-map-travel-percent">0%</div>
+        </div>
+      </div>`;
     document.body.appendChild(el);
     zoneMapScreen = el;
     el.addEventListener('click', event => {
@@ -382,19 +470,17 @@
     if (kind === 'transition') {
       const target = Number(point?.targetLocation || 0);
       if (target === 1) {
-        setZoneRaidKind('');
-        setZoneLocation(1);
+        await travelToZoneLocation(1);
         return;
       }
       if (target === 2) {
         if (!firstLocationToSecondReady()) {
           if (typeof showGameAlert === 'function') {
-            showGameAlert('Переход на вторую локацию откроется, когда будут доступны первые 10 пистолетов и первые 10 костюмов.');
+            showGameAlert('У меня еще недостаточно хорошое снаряжения чтобы идти на свалку');
           }
           return;
         }
-        setZoneRaidKind('');
-        setZoneLocation(2);
+        await travelToZoneLocation(2);
         return;
       }
       if (point?.future) {
@@ -1031,7 +1117,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.4.0',
+    version: '0.5.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1044,6 +1130,6 @@
     firstLocationToSecondReady,
     secondPistolDecadeReady
   });
-  window.BunkerMenu = {version: '1.8.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.9.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
