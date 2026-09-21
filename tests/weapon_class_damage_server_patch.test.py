@@ -43,6 +43,20 @@ assert 'getNextItemCeilingServer(SHOP_ARMOR' in patched
 again,changed2,replaced2=mod.patch(patched)
 assert not changed2 and replaced2==0 and again==patched
 
+legacy_block=r"""// WEAPON_CLASS_DAMAGE_V1
+const WEAPON_CLASS_DAMAGE_MULTIPLIERS={pistol:1,shotgun:1.25,automatic:1.5,rifle:1.75};
+function weaponDamageClassServer(){return'pistol';}
+function getWeaponClassNextCeilingServer(list,item,statKey){return Infinity;}
+
+"""
+legacy=patched.replace(mod.BLOCK,legacy_block,1)
+upgraded,changed3,replaced3=mod.patch(legacy)
+assert changed3
+assert 'const WEAPON_DAMAGE_BASE=80' in upgraded
+assert 'WEAPON_CLASS_DAMAGE_MULTIPLIERS' not in upgraded
+assert upgraded.count(mod.MARK)==1
+assert 'getWeaponClassNextCeilingServer(SHOP_WEAPONS' in upgraded
+
 runtime=patched+r"""
 const auto=SHOP_WEAPONS[0],rifle=SHOP_WEAPONS[29],pistol=SHOP_WEAPONS[58],shotgun=SHOP_WEAPONS[87];
 if(weaponDamageClassServer(SHOP_WEAPONS,auto)!=='automatic')throw new Error('auto class');
