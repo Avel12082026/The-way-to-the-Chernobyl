@@ -19,18 +19,18 @@
   let zoneMapLoadSeq = 0;
   let zoneMapTravelling = false;
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка',3:'НИИ Агропром'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
   const ZONE_MAP_ASSETS = Object.freeze({
     1: {path:'/api/zone-map/1', width:890, height:1536},
-    2: {path:'/api/zone-map/2', width:1397, height:1536},
+    2: {path:'/api/zone-map/2', width:864, height:1536},
     3: {path:'/api/zone-map/3', width:863, height:1536}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
-      {id:'transition-to-2',kind:'transition',label:'Переход на локацию 2',x:44.28,y:4.07,targetLocation:2,unlock:'first-location-gear'},
+      {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:44.28,y:4.07,targetLocation:2,unlock:'first-location-gear'},
       {id:'anomaly-1-1',kind:'anomaly',label:'Аномалия',x:90.88,y:5.24},
       {id:'mutant-1-1',kind:'mutant',label:'Мутанты',x:20.97,y:13.14},
       {id:'enemy-1-1',kind:'enemy',label:'NPC',x:60.50,y:27.78},
@@ -43,17 +43,17 @@
       {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.30,y:90.71}
     ],
     2: [
-      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:71.08,y:6.00,targetLocation:4,unlock:'second-pistol-decade',future:true},
-      {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:14.07,y:13.91},
-      {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:92.62,y:8.06},
-      {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:85.41,y:39.08},
-      {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:22.19,y:43.79},
-      {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:45.82,y:43.49},
-      {id:'transition-to-3',kind:'transition',label:'Переход на НИИ Агропром',x:5.86,y:49.15,targetLocation:3,unlock:'last-nine-pistols'},
-      {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:91.36,y:68.31},
-      {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:6.77,y:78.73},
-      {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:44.78,y:86.31},
-      {id:'transition-to-1',kind:'transition',label:'Переход на локацию 1',x:64.87,y:92.11,targetLocation:1,unlock:'none'}
+      {id:'transition-future-top',kind:'transition',label:'Переход на будущую локацию',x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade',future:true},
+      {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:18.70,y:28.69},
+      {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:87.03,y:25.38},
+      {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:81.06,y:42.12},
+      {id:'enemy-2-1',kind:'enemy',label:'Бандиты',x:25.24,y:45.01},
+      {id:'enemy-2-2',kind:'enemy',label:'Бандиты',x:46.25,y:45.00},
+      {id:'transition-to-3',kind:'transition',label:'Переход на НИИ Агропром',x:10.50,y:47.49,targetLocation:3,unlock:'last-nine-pistols'},
+      {id:'mutant-2-3',kind:'mutant',label:'Мутанты',x:87.11,y:58.30},
+      {id:'anomaly-2-2',kind:'anomaly',label:'Аномалия',x:10.58,y:63.39},
+      {id:'enemy-2-3',kind:'enemy',label:'Бандиты',x:45.43,y:68.65},
+      {id:'transition-to-1',kind:'transition',label:'Переход на Кордон',x:62.82,y:71.62,targetLocation:1,unlock:'none'}
     ],
     3: [
       {id:'anomaly-3-1',kind:'anomaly',label:'Аномалия',x:9.85,y:34.57},
@@ -294,7 +294,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260921-map11`;
+    return `${SERVER_URL}${config.path}?v=20260921-map13`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -1145,7 +1145,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.6.1',
+    version: '0.6.2',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1159,6 +1159,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.10.2', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.10.3', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
