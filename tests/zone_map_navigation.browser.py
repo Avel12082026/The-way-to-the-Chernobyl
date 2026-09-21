@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import asyncio, json, base64
+import asyncio, json, base64, math
 from pathlib import Path
 from playwright.async_api import async_playwright
 
@@ -34,6 +34,7 @@ async def main():
         await page.add_style_tag(content=css)
         await page.evaluate("""()=>{
           window.SERVER_URL='http://game.test';
+          window.__zoneMapTravelMs=120;
           window.__calls={start:0,back:0,end:0,open:[],alerts:[],fetches:[]};
           window.raidActive=false;
           window.currentEnemy=null;
@@ -41,7 +42,7 @@ async def main():
           window.currentLuckyFind=null;
           window.expNeededForLevel=()=>100;
           window.player={
-            level:200,health:100,maxHealth:100,hunger:100,maxHunger:100,
+            level:1,health:100,maxHealth:100,hunger:100,maxHunger:100,
             thirst:100,maxThirst:100,radiation:0,exp:0,coins:100000,breedCredits:0,inventory:{}
           };
           window.weapons=[
@@ -68,32 +69,63 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.8.0' && window.ZoneMap?.version==='0.4.0'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.9.0' && window.ZoneMap?.version==='0.5.0'")
 
         await page.locator('#bunkerRaid').click()
         zone=page.locator('#zoneMapScreen')
         assert await zone.is_visible()
         assert await page.evaluate('ZoneMap.location')==1
+        assert await page.locator('#zoneMapTitle').inner_text()=='Кардон'
         assert await page.locator('#zoneMapPoints .zone-map-point').count()==11
-        canvas=await page.locator('#zoneMapCanvas').bounding_box()
-        assert round(canvas['width'])==390 and round(canvas['height'])==844,canvas
 
-        assert await page.evaluate('ZoneMap.firstLocationToSecondReady()') is True
+        canvas=await page.locator('#zoneMapCanvas').bounding_box()
+        ratio=canvas['width']/canvas['height']
+        assert abs(ratio-(890/1536))<0.02,canvas
+        assert round(canvas['width'])==390
+        assert canvas['height']<792,canvas
+
+        # Locked transition shows the exact requested phrase.
         await page.locator('[data-zone-point="transition-to-2"]').click()
-        assert await page.evaluate('ZoneMap.location')==2
+        assert await page.evaluate('ZoneMap.location')==1
+        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='У меня еще недостаточно хорошое снаряжения чтобы идти на свалку'
+
+        # Unlock first ten pistols/armor, then transition via loading screen.
+        await page.evaluate('player.level=200')
+        await page.locator('[data-zone-point="transition-to-2"]').click()
+        travel=page.locator('#zoneMapTravel')
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Кардон → Свалка'
+        await page.wait_for_function("document.getElementById('zoneMapTravelPercent')?.textContent!=='0%'")
+        await page.wait_for_function("ZoneMap.location===2")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
+
         points2=await page.evaluate('ZoneMap.points')
         assert len(points2)==11
         assert not any(p['kind']=='camp' for p in points2)
         assert all(p['label']=='Бандиты' for p in points2 if p['kind']=='enemy')
 
+        # Map 2 also preserves its native aspect ratio.
+        canvas2=await page.locator('#zoneMapCanvas').bounding_box()
+        assert abs((canvas2['width']/canvas2['height'])-(1397/1536))<0.02,canvas2
+        assert canvas2['height']<792,canvas2
+
         future=next(p for p in points2 if p.get('future'))
         await page.locator(f'[data-zone-point="{future["id"]}"]').click()
         assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='Переход откроется, когда станет доступна вторая десятка пистолетов.'
 
+        # Bottom marker returns through the same travel loader.
         await page.locator('[data-zone-point="transition-to-1"]').click()
-        assert await page.evaluate('ZoneMap.location')==1
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → Кардон'
+        await page.wait_for_function("ZoneMap.location===1")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Кардон'
 
+        # Enter map 2 again and start a Bandit-only routed raid.
         await page.locator('[data-zone-point="transition-to-2"]').click()
+        await page.wait_for_function("ZoneMap.location===2")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         enemy2=next(p for p in (await page.evaluate('ZoneMap.points')) if p['kind']=='enemy')
         await page.locator(f'[data-zone-point="{enemy2["id"]}"]').click()
         assert await page.evaluate('ZoneMap.routeKind')=='enemy'
@@ -108,11 +140,14 @@ async def main():
         assert routed['url'].endswith('/api/raid/zone-step'),routed
         assert routed['body']['zoneKind']=='enemy' and routed['body']['zoneLocation']==2,routed
 
+        # Open-map during the raid keeps the current location/title.
         await page.evaluate("document.getElementById('raidScreen').classList.add('active')")
         await page.locator('#raidMapBtn').click()
         assert await zone.is_visible()
         assert await page.evaluate('ZoneMap.location')==2
+        assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
 
+        # Future maps remain unavailable even after second pistol decade unlock.
         await page.evaluate('player.level=1000')
         await page.locator(f'[data-zone-point="{future["id"]}"]').click()
         assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='Локация ещё не открыта сталкерами.'
@@ -124,7 +159,8 @@ async def main():
         assert not errors,errors
         print(json.dumps({
           'status':'passed',
-          'location2Kinds':[p['kind'] for p in points2],
+          'map1_canvas':canvas,
+          'map2_canvas':canvas2,
           'routed':routed
         },ensure_ascii=False))
         await browser.close()
