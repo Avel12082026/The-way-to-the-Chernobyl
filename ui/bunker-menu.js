@@ -294,7 +294,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260921-map10`;
+    return `${SERVER_URL}${config.path}?v=20260921-map11`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -1145,7 +1145,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.6.0',
+    version: '0.6.1',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1159,6 +1159,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.10.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
+  window.BunkerMenu = {version: '1.10.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap};
   layout();
 })();
