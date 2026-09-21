@@ -12,8 +12,8 @@ const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 assert(!enter.includes('startRaid()'),'raid door must not start raid before marker selection');
 
-assert(js.includes("version: '0.5.0'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.9.0'"),'BunkerMenu version mismatch');
+assert(js.includes("version: '0.5.1'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.9.1'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кардон',2:'Свалка'})"),'map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 server image missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:1397, height:1536}"),'location 2 server image missing');
@@ -43,8 +43,8 @@ assert(js.includes("slice(10, 20)"),'second pistol decade definition missing');
 assert(index.includes('id="raidMapBtn"'),'raid map button missing');
 assert(index.includes("BunkerMenu.openZoneMap('raid')"),'raid map button not wired');
 assert(index.includes('>Открыть карту</button>'),'raid map caption missing');
-assert(index.includes('ui/bunker-menu.css?v=20260921-map8'),'CSS cache version mismatch');
-assert(index.includes('ui/bunker-menu.js?v=20260921-map8'),'JS cache version mismatch');
+assert(index.includes('ui/bunker-menu.css?v=20260921-map9'),'CSS cache version mismatch');
+assert(index.includes('ui/bunker-menu.js?v=20260921-map9'),'JS cache version mismatch');
 
 assert(css.includes('.zone-map-title'),'map title styling missing');
 const zoneCss=css.slice(css.indexOf('/* Zone map.'));
