@@ -176,12 +176,12 @@ def run(cmd,**kw):
     kw.setdefault('check',True)
     return subprocess.run(cmd,**kw)
 
-def find_one(text,anchors,label):
-    matches=[a for a in anchors if text.count(a)]
-    total=sum(text.count(a) for a in anchors)
-    if total!=1:
-        raise RuntimeError(f'{label}: ожидался один якорь, найдено {total}.')
-    return matches[0]
+def find_first(text,anchors,label):
+    found=[(text.find(a),a) for a in anchors if text.find(a)>=0]
+    if not found:
+        raise RuntimeError(f'{label}: якорь не найден.')
+    found.sort(key=lambda x:x[0])
+    return found[0][1]
 
 def patch(source):
     marks=[MARK in source,NPC_MARK in source,VICTORY_MARK in source]
@@ -199,21 +199,21 @@ def patch(source):
 
     text=source
 
-    shop_anchor=find_one(
+    shop_anchor=find_first(
         text,
         ["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""],
         'маршрут покупки'
     )
     text=text.replace(shop_anchor,CORE+shop_anchor,1)
 
-    raid_anchor=find_one(
+    raid_anchor=find_first(
         text,
         ["app.post('/api/raid/step'","app.post(\"/api/raid/step\""],
         'маршрут шага рейда'
     )
     text=text.replace(raid_anchor,NPC_WRAP+raid_anchor,1)
 
-    victory_anchor=find_one(
+    victory_anchor=find_first(
         text,
         ["app.post('/api/pve/victory'","app.post(\"/api/pve/victory\""],
         'маршрут победы PvE'
