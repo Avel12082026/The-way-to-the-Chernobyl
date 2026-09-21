@@ -19,6 +19,7 @@ async def main():
         async def image_route(route):
             await route.fulfill(status=200,body=ONE_PX,content_type='image/png')
         await page.route('http://game.test/api/zone-map/*',image_route)
+        await page.route('http://game.test/api/zone-camp/*',image_route)
 
         await page.set_content('''<!doctype html><html><body>
           <section id="mainMenu" style="display:block"><div id="bunkerScene">
@@ -71,7 +72,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.10.3' && window.ZoneMap?.version==='0.6.2'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.11.0' && window.ZoneMap?.version==='0.6.2'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -111,12 +112,58 @@ async def main():
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
 
         points2=await page.evaluate('ZoneMap.points')
-        top=next(p for p in points2 if p['id']=='transition-future-top')
-        assert top.get('future') is True and top['targetLocation']==4
+        top=next(p for p in points2 if p['id']=='transition-to-4')
+        assert top.get('future') is not True and top['targetLocation']==4
         bottom=next(p for p in points2 if p['id']=='transition-to-1')
         left=next(p for p in points2 if p['id']=='transition-to-3')
         assert abs(bottom['x']-62.82)<0.01 and abs(bottom['y']-71.62)<0.01,bottom
         assert abs(left['x']-10.50)<0.01 and abs(left['y']-47.49)<0.01,left
+
+        # Upper Svalka transition is now the Rostok route and uses the second-pistol-decade gate.
+        assert await page.evaluate('ZoneMap.secondPistolDecadeReady()') is False
+        await page.locator('[data-zone-point="transition-to-4"]').click()
+        assert await page.evaluate('ZoneMap.location')==2
+        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.'
+
+        await page.evaluate('player.level=400')
+        assert await page.evaluate('ZoneMap.secondPistolDecadeReady()') is True
+        await page.locator('[data-zone-point="transition-to-4"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → Россток'
+        await page.wait_for_function("ZoneMap.location===4")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Россток'
+
+        points4=await page.evaluate('ZoneMap.points')
+        assert len(points4)==13,points4
+        assert sum(p['kind']=='enemy' for p in points4)==3
+        assert sum(p['kind']=='mutant' for p in points4)==3
+        assert sum(p['kind']=='anomaly' for p in points4)==3
+        assert sum(p['kind']=='camp' for p in points4)==1
+        assert all(p['label']=='Наёмники' for p in points4 if p['kind']=='enemy')
+        back4=next(p for p in points4 if p['id']=='transition-to-2')
+        assert abs(back4['x']-93.76)<0.01 and abs(back4['y']-89.32)<0.01,back4
+
+        canvas4=await page.locator('#zoneMapCanvas').bounding_box()
+        assert abs((canvas4['width']/canvas4['height'])-(865/1536))<0.02,canvas4
+
+        # Rostok camp marker opens the 100 RADS artwork with Cordon-style survival bars.
+        await page.locator('[data-zone-point="camp-4"]').click()
+        camp=page.locator('#rostokCampScreen')
+        assert await camp.is_visible()
+        assert await page.locator('#rostokHealth').is_visible()
+        assert await page.locator('#rostokHunger').is_visible()
+        assert await page.locator('#rostokThirst').is_visible()
+        await page.locator('[data-rostok-action="map"]').click()
+        assert await zone.is_visible()
+        assert await page.evaluate('ZoneMap.location')==4
+
+        # Rostok return to Svalka is the bottom-right marker.
+        await page.locator('[data-zone-point="transition-to-2"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Свалка'
+        await page.wait_for_function("ZoneMap.location===2")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
         # Left-middle Svalka transition is the NII Agroprom route and stays locked
         # until all final nine pistols are unlocked.
@@ -187,6 +234,8 @@ async def main():
           'agroprom_points':points3,
           'map2_canvas':canvas2,
           'map3_canvas':canvas3,
+          'map4_canvas':canvas4,
+          'rostok_points':points4,
           'routed':routed
         },ensure_ascii=False))
         await browser.close()
