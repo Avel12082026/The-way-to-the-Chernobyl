@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Install/upgrade map-routed raids for two locations and the first-location shop limits."""
+"""Install/upgrade map-routed raids for three locations and the first-location shop limits."""
 from pathlib import Path
 import argparse, os, shutil, subprocess, tempfile, time
 
 SERVICE='pocketzone.service'
-OLD_ROUTE_MARK='// ZONE_MAP_ROUTING_V1'
-ROUTE_MARK='// ZONE_MAP_ROUTING_V2'
+OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V3')
+ROUTE_MARK='// ZONE_MAP_ROUTING_V3'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
@@ -34,8 +34,8 @@ app.post('/api/shop/buy',(req,res,next)=>{
 
 """
 
-ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V2
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg'});
+ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V3
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
     if(!file)return res.status(404).end();
@@ -53,6 +53,7 @@ function zoneMapPistolListServer(){
 }
 const ZONE_MAP_PISTOLS_SERVER=zoneMapPistolListServer();
 const ZONE_MAP_FIRST_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(0,10);
+const ZONE_MAP_LAST_NINE_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(-9);
 const ZONE_MAP_FIRST_ARMOR_SERVER=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
     .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor).slice(0,10);
 
@@ -64,6 +65,7 @@ function zoneMapLocationUnlocked(data,location){
     if(location===1)return true;
     if(location===2)return zoneMapListUnlocked(data,ZONE_MAP_FIRST_PISTOLS_SERVER,10)&&
         zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
+    if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9);
     return false;
 }
 const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45}});
@@ -71,13 +73,16 @@ function zoneMapNpcPayload(data,zoneTier,zoneLocation){
     const forcedLevel=zoneTier<=1?1:1+(zoneTier-1)*40;
     const npc=raidCreateNpcPayload({...data,level:forcedLevel});
     if(!npc)return null;
-    const stats=ZONE_MAP_NPC_STATS[zoneTier]||ZONE_MAP_NPC_STATS[1];
+    const stats=ZONE_MAP_NPC_STATS[zoneTier];
     npc.tier=zoneTier;
-    npc.hp=stats.hp;
-    npc.enemyHp=stats.hp;
-    npc.maxEnemyHp=stats.hp;
-    npc.dmg=stats.dmg;
+    if(stats){
+        npc.hp=stats.hp;
+        npc.enemyHp=stats.hp;
+        npc.maxEnemyHp=stats.hp;
+        npc.dmg=stats.dmg;
+    }
     if(zoneLocation===2)npc.faction='Бандиты';
+    if(zoneLocation===3)npc.faction='Военные';
     return npc;
 }
 function zoneMapMutantPayload(data,zoneTier){
@@ -105,7 +110,7 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
     const zoneLocation=Number(req.body?.zoneLocation||1);
     if(!['enemy','mutant','anomaly'].includes(zoneKind))
         return res.status(400).json({success:false,error:'Неизвестная точка на карте'});
-    if(![1,2].includes(zoneLocation))
+    if(![1,2,3].includes(zoneLocation))
         return res.status(400).json({success:false,error:'Неизвестная локация'});
     try{
         const tx=db.transaction(()=>{
@@ -113,8 +118,12 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
             if(sess.pending_type)return{success:false,error:'Сначала завершите текущую встречу'};
             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);if(!row)return{success:false,error:'Игрок не найден'};
             const data=safeParsePlayerData(row.data);
-            if(!zoneMapLocationUnlocked(data,zoneLocation))
-                return{success:false,error:'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.'};
+            if(!zoneMapLocationUnlocked(data,zoneLocation)){
+                const error=zoneLocation===3
+                    ?'НИИ Агропром пока закрыт. Должны быть открыты последние 9 пистолетов.'
+                    :'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.';
+                return{success:false,error};
+            }
 
             const zoneTier=zoneLocation;
             data.hunger=Math.max(0,Math.min(Number(data.maxHunger)||100,(Number(data.hunger)||0)-2));
@@ -189,25 +198,27 @@ def insert_before_one(text, anchors, block, label):
     return text.replace(anchor,block+anchor,1)
 
 def upgrade_route(text):
-    start=text.find(OLD_ROUTE_MARK)
-    if start<0:
-        raise RuntimeError('Маркер старого маршрута карты не найден.')
+    matches=[mark for mark in OLD_ROUTE_MARKS if mark in text]
+    if len(matches)!=1:
+        raise RuntimeError(f'Ожидался один старый маршрут карты, найдено {len(matches)}.')
+    start=text.find(matches[0])
     listen=text.find('app.listen(',start)
     if listen<0:
         raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
     return text[:start]+ZONE_ROUTE+text[listen:]
 
 def patch(source):
-    has_v2=ROUTE_MARK in source
-    has_v1=OLD_ROUTE_MARK in source
+    has_v3=ROUTE_MARK in source
+    old_marks=[mark for mark in OLD_ROUTE_MARKS if mark in source]
     has_shop=SHOP_MARK in source
 
-    if has_v2:
-        if not has_shop: raise RuntimeError('Маршрут V2 есть, но защита магазина отсутствует.')
+    if has_v3:
+        if not has_shop: raise RuntimeError('Маршрут V3 есть, но защита магазина отсутствует.')
         return source,False
 
-    if has_v1:
-        if not has_shop: raise RuntimeError('Обнаружена частичная установка V1. Автоматическое продолжение запрещено.')
+    if old_marks:
+        if len(old_marks)!=1: raise RuntimeError('Найдено несколько старых маршрутов карты.')
+        if not has_shop: raise RuntimeError('Обнаружена частичная старая установка. Автоматическое продолжение запрещено.')
         return upgrade_route(source),True
 
     text=source
@@ -232,34 +243,38 @@ def main():
     args=ap.parse_args()
     path=args.server.resolve(strict=True)
     root=path.parent
-    assets=[root/'ui'/'zone-map1.jpg',root/'ui'/'zone-map2.jpg']
-    for asset in assets:
+    assets=[
+        (root/'ui'/'zone-map1.jpg',b'\xff\xd8'),
+        (root/'ui'/'zone-map2.jpg',b'\xff\xd8'),
+        (root/'ui'/'zone-map3.png',b'\x89PNG\r\n\x1a\n'),
+    ]
+    for asset,signature in assets:
         if not asset.is_file():
-            raise RuntimeError(f'Не найдена карта: {asset}. Сначала распакуйте архив карт в /var/www/pocketzone/ui.')
+            raise RuntimeError(f'Не найдена карта: {asset}. Сначала скопируйте карту в /var/www/pocketzone/ui.')
         raw_asset=asset.read_bytes()
-        if len(raw_asset)<50000 or raw_asset[:2]!=b'\xff\xd8':
+        if len(raw_asset)<50000 or not raw_asset.startswith(signature):
             raise RuntimeError(f'Файл карты повреждён или слишком мал: {asset}')
     old=path.read_bytes()
     source=old.decode('utf-8')
     new_text,changed=patch(source)
     if not changed:
-        print('ZONE_MAP_ROUTING_V2 уже установлен.')
+        print('ZONE_MAP_ROUTING_V3 уже установлен.')
         return
 
-    with tempfile.TemporaryDirectory(prefix='zone-map-routing-v2-check-') as td:
+    with tempfile.TemporaryDirectory(prefix='zone-map-routing-v3-check-') as td:
         candidate=Path(td)/'server.js'
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Совместимость двух локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
+            print('Совместимость трёх локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
         raise RuntimeError('Установку нужно запускать от root на сервере.')
 
-    backup=path.with_name(path.name+'.before-zone-map-routing-v2-'+time.strftime('%Y%m%d_%H%M%S'))
+    backup=path.with_name(path.name+'.before-zone-map-routing-v3-'+time.strftime('%Y%m%d_%H%M%S'))
     shutil.copy2(path,backup)
-    fd,tmp=tempfile.mkstemp(prefix='.zone-map-routing-v2-',dir=path.parent)
+    fd,tmp=tempfile.mkstemp(prefix='.zone-map-routing-v3-',dir=path.parent)
     try:
         with os.fdopen(fd,'w',encoding='utf-8') as h:
             h.write(new_text);h.flush();os.fsync(h.fileno())
@@ -275,7 +290,7 @@ def main():
             if state.stdout.strip()=='active':
                 probe=run(['curl','-fsS','--max-time','2','http://127.0.0.1:3000/api/market'],capture_output=True,check=False)
                 if probe.returncode==0:
-                    print('ZONE_MAP_ROUTING_V2 установлен. Backup:',backup)
+                    print('ZONE_MAP_ROUTING_V3 установлен. Backup:',backup)
                     return
             time.sleep(1)
         raise RuntimeError('Сервер не подтвердил запуск после обновления')
