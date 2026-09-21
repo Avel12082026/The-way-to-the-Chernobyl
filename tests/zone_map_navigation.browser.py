@@ -71,13 +71,13 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.10.2' && window.ZoneMap?.version==='0.6.1'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.10.3' && window.ZoneMap?.version==='0.6.2'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
         assert await zone.is_visible()
         assert await page.evaluate('ZoneMap.location')==1
-        assert await page.locator('#zoneMapTitle').inner_text()=='Кардон'
+        assert await page.locator('#zoneMapTitle').inner_text()=='Кордон'
 
         # Location 2 remains gated by first ten pistols + first ten armor.
         await page.locator('[data-zone-point="transition-to-2"]').click()
@@ -88,6 +88,35 @@ async def main():
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
+
+        # New Svalka artwork is 864x1536 and must remain fully proportional.
+        canvas2=await page.locator('#zoneMapCanvas').bounding_box()
+        assert abs((canvas2['width']/canvas2['height'])-(864/1536))<0.02,canvas2
+
+        # Bottom Svalka transition returns to Kordon through the loading screen.
+        await page.locator('[data-zone-point="transition-to-1"]').click()
+        travel=page.locator('#zoneMapTravel')
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → Кордон'
+        await page.wait_for_function("ZoneMap.location===1")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Кордон'
+
+        # Kordon transition is the reverse route back to Svalka and also loads first.
+        await page.locator('[data-zone-point="transition-to-2"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Кордон → Свалка'
+        await page.wait_for_function("ZoneMap.location===2")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
+
+        points2=await page.evaluate('ZoneMap.points')
+        top=next(p for p in points2 if p['id']=='transition-future-top')
+        assert top.get('future') is True and top['targetLocation']==4
+        bottom=next(p for p in points2 if p['id']=='transition-to-1')
+        left=next(p for p in points2 if p['id']=='transition-to-3')
+        assert abs(bottom['x']-62.82)<0.01 and abs(bottom['y']-71.62)<0.01,bottom
+        assert abs(left['x']-10.50)<0.01 and abs(left['y']-47.49)<0.01,left
 
         # Left-middle Svalka transition is the NII Agroprom route and stays locked
         # until all final nine pistols are unlocked.
@@ -156,6 +185,7 @@ async def main():
         print(json.dumps({
           'status':'passed',
           'agroprom_points':points3,
+          'map2_canvas':canvas2,
           'map3_canvas':canvas3,
           'routed':routed
         },ensure_ascii=False))
