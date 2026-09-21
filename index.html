@@ -1455,65 +1455,66 @@ button:active {filter:brightness(1.18);}
     });
 
     // ===== ОРУЖИЕ =====
+    // WEAPON_CLASS_DAMAGE_V1: pistols 100%, shotguns 125%, automatics 150%, rifles 175%.
     const weapons = [
-        { id: 11, name: "Автомат АКС-74У", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
-        { id: 12, name: "Автомат АК-74", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
-        { id: 37, name: "Автомат АК-107", tier: 3, dmg: 166, price: 800, unlockLevel: 100 },
-        { id: 21, name: "Автомат АК-12", tier: 2, dmg: 115, price: 400, unlockLevel: 60 },
-        { id: 26, name: "Автомат АН-94 «Абакан»", tier: 2, dmg: 138, price: 700, unlockLevel: 80 },
-        { id: 17, name: "Пулемёт РПК-74", tier: 3, dmg: 199, price: 1500, unlockLevel: 120 },
-        { id: 38, name: "Автомат ADAR 2-15", tier: 4, dmg: 239, price: 1800, unlockLevel: 140 },
-        { id: 45, name: "Автомат АК-19", tier: 5, dmg: 344, price: 4000, unlockLevel: 180 },
-        { id: 57, name: "Автомат HK416", tier: 4, dmg: 287, price: 3500, unlockLevel: 160 },
-        { id: 69, name: "Автомат CZ Bren 2", tier: 5, dmg: 413, price: 6000, unlockLevel: 200 },
-        { id: 67, name: "Пулемёт Minimi Mk3", tier: 5, dmg: 495, price: 8000, unlockLevel: 220 },
-        { id: 43, name: "Автомат ОЦ-14 «Гроза»", tier: 7, dmg: 856, price: 17000, unlockLevel: 280 },
-        { id: 16, name: "Карабин «Вепрь»", tier: 7, dmg: 1027, price: 24000, unlockLevel: 300 },
-        { id: 15, name: "Автомат АК-103", tier: 6, dmg: 594, price: 9000, unlockLevel: 240 },
-        { id: 25, name: "Пулемёт РПД", tier: 6, dmg: 713, price: 16000, unlockLevel: 260 },
-        { id: 18, name: "Автомат АС «Вал»", tier: 8, dmg: 1479, price: 34000, unlockLevel: 340 },
-        { id: 10, name: "Карабин Сайга-12", tier: 8, dmg: 1233, price: 25000, unlockLevel: 320 },
-        { id: 63, name: "Автомат АК-308", tier: 9, dmg: 2130, price: 41000, unlockLevel: 380 },
-        { id: 51, name: "Автомат ЛР-308", tier: 9, dmg: 1775, price: 35000, unlockLevel: 360 },
-        { id: 75, name: "Автомат SCAR-H", tier: 9, dmg: 2556, price: 47000, unlockLevel: 400 },
-        { id: 61, name: "Пулемёт M60E6", tier: 10, dmg: 3067, price: 48000, unlockLevel: 420 },
-        { id: 59, name: "Пулемёт M240", tier: 10, dmg: 3680, price: 65000, unlockLevel: 440 },
-        { id: 71, name: "Пулемёт FN MAG", tier: 11, dmg: 4416, price: 66000, unlockLevel: 460 },
-        { id: 77, name: "Пулемёт Negev NG7", tier: 11, dmg: 5300, price: 91000, unlockLevel: 480 },
-        { id: 22, name: "Пулемёт ПКМ", tier: 12, dmg: 6360, price: 92000, unlockLevel: 500 },
-        { id: 29, name: "Пулемёт «Печенег»", tier: 12, dmg: 7632, price: 124000, unlockLevel: 520 },
-        { id: 53, name: "Пулемёт «Печенег-СП»", tier: 13, dmg: 9158, price: 125000, unlockLevel: 540 },
-        { id: 47, name: "Автомат АК-АН «Абакан-100»", tier: 13, dmg: 10990, price: 147500, unlockLevel: 560 },
-        { id: 65, name: "Пулемёт «Утёс-М»", tier: 13, dmg: 13188, price: 170000, unlockLevel: 580 },
-        { id: 14, name: "Винтовка СКС", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
-        { id: 46, name: "Винтовка SSG 08", tier: 4, dmg: 287, price: 3500, unlockLevel: 160 },
-        { id: 42, name: "Винтовка SR-25", tier: 4, dmg: 239, price: 1800, unlockLevel: 140 },
-        { id: 13, name: "Винтовка СВД", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
-        { id: 24, name: "Винтовка СВДС", tier: 2, dmg: 115, price: 400, unlockLevel: 60 },
-        { id: 23, name: "Винтовка Т-5000", tier: 2, dmg: 138, price: 700, unlockLevel: 80 },
-        { id: 28, name: "Винтовка СВ-98", tier: 3, dmg: 166, price: 800, unlockLevel: 100 },
-        { id: 36, name: "Винтовка СВК", tier: 3, dmg: 199, price: 1500, unlockLevel: 120 },
-        { id: 30, name: "Винтовка ВСС «Винторез»", tier: 5, dmg: 344, price: 4000, unlockLevel: 180 },
-        { id: 40, name: "Винтовка ВСК-94", tier: 5, dmg: 413, price: 6000, unlockLevel: 200 },
-        { id: 31, name: "Винтовка СВ-338", tier: 5, dmg: 495, price: 8000, unlockLevel: 220 },
-        { id: 27, name: "Винтовка ОРСИС T-5000M", tier: 6, dmg: 594, price: 9000, unlockLevel: 240 },
-        { id: 70, name: "Винтовка Sako TRG-42", tier: 6, dmg: 713, price: 16000, unlockLevel: 260 },
-        { id: 76, name: "Винтовка Blaser R93 Tactical 2", tier: 7, dmg: 856, price: 17000, unlockLevel: 280 },
-        { id: 39, name: "Винтовка ORSIS T-5000 Sniper Pro", tier: 7, dmg: 1027, price: 24000, unlockLevel: 300 },
-        { id: 60, name: "Винтовка Accuracy International AXMC", tier: 8, dmg: 1479, price: 34000, unlockLevel: 340 },
-        { id: 48, name: "Винтовка Barrett M98B", tier: 8, dmg: 1233, price: 25000, unlockLevel: 320 },
-        { id: 64, name: "Винтовка ORSIS T-5000 Elite", tier: 9, dmg: 1775, price: 35000, unlockLevel: 360 },
-        { id: 33, name: "Винтовка «Выхлоп»", tier: 9, dmg: 2130, price: 41000, unlockLevel: 380 },
-        { id: 35, name: "Винтовка ОСВ-96", tier: 10, dmg: 3680, price: 65000, unlockLevel: 440 },
-        { id: 66, name: "Винтовка Zastava M93 Black Arrow", tier: 9, dmg: 2556, price: 47000, unlockLevel: 400 },
-        { id: 52, name: "Винтовка АСВК «Корд»", tier: 11, dmg: 4416, price: 66000, unlockLevel: 460 },
-        { id: 58, name: "Винтовка Steyr HS .50", tier: 10, dmg: 3067, price: 48000, unlockLevel: 420 },
-        { id: 49, name: "Винтовка Barrett M82", tier: 11, dmg: 5300, price: 91000, unlockLevel: 480 },
-        { id: 54, name: "Винтовка McMillan TAC-50", tier: 12, dmg: 6360, price: 92000, unlockLevel: 500 },
-        { id: 72, name: "Винтовка Desert Tech HTI", tier: 12, dmg: 7632, price: 124000, unlockLevel: 520 },
-        { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 9158, price: 125000, unlockLevel: 540 },
-        { id: 73, name: "Прототип X-17", tier: 13, dmg: 10990, price: 147500, unlockLevel: 560 },
-        { id: 55, name: "Гаусс-пушка", tier: 13, dmg: 13188, price: 170000, unlockLevel: 580 },
+        { id: 11, name: "Автомат АКС-74У", tier: 1, dmg: 120, price: 150, unlockLevel: 10 },
+        { id: 12, name: "Автомат АК-74", tier: 1, dmg: 144, price: 350, unlockLevel: 20 },
+        { id: 37, name: "Автомат АК-107", tier: 3, dmg: 249, price: 800, unlockLevel: 100 },
+        { id: 21, name: "Автомат АК-12", tier: 2, dmg: 173, price: 400, unlockLevel: 60 },
+        { id: 26, name: "Автомат АН-94 «Абакан»", tier: 2, dmg: 207, price: 700, unlockLevel: 80 },
+        { id: 17, name: "Пулемёт РПК-74", tier: 3, dmg: 299, price: 1500, unlockLevel: 120 },
+        { id: 38, name: "Автомат ADAR 2-15", tier: 4, dmg: 359, price: 1800, unlockLevel: 140 },
+        { id: 45, name: "Автомат АК-19", tier: 5, dmg: 516, price: 4000, unlockLevel: 180 },
+        { id: 57, name: "Автомат HK416", tier: 4, dmg: 431, price: 3500, unlockLevel: 160 },
+        { id: 69, name: "Автомат CZ Bren 2", tier: 5, dmg: 620, price: 6000, unlockLevel: 200 },
+        { id: 67, name: "Пулемёт Minimi Mk3", tier: 5, dmg: 743, price: 8000, unlockLevel: 220 },
+        { id: 43, name: "Автомат ОЦ-14 «Гроза»", tier: 7, dmg: 1284, price: 17000, unlockLevel: 280 },
+        { id: 16, name: "Карабин «Вепрь»", tier: 7, dmg: 1541, price: 24000, unlockLevel: 300 },
+        { id: 15, name: "Автомат АК-103", tier: 6, dmg: 891, price: 9000, unlockLevel: 240 },
+        { id: 25, name: "Пулемёт РПД", tier: 6, dmg: 1070, price: 16000, unlockLevel: 260 },
+        { id: 18, name: "Автомат АС «Вал»", tier: 8, dmg: 2219, price: 34000, unlockLevel: 340 },
+        { id: 10, name: "Карабин Сайга-12", tier: 8, dmg: 1850, price: 25000, unlockLevel: 320 },
+        { id: 63, name: "Автомат АК-308", tier: 9, dmg: 3195, price: 41000, unlockLevel: 380 },
+        { id: 51, name: "Автомат ЛР-308", tier: 9, dmg: 2663, price: 35000, unlockLevel: 360 },
+        { id: 75, name: "Автомат SCAR-H", tier: 9, dmg: 3834, price: 47000, unlockLevel: 400 },
+        { id: 61, name: "Пулемёт M60E6", tier: 10, dmg: 4601, price: 48000, unlockLevel: 420 },
+        { id: 59, name: "Пулемёт M240", tier: 10, dmg: 5520, price: 65000, unlockLevel: 440 },
+        { id: 71, name: "Пулемёт FN MAG", tier: 11, dmg: 6624, price: 66000, unlockLevel: 460 },
+        { id: 77, name: "Пулемёт Negev NG7", tier: 11, dmg: 7950, price: 91000, unlockLevel: 480 },
+        { id: 22, name: "Пулемёт ПКМ", tier: 12, dmg: 9540, price: 92000, unlockLevel: 500 },
+        { id: 29, name: "Пулемёт «Печенег»", tier: 12, dmg: 11448, price: 124000, unlockLevel: 520 },
+        { id: 53, name: "Пулемёт «Печенег-СП»", tier: 13, dmg: 13737, price: 125000, unlockLevel: 540 },
+        { id: 47, name: "Автомат АК-АН «Абакан-100»", tier: 13, dmg: 16485, price: 147500, unlockLevel: 560 },
+        { id: 65, name: "Пулемёт «Утёс-М»", tier: 13, dmg: 19782, price: 170000, unlockLevel: 580 },
+        { id: 14, name: "Винтовка СКС", tier: 1, dmg: 140, price: 150, unlockLevel: 10 },
+        { id: 46, name: "Винтовка SSG 08", tier: 4, dmg: 502, price: 3500, unlockLevel: 160 },
+        { id: 42, name: "Винтовка SR-25", tier: 4, dmg: 418, price: 1800, unlockLevel: 140 },
+        { id: 13, name: "Винтовка СВД", tier: 1, dmg: 168, price: 350, unlockLevel: 20 },
+        { id: 24, name: "Винтовка СВДС", tier: 2, dmg: 201, price: 400, unlockLevel: 60 },
+        { id: 23, name: "Винтовка Т-5000", tier: 2, dmg: 242, price: 700, unlockLevel: 80 },
+        { id: 28, name: "Винтовка СВ-98", tier: 3, dmg: 291, price: 800, unlockLevel: 100 },
+        { id: 36, name: "Винтовка СВК", tier: 3, dmg: 348, price: 1500, unlockLevel: 120 },
+        { id: 30, name: "Винтовка ВСС «Винторез»", tier: 5, dmg: 602, price: 4000, unlockLevel: 180 },
+        { id: 40, name: "Винтовка ВСК-94", tier: 5, dmg: 723, price: 6000, unlockLevel: 200 },
+        { id: 31, name: "Винтовка СВ-338", tier: 5, dmg: 866, price: 8000, unlockLevel: 220 },
+        { id: 27, name: "Винтовка ОРСИС T-5000M", tier: 6, dmg: 1040, price: 9000, unlockLevel: 240 },
+        { id: 70, name: "Винтовка Sako TRG-42", tier: 6, dmg: 1248, price: 16000, unlockLevel: 260 },
+        { id: 76, name: "Винтовка Blaser R93 Tactical 2", tier: 7, dmg: 1498, price: 17000, unlockLevel: 280 },
+        { id: 39, name: "Винтовка ORSIS T-5000 Sniper Pro", tier: 7, dmg: 1797, price: 24000, unlockLevel: 300 },
+        { id: 60, name: "Винтовка Accuracy International AXMC", tier: 8, dmg: 2588, price: 34000, unlockLevel: 340 },
+        { id: 48, name: "Винтовка Barrett M98B", tier: 8, dmg: 2158, price: 25000, unlockLevel: 320 },
+        { id: 64, name: "Винтовка ORSIS T-5000 Elite", tier: 9, dmg: 3106, price: 35000, unlockLevel: 360 },
+        { id: 33, name: "Винтовка «Выхлоп»", tier: 9, dmg: 3728, price: 41000, unlockLevel: 380 },
+        { id: 35, name: "Винтовка ОСВ-96", tier: 10, dmg: 6440, price: 65000, unlockLevel: 440 },
+        { id: 66, name: "Винтовка Zastava M93 Black Arrow", tier: 9, dmg: 4473, price: 47000, unlockLevel: 400 },
+        { id: 52, name: "Винтовка АСВК «Корд»", tier: 11, dmg: 7728, price: 66000, unlockLevel: 460 },
+        { id: 58, name: "Винтовка Steyr HS .50", tier: 10, dmg: 5367, price: 48000, unlockLevel: 420 },
+        { id: 49, name: "Винтовка Barrett M82", tier: 11, dmg: 9275, price: 91000, unlockLevel: 480 },
+        { id: 54, name: "Винтовка McMillan TAC-50", tier: 12, dmg: 11130, price: 92000, unlockLevel: 500 },
+        { id: 72, name: "Винтовка Desert Tech HTI", tier: 12, dmg: 13356, price: 124000, unlockLevel: 520 },
+        { id: 78, name: "Винтовка Cheytac M200 Intervention", tier: 13, dmg: 16027, price: 125000, unlockLevel: 540 },
+        { id: 73, name: "Прототип X-17", tier: 13, dmg: 19233, price: 147500, unlockLevel: 560 },
+        { id: 55, name: "Гаусс-пушка", tier: 13, dmg: 23079, price: 170000, unlockLevel: 580 },
         { id: 86, name: "Beretta 21A Bobcat", tier: 1, dmg: 80, price: 150, unlockLevel: 1, starterGear: true },
         { id: 2, name: "Пистолет ПСМ", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
         { id: 87, name: "Walther PPK", tier: 2, dmg: 115, price: 400, unlockLevel: 60 },
@@ -1543,35 +1544,35 @@ button:active {filter:brightness(1.18);}
         { id: 103, name: "Smith & Wesson Model 29", tier: 13, dmg: 9158, price: 125000, unlockLevel: 540 },
         { id: 104, name: "Taurus Raging Bull", tier: 13, dmg: 10990, price: 147500, unlockLevel: 560 },
         { id: 105, name: "Desert Eagle Mark XIX", tier: 13, dmg: 13188, price: 170000, unlockLevel: 580 },
-        { id: 20, name: "Дробовик Сайга-410", tier: 1, dmg: 80, price: 150, unlockLevel: 10 },
-        { id: 106, name: "Дробовик Mossberg 500", tier: 1, dmg: 96, price: 350, unlockLevel: 20 },
-        { id: 107, name: "Дробовик Stoeger P3000", tier: 2, dmg: 115, price: 400, unlockLevel: 60 },
-        { id: 108, name: "Дробовик Remington 870", tier: 2, dmg: 138, price: 700, unlockLevel: 80 },
-        { id: 109, name: "Дробовик Winchester Model 1300", tier: 3, dmg: 166, price: 800, unlockLevel: 100 },
-        { id: 110, name: "Дробовик Ithaca 37", tier: 3, dmg: 199, price: 1500, unlockLevel: 120 },
-        { id: 111, name: "Дробовик Browning BPS", tier: 4, dmg: 239, price: 1800, unlockLevel: 140 },
-        { id: 19, name: "Дробовик СПАС-12", tier: 4, dmg: 287, price: 3500, unlockLevel: 160 },
-        { id: 112, name: "Дробовик Winchester SXP Defender", tier: 5, dmg: 344, price: 4000, unlockLevel: 180 },
-        { id: 113, name: "Дробовик Mossberg 590A1", tier: 5, dmg: 413, price: 6000, unlockLevel: 200 },
-        { id: 114, name: "Дробовик Remington 870 MCS", tier: 5, dmg: 495, price: 8000, unlockLevel: 220 },
-        { id: 32, name: "Дробовик Сайга-12К", tier: 6, dmg: 594, price: 9000, unlockLevel: 240 },
-        { id: 115, name: "Дробовик Benelli Nova", tier: 6, dmg: 713, price: 16000, unlockLevel: 260 },
-        { id: 116, name: "Дробовик TOZ-194", tier: 7, dmg: 856, price: 17000, unlockLevel: 280 },
-        { id: 44, name: "Дробовик «Вепрь-12»", tier: 7, dmg: 1027, price: 24000, unlockLevel: 300 },
-        { id: 117, name: "Дробовик Remington 1100", tier: 8, dmg: 1233, price: 25000, unlockLevel: 320 },
-        { id: 62, name: "Дробовик Kel-Tec KSG", tier: 8, dmg: 1479, price: 34000, unlockLevel: 340 },
-        { id: 118, name: "Дробовик Beretta 1301 Tactical", tier: 9, dmg: 1775, price: 35000, unlockLevel: 360 },
-        { id: 50, name: "Дробовик Benelli M4", tier: 9, dmg: 2130, price: 41000, unlockLevel: 380 },
-        { id: 119, name: "Дробовик Fabarm STF/12", tier: 9, dmg: 2556, price: 47000, unlockLevel: 400 },
-        { id: 56, name: "Дробовик AA-12", tier: 10, dmg: 3067, price: 48000, unlockLevel: 420 },
-        { id: 120, name: "Дробовик Winchester SX4", tier: 10, dmg: 3680, price: 65000, unlockLevel: 440 },
-        { id: 121, name: "Дробовик Browning A5", tier: 11, dmg: 4416, price: 66000, unlockLevel: 460 },
-        { id: 68, name: "Дробовик Franchi SPAS-15", tier: 11, dmg: 5300, price: 91000, unlockLevel: 480 },
-        { id: 122, name: "Дробовик Remington 870 Magnum", tier: 12, dmg: 6360, price: 92000, unlockLevel: 500 },
-        { id: 123, name: "Дробовик Benelli Vinci", tier: 12, dmg: 7632, price: 124000, unlockLevel: 520 },
-        { id: 74, name: "Дробовик USAS-12", tier: 13, dmg: 9158, price: 125000, unlockLevel: 540 },
-        { id: 124, name: "Дробовик Ithaca Mag-10", tier: 13, dmg: 10990, price: 147500, unlockLevel: 560 },
-        { id: 125, name: "Дробовик Remington SP-10", tier: 13, dmg: 13188, price: 170000, unlockLevel: 580 },
+        { id: 20, name: "Дробовик Сайга-410", tier: 1, dmg: 100, price: 150, unlockLevel: 10 },
+        { id: 106, name: "Дробовик Mossberg 500", tier: 1, dmg: 120, price: 350, unlockLevel: 20 },
+        { id: 107, name: "Дробовик Stoeger P3000", tier: 2, dmg: 144, price: 400, unlockLevel: 60 },
+        { id: 108, name: "Дробовик Remington 870", tier: 2, dmg: 173, price: 700, unlockLevel: 80 },
+        { id: 109, name: "Дробовик Winchester Model 1300", tier: 3, dmg: 208, price: 800, unlockLevel: 100 },
+        { id: 110, name: "Дробовик Ithaca 37", tier: 3, dmg: 249, price: 1500, unlockLevel: 120 },
+        { id: 111, name: "Дробовик Browning BPS", tier: 4, dmg: 299, price: 1800, unlockLevel: 140 },
+        { id: 19, name: "Дробовик СПАС-12", tier: 4, dmg: 359, price: 3500, unlockLevel: 160 },
+        { id: 112, name: "Дробовик Winchester SXP Defender", tier: 5, dmg: 430, price: 4000, unlockLevel: 180 },
+        { id: 113, name: "Дробовик Mossberg 590A1", tier: 5, dmg: 516, price: 6000, unlockLevel: 200 },
+        { id: 114, name: "Дробовик Remington 870 MCS", tier: 5, dmg: 619, price: 8000, unlockLevel: 220 },
+        { id: 32, name: "Дробовик Сайга-12К", tier: 6, dmg: 743, price: 9000, unlockLevel: 240 },
+        { id: 115, name: "Дробовик Benelli Nova", tier: 6, dmg: 891, price: 16000, unlockLevel: 260 },
+        { id: 116, name: "Дробовик TOZ-194", tier: 7, dmg: 1070, price: 17000, unlockLevel: 280 },
+        { id: 44, name: "Дробовик «Вепрь-12»", tier: 7, dmg: 1284, price: 24000, unlockLevel: 300 },
+        { id: 117, name: "Дробовик Remington 1100", tier: 8, dmg: 1541, price: 25000, unlockLevel: 320 },
+        { id: 62, name: "Дробовик Kel-Tec KSG", tier: 8, dmg: 1849, price: 34000, unlockLevel: 340 },
+        { id: 118, name: "Дробовик Beretta 1301 Tactical", tier: 9, dmg: 2219, price: 35000, unlockLevel: 360 },
+        { id: 50, name: "Дробовик Benelli M4", tier: 9, dmg: 2663, price: 41000, unlockLevel: 380 },
+        { id: 119, name: "Дробовик Fabarm STF/12", tier: 9, dmg: 3195, price: 47000, unlockLevel: 400 },
+        { id: 56, name: "Дробовик AA-12", tier: 10, dmg: 3834, price: 48000, unlockLevel: 420 },
+        { id: 120, name: "Дробовик Winchester SX4", tier: 10, dmg: 4600, price: 65000, unlockLevel: 440 },
+        { id: 121, name: "Дробовик Browning A5", tier: 11, dmg: 5520, price: 66000, unlockLevel: 460 },
+        { id: 68, name: "Дробовик Franchi SPAS-15", tier: 11, dmg: 6625, price: 91000, unlockLevel: 480 },
+        { id: 122, name: "Дробовик Remington 870 Magnum", tier: 12, dmg: 7950, price: 92000, unlockLevel: 500 },
+        { id: 123, name: "Дробовик Benelli Vinci", tier: 12, dmg: 9540, price: 124000, unlockLevel: 520 },
+        { id: 74, name: "Дробовик USAS-12", tier: 13, dmg: 11448, price: 125000, unlockLevel: 540 },
+        { id: 124, name: "Дробовик Ithaca Mag-10", tier: 13, dmg: 13738, price: 147500, unlockLevel: 560 },
+        { id: 125, name: "Дробовик Remington SP-10", tier: 13, dmg: 16485, price: 170000, unlockLevel: 580 },
         { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 6660, price: 666000, adminOnly: true }
     ];
 
@@ -7641,17 +7642,31 @@ function startBattle(enemy) {
     // СЛЕДУЮЩЕГО по уровню открытия предмета, улучшенного всего на 20 из 100 — а не просто
     // "следующего предмета без улучшений". Считается рекурсивно с конца цепочки: потолок каждого
     // предмета зависит от потолка следующего, который зависит от следующего за ним, и т.д.
+    function getWeaponDamageClass(list, item) {
+        if (!Array.isArray(list) || !item || item.adminOnly) return '';
+        const index = list.indexOf(item);
+        const rifleStart = list.findIndex(o => /^Винтовка\b/i.test(String(o?.name || '')));
+        const pistolStart = list.findIndex(o => !!o?.starterGear);
+        const shotgunStart = list.findIndex(o => /^Дробовик\b/i.test(String(o?.name || '')));
+        if (index < 0 || rifleStart < 0 || pistolStart < 0 || shotgunStart < 0) return '';
+        if (index < rifleStart) return 'automatic';
+        if (index < pistolStart) return 'rifle';
+        if (index < shotgunStart) return 'pistol';
+        return 'shotgun';
+    }
     function getNextItemCeiling(list, item, statKey) {
         if (!item || item.unlockLevel === undefined) return Infinity;
+        const weaponClass = statKey === 'dmg' ? getWeaponDamageClass(list, item) : '';
         const candidates = list.filter(o => !o.adminOnly && !o.isPremiumArmor && !o.isResearchSuit &&
-            o.unlockLevel !== undefined && o.unlockLevel > item.unlockLevel);
+            o.unlockLevel !== undefined && o.unlockLevel > item.unlockLevel &&
+            (!weaponClass || getWeaponDamageClass(list, o) === weaponClass));
         if (candidates.length === 0) return Infinity;
         const minUnlock = Math.min(...candidates.map(o => o.unlockLevel));
         const nextTier = candidates.filter(o => o.unlockLevel === minUnlock);
         nextTier.sort((a, b) => (Number(a[statKey]) || 0) - (Number(b[statKey]) || 0));
         const nextItem = nextTier[0];
         const nextCeiling = getNextItemCeiling(list, nextItem, statKey);
-        const nextValueAt20 = getUpgradedStat(Number(nextItem[statKey]) || 0, 20, nextCeiling);
+        const nextValueAt20 = getUpgradedStat(Number(nextItem[statKey]) || 0, 20, nextCeiling, !!nextItem.adminOnly);
         return Math.max((Number(item[statKey]) || 0), nextValueAt20);
     }
     const UPGRADE_BYTE_THRESHOLD = 25; // уровни 1-50 — за Байты, 51-100 — за Жетоны сталкера
