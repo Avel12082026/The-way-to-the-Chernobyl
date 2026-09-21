@@ -17,9 +17,9 @@ const SHOP_WEAPONS=[
  {name:'Дробовик test',unlockLevel:900}
 ];
 const SHOP_ARMOR=Array.from({length:12},(_,i)=>({name:'a'+i,unlockLevel:i+1}));
-const RAID_ANOMALIES=[{name:'A1',tier:1},{name:'A2',tier:2},{name:'A3',tier:3}];
+const RAID_ANOMALIES=[{name:'A1',tier:1},{name:'A2',tier:2},{name:'A3',tier:3},{name:'A4',tier:4}];
 const PVE_MUTANTS=[
- {name:'m1',tier:1,hp:200},{name:'m2',tier:3,hp:400},{name:'m3',tier:5,hp:600}
+ {name:'m1',tier:1,hp:200},{name:'m2',tier:2,hp:300},{name:'m3',tier:3,hp:400},{name:'m4',tier:4,hp:600}
 ];
 const app={post(){},get(){},listen(){}};
 const db={},requireAuth=()=>{},rateLimit=()=>()=>{};
@@ -40,25 +40,33 @@ assert changed
 assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert "app.get('/api/zone-map/:location'" in patched
-assert "3:'zone-map3.jpg'" in patched
-assert "if(![1,2,3].includes(zoneLocation))" in patched
+assert "app.get('/api/zone-camp/:location'" in patched
+assert "4:'zone-map4.png'" in patched
+assert "4:'rostok-bar.png'" in patched
+assert "if(![1,2,3,4].includes(zoneLocation))" in patched
 assert "const zoneTier=zoneLocation" in patched
 
-# Location 3 unlock is exactly the last nine pistols.
+# Location 3 remains the last-nine-pistol branch.
 assert "ZONE_MAP_LAST_NINE_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(-9)" in patched
 assert "if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9)" in patched
 assert "НИИ Агропром пока закрыт. Должны быть открыты последние 9 пистолетов." in patched
 
-# Human enemies on location 3 are Military, while Svalka remains Bandits.
+# Rostok is location/tier 4 and unlocks on the second decade of pistols.
+assert "ZONE_MAP_SECOND_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(10,20)" in patched
+assert "if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
+assert "Россток пока закрыт. Должна быть открыта вторая десятка пистолетов." in patched
+
+# Human factions are location-specific.
 assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
 assert "if(zoneLocation===3)npc.faction='Военные'" in patched
+assert "if(zoneLocation===4)npc.faction='Наёмники'" in patched
 assert "npc.tier=zoneTier" in patched
 
-# Mutants/anomalies are routed by the logical location tier; map 3 therefore yields tier 3.
+# Mutants/anomalies are routed by the logical location tier; Rostok therefore yields tier 4.
 assert "sourceTier" in patched and "tier:zoneTier" in patched
 assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in patched
 
-# Location-one armor restriction remains, but weapon stock follows global progression.
+# Location-one armor restriction remains, while weapon stock follows global progression.
 assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
 assert "Этот ствол продаётся на другой локации" not in patched
 assert "Этот костюм продаётся на другой локации" in patched
@@ -67,26 +75,27 @@ assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
 
-# Live server is V2: V3 installer must replace that block in place.
-v2=source.replace(
+# A live V3 install must upgrade in place to V4.
+v3=source.replace(
     "app.listen(3000);",
     mod.SHOP_GUARD +
-    "// ZONE_MAP_ROUTING_V2\n"
-    "const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg'});\n"
+    "// ZONE_MAP_ROUTING_V3\n"
+    "const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg'});\n"
     "app.post('/api/raid/zone-step',(req,res)=>{});\n"
     "app.listen(3000);"
 )
-upgraded,changed3=mod.patch(v2)
+upgraded,changed3=mod.patch(v3)
 assert changed3
 assert mod.ROUTE_MARK in upgraded
-assert "// ZONE_MAP_ROUTING_V2" not in upgraded
-assert "3:'zone-map3.jpg'" in upgraded
+assert "// ZONE_MAP_ROUTING_V3" not in upgraded
+assert "4:'zone-map4.png'" in upgraded
+assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
 
 installer=path.read_text(encoding='utf-8')
-assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2')" in installer
-assert "zone-map3.jpg" in installer
-assert "(root/'ui'/'zone-map3.jpg',b'\\xff\\xd8')" in installer
-assert "Совместимость трёх локаций" in installer
+assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
+assert "(root/'ui'/'zone-map4.png',b'\\x89PNG')" in installer
+assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG')" in installer
+assert "Совместимость четырёх локаций" in installer
 
-print('PASS: V3 installer upgrades live V2 and adds NII Agroprom, last-nine-pistol gate, Military-only NPCs and tier-3 routing')
+print('PASS: V4 installer upgrades V3 and adds Rostok map/camp, second-decade gate, Mercenary NPCs and tier-4 routing')
