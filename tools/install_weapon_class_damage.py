@@ -16,9 +16,9 @@ const WEAPON_CLASS_DAMAGE_MULTIPLIERS=Object.freeze({
 function weaponDamageClassServer(list,item){
     if(!Array.isArray(list)||!item||item.adminOnly)return'';
     const index=list.indexOf(item);
-    const rifleStart=list.findIndex(o=>/^Винтовка\b/i.test(String(o&&o.name||'')));
+    const rifleStart=list.findIndex(o=>/^Винтовка(?:\s|$)/i.test(String(o&&o.name||'')));
     const pistolStart=list.findIndex(o=>!!(o&&o.starterGear));
-    const shotgunStart=list.findIndex(o=>/^Дробовик\b/i.test(String(o&&o.name||'')));
+    const shotgunStart=list.findIndex(o=>/^Дробовик(?:\s|$)/i.test(String(o&&o.name||'')));
     if(index<0||rifleStart<0||pistolStart<0||shotgunStart<0)return'';
     if(!(rifleStart<pistolStart&&pistolStart<shotgunStart))
         throw new Error('Нарушен порядок классов оружия в SHOP_WEAPONS');
