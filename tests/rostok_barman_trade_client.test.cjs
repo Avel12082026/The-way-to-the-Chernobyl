@@ -31,7 +31,7 @@ assert(css.includes('.rostok-cordon-hud-artwork')&&css.includes('clip-path:inset
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
-  'ui/bunker-menu.js?v=20260922-position3',
+  'ui/bunker-menu.js?v=20260922-position4',
   'ui/bunker-menu.css?v=20260922-position3',
   'ui/trade-menu.js?v=20260922-position3',
   'ui/trader-hubs.js?v=20260922-position3'
