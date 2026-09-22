@@ -44,7 +44,7 @@ async def main():
           window.expNeededForLevel=()=>100;
           window.player={
             level:1,health:100,maxHealth:100,hunger:100,maxHunger:100,
-            thirst:100,maxThirst:100,radiation:0,exp:0,coins:100000,breedCredits:0,inventory:{}
+            thirst:100,maxThirst:100,radiation:12,exp:37,coins:123456,breedCredits:7,inventory:{'Книга знаний':3}
           };
           window.weapons=[
             ...Array.from({length:29},(_,i)=>({
@@ -65,6 +65,7 @@ async def main():
           window.endRaid=async()=>{window.__calls.end++;window.raidActive=false;window.openScreen('main');};
           window.openScreen=(name)=>{window.__calls.open.push(name);document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));document.getElementById('mainMenu').style.display=name==='main'?'block':'none';};
           window.showGameAlert=(m)=>window.__calls.alerts.push(String(m));
+          window.useKnowledgeBookFromHeader=async()=>{window.__calls.read=(window.__calls.read||0)+1;player.inventory['Книга знаний']=Math.max(0,(player.inventory['Книга знаний']||0)-1);player.exp+=10;};
           window.fetch=async(input,init={})=>{
             const url=String(input);
             window.__calls.fetches.push({url,body:init.body?JSON.parse(init.body):null});
@@ -72,13 +73,15 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.11.0' && window.ZoneMap?.version==='0.6.2'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.12.0' && window.ZoneMap?.version==='0.6.3'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
         assert await zone.is_visible()
         assert await page.evaluate('ZoneMap.location')==1
         assert await page.locator('#zoneMapTitle').inner_text()=='Кордон'
+        assert await page.locator('#zoneMapScreen .zone-map-back').count()==0
+        assert await page.locator('#zoneMapScreen [data-zone-map-action="back"]').count()==0
 
         # Location 2 remains gated by first ten pistols + first ten armor.
         await page.locator('[data-zone-point="transition-to-2"]').click()
@@ -147,16 +150,37 @@ async def main():
         canvas4=await page.locator('#zoneMapCanvas').bounding_box()
         assert abs((canvas4['width']/canvas4['height'])-(865/1536))<0.02,canvas4
 
-        # Rostok camp marker opens the 100 RADS artwork with Cordon-style survival bars.
+        # Rostok camp marker opens the 100 RADS artwork with the full Cordon-style working hub.
         await page.locator('[data-zone-point="camp-4"]').click()
         camp=page.locator('#rostokCampScreen')
         assert await camp.is_visible()
-        assert await page.locator('#rostokHealth').is_visible()
-        assert await page.locator('#rostokHunger').is_visible()
-        assert await page.locator('#rostokThirst').is_visible()
+        for meter_id in ['rostokHealth','rostokHunger','rostokThirst','rostokExperience','rostokRadiation']:
+            assert await page.locator('#'+meter_id).is_visible(),meter_id
+        assert await page.locator('#rostokExperienceText').inner_text()=='Опыт: 37 / 100'
+        assert await page.locator('#rostokRadiationText').inner_text()=='Радиация: 12 / 100'
+        assert await page.locator('#rostokCoins').inner_text()=='123456'
+        assert await page.locator('#rostokBreedCredits').inner_text()=='7'
+        assert await page.locator('#rostokKnowledgeBooks').inner_text()=='3'
+        assert await page.locator('#rostokReadBook').is_visible()
+        assert await page.locator('#rostokInventory').is_visible()
+        assert await page.locator('#rostokPda').is_visible()
+
+        await page.locator('#rostokReadBook').click()
+        await page.wait_for_function("window.__calls.read===1")
+        assert await page.locator('#rostokKnowledgeBooks').inner_text()=='2'
+        assert await page.locator('#rostokExperienceText').inner_text()=='Опыт: 47 / 100'
+
+        await page.locator('#rostokInventory').click()
+        assert (await page.evaluate('window.__calls.open.at(-1)'))=='inventory'
+        await page.evaluate('BunkerMenu.openRostokCamp()')
+        await page.locator('#rostokPda').click()
+        assert (await page.evaluate('window.__calls.open.at(-1)'))=='kpk'
+        await page.evaluate('BunkerMenu.openRostokCamp()')
+
         await page.locator('[data-rostok-action="map"]').click()
         assert await zone.is_visible()
         assert await page.evaluate('ZoneMap.location')==4
+        assert await page.locator('#zoneMapScreen .zone-map-back').count()==0
 
         # Rostok return to Svalka is the bottom-right marker.
         await page.locator('[data-zone-point="transition-to-2"]').click()
