@@ -23,6 +23,6 @@ assert "x:10.50,y:47.49,targetLocation:3" in js
 assert "id:'transition-to-4'" in js and "label:'Переход на Россток'" in js
 assert "x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'" in js
 assert "transition-future-top" not in js
-assert '20260922-barman1' in js
+assert '20260922-position2' in js
 
 print('PASS: full-resolution 864x1536 Svalka artwork, hotspots and active top transition to Rostok verified')
