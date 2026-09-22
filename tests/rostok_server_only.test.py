@@ -25,6 +25,7 @@ with tempfile.TemporaryDirectory() as td:
         if relative=='tools/install_zone_map_routing_server.py':
             return (
                 "# // ZONE_MAP_ROUTING_V4\n"
+                "# // ROSTOK_BARMAN_SHOP_V1\n"
                 "# "+mod.MAP_SHA+"\n"
                 "# "+mod.BAR_SHA+"\n"
                 "def patch(source):\n"
