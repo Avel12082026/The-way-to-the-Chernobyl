@@ -40,6 +40,9 @@ if(playerData.worldPosition.zoneLocation!==4||playerData.worldPosition.origin!==
 r=call({zoneLocation:4,place:'zhuchara',origin:'zone-map'});
 if(playerData.worldPosition.zoneLocation!==1||playerData.worldPosition.origin!=='cordon-camp')throw Error('Cordon trader not normalized');
 
+r=call({zoneLocation:4,place:'smoker',origin:'zone-map'});
+if(playerData.worldPosition.zoneLocation!==1||playerData.worldPosition.place!=='smoker'||playerData.worldPosition.origin!=='cordon-camp')throw Error('Cordon smoker position not preserved');
+
 r=call({zoneLocation:4,place:'zone-map',origin:'zone-map'});
 if(playerData.worldPosition.zoneLocation!==4||playerData.worldPosition.origin!=='zone-map')throw Error('Zone map location lost');
 
