@@ -329,10 +329,10 @@
     el.setAttribute('aria-label', 'Россток — бар 100 RADS');
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
-        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-barman1" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position1" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img class="rostok-cordon-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
-        <div class="rostok-hub-shell" aria-hidden="true"></div>
         <div class="rostok-progress-row" aria-label="Опыт и радиация">
           <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
           <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
@@ -345,13 +345,9 @@
           <div class="rostok-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
           <div class="rostok-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
         </section>
-        <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read">Прочитать</button>
-        <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Инвентарь">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M19 18h26l5 10v26H14V28l5-10zm5-8h16l4 8H20l4-8zm-4 18v22h8V28h-8zm16 0v22h8V28h-8z"/><path d="M28 31h8v8h-8z"/></svg><span>Рюкзак</span>
-        </button>
-        <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8h22l6 8v38H16V16l6-8zm1 12v21h20V20H23zm4 26h4v4h-4v-4zm12 0h4v4h-4v-4z"/><path d="M43 4h3v10h-3z"/></svg><span>КПК</span>
-        </button>
+        <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+"></button>
+        <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
+        <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
       </div>`;
     document.body.appendChild(el);
     rostokCampScreen = el;
@@ -397,7 +393,7 @@
     el.dataset.actionCount = '3';
     el.setAttribute('aria-label', 'Бармен');
     el.innerHTML = `
-      <img id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-barman1" width="941" height="1672" alt="Бармен в 100 RADS" draggable="false">
+      <img id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position1" width="941" height="1672" alt="Бармен в 100 RADS" draggable="false">
       <div class="barman-hub-name">БАРМЕН</div>
       <nav class="trader-portrait-actions" aria-label="Действия: Бармен">
         <button type="button" data-barman-action="talk">Говорить</button>
@@ -516,7 +512,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260922-barman1`;
+    return `${SERVER_URL}${config.path}?v=20260922-position1`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -1394,6 +1390,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.13.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.14.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
 })();
