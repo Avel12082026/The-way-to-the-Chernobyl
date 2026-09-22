@@ -21,6 +21,10 @@
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
   let zoneMapTravelling = false;
+  let worldPositionRestored = false;
+  let worldPositionRestoring = false;
+  let worldPositionTimer = 0;
+  let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
   const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
@@ -120,6 +124,113 @@
     }
     return zoneLocation;
   }
+
+  const WORLD_POSITION_PLACES = new Set([
+    'cordon-camp','zone-map','rostok-bar','barman','inventory','kpk',
+    'warehouse','arena','market','chat','zhuchara','diesel','leonov','smoker'
+  ]);
+
+  function normalizeWorldPosition(raw) {
+    const location = ZONE_MAP_ASSETS[Number(raw?.zoneLocation)] ? Number(raw.zoneLocation) : 1;
+    let place = WORLD_POSITION_PLACES.has(String(raw?.place||'')) ? String(raw.place) : 'cordon-camp';
+    let origin = ['cordon-camp','zone-map','rostok-bar'].includes(String(raw?.origin||'')) ? String(raw.origin) : 'cordon-camp';
+    if (location !== 4 && ['rostok-bar','barman'].includes(place)) {
+      place = 'zone-map';
+      origin = 'zone-map';
+    }
+    if (location !== 4 && ['inventory','kpk'].includes(place) && origin === 'rostok-bar') origin = 'cordon-camp';
+    return {zoneLocation:location,place,origin};
+  }
+
+  function sendWorldPosition(payload, keepalive = false) {
+    const initData = window.Telegram?.WebApp?.initData;
+    if (!initData || typeof fetch !== 'function') return Promise.resolve(false);
+    const body = JSON.stringify({initData,...payload});
+    return fetch(`${SERVER_URL}/api/player/position`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body,
+      keepalive:!!keepalive
+    }).then(r=>r.ok?r.json():null).then(result=>{
+      if (result?.success && typeof player === 'object' && player) player.worldPosition = result.worldPosition;
+      return !!result?.success;
+    }).catch(()=>false);
+  }
+
+  function saveWorldPosition(place, origin = 'zone-map', immediate = false) {
+    const payload = normalizeWorldPosition({zoneLocation,place,origin});
+    const signature = JSON.stringify(payload);
+    if (!worldPositionRestoring && signature === worldPositionLast && !immediate) return;
+    worldPositionLast = signature;
+    if (typeof player === 'object' && player) {
+      player.worldPosition = {...payload,updatedAt:Date.now()};
+    }
+    clearTimeout(worldPositionTimer);
+    if (worldPositionRestoring) return;
+    const write = () => sendWorldPosition(payload,false);
+    if (immediate) void write();
+    else worldPositionTimer = setTimeout(write,120);
+  }
+
+  function saveCurrentWorldPositionOnExit() {
+    if (worldPositionRestoring || !worldPositionLast) return;
+    let payload;
+    try { payload = JSON.parse(worldPositionLast); } catch (_) { return; }
+    clearTimeout(worldPositionTimer);
+    void sendWorldPosition(payload,true);
+  }
+
+  function restorePlayerWorldPosition() {
+    if (worldPositionRestored || typeof player !== 'object' || !player?.worldPosition) return false;
+    const saved = normalizeWorldPosition(player.worldPosition);
+    worldPositionRestored = true;
+    worldPositionRestoring = true;
+    setZoneLocation(saved.zoneLocation,true);
+    if (saved.origin === 'rostok-bar' && saved.zoneLocation === 4 && ['inventory','kpk'].includes(saved.place)) {
+      rostokReturnPending = true;
+    }
+    const finish = () => {
+      worldPositionRestoring = false;
+      worldPositionLast = JSON.stringify(saved);
+    };
+    const openSaved = (attempt = 0) => {
+      try {
+        if (saved.place === 'rostok-bar') openRostokCamp();
+        else if (saved.place === 'barman') openBarmanHub();
+        else if (saved.place === 'zone-map') openZoneMap('camp');
+        else if (saved.place === 'zhuchara') {
+          if (window.TraderHubs?.openZhuchara) window.TraderHubs.openZhuchara();
+          else if (attempt < 20) return setTimeout(()=>openSaved(attempt+1),50);
+          else openScreen('main');
+        } else if (saved.place === 'diesel') {
+          if (window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();
+          else if (attempt < 20) return setTimeout(()=>openSaved(attempt+1),50);
+          else openScreen('main');
+        } else if (saved.place === 'leonov') {
+          if (window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov();
+          else if (typeof openLeonov === 'function') openLeonov();
+          else openScreen('main');
+        } else if (saved.place === 'smoker') {
+          if (window.BunkerMenu?.openSmoker) window.BunkerMenu.openSmoker();
+          else openScreen('main');
+        } else if (['inventory','kpk','warehouse','arena','market','chat'].includes(saved.place)) {
+          openScreen(saved.place);
+        } else {
+          openScreen('main');
+        }
+      } finally {
+        if (!(saved.place === 'zhuchara' && !window.TraderHubs?.openZhuchara && attempt < 20) &&
+            !(saved.place === 'diesel' && !window.TraderHubs?.openDiesel && attempt < 20)) finish();
+      }
+    };
+    requestAnimationFrame(()=>openSaved(0));
+    return true;
+  }
+
+  window.addEventListener('pagehide', saveCurrentWorldPositionOnExit);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) saveCurrentWorldPositionOnExit();
+  });
 
   function pistolWeaponList() {
     if (typeof weapons === 'undefined' || !Array.isArray(weapons)) return [];
@@ -365,6 +476,7 @@
 
   function openRostokCamp() {
     rostokReturnPending = false;
+    saveWorldPosition('rostok-bar','rostok-bar');
     closeBarmanHub(false);
     const el = ensureRostokCampScreen();
     document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
@@ -378,6 +490,7 @@
 
   function openRostokDestination(screen) {
     rostokReturnPending = true;
+    saveWorldPosition(screen,'rostok-bar',true);
     if (rostokCampScreen) rostokCampScreen.classList.remove('active');
     document.body.classList.remove('rostok-camp-visible');
     setZoneLocation(4);
@@ -419,6 +532,7 @@
   }
 
   function openBarmanHub() {
+    saveWorldPosition('barman','rostok-bar');
     const el = ensureBarmanHub();
     if (rostokCampScreen) rostokCampScreen.classList.remove('active');
     document.body.classList.remove('rostok-camp-visible');
@@ -593,6 +707,7 @@
 
     setZoneRaidKind('');
     setZoneLocation(target);
+    saveWorldPosition('zone-map','zone-map',true);
     if (overlay) overlay.hidden = true;
     el.classList.remove('travelling');
     zoneMapTravelling = false;
@@ -632,6 +747,7 @@
   }
 
   function openZoneMap(origin = '') {
+    if (!worldPositionRestoring) saveWorldPosition('zone-map','zone-map');
     if (typeof currentEnemy !== 'undefined' && currentEnemy) {
       if (typeof showGameAlert === 'function') showGameAlert('Сначала завершите текущую встречу.');
       return;
@@ -855,6 +971,7 @@
   }
 
   function openSmoker() {
+    saveWorldPosition('smoker','cordon-camp');
     const el = ensureSmokerScreen();
     const bubble = document.getElementById('smokerTalkBubble');
     if (bubble) bubble.hidden = true;
@@ -919,6 +1036,7 @@
   }
 
   function openLeonov() {
+    saveWorldPosition('leonov','cordon-camp');
     const el = ensureLeonovScreen();
     el.classList.add('active');
     document.body.classList.add('leonov-hub-visible');
@@ -1372,9 +1490,39 @@
     }
   });
 
+  function patchPersistentScreenNavigation() {
+    const nativeOpen = window.openScreen;
+    if (typeof nativeOpen !== 'function' || nativeOpen.__worldPositionAware) return;
+    const wrapped = function(screen) {
+      if (!worldPositionRestoring) {
+        if (screen === 'main') {
+          if (!rostokReturnPending) saveWorldPosition('cordon-camp','cordon-camp');
+        } else if (['inventory','kpk'].includes(screen)) {
+          saveWorldPosition(screen,rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp');
+        } else if (['warehouse','arena','market','chat'].includes(screen)) {
+          saveWorldPosition(screen,'cordon-camp');
+        } else if (screen === 'raid') {
+          saveWorldPosition('zone-map','zone-map');
+        }
+      }
+      return nativeOpen.apply(this, arguments);
+    };
+    wrapped.__worldPositionAware = true;
+    wrapped.__worldPositionNative = nativeOpen;
+    window.openScreen = wrapped;
+  }
+
+  patchPersistentScreenNavigation();
+
   patchRaidMapButton();
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
+  window.GamePosition = Object.freeze({
+    version:'1.0.0',
+    save:saveWorldPosition,
+    restoreFromPlayer:restorePlayerWorldPosition,
+    get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
+  });
   window.ZoneMap = Object.freeze({
     version: '0.6.4',
     open: openZoneMap,
@@ -1392,4 +1540,5 @@
   });
   window.BunkerMenu = {version: '1.14.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
+  setTimeout(()=>restorePlayerWorldPosition(),0);
 })();
