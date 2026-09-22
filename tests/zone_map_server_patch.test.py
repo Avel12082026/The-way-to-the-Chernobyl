@@ -40,6 +40,8 @@ assert changed
 assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert mod.BARMAN_MARK in patched
+assert mod.POSITION_MARK in patched
+assert "app.post('/api/player/position'" in patched
 assert "sourceVendor||'')==='barman'" in patched
 assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
@@ -84,6 +86,7 @@ v4_old=v4_old.replace("||String(req.body?.sourceVendor||'')==='barman'","")
 v4_upgraded,v4_changed=mod.patch(v4_old)
 assert v4_changed
 assert mod.BARMAN_MARK in v4_upgraded
+assert mod.POSITION_MARK in v4_upgraded
 assert "sourceVendor||'')==='barman'" in v4_upgraded
 assert v4_upgraded.count(mod.ROUTE_MARK)==1
 
@@ -147,4 +150,4 @@ assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a
 assert "Файл локации изменён или пережат" in installer
 assert "Совместимость четырёх локаций" in installer
 
-print('PASS: V4 installer upgrades V3 and adds Rostok map/camp, second-decade gate, Mercenary NPCs and tier-4 routing')
+print('PASS: V4 installer upgrades V3 and adds Rostok map/camp, Barman guard, persistent player position, Mercenary NPCs and tier-4 routing')
