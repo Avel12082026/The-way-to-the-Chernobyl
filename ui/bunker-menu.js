@@ -464,6 +464,23 @@
     openZoneMap('camp');
   }
 
+  function patchRostokReturnNavigation() {
+    const nativeOpen = window.openScreen;
+    if (typeof nativeOpen !== 'function' || nativeOpen.__rostokReturnAware) return;
+    const wrapped = function(screen) {
+      if (screen === 'main' && rostokReturnPending) {
+        rostokReturnPending = false;
+        return openRostokCamp();
+      }
+      return nativeOpen.apply(this, arguments);
+    };
+    wrapped.__rostokReturnAware = true;
+    wrapped.__rostokNative = nativeOpen;
+    window.openScreen = wrapped;
+  }
+
+  patchRostokReturnNavigation();
+
   function renderZoneMapPoints() {
     const layer = document.getElementById('zoneMapPoints');
     if (!layer) return;
@@ -1298,11 +1315,6 @@
 
     // Any legacy entry to the scientist screen now lands on the two-choice Leonov hub.
     window.openScreen = function(screen) {
-      if (screen === 'main' && rostokReturnPending) {
-        cleanup();
-        rostokReturnPending = false;
-        return openRostokCamp();
-      }
       if (screen === 'scientists') {
         if (busy) return;
         cleanup();
