@@ -32,10 +32,15 @@ const okWeapon=call({vendor:'zhuchara',sourceVendor:'barman',category:'weapon',n
 if(!okWeapon.next)throw new Error('tier4 weapon blocked');
 const okArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A7 +3'});
 if(!okArmor.next)throw new Error('upgraded tier7 armor blocked');
+for(const name of ['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад']){
+  const r=call({vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name});
+  if(!r.next)throw new Error('Barman consumable blocked '+name);
+}
 for(const payload of [
  {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'W3'},
  {vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A2'},
- {vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name:'Хлеб'},
+ {vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name:'Неизвестный припас'},
+ {vendor:'zhuchara',sourceVendor:'barman',category:'detector',name:'D1'},
  {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'ADMIN'}
 ]){
   const r=call(payload);
@@ -53,4 +58,4 @@ with tempfile.TemporaryDirectory() as td:
         raise AssertionError(proc.stdout+'\n'+proc.stderr)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: Barman accepts only weapon/armor tier 4+ and leaves normal Zhuchara traffic untouched')
+print('PASS: Barman accepts Zhuchara consumables plus weapon/armor tier 4+ and leaves normal Zhuchara traffic untouched')
