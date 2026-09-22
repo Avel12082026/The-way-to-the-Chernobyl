@@ -17,7 +17,7 @@ assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'locat
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
-assert(js.includes('20260922-position2'),'Rostok map cache key missing');
+assert(js.includes('20260922-position3'),'Rostok map cache key missing');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
 assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must keep bottom/left/top transition markers');
@@ -44,7 +44,7 @@ assert.equal((loc4Block.match(/kind:'transition'/g)||[]).length,3,'Rostok transi
 assert.equal((loc4Block.match(/kind:'camp'/g)||[]).length,1,'Rostok must have one clickable camp');
 assert(loc4Block.includes("id:'camp-4'")&&loc4Block.includes("label:'Бар «100 RADS»'"),'Rostok camp/bar hotspot missing');
 assert(loc4Block.includes("id:'transition-to-2'")&&loc4Block.includes("x:93.76,y:89.32,targetLocation:2"),'Rostok -> Svalka transition must be bottom-right');
-assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-position2'),'Rostok bar screen missing');
+assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-position3'),'Rostok bar screen missing');
 assert(js.includes("if (zoneLocation === 4)")&&js.includes('openRostokCamp();'),'Rostok camp marker must open bar screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
 
