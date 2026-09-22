@@ -29,12 +29,21 @@ app.post('/api/shop/buy',(req,res,next)=>{
 """
 
 BARMAN_GUARD=r"""// ROSTOK_BARMAN_SHOP_V1
+const ROSTOK_BARMAN_CONSUMABLES_SERVER=new Set([
+    'Хлеб','Тушенка','Вода','Энергетик',
+    'Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'
+]);
 app.post('/api/shop/buy',(req,res,next)=>{
     const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
     if(sourceVendor!=='barman')return next();
     const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    if(category==='consumable'){
+        if(!ROSTOK_BARMAN_CONSUMABLES_SERVER.has(rawName))
+            return res.status(400).json({success:false,error:'Этого припаса у Бармена нет'});
+        return next();
+    }
     if(!['weapon','armor'].includes(category))
-        return res.status(400).json({success:false,error:'Бармен торгует только оружием и бронёй'});
+        return res.status(400).json({success:false,error:'Бармен торгует оружием, бронёй и припасами'});
     const list=category==='weapon'?(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[])
         :(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[]);
     let baseName=rawName;
@@ -43,7 +52,7 @@ app.post('/api/shop/buy',(req,res,next)=>{
     }
     const item=list.find(row=>row&&String(row.name||'')===baseName);
     if(!item||item.adminOnly||Number(item.tier||0)<4)
-        return res.status(400).json({success:false,error:'У Бармена доступны только оружие и броня 4-го тира и выше'});
+        return res.status(400).json({success:false,error:'У Бармена оружие и броня доступны только с 4-го тира'});
     return next();
 });
 
