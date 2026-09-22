@@ -408,14 +408,30 @@ def insert_position_route(text):
         raise RuntimeError('Нельзя добавить позицию игрока без ZONE_MAP_ROUTING_V4.')
     return insert_before_one(text,["app.listen("],POSITION_ROUTE,'app.listen для позиции игрока'),True
 
+def _next_shop_buy_route(text,after=0):
+    anchors=["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""]
+    positions=[text.find(a,after) for a in anchors]
+    positions=[p for p in positions if p>=0]
+    return min(positions) if positions else -1
+
 def insert_barman_guard(text):
     if BARMAN_MARK in text:
-        return text,False
-    anchors=["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""]
-    positions=[text.find(a) for a in anchors if text.find(a)>=0]
-    if not positions:
+        start=text.find(BARMAN_MARK)
+        first=_next_shop_buy_route(text,start)
+        if first<0:
+            raise RuntimeError('Маркер Бармена есть, но его маршрут покупки не найден.')
+        end=_next_shop_buy_route(text,first+1)
+        if end<0:
+            raise RuntimeError('Не найден следующий маршрут покупки после блока Бармена.')
+        block=text[start:end]
+        if 'ROSTOK_BARMAN_CONSUMABLES_SERVER' in block:
+            return text,False
+        # Upgrade the already-installed pre-consumables Barman middleware in place.
+        return text[:start]+BARMAN_GUARD+text[end:],True
+
+    pos=_next_shop_buy_route(text,0)
+    if pos<0:
         raise RuntimeError('Не найден маршрут покупки для защиты Бармена.')
-    pos=min(positions)
     return text[:pos]+BARMAN_GUARD+text[pos:],True
 
 def patch(source):
