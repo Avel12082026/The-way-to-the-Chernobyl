@@ -32,12 +32,18 @@
     },
     barman: {
       title: () => 'БАРМЕН — ТОРГОВЛЯ',
-      // Same underlying Zhuchara catalog/prices, but only currently unlocked
-      // weapons and armor of tier 4+ are shown in Rostok.
-      stock: () => getShopCatalog().filter(item =>
-        ['weapon','armor'].includes(String(item?.category||'')) &&
-        Number(item?.tier) >= 4
-      ),
+      // Rostok uses Zhuchara prices, but builds stock directly from the full
+      // weapon/armor catalogs so tier-4+ body armor/vests cannot disappear
+      // because of another trader's location filter.
+      stock: () => [
+        ...(typeof WEAPON_PROGRESSION_ORDER!=='undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
+          .filter(w => w && !w.adminOnly && Number(w.tier) >= 4 && player.level >= Number(w.unlockLevel||0))
+          .map(w => ({...w, category:'weapon'})),
+        ...armorItems
+          .filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor &&
+            Number(a.tier) >= 4 && player.level >= Number(a.unlockLevel||0))
+          .map(a => ({...a, category:'armor'}))
+      ],
       price: item => getBuyPrice(item.price),
       accepts: name => !artifact(name)?.isNamedArtifact,
       offer: name => ({coins: getSellPrice(name), tokens: 0}),
@@ -493,7 +499,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.3', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.4', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
