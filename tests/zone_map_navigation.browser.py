@@ -287,6 +287,42 @@ async def main():
         assert sum(x.get('category')=='armor' for x in catalog)==10
 
         assert not errors,errors
+
+        # Fresh application start restores a server-saved Rostok bar position instead of Cordon.
+        restore_errors=[]
+        page2=await browser.new_page(viewport={'width':390,'height':844})
+        page2.on('pageerror',lambda exc: restore_errors.append(str(exc)))
+        await page2.route('http://game.test/api/zone-map/*',image_route)
+        await page2.route('http://game.test/api/zone-camp/*',image_route)
+        await page2.set_content('''<!doctype html><html><body>
+          <section id="mainMenu" style="display:block"><div id="bunkerScene"><img id="bunkerArtwork" alt=""></div></section>
+          <div id="embeddedChatWidget"></div>
+        </body></html>''')
+        await page2.add_style_tag(content=css)
+        await page2.evaluate("""()=>{
+          window.SERVER_URL='http://game.test';
+          window.raidActive=false;window.currentEnemy=null;window.currentAnomaly=null;window.currentLuckyFind=null;
+          window.expNeededForLevel=()=>100;
+          window.player={
+            level:400,health:100,maxHealth:100,hunger:90,maxHunger:100,thirst:80,maxThirst:100,
+            radiation:0,exp:20,coins:5000,breedCredits:0,inventory:{},
+            worldPosition:{zoneLocation:4,place:'rostok-bar',origin:'rostok-bar'}
+          };
+          window.weapons=[];window.armorItems=[];window.getShopCatalog=()=>[];
+          window.openScreen=(name)=>{document.getElementById('mainMenu').style.display=name==='main'?'block':'none';};
+          window.showGameAlert=()=>{};window.useKnowledgeBookFromHeader=async()=>{};
+          window.fetch=async(input,init={})=>{
+            let body={};try{body=JSON.parse(init.body||'{}')}catch(_){}
+            return new Response(JSON.stringify({success:true,worldPosition:{zoneLocation:body.zoneLocation||4,place:body.place||'rostok-bar',origin:body.origin||'rostok-bar'}}),{status:200,headers:{'Content-Type':'application/json'}});
+          };
+        }""")
+        await page2.add_script_tag(content=js)
+        await page2.wait_for_function("document.getElementById('rostokCampScreen')?.classList.contains('active')===true")
+        assert await page2.evaluate('ZoneMap.location')==4
+        assert await page2.locator('#rostokCampScreen').is_visible()
+        assert not restore_errors,restore_errors
+        await page2.close()
+
         print(json.dumps({
           'status':'passed',
           'agroprom_points':points3,
@@ -294,7 +330,8 @@ async def main():
           'map3_canvas':canvas3,
           'map4_canvas':canvas4,
           'rostok_points':points4,
-          'routed':routed
+          'routed':routed,
+          'restored_position':'rostok-bar'
         },ensure_ascii=False))
         await browser.close()
 
