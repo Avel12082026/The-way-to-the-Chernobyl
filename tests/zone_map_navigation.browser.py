@@ -74,7 +74,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.13.0' && window.ZoneMap?.version==='0.6.4'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.15.0' && window.ZoneMap?.version==='0.6.4'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -165,6 +165,8 @@ async def main():
         assert await page.locator('#rostokReadBook').is_visible()
         assert await page.locator('#rostokInventory').is_visible()
         assert await page.locator('#rostokPda').is_visible()
+        assert await page.locator('.rostok-cordon-hud-artwork').count()==1
+        assert await page.locator('#rostokWarehouseHotspot').is_visible()
 
         await page.locator('#rostokReadBook').click()
         await page.wait_for_function("window.__calls.read===1")
@@ -180,6 +182,15 @@ async def main():
 
         await page.locator('#rostokPda').click()
         assert (await page.evaluate('window.__calls.open.at(-1)'))=='kpk'
+        await page.evaluate("openScreen('main')")
+        assert await camp.is_visible()
+        assert await page.evaluate('ZoneMap.location')==4
+
+        # The door marked "СКЛАД" opens Warehouse and Back returns to the same Rostok bar.
+        await page.locator('#rostokWarehouseHotspot').click()
+        assert (await page.evaluate('window.__calls.open.at(-1)'))=='warehouse'
+        position_calls=await page.evaluate("""window.__calls.fetches.filter(x=>x.url.endsWith('/api/player/position'))""")
+        assert any(x['body'] and x['body'].get('place')=='warehouse' and x['body'].get('origin')=='rostok-bar' and x['body'].get('zoneLocation')==4 for x in position_calls),position_calls
         await page.evaluate("openScreen('main')")
         assert await camp.is_visible()
         assert await page.evaluate('ZoneMap.location')==4
