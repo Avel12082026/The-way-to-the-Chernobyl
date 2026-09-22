@@ -138,7 +138,7 @@
       place = 'zone-map';
       origin = 'zone-map';
     }
-    if (location !== 4 && ['inventory','kpk'].includes(place) && origin === 'rostok-bar') origin = 'cordon-camp';
+    if (location !== 4 && ['inventory','kpk','warehouse'].includes(place) && origin === 'rostok-bar') origin = 'cordon-camp';
     return {zoneLocation:location,place,origin};
   }
 
@@ -186,7 +186,7 @@
     worldPositionRestored = true;
     worldPositionRestoring = true;
     setZoneLocation(saved.zoneLocation,true);
-    if (saved.origin === 'rostok-bar' && saved.zoneLocation === 4 && ['inventory','kpk'].includes(saved.place)) {
+    if (saved.origin === 'rostok-bar' && saved.zoneLocation === 4 && ['inventory','kpk','warehouse'].includes(saved.place)) {
       rostokReturnPending = true;
     }
     const finish = () => {
@@ -225,6 +225,25 @@
     };
     requestAnimationFrame(()=>openSaved(0));
     return true;
+  }
+
+  function restorePlayerWorldPositionWhenReady(attempt = 0) {
+    if (worldPositionRestored) return;
+    if (typeof player === 'object' && player?.worldPosition) {
+      restorePlayerWorldPosition();
+      return;
+    }
+    const loading = document.getElementById('loading');
+    const app = document.getElementById('app');
+    const profileLoaded = loading && loading.style.display === 'none' && app && app.style.display !== 'none';
+    if (profileLoaded) {
+      worldPositionRestored = true;
+      worldPositionRestoring = false;
+      setZoneLocation(1,true);
+      saveWorldPosition('cordon-camp','cordon-camp',true);
+      return;
+    }
+    if (attempt < 120) setTimeout(()=>restorePlayerWorldPositionWhenReady(attempt+1),50);
   }
 
   window.addEventListener('pagehide', saveCurrentWorldPositionOnExit);
@@ -444,6 +463,7 @@
         <img class="rostok-cordon-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
+        <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
         <div class="rostok-progress-row" aria-label="Опыт и радиация">
           <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
           <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
@@ -467,6 +487,7 @@
       if (action === 'map') return closeRostokCamp();
       if (action === 'inventory' || action === 'kpk') return openRostokDestination(action);
       if (action === 'barman') return openBarmanHub();
+      if (action === 'warehouse') return openRostokDestination('warehouse');
       if (action === 'read') return readRostokBook();
     });
     window.addEventListener('resize', layoutRostokCamp);
@@ -1499,7 +1520,9 @@
           if (!rostokReturnPending) saveWorldPosition('cordon-camp','cordon-camp');
         } else if (['inventory','kpk'].includes(screen)) {
           saveWorldPosition(screen,rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp');
-        } else if (['warehouse','arena','market','chat'].includes(screen)) {
+        } else if (screen === 'warehouse') {
+          saveWorldPosition(screen,rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp');
+        } else if (['arena','market','chat'].includes(screen)) {
           saveWorldPosition(screen,'cordon-camp');
         } else if (screen === 'raid') {
           saveWorldPosition('zone-map','zone-map');
@@ -1538,7 +1561,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.14.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.15.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
-  setTimeout(()=>restorePlayerWorldPosition(),0);
+  restorePlayerWorldPositionWhenReady();
 })();
