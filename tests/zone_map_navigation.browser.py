@@ -65,6 +65,7 @@ async def main():
           window.endRaid=async()=>{window.__calls.end++;window.raidActive=false;window.openScreen('main');};
           window.openScreen=(name)=>{window.__calls.open.push(name);document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));document.getElementById('mainMenu').style.display=name==='main'?'block':'none';};
           window.showGameAlert=(m)=>window.__calls.alerts.push(String(m));
+          window.TradeMenu={open:(id)=>{window.__calls.trade=id;return true;}};
           window.useKnowledgeBookFromHeader=async()=>{window.__calls.read=(window.__calls.read||0)+1;player.inventory['Книга знаний']=Math.max(0,(player.inventory['Книга знаний']||0)-1);player.exp+=10;};
           window.fetch=async(input,init={})=>{
             const url=String(input);
@@ -73,7 +74,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.12.0' && window.ZoneMap?.version==='0.6.3'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.13.0' && window.ZoneMap?.version==='0.6.4'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -170,12 +171,34 @@ async def main():
         assert await page.locator('#rostokKnowledgeBooks').inner_text()=='2'
         assert await page.locator('#rostokExperienceText').inner_text()=='Опыт: 47 / 100'
 
+        # Back from screens opened inside Rostok must return to the Rostok bar, never Kordon.
         await page.locator('#rostokInventory').click()
         assert (await page.evaluate('window.__calls.open.at(-1)'))=='inventory'
-        await page.evaluate('BunkerMenu.openRostokCamp()')
+        await page.evaluate("openScreen('main')")
+        assert await camp.is_visible()
+        assert await page.evaluate('ZoneMap.location')==4
+
         await page.locator('#rostokPda').click()
         assert (await page.evaluate('window.__calls.open.at(-1)'))=='kpk'
-        await page.evaluate('BunkerMenu.openRostokCamp()')
+        await page.evaluate("openScreen('main')")
+        assert await camp.is_visible()
+        assert await page.evaluate('ZoneMap.location')==4
+
+        # Invisible bartender hotspot opens a named Barman hub with Talk/Trade/Back.
+        hotspot=page.locator('#rostokBarmanHotspot')
+        assert await hotspot.is_visible()
+        await hotspot.click()
+        barman=page.locator('#barmanHubScreen')
+        assert await barman.is_visible()
+        actions=page.locator('#barmanHubScreen [data-barman-action]')
+        assert await actions.evaluate_all("(xs)=>xs.map(x=>x.dataset.barmanAction)")==['talk','trade','back']
+        await page.locator('#barmanHubScreen [data-barman-action="talk"]').click()
+        assert 'Бармен:' in (await page.evaluate('window.__calls.alerts.at(-1)'))
+        await page.locator('#barmanHubScreen [data-barman-action="trade"]').click()
+        assert await page.evaluate('window.__calls.trade')=='barman'
+        await page.evaluate('BunkerMenu.openBarmanHub()')
+        await page.locator('#barmanHubScreen [data-barman-action="back"]').click()
+        assert await camp.is_visible()
 
         await page.locator('[data-rostok-action="map"]').click()
         assert await zone.is_visible()
