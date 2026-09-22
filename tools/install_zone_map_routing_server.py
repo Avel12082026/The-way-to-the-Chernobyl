@@ -61,7 +61,7 @@ app.post('/api/shop/buy',(req,res,next)=>{
 POSITION_ROUTE=r"""// PLAYER_WORLD_POSITION_V1
 const PLAYER_WORLD_POSITION_PLACES=new Set([
     'cordon-camp','zone-map','rostok-bar','barman','inventory','kpk',
-    'warehouse','arena','market','chat','zhuchara','diesel','leonov'
+    'warehouse','arena','market','chat','zhuchara','diesel','leonov','smoker'
 ]);
 const PLAYER_WORLD_POSITION_ORIGINS=new Set(['cordon-camp','zone-map','rostok-bar']);
 
