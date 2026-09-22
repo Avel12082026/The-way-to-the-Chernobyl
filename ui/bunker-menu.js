@@ -15,6 +15,8 @@
   let smokerScreen = null;
   let smokerImageLoaded = false;
   let rostokCampScreen = null;
+  let barmanHubScreen = null;
+  let rostokReturnPending = false;
   let zoneMapScreen = null;
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
@@ -327,8 +329,9 @@
     el.setAttribute('aria-label', 'Россток — бар 100 RADS');
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
-        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-rostok2" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-barman1" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
+        <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <div class="rostok-hub-shell" aria-hidden="true"></div>
         <div class="rostok-progress-row" aria-label="Опыт и радиация">
           <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
@@ -356,6 +359,7 @@
       const action = event.target.closest('[data-rostok-action]')?.dataset.rostokAction;
       if (action === 'map') return closeRostokCamp();
       if (action === 'inventory' || action === 'kpk') return openRostokDestination(action);
+      if (action === 'barman') return openBarmanHub();
       if (action === 'read') return readRostokBook();
     });
     window.addEventListener('resize', layoutRostokCamp);
@@ -364,6 +368,8 @@
   }
 
   function openRostokCamp() {
+    rostokReturnPending = false;
+    closeBarmanHub(false);
     const el = ensureRostokCampScreen();
     document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
     main.style.display = 'none';
@@ -375,10 +381,66 @@
   }
 
   function openRostokDestination(screen) {
+    rostokReturnPending = true;
     if (rostokCampScreen) rostokCampScreen.classList.remove('active');
     document.body.classList.remove('rostok-camp-visible');
     setZoneLocation(4);
     if (typeof openScreen === 'function') openScreen(screen);
+  }
+
+  function ensureBarmanHub() {
+    if (barmanHubScreen) return barmanHubScreen;
+    const el = document.createElement('section');
+    el.id = 'barmanHubScreen';
+    el.className = 'trader-portrait-screen barman-hub-screen';
+    el.hidden = true;
+    el.dataset.actionCount = '3';
+    el.setAttribute('aria-label', 'Бармен');
+    el.innerHTML = `
+      <img id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-barman1" width="941" height="1672" alt="Бармен в 100 RADS" draggable="false">
+      <div class="barman-hub-name">БАРМЕН</div>
+      <nav class="trader-portrait-actions" aria-label="Действия: Бармен">
+        <button type="button" data-barman-action="talk">Говорить</button>
+        <button type="button" data-barman-action="trade">Торговля</button>
+        <button type="button" data-barman-action="back">Назад</button>
+      </nav>`;
+    document.body.appendChild(el);
+    barmanHubScreen = el;
+    el.addEventListener('click', event => {
+      const action = event.target.closest('[data-barman-action]')?.dataset.barmanAction;
+      if (action === 'talk') {
+        if (typeof showGameAlert === 'function') showGameAlert('Бармен: Что принёс, сталкер? Посмотрим, чем можно торговаться.');
+        return;
+      }
+      if (action === 'trade') {
+        closeBarmanHub(false);
+        if (window.TradeMenu?.open) window.TradeMenu.open('barman');
+        return;
+      }
+      if (action === 'back') closeBarmanHub(true);
+    });
+    return el;
+  }
+
+  function openBarmanHub() {
+    const el = ensureBarmanHub();
+    if (rostokCampScreen) rostokCampScreen.classList.remove('active');
+    document.body.classList.remove('rostok-camp-visible');
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+    main.style.display = 'none';
+    el.hidden = false;
+    el.classList.add('active');
+    document.body.classList.add('trader-portrait-visible');
+    return el;
+  }
+
+  function closeBarmanHub(returnToCamp = true) {
+    if (barmanHubScreen) {
+      barmanHubScreen.hidden = true;
+      barmanHubScreen.classList.remove('active');
+    }
+    document.body.classList.remove('trader-portrait-visible');
+    if (returnToCamp) openRostokCamp();
   }
 
   async function readRostokBook() {
@@ -437,7 +499,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260922-rostok2`;
+    return `${SERVER_URL}${config.path}?v=20260922-barman1`;
   }
 
   function preloadZoneMapArtwork(location) {
@@ -1236,6 +1298,11 @@
 
     // Any legacy entry to the scientist screen now lands on the two-choice Leonov hub.
     window.openScreen = function(screen) {
+      if (screen === 'main' && rostokReturnPending) {
+        cleanup();
+        rostokReturnPending = false;
+        return openRostokCamp();
+      }
       if (screen === 'scientists') {
         if (busy) return;
         cleanup();
@@ -1315,6 +1382,6 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.12.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp};
+  window.BunkerMenu = {version: '1.13.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
 })();
