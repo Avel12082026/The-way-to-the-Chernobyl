@@ -7,6 +7,7 @@ SERVICE='pocketzone.service'
 OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')
 ROUTE_MARK='// ZONE_MAP_ROUTING_V4'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
+BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
 const ZONE_MAP_LOCATION1_ARMOR=new Set(
@@ -21,6 +22,27 @@ app.post('/api/shop/buy',(req,res,next)=>{
     // restriction remains location-specific.
     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
         return res.status(400).json({success:false,error:'Этот костюм продаётся на другой локации'});
+    return next();
+});
+
+"""
+
+BARMAN_GUARD=r"""// ROSTOK_BARMAN_SHOP_V1
+app.post('/api/shop/buy',(req,res,next)=>{
+    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
+    if(sourceVendor!=='barman')return next();
+    const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    if(!['weapon','armor'].includes(category))
+        return res.status(400).json({success:false,error:'Бармен торгует только оружием и бронёй'});
+    const list=category==='weapon'?(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[])
+        :(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[]);
+    let baseName=rawName;
+    if(typeof parseGearNameServer==='function'){
+        try{baseName=String(parseGearNameServer(rawName)?.baseName||rawName);}catch(_){}
+    }
+    const item=list.find(row=>row&&String(row.name||'')===baseName);
+    if(!item||item.adminOnly||Number(item.tier||0)<4)
+        return res.status(400).json({success:false,error:'У Бармена доступны только оружие и броня 4-го тира и выше'});
     return next();
 });
 
@@ -306,30 +328,46 @@ def upgrade_route(text):
         raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
     return text[:start]+ZONE_ROUTE+text[listen:]
 
+def insert_barman_guard(text):
+    if BARMAN_MARK in text:
+        return text,False
+    anchors=["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""]
+    positions=[text.find(a) for a in anchors if text.find(a)>=0]
+    if not positions:
+        raise RuntimeError('Не найден маршрут покупки для защиты Бармена.')
+    pos=min(positions)
+    return text[:pos]+BARMAN_GUARD+text[pos:],True
+
 def patch(source):
     has_v4=ROUTE_MARK in source
     old_marks=[mark for mark in OLD_ROUTE_MARKS if mark in source]
     has_shop=SHOP_MARK in source
+    changed=False
 
     if has_v4:
         if not has_shop: raise RuntimeError('Маршрут V4 есть, но защита магазина отсутствует.')
-        return source,False
-
-    if old_marks:
+        text=source
+    elif old_marks:
         if len(old_marks)!=1: raise RuntimeError('Найдено несколько старых маршрутов карты.')
         if not has_shop: raise RuntimeError('Обнаружена частичная старая установка. Автоматическое продолжение запрещено.')
-        return upgrade_route(source),True
+        text=upgrade_route(source)
+        changed=True
+    else:
+        text=source
+        if not has_shop:
+            text=insert_before_one(
+                text,
+                ["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""],
+                SHOP_GUARD,
+                'маршрут покупки'
+            )
+            changed=True
+        text=insert_before_one(text,["app.listen("],ZONE_ROUTE,'app.listen')
+        changed=True
 
-    text=source
-    if not has_shop:
-        text=insert_before_one(
-            text,
-            ["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""],
-            SHOP_GUARD,
-            'маршрут покупки'
-        )
-    text=insert_before_one(text,["app.listen("],ZONE_ROUTE,'app.listen')
-    return text,True
+    text,barman_changed=insert_barman_guard(text)
+    changed=changed or barman_changed
+    return text,changed
 
 def run(cmd,**kw):
     kw.setdefault('check',True)
