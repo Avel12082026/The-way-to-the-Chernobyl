@@ -228,8 +228,14 @@
 
   function hideZhuchara() { hideHub(zhucharaHub); }
   function hideDiesel() { hideHub(dieselHub); }
-  function openZhuchara() { return showHub(ensureZhucharaHub(), 'zhuchara'); }
-  function openDiesel() { return showHub(ensureDieselHub(), 'diesel'); }
+  function openZhuchara() {
+    window.GamePosition?.save?.('zhuchara','cordon-camp');
+    return showHub(ensureZhucharaHub(), 'zhuchara');
+  }
+  function openDiesel() {
+    window.GamePosition?.save?.('diesel','cordon-camp');
+    return showHub(ensureDieselHub(), 'diesel');
+  }
 
   window.openScreen = function(screen) {
     if (screen === 'shop') return openZhuchara();
@@ -240,7 +246,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.3.0',
+    version:'1.3.1',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
