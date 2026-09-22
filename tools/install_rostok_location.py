@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse, hashlib, os, re, shutil, subprocess, tempfile, time, urllib.request
 
 SERVICE='pocketzone.service'
-CACHE_KEY='20260922-rostok2'
+CACHE_KEY='20260922-barman1'
 MAP_SHA='017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa'
 BAR_SHA='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
 MAP_SIZE=(865,1536)
@@ -112,7 +112,7 @@ def main():
     if '#rostokCampScreen.rostok-camp-screen' not in css_text:
         raise RuntimeError('Загруженный bunker-menu.css не содержит экрана бара Росстока.')
     installer_text=server_installer.decode('utf-8')
-    if '// ZONE_MAP_ROUTING_V4' not in installer_text or MAP_SHA not in installer_text or BAR_SHA not in installer_text:
+    if '// ZONE_MAP_ROUTING_V4' not in installer_text or '// ROSTOK_BARMAN_SHOP_V1' not in installer_text or MAP_SHA not in installer_text or BAR_SHA not in installer_text:
         raise RuntimeError('Серверный установщик не соответствует пакету Росстока.')
 
     index_old=None
