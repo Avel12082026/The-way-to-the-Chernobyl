@@ -105,6 +105,14 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 #rostokCampScreen .rostok-barman-hotspot:focus-visible{
   opacity:.08;outline:2px solid #e4c477;outline-offset:-2px;
 }
+#rostokCampScreen .rostok-warehouse-hotspot{
+  position:absolute;z-index:7;left:21.2%;top:39.0%;width:12.2%;height:15.3%;
+  margin:0;padding:0;border:0;background:transparent;color:transparent;
+  opacity:.001;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+#rostokCampScreen .rostok-warehouse-hotspot:focus-visible{
+  opacity:.08;outline:2px solid #e4c477;outline-offset:-2px;
+}
 #rostokCampScreen .rostok-camp-back{
   position:absolute;z-index:8;left:3%;top:max(12px,env(safe-area-inset-top));
   min-height:40px;padding:8px 12px;border:1px solid #92794a;border-radius:5px;
