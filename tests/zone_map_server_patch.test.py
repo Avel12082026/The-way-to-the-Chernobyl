@@ -90,6 +90,27 @@ assert mod.POSITION_MARK in v4_upgraded
 assert "sourceVendor||'')==='barman'" in v4_upgraded
 assert v4_upgraded.count(mod.ROUTE_MARK)==1
 
+# A live V4 with the first Barman middleware (before consumables were added)
+# must be upgraded in place instead of being treated as already current.
+legacy_barman=r"""// ROSTOK_BARMAN_SHOP_V1
+app.post('/api/shop/buy',(req,res,next)=>{
+    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
+    if(sourceVendor!=='barman')return next();
+    const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    if(!['weapon','armor'].includes(category))
+        return res.status(400).json({success:false,error:'Бармен торгует только оружием и бронёй'});
+    return next();
+});
+
+"""
+v4_legacy=patched.replace(mod.BARMAN_GUARD,legacy_barman)
+legacy_upgraded,legacy_changed=mod.patch(v4_legacy)
+assert legacy_changed
+assert legacy_upgraded.count(mod.BARMAN_MARK)==1
+assert "ROSTOK_BARMAN_CONSUMABLES_SERVER" in legacy_upgraded
+assert "'Энергетик'" in legacy_upgraded and "'Аптечка научная'" in legacy_upgraded
+assert legacy_barman not in legacy_upgraded
+
 # A live V3 install must upgrade in place to V4.
 v3=source.replace(
     "app.listen(3000);",
