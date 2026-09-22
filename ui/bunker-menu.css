@@ -160,8 +160,7 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 #rostokCampScreen .rostok-resources{
   position:absolute;z-index:4;left:40.9%;top:90.65%;width:27.15%;height:7.15%;
   padding:calc(4 * var(--bunker-unit)) calc(7 * var(--bunker-unit));
-  border:calc(1 * var(--bunker-unit)) solid #36372f;background:#101310;color:#c9bd99;
-  box-sizing:border-box;
+  border:0;background:#101310;color:#c9bd99;
 }
 #rostokCampScreen .rostok-resource{
   display:flex;align-items:center;justify-content:space-between;gap:calc(6 * var(--bunker-unit));
