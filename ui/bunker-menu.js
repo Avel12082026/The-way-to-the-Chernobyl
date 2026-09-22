@@ -467,7 +467,7 @@
     el.setAttribute('aria-label', 'Россток — бар 100 RADS');
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
-        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position2" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
         <img class="rostok-cordon-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
@@ -535,7 +535,7 @@
     el.dataset.actionCount = '3';
     el.setAttribute('aria-label', 'Бармен');
     el.innerHTML = `
-      <img id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position2" width="941" height="1672" alt="Бармен в 100 RADS" draggable="false">
+      <img id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бармен в 100 RADS" draggable="false">
       <div class="barman-hub-name">БАРМЕН</div>
       <nav class="trader-portrait-actions" aria-label="Действия: Бармен">
         <button type="button" data-barman-action="talk">Говорить</button>
@@ -655,7 +655,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260922-position2`;
+    return `${SERVER_URL}${config.path}?v=20260922-position3`;
   }
 
   function preloadZoneMapArtwork(location) {
