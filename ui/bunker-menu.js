@@ -131,14 +131,22 @@
   ]);
 
   function normalizeWorldPosition(raw) {
-    const location = ZONE_MAP_ASSETS[Number(raw?.zoneLocation)] ? Number(raw.zoneLocation) : 1;
+    let location = ZONE_MAP_ASSETS[Number(raw?.zoneLocation)] ? Number(raw.zoneLocation) : 1;
     let place = WORLD_POSITION_PLACES.has(String(raw?.place||'')) ? String(raw.place) : 'cordon-camp';
     let origin = ['cordon-camp','zone-map','rostok-bar'].includes(String(raw?.origin||'')) ? String(raw.origin) : 'cordon-camp';
-    if (location !== 4 && ['rostok-bar','barman'].includes(place)) {
-      place = 'zone-map';
+
+    if (['rostok-bar','barman'].includes(place)) {
+      location = 4;
+      origin = 'rostok-bar';
+    } else if (['cordon-camp','zhuchara','diesel','leonov','smoker','arena','market','chat'].includes(place)) {
+      location = 1;
+      origin = 'cordon-camp';
+    } else if (['inventory','kpk','warehouse'].includes(place)) {
+      if (origin === 'rostok-bar') location = 4;
+      else { location = 1; origin = 'cordon-camp'; }
+    } else if (place === 'zone-map') {
       origin = 'zone-map';
     }
-    if (location !== 4 && ['inventory','kpk','warehouse'].includes(place) && origin === 'rostok-bar') origin = 'cordon-camp';
     return {zoneLocation:location,place,origin};
   }
 
