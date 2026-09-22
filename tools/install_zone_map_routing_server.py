@@ -16,7 +16,7 @@ const ZONE_MAP_LOCATION1_ARMOR=new Set(
       .slice(0,10).map(item=>item.name)
 );
 app.post('/api/shop/buy',(req,res,next)=>{
-    if(String(req.body?.vendor||'')!=='zhuchara')return next();
+    if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();
     const category=String(req.body?.category||''),name=String(req.body?.name||'');
     // Weapon stock follows the global 3-level progression; only the old armor
     // restriction remains location-specific.
@@ -328,6 +328,25 @@ def upgrade_route(text):
         raise RuntimeError('После старого маршрута карты не найден app.listen. Ничего не изменено.')
     return text[:start]+ZONE_ROUTE+text[listen:]
 
+def upgrade_shop_guard_for_barman(text):
+    if SHOP_MARK not in text:
+        return text,False
+    start=text.find(SHOP_MARK)
+    end=text.find("app.post('/api/raid/zone-step'",start)
+    if end<0:
+        end=text.find(ROUTE_MARK,start)
+    if end<0:
+        end=len(text)
+    block=text[start:end]
+    old="if(String(req.body?.vendor||'')!=='zhuchara')return next();"
+    new="if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();"
+    if new in block:
+        return text,False
+    if old not in block:
+        raise RuntimeError('Не удалось обновить защиту магазина Жучары для Бармена.')
+    block=block.replace(old,new,1)
+    return text[:start]+block+text[end:],True
+
 def insert_barman_guard(text):
     if BARMAN_MARK in text:
         return text,False
@@ -365,6 +384,8 @@ def patch(source):
         text=insert_before_one(text,["app.listen("],ZONE_ROUTE,'app.listen')
         changed=True
 
+    text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
+    changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
     changed=changed or barman_changed
     return text,changed
