@@ -80,7 +80,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
         if(zoneLocation!==4&&['rostok-bar','barman'].includes(place)){
             place='zone-map';origin='zone-map';
         }
-        if(['inventory','kpk'].includes(place)&&origin==='rostok-bar'&&zoneLocation!==4)origin='cordon-camp';
+        if(['inventory','kpk','warehouse'].includes(place)&&origin==='rostok-bar'&&zoneLocation!==4)origin='cordon-camp';
         data.worldPosition={zoneLocation,place,origin,updatedAt:Date.now()};
         const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
           .run(JSON.stringify(data),Date.now(),playerId);
