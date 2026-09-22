@@ -39,6 +39,8 @@ patched,changed=mod.patch(source)
 assert changed
 assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
+assert mod.BARMAN_MARK in patched
+assert "sourceVendor||'')==='barman'" in patched
 assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
 assert "4:'zone-map4.jpg'" in patched
@@ -74,6 +76,16 @@ assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
 
 again,changed2=mod.patch(patched)
 assert not changed2 and again==patched
+
+# An already-installed V4 from before the Barman feature must gain the new guard
+# without replacing the V4 route again.
+v4_old=patched.replace(mod.BARMAN_GUARD,'')
+v4_old=v4_old.replace("||String(req.body?.sourceVendor||'')==='barman'","")
+v4_upgraded,v4_changed=mod.patch(v4_old)
+assert v4_changed
+assert mod.BARMAN_MARK in v4_upgraded
+assert "sourceVendor||'')==='barman'" in v4_upgraded
+assert v4_upgraded.count(mod.ROUTE_MARK)==1
 
 # A live V3 install must upgrade in place to V4.
 v3=source.replace(
