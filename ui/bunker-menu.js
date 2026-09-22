@@ -166,6 +166,9 @@
   }
 
   function saveWorldPosition(place, origin = 'zone-map', immediate = false) {
+    // If the player has already navigated somewhere during startup, that new
+    // action wins over any still-pending restore from the previous session.
+    if (!worldPositionRestoring && !worldPositionRestored) worldPositionRestored = true;
     const payload = normalizeWorldPosition({zoneLocation,place,origin});
     const signature = JSON.stringify(payload);
     if (!worldPositionRestoring && signature === worldPositionLast && !immediate) return;
