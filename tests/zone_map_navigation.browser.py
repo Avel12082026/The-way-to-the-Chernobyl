@@ -158,8 +158,8 @@ async def main():
         assert await camp.is_visible()
         for meter_id in ['rostokHealth','rostokHunger','rostokThirst','rostokExperience','rostokRadiation']:
             assert await page.locator('#'+meter_id).is_visible(),meter_id
-        assert await page.locator('#rostokExperienceText').inner_text()=='Опыт: 37 / 100'
-        assert await page.locator('#rostokRadiationText').inner_text()=='Радиация: 12 / 100'
+        await page.wait_for_function("document.getElementById('rostokExperienceText')?.textContent==='Опыт: 37 / 100'")
+        await page.wait_for_function("document.getElementById('rostokRadiationText')?.textContent==='Радиация: 12 / 100'")
         assert await page.locator('#rostokCoins').inner_text()=='123456'
         assert await page.locator('#rostokBreedCredits').inner_text()=='7'
         assert await page.locator('#rostokKnowledgeBooks').inner_text()=='3'
