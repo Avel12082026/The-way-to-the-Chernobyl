@@ -1368,7 +1368,7 @@
   const raidNav = document.getElementById('raidNavButtons');
   if (raidNav) new MutationObserver(patchRaidMapButton).observe(raidNav, {childList: true, subtree: true});
   window.ZoneMap = Object.freeze({
-    version: '0.6.3',
+    version: '0.6.4',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
