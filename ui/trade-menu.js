@@ -30,6 +30,19 @@
       accepts: name => !artifact(name)?.isNamedArtifact,
       offer: name => ({coins: getSellPrice(name), tokens: 0})
     },
+    barman: {
+      title: () => 'БАРМЕН — ТОРГОВЛЯ',
+      // Same underlying Zhuchara catalog/prices, but only currently unlocked
+      // weapons and armor of tier 4+ are shown in Rostok.
+      stock: () => getShopCatalog().filter(item =>
+        ['weapon','armor'].includes(String(item?.category||'')) &&
+        Number(item?.tier) >= 4
+      ),
+      price: item => getBuyPrice(item.price),
+      accepts: name => !artifact(name)?.isNamedArtifact,
+      offer: name => ({coins: getSellPrice(name), tokens: 0}),
+      serverVendor: 'zhuchara'
+    },
     leonov: {
       title: () => 'ЭКОЛОГ ЛЕОНОВ — ТОРГОВЛЯ',
       stock: () => [
@@ -234,12 +247,13 @@
         if (side === 'sell' && (count(name) < qty || !vendors[vendor].accepts(name))) { message('Предмет или нужное количество больше недоступны.'); break; }
         let result;
         try {
+          const serverVendor = vendors[currentVendor]?.serverVendor || currentVendor;
           if (side === 'buy') result = currentVendor === 'friendly'
             ? await request('friendly/buy', {name})
-            : await request('shop/buy', {vendor: currentVendor, category: item.category, name, qty});
+            : await request('shop/buy', {vendor: serverVendor, sourceVendor: currentVendor, category: item.category, name, qty});
           else result = currentVendor === 'leonov'
             ? await request('scientists/sell', {name, qty})
-            : await request('shop/sell', {vendor: currentVendor === 'friendly' ? 'zhuchara' : currentVendor, name, qty});
+            : await request('shop/sell', {vendor: currentVendor === 'friendly' ? 'zhuchara' : serverVendor, sourceVendor: currentVendor, name, qty});
           if (!result || typeof result.success !== 'boolean') throw new Error('Нет подтверждения');
           if (!result.success) { message(`Операция отклонена: ${result.error || 'причина не указана'}. Завершено позиций: ${confirmed}.`); break; }
           apply(result);
@@ -301,6 +315,7 @@
     const id = vendor; hide();
     if (id === 'leonov' && window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov();
     else if (id === 'zhuchara' && window.TraderHubs?.openZhuchara) window.TraderHubs.openZhuchara();
+    else if (id === 'barman' && window.BunkerMenu?.openBarmanHub) window.BunkerMenu.openBarmanHub();
     else if (id === 'friendly') await native.closeFriendlyTrade();
     else if (id === 'technician' && window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();
     else if (id === 'technician') { technicianTab = 'upgrade'; native.openScreen('technician'); }
@@ -478,7 +493,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.2', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.3', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
