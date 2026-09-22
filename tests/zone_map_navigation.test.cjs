@@ -10,14 +10,14 @@ assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()')
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
-assert(js.includes("version: '0.6.2'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.11.0'"),'BunkerMenu version mismatch');
+assert(js.includes("version: '0.6.3'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.12.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
-assert(js.includes('20260922-rostok1'),'Rostok map cache key missing');
+assert(js.includes('20260922-rostok2'),'Rostok map cache key missing');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
 assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must keep bottom/left/top transition markers');
@@ -44,7 +44,7 @@ assert.equal((loc4Block.match(/kind:'transition'/g)||[]).length,3,'Rostok transi
 assert.equal((loc4Block.match(/kind:'camp'/g)||[]).length,1,'Rostok must have one clickable camp');
 assert(loc4Block.includes("id:'camp-4'")&&loc4Block.includes("label:'Бар «100 RADS»'"),'Rostok camp/bar hotspot missing');
 assert(loc4Block.includes("id:'transition-to-2'")&&loc4Block.includes("x:93.76,y:89.32,targetLocation:2"),'Rostok -> Svalka transition must be bottom-right');
-assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-rostok1'),'Rostok bar screen missing');
+assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-rostok2'),'Rostok bar screen missing');
 assert(js.includes("if (zoneLocation === 4)")&&js.includes('openRostokCamp();'),'Rostok camp marker must open bar screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
 
@@ -54,5 +54,13 @@ assert(!zoneCss.includes('object-fit:fill'),'zone maps must not be stretched');
 assert(zoneCss.includes('.zone-map-travel-bar')&&zoneCss.includes('.zone-map-title'),'travel bar/title styling missing');
 assert(css.includes('#rostokCampScreen.rostok-camp-screen'),'Rostok camp styles missing');
 assert(css.includes('.rostok-health')&&css.includes('.rostok-hunger')&&css.includes('.rostok-thirst'),'Rostok survival meters missing');
+assert(js.includes('id="rostokExperience"')&&js.includes('id="rostokRadiation"'),'Rostok exp/radiation bars missing');
+assert(js.includes('id="rostokCoins"')&&js.includes('id="rostokBreedCredits"')&&js.includes('id="rostokKnowledgeBooks"'),'Rostok resources missing');
+assert(js.includes('id="rostokReadBook"')&&js.includes('data-rostok-action="read"'),'Rostok read-book control missing');
+assert(js.includes('id="rostokInventory"')&&js.includes('data-rostok-action="inventory"'),'Rostok inventory control missing');
+assert(js.includes('id="rostokPda"')&&js.includes('data-rostok-action="kpk"'),'Rostok PDA control missing');
+assert(css.includes('.rostok-hub-shell')&&css.includes('.rostok-resources')&&css.includes('.rostok-quick'),'Rostok full lower hub styling missing');
+assert(!js.includes('class="zone-map-back"'),'Zone maps must not show the top-left Back button');
+assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be removed');
 
-console.log('PASS: Rostok map, Svalka route, Mercenary tier-4 encounters, bottom-right return and 100 RADS camp HUD');
+console.log('PASS: Rostok map, full Cordon-style hub, Mercenary tier-4 encounters and map Back removal');
