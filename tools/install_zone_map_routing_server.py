@@ -77,10 +77,18 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
         if(!PLAYER_WORLD_POSITION_PLACES.has(place))place='cordon-camp';
         let origin=String(req.body?.origin||'cordon-camp');
         if(!PLAYER_WORLD_POSITION_ORIGINS.has(origin))origin='cordon-camp';
-        if(zoneLocation!==4&&['rostok-bar','barman'].includes(place)){
-            place='zone-map';origin='zone-map';
+
+        if(['rostok-bar','barman'].includes(place)){
+            if(zoneMapLocationUnlocked(data,4)){zoneLocation=4;origin='rostok-bar';}
+            else{zoneLocation=1;place='cordon-camp';origin='cordon-camp';}
+        }else if(['cordon-camp','zhuchara','diesel','leonov','smoker','arena','market','chat'].includes(place)){
+            zoneLocation=1;origin='cordon-camp';
+        }else if(['inventory','kpk','warehouse'].includes(place)){
+            if(origin==='rostok-bar'&&zoneMapLocationUnlocked(data,4))zoneLocation=4;
+            else{zoneLocation=1;origin='cordon-camp';}
+        }else if(place==='zone-map'){
+            origin='zone-map';
         }
-        if(['inventory','kpk','warehouse'].includes(place)&&origin==='rostok-bar'&&zoneLocation!==4)origin='cordon-camp';
         data.worldPosition={zoneLocation,place,origin,updatedAt:Date.now()};
         const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
           .run(JSON.stringify(data),Date.now(),playerId);
