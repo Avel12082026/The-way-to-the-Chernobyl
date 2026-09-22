@@ -36,6 +36,8 @@
       // weapon/armor catalogs so tier-4+ body armor/vests cannot disappear
       // because of another trader's location filter.
       stock: () => [
+        // Same consumables as Zhuchara: food, water/energy drinks, all medkits and Antirad.
+        ...getShopCatalog().filter(item => item?.category === 'consumable'),
         ...(typeof WEAPON_PROGRESSION_ORDER!=='undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
           .filter(w => w && !w.adminOnly && Number(w.tier) >= 4 && player.level >= Number(w.unlockLevel||0))
           .map(w => ({...w, category:'weapon'})),
@@ -499,7 +501,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.4', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.5', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
