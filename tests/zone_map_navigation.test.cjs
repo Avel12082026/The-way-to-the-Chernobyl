@@ -63,7 +63,11 @@ assert(css.includes('.rostok-hub-shell')&&css.includes('.rostok-resources')&&css
 assert(!js.includes('class="zone-map-back"'),'Zone maps must not show the top-left Back button');
 assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be removed');
 assert(js.includes('id="rostokBarmanHotspot"')&&js.includes('data-rostok-action="barman"'),'invisible Barman hotspot missing');
-assert(js.includes('id="barmanHubScreen"')&&js.includes('>Говорить</button>')&&js.includes('>Торговля</button>')&&js.includes('>Назад</button>'),'Barman three-action hub missing');
+assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
+for(const [action,label] of [['talk','Говорить'],['trade','Торговля'],['back','Назад']]){
+  assert(js.includes('data-barman-action="'+action+'"'),`Barman ${action} action missing`);
+  assert(js.includes('>'+label+'</button>'),`Barman ${label} label missing`);
+}
 assert(js.includes('rostokReturnPending')&&js.includes("screen === 'main' && rostokReturnPending"),'Rostok PDA/inventory return context missing');
 
 console.log('PASS: Rostok map, full Cordon-style hub, Mercenary tier-4 encounters and map Back removal');
