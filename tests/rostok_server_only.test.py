@@ -26,6 +26,7 @@ with tempfile.TemporaryDirectory() as td:
             return (
                 "# // ZONE_MAP_ROUTING_V4\n"
                 "# // ROSTOK_BARMAN_SHOP_V1\n"
+                "# // PLAYER_WORLD_POSITION_V1\n"
                 "# "+mod.MAP_SHA+"\n"
                 "# "+mod.BAR_SHA+"\n"
                 "def patch(source):\n"
