@@ -8,6 +8,7 @@ OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_
 ROUTE_MARK='// ZONE_MAP_ROUTING_V4'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
+POSITION_MARK='// PLAYER_WORLD_POSITION_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
 const ZONE_MAP_LOCATION1_ARMOR=new Set(
@@ -44,6 +45,42 @@ app.post('/api/shop/buy',(req,res,next)=>{
     if(!item||item.adminOnly||Number(item.tier||0)<4)
         return res.status(400).json({success:false,error:'У Бармена доступны только оружие и броня 4-го тира и выше'});
     return next();
+});
+
+"""
+
+POSITION_ROUTE=r"""// PLAYER_WORLD_POSITION_V1
+const PLAYER_WORLD_POSITION_PLACES=new Set([
+    'cordon-camp','zone-map','rostok-bar','barman','inventory','kpk',
+    'warehouse','arena','market','chat','zhuchara','diesel','leonov'
+]);
+const PLAYER_WORLD_POSITION_ORIGINS=new Set(['cordon-camp','zone-map','rostok-bar']);
+
+app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000),(req,res)=>{
+    const playerId=String(req.telegramUser.id);
+    try{
+        const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);
+        if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
+        const data=safeParsePlayerData(row.data);
+        let zoneLocation=Number(req.body?.zoneLocation||1);
+        if(![1,2,3,4].includes(zoneLocation)||!zoneMapLocationUnlocked(data,zoneLocation))zoneLocation=1;
+        let place=String(req.body?.place||'cordon-camp');
+        if(!PLAYER_WORLD_POSITION_PLACES.has(place))place='cordon-camp';
+        let origin=String(req.body?.origin||'cordon-camp');
+        if(!PLAYER_WORLD_POSITION_ORIGINS.has(origin))origin='cordon-camp';
+        if(zoneLocation!==4&&['rostok-bar','barman'].includes(place)){
+            place='zone-map';origin='zone-map';
+        }
+        if(['inventory','kpk'].includes(place)&&origin==='rostok-bar'&&zoneLocation!==4)origin='cordon-camp';
+        data.worldPosition={zoneLocation,place,origin,updatedAt:Date.now()};
+        const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
+          .run(JSON.stringify(data),Date.now(),playerId);
+        if(result&&Number(result.changes)===0)return res.status(409).json({success:false,error:'Позиция не сохранена'});
+        return res.json({success:true,worldPosition:data.worldPosition});
+    }catch(e){
+        console.error('[/api/player/position]',e);
+        return res.status(500).json({success:false,error:'Не удалось сохранить позицию'});
+    }
 });
 
 """
@@ -347,6 +384,13 @@ def upgrade_shop_guard_for_barman(text):
     block=block.replace(old,new,1)
     return text[:start]+block+text[end:],True
 
+def insert_position_route(text):
+    if POSITION_MARK in text:
+        return text,False
+    if ROUTE_MARK not in text:
+        raise RuntimeError('Нельзя добавить позицию игрока без ZONE_MAP_ROUTING_V4.')
+    return insert_before_one(text,["app.listen("],POSITION_ROUTE,'app.listen для позиции игрока'),True
+
 def insert_barman_guard(text):
     if BARMAN_MARK in text:
         return text,False
@@ -388,6 +432,8 @@ def patch(source):
     changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
     changed=changed or barman_changed
+    text,position_changed=insert_position_route(text)
+    changed=changed or position_changed
     return text,changed
 
 def run(cmd,**kw):
