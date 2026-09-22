@@ -31,10 +31,10 @@ assert(css.includes('.rostok-cordon-hud-artwork')&&css.includes('clip-path:inset
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
-  'ui/bunker-menu.js?v=20260922-position2',
-  'ui/bunker-menu.css?v=20260922-position2',
-  'ui/trade-menu.js?v=20260922-position2',
-  'ui/trader-hubs.js?v=20260922-position2'
+  'ui/bunker-menu.js?v=20260922-position3',
+  'ui/bunker-menu.css?v=20260922-position3',
+  'ui/trade-menu.js?v=20260922-position3',
+  'ui/trader-hubs.js?v=20260922-position3'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
 console.log('PASS: Rostok exact Cordon HUD, warehouse door, persistent return and Barman consumables/tier-4 gear');
