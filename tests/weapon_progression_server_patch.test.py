@@ -82,6 +82,8 @@ for text in [
     "Припасы",
     "label+' с NPC: '+drop.name",
     "Это оружие откроется на ",
+    "sourceVendor==='zhuchara'&&cls==='pistol'",
+    "sourceVendor==='barman'&&cls==='shotgun'",
 ]:
     assert text in patched,text
 
