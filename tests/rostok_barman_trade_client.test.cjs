@@ -8,9 +8,14 @@ const html=fs.readFileSync('index.html','utf8');
 assert(trade.includes("barman: {"),'Barman vendor missing');
 assert(trade.includes("title: () => 'БАРМЕН — ТОРГОВЛЯ'"),'Barman trade title missing');
 assert(trade.includes("getShopCatalog().filter(item => item?.category === 'consumable')"),'Barman must inherit all Zhuchara consumables');
-assert(trade.includes("Number(w.tier) >= 4"),'Barman weapon tier 4+ client gate missing');
-assert(trade.includes("Number(a.tier) >= 4"),'Barman armor tier 4+ client gate missing');
-assert(trade.includes("...armorItems"),'Barman must use full armor catalog so body armor/vests are present');
+assert(trade.includes("markedPistols.length === 29"),'Zhuchara 29-pistol class detection missing');
+assert(trade.includes("weaponOrder.slice(pistolStart, pistolStart + 29)"),'Zhuchara pistol fallback range missing');
+assert(trade.includes("regularArmor.slice(0, 29)"),'Zhuchara armor 1-29 range missing');
+assert(trade.includes("markedShotguns.length === 29"),'Barman 29-shotgun class detection missing');
+assert(trade.includes("weaponOrder.slice(pistolStart + 29, pistolStart + 58)"),'Barman shotgun fallback range missing');
+assert(trade.includes("regularArmor.slice(29, 58)"),'Barman armor 30-58 range missing');
+assert(!trade.includes("Number(w.tier) >= 4"),'Old Barman weapon tier gate must be removed');
+assert(!trade.includes("Number(a.tier) >= 4"),'Old Barman armor tier gate must be removed');
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
 assert(trade.includes("sourceVendor: currentVendor"),'Barman source marker missing from requests');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
@@ -37,4 +42,4 @@ for(const ref of [
   'ui/trader-hubs.js?v=20260922-position3'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
-console.log('PASS: Rostok exact Cordon HUD, warehouse door, persistent return and Barman consumables/tier-4 gear');
+console.log('PASS: Rostok Barman has 29 shotguns + armor 30-58; Zhuchara has 29 pistols + armor 1-29');
