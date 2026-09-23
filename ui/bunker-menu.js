@@ -476,11 +476,10 @@
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
-        <!-- Exact lower menu from the Cordon camp: only the menu itself is shown.
-             The full Cordon screenshot is cropped inside this bottom-anchored frame,
-             so no floor/stools/background can leak above it. -->
+        <!-- Clean lower menu only: this is the approved 1536x351 menu artwork.
+             It contains no experience/radiation bars and no Cordon floor/stools. -->
         <div id="rostokLowerHud" class="rostok-lower-hud">
-          <img class="rostok-cordon-hud-artwork rostok-lower-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
+          <img id="rostokLowerHudArtwork" class="rostok-lower-hud-artwork" src="ui/rostok-lower-hud.webp?v=ddf15c7509a3" width="1536" height="351" alt="" aria-hidden="true" draggable="false">
           <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
           <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
           <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
@@ -1581,7 +1580,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.17.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.18.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
