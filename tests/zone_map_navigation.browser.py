@@ -75,7 +75,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.17.0' && window.ZoneMap?.version==='0.6.4'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.18.0' && window.ZoneMap?.version==='0.6.4'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -166,9 +166,9 @@ async def main():
         assert await page.locator('#rostokReadBook').is_visible()
         assert await page.locator('#rostokInventory').is_visible()
         assert await page.locator('#rostokPda').is_visible()
-        assert await page.locator('.rostok-cordon-hud-artwork').count()==1
+        assert await page.locator('.rostok-lower-hud-artwork').count()==1
         assert await page.locator('#rostokWarehouseHotspot').is_visible()
-        # The lower Cordon menu is its own bottom crop: no floor/stools strip,
+        # The lower menu is its own clean artwork: no old exp/rad bars or Cordon floor/stools,
         # health stays inside it, and the upper two meters sit immediately above it.
         scene_box=await page.locator('#rostokCampScene').bounding_box()
         lower_box=await page.locator('#rostokLowerHud').bounding_box()
