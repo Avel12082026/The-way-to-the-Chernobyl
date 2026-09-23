@@ -1,0 +1,39 @@
+name: Generate clean Rostok lower HUD
+on:
+  push:
+    branches: [tmp/rostok-hud-generate]
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow
+        run: python -m pip install pillow==11.3.0
+      - name: Crop exact lower HUD only
+        run: |
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          src=Path('file_000000002bb08210800056ebfb1dce1f.png')
+          out=Path('ui/rostok-lower-hud.png')
+          im=Image.open(src)
+          assert im.size==(941,1672), im.size
+          crop=im.crop((0,1490,941,1672))
+          assert crop.size==(941,182), crop.size
+          crop.save(out,'PNG',optimize=True)
+          print('HUD:',crop.size,'bytes:',out.stat().st_size)
+          PY
+      - name: Commit exact crop to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ui/rostok-lower-hud.png
+          git commit -m "Add exact lower-only Cordon HUD crop for Rostok"
+          git push origin HEAD:main
