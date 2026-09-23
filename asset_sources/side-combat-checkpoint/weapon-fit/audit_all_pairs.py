@@ -12,9 +12,9 @@ for c in d['characters']:
  hand=Image.open(r/f'fitting/hands/{c["armor"]}-{c["pose"]}.png').getchannel('A');ha=np.array(hand)>128
  for w in d['weapons']:
   if w['pose']!=c['pose']:continue
-  g=weapons[w['id']];x=round(c['grip'][0]-w['grip'][0]*w['scale']);y=round(c['grip'][1]-w['grip'][1]*w['scale'])
+  adj=d.get('pairAdjustments',{}).get(f'{c["armor"]}-{w["id"]}',{});g=weapons[w['id']];pivot=(c['grip'][0]+adj.get('dx',0),c['grip'][1]+adj.get('dy',0));x=round(pivot[0]-w['grip'][0]*w['scale']);y=round(pivot[1]-w['grip'][1]*w['scale'])
   layer=Image.new('L',(1800,800));layer.paste(g.getchannel('A'),(x,y));angle=d.get('pairAdjustments',{}).get(f'{c["armor"]}-{w["id"]}',{}).get('angle',0)
-  if angle:layer=layer.rotate(-angle,resample=Image.Resampling.BICUBIC,center=tuple(c['grip']))
+  if angle:layer=layer.rotate(-angle,resample=Image.Resampling.BICUBIC,center=pivot)
   ga=np.array(layer)>128
   vals=[]
   for reg in c['regions']:

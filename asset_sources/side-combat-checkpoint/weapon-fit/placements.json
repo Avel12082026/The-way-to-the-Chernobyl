@@ -7170,8 +7170,12 @@
   "note": "Примерка оружия. Возможны несовпадения хвата; компактное оружие требует отдельной проверки второй руки.",
   "pairAdjustments": {
     "7-11": {
-      "angle": 4.518,
-      "status": "support-height-trial"
+      "angle": 7.5,
+      "dx": -20,
+      "dy": -18,
+      "size": 100,
+      "status": "grip-position-refined-trigger-finger-pending",
+      "review": "Inspected at source-pixel scale on white, dark and checkerboard. Less grip protrusion; trigger-finger anatomy not approved."
     },
     "8-11": {
       "angle": 5.535,
