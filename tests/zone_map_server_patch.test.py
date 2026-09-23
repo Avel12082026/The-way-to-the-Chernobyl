@@ -70,10 +70,16 @@ assert "npc.tier=zoneTier" in patched
 assert "sourceTier" in patched and "tier:zoneTier" in patched
 assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in patched
 
-# Location-one armor restriction remains, while weapon stock follows global progression.
+# Trader stock is split explicitly: Zhuchara gets all 29 pistols + armor 1-29;
+# Barman gets all 29 shotguns + armor 30-58.
 assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
-assert "Этот ствол продаётся на другой локации" not in patched
-assert "Этот костюм продаётся на другой локации" in patched
+assert "ZONE_MAP_LOCATION1_PISTOLS" in patched
+assert ".slice(0,29)" in patched
+assert "У Жучары продаются только пистолеты" in patched
+assert "ROSTOK_BARMAN_SHOTGUNS_SERVER" in patched
+assert ".slice(29,58)" in patched
+assert "У Бармена продаются только дробовики" in patched
+assert "У Бармена продаются костюмы с 30-го по 58-й" in patched
 assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
 
 again,changed2=mod.patch(patched)
@@ -108,6 +114,8 @@ legacy_upgraded,legacy_changed=mod.patch(v4_legacy)
 assert legacy_changed
 assert legacy_upgraded.count(mod.BARMAN_MARK)==1
 assert "ROSTOK_BARMAN_CONSUMABLES_SERVER" in legacy_upgraded
+assert "ROSTOK_BARMAN_SHOTGUNS_SERVER" in legacy_upgraded
+assert "ROSTOK_BARMAN_ARMOR_SERVER" in legacy_upgraded
 assert "'Энергетик'" in legacy_upgraded and "'Аптечка научная'" in legacy_upgraded
 assert legacy_barman not in legacy_upgraded
 
