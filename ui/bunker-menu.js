@@ -450,22 +450,17 @@
     if (!rostokCampScreen || !rostokCampScreen.classList.contains('active')) return;
     const campScene = document.getElementById('rostokCampScene');
     if (!campScene) return;
-    const viewport = window.visualViewport;
-    const viewportW = viewport ? viewport.width : window.innerWidth;
-    const viewportH = viewport ? viewport.height : window.innerHeight;
-    const layoutW = document.documentElement?.clientWidth || window.innerWidth || viewportW;
-    const layoutH = document.documentElement?.clientHeight || window.innerHeight || viewportH;
-    // Telegram/WebView can briefly report a visualViewport taller than the actually
-    // drawable fixed viewport. Use the smaller dimensions so the third (health)
-    // row of the lower Cordon HUD can never end up below the visible screen.
-    const w = Math.max(1, Math.min(viewportW || layoutW, layoutW || viewportW));
-    const h = Math.max(1, Math.min(viewportH || layoutH, layoutH || viewportH, window.innerHeight || viewportH));
+    const screenBox = rostokCampScreen.getBoundingClientRect();
+    const w = Math.max(1, screenBox.width || window.innerWidth || 1);
+    const h = Math.max(1, screenBox.height || window.innerHeight || 1);
     const ratio = 941 / 1672;
     const width = w <= h ? w : h * ratio;
+    const lowerHudHeight = width * 351 / 1536;
     campScene.style.width = width + 'px';
     campScene.style.height = h + 'px';
     campScene.style.setProperty('--bunker-unit', width / 941 + 'px');
     campScene.style.setProperty('--bunker-vunit', h / 1672 + 'px');
+    campScene.style.setProperty('--rostok-hud-height', lowerHudHeight + 'px');
     refreshRostokCamp();
   }
 
@@ -478,23 +473,28 @@
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
         <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
-        <img class="rostok-cordon-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
-        <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
-        <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
-        <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
-        <section class="rostok-resources" aria-label="Ресурсы персонажа">
-          <div class="rostok-resource"><span>Сталбайты</span><span id="rostokCoins">0</span></div>
-          <div class="rostok-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
-          <div class="rostok-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
-        </section>
-        <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+"></button>
-        <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
-        <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
-        <!-- Upper meters are a separate overlay over the bar artwork. The full
-             lower Cordon HUD is laid out first and remains untouched underneath. -->
+        <!-- Exact lower menu from the Cordon camp: only the menu itself is shown.
+             The full Cordon screenshot is cropped inside this bottom-anchored frame,
+             so no floor/stools/background can leak above it. -->
+        <div id="rostokLowerHud" class="rostok-lower-hud">
+          <img class="rostok-cordon-hud-artwork rostok-lower-hud-artwork" src="file_000000002bb08210800056ebfb1dce1f.png?v=0503d3b544d1" width="941" height="1672" alt="" aria-hidden="true" draggable="false">
+          <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
+          <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
+          <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
+          <section class="rostok-resources" aria-label="Ресурсы персонажа">
+            <div class="rostok-resource"><span>Столбайты</span><span id="rostokCoins">0</span></div>
+            <div class="rostok-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
+            <div class="rostok-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
+          </section>
+          <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+"></button>
+          <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
+          <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
+        </div>
+        <!-- Experience and radiation are independent working overlays placed
+             only after the clean lower menu has been laid out. -->
         <div class="rostok-progress-row" aria-label="Опыт и радиация">
           <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
           <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
@@ -1581,7 +1581,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.16.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.17.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
