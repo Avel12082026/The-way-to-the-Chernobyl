@@ -9,11 +9,11 @@ mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
 js=r"""
 const SHOP_WEAPONS=[
- {name:'W3',tier:3},{name:'W4',tier:4},{name:'W8',tier:8},{name:'ADMIN',tier:14,adminOnly:true}
+ ...Array.from({length:29},(_,i)=>({name:'P'+(i+1),progressionClass:'pistol',starterGear:i===0})),
+ ...Array.from({length:29},(_,i)=>({name:'S'+(i+1),progressionClass:'shotgun'})),
+ {name:'ADMIN',progressionClass:'shotgun',adminOnly:true}
 ];
-const SHOP_ARMOR=[
- {name:'A2',tier:2},{name:'A4',tier:4},{name:'A7',tier:7}
-];
+const SHOP_ARMOR=Array.from({length:60},(_,i)=>({name:'A'+(i+1)}));
 function parseGearNameServer(name){return {baseName:String(name).replace(/ \+\d+$/,'')};}
 const handlers=[];
 const app={post(path,...fns){if(path==='/api/shop/buy')handlers.push(...fns)}};
@@ -28,17 +28,22 @@ function call(body){
   handlers[0](req,res,()=>{result.next=true});
   return result;
 }
-const okWeapon=call({vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'W4'});
-if(!okWeapon.next)throw new Error('tier4 weapon blocked');
-const okArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A7 +3'});
-if(!okArmor.next)throw new Error('upgraded tier7 armor blocked');
+const okWeapon=call({vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'S1'});
+if(!okWeapon.next)throw new Error('shotgun blocked');
+const okLastWeapon=call({vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'S29'});
+if(!okLastWeapon.next)throw new Error('last shotgun blocked');
+const okArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A30 +3'});
+if(!okArmor.next)throw new Error('armor 30 blocked');
+const okLastArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A58'});
+if(!okLastArmor.next)throw new Error('armor 58 blocked');
 for(const name of ['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад']){
   const r=call({vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name});
   if(!r.next)throw new Error('Barman consumable blocked '+name);
 }
 for(const payload of [
- {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'W3'},
- {vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A2'},
+ {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'P1'},
+ {vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A29'},
+ {vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A59'},
  {vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name:'Неизвестный припас'},
  {vendor:'zhuchara',sourceVendor:'barman',category:'detector',name:'D1'},
  {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'ADMIN'}
@@ -58,4 +63,4 @@ with tempfile.TemporaryDirectory() as td:
         raise AssertionError(proc.stdout+'\n'+proc.stderr)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: Barman accepts Zhuchara consumables plus weapon/armor tier 4+ and leaves normal Zhuchara traffic untouched')
+print('PASS: Barman accepts all 29 shotguns + armor 30-58 + consumables and rejects Zhuchara pistol/armor ranges')
