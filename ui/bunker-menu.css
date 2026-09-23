@@ -122,7 +122,9 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 }
 #rostokCampScreen .rostok-hub-shell{display:none!important;}
 #rostokCampScreen .rostok-progress-row{
-  position:absolute;z-index:4;left:2%;top:86.6%;width:96%;height:2.1%;
+  /* Separate upper overlay: it sits on the bar picture immediately above the
+     untouched Cordon lower HUD (which begins at 84.35%). */
+  position:absolute;z-index:5;left:2%;top:82.05%;width:96%;height:2.1%;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(10 * var(--bunker-unit));
   pointer-events:none;
 }
@@ -142,10 +144,13 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
   position:absolute;z-index:4;left:8.9%;width:30.1%;height:1.23%;overflow:hidden;
   border-radius:calc(12 * var(--bunker-unit));background:#0c1110;
   border:calc(1 * var(--bunker-unit)) solid #625c44;pointer-events:none;
+  visibility:visible;opacity:1;
 }
 #rostokCampScreen .rostok-hunger{top:91.00%;}
 #rostokCampScreen .rostok-thirst{top:93.51%;}
-#rostokCampScreen .rostok-health{top:96.02%;}
+#rostokCampScreen .rostok-health{
+  top:96.02%;z-index:5;visibility:visible!important;opacity:1!important;
+}
 #rostokCampScreen .rostok-vital .bunker-vital-fill{
   position:absolute;inset:0 auto 0 0;width:0;height:100%;border-radius:inherit;
 }
