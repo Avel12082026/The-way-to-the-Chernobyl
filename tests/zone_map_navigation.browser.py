@@ -75,7 +75,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.15.0' && window.ZoneMap?.version==='0.6.4'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.16.0' && window.ZoneMap?.version==='0.6.4'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -168,6 +168,15 @@ async def main():
         assert await page.locator('#rostokPda').is_visible()
         assert await page.locator('.rostok-cordon-hud-artwork').count()==1
         assert await page.locator('#rostokWarehouseHotspot').is_visible()
+        # The complete lower hub must stay inside the visible scene and the two
+        # upper meters must be a separate overlay immediately above it.
+        scene_box=await page.locator('#rostokCampScene').bounding_box()
+        health_box=await page.locator('#rostokHealth').bounding_box()
+        upper_box=await page.locator('.rostok-progress-row').bounding_box()
+        assert scene_box and health_box and upper_box
+        assert health_box['y']+health_box['height'] <= scene_box['y']+scene_box['height']+1,(scene_box,health_box)
+        assert upper_box['y']+upper_box['height'] < scene_box['y']+scene_box['height']*0.8435+2,(scene_box,upper_box)
+        assert await page.locator('#rostokHealthText').inner_text()=='100 / 100'
 
         await page.locator('#rostokReadBook').click()
         await page.wait_for_function("window.__calls.read===1")
