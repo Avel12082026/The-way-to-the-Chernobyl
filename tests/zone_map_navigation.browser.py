@@ -75,7 +75,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.18.0' && window.ZoneMap?.version==='0.6.4'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.19.0' && window.ZoneMap?.version==='0.6.4'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -175,7 +175,7 @@ async def main():
         health_box=await page.locator('#rostokHealth').bounding_box()
         upper_box=await page.locator('.rostok-progress-row').bounding_box()
         assert scene_box and lower_box and health_box and upper_box
-        assert abs((lower_box['width']/lower_box['height'])-(1536/351))<0.04,lower_box
+        assert abs((lower_box['width']/lower_box['height'])-(941/182))<0.04,lower_box
         assert abs((lower_box['y']+lower_box['height'])-(scene_box['y']+scene_box['height']))<2,(scene_box,lower_box)
         assert health_box['y']>=lower_box['y'] and health_box['y']+health_box['height']<=lower_box['y']+lower_box['height']+1,(lower_box,health_box)
         gap=lower_box['y']-(upper_box['y']+upper_box['height'])
