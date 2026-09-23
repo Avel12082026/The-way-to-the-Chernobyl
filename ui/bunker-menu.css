@@ -92,10 +92,16 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
   position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;
   image-rendering:auto;pointer-events:none;user-select:none;-webkit-user-drag:none;
 }
-#rostokCampScreen .rostok-cordon-hud-artwork{
-  position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;object-fit:fill;
-  clip-path:inset(84.35% 0 0 0);pointer-events:none;user-select:none;-webkit-user-drag:none;
-  image-rendering:auto;
+#rostokCampScreen .rostok-lower-hud{
+  position:absolute;z-index:3;left:0;right:0;bottom:0;width:100%;
+  height:var(--rostok-hud-height,calc(100vw * 351 / 1536));
+  overflow:hidden;pointer-events:none;
+}
+#rostokCampScreen .rostok-cordon-hud-artwork,
+#rostokCampScreen .rostok-lower-hud-artwork{
+  position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;
+  object-fit:cover;object-position:center bottom;
+  pointer-events:none;user-select:none;-webkit-user-drag:none;image-rendering:auto;
 }
 #rostokCampScreen .rostok-barman-hotspot{
   position:absolute;z-index:7;left:61.5%;top:37.5%;width:21%;height:17%;
@@ -122,9 +128,9 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 }
 #rostokCampScreen .rostok-hub-shell{display:none!important;}
 #rostokCampScreen .rostok-progress-row{
-  /* Separate upper overlay: it sits on the bar picture immediately above the
-     untouched Cordon lower HUD (which begins at 84.35%). */
-  position:absolute;z-index:5;left:2%;top:82.05%;width:96%;height:2.1%;
+  /* Separate working overlay, placed only after the clean lower HUD. */
+  position:absolute;z-index:5;left:2%;bottom:calc(var(--rostok-hud-height,0px) + calc(7 * var(--bunker-vunit)));
+  width:96%;height:2.1%;
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(10 * var(--bunker-unit));
   pointer-events:none;
 }
@@ -141,16 +147,14 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
   text-shadow:0 1px 2px #000,1px 0 2px #000;
 }
 #rostokCampScreen .rostok-vital{
-  position:absolute;z-index:4;left:8.9%;width:30.1%;height:1.23%;overflow:hidden;
+  position:absolute;z-index:2;left:8.65%;width:30.25%;height:12.2%;overflow:hidden;
   border-radius:calc(12 * var(--bunker-unit));background:#0c1110;
   border:calc(1 * var(--bunker-unit)) solid #625c44;pointer-events:none;
   visibility:visible;opacity:1;
 }
-#rostokCampScreen .rostok-hunger{top:91.00%;}
-#rostokCampScreen .rostok-thirst{top:93.51%;}
-#rostokCampScreen .rostok-health{
-  top:96.02%;z-index:5;visibility:visible!important;opacity:1!important;
-}
+#rostokCampScreen .rostok-hunger{top:16.25%;}
+#rostokCampScreen .rostok-thirst{top:39.35%;}
+#rostokCampScreen .rostok-health{top:62.70%;visibility:visible!important;opacity:1!important;}
 #rostokCampScreen .rostok-vital .bunker-vital-fill{
   position:absolute;inset:0 auto 0 0;width:0;height:100%;border-radius:inherit;
 }
@@ -163,33 +167,31 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
   text-shadow:0 1px 2px #000,1px 0 2px #000;
 }
 #rostokCampScreen .rostok-resources{
-  position:absolute;z-index:4;left:40.9%;top:90.65%;width:27.15%;height:7.15%;
-  padding:calc(4 * var(--bunker-unit)) calc(7 * var(--bunker-unit));
-  border:0;background:#101310;color:#c9bd99;
+  position:absolute;z-index:2;left:60.35%;top:14.6%;width:7.55%;height:39.8%;
+  padding:0;border:0;background:#101310;color:#efcf73;pointer-events:none;
 }
 #rostokCampScreen .rostok-resource{
-  display:flex;align-items:center;justify-content:space-between;gap:calc(6 * var(--bunker-unit));
-  height:calc(26 * var(--bunker-vunit,var(--bunker-unit)));min-width:0;
-  font:calc(17.5 * var(--bunker-unit))/1.05 Arial,sans-serif;white-space:nowrap;
+  display:flex;align-items:center;justify-content:flex-end;width:100%;height:33.333%;
+  min-width:0;font:700 calc(21 * var(--bunker-unit))/1 Arial,sans-serif;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
 }
-#rostokCampScreen .rostok-resource>span:first-child{flex:1;min-width:0;}
-#rostokCampScreen .rostok-resource>span[id]{
-  flex:none;color:#efcf73;font-weight:700;font-size:calc(21 * var(--bunker-unit));font-variant-numeric:tabular-nums;
-}
+#rostokCampScreen .rostok-resource>span:first-child{display:none!important;}
+#rostokCampScreen .rostok-resource>span[id]{display:block;color:#efcf73;font:inherit;}
 #rostokCampScreen .rostok-read-book{
-  position:absolute;z-index:6;left:41.65%;top:95.47%;width:15.4%;height:1.97%;
+  position:absolute;z-index:3;left:41.65%;top:57.55%;width:15.45%;height:18.9%;
   min-height:0!important;min-width:0!important;padding:0!important;margin:0!important;
   border:0!important;border-radius:0;background:transparent!important;box-shadow:none!important;
-  color:transparent!important;font-size:0!important;opacity:.001;touch-action:manipulation;
+  color:transparent!important;font-size:0!important;opacity:.001;touch-action:manipulation;pointer-events:auto;
 }
 #rostokCampScreen .rostok-read-book:disabled{cursor:wait;opacity:.65;}
 #rostokCampScreen .rostok-quick{
-  position:absolute;z-index:6;top:90.4%;height:7.8%;padding:0!important;margin:0!important;
+  position:absolute;z-index:3;top:7%;height:82%;padding:0!important;margin:0!important;
   border:0!important;border-radius:0;background:transparent!important;color:transparent!important;
   box-shadow:none!important;opacity:.001;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  pointer-events:auto;
 }
-#rostokCampScreen .rostok-inventory{left:70%;width:13.9%;}
-#rostokCampScreen .rostok-pda{left:84.1%;width:13.7%;}
+#rostokCampScreen .rostok-inventory{left:70.0%;width:13.2%;}
+#rostokCampScreen .rostok-pda{left:84.0%;width:13.2%;}
 #rostokCampScreen .rostok-camp-back:focus-visible,
 #rostokCampScreen .rostok-read-book:focus-visible,
 #rostokCampScreen .rostok-quick:focus-visible{opacity:.10;outline:2px solid #e4c477;outline-offset:-2px;}
