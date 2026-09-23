@@ -1,0 +1,10 @@
+{
+  "mode": "RGBA",
+  "size": [
+    1121,
+    1403
+  ],
+  "transparent_pixels": 490865,
+  "accepted": false,
+  "reason": "Visible texture drift in face, glove and metal; full-frame generative editing is not preserving invariant pixels."
+}
