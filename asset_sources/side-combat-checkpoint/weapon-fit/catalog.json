@@ -1,0 +1,698 @@
+[
+  {
+    "id": 11,
+    "name": "Автомат АКС-74У",
+    "icon": "avtomat_aks74u.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 12,
+    "name": "Автомат АК-74",
+    "icon": "avtomat_ak74.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 37,
+    "name": "Автомат АК-107",
+    "icon": "avtomat_ak107.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 21,
+    "name": "Автомат АК-12",
+    "icon": "avtomat_ak12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 26,
+    "name": "Автомат АН-94 «Абакан»",
+    "icon": "avtomat_an94_abakan.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 17,
+    "name": "Пулемёт РПК-74",
+    "icon": "pulemet_rpk74.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 38,
+    "name": "Автомат ADAR 2-15",
+    "icon": "avtomat_adar215.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 45,
+    "name": "Автомат АК-19",
+    "icon": "avtomat_ak19.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 57,
+    "name": "Автомат HK416",
+    "icon": "avtomat_hk416.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 69,
+    "name": "Автомат CZ Bren 2",
+    "icon": "avtomat_cz_bren2.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 67,
+    "name": "Пулемёт Minimi Mk3",
+    "icon": "pulemet_minimi_mk3.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 43,
+    "name": "Автомат ОЦ-14 «Гроза»",
+    "icon": "avtomat_ots14_groza.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 16,
+    "name": "Карабин «Вепрь»",
+    "icon": "karabin_vepr.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 15,
+    "name": "Автомат АК-103",
+    "icon": "avtomat_ak103.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 25,
+    "name": "Пулемёт РПД",
+    "icon": "pulemet_rpd.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 18,
+    "name": "Автомат АС «Вал»",
+    "icon": "avtomat_as_val.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 10,
+    "name": "Карабин Сайга-12",
+    "icon": "karabin_sayga12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 63,
+    "name": "Автомат АК-308",
+    "icon": "avtomat_ak308.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 51,
+    "name": "Автомат ЛР-308",
+    "icon": "avtomat_lr308.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 75,
+    "name": "Автомат SCAR-H",
+    "icon": "avtomat_scar_h.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 61,
+    "name": "Пулемёт M60E6",
+    "icon": "pulemet_m60e6.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 59,
+    "name": "Пулемёт M240",
+    "icon": "pulemet_m240.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 71,
+    "name": "Пулемёт FN MAG",
+    "icon": "pulemet_fn_mag.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 77,
+    "name": "Пулемёт Negev NG7",
+    "icon": "pulemet_negev_ng7.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 22,
+    "name": "Пулемёт ПКМ",
+    "icon": "pulemet_pkm.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 29,
+    "name": "Пулемёт «Печенег»",
+    "icon": "pulemet_pecheneg.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 53,
+    "name": "Пулемёт «Печенег-СП»",
+    "icon": "pulemet_pechenegsp.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 47,
+    "name": "Автомат АК-АН «Абакан-100»",
+    "icon": "avtomat_ak_an_abakan100.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 65,
+    "name": "Пулемёт «Утёс-М»",
+    "icon": "pulemet_utes_m.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 14,
+    "name": "Винтовка СКС",
+    "icon": "vintovka_sks.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 46,
+    "name": "Винтовка SSG 08",
+    "icon": "vintovka_ssg08.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 42,
+    "name": "Винтовка SR-25",
+    "icon": "vintovka_sr25.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 13,
+    "name": "Винтовка СВД",
+    "icon": "vintovka_svd.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 24,
+    "name": "Винтовка СВДС",
+    "icon": "vintovka_svds.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 23,
+    "name": "Винтовка Т-5000",
+    "icon": "vintovka_t5000.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 28,
+    "name": "Винтовка СВ-98",
+    "icon": "vintovka_sv98.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 36,
+    "name": "Винтовка СВК",
+    "icon": "vintovka_svk.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 30,
+    "name": "Винтовка ВСС «Винторез»",
+    "icon": "vintovka_vss_vintorez.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 40,
+    "name": "Винтовка ВСК-94",
+    "icon": "vintovka_vsk94.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 31,
+    "name": "Винтовка СВ-338",
+    "icon": "vintovka_sv338.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 27,
+    "name": "Винтовка ОРСИС T-5000M",
+    "icon": "vintovka_orsis_t5000m.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 70,
+    "name": "Винтовка Sako TRG-42",
+    "icon": "vintovka_sako_trg42.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 76,
+    "name": "Винтовка Blaser R93 Tactical 2",
+    "icon": "vintovka_blaser_r93_t2.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 39,
+    "name": "Винтовка ORSIS T-5000 Sniper Pro",
+    "icon": "vintovka_orsis_t5000_sniper_pro.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 60,
+    "name": "Винтовка Accuracy International AXMC",
+    "icon": "vintovka_axmc.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 48,
+    "name": "Винтовка Barrett M98B",
+    "icon": "vintovka_barrett_m98b.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 64,
+    "name": "Винтовка ORSIS T-5000 Elite",
+    "icon": "vintovka_orsis_t5000_elite.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 33,
+    "name": "Винтовка «Выхлоп»",
+    "icon": "vintovka_vyhlop.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 35,
+    "name": "Винтовка ОСВ-96",
+    "icon": "vintovka_osv96.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 66,
+    "name": "Винтовка Zastava M93 Black Arrow",
+    "icon": "vintovka_zastava_m93.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 52,
+    "name": "Винтовка АСВК «Корд»",
+    "icon": "vintovka_asvk_kord.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 58,
+    "name": "Винтовка Steyr HS .50",
+    "icon": "vintovka_steyr_hs50.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 49,
+    "name": "Винтовка Barrett M82",
+    "icon": "vintovka_barrett_m82.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 54,
+    "name": "Винтовка McMillan TAC-50",
+    "icon": "vintovka_mcmillan_tac50.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 72,
+    "name": "Винтовка Desert Tech HTI",
+    "icon": "vintovka_desert_tech_hti.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 78,
+    "name": "Винтовка Cheytac M200 Intervention",
+    "icon": "vintovka_cheytac_m200.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 73,
+    "name": "Прототип X-17",
+    "icon": "prototip_x17.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 55,
+    "name": "Гаусс-пушка",
+    "icon": "gauss_pushka.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 86,
+    "name": "Beretta 21A Bobcat",
+    "icon": "pistol_beretta21a_bobcat.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 2,
+    "name": "Пистолет ПСМ",
+    "icon": "pistolet_psm.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 87,
+    "name": "Walther PPK",
+    "icon": "pistol_walther_ppk.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 1,
+    "name": "Пистолет Макарова",
+    "icon": "pistolet_makarova.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 3,
+    "name": "Пистолет ИЖ-71",
+    "icon": "pistolet_izh71.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 88,
+    "name": "Glock 25",
+    "icon": "pistol_glock25.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 5,
+    "name": "Пистолет ОЦ-33 «Пернач»",
+    "icon": "pistolet_ots33_pernach.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 6,
+    "name": "Револьвер Наган",
+    "icon": "revolver_nagan.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 89,
+    "name": "Walther P99",
+    "icon": "pistol_walther_p99.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 90,
+    "name": "CZ 75",
+    "icon": "pistol_cz75.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 91,
+    "name": "Glock 17",
+    "icon": "pistol_glock17.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 92,
+    "name": "Beretta 92FS",
+    "icon": "pistol_beretta92fs.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 93,
+    "name": "SIG Sauer P226",
+    "icon": "pistol_sig_p226.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 7,
+    "name": "Пистолет ТТ",
+    "icon": "pistolet_tt.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 94,
+    "name": "HK USP",
+    "icon": "pistol_hk_usp.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 95,
+    "name": "Glock 22",
+    "icon": "pistol_glock22.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 96,
+    "name": "SIG Sauer P229",
+    "icon": "pistol_sig_p229.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 4,
+    "name": "Обрез охотничьего ружья",
+    "icon": "obrez_ohotnichego_ruzhya.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 97,
+    "name": "Glock 20",
+    "icon": "pistol_glock20.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 98,
+    "name": "Colt 1911",
+    "icon": "pistol_colt1911.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 99,
+    "name": "Glock 21",
+    "icon": "pistol_glock21.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 100,
+    "name": "CZ 97B",
+    "icon": "pistol_cz97b.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 8,
+    "name": "ПП «Кедр»",
+    "icon": "pp_kedr.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 101,
+    "name": "HK Mark 23",
+    "icon": "pistol_hk_mk23.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 9,
+    "name": "ПП-19 «Бизон»",
+    "icon": "pp19_bizon.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 102,
+    "name": "Taurus Judge",
+    "icon": "pistol_taurus_judge.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 103,
+    "name": "Smith & Wesson Model 29",
+    "icon": "pistol_sw_model29.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 104,
+    "name": "Taurus Raging Bull",
+    "icon": "pistol_taurus_ragingbull.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 105,
+    "name": "Desert Eagle Mark XIX",
+    "icon": "pistol_deagle_xix.png",
+    "pose": "pistol"
+  },
+  {
+    "id": 20,
+    "name": "Дробовик Сайга-410",
+    "icon": "drobovik_sayga410.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 106,
+    "name": "Дробовик Mossberg 500",
+    "icon": "drobovik_mossberg500.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 107,
+    "name": "Дробовик Stoeger P3000",
+    "icon": "drobovik_stoeger_p3000.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 108,
+    "name": "Дробовик Remington 870",
+    "icon": "drobovik_remington870.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 109,
+    "name": "Дробовик Winchester Model 1300",
+    "icon": "drobovik_winchester_1300.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 110,
+    "name": "Дробовик Ithaca 37",
+    "icon": "drobovik_ithaca37.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 111,
+    "name": "Дробовик Browning BPS",
+    "icon": "drobovik_browning_bps.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 19,
+    "name": "Дробовик СПАС-12",
+    "icon": "drobovik_spas12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 112,
+    "name": "Дробовик Winchester SXP Defender",
+    "icon": "drobovik_winchester_sxp_defender.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 113,
+    "name": "Дробовик Mossberg 590A1",
+    "icon": "drobovik_mossberg590a1.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 114,
+    "name": "Дробовик Remington 870 MCS",
+    "icon": "drobovik_remington870_mcs.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 32,
+    "name": "Дробовик Сайга-12К",
+    "icon": "drobovik_sayga12k.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 115,
+    "name": "Дробовик Benelli Nova",
+    "icon": "drobovik_benelli_nova.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 116,
+    "name": "Дробовик TOZ-194",
+    "icon": "drobovik_toz194.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 44,
+    "name": "Дробовик «Вепрь-12»",
+    "icon": "drobovik_vepr12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 117,
+    "name": "Дробовик Remington 1100",
+    "icon": "drobovik_remington1100.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 62,
+    "name": "Дробовик Kel-Tec KSG",
+    "icon": "drobovik_keltec_ksg.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 118,
+    "name": "Дробовик Beretta 1301 Tactical",
+    "icon": "drobovik_beretta1301.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 50,
+    "name": "Дробовик Benelli M4",
+    "icon": "drobovik_benelli_m4.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 119,
+    "name": "Дробовик Fabarm STF/12",
+    "icon": "drobovik_fabarm_stf12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 56,
+    "name": "Дробовик AA-12",
+    "icon": "drobovik_aa12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 120,
+    "name": "Дробовик Winchester SX4",
+    "icon": "drobovik_winchester_sx4.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 121,
+    "name": "Дробовик Browning A5",
+    "icon": "drobovik_browning_a5.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 68,
+    "name": "Дробовик Franchi SPAS-15",
+    "icon": "drobovik_franchi_spas15.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 122,
+    "name": "Дробовик Remington 870 Magnum",
+    "icon": "drobovik_remington870_magnum.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 123,
+    "name": "Дробовик Benelli Vinci",
+    "icon": "drobovik_benelli_vinci.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 74,
+    "name": "Дробовик USAS-12",
+    "icon": "drobovik_usas12.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 124,
+    "name": "Дробовик Ithaca Mag-10",
+    "icon": "drobovik_ithaca_mag10.png",
+    "pose": "heavy"
+  },
+  {
+    "id": 125,
+    "name": "Дробовик Remington SP-10",
+    "icon": "drobovik_remington_sp10.png",
+    "pose": "heavy"
+  }
+]

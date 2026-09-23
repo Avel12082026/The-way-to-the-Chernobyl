@@ -1,0 +1,1394 @@
+[
+  {
+    "weapon": 11,
+    "transparentPixels": 1253761,
+    "opaquePixels": 292079,
+    "bbox": [
+      15,
+      240,
+      1523,
+      844
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 12,
+    "transparentPixels": 1305607,
+    "opaquePixels": 241315,
+    "bbox": [
+      22,
+      282,
+      1514,
+      810
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 37,
+    "transparentPixels": 1341862,
+    "opaquePixels": 204496,
+    "bbox": [
+      0,
+      337,
+      1525,
+      818
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 21,
+    "transparentPixels": 1279487,
+    "opaquePixels": 264993,
+    "bbox": [
+      13,
+      251,
+      1524,
+      815
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 26,
+    "transparentPixels": 1310775,
+    "opaquePixels": 237393,
+    "bbox": [
+      11,
+      274,
+      1527,
+      790
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 17,
+    "transparentPixels": 1345971,
+    "opaquePixels": 193079,
+    "bbox": [
+      8,
+      328,
+      1529,
+      831
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 38,
+    "transparentPixels": 1284413,
+    "opaquePixels": 256348,
+    "bbox": [
+      0,
+      272,
+      1525,
+      806
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 45,
+    "transparentPixels": 1314543,
+    "opaquePixels": 229844,
+    "bbox": [
+      19,
+      338,
+      1513,
+      822
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 57,
+    "transparentPixels": 1275976,
+    "opaquePixels": 267094,
+    "bbox": [
+      19,
+      268,
+      1518,
+      803
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 69,
+    "transparentPixels": 1292547,
+    "opaquePixels": 255850,
+    "bbox": [
+      18,
+      274,
+      1518,
+      807
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 67,
+    "transparentPixels": 1271543,
+    "opaquePixels": 267471,
+    "bbox": [
+      21,
+      271,
+      1518,
+      861
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 43,
+    "transparentPixels": 1128584,
+    "opaquePixels": 410013,
+    "bbox": [
+      50,
+      210,
+      1508,
+      916
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 16,
+    "transparentPixels": 1295627,
+    "opaquePixels": 251347,
+    "bbox": [
+      9,
+      294,
+      1536,
+      783
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 15,
+    "transparentPixels": 1292328,
+    "opaquePixels": 252960,
+    "bbox": [
+      0,
+      280,
+      1525,
+      815
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 25,
+    "transparentPixels": 1280979,
+    "opaquePixels": 261390,
+    "bbox": [
+      11,
+      219,
+      1528,
+      824
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 18,
+    "transparentPixels": 1349248,
+    "opaquePixels": 197499,
+    "bbox": [
+      13,
+      313,
+      1523,
+      767
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 10,
+    "transparentPixels": 1269638,
+    "opaquePixels": 277391,
+    "bbox": [
+      15,
+      254,
+      1523,
+      819
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 63,
+    "transparentPixels": 1335464,
+    "opaquePixels": 213116,
+    "bbox": [
+      23,
+      333,
+      1519,
+      794
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 51,
+    "transparentPixels": 1329284,
+    "opaquePixels": 219484,
+    "bbox": [
+      11,
+      338,
+      1523,
+      787
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 75,
+    "transparentPixels": 1255654,
+    "opaquePixels": 288794,
+    "bbox": [
+      27,
+      240,
+      1511,
+      783
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 61,
+    "transparentPixels": 1270910,
+    "opaquePixels": 266181,
+    "bbox": [
+      24,
+      259,
+      1518,
+      767
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 59,
+    "transparentPixels": 1301290,
+    "opaquePixels": 239912,
+    "bbox": [
+      9,
+      291,
+      1528,
+      838
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 71,
+    "transparentPixels": 1304113,
+    "opaquePixels": 240224,
+    "bbox": [
+      18,
+      297,
+      1518,
+      800
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 77,
+    "transparentPixels": 1282081,
+    "opaquePixels": 257485,
+    "bbox": [
+      15,
+      286,
+      1536,
+      856
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 22,
+    "transparentPixels": 1282796,
+    "opaquePixels": 254544,
+    "bbox": [
+      13,
+      216,
+      1523,
+      801
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 29,
+    "transparentPixels": 1285093,
+    "opaquePixels": 252994,
+    "bbox": [
+      14,
+      266,
+      1521,
+      758
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 53,
+    "transparentPixels": 1319535,
+    "opaquePixels": 221541,
+    "bbox": [
+      25,
+      269,
+      1515,
+      760
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 47,
+    "transparentPixels": 1392776,
+    "opaquePixels": 153630,
+    "bbox": [
+      0,
+      355,
+      1518,
+      739
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 65,
+    "transparentPixels": 1291572,
+    "opaquePixels": 250894,
+    "bbox": [
+      18,
+      334,
+      1509,
+      817
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 14,
+    "transparentPixels": 1376620,
+    "opaquePixels": 175757,
+    "bbox": [
+      17,
+      330,
+      1525,
+      686
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 46,
+    "transparentPixels": 1348645,
+    "opaquePixels": 194015,
+    "bbox": [
+      17,
+      308,
+      1524,
+      711
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 42,
+    "transparentPixels": 1281962,
+    "opaquePixels": 259354,
+    "bbox": [
+      0,
+      274,
+      1527,
+      798
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 13,
+    "transparentPixels": 1380321,
+    "opaquePixels": 162266,
+    "bbox": [
+      9,
+      341,
+      1524,
+      687
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 24,
+    "transparentPixels": 1362014,
+    "opaquePixels": 180217,
+    "bbox": [
+      13,
+      312,
+      1523,
+      689
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 23,
+    "transparentPixels": 1343665,
+    "opaquePixels": 199063,
+    "bbox": [
+      18,
+      296,
+      1517,
+      689
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 28,
+    "transparentPixels": 1336746,
+    "opaquePixels": 203015,
+    "bbox": [
+      16,
+      303,
+      1519,
+      698
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 36,
+    "transparentPixels": 1341325,
+    "opaquePixels": 196915,
+    "bbox": [
+      16,
+      305,
+      1524,
+      782
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 30,
+    "transparentPixels": 1329247,
+    "opaquePixels": 214585,
+    "bbox": [
+      17,
+      295,
+      1521,
+      709
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 40,
+    "transparentPixels": 1250550,
+    "opaquePixels": 289728,
+    "bbox": [
+      15,
+      281,
+      1525,
+      736
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 31,
+    "transparentPixels": 1321242,
+    "opaquePixels": 210913,
+    "bbox": [
+      16,
+      296,
+      1521,
+      702
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 27,
+    "transparentPixels": 1344198,
+    "opaquePixels": 195736,
+    "bbox": [
+      9,
+      321,
+      1521,
+      714
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 70,
+    "transparentPixels": 1346250,
+    "opaquePixels": 193883,
+    "bbox": [
+      19,
+      276,
+      1523,
+      725
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 76,
+    "transparentPixels": 1352270,
+    "opaquePixels": 191652,
+    "bbox": [
+      17,
+      326,
+      1526,
+      758
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 39,
+    "transparentPixels": 1354201,
+    "opaquePixels": 184348,
+    "bbox": [
+      17,
+      294,
+      1523,
+      767
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 60,
+    "transparentPixels": 1357088,
+    "opaquePixels": 187274,
+    "bbox": [
+      33,
+      336,
+      1507,
+      707
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 48,
+    "transparentPixels": 1359099,
+    "opaquePixels": 180091,
+    "bbox": [
+      23,
+      297,
+      1511,
+      674
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 64,
+    "transparentPixels": 1357567,
+    "opaquePixels": 186379,
+    "bbox": [
+      17,
+      305,
+      1520,
+      704
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 33,
+    "transparentPixels": 1352331,
+    "opaquePixels": 189339,
+    "bbox": [
+      0,
+      327,
+      1523,
+      721
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 35,
+    "transparentPixels": 1364390,
+    "opaquePixels": 175012,
+    "bbox": [
+      16,
+      294,
+      1524,
+      755
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 66,
+    "transparentPixels": 1363865,
+    "opaquePixels": 179073,
+    "bbox": [
+      34,
+      319,
+      1502,
+      743
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 52,
+    "transparentPixels": 1366631,
+    "opaquePixels": 173865,
+    "bbox": [
+      17,
+      303,
+      1518,
+      806
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 58,
+    "transparentPixels": 1352094,
+    "opaquePixels": 188325,
+    "bbox": [
+      16,
+      288,
+      1523,
+      759
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 49,
+    "transparentPixels": 1324715,
+    "opaquePixels": 211015,
+    "bbox": [
+      0,
+      281,
+      1536,
+      791
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 54,
+    "transparentPixels": 1300429,
+    "opaquePixels": 240606,
+    "bbox": [
+      14,
+      305,
+      1524,
+      767
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 72,
+    "transparentPixels": 1255797,
+    "opaquePixels": 288582,
+    "bbox": [
+      28,
+      273,
+      1508,
+      755
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 78,
+    "transparentPixels": 1341830,
+    "opaquePixels": 193993,
+    "bbox": [
+      9,
+      283,
+      1527,
+      759
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 73,
+    "transparentPixels": 1229184,
+    "opaquePixels": 314047,
+    "bbox": [
+      18,
+      286,
+      1520,
+      769
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 55,
+    "transparentPixels": 1219938,
+    "opaquePixels": 322401,
+    "bbox": [
+      33,
+      305,
+      1496,
+      752
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 86,
+    "transparentPixels": 1038928,
+    "opaquePixels": 512103,
+    "bbox": [
+      59,
+      224,
+      1220,
+      1074
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 2,
+    "transparentPixels": 1022559,
+    "opaquePixels": 527991,
+    "bbox": [
+      67,
+      199,
+      1214,
+      1087
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 87,
+    "transparentPixels": 1045942,
+    "opaquePixels": 503378,
+    "bbox": [
+      54,
+      239,
+      1221,
+      1140
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 1,
+    "transparentPixels": 1024793,
+    "opaquePixels": 524573,
+    "bbox": [
+      39,
+      194,
+      1231,
+      1111
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 3,
+    "transparentPixels": 1066639,
+    "opaquePixels": 485245,
+    "bbox": [
+      31,
+      225,
+      1231,
+      1083
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 88,
+    "transparentPixels": 1030379,
+    "opaquePixels": 520714,
+    "bbox": [
+      19,
+      217,
+      1220,
+      1084
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 5,
+    "transparentPixels": 1025377,
+    "opaquePixels": 527419,
+    "bbox": [
+      30,
+      202,
+      1228,
+      1076
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 6,
+    "transparentPixels": 1214200,
+    "opaquePixels": 334080,
+    "bbox": [
+      17,
+      279,
+      1244,
+      1071
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 89,
+    "transparentPixels": 1020270,
+    "opaquePixels": 528506,
+    "bbox": [
+      24,
+      226,
+      1240,
+      1091
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 90,
+    "transparentPixels": 1068190,
+    "opaquePixels": 480104,
+    "bbox": [
+      14,
+      224,
+      1243,
+      1104
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 91,
+    "transparentPixels": 1064237,
+    "opaquePixels": 485750,
+    "bbox": [
+      21,
+      242,
+      1236,
+      1089
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 92,
+    "transparentPixels": 1115802,
+    "opaquePixels": 436780,
+    "bbox": [
+      25,
+      293,
+      1241,
+      1095
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 93,
+    "transparentPixels": 1016009,
+    "opaquePixels": 535631,
+    "bbox": [
+      20,
+      219,
+      1244,
+      1135
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 7,
+    "transparentPixels": 1094210,
+    "opaquePixels": 457097,
+    "bbox": [
+      52,
+      267,
+      1220,
+      1139
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 94,
+    "transparentPixels": 1060813,
+    "opaquePixels": 490303,
+    "bbox": [
+      32,
+      244,
+      1229,
+      1089
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 95,
+    "transparentPixels": 1066620,
+    "opaquePixels": 486111,
+    "bbox": [
+      29,
+      236,
+      1234,
+      1084
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 96,
+    "transparentPixels": 1009579,
+    "opaquePixels": 543066,
+    "bbox": [
+      28,
+      225,
+      1234,
+      1116
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 4,
+    "transparentPixels": 1213558,
+    "opaquePixels": 334374,
+    "bbox": [
+      35,
+      262,
+      1506,
+      822
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 97,
+    "transparentPixels": 1018920,
+    "opaquePixels": 532082,
+    "bbox": [
+      20,
+      252,
+      1226,
+      1120
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 98,
+    "transparentPixels": 1095594,
+    "opaquePixels": 456808,
+    "bbox": [
+      23,
+      274,
+      1239,
+      1105
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 99,
+    "transparentPixels": 1014368,
+    "opaquePixels": 536896,
+    "bbox": [
+      17,
+      237,
+      1228,
+      1111
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 100,
+    "transparentPixels": 1032974,
+    "opaquePixels": 517719,
+    "bbox": [
+      18,
+      272,
+      1244,
+      1141
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 8,
+    "transparentPixels": 1077379,
+    "opaquePixels": 468105,
+    "bbox": [
+      62,
+      139,
+      1498,
+      977
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 101,
+    "transparentPixels": 1089303,
+    "opaquePixels": 461869,
+    "bbox": [
+      26,
+      273,
+      1254,
+      1071
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 9,
+    "transparentPixels": 1189135,
+    "opaquePixels": 358535,
+    "bbox": [
+      22,
+      263,
+      1518,
+      789
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 102,
+    "transparentPixels": 1102211,
+    "opaquePixels": 450440,
+    "bbox": [
+      24,
+      270,
+      1238,
+      1081
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 103,
+    "transparentPixels": 1250323,
+    "opaquePixels": 303005,
+    "bbox": [
+      0,
+      318,
+      1239,
+      1014
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 104,
+    "transparentPixels": 1231727,
+    "opaquePixels": 323844,
+    "bbox": [
+      30,
+      320,
+      1247,
+      985
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 105,
+    "transparentPixels": 1093215,
+    "opaquePixels": 457978,
+    "bbox": [
+      13,
+      266,
+      1242,
+      1122
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 20,
+    "transparentPixels": 1336424,
+    "opaquePixels": 214229,
+    "bbox": [
+      18,
+      332,
+      1522,
+      726
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 106,
+    "transparentPixels": 1387618,
+    "opaquePixels": 168069,
+    "bbox": [
+      32,
+      406,
+      1516,
+      724
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 107,
+    "transparentPixels": 1371594,
+    "opaquePixels": 182901,
+    "bbox": [
+      22,
+      374,
+      1518,
+      705
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 108,
+    "transparentPixels": 1375404,
+    "opaquePixels": 178981,
+    "bbox": [
+      26,
+      380,
+      1518,
+      708
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 109,
+    "transparentPixels": 1386276,
+    "opaquePixels": 167049,
+    "bbox": [
+      18,
+      394,
+      1519,
+      704
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 110,
+    "transparentPixels": 1378114,
+    "opaquePixels": 174292,
+    "bbox": [
+      16,
+      376,
+      1521,
+      698
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 111,
+    "transparentPixels": 1396466,
+    "opaquePixels": 158962,
+    "bbox": [
+      22,
+      399,
+      1518,
+      694
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 19,
+    "transparentPixels": 1331682,
+    "opaquePixels": 219083,
+    "bbox": [
+      11,
+      306,
+      1536,
+      707
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 112,
+    "transparentPixels": 1365559,
+    "opaquePixels": 184920,
+    "bbox": [
+      25,
+      377,
+      1518,
+      733
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 113,
+    "transparentPixels": 1382988,
+    "opaquePixels": 173885,
+    "bbox": [
+      22,
+      384,
+      1517,
+      712
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 114,
+    "transparentPixels": 1341069,
+    "opaquePixels": 202201,
+    "bbox": [
+      28,
+      353,
+      1511,
+      710
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 32,
+    "transparentPixels": 1329274,
+    "opaquePixels": 218865,
+    "bbox": [
+      22,
+      313,
+      1518,
+      831
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 115,
+    "transparentPixels": 1390452,
+    "opaquePixels": 166648,
+    "bbox": [
+      20,
+      401,
+      1517,
+      726
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 116,
+    "transparentPixels": 1414678,
+    "opaquePixels": 141634,
+    "bbox": [
+      13,
+      394,
+      1524,
+      714
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 44,
+    "transparentPixels": 1327875,
+    "opaquePixels": 217632,
+    "bbox": [
+      0,
+      335,
+      1523,
+      798
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 117,
+    "transparentPixels": 1392970,
+    "opaquePixels": 158985,
+    "bbox": [
+      24,
+      387,
+      1514,
+      705
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 62,
+    "transparentPixels": 1250477,
+    "opaquePixels": 300943,
+    "bbox": [
+      26,
+      292,
+      1512,
+      786
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 118,
+    "transparentPixels": 1366365,
+    "opaquePixels": 185615,
+    "bbox": [
+      26,
+      382,
+      1510,
+      721
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 50,
+    "transparentPixels": 1354943,
+    "opaquePixels": 192911,
+    "bbox": [
+      17,
+      317,
+      1518,
+      716
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 119,
+    "transparentPixels": 1331268,
+    "opaquePixels": 218080,
+    "bbox": [
+      38,
+      349,
+      1502,
+      753
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 56,
+    "transparentPixels": 1183166,
+    "opaquePixels": 363353,
+    "bbox": [
+      29,
+      236,
+      1535,
+      830
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 120,
+    "transparentPixels": 1398293,
+    "opaquePixels": 156704,
+    "bbox": [
+      28,
+      377,
+      1518,
+      697
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 121,
+    "transparentPixels": 1403592,
+    "opaquePixels": 153065,
+    "bbox": [
+      18,
+      391,
+      1518,
+      695
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 68,
+    "transparentPixels": 1272054,
+    "opaquePixels": 270873,
+    "bbox": [
+      0,
+      304,
+      1536,
+      798
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 122,
+    "transparentPixels": 1366676,
+    "opaquePixels": 185927,
+    "bbox": [
+      18,
+      385,
+      1518,
+      719
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 123,
+    "transparentPixels": 1390792,
+    "opaquePixels": 165290,
+    "bbox": [
+      24,
+      407,
+      1515,
+      718
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 74,
+    "transparentPixels": 1209419,
+    "opaquePixels": 337724,
+    "bbox": [
+      18,
+      240,
+      1522,
+      814
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 124,
+    "transparentPixels": 1318357,
+    "opaquePixels": 230127,
+    "bbox": [
+      19,
+      337,
+      1516,
+      730
+    ],
+    "rightFacing": true
+  },
+  {
+    "weapon": 125,
+    "transparentPixels": 1273450,
+    "opaquePixels": 272202,
+    "bbox": [
+      11,
+      321,
+      1524,
+      825
+    ],
+    "rightFacing": true
+  }
+]

@@ -1,0 +1,4122 @@
+[
+  {
+    "path": "START-HERE.md",
+    "bytes": 4311,
+    "sha256": "db186ca291abda3530eda1f48dc0553a690e006a4e344252fe8e62ec99070db2"
+  },
+  {
+    "path": "generated-references/exec-068ce3d1-fa6e-4b03-a37c-946d0d4bf058.png",
+    "bytes": 2131192,
+    "sha256": "88cb40e1040b58805cf7d69e98e2ba25116421f6d6aa1b4fe476ab85f063f844"
+  },
+  {
+    "path": "generated-references/exec-2742ba40-835c-4837-8fa4-c989cc95f637.png",
+    "bytes": 832585,
+    "sha256": "05efac10ea62f904f3577b1a4d8b382c339607d69aa3846ddb71fb2118780352"
+  },
+  {
+    "path": "generated-references/exec-2e381c6e-1c63-47c7-8898-9b52bd023a95.png",
+    "bytes": 1976675,
+    "sha256": "a24123a4eb159da4387160e9bbf414e2a520439fed6ea0def561f614c5ae0eb2"
+  },
+  {
+    "path": "generated-references/exec-52c02d9d-9901-4426-b05f-1f6ea42cee3c.png",
+    "bytes": 2176877,
+    "sha256": "f9dd80ba8a30c1c2f2e1381ccdef858be33aef4ea6e0ba9c4894791bcc1a12a4"
+  },
+  {
+    "path": "generated-references/exec-6db08aff-09af-4c88-963a-70e19b1b1aa9.png",
+    "bytes": 2235549,
+    "sha256": "c972b17d7aaad29dc7037018f6eaae322d6df7b675e34c1e01121c29047d233b"
+  },
+  {
+    "path": "generated-references/exec-79ba98f1-0d9b-44b8-911a-90e2ee07d347.png",
+    "bytes": 2192172,
+    "sha256": "e2d81bd3676e22b3189f966e2b6d1e352d3bb86ec0300b65d0b25a610222aba0"
+  },
+  {
+    "path": "generated-references/exec-83b7c923-0a37-4570-a4e6-b218c379e081.png",
+    "bytes": 2136779,
+    "sha256": "3c3e9af14979e92dbcd5e38d204e300319fe812d127afc62c662c4a2d1b8c63c"
+  },
+  {
+    "path": "generated-references/exec-975b5eca-d67b-4e32-bac1-c16309520b3f.png",
+    "bytes": 885593,
+    "sha256": "aba01209d44f9ffeedb3b960ad333fbec6addfab005115e8bb9ad902ff4f8719"
+  },
+  {
+    "path": "generated-references/exec-cd6ebaa9-a419-4ebe-aebc-60ee651385af.png",
+    "bytes": 2130439,
+    "sha256": "c89609b69628af3b99d57ca1e7f7fb59da2d3a8c2db1ceebebb881757b992d35"
+  },
+  {
+    "path": "generated-references/exec-de0fc8d5-7380-4f32-8f22-5d906c0abc6a.png",
+    "bytes": 873855,
+    "sha256": "b4c62d55708acc948dbee89f67d1a3f65dec182c662d21faf17fb94738d568df"
+  },
+  {
+    "path": "user-references/01-1000456687.png",
+    "bytes": 238375,
+    "sha256": "663aa098046780b7e0827f310357e73f9e99323aa7cd6c9a02eed7d6d5c3a12f"
+  },
+  {
+    "path": "weapon-fit/CONTINUE.md",
+    "bytes": 5321,
+    "sha256": "ea4d4aa1c2820f40fff2c8f20f5c22cc57ee9a7aa5170bb4b6b4e55ddd11cee7"
+  },
+  {
+    "path": "weapon-fit/alpha-check.json",
+    "bytes": 20560,
+    "sha256": "8191e746cbb2eade05ca4b33659dc98c3921c9c931c85798450243b0b7d4bde2"
+  },
+  {
+    "path": "weapon-fit/armor-7-weapon-11-before.png",
+    "bytes": 1399717,
+    "sha256": "040790e5cac4acdf7e8644802b8fc06d9db1bdaea6755bdedcb00948ba50af85"
+  },
+  {
+    "path": "weapon-fit/audit_all_pairs.py",
+    "bytes": 2931,
+    "sha256": "8a4201386abd5749bf98938f40614c81ddc1b44a1497e144ed75d14fdf638139"
+  },
+  {
+    "path": "weapon-fit/build_fitting.py",
+    "bytes": 3210,
+    "sha256": "151ac8a4434d0b36201541f0ccd83bdca5f5173b155ebc9077fd9d7f8e5cea2b"
+  },
+  {
+    "path": "weapon-fit/build_preview.py",
+    "bytes": 2776,
+    "sha256": "1be893c80807324ae785e6568fdb7a634a9b1eff2e919b9ba2b17a52a98e70b8"
+  },
+  {
+    "path": "weapon-fit/catalog.json",
+    "bytes": 14174,
+    "sha256": "f555c9dc14e100a45ef7aed170012b10545b6971ee7c8561fb613eec2596f225"
+  },
+  {
+    "path": "weapon-fit/compose_trial.py",
+    "bytes": 1473,
+    "sha256": "e112c9cc84b85e1fc0344cfd32cb69508c2cc0b8b2ced51de4e976ffe1d94e89"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/1-heavy.png",
+    "bytes": 999887,
+    "sha256": "82c438e4a9bfaa6d8dc547b8cfc6eab409b22ff937613cc60a56c63f3b6596a0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/1-pistol.png",
+    "bytes": 1000157,
+    "sha256": "49f4a36b24d45b25434c116626a68ef57190d68def418573b907216421546d4a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/10-heavy.png",
+    "bytes": 1389916,
+    "sha256": "996cab3ece06977ea7a499fa476b69750f939c3dcd5d2b49c0f1b47530ace062"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/10-pistol.png",
+    "bytes": 1298975,
+    "sha256": "7962c9917f0bc8ba573d56f1585e6dac915390121cf362618f9d1b39cc1ee93e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/11-heavy.png",
+    "bytes": 1355519,
+    "sha256": "0acbe68651ad15472ee0233ef013159214bb8b09a68623b31eae7c712151a547"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/11-pistol.png",
+    "bytes": 1326034,
+    "sha256": "706d55f3916104ee5b3677959804bc4a114355c48b6ee9a43b37af1992ab20c6"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/12-heavy.png",
+    "bytes": 1234024,
+    "sha256": "b4258ec754223f586d36403586458ddbcb2104ce2c9a62d38c1842371b12498c"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/12-pistol.png",
+    "bytes": 1251905,
+    "sha256": "fe6071c57f906a9380d8bc4772dac6f7694bd0b5a1e4d1149705674502a28334"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/13-heavy.png",
+    "bytes": 1259106,
+    "sha256": "e1619516d90cab01ecdcc4442c2cbfa20398b8ad489c76208700f5b77bac42b7"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/13-pistol.png",
+    "bytes": 1416849,
+    "sha256": "885e9ee6ac7594efdaf8fddd53478a16b3223e2c57bc2102d6d9e03bc3e148d3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/14-heavy.png",
+    "bytes": 1332874,
+    "sha256": "03620be9064c52c58365f0954e27c57eb62367d95eaaccb3bfeb4b7c255047f3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/14-pistol.png",
+    "bytes": 1385665,
+    "sha256": "7379f9e9b457715d34c00931a3ffc4d9ea46292d83ec03e0226c451e1f06577c"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/15-heavy.png",
+    "bytes": 1370264,
+    "sha256": "2d5289cc445d853a2eb067c5bee04b8b6b092df175b273825f12a1be7e742ef8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/15-pistol.png",
+    "bytes": 1494640,
+    "sha256": "f7cd10671d819d0831554aec8151b99a30415a996be63e413229665910c0a0df"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/16-heavy.png",
+    "bytes": 1328482,
+    "sha256": "779800cedfa7955f6062b34c35b64ba84649ea2e397a4b01af96e5a04309bea5"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/16-pistol.png",
+    "bytes": 1341104,
+    "sha256": "65c6223ee6c136d4a70702ff532e8eab687f9cbb109d5f2aef367d7de0a52431"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/17-heavy.png",
+    "bytes": 1387083,
+    "sha256": "e2127bd7e04af81378db9b8e1662548719a2b9a91ce399021eb701472caac287"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/17-pistol.png",
+    "bytes": 1299147,
+    "sha256": "348ec0e01edd1775e5a0bde9fc18f0f5978b6842cdfbe6033e18e46dfa083191"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/18-heavy.png",
+    "bytes": 1265518,
+    "sha256": "4fe97b02bf4574668547ae69afc37b903f1838d4e6c3de0e2bd9e6f9f589b576"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/18-pistol.png",
+    "bytes": 1240521,
+    "sha256": "882b54eaf48f9b744fed4285b355de084c1f90dba8593b79f89671de6feb55d9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/19-heavy.png",
+    "bytes": 1315553,
+    "sha256": "44a9af2c71eae6ab295fc0f753705de22c6b4b16dd03a9b935c81a47093c11cb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/19-pistol.png",
+    "bytes": 1267144,
+    "sha256": "6a1363447c5bb1bd618cc7663fd2d7a8e9595cdacb71209c69ebd88f956f6d78"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/2-heavy.png",
+    "bytes": 1056169,
+    "sha256": "2bb2b88a01de6c884e6ec982ef008851c449f293866373646be5f1a61c40c933"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/2-pistol.png",
+    "bytes": 1034490,
+    "sha256": "1be706db732efeaebc626c8d1e28ff134fda75f422b7e9e044161909052d8417"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/20-heavy.png",
+    "bytes": 1375896,
+    "sha256": "bccb9979ee7d0550f0a6c36d77e31f5f3c80d72aafc65722b502f6721c8751ec"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/20-pistol.png",
+    "bytes": 1239177,
+    "sha256": "ec39027c5b61616c54e7e960821e56d0f6dbeda615ae5026f7a8529da66da1f0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/21-heavy.png",
+    "bytes": 1424394,
+    "sha256": "b62a8a23f1629c8d61b863d60d1b77c408b88b09e50787788a1d4bb19865967e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/21-pistol.png",
+    "bytes": 1317415,
+    "sha256": "173b4a030bad0dc12bfa3087f2947eb913c4b35624a4846e251ba8a672a059a6"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/22-heavy.png",
+    "bytes": 1198388,
+    "sha256": "e8d1869065673963c396afe11573a0390a821864045a6ee294d638b5e83d533a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/22-pistol.png",
+    "bytes": 1230256,
+    "sha256": "fcdeda1a0245c99ae80d3c078168a3e73f80159eeb11a275c8782cf52fcf8b29"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/23-heavy.png",
+    "bytes": 1341608,
+    "sha256": "2828f61e10259b76f2e27d2897b0fc28b327ded520cff90194af4cdd481c732f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/23-pistol.png",
+    "bytes": 1272489,
+    "sha256": "fa402bb96ca45fdc6edab4a3427a4a8982ad373c4efc1bfe10d39a07cf14f7d6"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/24-heavy.png",
+    "bytes": 1251580,
+    "sha256": "ef37be0248f1a474854120baeda1e0dbd3476fd7e4fc8adc72e98b20c8d411ac"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/24-pistol.png",
+    "bytes": 1259503,
+    "sha256": "10751fd358a2918a85d94923f783a75b76e7d37d5134cb8eea6cc2a87b9a08b2"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/25-heavy.png",
+    "bytes": 1295517,
+    "sha256": "b13517b623607fb9e79e7ea73e8634ac5769982df19d6926b5858b8e0a18d696"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/25-pistol.png",
+    "bytes": 1402587,
+    "sha256": "5482c4a10456f74eea26f8acb2f562db2d5530ea40a7a5fc1cf309d77e10c80f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/26-heavy.png",
+    "bytes": 1247209,
+    "sha256": "c5e6f7ad71e8f2a7f8044042be6752b7a46e64784044b20cf59f737d3d872373"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/26-pistol.png",
+    "bytes": 1322758,
+    "sha256": "9601474f548303267fe00d87ce895aed6272a83ff8199d031928f17399564d98"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/27-heavy.png",
+    "bytes": 1238579,
+    "sha256": "a77471e46031bc0725eaf7040727d7e7f54b4e528c4b59979c4d5fa5bc8949d4"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/27-pistol.png",
+    "bytes": 1171568,
+    "sha256": "e462ec8099769680c61c2bf881b972cc29d0a634aeb56c0ed8c94c0e62112db3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/28-heavy.png",
+    "bytes": 1312047,
+    "sha256": "50930971ad0653e195fc9b8f5e5bc1b67d46212a86759b6081ad34b245112d80"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/28-pistol.png",
+    "bytes": 1276251,
+    "sha256": "10d56717d8be6b24e51a35ed2ce49c090c8922b8dac79d5ea740e8e495077a56"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/29-heavy.png",
+    "bytes": 1329873,
+    "sha256": "389f2405c906301b34d95317dab0d7ad7111322eba59c279608593222b55a3be"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/29-pistol.png",
+    "bytes": 1207980,
+    "sha256": "b7ad95b9430a89497fa6a93ca69ca10922aaf63e19564d4799a6cde12c82dc86"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/3-heavy.png",
+    "bytes": 1035083,
+    "sha256": "2df7fbccb04825bea160467dc0d0763de30e765a2956fc90e483b17c03b48f5d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/3-pistol.png",
+    "bytes": 982121,
+    "sha256": "5ae6c0662ae70a40638e8d632b5865d52dbad5ff78e2494c3e8acba30b396eb9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/30-heavy.png",
+    "bytes": 1194544,
+    "sha256": "59b9d32ecd3c97535bf725cdbcf0fc389704ef3b51ac4063d417eebcfd471936"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/30-pistol.png",
+    "bytes": 1176750,
+    "sha256": "7fe766d4e4143012815479bb8d80286a46706fbdb1db739effeaf7f8bab5a38a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/31-heavy.png",
+    "bytes": 1276720,
+    "sha256": "7ba41d118e61da34f8bedfed6fd2c9f3cc6f201cbd6cb04d8e926a6c40724a5f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/31-pistol.png",
+    "bytes": 1199014,
+    "sha256": "5e8e7603ae7e30a0e3bd23dc76fe6f744daa2a2122738ed95ec5003a1c836a03"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/32-heavy.png",
+    "bytes": 1246489,
+    "sha256": "beb817d5cacba3ab37fa700a0a9dccf3d1eefffe0feb9bf5ed6fdb5cceaa35a1"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/32-pistol.png",
+    "bytes": 1334535,
+    "sha256": "e2ec3ce84d5dbd3c2d0fef04996609ae1f11f4bf18e45d0e9ca60c5b43159ca8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/33-heavy.png",
+    "bytes": 1296846,
+    "sha256": "06cfa0ac9a9c580be134ea1835529a0dfee2fd15cf276b55aca4314cb7023bac"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/33-pistol.png",
+    "bytes": 1194947,
+    "sha256": "795ddc0732b8038eabc9586a1b74bd8946d590865f939a9247bc6b099bdaee8f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/34-heavy.png",
+    "bytes": 1209938,
+    "sha256": "86f63f0efec5aaefe6c14077ed7db9a31f984209437cbd640acf3cfaf408c961"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/34-pistol.png",
+    "bytes": 1230123,
+    "sha256": "484bf9f8f8e4687f97e4ad49ae41b1102111becd34a7517dcc3afacb41c7750a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/35-heavy.png",
+    "bytes": 1306577,
+    "sha256": "4a3b76aa8dd7f134b4b39bf7afe42b18c254d57202abb71dbedf3c843d94e080"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/35-pistol.png",
+    "bytes": 1239475,
+    "sha256": "844227de699d0ff78066559413cebd8188c14012febb067931c5567602a08ce7"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/36-heavy.png",
+    "bytes": 1262090,
+    "sha256": "a9bf30062ec8fc0f07b185e859be01fbd8370c5d312c6758cd9321b85363f50b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/36-pistol.png",
+    "bytes": 1364850,
+    "sha256": "35185fe6cb9c2f5163c88712aa85bf42745585ce747500428139b1e9b593fc59"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/37-heavy.png",
+    "bytes": 1193388,
+    "sha256": "9bf17419a8cef7f47d983fca77f7d33251f173368ba2efb734b76a24753f630c"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/37-pistol.png",
+    "bytes": 1341264,
+    "sha256": "6e4a752c0e1f377c40ffdaa9fa1719052fca691fe89aea23cc780e69505dba07"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/38-heavy.png",
+    "bytes": 1353129,
+    "sha256": "09934dfb9f5a6b8cd69576b3e163eab10d601bc9365cef3bc038652f9ae804e9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/38-pistol.png",
+    "bytes": 1315040,
+    "sha256": "26ae56060f2b464fc4e50e03316eb1a1dfe4bdae17eeefc5fddf96da8f511f1a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/39-heavy.png",
+    "bytes": 1601178,
+    "sha256": "1c2a90532fc947dade477f74a3a6b274f236a5488995fe2e6445ad6736340496"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/39-pistol.png",
+    "bytes": 1458394,
+    "sha256": "f2983167218a7763444a9b7c58d7333fc08595937d5dee2acb8eaecb4fbf3cea"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/4-heavy.png",
+    "bytes": 1377787,
+    "sha256": "899f8a63c808e3a97c811399f8ad89910257cdbec6adde9e8789ab2d762d4372"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/4-pistol.png",
+    "bytes": 1292456,
+    "sha256": "dc0157c0d75d602a56f392e3784ef8cdcbe573fe436c5a2a9541c34ce2555d46"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/40-heavy.png",
+    "bytes": 1556686,
+    "sha256": "9fe009557c686ecc27412a744f0750bd6e41da35731cd16982506735e3bb33ba"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/40-pistol.png",
+    "bytes": 1516023,
+    "sha256": "2ed0670522f6913a2a901b95728168e0d0f0822dd10d5f4a7d25dfadd8f3f15d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/41-heavy.png",
+    "bytes": 1479831,
+    "sha256": "48a4057d60e98a8e67e156c34642d13d6c635e9a1a095e4af8e0748506b99772"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/41-pistol.png",
+    "bytes": 1401642,
+    "sha256": "d2ab24ebf564d3b4b930ee3e848406d3edc7c63743a5f9051acaa3531d5b882b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/42-heavy.png",
+    "bytes": 1327643,
+    "sha256": "a8820b1fece9544de5615491c6b23afbbdcfe03fcc506c3ef5eeabefa8c09c23"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/42-pistol.png",
+    "bytes": 1241418,
+    "sha256": "004455b86017de712882c45e2096bab4741c1b3cfd9a574b960e33f7a857abde"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/43-heavy.png",
+    "bytes": 1322100,
+    "sha256": "ea099d6c854bf12e6cce0d9dd8b1f0586e60d22f4e9b26b227fa522a8d2b75d2"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/43-pistol.png",
+    "bytes": 1284579,
+    "sha256": "b34ce7c7214ed0f865e8f88bf57373eff757c8514873c7933d9f396f9bd96777"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/44-heavy.png",
+    "bytes": 1206541,
+    "sha256": "09415b65abc77aced89a766dd2cec0766caf4cd137824c4f3fbd56816ef4284f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/44-pistol.png",
+    "bytes": 1210467,
+    "sha256": "e4423d110526c06fb325887fce58061f2a9d713eca538ff68fdca41b6efcf099"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/45-heavy.png",
+    "bytes": 1172291,
+    "sha256": "59669aca38f9fbd56eb12d8293596f85657a835e535338b9dcdf7667adef136c"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/45-pistol.png",
+    "bytes": 1271687,
+    "sha256": "3cced607103242d1d27107967dca2a74d2adcf569b8e3c3fbfd4cf5f78d15b58"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/46-heavy.png",
+    "bytes": 1178005,
+    "sha256": "dc6bf3beba7ecae325aa6ae7fa1a9b968d59d2c11df57964393574b913c48c4d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/46-pistol.png",
+    "bytes": 1387488,
+    "sha256": "59a43b869b0b50bb11f53862798864cbef566874c181005d678c799232d8e4a0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/47-heavy.png",
+    "bytes": 1181184,
+    "sha256": "26e72c94f65955f1c2686d94cb0066715f1d03655185c630ebe6169b1e317145"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/47-pistol.png",
+    "bytes": 1404695,
+    "sha256": "4d49ea99e7335095fb0e65c807f9902bbdc7b0ec1ceec9409ba46d12c069f694"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/48-heavy.png",
+    "bytes": 1198506,
+    "sha256": "2bbc9644f43dcaec955539a715043d832b4e738b627a915e89bb4172e8977f0a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/48-pistol.png",
+    "bytes": 1348060,
+    "sha256": "592bd74d6d443339856c4fa85d8cff3951a11dc5b0184af0a327d62c3758c276"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/49-heavy.png",
+    "bytes": 1287407,
+    "sha256": "65d5c0f3086bb61f3a49d81820a000d858555f98408768de25d8d88148abc243"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/49-pistol.png",
+    "bytes": 1317396,
+    "sha256": "16afeb29e09d3486ea20e21b0ecc370b4adf4a86a415f285b26d30f2e5e38b1f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/5-heavy.png",
+    "bytes": 1107691,
+    "sha256": "927717d77ba989dc7145367e140bd8540d7d84f559a40a67c96c35595cb0ca5d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/5-pistol.png",
+    "bytes": 1211579,
+    "sha256": "25ff15323ae43f1da42022278bf341a7f069fd08820536e8010bc280c2adaae1"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/50-heavy.png",
+    "bytes": 1196538,
+    "sha256": "3c843fd9edd92a5677451a048285160803351932f05978b1c7267592d414ec52"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/50-pistol.png",
+    "bytes": 1231613,
+    "sha256": "407f6adea15cb585cca8f95e57486e0277680534b61472b9daff310f55fd2432"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/51-heavy.png",
+    "bytes": 1129870,
+    "sha256": "99d48a70da681193edf15629f28d94adb126bc6d7af0ce8909a38590466ffbd0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/51-pistol.png",
+    "bytes": 1258063,
+    "sha256": "145d09717af8dea3e250c494f0d058a387651b87d5fb35b675ce11c94979acf8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/52-heavy.png",
+    "bytes": 1232949,
+    "sha256": "f338c8bb0440f6006832fbdb58e96bdffc85249ec8205805718856d514b6680d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/52-pistol.png",
+    "bytes": 1302005,
+    "sha256": "fefe14d3735dc16f9baab570f72fdb3c99e6ab02f76659e316be4f435e121d65"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/53-heavy.png",
+    "bytes": 1271281,
+    "sha256": "d5ca92ef375450c976f341dcbe5b27cb196957341974b902466f66782313190d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/53-pistol.png",
+    "bytes": 1297286,
+    "sha256": "ce32e77f0bfb5b76b17fc853931ff0911afe86f7b5d989c9b49bd5f597986ed9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/54-heavy.png",
+    "bytes": 1219713,
+    "sha256": "16ae04e0a77e24fdc007dbd38957c3bfcb3599bbd6e35a74a357e9c9f9f5aa72"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/54-pistol.png",
+    "bytes": 1389097,
+    "sha256": "cd597cbcd0c080ef27ac979c1b515deb6d953c1a490a1328bb63d1a6680c02d4"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/55-heavy.png",
+    "bytes": 1219932,
+    "sha256": "0d689e149bd44734ff62e3425a169c2e52a31c76edc85970efc47e515620947e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/55-pistol.png",
+    "bytes": 1346196,
+    "sha256": "edc0006235e32609d5ef5fd7b636de2329054f0e54ba33308c36e5cd08bec6fb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/56-heavy.png",
+    "bytes": 1216274,
+    "sha256": "c5f96983b64f9f424c3b4efb086c44817e72dcdaa0a79ba3d54a07b1fedb8f1d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/56-pistol.png",
+    "bytes": 1298386,
+    "sha256": "95282965367890473e43c7368248155fefedaccc3113b7e4d138aef0e9dcfc65"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/57-heavy.png",
+    "bytes": 1256047,
+    "sha256": "5e5d85e4a8b7a7800b09d311c581a0b686e8233b83399278bb9e21457e8200b8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/57-pistol.png",
+    "bytes": 1431051,
+    "sha256": "fd04b151b1c42f5804744ab784622a7885e204abb05d4246f02b6cc35aee8786"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/58-heavy.png",
+    "bytes": 1275592,
+    "sha256": "13667d9a85f87d8ecdb658e43c1bb048ba51b6dcabce8df71cfc00f5aecf2bf7"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/58-pistol.png",
+    "bytes": 1433908,
+    "sha256": "c7e5e724823c25220ddd41bc367b37543992911bc056a85d29aaef24075e96d9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/59-heavy.png",
+    "bytes": 1178534,
+    "sha256": "03bbde0be8ca0580f085e82b97016b52e2bbaacc373f1ad8d00fa30636403085"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/59-pistol.png",
+    "bytes": 1202321,
+    "sha256": "f6124457d44531dcec8ffdf13dfeb0e6ff1c0ef3d12dad736ec500f59c4991cb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/6-heavy.png",
+    "bytes": 1139335,
+    "sha256": "16981b6dd60408202be69eee0f82afa359ca9e06a627553b72d5f8df5b3c97b2"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/6-pistol.png",
+    "bytes": 1299723,
+    "sha256": "1c4405f895bba9f5e7b3bb9c536edd937c905f2f9cc24b8f94cb670f0280d059"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/60-heavy.png",
+    "bytes": 1339370,
+    "sha256": "910d67ca21cb1ea090622817a3feae99a6dbeb8d7f8bca5e9a58d21ff5ec3e17"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/60-pistol.png",
+    "bytes": 1470012,
+    "sha256": "c4144d023f3a824bbef48a99fa99ac69f04d2b617f9e7ca70b435a99f7c3108d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/61-heavy.png",
+    "bytes": 1410918,
+    "sha256": "518351b5802572083e01e3b2fa090138a0ba8e1a017aed2b7e103616d0b4798d"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/61-pistol.png",
+    "bytes": 1445296,
+    "sha256": "7eb344b3f1cd0786f11f43f2c6dce89fb6e1aefa2a599cc8f8818876b8105dd5"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/62-heavy.png",
+    "bytes": 1182183,
+    "sha256": "dfb5a9ca6b6a298435d16e75fd79425ffcbd6e9abcdfdd41e0006e86ae2dd32f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/62-pistol.png",
+    "bytes": 1287954,
+    "sha256": "a6c431c63c3b85de357d76ced9f074dce2fe66429f560824cc4a625c79d5b2a2"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/63-heavy.png",
+    "bytes": 1291665,
+    "sha256": "092236d1a8e95146bb6d22b783806e781f8877e4a0bde1843c9c0454f48a93d3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/63-pistol.png",
+    "bytes": 1509468,
+    "sha256": "3cac9e08c48c73fa720abfe0e4cf0186b0b5b081a7b36a7cf3b487066088ed5a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/64-heavy.png",
+    "bytes": 1213355,
+    "sha256": "7086478be42100126fdaf4988f039c923999245501925ccd37f2215e3ddd274f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/64-pistol.png",
+    "bytes": 1271688,
+    "sha256": "7762b9cf51e18aefde46c146ed62ccaa2fbb19365f06b67ea92f11b430594408"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/65-heavy.png",
+    "bytes": 1265186,
+    "sha256": "7de471aa9fce5a8cb756ecd6b9b7de71f12da469ea2302199746e0cd3ea05151"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/65-pistol.png",
+    "bytes": 1508579,
+    "sha256": "62d165ac3ca5cde330e127d1b626ae9d2c638fe81f33a3888dab38449ebfbbeb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/66-heavy.png",
+    "bytes": 1375468,
+    "sha256": "aa5f8e0912fb79f278a4fb233e1a52dca45b8c478fc36642614e10e1f738dd6c"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/66-pistol.png",
+    "bytes": 1481076,
+    "sha256": "564614dda22cdc1dfbca444432cdf04a8246cb3b4fe5231c9a52daefd0cecb46"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/67-heavy.png",
+    "bytes": 1333620,
+    "sha256": "23cf0dd4ad32586568cbf94541fa1c9461ba352c78dd0741ab3f308cb3c3fc4f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/67-pistol.png",
+    "bytes": 1251069,
+    "sha256": "ac137a1116601207ebda24adee6bfb9a308972a4de8d0a3a5a16fec950068e53"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/68-heavy.png",
+    "bytes": 1399969,
+    "sha256": "2acdeb9807cb5de00e06cfe75a5f72fb8dc12d6199e6a550477f1b6e4007d238"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/68-pistol.png",
+    "bytes": 1353958,
+    "sha256": "0148f5c0fd5164e02f9eb554dfb0cca2a8b5f570b27a8174879004fe6e0de055"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/69-heavy.png",
+    "bytes": 1183675,
+    "sha256": "7cc6f84bd2bb5b2e3dd0df382416caf701c600a275d646131219ceb37009bd00"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/69-pistol.png",
+    "bytes": 1299197,
+    "sha256": "d933202c17b8eea6530373894fbe72c503fd2646d72e2e28d2429b2552ea9e0a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/7-heavy.png",
+    "bytes": 1309681,
+    "sha256": "04bc1e6c0b14e1007ca3dc2e5272dd31522e334d5682f963ef388b04f6f67352"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/7-pistol.png",
+    "bytes": 1101486,
+    "sha256": "6883490531b33b7006d10a3e78ff825daf43401df9ba4c874a6b88f1f3b42009"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/70-heavy.png",
+    "bytes": 1356191,
+    "sha256": "091e14237f0219b2dc47a524b904491ddd8519347614e92454898acc07bff010"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/70-pistol.png",
+    "bytes": 1416683,
+    "sha256": "c2402532bfca9e2d4b8b55a28405172d508f6ef59bc03489014a2e8c4bbd0a2e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/71-heavy.png",
+    "bytes": 1350302,
+    "sha256": "f47016eac9a325d8a1b852c535362a1874a48f6914240cb79744215e777cf3f1"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/71-pistol.png",
+    "bytes": 1439887,
+    "sha256": "a3290fc3942b319c43e9e24a20e5ca7e97ee25d89b16a8c540af8b723455c482"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/72-heavy.png",
+    "bytes": 1451774,
+    "sha256": "bb10d99b8dd69874bbab8b65ba446dac47036add2074fadf0ff59b0013742649"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/72-pistol.png",
+    "bytes": 1361068,
+    "sha256": "514fe6bacfab38b1ce7433c7bf1583143d5ec3eda56f6808379645872c43ded3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/73-heavy.png",
+    "bytes": 1316256,
+    "sha256": "68b730ea7c15a166b34e2d56af7d20013a0b2bf4158b4cfd3c30b8b37d67cd47"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/73-pistol.png",
+    "bytes": 1341636,
+    "sha256": "9e5e5c6bdaa33252999af365b9e948fecfe389f83aaa087a4cca3e558f727921"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/74-heavy.png",
+    "bytes": 1262078,
+    "sha256": "9653c0f50569cbd385b2b46aef8939a0461eb544e8904c470764aab205c84a58"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/74-pistol.png",
+    "bytes": 1318963,
+    "sha256": "6a1164aa3701bfaee930e44261e2609d46d65ea03ada5b3fc1aa37ecaf135e6e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/75-heavy.png",
+    "bytes": 1353899,
+    "sha256": "f1bd09ccb0261e9bee2c8d7561a7b588925326701a42638d82a2bac9aa903986"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/75-pistol.png",
+    "bytes": 1412294,
+    "sha256": "712791db8bb3721b0259ebac4981ad5ec528affc7cb029a8a2354eded45c19e4"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/76-heavy.png",
+    "bytes": 1271682,
+    "sha256": "506c12a2f5cce14a4d0295fd7eec9f609ba2003037c56ffff84a96a559f6f95f"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/76-pistol.png",
+    "bytes": 1316579,
+    "sha256": "f6e517d3916d2667052aca43dd59092bb6c254be39d71c503f76d55609425a8b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/77-heavy.png",
+    "bytes": 1282227,
+    "sha256": "7708117a2bdb2aea2e0abf2d48541c683e618b1790459c8c978b1b7c2d2364a4"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/77-pistol.png",
+    "bytes": 1385591,
+    "sha256": "da70b8ce4501e3890a3377159d35e09339faf8fb61b88c7a1b8c894e6191b000"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/78-heavy.png",
+    "bytes": 1344182,
+    "sha256": "fceb356aa59e8e26eb4f33a98887a1b60ef51f9d72a1e18cc268bb533e0c2c64"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/78-pistol.png",
+    "bytes": 1462092,
+    "sha256": "4d7df609fd239ae387f026a16527688d3ec11c04002787068f7c0d47cef0401e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/79-heavy.png",
+    "bytes": 1180046,
+    "sha256": "8f7fb842dcbec63677fd80e3905c00542a9f8287848ee4e617aaefcdebddedfc"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/79-pistol.png",
+    "bytes": 1286349,
+    "sha256": "16fd51a63ef727b8fccc701f14c46842a65c89de604da14110b593cfd9ca1c1a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/8-heavy.png",
+    "bytes": 1307065,
+    "sha256": "d5ffc747a279728d3070356bd8e5ef5f9851a6eb05cbb61231b9a6a499dd045b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/8-pistol.png",
+    "bytes": 1209327,
+    "sha256": "50ac4d0706faa375f13f10aa142f36f1d93d286a9499beb701a5a6e863e83745"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/80-heavy.png",
+    "bytes": 1213812,
+    "sha256": "2538e9427ce17c60bb4a5a8d690b3ddac4ae6cea6ec1c1343c481c3b2fa5320e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/80-pistol.png",
+    "bytes": 1406080,
+    "sha256": "a3a39af3704155e7688df260990bd76c549bf535b4c0ef78cd5723b8486658d5"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/81-heavy.png",
+    "bytes": 1615734,
+    "sha256": "545bca198a73bda6bb823806610248f19f98023f0fcc33d92f16bc56c1ccd721"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/81-pistol.png",
+    "bytes": 1551192,
+    "sha256": "77682ca4d5eb17fb7a8bb898e9381cdd50fea78559096617429a594705cc52fa"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/82-heavy.png",
+    "bytes": 1276132,
+    "sha256": "fb58400c1a3c6223bf64112bc6ea9efb8573b178e0326ea04fccad820b5832b8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/82-pistol.png",
+    "bytes": 1272007,
+    "sha256": "b12965db3e1473809d4c50fa13b46d723ebe906a9cb3a167e33e1ecfd606bbb3"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/83-heavy.png",
+    "bytes": 1542627,
+    "sha256": "fa5111c8e31750a207cb2a5b4b9df89f84583275aee70499a19d918a175cc439"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/83-pistol.png",
+    "bytes": 1547306,
+    "sha256": "6f94b9981b589d4c87909415b0d67cbf172182b9368633afcf9c017fcc157504"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/84-heavy.png",
+    "bytes": 1391857,
+    "sha256": "e2aaf72ab16c0cec7a9d720961b4e179697ced39759fd44deebf4dd9b6507352"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/84-pistol.png",
+    "bytes": 1546767,
+    "sha256": "2e7c1e3125e6b9dae26ecfc6d7e7f4b001c477e95751f21c37e3470941029771"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/85-heavy.png",
+    "bytes": 1421777,
+    "sha256": "bf50312bf628163beacd9c832d0c1a1401cf3157d05a763ab0ad1be88150428e"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/85-pistol.png",
+    "bytes": 1423549,
+    "sha256": "c7b0de07e977f828e442c15f48a44b88f14b1313e47d6501e827087793b2f61a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/86-heavy.png",
+    "bytes": 1125948,
+    "sha256": "1fef2d330049700f1920034b0201af4f366f08eb4e641da8cf0b3bcea6b1c87b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/86-pistol.png",
+    "bytes": 1324017,
+    "sha256": "d5cc4f9152022ecf4da33ddb22441fedae7660a92d40de6947b444848b0ef325"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/87-heavy.png",
+    "bytes": 1156313,
+    "sha256": "528a1d1ca3b1859e38dedd010886babebf83f5eacff46b47746fe0958a36e953"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/87-pistol.png",
+    "bytes": 1279104,
+    "sha256": "eb8c8b69fdf10f4fd79c826573a53bb6f9fef8c3c1c0bb1d5c16800cb39cfef0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/88-heavy.png",
+    "bytes": 1236765,
+    "sha256": "e652f983d18fdb839c549ed798eecb9138e6bdbb0d7276ea6b925373e898a271"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/88-pistol.png",
+    "bytes": 1256072,
+    "sha256": "23cf734316e7df98156bd1e447cb99cd34e1f91eef800245fa1718534c2ff01b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/89-heavy.png",
+    "bytes": 1189223,
+    "sha256": "56f523b25be1a7d1ce177b5e173d61f870ad5c4f73cb383c0561810f0acfa2ac"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/89-pistol.png",
+    "bytes": 1362668,
+    "sha256": "1fdda6c60050fc0dba695d0254e3495e1c852cc6cccd545de495dc2bd6004ee5"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/9-heavy.png",
+    "bytes": 1223924,
+    "sha256": "7399736f86bf2c1018c02e0dce7e665bc0563b96aabffc3998e1806db7ce90ca"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/9-pistol.png",
+    "bytes": 1277364,
+    "sha256": "aadc3ebe7371329fb9dcca2d4a9dcceadce2ccb6ba592357d2b87b2e78182fd9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/90-heavy.png",
+    "bytes": 1223645,
+    "sha256": "e143afd0a92ac330936f52f9f2cee7a448c4f4ac239a27903fc9abb82f73b0a8"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/90-pistol.png",
+    "bytes": 1243993,
+    "sha256": "06655bc4a6f6a89d6cba931ba458c282eca4ca5e22f4949eb5aba97bdd260ed4"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/91-heavy.png",
+    "bytes": 1332677,
+    "sha256": "e145409219f4df13becf5e9ae67a167eff72acb159c97c58f7436447e7aa26c9"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/91-pistol.png",
+    "bytes": 1402092,
+    "sha256": "fa7705950313dec3ab3ffcb5150e44da5d0a52970ea5bc5d92010b6275a49f48"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/92-heavy.png",
+    "bytes": 1257265,
+    "sha256": "59cbcf454cb70146e7c235d7450b7cd171684f35afadee95bfa5a7d264d2a55a"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/92-pistol.png",
+    "bytes": 1417462,
+    "sha256": "1a2b881bbfce676d13c10ad04ebc645ce11749f2667ae288da52a8a2c82d0660"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/93-heavy.png",
+    "bytes": 1271490,
+    "sha256": "91bc6297c91caecc106f25cfee9a754fa258230c477f80b111aaf48b223b7eda"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/93-pistol.png",
+    "bytes": 1223947,
+    "sha256": "bbe12402110add59486471742ba09a63f189c93b1f749095f17aaea17bcbf1dc"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/94-heavy.png",
+    "bytes": 1299110,
+    "sha256": "53ac3eda3fd5c55c494c2991b373ee72a8f45714029366744b8cd5db82ce39b6"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/94-pistol.png",
+    "bytes": 1344378,
+    "sha256": "d8951d4427eae23bb3d4fbec03574b259a16c23f4175a0600d5a7ad1df5835c0"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/95-heavy.png",
+    "bytes": 1217428,
+    "sha256": "80f5155fee268d1ee824a1f8f48a9d5089369aad24b4cd952eda9d1636b2c97b"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/95-pistol.png",
+    "bytes": 1377951,
+    "sha256": "581c4d82f1d70dbcfcf8e6d9e09688b706f01ba70e3b8441234709bfcff73deb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/96-heavy.png",
+    "bytes": 1087754,
+    "sha256": "fc7c0e54112271edb2b5f1caf0e456c0ac0481420646a7830aad742a7e3781cb"
+  },
+  {
+    "path": "weapon-fit/fitting/characters/96-pistol.png",
+    "bytes": 1201995,
+    "sha256": "46890c4622bf0409dbf2501a2441f555888962b7a5720114f47653b93cc1d55c"
+  },
+  {
+    "path": "weapon-fit/fitting/data.js",
+    "bytes": 57881,
+    "sha256": "49633f23bfb2612418f01565312b1f6e6f27c3ee26e18d11201be9895dd5b661"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/1-heavy.png",
+    "bytes": 47264,
+    "sha256": "37772b22233a4262aca2ffc9c45fa3c91c6a610c5efd50032a4b92146e6b6da4"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/1-pistol.png",
+    "bytes": 39384,
+    "sha256": "fdbe0b8e8baed67e4c9ba7ac1c5c076ca3ea8ba3590e261b040e7ce4c629e368"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/10-heavy.png",
+    "bytes": 64415,
+    "sha256": "8bdac98ec974a81c9ea5f53e407c60f158b9bc6b6c84fc2ba14efda799ba414f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/10-pistol.png",
+    "bytes": 49198,
+    "sha256": "a8edfd5cf22ee27fce56034128ff9652e605d1efceda12ef4f1fd84302b874fd"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/11-heavy.png",
+    "bytes": 60293,
+    "sha256": "466c7d30d3188ff2d354024ab3af329e95463355c99986a804d1247e85df6094"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/11-pistol.png",
+    "bytes": 48136,
+    "sha256": "939fb6f0ccd6e02b665506644f9ed77bebfbea1c070087bf8b9c46e79784784b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/12-heavy.png",
+    "bytes": 62712,
+    "sha256": "c18daf87fa673964a643306af0a81b4c289de59b96330016f633af9570a2636f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/12-pistol.png",
+    "bytes": 44821,
+    "sha256": "616b29213ed53e6739b4df664b8fc25a0ecfbbb330b49b53d6135421e15f61f4"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/13-heavy.png",
+    "bytes": 58313,
+    "sha256": "7b8f574805c920cbc10520f8248a865cd79a647b0bca62af871fb0c932a6e9c2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/13-pistol.png",
+    "bytes": 47994,
+    "sha256": "cfa717d99513c60dedc38d5d8d7bebd19a4a7d6354e8bfede6b91f990ddc79fc"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/14-heavy.png",
+    "bytes": 65137,
+    "sha256": "85c85b817d9e47686dd7638920786cf68e810be1923954b950de1de5d34727cc"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/14-pistol.png",
+    "bytes": 46950,
+    "sha256": "4d1dfd2b78e8c552f5b9c1bba369c546c6029697242f9fd15d43056d24081a46"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/15-heavy.png",
+    "bytes": 63395,
+    "sha256": "808604abc4db617f59157e304f8a30f68117d63965b46749dbc63181fcb0a05f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/15-pistol.png",
+    "bytes": 51205,
+    "sha256": "b7706bcec0880d4bb5a61f62e66293e2d793d55aa9f96e338f00d3ae475c50b8"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/16-heavy.png",
+    "bytes": 66716,
+    "sha256": "3b791f132ad89b75c84c5a448844e172897dde65e38d952ff555faa894a21fd9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/16-pistol.png",
+    "bytes": 52112,
+    "sha256": "f123a142998f13a0451104d6177e18c3361e058df2682a61b08e500e1c6b6690"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/17-heavy.png",
+    "bytes": 61705,
+    "sha256": "927fda03e0be7fe4e11bfc27d79fd086f43a5ee7200f009a3d1cad16de5b4634"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/17-pistol.png",
+    "bytes": 51138,
+    "sha256": "5e4272a0494f4e6e50d3ad56eb9bd058dbab37ec026247a5c84491db231774c7"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/18-heavy.png",
+    "bytes": 62276,
+    "sha256": "7b12dcdb73030ae03569cde2e691ac74445cefd8e5484c51d57af20229343134"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/18-pistol.png",
+    "bytes": 51366,
+    "sha256": "3df4591363891d81a5e34e40f4d6ab456e502547fe98a9bcc3be52d9a10d6500"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/19-heavy.png",
+    "bytes": 67239,
+    "sha256": "acddae6663dbe3a3996ff0b4046b43a95b6388c17d3846c538de1186a33aec93"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/19-pistol.png",
+    "bytes": 40911,
+    "sha256": "e59edd2ce7ec1e1466f6abee3792e5e3de0fbcc8c1fad331548178d8ad1c2cc8"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/2-heavy.png",
+    "bytes": 55668,
+    "sha256": "5268d5bb085d44e724c80f0ea4a4488f25ce8a7c5f4c6f1bca6e257cf3500116"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/2-pistol.png",
+    "bytes": 48843,
+    "sha256": "09fede32761cfee928c17d15f027bb5d57e0f509f98cc003022a37abdc74f236"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/20-heavy.png",
+    "bytes": 59743,
+    "sha256": "16a659ebe1a3426392f0955309f159e0a9eafd653d1c9ddfae8ba44ecf968c91"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/20-pistol.png",
+    "bytes": 50543,
+    "sha256": "f8751ff29fe19adb7d028f7e50f87f8a587bf3f921d5458a00ef326e9fa7ddcb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/21-heavy.png",
+    "bytes": 62382,
+    "sha256": "3489065ffb924ef16d127015e4792133e94b0ae6cbf6e0a4f0660e2c2dff416e"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/21-pistol.png",
+    "bytes": 53974,
+    "sha256": "8dd0ba6971b446762efe0470b240839695ba77d334e348e9e1444257646339be"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/22-heavy.png",
+    "bytes": 59656,
+    "sha256": "e520d3026ca1922173c92fb244f68fbba688270b700e2a3a71eccc0a71c7c940"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/22-pistol.png",
+    "bytes": 49568,
+    "sha256": "54df7676adccc0b0ab1d482cc106e1393dbb51c01a4673e0034972376438f317"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/23-heavy.png",
+    "bytes": 63756,
+    "sha256": "a6745946113a28c545a960c4d0fabff73ca5ebb58065889ecd8008dcc4d13157"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/23-pistol.png",
+    "bytes": 50377,
+    "sha256": "59a5c53c52fff81739aa80b93a944fa6e47a0b4d5aa590eb213b1dfd4083f02b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/24-heavy.png",
+    "bytes": 60294,
+    "sha256": "58bb370d85ec95c3e368aa1f168b71c88f97cf54e1ab64f89353de7f2d92c8b0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/24-pistol.png",
+    "bytes": 44593,
+    "sha256": "f7f270ea606b70ffe58ffc9625327e5a3c62cd1f8f73c5219401150c98d0b101"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/25-heavy.png",
+    "bytes": 61807,
+    "sha256": "97ecabbe8138a94386973c7f3ac34f513c14cea1a87070595cb089c44df426cf"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/25-pistol.png",
+    "bytes": 50028,
+    "sha256": "fa527b26ba82377a4abe8066a80c0a45796804da3b630202826d082b82d9f9bd"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/26-heavy.png",
+    "bytes": 55553,
+    "sha256": "64b9f3124754ffd9c82f4f8fda3dac57c9ad509c6860def47c17350d11dcf915"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/26-pistol.png",
+    "bytes": 51486,
+    "sha256": "bcf1c562d92bb74cf26c3fe62379251bafacdb172ead516da0cf8218217a5860"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/27-heavy.png",
+    "bytes": 53853,
+    "sha256": "5c0272e73df3378dbfa19e4825f7fbdcd2a5bd4fc84c0071941a3a1bc10408fb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/27-pistol.png",
+    "bytes": 51005,
+    "sha256": "55e16e80e01010a3a4e7921a9b86c2920e1bd7edb0ef3ca1822600c429cc88a2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/28-heavy.png",
+    "bytes": 58824,
+    "sha256": "6c87f938a26c66801c6cd4184d31e48ce411952f0a3571fa010101e0a1f224b6"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/28-pistol.png",
+    "bytes": 48995,
+    "sha256": "ce4704c25dd1e62f8a9e872aef7011745dbf9c79fe31b92183e7689957810870"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/29-heavy.png",
+    "bytes": 60427,
+    "sha256": "49453d095d3aff362de030a1484e1b250029c503ba7201f4cd4907e209e96989"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/29-pistol.png",
+    "bytes": 50860,
+    "sha256": "147eaa8509d0c841a38abcfdfea18c799ad7363927f73b26869bdbb604237d4a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/3-heavy.png",
+    "bytes": 57425,
+    "sha256": "92fa566aac4bf25db1b43e3bffe93feb5786db851fc33882a0c255906916d325"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/3-pistol.png",
+    "bytes": 47696,
+    "sha256": "8c1888a7a2ef177992a61ab5562063615a7000decb0a6926d0e0d1f17ab91524"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/30-heavy.png",
+    "bytes": 63719,
+    "sha256": "5fe6755258ef87ad12445af35fb66101561c998757483495966aefc50a5a2846"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/30-pistol.png",
+    "bytes": 49745,
+    "sha256": "4e46861eadab82c1ab3f2d5183d1ba60a76b95ad600b47fe76604358ba337416"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/31-heavy.png",
+    "bytes": 58489,
+    "sha256": "f8075691c36d2afb9bcac439312d1f95f33af14b9ea7a5605957cf7d1f0cc279"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/31-pistol.png",
+    "bytes": 48341,
+    "sha256": "2f19f58597db154eece4dd826bdc6fb5473d606be39d73b8e239cafd762cc21b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/32-heavy.png",
+    "bytes": 54296,
+    "sha256": "88a61fbcaf0182e19d84672c5084068bdb497a2c0d75e85a3e0327d976df23e4"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/32-pistol.png",
+    "bytes": 53102,
+    "sha256": "2af281574b8f57b0597e86d533c5c49a696bfc965c9ac1373cba7e8b42d1718a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/33-heavy.png",
+    "bytes": 61380,
+    "sha256": "ccaaa9372911b608cf41566089b74aff9e9807573797ac5cc58ea794086d39c5"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/33-pistol.png",
+    "bytes": 50275,
+    "sha256": "6e32b5b09c05ce42d4b8e8fdac30d9f30f501aa2973429814e080144f2d843ef"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/34-heavy.png",
+    "bytes": 58559,
+    "sha256": "fb2d2bb5abbf977f04c05b9d2153d4fc52f83240f91c101156eeb6fd0f924361"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/34-pistol.png",
+    "bytes": 48311,
+    "sha256": "842841b5671c16526e0e0292576ff35506a071857395e5aa93e838dc02f08639"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/35-heavy.png",
+    "bytes": 60662,
+    "sha256": "91f3e77f9e8d21fd07f9afb3692451a30baecd3eb50d30c83bba8930122eb76a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/35-pistol.png",
+    "bytes": 47693,
+    "sha256": "d9802a772e1be4579fb160d3bca447e03ceaa86130f18dfb59dd317558a9b301"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/36-heavy.png",
+    "bytes": 55428,
+    "sha256": "0d8e7423d0c0fcdda8077ef82cf8c52eda686b1f537f2179ef599e7b53604a5d"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/36-pistol.png",
+    "bytes": 50907,
+    "sha256": "d349fd3bf9b07ef3f06bde37a7a19a29bc575b6a0b964c333ac6d5af51173317"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/37-heavy.png",
+    "bytes": 60768,
+    "sha256": "469c00e10e8a48d3680b69e9ea026772d31ec7bfa814b8b3edc13922483040f2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/37-pistol.png",
+    "bytes": 52816,
+    "sha256": "793cd4b03ad5b6c05e6db25a1c64d375becfff63a97033bff14beb063c30378c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/38-heavy.png",
+    "bytes": 59677,
+    "sha256": "dcf7bf43ab0c17ee071592baa90e1a268cdd6f09f71543aec6b4e0d1dc9f9c6b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/38-pistol.png",
+    "bytes": 49631,
+    "sha256": "93770ed40f79fde3ac2c15c227ce42d456b0faf258417b7296623e0342ba644f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/39-heavy.png",
+    "bytes": 63158,
+    "sha256": "10114e224882fe96c13b1a228ddb6a54dc349070813c53ba5d97cd5d402e04bb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/39-pistol.png",
+    "bytes": 49944,
+    "sha256": "4753b11658ebf4aedbd0fc7091468dcb6cf520571c1b73b581bdbf799339544c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/4-heavy.png",
+    "bytes": 61449,
+    "sha256": "efddcf596c2bc395adfdb833c2992149f31e3edb43c76cf3ed3617ebfc6eccc2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/4-pistol.png",
+    "bytes": 49651,
+    "sha256": "e1e27f90eec3e15bb1687ca40207d28c55880a07a30a2f99c4ed940429658c27"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/40-heavy.png",
+    "bytes": 64031,
+    "sha256": "531cc2fed81f257f81f8d320b2362c9a91610fb6f88887ea5ad45216506f4de2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/40-pistol.png",
+    "bytes": 56130,
+    "sha256": "498abac263af989ad24c2ee8c723b8132e1c854c33acfd4a6aa9eba3d934ac8b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/41-heavy.png",
+    "bytes": 59362,
+    "sha256": "e7a8026faea2a26a73f6477ce61da256d2850e67271144cd2e69b9fbaeb498e0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/41-pistol.png",
+    "bytes": 49586,
+    "sha256": "459d85b812697a4fcf6858f238bcb4d4e618c7b1735fbca33f5d26a3d3aebb6c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/42-heavy.png",
+    "bytes": 55835,
+    "sha256": "5a7042d3c11ab04d085968be2e750f48b5d16b17c4935c1d3d664232a34a414a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/42-pistol.png",
+    "bytes": 43136,
+    "sha256": "465483c4889565c7ca29def38362acbea4f26b2f339dc5f852ef417f630cc42f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/43-heavy.png",
+    "bytes": 57990,
+    "sha256": "66b30dac3bfd44dba050685578588d7e7a5a232306456d26e340ae9072172643"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/43-pistol.png",
+    "bytes": 45530,
+    "sha256": "a1461a0521c54a5dc3f5fb719d37d8e4381ebe3223b6b306d892b7e3965e7cea"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/44-heavy.png",
+    "bytes": 58515,
+    "sha256": "deb14201e39cfc558602b2f079e98f031eb678fdd19f5a4336627e1d9456d965"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/44-pistol.png",
+    "bytes": 47572,
+    "sha256": "22b9f3a85ac9c1099d0ad80819bf171e06cce7f8a05c59772f790c1a28ca4462"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/45-heavy.png",
+    "bytes": 54835,
+    "sha256": "c629d1cce7080bd9a8c83cbc98e818d1fb4fa7e1068d26ccd13126505fe0494b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/45-pistol.png",
+    "bytes": 47959,
+    "sha256": "40a4d6fbf25aa06302c8cf6dc79d8258aa3f3692d52e6f46106845c305aaf290"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/46-heavy.png",
+    "bytes": 57262,
+    "sha256": "59c030e7915ad8d124609bfd119cde34b551fae287a863a6ea6cbdd716227367"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/46-pistol.png",
+    "bytes": 50866,
+    "sha256": "74a055a1ddf951fb5baf6fc9ac6c103746eaa9e667d3f51d2232ac3ce52a06ee"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/47-heavy.png",
+    "bytes": 57909,
+    "sha256": "69c7eb31fb37546d83c482641fbd920cbcd73e3743e51f9ec9301f3814bf4a5e"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/47-pistol.png",
+    "bytes": 40572,
+    "sha256": "c900503a09793278ca54a7a07b10abf441aa71e42472d9bd511780df72e3af74"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/48-heavy.png",
+    "bytes": 58939,
+    "sha256": "742144013e0eb53b69754db951abf2a08d1b7800073af16df672dc9f3986b6e0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/48-pistol.png",
+    "bytes": 49612,
+    "sha256": "0f03f2be401bb9e9d93fdb809d16d65ec90cc74cc4a0451e4c56cdd19742c3dc"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/49-heavy.png",
+    "bytes": 59395,
+    "sha256": "a4287ac7414cdacae68feac109b8e04776cc01a717a78de515d05ca8eec436d8"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/49-pistol.png",
+    "bytes": 49903,
+    "sha256": "ca43c8746dda3f3d341441435c63bd78352579d55aa130286eb5b2d62a85a8bb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/5-heavy.png",
+    "bytes": 56616,
+    "sha256": "592c5a93f1039b706e0e5fc61795b16d97756ed8ccd4c5ada5d01b0ff02b0b96"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/5-pistol.png",
+    "bytes": 50231,
+    "sha256": "e75f6ad209b4b634d5447e5dc2d5eac63e8dfaa58bc6bce92ce619bd22dd56df"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/50-heavy.png",
+    "bytes": 56758,
+    "sha256": "89cde73f0657f70d3dc1f06480853a42a5ca9d3db877dc36e4f42f4f24a3d3bf"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/50-pistol.png",
+    "bytes": 48076,
+    "sha256": "223a75b80759140192ef37c4d7e75b2447d91beddeb541b0b69ab9408c0fe277"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/51-heavy.png",
+    "bytes": 57378,
+    "sha256": "c4acd435d16612a63f8272b2332a34b0af0eea23a91aa61b414f3a6861a9224d"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/51-pistol.png",
+    "bytes": 44243,
+    "sha256": "571b8122e455ac638e7f97768cb806f957cc1ba006ce565e8d50da77dc3579eb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/52-heavy.png",
+    "bytes": 61020,
+    "sha256": "97f9f707bcd96e4a142c910c9a0694230078b9ddd5895fe551f3ca9bb99512d2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/52-pistol.png",
+    "bytes": 41332,
+    "sha256": "f98c924a16ae2ad8c9696f36558f39e96a952fa5981253863387479daffb4f54"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/53-heavy.png",
+    "bytes": 58908,
+    "sha256": "aa4fa5385713eeba39689dcfad063a5973df28f0812ec874e2c1a5d6573a83d3"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/53-pistol.png",
+    "bytes": 47108,
+    "sha256": "0fce7ed659240699cb2da2ada1f04bb0ba3a4917eb5c240a8ebb6354fd4117f0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/54-heavy.png",
+    "bytes": 58654,
+    "sha256": "15a6ecf1f17ba1615bd2d5a04c69e1e0a98ecebab2e247d6d5b24f4937f88d77"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/54-pistol.png",
+    "bytes": 49829,
+    "sha256": "37c0239f249c519b8a931a48f4d29c613bbd76494a7f111ed4a576df7e0414fb"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/55-heavy.png",
+    "bytes": 59031,
+    "sha256": "0f5af2fe425ca4b8348a3b64d8f01ffde96026c42369a98ca042fbd44bcd0874"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/55-pistol.png",
+    "bytes": 45793,
+    "sha256": "7e7d21be82ca9b03fcb681f99bf383467f234f714aa9f147c86467c793cdf6c9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/56-heavy.png",
+    "bytes": 59730,
+    "sha256": "cb9b676d8d0f63fcc1cf25d4fea7518a391a77c375d32e04d5dfdf097df7882c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/56-pistol.png",
+    "bytes": 48183,
+    "sha256": "b9a3df4305b94ae11f190f8c082cbb2542159985a0ecb4a869800ffb56599dda"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/57-heavy.png",
+    "bytes": 58438,
+    "sha256": "86517e5bf59e92bb02cfce2e13648cfb894f8a6e78b30398db1637db19d08510"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/57-pistol.png",
+    "bytes": 46116,
+    "sha256": "32b77365012e14cb8cdeb4e7b1db8a2fbbe86a5111115c8135c8f2f1fff84200"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/58-heavy.png",
+    "bytes": 54369,
+    "sha256": "3198ed62f92e90ef88846f7f66ac5ee6a8c6307afb42485b2d8a7c532bb84165"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/58-pistol.png",
+    "bytes": 50401,
+    "sha256": "fdc5a5e21a20c1dbc8a9ed579452282ad50cede2f0b7ef3b861c34001afb579d"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/59-heavy.png",
+    "bytes": 53469,
+    "sha256": "0d11fc0ed6fdaad16f313ba1b830b44c691f3fdf19041188863b3ea5b3e7358e"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/59-pistol.png",
+    "bytes": 47080,
+    "sha256": "b362053afe90e76d87a4a516ee2a0e5a3e1a6295c6c02d526107d81467291cf5"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/6-heavy.png",
+    "bytes": 56918,
+    "sha256": "955ef714f7a951a84536e9e1205aadebf5187b74eb2e9acdde05f5218e442f4a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/6-pistol.png",
+    "bytes": 54731,
+    "sha256": "22a5e2357509703481f6d97ce3fa29d719b48eac62b716fa764b766b6cd1be83"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/60-heavy.png",
+    "bytes": 59024,
+    "sha256": "c6f19c6a9d9abe96e1802ed5d60473bf25627d84cd82daeb0d6984435143ea75"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/60-pistol.png",
+    "bytes": 51542,
+    "sha256": "ac76017e7a8b9ebee30ce7bfa3a0688cca4b4b16a464846b07e6b31aaf11700f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/61-heavy.png",
+    "bytes": 60029,
+    "sha256": "ca00fd0c28a60ed5f484e11afd790b149c46ff66c21f2af67964f3e7392cdf9c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/61-pistol.png",
+    "bytes": 49842,
+    "sha256": "69f0d15c80421f3553e40b28c0dc67e418e965da1aa82009697149ef5356c396"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/62-heavy.png",
+    "bytes": 54928,
+    "sha256": "ebf86dd7b07e2e34f963936e6c783eb9bc7755ed87b4000017ca7e0b1792d904"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/62-pistol.png",
+    "bytes": 50065,
+    "sha256": "ab933eb31dc4b28a454a02c4328cb83a05c554cc2829744f13a0811bdeaae230"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/63-heavy.png",
+    "bytes": 59760,
+    "sha256": "1102157bf4a64c04390f1b1f5ff9fbb5e910c905842c8f370b325c30dcfa7638"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/63-pistol.png",
+    "bytes": 44053,
+    "sha256": "d68a560f0995b1eb4cbef3d84d33f1c3f2c696d5faaceb960822397eeec936b9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/64-heavy.png",
+    "bytes": 56304,
+    "sha256": "de74e97de85997b701db1e832ed1a642aa07ab339f9b6a65cffde8d5f6c70370"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/64-pistol.png",
+    "bytes": 46584,
+    "sha256": "eab1e02520d9ee15a6b5c8f5d15a246932f3f515205b18c3270d14841fea96f0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/65-heavy.png",
+    "bytes": 60065,
+    "sha256": "f6330edd1e9a18c1401f0b8497cb8fb6c461ab0e2b235cfdf8ad719b806a5176"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/65-pistol.png",
+    "bytes": 45691,
+    "sha256": "2c480aa5ebf6ca3324a114f9327ce30c20b3adc8ee801a2e9f5f1f98bd7c393e"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/66-heavy.png",
+    "bytes": 53919,
+    "sha256": "e7bc7f9aaa65cc7b1393b5fff4698599f567d17d37d0873f3c4fe17f32fe4b70"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/66-pistol.png",
+    "bytes": 45390,
+    "sha256": "4c66340991bfd469a0264741a113df219ac2c34ae400efaeef42cf496de3b530"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/67-heavy.png",
+    "bytes": 51106,
+    "sha256": "875441379f71af17b60c0b003933b0fbb6e591f2bd95a23703db97ea7a04bc21"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/67-pistol.png",
+    "bytes": 45021,
+    "sha256": "d74dedff7ce172e9dea8a05e5526d5cdb8fb2384a683cef4486b8e813256a97c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/68-heavy.png",
+    "bytes": 54978,
+    "sha256": "674292f4c5977518a62b92c54c0d7e35a14ef149d40018a3be9837cf0f0ca885"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/68-pistol.png",
+    "bytes": 41154,
+    "sha256": "017cb76dfe8abb922a96d7d72a163da3ed0cd716eea8eaae94cbb675b6756ce1"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/69-heavy.png",
+    "bytes": 55335,
+    "sha256": "a670cb166486eead5ba10e22a761cdf6e0d53a4aaf5e3b620500e2a11ed48a3f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/69-pistol.png",
+    "bytes": 41755,
+    "sha256": "76c5443c2092826e96af17f91f40e9c586a4cfd080d9acf7c8ac40a234e2c27f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/7-heavy.png",
+    "bytes": 62111,
+    "sha256": "5ea738cf4288b8b219861621f314d32ce9250b96d2de693e242fe8c0b6239f43"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/7-pistol.png",
+    "bytes": 45117,
+    "sha256": "9026096b8d491079166a6d188c1da575cf6207ae68c1c6ef653123979b91b533"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/70-heavy.png",
+    "bytes": 58971,
+    "sha256": "55ae73fe435a2130aad60c4ff59ecab8bb9b66faf6aa47cfabfe875fb36e4637"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/70-pistol.png",
+    "bytes": 51099,
+    "sha256": "bdcb3312ec8f4ac466fd8f30802b12487c099fd522247bcd9fb3f5844703fc81"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/71-heavy.png",
+    "bytes": 58850,
+    "sha256": "9a923718e505b8dc07e8857187bb86266275b06775169d6c037e2868ee33c754"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/71-pistol.png",
+    "bytes": 51222,
+    "sha256": "a06b091f6c85523a98d3cbb9ee820e429b7199a234507da79d608ec72780cf1a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/72-heavy.png",
+    "bytes": 56335,
+    "sha256": "eb884d37c9235306aa00fa6e113b91b655282bcef78d9244de29a93508b356ad"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/72-pistol.png",
+    "bytes": 49526,
+    "sha256": "b15311c9b22f25294ab369ffbbb5274a88818c043f7a432800ad345d1fe4ef77"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/73-heavy.png",
+    "bytes": 53833,
+    "sha256": "ff06b70730a564ef2932d040d7642bba60ad2314397e673a650912527d217774"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/73-pistol.png",
+    "bytes": 49298,
+    "sha256": "3e77fc076587a5236f59a0c04f6148cb585a294eedd31aef7b37707852cf4eaf"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/74-heavy.png",
+    "bytes": 56467,
+    "sha256": "135d91ff2cf1290451ac58a57520c9c058917b9c1582fc9a534d90994e65c4c9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/74-pistol.png",
+    "bytes": 48043,
+    "sha256": "7bced8a7d179cc5064bf08ec625d3ab154d31d7860b9d6e45a6cab12cab7abca"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/75-heavy.png",
+    "bytes": 60421,
+    "sha256": "ab4ca914d1d289e289e498ef10ff931e91e255eaebcb090be111aa1cf18af0fe"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/75-pistol.png",
+    "bytes": 47362,
+    "sha256": "77cdee86f5ed687bf887a53bdd1a83a3d2abd005f6717dd22a1389c620acc7dd"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/76-heavy.png",
+    "bytes": 53708,
+    "sha256": "f25960f43577cc7caae2badb918e6d51f9d1513f4841ce8ec976d16cd15d3f49"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/76-pistol.png",
+    "bytes": 49219,
+    "sha256": "67cad638a226e4892fec300a4ab685e2533adc73e0ce1c31a03d64ecae9eba75"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/77-heavy.png",
+    "bytes": 58641,
+    "sha256": "3792128dbb677c4b47408b85e466f7354317e349a8a6be0233afb791c2ad7451"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/77-pistol.png",
+    "bytes": 48627,
+    "sha256": "cdc286f5d9e726a6a2bb996d4a829b803f9706006cf33ca401411625b4919daf"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/78-heavy.png",
+    "bytes": 57246,
+    "sha256": "1acdd9e1b63c5a8ec1152140e502d451cb2c8976a2f1dd76fb098fa710916a21"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/78-pistol.png",
+    "bytes": 48607,
+    "sha256": "099561ba7371fcab936211ba2d55f513cff6bc9de6e21c5e6ccdce302ecaea0d"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/79-heavy.png",
+    "bytes": 54893,
+    "sha256": "afa7f23f5fa4192be2b2c477062ff8d26fc04ccefca10a7b17c9349212e32091"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/79-pistol.png",
+    "bytes": 48941,
+    "sha256": "d71e2e695ddadbd2d9b6b5031ff99d0b0abd1acfee91d6e14fcf15720fe804b7"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/8-heavy.png",
+    "bytes": 61933,
+    "sha256": "f7a04b71b6a3308bb8afd7518e39e36d0abd7550881ccbc03fae702c15b4ee40"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/8-pistol.png",
+    "bytes": 50296,
+    "sha256": "917039dba7b25f82bfe00925a4627ede9544b6ea108985bea8418f383eae3c1b"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/80-heavy.png",
+    "bytes": 53120,
+    "sha256": "b9d2d8461489a09f8dba11aef1454ef59da93609580ff21a986d06b21d75a135"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/80-pistol.png",
+    "bytes": 47493,
+    "sha256": "55e7c1774cea13320c9cff0fca2b482c524826895dabee2a994f5bc48e87d49f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/81-heavy.png",
+    "bytes": 57805,
+    "sha256": "ed12e1601b79cd4f5452e43196c9e47ac606befee91d55372b5908a1a93d65d1"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/81-pistol.png",
+    "bytes": 45656,
+    "sha256": "7320b54e35aff9224e316b6f7fcfa96b5e4e7ab182eab79762d1fb099fac11cf"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/82-heavy.png",
+    "bytes": 59498,
+    "sha256": "a271e6734e5ef2a3161ca442142e5fd7d0e0a0c9caeff9117abd31cd0a676837"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/82-pistol.png",
+    "bytes": 47300,
+    "sha256": "06fa597e60cabf9befe92a925d1b8c5672a3da600c96829f3f9b17abb60bd7cd"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/83-heavy.png",
+    "bytes": 56717,
+    "sha256": "2b40c81507d2b8c27c6d510d3c8e085b0e0ff29b266fe2442ac5a6cd40cfa585"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/83-pistol.png",
+    "bytes": 45381,
+    "sha256": "bc8b60d1540bfd1e939168c43c5f88eb371447b3c464791b87fe9c039daa5246"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/84-heavy.png",
+    "bytes": 54672,
+    "sha256": "6455c13b2717d913d01b82d0554444e84ff1fe845d2e2c89dbce220efa67c10c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/84-pistol.png",
+    "bytes": 46663,
+    "sha256": "04f2037aae5a8059cc6bb46830cc9cef3b33241d05af95a63bd51d6b2b288942"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/85-heavy.png",
+    "bytes": 56620,
+    "sha256": "e5e0303065d4438e8801f5077ceae4c5bec052768a7fe56381465e0e96b03157"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/85-pistol.png",
+    "bytes": 50355,
+    "sha256": "2b8fef638efee11dcf0560580c5870c3979bd6717292fca24c1d55489a814cc9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/86-heavy.png",
+    "bytes": 53558,
+    "sha256": "49a2fc7e077f9ab5d2fa1a4adde67fcf68547023775bab9ec50972736f9590a5"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/86-pistol.png",
+    "bytes": 48644,
+    "sha256": "0ae565715e4bfd4a0dbdeb87c34e4a0d0ccedebbc07a0f306b81fbc492f44437"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/87-heavy.png",
+    "bytes": 52761,
+    "sha256": "90e10c59199ced129634d1109b43421f2f5d0a9d5f45345194bd283240de2d22"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/87-pistol.png",
+    "bytes": 46565,
+    "sha256": "754f4ec3bc1b5c57412a9c2766bb8a6e2458ef1e55920c7c942b238bbe689e88"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/88-heavy.png",
+    "bytes": 58043,
+    "sha256": "2b63c24c420d4fc9f35b0a5b91f28e13ce8d7e565b399c253efa8524aaf50143"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/88-pistol.png",
+    "bytes": 48990,
+    "sha256": "d2436b3b225ae052e67a770bc6667f49398a58f89e392ce01030a78795bf4ea0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/89-heavy.png",
+    "bytes": 55096,
+    "sha256": "e1bb704e7080ad5519ec95ce7307deff5381c71149beb05aaf3b594a83a960c0"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/89-pistol.png",
+    "bytes": 49273,
+    "sha256": "1b335c5cd2df98cc93c88f038ebc641a3a1029663ee10cd99bc3f9dc8306e81a"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/9-heavy.png",
+    "bytes": 62212,
+    "sha256": "ed3275e47fd2c5249016d4c2298ae686589c2b655de952b9c363b4c4bc61452e"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/9-pistol.png",
+    "bytes": 51676,
+    "sha256": "dba61d6910e7f0dc4b19ccedca62862e86a3eb7c9c55bc87e9aff39071b1a63f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/90-heavy.png",
+    "bytes": 53559,
+    "sha256": "7f1e2057055362a6ab8d3c626b8de624d979cd5b2070ee43c137dfd5cd5e003f"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/90-pistol.png",
+    "bytes": 49135,
+    "sha256": "cb238635b09c4dc5b3e2832078fd1699ea513fead4c833348bdb134133cc4fa6"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/91-heavy.png",
+    "bytes": 59572,
+    "sha256": "1ec0c903aaa2c7d6f7356d8a693936785d10f61e4089b39a193f9c4ca9a73ab5"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/91-pistol.png",
+    "bytes": 50036,
+    "sha256": "11d7a42f7e54cf60c53cb30d85edfe63332a5a67cfd888d998303dc87966eef9"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/92-heavy.png",
+    "bytes": 51286,
+    "sha256": "17c796cb5e0b00a83b75e18f2fa65f0a56615dd9cfd7d68c076995bc4af50dd2"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/92-pistol.png",
+    "bytes": 49369,
+    "sha256": "70b5451b2d92f83e77dc293a5b8ff962c64c7b029a1efb93dcafd839ff0790ba"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/93-heavy.png",
+    "bytes": 58480,
+    "sha256": "b460966ccfca5ea56ad10f1490b81d25475578e4e3af618f8cebbab454beea80"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/93-pistol.png",
+    "bytes": 44405,
+    "sha256": "fc6416adab2906a437d177d868b728b0ca9d8328e764e573654259724486993c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/94-heavy.png",
+    "bytes": 55400,
+    "sha256": "bc33d2cf3872bbc5a1287120c93346fb833883e3bd5ff6864a644501b87411fe"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/94-pistol.png",
+    "bytes": 50326,
+    "sha256": "e3c19f958eb81b9cee6157da4c4461e737f44be3bb438a5100bd45d36f80ded5"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/95-heavy.png",
+    "bytes": 52004,
+    "sha256": "dc64e421ed112944d86a4173f73d3698b4cf99577e4ba926b44381fc7087ef4c"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/95-pistol.png",
+    "bytes": 49111,
+    "sha256": "652b37dffba315693b92b1c0258e773efb798d2032383b72a98664a6ae5fc8ea"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/96-heavy.png",
+    "bytes": 53640,
+    "sha256": "251423989410a785b45a0453c6e6ee59e1ba3612c14443adb93522e669a986df"
+  },
+  {
+    "path": "weapon-fit/fitting/hands/96-pistol.png",
+    "bytes": 45925,
+    "sha256": "aa9e717feec2c59116643e31710e2bc083e1a0fb54e5c049a096202f987cd933"
+  },
+  {
+    "path": "weapon-fit/fitting/index.html",
+    "bytes": 7571,
+    "sha256": "ffa5e1aee31f68f6191f63a9b93ac1f6ad60702ce3c6e87ad2e025e1eccf2c50"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/1.png",
+    "bytes": 1309416,
+    "sha256": "d965b9bf77345788c16345113b983ce8f1fe1de1685a3b45b6bf900a6689384a"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/10.png",
+    "bytes": 724251,
+    "sha256": "45b280d7a24ca4b263d534339a691c990be7c204dda89e23f12c10483413938d"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/100.png",
+    "bytes": 1307258,
+    "sha256": "64cc73df6c6938771090cff816051b9c37a64cd2b1a2ce24534033baac089707"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/101.png",
+    "bytes": 1092575,
+    "sha256": "232e798f2bd5ea5d88f3fde71cd3e19cc64c0e818461c04fc898c5895427cab0"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/102.png",
+    "bytes": 1081677,
+    "sha256": "e532a57a67b91410e0a96fe9472ab50ef0611b9dcd6e3bf0050b874f0e851d99"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/103.png",
+    "bytes": 753567,
+    "sha256": "e95ecb303f7a9f22652891960a0acb743633bd0f90ea68a885ffaf9c8f169eba"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/104.png",
+    "bytes": 762123,
+    "sha256": "e7a936716154d1c0ebdf71b8bb197f1d00aff80dde70cebf5d83454f8355dd5e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/105.png",
+    "bytes": 1085659,
+    "sha256": "a5586626cdbec9c78a6cb0b84b860d031deb264c4147a3ea9a7e509338d04375"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/106.png",
+    "bytes": 402631,
+    "sha256": "1b01a1d98f7dbc6ba7ee5de18aad94408e204686e85066d1546129cb77daab98"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/107.png",
+    "bytes": 450631,
+    "sha256": "00885578788e5436f4edf98a08863f9be89a7643001eb62cf1ebf70a6b007841"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/108.png",
+    "bytes": 445824,
+    "sha256": "f926157d6954ab20a57e4365d0bc6b64b15176dd9643893c90ab14ec92941752"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/109.png",
+    "bytes": 433609,
+    "sha256": "eccf0e7f3b21f2b83dc58aa9e5b8c4c0a5156a17768fc04e32f85a44d26ed2ff"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/11.png",
+    "bytes": 819610,
+    "sha256": "d5e059dff1a15685ce1eb63f3a61c6c396aa71f7467bf86e5ab2a2d6cb829362"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/110.png",
+    "bytes": 461913,
+    "sha256": "e90b21d8fda0a83ce3f5e6198dbf03023ca2abd3a343ad58cc7f6477b11b21c6"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/111.png",
+    "bytes": 404378,
+    "sha256": "7cfe4581d4c3d46b5ad96d2285b29371fd592a57e4c96a12bcb0c3dfe6576a88"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/112.png",
+    "bytes": 506660,
+    "sha256": "718a3663195cb0e284f32dbf58f1edb178283939190e45bf8ef55dbc5c3c5548"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/113.png",
+    "bytes": 441278,
+    "sha256": "3518ed20a740a5bc0b37fa710297e7853948028fb781775af2cc749e155289a7"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/114.png",
+    "bytes": 538793,
+    "sha256": "be630ffcb84e2b398325a51af830e61fe26890d246746965894fa8ff5187dd4b"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/115.png",
+    "bytes": 418515,
+    "sha256": "5e3a8cf65ccf715c6562760e2154216fe087e988416d7e54881a0621c76f753e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/116.png",
+    "bytes": 375390,
+    "sha256": "4225da2d290969d11c5e0856137aec84cf21a9fb2618e7e6576d717f63b4e43e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/117.png",
+    "bytes": 412550,
+    "sha256": "903ce6c22106a692ff0ef8a88355e82dfbcbb91a82294cd9c3c5731097c01c89"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/118.png",
+    "bytes": 483195,
+    "sha256": "3f1a89242f43809bd7faff2622d634c12597a754f8d0b9bc10c6d42db5bedc30"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/119.png",
+    "bytes": 568363,
+    "sha256": "3426ba1735e2ab903e5be2ab243e5d91186b21bf56351c3130d510f9f4c6d4ed"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/12.png",
+    "bytes": 644937,
+    "sha256": "38d83d0176728ac19ce181e849ad9cd1a9c57e3468eaf1416cf619e264eb980e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/120.png",
+    "bytes": 393000,
+    "sha256": "2ea9ebc4fc177e0112716f3218a9fbe6cac1660442dba2cc28db1bf6eaa484f4"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/121.png",
+    "bytes": 396947,
+    "sha256": "ab798a9d998ca53c1e703ab72d9b6eab7aa59079cce29403054e57e05c090fae"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/122.png",
+    "bytes": 446514,
+    "sha256": "9814f893da3b6916986d0491ed401847bde802a8e888dd7f55826c301f5db8fc"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/123.png",
+    "bytes": 374941,
+    "sha256": "7e46654f08c9d92406b99350afbd00bcbf1afdbb210e287ad183c208445eef48"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/124.png",
+    "bytes": 531774,
+    "sha256": "1d0665c772b0cd4a93065d32c6413d9816c625f332665cded1d0bfe0b5a9fd7f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/125.png",
+    "bytes": 691217,
+    "sha256": "689ab4f16094c0608c4e96205cfc11200a5ef8449bd562029d73ccb7191f026d"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/13.png",
+    "bytes": 478788,
+    "sha256": "073dafe11f80d66a66985fc9fa8a6991815599ccd8026f4ccb3ae2c24be8ae0e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/14.png",
+    "bytes": 476309,
+    "sha256": "60dc4373740af69ac7daaccc884678b036bf0e5f55118ca3101ca562f46066ba"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/15.png",
+    "bytes": 678206,
+    "sha256": "03a1dc59fe9e3964fe402083d4d089ea5e7925793c055982e9e742a93bbd8e0e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/16.png",
+    "bytes": 718014,
+    "sha256": "24c2143a5eb429f5352538887281aa1603fb73e5afaa3add7151f85976e6422f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/17.png",
+    "bytes": 587883,
+    "sha256": "18c77c8bbdec0497827bfbbf51e9553282b5a4a238d703ccae054f1914df55f4"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/18.png",
+    "bytes": 573871,
+    "sha256": "8a934b300a680d29d7d066790eb13a01b67e1137a15bb4f0c5495d8485b21486"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/19.png",
+    "bytes": 516833,
+    "sha256": "30e1973b93e9f1781ec266f27ce6aceed6e32c3d25928f9b59539e85c3fbfe26"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/2.png",
+    "bytes": 1275605,
+    "sha256": "96a0ec9e8246edac70a42e2e7a8589bfd85cbcd945b893e6368728842b6b67e0"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/20.png",
+    "bytes": 577335,
+    "sha256": "60f9a4db67f6e5ee63d3ae9cf62cf26dcc25467a2d1228de6532c42f08e6dbb4"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/21.png",
+    "bytes": 744138,
+    "sha256": "4d691d29fdd2ec601be46ad8f9289e009c3e643707ed41c894ffe98ad0178d1e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/22.png",
+    "bytes": 761537,
+    "sha256": "5caca40a9ea473be40ca309e4504c6d3b7add2a9dfcc2c2f7227e60df3f3c465"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/23.png",
+    "bytes": 528704,
+    "sha256": "0cb965bd88c1ec294c72951f4f199fbc7745cb7f4bc60fc5cbcba8d010511fd8"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/24.png",
+    "bytes": 513269,
+    "sha256": "213c853e8606c9a1fa96213899fc726426e9cf914a9adccff1bf9e6a2e66d370"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/25.png",
+    "bytes": 769579,
+    "sha256": "30445f41541bcc7ddf08c500abe6fa8fecec1e3fd0e7da86cb8ebeebd12f7c92"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/26.png",
+    "bytes": 634945,
+    "sha256": "f32922818e69bb61821a46e0a796d672d2eb1cf5b7f2a44b0d112ed24f55446c"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/27.png",
+    "bytes": 562219,
+    "sha256": "ab5c3c5fa0228031943c1d7ee73bd4931a069daaba9b98a8a6179f5813cc288c"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/28.png",
+    "bytes": 566091,
+    "sha256": "bfc8997b3bb6990e2d51e607c1cb698e06d7f425d773dedab23951c24a3ed91e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/29.png",
+    "bytes": 681546,
+    "sha256": "6682636907fd8225fa094d3347e6854b372bd855f1b4e7f43e220809625407f8"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/3.png",
+    "bytes": 1226822,
+    "sha256": "dcfae07bb11967742a1d4b6ccf7cc050ccc46b8959f86a47899281771ae874c7"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/30.png",
+    "bytes": 586281,
+    "sha256": "e8e2a897218eb270dff27ae5b3029ac228ce5006fbfc0622dda562a1f4a0d7f2"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/31.png",
+    "bytes": 567268,
+    "sha256": "fb1b4c88e25ef80bdd0c5e1f373ea6bd64ab1864bb943bac3699e230c76271c0"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/32.png",
+    "bytes": 530085,
+    "sha256": "0917ff7a74b4c70db53ae8e5ee9486baf5fa06c22d03dbe8b53a95764e3c370d"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/33.png",
+    "bytes": 491561,
+    "sha256": "00c7d76b5644c1f1b14718430d3c95a7b27f94dd08a0a0b7fb6983609627a584"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/35.png",
+    "bytes": 498367,
+    "sha256": "a8d0e6fd43c5e2ce4dfbc78e7873682b801e5371cf4c43630f5e1128af606a59"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/36.png",
+    "bytes": 547553,
+    "sha256": "cc4e00f674313f96897d4e42b459ccbc56c7c39eeb385f3be47b3a3331fa5d21"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/37.png",
+    "bytes": 528938,
+    "sha256": "4497aa7883feef6fcc30115c0067ffb97499f0293e4cff796f76a1ba67e16041"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/38.png",
+    "bytes": 685452,
+    "sha256": "06567ac623d34b348b3b63017c537bdf9d0889f3e482cecd627e59de4fade8c0"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/39.png",
+    "bytes": 520470,
+    "sha256": "ff8c09d103395980e6ee0048822a4f63ce7b25742fbd5a1826f2cf883516e95f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/4.png",
+    "bytes": 877663,
+    "sha256": "1c1ea7bb2268fd2e4c0ee5d201fd4362fa3b16eb747752ab54cbf2b8da19de32"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/40.png",
+    "bytes": 691881,
+    "sha256": "93f5319c1ebe114f4fd5fd7f71d1c0c063114a2d7df76093d87710fdd6565737"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/42.png",
+    "bytes": 626714,
+    "sha256": "3a0ea06afa40219e7a9be1a77efde5af467c1be855aefdbe1f5506812f906801"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/43.png",
+    "bytes": 989874,
+    "sha256": "96039ddc3f2b3fa36e2658c522711e5a4ad13419cfd2d7f92f0a9cab266dc5a3"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/44.png",
+    "bytes": 547242,
+    "sha256": "4d4c345dc6dc3d8be241bfe1535201b6ab38746bdb50c59250fea466727126b6"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/45.png",
+    "bytes": 539031,
+    "sha256": "313ed4271f892cabc0a331ba80f5d2dab7b58423faff3a7b8b1561f24e0fcbc4"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/46.png",
+    "bytes": 476783,
+    "sha256": "992f3d1247228140abc2cc8cabbca113fd4dbfb206cf0c31959a0a618d664df1"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/47.png",
+    "bytes": 425479,
+    "sha256": "431a8cd0cf24b10045cfa170b49ccb95afb98877f8f8454f979c53faca1c8a6d"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/48.png",
+    "bytes": 469062,
+    "sha256": "6f0866ecb239d4e381c15f163cc1fe839ac0c672d4a3c1b473862eeacddc04e8"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/49.png",
+    "bytes": 567262,
+    "sha256": "ab557a7998a5dc496e25f740677bf9429a9042a3749e08cfa00a840447c1901b"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/5.png",
+    "bytes": 1303631,
+    "sha256": "1596507ea4d6e6315cfc0fcd6b5d0e65e41a384d71c0a3866ec65e0c1c603208"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/50.png",
+    "bytes": 423531,
+    "sha256": "165a8666419f8b0598164d3074225ff776175b94119bba92c15f96cda114de11"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/51.png",
+    "bytes": 530166,
+    "sha256": "f1204837a23388807df6f2a5cea7d9a3b2d0f5ed456b13f792902f0ae9adc4e8"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/52.png",
+    "bytes": 474272,
+    "sha256": "4fac61e0e43edde9c83028fbcf778ede0dc1ea2491c9d8db1e38e1b7e00173ab"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/53.png",
+    "bytes": 590763,
+    "sha256": "3483b43648cdfde3fbce0cb49f2afc4ab08843992f20ff3f82afd348de195fa2"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/54.png",
+    "bytes": 616867,
+    "sha256": "9a11332413851638b18b1b0030b27e9b98122151e0931c543d83ce6cced746f3"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/55.png",
+    "bytes": 914507,
+    "sha256": "9e285e81f097b9d2193f6c822675f79d12f2940ae14cd67c2f7861f6528b9c22"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/56.png",
+    "bytes": 885186,
+    "sha256": "436d0a356c7c67ba762e3dc5bfd5d711eb1735f95652b83c869ccc0a2e2b37bf"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/57.png",
+    "bytes": 678808,
+    "sha256": "ed4ba7cb415907af4a30a8abc8a214e8d06c9c0b7ed8c501245b5cf13e26e728"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/58.png",
+    "bytes": 493739,
+    "sha256": "33ec7fd1d9c7011944641aaf6c40da11d3c583ae9308fd8d93b4c6141749173f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/59.png",
+    "bytes": 664358,
+    "sha256": "374e2d2a717ee2aa460845d4587a70ee5293184aeeceadbb4ff93d592e70690c"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/6.png",
+    "bytes": 915290,
+    "sha256": "bf07092855143ea987a8cea49dbb9d5764c3ebccdef3e7a8970f7c40f0a2811f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/60.png",
+    "bytes": 459678,
+    "sha256": "dbadda28b2c41d5e3cde9ad6eecd1e9ed6289cb6811bdd769063bee1f4ffedd0"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/61.png",
+    "bytes": 670079,
+    "sha256": "a4904d680261abd85ed65aff83f675a6bffdb6fb2f7e075cc2b1e2fc9a72a237"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/62.png",
+    "bytes": 702947,
+    "sha256": "581ab69adbd4fdeaf9b96da04b88f4a22001427b1a763f284af782d8249bcba3"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/63.png",
+    "bytes": 580697,
+    "sha256": "17f1d6ca01af2c94ee2208f7316062d6671b280b1fadbce5fc973c7e79ac9166"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/64.png",
+    "bytes": 450597,
+    "sha256": "61abcb81d27d2d026e10a1729b9662e64ee32a736b42d898d20cf0a5b7c3db50"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/65.png",
+    "bytes": 664592,
+    "sha256": "c0262a848c276665b42917ea765c66e0ef0ecfe7decbcc2f7e11bf3b154e0593"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/66.png",
+    "bytes": 477289,
+    "sha256": "c2745c4d59e3d25443c0418a596436c19b0037cef9e44e83d6a6ae05d69baef5"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/67.png",
+    "bytes": 730897,
+    "sha256": "ab1b15c1713b4417d343eaba69380485669a5d821363f023418e1b3ae10d51e9"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/68.png",
+    "bytes": 686681,
+    "sha256": "211c197014873d0a43432623c752a3e92ca4ea6d056f43feb1cef2772a6cf3a6"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/69.png",
+    "bytes": 635159,
+    "sha256": "08cc69c794babeb35ac59aa536a466443c5f6ad352382027b8199a21cdfe7b27"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/7.png",
+    "bytes": 1046583,
+    "sha256": "7e7385f83b216889aaf45c07b8c8a211967f5b6340d59bd7c2520e2667456781"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/70.png",
+    "bytes": 494598,
+    "sha256": "f1d126f3e50aaf054c4b6ac8ca4640438063a9e6aee3bc8e4a66dcbb612db846"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/71.png",
+    "bytes": 637595,
+    "sha256": "f7c069ce457045c80fb00ace5ba6f631f950b1af1f8fd405daaa191484e66de2"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/72.png",
+    "bytes": 682721,
+    "sha256": "d416b2454ebff1a25d08fcfb7fc578a2f4568a33c6a07cf564c829f875a9c7db"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/73.png",
+    "bytes": 796723,
+    "sha256": "259cae05acae55a802f789233c6ad91e4c53e6110d5340fba3715693344b5bd3"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/74.png",
+    "bytes": 826099,
+    "sha256": "c5a8e389e24ea1200a7a4e7da7ab8d46d03b0e3f5655dddb238d696a2ff273c3"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/75.png",
+    "bytes": 704720,
+    "sha256": "04ba276f81d2c54b932300252aa284abd05c85c28baf07d7db8e598d8184232a"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/76.png",
+    "bytes": 485764,
+    "sha256": "bf2071cc2b81d56676211e4376377b66aeb1e4bd5117e66fece1e808c163abad"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/77.png",
+    "bytes": 697017,
+    "sha256": "7b561e59840c36c922cb71c0efa5610f2b1bfc5401b424838087293cee03d9e1"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/78.png",
+    "bytes": 557258,
+    "sha256": "f4ed857dc70b2236d83c8cfdf26d6c2ca633222f9579d130703a4d0b3e8512cb"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/8.png",
+    "bytes": 1127784,
+    "sha256": "a2d1b2b50fee27e71a31697442699f8c895b98176058ed779882d9e3cdc61c6e"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/86.png",
+    "bytes": 1253538,
+    "sha256": "34136678df6a750a43c4ca2f3c63cf0c9058cd0275c9299502c6a38303628793"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/87.png",
+    "bytes": 1155552,
+    "sha256": "97eab049727250f6ac77f43a64fc7bdd66ebd72169620e065fcd510aacae03d6"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/88.png",
+    "bytes": 1219926,
+    "sha256": "4a58b0701d0481955c4c7bae6aec0d9cbcafd070866ac0338de88fdd1dda17c8"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/89.png",
+    "bytes": 1136093,
+    "sha256": "e748d56d6716828fad999799b52d19be43cbc860dace6947d3f4c0e595fce708"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/9.png",
+    "bytes": 910962,
+    "sha256": "ea68313cc9e31f9c0497feea79d5b16f0f3f467306b57d08c36fefd8053c9b33"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/90.png",
+    "bytes": 1088717,
+    "sha256": "bbfa7bffede6fd23deff1bd5da811fa258b1f4f5fabfc08b26e4aa8a19e8d5cb"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/91.png",
+    "bytes": 1079836,
+    "sha256": "37f8fdb1a37e8276e643266bff70ecfd92e297b7a8aa4c371336acd0143d083f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/92.png",
+    "bytes": 1041554,
+    "sha256": "323c298392a89ea870c29b938a7e53b946ee6a164bbb0394b3dab8aaf8a62b1c"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/93.png",
+    "bytes": 1203615,
+    "sha256": "8dfb555185c2c4f1af1a2f9d8368897deabed0db62f77420178e8ef067df9eb5"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/94.png",
+    "bytes": 1060039,
+    "sha256": "1fd44a7f15b6db9ef245d9d244e7f4bccb5de413689640ac7021c36d53175b06"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/95.png",
+    "bytes": 1102213,
+    "sha256": "2b1a87235cddca0d187bdbb8c78a4d69eba61ea9b95fc7616ac3fd456e8222c1"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/96.png",
+    "bytes": 1235660,
+    "sha256": "626967c7216734eb8f4c27f1cff08c3d818a42fd332d29ae3b786d05a437ee1c"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/97.png",
+    "bytes": 1282810,
+    "sha256": "d5f40d8f5868fe75b4bc5a35c9d5097c7f02dfbd4f62e849595ab55acfe77aed"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/98.png",
+    "bytes": 1136405,
+    "sha256": "ef961df6cc3f09b497431055f17448b48d68958459a370f6d30eeef9d59e081f"
+  },
+  {
+    "path": "weapon-fit/fitting/weapons/99.png",
+    "bytes": 1128200,
+    "sha256": "fd221b0ca1b95563d9880f7a9918c37b1f765d92ac32dd4e72eff79271733c11"
+  },
+  {
+    "path": "weapon-fit/grip-before.png",
+    "bytes": 1169741,
+    "sha256": "7489f3835e99f40fcfad760c6caceb0d430d4adaeae4acdd3aca2df1a26e0777"
+  },
+  {
+    "path": "weapon-fit/heavy-grips.json",
+    "bytes": 962,
+    "sha256": "5090ba1aeabce63ec00003b3365e3567f914802dfcbb84b06b813c0f317c0066"
+  },
+  {
+    "path": "weapon-fit/marked-correction/CONTINUE.md",
+    "bytes": 5038,
+    "sha256": "b9825fd66c72b8c9aa2502f30fa21f06e5fc735c00cb2f7b56ae0c429e366876"
+  },
+  {
+    "path": "weapon-fit/marked-correction/alpha-v1.json",
+    "bytes": 192,
+    "sha256": "c8dc91c4d4944fcfa6182278801a246fc9d15e74c34a4af6ffe43e06fa50152e"
+  },
+  {
+    "path": "weapon-fit/marked-correction/candidate-v3-rejected.png",
+    "bytes": 2131192,
+    "sha256": "88cb40e1040b58805cf7d69e98e2ba25116421f6d6aa1b4fe476ab85f063f844"
+  },
+  {
+    "path": "weapon-fit/marked-correction/finger-review.png",
+    "bytes": 477497,
+    "sha256": "210b7136d9e06c93e4154e37c582b7338740e1f600ea9843039bcc44e446e668"
+  },
+  {
+    "path": "weapon-fit/marked-correction/stock-grip-candidate-v1.png",
+    "bytes": 2235549,
+    "sha256": "c972b17d7aaad29dc7037018f6eaae322d6df7b675e34c1e01121c29047d233b"
+  },
+  {
+    "path": "weapon-fit/marked-correction/stock-grip-candidate-v2.png",
+    "bytes": 1976675,
+    "sha256": "a24123a4eb159da4387160e9bbf414e2a520439fed6ea0def561f614c5ae0eb2"
+  },
+  {
+    "path": "weapon-fit/marked-correction/validation-v2.json",
+    "bytes": 213,
+    "sha256": "ffee9f4c6b91caea1f53b3e838619b53ccb72eca368fb083dc0436edb4a2eaf4"
+  },
+  {
+    "path": "weapon-fit/marked-correction/validation-v3.json",
+    "bytes": 238,
+    "sha256": "1a029c7bbb314a3641e7dd8071eeab8d980fdec253918a9938b2a0e2c1119a40"
+  },
+  {
+    "path": "weapon-fit/originals/1.png",
+    "bytes": 43935,
+    "sha256": "77bdd06e9fa5670d9040feb22fa2063ac3c0fe42496293f5fd6f236654ac884b"
+  },
+  {
+    "path": "weapon-fit/originals/10.png",
+    "bytes": 41670,
+    "sha256": "2206550a5d63a5e1be316f2bbd4e71806bba6b4adcad9d277ae1e5b0f5c78b4e"
+  },
+  {
+    "path": "weapon-fit/originals/100.png",
+    "bytes": 183422,
+    "sha256": "9b3cc7e3391f6f3e7189f0b2bbb4afa01fa8d03fdbbd47cb1483ff52a031e9ac"
+  },
+  {
+    "path": "weapon-fit/originals/101.png",
+    "bytes": 179181,
+    "sha256": "8bcfb90f726d4bf79d65e62df2aaa674aa568187f862986a5daea53f2ee83e82"
+  },
+  {
+    "path": "weapon-fit/originals/102.png",
+    "bytes": 172521,
+    "sha256": "bf413072ea67b8a27ce39607a039d2b7d93a0357f49102ff18d9b1019f3359ff"
+  },
+  {
+    "path": "weapon-fit/originals/103.png",
+    "bytes": 179592,
+    "sha256": "87e067cf0202cc5be63ab61c3678b6d91a7a30e79a1c88db675e94136ec3e16d"
+  },
+  {
+    "path": "weapon-fit/originals/104.png",
+    "bytes": 168329,
+    "sha256": "a1d948b752e2b4fb52afc77637657ca627293991a9359e771debeb82fb44347d"
+  },
+  {
+    "path": "weapon-fit/originals/105.png",
+    "bytes": 180809,
+    "sha256": "c83676892d71a1918193ea6df494121505511909e11041bb3cfc7d3834abe3ae"
+  },
+  {
+    "path": "weapon-fit/originals/106.png",
+    "bytes": 164359,
+    "sha256": "06276e309727b3463905d5433fd776418cd1dfeba45c0ed1a03a6385bdac3872"
+  },
+  {
+    "path": "weapon-fit/originals/107.png",
+    "bytes": 164399,
+    "sha256": "026f48b22f7995807efbc7ed95001fb5b2f6e716262d3d18b2cba347c17ba2ad"
+  },
+  {
+    "path": "weapon-fit/originals/108.png",
+    "bytes": 170450,
+    "sha256": "70326bc9447dc2756faa7b12795e6ca037c8ee8107b32c983695e131a44462c4"
+  },
+  {
+    "path": "weapon-fit/originals/109.png",
+    "bytes": 167086,
+    "sha256": "1db03ba5e04ab517d24f39a43ea539d703393c132f4725cb3fa5ac425a7317b9"
+  },
+  {
+    "path": "weapon-fit/originals/11.png",
+    "bytes": 44655,
+    "sha256": "c33245a8e3cdbb8651d53546bf25dae72d27237d312c05dcdca1c04c07eac59c"
+  },
+  {
+    "path": "weapon-fit/originals/110.png",
+    "bytes": 167695,
+    "sha256": "c31c1b17fb8e44e706c9e8ecaecfe838591539d4afeb5bd624cb56657b56de0b"
+  },
+  {
+    "path": "weapon-fit/originals/111.png",
+    "bytes": 165721,
+    "sha256": "b5074ff1b863a4423be45b4710188f099a0c39a6f41a08e325b501549604f3a7"
+  },
+  {
+    "path": "weapon-fit/originals/112.png",
+    "bytes": 167810,
+    "sha256": "f01eed1183f286ff8da99d687a0b87d8f9dd74ae486b6701270ed01e439b5a66"
+  },
+  {
+    "path": "weapon-fit/originals/113.png",
+    "bytes": 160099,
+    "sha256": "2db53782056a764dfc72270544594a467463f6bff8a1661fab4b98b8ddf6d447"
+  },
+  {
+    "path": "weapon-fit/originals/114.png",
+    "bytes": 169416,
+    "sha256": "d3443eb23e5c7288aeea5f9b4a6e2f41bf541c1949bfb68a58453188b3ea7f16"
+  },
+  {
+    "path": "weapon-fit/originals/115.png",
+    "bytes": 161652,
+    "sha256": "86225e465fb681836dc0d126199890592b82b2bd77ac39174c0254ab93ced26a"
+  },
+  {
+    "path": "weapon-fit/originals/116.png",
+    "bytes": 163957,
+    "sha256": "1f000105c2bed1384be14592d81bf605172a80e5caa7132ae312181acc19556b"
+  },
+  {
+    "path": "weapon-fit/originals/117.png",
+    "bytes": 151155,
+    "sha256": "4c77c157147748527b17fa8881dda735a5b854dff4d753245509499d1013773d"
+  },
+  {
+    "path": "weapon-fit/originals/118.png",
+    "bytes": 151613,
+    "sha256": "a004d7066c9e11fca53241b84b2203f6cfae0aec13c0f99c656f2527b7eca888"
+  },
+  {
+    "path": "weapon-fit/originals/119.png",
+    "bytes": 154640,
+    "sha256": "1bc444e050aafa1077841135e8ba309040d618cea8a62a4ff02286d436ffba88"
+  },
+  {
+    "path": "weapon-fit/originals/12.png",
+    "bytes": 42572,
+    "sha256": "7e806e048382324ff736dae6887e81a407bdf1e249fa58cc92003f6331ece317"
+  },
+  {
+    "path": "weapon-fit/originals/120.png",
+    "bytes": 151220,
+    "sha256": "3e9fdd3f1f115256b85be7447f9724b9bd0251cdfe737ddc08d2690ae527efad"
+  },
+  {
+    "path": "weapon-fit/originals/121.png",
+    "bytes": 152092,
+    "sha256": "a28022982a7890eff53b54ffeb8eb26d5923243b3ba11a6dfa166c5293c31346"
+  },
+  {
+    "path": "weapon-fit/originals/122.png",
+    "bytes": 146646,
+    "sha256": "b52dc596cd33134825bb2fdfa3b251e7b16a583d07c2a03190920508dec691c5"
+  },
+  {
+    "path": "weapon-fit/originals/123.png",
+    "bytes": 143842,
+    "sha256": "529487c60a90e8bf3d3f97b88272eeeb975a2e00593fa0d26b9a8b2e176fcb76"
+  },
+  {
+    "path": "weapon-fit/originals/124.png",
+    "bytes": 152029,
+    "sha256": "a3128ba53c0ed1185f1140409284ece8c998b045ec2f1a8e08ef0adb02fa2faa"
+  },
+  {
+    "path": "weapon-fit/originals/125.png",
+    "bytes": 157475,
+    "sha256": "5b03c5e016fed47846fd07fab3afe5984975ffad16fe8d5352c350d10d5f4cee"
+  },
+  {
+    "path": "weapon-fit/originals/13.png",
+    "bytes": 40962,
+    "sha256": "5f210e159d44839f285cc5479a1c255355ba19b432a0720731f06e77cb0dc9a8"
+  },
+  {
+    "path": "weapon-fit/originals/14.png",
+    "bytes": 38854,
+    "sha256": "f16f6dcc6e14f9c58f72c079945b91a8e7a096a31365d9ac90c06f343bcc743a"
+  },
+  {
+    "path": "weapon-fit/originals/15.png",
+    "bytes": 44661,
+    "sha256": "03d4ae98e52336708f756eedba83ec1df8f7022c0562bcfae20aa6e52d42e2ca"
+  },
+  {
+    "path": "weapon-fit/originals/16.png",
+    "bytes": 42107,
+    "sha256": "59ae04e1ffe8c71131c4e9d2b41369cb9a1c04867e795ff4a04f97eef6b6a64c"
+  },
+  {
+    "path": "weapon-fit/originals/17.png",
+    "bytes": 45117,
+    "sha256": "0a83cd63a2dfde38ff0579e78192753cc3786e690281027a726cef26fcbfe88b"
+  },
+  {
+    "path": "weapon-fit/originals/18.png",
+    "bytes": 42337,
+    "sha256": "f936e67709d19c9d16527d355432823c30076d0d7d25f172a0cf6ca5f1833507"
+  },
+  {
+    "path": "weapon-fit/originals/19.png",
+    "bytes": 41123,
+    "sha256": "cca5b27857c0b0688113dd354bfb03215efd44e0be563f1cebabf7b404c954e1"
+  },
+  {
+    "path": "weapon-fit/originals/2.png",
+    "bytes": 45775,
+    "sha256": "4976786c71e7c62f1866838e09262d9ec51dcc7c9f01a5b644269c8398e22490"
+  },
+  {
+    "path": "weapon-fit/originals/20.png",
+    "bytes": 42772,
+    "sha256": "c3fc918f070abb25b0159b9898bec8c4e7fdbb49589b77ebfd6defa986f8920d"
+  },
+  {
+    "path": "weapon-fit/originals/21.png",
+    "bytes": 46113,
+    "sha256": "ae33e06a5f4d15bb7340338fd10bba721e47b172bfa02e8bbf6f0c8548f2cf5c"
+  },
+  {
+    "path": "weapon-fit/originals/22.png",
+    "bytes": 46934,
+    "sha256": "5e5d4cc82aa898440239f9b07896515894f5066d439699f2528373ea352eb01d"
+  },
+  {
+    "path": "weapon-fit/originals/23.png",
+    "bytes": 43336,
+    "sha256": "dbf0d099bb3f92d0bc80f8fff59a6b3f2f92ba8de6a2c4c9e60f8626cee47f51"
+  },
+  {
+    "path": "weapon-fit/originals/24.png",
+    "bytes": 41992,
+    "sha256": "c283dce53634a2d3bb48da426c04cda3fec43fc59493476511e48bd4176a2d6d"
+  },
+  {
+    "path": "weapon-fit/originals/25.png",
+    "bytes": 47886,
+    "sha256": "857b057ee8577302cff8904d1dbf640a144d09e518c386952c0106b92202b25f"
+  },
+  {
+    "path": "weapon-fit/originals/26.png",
+    "bytes": 45593,
+    "sha256": "3fabb01e6d7064638c51d9a4fc5dd18c3f9c5ce6b29375a6936919c43f48bc21"
+  },
+  {
+    "path": "weapon-fit/originals/27.png",
+    "bytes": 45505,
+    "sha256": "025d6cbb5a748e66e1eeb6fece8727b108ef46a1b87031725ff206a4146653d2"
+  },
+  {
+    "path": "weapon-fit/originals/28.png",
+    "bytes": 47063,
+    "sha256": "04982afb187f24f2ebe7207d039141ba603ceeaa927e42a3278a35f4fcab923a"
+  },
+  {
+    "path": "weapon-fit/originals/29.png",
+    "bytes": 46976,
+    "sha256": "bbb6607c75c7aae9693cf0ce5e07771437d2f5f380affd59aef4b64a2c7505dd"
+  },
+  {
+    "path": "weapon-fit/originals/3.png",
+    "bytes": 45268,
+    "sha256": "9a72c417b4266e2b2cc88efdf62f131ae1823b868b0cb0bddf58fd4560f32c59"
+  },
+  {
+    "path": "weapon-fit/originals/30.png",
+    "bytes": 232496,
+    "sha256": "47b6e736517c883f7878243e5a2d13cbe5747e7e19bfc327a8b62cf62a43b0bb"
+  },
+  {
+    "path": "weapon-fit/originals/31.png",
+    "bytes": 235199,
+    "sha256": "5cead12b014970583e72c0474ab62d44d27f1bc97d63e7f1ddad1da9cbbfdb50"
+  },
+  {
+    "path": "weapon-fit/originals/32.png",
+    "bytes": 221002,
+    "sha256": "780bd80128ff32b8fe2e23c3809b2cae1e342cffa6631fe8d18e26deb8b81c1f"
+  },
+  {
+    "path": "weapon-fit/originals/33.png",
+    "bytes": 222913,
+    "sha256": "530ec6a4e3084acdfed7c50fea1d8916a24f7cb6226bd89d3675bd9818a78951"
+  },
+  {
+    "path": "weapon-fit/originals/35.png",
+    "bytes": 226443,
+    "sha256": "27a4a5cc1deecacb43db4f0741a16e9886d848c3c610084a10d980f9ad2cdf33"
+  },
+  {
+    "path": "weapon-fit/originals/36.png",
+    "bytes": 234552,
+    "sha256": "cf7c44771e182818c5c766fee4da5e9b3df2bf81fe13ce862bbba7f5fb4cfc3e"
+  },
+  {
+    "path": "weapon-fit/originals/37.png",
+    "bytes": 219291,
+    "sha256": "71959b57c9fc78525ed83d33f9f1faefc84119ffef3d99d066fd730fc6338b79"
+  },
+  {
+    "path": "weapon-fit/originals/38.png",
+    "bytes": 249241,
+    "sha256": "d8b8508d6062c2515876564e970fc83405ddc1c45ff882a5417fcede48fd62d5"
+  },
+  {
+    "path": "weapon-fit/originals/39.png",
+    "bytes": 238815,
+    "sha256": "9208243f11986308bd96639db66b41426bf1af31fd98e2953eba2bf2b88370d5"
+  },
+  {
+    "path": "weapon-fit/originals/4.png",
+    "bytes": 41513,
+    "sha256": "80119aeb262eff104fb39c56642f81185f958899a8aac69f26f79f9c1d2ceb53"
+  },
+  {
+    "path": "weapon-fit/originals/40.png",
+    "bytes": 233325,
+    "sha256": "2519bd964c16040fac5d3c3bbca2fc74cabeee264536d5ad541c7255b56152bc"
+  },
+  {
+    "path": "weapon-fit/originals/42.png",
+    "bytes": 246950,
+    "sha256": "25b67a412396acd7782d8ae13fad5cf67366417f011943fc98558a4d1c101763"
+  },
+  {
+    "path": "weapon-fit/originals/43.png",
+    "bytes": 276832,
+    "sha256": "9400a698870a71f1d6c70e1774b2a255765e616f90c6612dc0196c4812c00970"
+  },
+  {
+    "path": "weapon-fit/originals/44.png",
+    "bytes": 235790,
+    "sha256": "7f3d1cf1cc48e94224a18198645413ff9860e2de467549acbc422fcf57d322d3"
+  },
+  {
+    "path": "weapon-fit/originals/45.png",
+    "bytes": 238072,
+    "sha256": "07fbf892af0cfc092d16408447fb7d77d286875ee928baf090b212f397e9fdb1"
+  },
+  {
+    "path": "weapon-fit/originals/46.png",
+    "bytes": 223834,
+    "sha256": "0313f5f7586b960c49a8c2975ca82ff4ebc45b45d961bb73d1a01fc8b87c7731"
+  },
+  {
+    "path": "weapon-fit/originals/47.png",
+    "bytes": 203739,
+    "sha256": "5358b0ec6fb2a23d5de3321e52b9fb365ac93a3ce4525e6fe23936ff1d2bfe66"
+  },
+  {
+    "path": "weapon-fit/originals/48.png",
+    "bytes": 226994,
+    "sha256": "ed3b7633c6218f8297ffe74885d602d6e872dad8f8fb7120653cddd48ce7ea86"
+  },
+  {
+    "path": "weapon-fit/originals/49.png",
+    "bytes": 234353,
+    "sha256": "0ac7ab13fb247dc17244e9381b24c9a70a1b6357842cc5b26871ec27df5767a0"
+  },
+  {
+    "path": "weapon-fit/originals/5.png",
+    "bytes": 45759,
+    "sha256": "dfa4cabbc180bfa0f84bcae247e5edde3fe11d7b59c4a8953b9a678b70952d28"
+  },
+  {
+    "path": "weapon-fit/originals/50.png",
+    "bytes": 227287,
+    "sha256": "9150eb05b1579355d63b7e29e4c34f4b460dbaf2eed466739a0a3e221c432724"
+  },
+  {
+    "path": "weapon-fit/originals/51.png",
+    "bytes": 245728,
+    "sha256": "23b6a4a739d89215fdfb6ad8eca8629d90abb7a01f8b4a34ce18a1f7f0dba378"
+  },
+  {
+    "path": "weapon-fit/originals/52.png",
+    "bytes": 143616,
+    "sha256": "93e9493dfb2a17752b2e237b27cd778ab3cb800addcaabf0442d58d17ab9a502"
+  },
+  {
+    "path": "weapon-fit/originals/53.png",
+    "bytes": 146711,
+    "sha256": "3d21ad5db98a525d72329fa220454b5cb84f778876880bc724a313ffba08b128"
+  },
+  {
+    "path": "weapon-fit/originals/54.png",
+    "bytes": 149925,
+    "sha256": "53d351745cce87a90253344215937e43f59987c31c2c007ab43e9096f79ecb55"
+  },
+  {
+    "path": "weapon-fit/originals/55.png",
+    "bytes": 154903,
+    "sha256": "727102db3b089c404c4a95fbf524d300884721b3b2342aca20691c87c8c38ef9"
+  },
+  {
+    "path": "weapon-fit/originals/56.png",
+    "bytes": 140525,
+    "sha256": "ca3dcd281df74215d6e56bd814e1daf03e8e98a3c6c2ffb9fb60258c81bcb5c6"
+  },
+  {
+    "path": "weapon-fit/originals/57.png",
+    "bytes": 141006,
+    "sha256": "5a70b1a999822939c67f28540378b2cd26d0f3bf50be82b9f63a59ff113f0e06"
+  },
+  {
+    "path": "weapon-fit/originals/58.png",
+    "bytes": 139143,
+    "sha256": "2b40e4a0ab57c222c43aa49aa616526b899a710e5eac725aec33406000bedf49"
+  },
+  {
+    "path": "weapon-fit/originals/59.png",
+    "bytes": 150639,
+    "sha256": "bfa4194b65ca8898af12359f9bbbd116b84d72916a35cac820df5d7af585c251"
+  },
+  {
+    "path": "weapon-fit/originals/6.png",
+    "bytes": 44842,
+    "sha256": "07469d92de755271b9517abe235bcf708c996a7b5d77d3aa0d1c952c7b5098b4"
+  },
+  {
+    "path": "weapon-fit/originals/60.png",
+    "bytes": 149370,
+    "sha256": "a11814a2915013f9882c01f6dd0dfc9aabc6b2adeb56fe4cc6c983866c4fbdde"
+  },
+  {
+    "path": "weapon-fit/originals/61.png",
+    "bytes": 145658,
+    "sha256": "aabbae4f400f2f54d331881b3f8d579d8efa08ce141b1b80ddada285aee0d617"
+  },
+  {
+    "path": "weapon-fit/originals/62.png",
+    "bytes": 137302,
+    "sha256": "ead9cedf3b3f83086cebd6e6efd0571fbd2e7860c11cbf2ca663915eab530330"
+  },
+  {
+    "path": "weapon-fit/originals/63.png",
+    "bytes": 132288,
+    "sha256": "e77c2b537422c454943f9c6109afda90d7d59ca69462a55236b0653dc83974f2"
+  },
+  {
+    "path": "weapon-fit/originals/64.png",
+    "bytes": 138038,
+    "sha256": "a46210fdd6938247724651f315d5b19dd9cb64e4c8a138ea909749a8724de256"
+  },
+  {
+    "path": "weapon-fit/originals/65.png",
+    "bytes": 150102,
+    "sha256": "607167876d9da050eed5a8a5b9bde410d18d1bc2a55b061b9919280456cde208"
+  },
+  {
+    "path": "weapon-fit/originals/66.png",
+    "bytes": 138234,
+    "sha256": "2e66df9d3a2443e9594c6a8867582cafb3d5bd1256ba18fd4a87a368071dee41"
+  },
+  {
+    "path": "weapon-fit/originals/67.png",
+    "bytes": 149046,
+    "sha256": "c5569c7405028fbf534b5a14ade670e98683b85dd2c430ce51487a1770749b73"
+  },
+  {
+    "path": "weapon-fit/originals/68.png",
+    "bytes": 145913,
+    "sha256": "bfd23c4e56441896d74e170a1066cacae67d811eafef202fe613f6fea8b50eee"
+  },
+  {
+    "path": "weapon-fit/originals/69.png",
+    "bytes": 143386,
+    "sha256": "1af93e9a8d03cb25dec3dad555f9d697ff6e971e91b940d8ad974fb5a660b672"
+  },
+  {
+    "path": "weapon-fit/originals/7.png",
+    "bytes": 45350,
+    "sha256": "f442af426964e8dbc76f32d847a495e1a978fc875f4fd5a8bfff8d79a8625b8b"
+  },
+  {
+    "path": "weapon-fit/originals/70.png",
+    "bytes": 140712,
+    "sha256": "9d564e5efdda98e5cefe1914a62bb9043a2011c7cee2ef1d4f68144b6e3efe0e"
+  },
+  {
+    "path": "weapon-fit/originals/71.png",
+    "bytes": 145698,
+    "sha256": "4d8d3ffa6bcaef16cb3659986a2b92b6cd4dacd0b2aa80c66f5fd8b4e56f68a7"
+  },
+  {
+    "path": "weapon-fit/originals/72.png",
+    "bytes": 153659,
+    "sha256": "2cb458bad6134f690f02da4310bb38af91e404e351a46120c492851281da90db"
+  },
+  {
+    "path": "weapon-fit/originals/73.png",
+    "bytes": 151197,
+    "sha256": "648d07f411e0e2d27604de3a13d4fc47efcf6f01da0f7d2087887925bb0e85ac"
+  },
+  {
+    "path": "weapon-fit/originals/74.png",
+    "bytes": 143568,
+    "sha256": "ab1d8e440e73515e94e05f4537f8f4138204e39768ae4cfe9e79e724846f21e3"
+  },
+  {
+    "path": "weapon-fit/originals/75.png",
+    "bytes": 150089,
+    "sha256": "f29f1c1a80999c89cc81f0d97dcdc0ec99f4f7be6d66803c41def56be3d98890"
+  },
+  {
+    "path": "weapon-fit/originals/76.png",
+    "bytes": 138313,
+    "sha256": "80dd7fb64bd7bf3d8f5f34360a4d2c7216d3873e40b4b0fa6ac501ee46870931"
+  },
+  {
+    "path": "weapon-fit/originals/77.png",
+    "bytes": 148317,
+    "sha256": "495e99770e7097ac6d6762b57fea1f4c4d3b63f7904b7fcee06ca09c42cd33e9"
+  },
+  {
+    "path": "weapon-fit/originals/78.png",
+    "bytes": 146604,
+    "sha256": "0eefa97429ecd9195233a3649ce55bf4d50e5c3e0597f6b7bd21c526cef3a941"
+  },
+  {
+    "path": "weapon-fit/originals/8.png",
+    "bytes": 44339,
+    "sha256": "d3994ce9909745fd5ccd8a9e6592b21f18294907b671ae7f42e24dd7bbfd9b5d"
+  },
+  {
+    "path": "weapon-fit/originals/86.png",
+    "bytes": 167567,
+    "sha256": "ec0b9950a132f16bf2e8d89256e80adad769ebcc1311362c190b43285c99c903"
+  },
+  {
+    "path": "weapon-fit/originals/87.png",
+    "bytes": 166366,
+    "sha256": "baed7e1994bb60158ceae20b0c436fc017748da94b64a760383c6fc394b8cc60"
+  },
+  {
+    "path": "weapon-fit/originals/88.png",
+    "bytes": 148065,
+    "sha256": "7866720a8dbc0073ad163173ee76cfccbba0deb706866d6f3beefb4f5c3fc75c"
+  },
+  {
+    "path": "weapon-fit/originals/89.png",
+    "bytes": 155733,
+    "sha256": "021cc01ebf4033ff2accb9af11a66265df2fbda5eaf24240cfa6f09465a59dd9"
+  },
+  {
+    "path": "weapon-fit/originals/9.png",
+    "bytes": 44209,
+    "sha256": "b7b39a85884b7de3cc226a14511921265183fc606f6d542145a7fb943b2314d4"
+  },
+  {
+    "path": "weapon-fit/originals/90.png",
+    "bytes": 159918,
+    "sha256": "fc2329c5afbfc1bc2272c131c1bb58de825edc9f87a8e5c082aa5d015d7cbe8d"
+  },
+  {
+    "path": "weapon-fit/originals/91.png",
+    "bytes": 149049,
+    "sha256": "b460f7671408e52113408c5efb9fc96384181b55393be57ba30a6c685b3df103"
+  },
+  {
+    "path": "weapon-fit/originals/92.png",
+    "bytes": 157986,
+    "sha256": "752966fdcc6c1b2310ee993f53efde234416a4efbd131c45ba0aa5ab0ac79caa"
+  },
+  {
+    "path": "weapon-fit/originals/93.png",
+    "bytes": 158127,
+    "sha256": "25bad92156a4ed8ec29b77425b734e0cb6e63f7102083c19b21884d06673d8c1"
+  },
+  {
+    "path": "weapon-fit/originals/94.png",
+    "bytes": 159638,
+    "sha256": "5fd02d13db8b06060171b28ceb0ad5f84e3e1e2e32649806ea6a13078326e163"
+  },
+  {
+    "path": "weapon-fit/originals/95.png",
+    "bytes": 147949,
+    "sha256": "96dcf7ca92221d2bc092a812f4dfa8b3a0e76cd4026e5a62c910cbdb3c6a8edb"
+  },
+  {
+    "path": "weapon-fit/originals/96.png",
+    "bytes": 154826,
+    "sha256": "e5ef0aaacecb9dc82f2a895efa0144b8476ab3dbf14a88b78b415c6a71647444"
+  },
+  {
+    "path": "weapon-fit/originals/97.png",
+    "bytes": 178719,
+    "sha256": "fc63225d8571fd322474731cfe55f41146e4f2050164e0ce9e8242b65ff6ca15"
+  },
+  {
+    "path": "weapon-fit/originals/98.png",
+    "bytes": 189404,
+    "sha256": "c0c2046eb3f65de130fad17f2733bb767a728cd6c005780c127e39e4805774f6"
+  },
+  {
+    "path": "weapon-fit/originals/99.png",
+    "bytes": 173137,
+    "sha256": "a8baa90a47780c92b7a3e23b184cfbf8c8347aae41cab7a568b0f82a795d5cee"
+  },
+  {
+    "path": "weapon-fit/package_viewer.py",
+    "bytes": 1092,
+    "sha256": "dad518b828998045f5f148eea2a3f813412465bae7b98b0fd301b2534f95f638"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/CONTINUE.md",
+    "bytes": 4231,
+    "sha256": "5104ecf5708894ea6a0a93f596482ea7546bdbd7b2360503a13925b33129f6cc"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/all-11136-pairs.csv",
+    "bytes": 912950,
+    "sha256": "9ed92d14b9450e6565eefb66f19d13237159032102e74df4bdf69ab7656adcd7"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/armor-7-weapon-11-candidate.png",
+    "bytes": 832585,
+    "sha256": "05efac10ea62f904f3577b1a4d8b382c339607d69aa3846ddb71fb2118780352"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/audit_all_pairs.py",
+    "bytes": 2931,
+    "sha256": "8a4201386abd5749bf98938f40614c81ddc1b44a1497e144ed75d14fdf638139"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-01.jpg",
+    "bytes": 881685,
+    "sha256": "5048bcae0e5b5697aa717bf09ec3851adec3963b0adedc6b46fca80bd3095746"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-13.jpg",
+    "bytes": 918839,
+    "sha256": "ff85dc2eb99f7b96ac52f9b89cec138f496419ce498434c75a0b8f57ebf128a7"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-25.jpg",
+    "bytes": 928656,
+    "sha256": "8012233b1d83cb536f29c6e056e6fb50887480d83985a2e5db5123ebd25d31b6"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-37.jpg",
+    "bytes": 862276,
+    "sha256": "0b3bbd48554fdea2447ac1b9f5bb7a27b563f6ee6752f38e0ce56a93f664e60a"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-49.jpg",
+    "bytes": 758475,
+    "sha256": "5e22310d869ebb7e87707b2f27b4d26f7c3ebddd21f72d2b56341a04f657f9e6"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-61.jpg",
+    "bytes": 843199,
+    "sha256": "4f3e0b873f27e3cd9c29b7d973ced95d1e8a062c6f74be50869c3b4c5297351e"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-73.jpg",
+    "bytes": 801152,
+    "sha256": "518f7bdd9a341d40bfefce08b60f06948422a310b513850e57b4630b3f5a0580"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/base-hands-85.jpg",
+    "bytes": 775893,
+    "sha256": "4b7e08ce410d76d10571969f2b2ee1923a0c2848875c03baf9e437e4963dbcdd"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/edited-grip-close.png",
+    "bytes": 458478,
+    "sha256": "484ee18eccb80d97e843c9103057a399996a18d1e646b2fcd8582747284d8c24"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/review_base_hands.py",
+    "bytes": 861,
+    "sha256": "c333612854ff111eadf99023d6cf09fb73b8950f762080c24eb42a10cac5ba48"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/summary.json",
+    "bytes": 207,
+    "sha256": "8395150621d044ef4fde257b3ed60dfd1802ffcd547d28f3c190091dae852d16"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/support-repair-queue.csv",
+    "bytes": 171339,
+    "sha256": "acdb4d7eeb72b2b6845653e5e31e6e624ee93c0a2c58e499f11b94299ff944c1"
+  },
+  {
+    "path": "weapon-fit/pixel-audit/weapon-alpha.json",
+    "bytes": 14417,
+    "sha256": "b50cfb8d11c27ed781881f8e5d8210ad967296f75e0ed5550020103545eadc9a"
+  },
+  {
+    "path": "weapon-fit/placements.json",
+    "bytes": 111886,
+    "sha256": "e413187fd95cab79484b789c887e9a721e3f57999a8319f452a54b6b1748211b"
+  },
+  {
+    "path": "weapon-fit/refine_cutouts.py",
+    "bytes": 1080,
+    "sha256": "ff9ab9344c0e591254f6a757e30e04a6a2727ce764c42ba95e90195d310d5c1c"
+  },
+  {
+    "path": "weapon-fit/refine_support.py",
+    "bytes": 833,
+    "sha256": "5fdf00f4b9545003948d49d9543cbb4b0e0b24a62318d779fc6f635d58ae330f"
+  },
+  {
+    "path": "weapon-fit/render_review.py",
+    "bytes": 1939,
+    "sha256": "69d0001265ff92d04066877e62395a329b439927a4d72c228269edb91bfdbfdb"
+  },
+  {
+    "path": "weapon-fit/review_base_hands.py",
+    "bytes": 861,
+    "sha256": "c333612854ff111eadf99023d6cf09fb73b8950f762080c24eb42a10cac5ba48"
+  },
+  {
+    "path": "weapon-fit/review_weapons.py",
+    "bytes": 581,
+    "sha256": "0398be056eabc281781d53f32e5e28069619aabb3c41599d0e3abe7bed8fd28d"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/CONTINUE.md",
+    "bytes": 7247,
+    "sha256": "1b4aa2203a26af9de5f46d866a2e1bafb928c9c9f66081c72c2be07b495cf164"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-7-aks74u-v4.png",
+    "bytes": 885593,
+    "sha256": "aba01209d44f9ffeedb3b960ad333fbec6addfab005115e8bb9ad902ff4f8719"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-7-aks74u-v5-clean.png",
+    "bytes": 821231,
+    "sha256": "37540798a5bbe7f9f7c56e016625d3f6a1be95061b026e6435cbcd0aceca7210"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-7-aks74u-v5.png",
+    "bytes": 873855,
+    "sha256": "b4c62d55708acc948dbee89f67d1a3f65dec182c662d21faf17fb94738d568df"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-aks74u-clean.png",
+    "bytes": 2123632,
+    "sha256": "503bb3ce774e2d5ab58e58b3116471fe57f49b22b9a7a7e66a34c72c922afd81"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-aks74u-cutout-trial.png",
+    "bytes": 1373629,
+    "sha256": "b55732a28b074212bdbb2a174318f187302d8e186d78d854a225dd06f02f7943"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-aks74u-source.png",
+    "bytes": 2192172,
+    "sha256": "e2d81bd3676e22b3189f966e2b6d1e352d3bb86ec0300b65d0b25a610222aba0"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-cutout-review.jpg",
+    "bytes": 67511,
+    "sha256": "9aa1ad0ef8f28aec3cd1a448e2471358dcbe818bc7ab1b0deb278766f63337f4"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-final-review.jpg",
+    "bytes": 86059,
+    "sha256": "5e58a025c125f1821d718b3f22f83ab41c41f961a92388f1335221f223a8ef2c"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-8-hands-check.png",
+    "bytes": 673121,
+    "sha256": "c5b3a8ea73149711f05e76511933e12f2e844408c106eaf022b04cbde9efb08b"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-aks74u-clean.png",
+    "bytes": 2067070,
+    "sha256": "08ba27df7d684437b0ce12618ae83b313fb34cfaf80e9156c41d06be9586e0d8"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-aks74u-cutout-trial.png",
+    "bytes": 1295770,
+    "sha256": "bb7bbbdf07fcd708b2b197b52ddcfaeac5863eccd3259cbfc848dbca961c0847"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-aks74u-source.png",
+    "bytes": 2130439,
+    "sha256": "c89609b69628af3b99d57ca1e7f7fb59da2d3a8c2db1ceebebb881757b992d35"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-cutout-review.jpg",
+    "bytes": 67636,
+    "sha256": "8d85084a6927b8066211ab744fa3a1c58b06d250098dfb28d23316395fbe7a93"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-final-review.jpg",
+    "bytes": 86644,
+    "sha256": "b40acb4b7f9cc9dcfc31430e0a1a750835db216f1a39c715641197d280947e39"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/armor-9-hands-check.png",
+    "bytes": 696806,
+    "sha256": "93806b62a6ae158577fa5c90b31a3d737753c5680c2e04a870c1b412a52b1f79"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/grip-review.png",
+    "bytes": 602160,
+    "sha256": "27f6458982d6095f703f58c746663c41f7b109a3b9bb4d4df80daa2f9a75da3c"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/hole-8.png",
+    "bytes": 526827,
+    "sha256": "8395ed86acf16519418fb90fe48626fb7476e76f203d88cdf472b1fcdd39310f"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/hole-9.png",
+    "bytes": 570666,
+    "sha256": "7303af19c8a3cd8f04c7e5d2b0c9d9633ad4dd73b778a4ea12550e8ea0c0af59"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/interior-hole-masks.json",
+    "bytes": 158,
+    "sha256": "db1d0db320ace386f8886d1b49bf674c31e3918e84ae934e76a99bc2763a8662"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/refine_cutouts.py",
+    "bytes": 1080,
+    "sha256": "ff9ab9344c0e591254f6a757e30e04a6a2727ce764c42ba95e90195d310d5c1c"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/texture_cutout.py",
+    "bytes": 1116,
+    "sha256": "8ecef7879dbd452d9473859d0ff6446e7d77bd0226e700fea3d9f563962e96de"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/v5-grip-review.png",
+    "bytes": 1176702,
+    "sha256": "af1469a19fc6cb3c3e2863d1cc3221bf157f5c25ec30ce56efc450be59d7efb7"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/v5-validation.json",
+    "bytes": 291,
+    "sha256": "0d1ddbc45082fa8f67f9d7ef54b82069a1fe2ca81f4f8eb580ad616afba77029"
+  },
+  {
+    "path": "weapon-fit/reviewed-variants/v5-white-black-check.jpg",
+    "bytes": 158764,
+    "sha256": "0183bc013a0a96bdd4fdf6c92945611bf8ca3d1ae19230df3909d4fd63b243c6"
+  },
+  {
+    "path": "weapon-fit/stock-review/CONTINUE.md",
+    "bytes": 2325,
+    "sha256": "53a28a8a4f01390dd653ec3cc0f877e9d855c7da0e9f252c15300edf8bc9306b"
+  },
+  {
+    "path": "weapon-fit/stock-review/armor-1-weapon-11.png",
+    "bytes": 1125765,
+    "sha256": "dfae91db1d93dfb544c0bdbb282eece912836e816cd17aa7f37574e128d226a0"
+  },
+  {
+    "path": "weapon-fit/stock-review/armor-10-weapon-11.png",
+    "bytes": 196673,
+    "sha256": "95045963f1eacb0db074e57f6a12cbddb60e14c162e35a823b327c8d60de33f3"
+  },
+  {
+    "path": "weapon-fit/stock-review/armor-7-weapon-11.png",
+    "bytes": 1400375,
+    "sha256": "3a880b06e435e20c804f91ef97e1f74b25fe5ff48f437efc3247956d93562e0a"
+  },
+  {
+    "path": "weapon-fit/stock-review/armor-8-weapon-11.png",
+    "bytes": 1403391,
+    "sha256": "81abb5c60dd944cc145d6114d2dc7dedaf86b34374d716df5f8a02015bf727cf"
+  },
+  {
+    "path": "weapon-fit/stock-review/compare-1.jpg",
+    "bytes": 198846,
+    "sha256": "d6da48007c4b5fa42395cb724b0d7ff94c5fbbd3c0b09baa35f96159eec005d2"
+  },
+  {
+    "path": "weapon-fit/stock-review/compare-10.jpg",
+    "bytes": 248016,
+    "sha256": "79dd1d7fbba2d87530f86d2056be4b12764e710a9565fde9bb18359cb4aaa0d8"
+  },
+  {
+    "path": "weapon-fit/stock-review/compare-7.jpg",
+    "bytes": 238710,
+    "sha256": "7b6a40c2ace6bdd6e6894cddc21916b556472a331ed6f39277c2c961e5dbafb2"
+  },
+  {
+    "path": "weapon-fit/stock-review/compare-8.jpg",
+    "bytes": 240206,
+    "sha256": "7ab6da9d8f3cd9094e72daec647bd5fc2eb7c5f09b1d7ade99f876a37fb573f0"
+  },
+  {
+    "path": "weapon-fit/stock_occlusion.py",
+    "bytes": 2350,
+    "sha256": "80414a3306e2bb70be533246c0f9d5d921289f1de4606d62b752611297e62cb6"
+  },
+  {
+    "path": "weapon-fit/weapon-anchors.json",
+    "bytes": 1759,
+    "sha256": "af9c44a63febdbf3feac1161c62aa5b732d76c5701b83d52476b752adefe874c"
+  },
+  {
+    "path": "weapon-fit/weapons/1.png",
+    "bytes": 1367073,
+    "sha256": "ae543be324de324efed3e31410233a13df996a87c4d296ec0b4d9dcd53348713"
+  },
+  {
+    "path": "weapon-fit/weapons/10.png",
+    "bytes": 1369680,
+    "sha256": "41b3d3b8a7a5d741566dc9d47fc2857a9347ce980566800141ef590cd67c33b0"
+  },
+  {
+    "path": "weapon-fit/weapons/100.png",
+    "bytes": 1353629,
+    "sha256": "c2261275285377f6cf2446e90ae194a8d0873ab528431d061cd5624a86b3d602"
+  },
+  {
+    "path": "weapon-fit/weapons/101.png",
+    "bytes": 1133622,
+    "sha256": "bd9babb93c33155eaf92b322382d062609bb92cfc37fcc25c167e4443dcd8271"
+  },
+  {
+    "path": "weapon-fit/weapons/102.png",
+    "bytes": 1128362,
+    "sha256": "3cff9108b30b8bde4aa0deb1e9768d3fcfd3466c4f173dee6096bcd65e234fc8"
+  },
+  {
+    "path": "weapon-fit/weapons/103.png",
+    "bytes": 793627,
+    "sha256": "9ecae2e3383435c279eb60eee70a30ffbe1f18716d6ec85d03fb547837151e2d"
+  },
+  {
+    "path": "weapon-fit/weapons/104.png",
+    "bytes": 798043,
+    "sha256": "7657ae3a3cafbaefb885924a0bed931747442ea2d27c51de19f98e393bb8bfb5"
+  },
+  {
+    "path": "weapon-fit/weapons/105.png",
+    "bytes": 1130865,
+    "sha256": "38f8405e2a41d552d18fc6ca2337519500bb880a606b59884776d872d117d59c"
+  },
+  {
+    "path": "weapon-fit/weapons/106.png",
+    "bytes": 1013593,
+    "sha256": "846c90395c99848bae32b72b5dd9574bb3b84faf66cdfb2dbfe125ec8ab8624e"
+  },
+  {
+    "path": "weapon-fit/weapons/107.png",
+    "bytes": 1063963,
+    "sha256": "f509861b2028780e3f6ebf58c5784ca2df065e6268da2f147b16ca0f49646d5b"
+  },
+  {
+    "path": "weapon-fit/weapons/108.png",
+    "bytes": 1086224,
+    "sha256": "0aab8c3fbdc95a1f08a293556fddd618b38417e1b15049f7d1efd2fb35228f59"
+  },
+  {
+    "path": "weapon-fit/weapons/109.png",
+    "bytes": 1090558,
+    "sha256": "7bbc07a71006207fe07eaea9bc6def26710d1ba58b8d16c9b8d9007749206c0e"
+  },
+  {
+    "path": "weapon-fit/weapons/11.png",
+    "bytes": 819610,
+    "sha256": "d5e059dff1a15685ce1eb63f3a61c6c396aa71f7467bf86e5ab2a2d6cb829362"
+  },
+  {
+    "path": "weapon-fit/weapons/110.png",
+    "bytes": 1089713,
+    "sha256": "5cf8f8abd8b88d2169faf274f5e25554192dba29bb16828c6268a9aaffa3dd8f"
+  },
+  {
+    "path": "weapon-fit/weapons/111.png",
+    "bytes": 1035676,
+    "sha256": "e224b2fc098033eac46068b9935998e4b82d2a65aee6ee67afcb32a14238461b"
+  },
+  {
+    "path": "weapon-fit/weapons/112.png",
+    "bytes": 1147430,
+    "sha256": "39989753c89461672339015c77a75c23c0e0b2495ddc9d9070290e7c33559ca9"
+  },
+  {
+    "path": "weapon-fit/weapons/113.png",
+    "bytes": 1063578,
+    "sha256": "21cf42a97403e6f0eda272937deb34e830da6fb1f08dc64a85addb765fa68772"
+  },
+  {
+    "path": "weapon-fit/weapons/114.png",
+    "bytes": 1165804,
+    "sha256": "b21d37051faaf96754092225c74290f6ca2369a163d152ced8e739b1a1c8e3dd"
+  },
+  {
+    "path": "weapon-fit/weapons/115.png",
+    "bytes": 1038598,
+    "sha256": "cb9c674c0d2c7610f5de69fe524246b3331708693d7ba86469d4d46706ac4c4b"
+  },
+  {
+    "path": "weapon-fit/weapons/116.png",
+    "bytes": 1006089,
+    "sha256": "886f69928e55ceed98f41d1cc0c5b8bfc9ecf970da7b46451770654cdff68240"
+  },
+  {
+    "path": "weapon-fit/weapons/117.png",
+    "bytes": 1048874,
+    "sha256": "e7edada30175f6efa9e531d05b2f2503697749cd8e2984af7949ef69822373f0"
+  },
+  {
+    "path": "weapon-fit/weapons/118.png",
+    "bytes": 1112448,
+    "sha256": "37989666ab21cbf08365f8cc0b62026efc8c1aeacc488b56b927382e26c3724f"
+  },
+  {
+    "path": "weapon-fit/weapons/119.png",
+    "bytes": 1213686,
+    "sha256": "eb82298a22b0ff79d0809eeb9582625343788d41c5d9767f79f8ed5cf2962a7d"
+  },
+  {
+    "path": "weapon-fit/weapons/12.png",
+    "bytes": 1323416,
+    "sha256": "4e9de75f1afc3ce8ec17d14a6db0eb5398ff925b9e46dbf773e46a423bac11c4"
+  },
+  {
+    "path": "weapon-fit/weapons/120.png",
+    "bytes": 1032962,
+    "sha256": "34acd2983efe5baafd48a9e010d230db063292a18597a872eaa95c2e11cab7eb"
+  },
+  {
+    "path": "weapon-fit/weapons/121.png",
+    "bytes": 1021591,
+    "sha256": "68486efa23e95c14cfb8c259eea8934e713922cfe86cc023b2572b448fca4d7b"
+  },
+  {
+    "path": "weapon-fit/weapons/122.png",
+    "bytes": 1069678,
+    "sha256": "36f6fb53d9f46e229a78e457410d20867b70c99ab5743fde32b83721a4fcad1d"
+  },
+  {
+    "path": "weapon-fit/weapons/123.png",
+    "bytes": 999210,
+    "sha256": "73ec56871101fcc8b3de47194cdce6fd55a5afea4cef77ceac4cd114a96c24a8"
+  },
+  {
+    "path": "weapon-fit/weapons/124.png",
+    "bytes": 1190859,
+    "sha256": "2af5cec20a20cc5fc057d6e1e4f9b3a281a0d3079b3c85bb85ca55c09ee63cae"
+  },
+  {
+    "path": "weapon-fit/weapons/125.png",
+    "bytes": 1347135,
+    "sha256": "d2958f31a72db60689140b844337fd02a89d3545fa833b2fc7449b450bcc0a78"
+  },
+  {
+    "path": "weapon-fit/weapons/13.png",
+    "bytes": 1140059,
+    "sha256": "7bd9a4c3bcea6d8735203efb0e1067132ac88a383c336f17a68afc03d58f435e"
+  },
+  {
+    "path": "weapon-fit/weapons/14.png",
+    "bytes": 1105124,
+    "sha256": "01e9ce7a1f59d131aedd6ad5732dc2071dc09783e5901f1b304190ebb09b5822"
+  },
+  {
+    "path": "weapon-fit/weapons/15.png",
+    "bytes": 1339630,
+    "sha256": "e72e3bb98ddd509ac5eb6d681aa5bca8bc73bd29243bead98fd6cc37879d1ff2"
+  },
+  {
+    "path": "weapon-fit/weapons/16.png",
+    "bytes": 1403322,
+    "sha256": "0d1800a8a0d95c6180e07c54c287f2edce81431a83a36b1e853915f6e7bc3254"
+  },
+  {
+    "path": "weapon-fit/weapons/17.png",
+    "bytes": 1336154,
+    "sha256": "f4c87c5ee46d0555ba55dfaed34faaede7ed61d876be97eff03444c6ad48e603"
+  },
+  {
+    "path": "weapon-fit/weapons/18.png",
+    "bytes": 1224840,
+    "sha256": "e4ae441c4999556bcc5056f4dafefe050159fb43ec68e3d92b1f1676e05ba3df"
+  },
+  {
+    "path": "weapon-fit/weapons/19.png",
+    "bytes": 1114884,
+    "sha256": "6319081352db8fb425ffa3ea920975e9ae785f041c8e7f8c576f024c746177cd"
+  },
+  {
+    "path": "weapon-fit/weapons/2.png",
+    "bytes": 1321541,
+    "sha256": "6f4081e03d0053fc9d3ee0379c3a98e1a9880e3bd8bd0c7284fbc969ff552c86"
+  },
+  {
+    "path": "weapon-fit/weapons/20.png",
+    "bytes": 1198452,
+    "sha256": "baa72023267d3f18586d202aa3505d34955f6fc7b852116a7af6fac622f597be"
+  },
+  {
+    "path": "weapon-fit/weapons/21.png",
+    "bytes": 1413540,
+    "sha256": "9e227bf4678ca363bfe9df8834629f5cadd68111bab762a34ec476abb1ed1c6e"
+  },
+  {
+    "path": "weapon-fit/weapons/22.png",
+    "bytes": 1529706,
+    "sha256": "67c694791648a9671760b1c146b8d8f6429015daa345aa52fd60699abc96e4a5"
+  },
+  {
+    "path": "weapon-fit/weapons/23.png",
+    "bytes": 1162448,
+    "sha256": "172e09000af7d1bd45c6cc6776913780ecd14847d88eaf47e2a2b13148cdd430"
+  },
+  {
+    "path": "weapon-fit/weapons/24.png",
+    "bytes": 1146013,
+    "sha256": "4c1c2ea22845ce6e9c53efef22aed2508fd82065694c9ec9acbb4f38e901a436"
+  },
+  {
+    "path": "weapon-fit/weapons/25.png",
+    "bytes": 1521767,
+    "sha256": "b9f4ef68319a33fddb053cc04a176dc48117bf20aa33899bb3846528625ae63d"
+  },
+  {
+    "path": "weapon-fit/weapons/26.png",
+    "bytes": 1276434,
+    "sha256": "b29cbbbb35775b360d676fe0d1e1a98da64ba44a9db9003b1674366f0d67eeab"
+  },
+  {
+    "path": "weapon-fit/weapons/27.png",
+    "bytes": 1208458,
+    "sha256": "295e8cd8dbc2f68f3812608684cc448be08cb0e51fff27f4428039a55342b3d9"
+  },
+  {
+    "path": "weapon-fit/weapons/28.png",
+    "bytes": 1227037,
+    "sha256": "63e72fa4f9b85134b709d7269f7be85601f67dd3ba7fce23d76c1e8945bd3103"
+  },
+  {
+    "path": "weapon-fit/weapons/29.png",
+    "bytes": 1353718,
+    "sha256": "b399156386949425a3e6786067954100bef3e0dd30c3388d5995d8c3cdbd82dd"
+  },
+  {
+    "path": "weapon-fit/weapons/3.png",
+    "bytes": 1275059,
+    "sha256": "555ab2887d49a4f2eeb6a7eb392d921fcb5e6a4ecd22735fbb42dca0ea0e8d10"
+  },
+  {
+    "path": "weapon-fit/weapons/30.png",
+    "bytes": 1244522,
+    "sha256": "091d49e31abfa6ebc104c2b6b85e8e060cef5c750b1ff26ccd94544cfcc67e4f"
+  },
+  {
+    "path": "weapon-fit/weapons/31.png",
+    "bytes": 1220932,
+    "sha256": "225c5490ec629e93e3e798040511847b0400381aab94be6567a2df55e666b3b7"
+  },
+  {
+    "path": "weapon-fit/weapons/32.png",
+    "bytes": 1193221,
+    "sha256": "4fa8304f6fa4eb7289273fedf4fcee0eae862768644ed0a1e79dda9a2d8e44aa"
+  },
+  {
+    "path": "weapon-fit/weapons/33.png",
+    "bytes": 1126044,
+    "sha256": "7535ccf6c090f2bda23bc1c713b1abb7f273873e4ed7d4799734a332347d776e"
+  },
+  {
+    "path": "weapon-fit/weapons/35.png",
+    "bytes": 1208022,
+    "sha256": "40dd7b50c5f232f76546342e887eada6d836ae48b93e113307a72f70ab3035a8"
+  },
+  {
+    "path": "weapon-fit/weapons/36.png",
+    "bytes": 1251930,
+    "sha256": "e410e30a7959ec7fe46b7006be7365896bd27397c21ab7ad679cbfed968d8d22"
+  },
+  {
+    "path": "weapon-fit/weapons/37.png",
+    "bytes": 1210832,
+    "sha256": "7eef6eb05d48572449166dd60c36ac0e3030c39d9ad9d25395e3ce9397840dc2"
+  },
+  {
+    "path": "weapon-fit/weapons/38.png",
+    "bytes": 1391363,
+    "sha256": "60214060966dd00b2a126a90cd5fc02d3acfe47c61af8991410a48e6df5f839a"
+  },
+  {
+    "path": "weapon-fit/weapons/39.png",
+    "bytes": 1225280,
+    "sha256": "1590879f0c223d99aa21269aa13e09863d1a9a6e80a58013f6af9a72605467ad"
+  },
+  {
+    "path": "weapon-fit/weapons/4.png",
+    "bytes": 1538199,
+    "sha256": "4b22586a929cf74f1a25c1d9936fe687dfb0ed76ac9c7605cc22730e183ccf45"
+  },
+  {
+    "path": "weapon-fit/weapons/40.png",
+    "bytes": 1338900,
+    "sha256": "26737043cd29ff8faa35f708e750780f7bbd47242df6072ae3b94a2e398e7a52"
+  },
+  {
+    "path": "weapon-fit/weapons/42.png",
+    "bytes": 1303820,
+    "sha256": "d92fe9222a0a0ff62ec1cbd946f433c3986aa2c17444ddf1575af5b23d049349"
+  },
+  {
+    "path": "weapon-fit/weapons/43.png",
+    "bytes": 1715189,
+    "sha256": "fc27b1845188b60b177392061af48a5bb73c49fe5b3a351f799c79eac27a0303"
+  },
+  {
+    "path": "weapon-fit/weapons/44.png",
+    "bytes": 1201644,
+    "sha256": "066b63e6e381b92f7a3ef28b6339b6381a55cdd9d173c5e58f2c1754a5317450"
+  },
+  {
+    "path": "weapon-fit/weapons/45.png",
+    "bytes": 1184611,
+    "sha256": "06fb83bf370bfe5989779302530e4298640b60b89837096609608b85806293b1"
+  },
+  {
+    "path": "weapon-fit/weapons/46.png",
+    "bytes": 1108484,
+    "sha256": "b1f432d7711bc8416c8dd4df99dbb7cd338047e40456ed5686343544c4bf2143"
+  },
+  {
+    "path": "weapon-fit/weapons/47.png",
+    "bytes": 1062613,
+    "sha256": "a5be92ecbadbcb4afc04b60a9e8e7c1a4ef61b7025a5ee0e2ec76ae96b86db5d"
+  },
+  {
+    "path": "weapon-fit/weapons/48.png",
+    "bytes": 1119465,
+    "sha256": "d266b837d567536b2ade23a805a8e1b9445762a7a94b7a7fb5274afa2dc69477"
+  },
+  {
+    "path": "weapon-fit/weapons/49.png",
+    "bytes": 1263297,
+    "sha256": "d91f02b925a03a8d55654a1f67e9aa12688ce5260033d6d4c40004f0c1f5c21b"
+  },
+  {
+    "path": "weapon-fit/weapons/5.png",
+    "bytes": 1346473,
+    "sha256": "2a103d7e814af796717d703624c71cf378a69be5ddfa3ecc55379b184f81b02c"
+  },
+  {
+    "path": "weapon-fit/weapons/50.png",
+    "bytes": 1048521,
+    "sha256": "2106cf4746f08802e4ee553fe2b9b2d23cfe825eed804fbf6ac4af7856f1b087"
+  },
+  {
+    "path": "weapon-fit/weapons/51.png",
+    "bytes": 1166679,
+    "sha256": "7bf6579191e0a472ee1b775029a55ea3951f60b6213858f7dbcdbd6d69aaae2e"
+  },
+  {
+    "path": "weapon-fit/weapons/52.png",
+    "bytes": 1177586,
+    "sha256": "d7a2b4e35f5d7ba14c24f010643e900258d5054526c862c02d4fbc37afebf207"
+  },
+  {
+    "path": "weapon-fit/weapons/53.png",
+    "bytes": 1292092,
+    "sha256": "33dd111210b9c6c4d0413060b55350e399439f39ce1e8e9c77d8bee8efdaa2fa"
+  },
+  {
+    "path": "weapon-fit/weapons/54.png",
+    "bytes": 1341949,
+    "sha256": "9115f0a9144ef0db24000ff69728d91d43fc84667e0782046b2fa7a5df9c0114"
+  },
+  {
+    "path": "weapon-fit/weapons/55.png",
+    "bytes": 1585954,
+    "sha256": "44f3fb7e5b8ff58befe47c56a6e37d7a2626b425cc11cb8adfc59617fdf86e27"
+  },
+  {
+    "path": "weapon-fit/weapons/56.png",
+    "bytes": 1559346,
+    "sha256": "2a10ee0a2f6188b3e6a473b33a162810b047755ace319e6b74c2194365ae1083"
+  },
+  {
+    "path": "weapon-fit/weapons/57.png",
+    "bytes": 1365722,
+    "sha256": "c3d1359ee794e776350fc54819b92aec44218686703d0a518612c0822ed661fc"
+  },
+  {
+    "path": "weapon-fit/weapons/58.png",
+    "bytes": 1166190,
+    "sha256": "560ec06abb6c3e1e1a0d7239698fe406492dcf11f9e155d4ffb7246da05c4c76"
+  },
+  {
+    "path": "weapon-fit/weapons/59.png",
+    "bytes": 1379619,
+    "sha256": "9fed0dcc03e26bb25d687f96b16e66f9ebfb34b49637585eddf0bd5f1fc13238"
+  },
+  {
+    "path": "weapon-fit/weapons/6.png",
+    "bytes": 961790,
+    "sha256": "caa829cfbc38c0e21bca19cd265bb19c1706adb975211cd88f919ce9a8cb415f"
+  },
+  {
+    "path": "weapon-fit/weapons/60.png",
+    "bytes": 1157768,
+    "sha256": "8df7beba05f87a367833eecf356833991e7ed836c1eb339763c10f44f42b40d6"
+  },
+  {
+    "path": "weapon-fit/weapons/61.png",
+    "bytes": 1363053,
+    "sha256": "f69b1b5b16d4276c314b6bd0f9b3902b189d01ebcbb5cd27345889444bdf3141"
+  },
+  {
+    "path": "weapon-fit/weapons/62.png",
+    "bytes": 1341552,
+    "sha256": "04e8288f0ba2d2708cda24985c0e1c15662924028c634b2727a598cd53d8b333"
+  },
+  {
+    "path": "weapon-fit/weapons/63.png",
+    "bytes": 1242133,
+    "sha256": "940c4405c8dfd07705bbaa98342501339e20358aa01e736aee2e131d3f4d4fba"
+  },
+  {
+    "path": "weapon-fit/weapons/64.png",
+    "bytes": 1115700,
+    "sha256": "08d8b305ca0dc646f49c5448bebd1f466c12301b490332b67234d26192068670"
+  },
+  {
+    "path": "weapon-fit/weapons/65.png",
+    "bytes": 1387476,
+    "sha256": "f73f08aa2afd1f6aaa889b8066ed78a92032e9a3255dc6ef5622f69f621af76a"
+  },
+  {
+    "path": "weapon-fit/weapons/66.png",
+    "bytes": 1141227,
+    "sha256": "9a9fbbf40b3bdbdae1cd1faefaa3c83d577825db763f18740aca6d402c518e11"
+  },
+  {
+    "path": "weapon-fit/weapons/67.png",
+    "bytes": 1454143,
+    "sha256": "2e50d867e5a537b6743fc4d6a6fd4366b6efd19bc60446d33efe8d9702a640c2"
+  },
+  {
+    "path": "weapon-fit/weapons/68.png",
+    "bytes": 1340111,
+    "sha256": "a97d7f0017cccbf32099ef1a342d6fea5c8806d9a8a3d3e5f6a59999a4e78de4"
+  },
+  {
+    "path": "weapon-fit/weapons/69.png",
+    "bytes": 1313522,
+    "sha256": "979149d4d676374a78e844913cfb488ca169f083cce038b2b839d62aaa7a4ef1"
+  },
+  {
+    "path": "weapon-fit/weapons/7.png",
+    "bytes": 1090753,
+    "sha256": "b9e4179bfab824a9bd043ea57adaffe7cb0ebdb7c13c4ae8b5da9c58828baaaf"
+  },
+  {
+    "path": "weapon-fit/weapons/70.png",
+    "bytes": 1183094,
+    "sha256": "15f8abc4e03bd4b91507e4988db603b99867af18e473dbce7ef60766a9379b57"
+  },
+  {
+    "path": "weapon-fit/weapons/71.png",
+    "bytes": 1352369,
+    "sha256": "055a47a4e4d8672d4ad08c11a1fbac1420d2a9f459b5890ef084677227b68484"
+  },
+  {
+    "path": "weapon-fit/weapons/72.png",
+    "bytes": 1364692,
+    "sha256": "f017e2482b2a3c52edf920cc242aed6d605406836595190ebd651fd9051085fe"
+  },
+  {
+    "path": "weapon-fit/weapons/73.png",
+    "bytes": 1452885,
+    "sha256": "ffb5fd4b8740a259f9f5815ef995740da8b3895d8883ea6fee1a3fc36449f1f1"
+  },
+  {
+    "path": "weapon-fit/weapons/74.png",
+    "bytes": 1508589,
+    "sha256": "89d1ec9465dfbcd9017c90d8b39ed39221709371ae89f29e5abc8cb3ff89cb44"
+  },
+  {
+    "path": "weapon-fit/weapons/75.png",
+    "bytes": 1418952,
+    "sha256": "0cd9dbef6863e8ccbf6a56b11136427d2c99fbf7c6fe2dc74d5083686a1e4fe4"
+  },
+  {
+    "path": "weapon-fit/weapons/76.png",
+    "bytes": 1138738,
+    "sha256": "45da4d90dae1f355101801f5712932c1e7ad1a3dec122515c983fc69d2f3279c"
+  },
+  {
+    "path": "weapon-fit/weapons/77.png",
+    "bytes": 1432859,
+    "sha256": "8cd003a50a0e35c766d4d0eae097b2f155f7e7596476bc789c3687165c29cef7"
+  },
+  {
+    "path": "weapon-fit/weapons/78.png",
+    "bytes": 1283885,
+    "sha256": "c76b09e82b248e810d683a85e3ecd86dd041613ab1f9d82bcbcff8c1f43811f2"
+  },
+  {
+    "path": "weapon-fit/weapons/8.png",
+    "bytes": 1851668,
+    "sha256": "3179311d9ab5e44ae2c6d09ab31559a48d2b9380926f508cd09b80ab8ca2bd70"
+  },
+  {
+    "path": "weapon-fit/weapons/86.png",
+    "bytes": 1253538,
+    "sha256": "34136678df6a750a43c4ca2f3c63cf0c9058cd0275c9299502c6a38303628793"
+  },
+  {
+    "path": "weapon-fit/weapons/87.png",
+    "bytes": 1211433,
+    "sha256": "e16f18d146ac0edc526d173d3771a19f6333bf7c7b30a50e9cc880b947d968e0"
+  },
+  {
+    "path": "weapon-fit/weapons/88.png",
+    "bytes": 1265386,
+    "sha256": "2649edbbd92ed3e3442d842ba70550262eee461704a06a1804830caf96a298f6"
+  },
+  {
+    "path": "weapon-fit/weapons/89.png",
+    "bytes": 1183684,
+    "sha256": "4387340a7079d559c100f804511f75cf11498f1e7f608382460f4222bf047aff"
+  },
+  {
+    "path": "weapon-fit/weapons/9.png",
+    "bytes": 1523211,
+    "sha256": "2acedfb953dbc1726e08fc66aff5b13b1fdb053f988e2965d7ed66955615c753"
+  },
+  {
+    "path": "weapon-fit/weapons/90.png",
+    "bytes": 1143324,
+    "sha256": "90e315b3ff577367c0bbed1db879d1e27e825033c1cfa5473bd77d88f0d072be"
+  },
+  {
+    "path": "weapon-fit/weapons/91.png",
+    "bytes": 1120025,
+    "sha256": "1a4d882ce152fbfe4dd9ffac6eb8f6a935d9032a8f9b0e164ccc33cf56dab202"
+  },
+  {
+    "path": "weapon-fit/weapons/92.png",
+    "bytes": 1081722,
+    "sha256": "3490bb327b2076f0e165646b58e9221cdb8e390e272ddd50c5af6b29634e3f3c"
+  },
+  {
+    "path": "weapon-fit/weapons/93.png",
+    "bytes": 1245575,
+    "sha256": "c8b2c9468680d69c5e84d31c480712453460655ac649753856bcc1edfabb676b"
+  },
+  {
+    "path": "weapon-fit/weapons/94.png",
+    "bytes": 1105632,
+    "sha256": "d37040fc9bba6290db36402a11d79c594941d18d41aa1f6c0cb02249cae6482c"
+  },
+  {
+    "path": "weapon-fit/weapons/95.png",
+    "bytes": 1144200,
+    "sha256": "0ee7078058902b91eb3e52cf0c69d7b6ae9caaccc5610a69dc40ec1ca15570d0"
+  },
+  {
+    "path": "weapon-fit/weapons/96.png",
+    "bytes": 1275765,
+    "sha256": "5e4ddccd8b4d6d4e83dfd5ef1f821ebf4a92b168b27d4e277541269c7eb6e63a"
+  },
+  {
+    "path": "weapon-fit/weapons/97.png",
+    "bytes": 1332159,
+    "sha256": "6554e099f95ad799ce084ee304332ff63092e4aea626d74ae460394bb68a8c2a"
+  },
+  {
+    "path": "weapon-fit/weapons/98.png",
+    "bytes": 1177692,
+    "sha256": "1e66c3a9e044d1ad354bf818425a6f9c01fb5c1df5ee36f4cafa10c936c80ebc"
+  },
+  {
+    "path": "weapon-fit/weapons/99.png",
+    "bytes": 1168889,
+    "sha256": "daf4a1461a82eec30b52e3cafcb24fd0d8a575b12f2ad456b19652d3a3c1a6b3"
+  }
+]
