@@ -11,7 +11,7 @@ const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
 assert(js.includes("version: '0.6.4'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.17.0'"),'BunkerMenu version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.18.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
@@ -59,9 +59,9 @@ assert(js.includes('id="rostokCoins"')&&js.includes('id="rostokBreedCredits"')&&
 assert(js.includes('id="rostokReadBook"')&&js.includes('data-rostok-action="read"'),'Rostok read-book control missing');
 assert(js.includes('id="rostokInventory"')&&js.includes('data-rostok-action="inventory"'),'Rostok inventory control missing');
 assert(js.includes('id="rostokPda"')&&js.includes('data-rostok-action="kpk"'),'Rostok PDA control missing');
-assert(css.includes('.rostok-cordon-hud-artwork')&&css.includes('.rostok-resources')&&css.includes('.rostok-quick'),'Rostok exact Cordon lower hub styling missing');
+assert(css.includes('.rostok-lower-hud-artwork')&&css.includes('.rostok-resources')&&css.includes('.rostok-quick'),'Rostok clean lower hub styling missing');
 assert(js.includes('id="rostokLowerHud"')&&js.includes('rostok-lower-hud-artwork'),'Rostok must use a dedicated lower-HUD crop container');
-assert(css.includes('height:var(--rostok-hud-height')&&css.includes('object-fit:cover;object-position:center bottom'),'Rostok must crop only the bottom Cordon menu');
+assert(css.includes('height:var(--rostok-hud-height')&&css.includes('object-fit:fill;object-position:center'),'Rostok must render only the clean lower menu artwork');
 assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized Cordon strip crop must be removed');
 assert(css.includes('bottom:calc(var(--rostok-hud-height'),'Upper meters must be a separate overlay directly above the lower HUD');
 assert(css.includes('.rostok-health{top:62.70%')&&css.includes('visibility:visible!important;opacity:1!important'),'Rostok health row must stay inside the lower HUD');
@@ -71,7 +71,12 @@ assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be
 assert(js.includes('id="rostokBarmanHotspot"')&&js.includes('data-rostok-action="barman"'),'invisible Barman hotspot missing');
 assert(js.includes('id="rostokWarehouseHotspot"')&&js.includes('data-rostok-action="warehouse"'),'Rostok warehouse door hotspot missing');
 assert(css.includes('.rostok-warehouse-hotspot'),'Rostok warehouse hotspot CSS missing');
-assert(js.includes('rostok-cordon-hud-artwork rostok-lower-hud-artwork')&&js.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Rostok must reuse the exact Cordon HUD raster inside the clean crop');
+assert(js.includes('id="rostokLowerHudArtwork"')&&js.includes('ui/rostok-lower-hud.webp?v=ddf15c7509a3'),'Rostok clean lower HUD asset missing');
+const rostokHud=fs.readFileSync('ui/rostok-lower-hud.webp');
+assert.equal(rostokHud.subarray(0,4).toString('ascii'),'RIFF','Rostok lower HUD is not WebP');
+assert(rostokHud.length>25000,'Rostok lower HUD asset unexpectedly small');
+const rostokBlock=js.slice(js.indexOf('function ensureRostokCampScreen()'),js.indexOf('function openRostokCamp()',js.indexOf('function ensureRostokCampScreen()')));
+assert(!rostokBlock.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Old Cordon screenshot must not be used inside Rostok');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
@@ -81,4 +86,4 @@ for(const [action,label] of [['talk','Говорить'],['trade','Торгов�
 }
 assert(js.includes('rostokReturnPending')&&js.includes("screen === 'main' && rostokReturnPending"),'Rostok PDA/inventory return context missing');
 
-console.log('PASS: Rostok map, exact Cordon HUD, warehouse, persistent position, Mercenary tier-4 encounters and map Back removal');
+console.log('PASS: Rostok map, clean lower HUD, separate exp/radiation overlay, warehouse and persistent position');
