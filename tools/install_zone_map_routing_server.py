@@ -11,18 +11,26 @@ BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
 POSITION_MARK='// PLAYER_WORLD_POSITION_V1'
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
+function zoneMapZhucharaPistolsServer(){
+    const list=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(item=>item&&!item.adminOnly);
+    const marked=list.filter(item=>String(item.progressionClass||'')==='pistol');
+    if(marked.length===29)return marked;
+    const start=list.findIndex(item=>!!item.starterGear||String(item.name||'')==='Beretta 21A Bobcat'||Number(item.id)===86);
+    return start>=0?list.slice(start,start+29):[];
+}
+const ZONE_MAP_LOCATION1_PISTOLS=new Set(zoneMapZhucharaPistolsServer().map(item=>item.name));
 const ZONE_MAP_LOCATION1_ARMOR=new Set(
     (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
       .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
-      .slice(0,10).map(item=>item.name)
+      .slice(0,29).map(item=>item.name)
 );
 app.post('/api/shop/buy',(req,res,next)=>{
     if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();
     const category=String(req.body?.category||''),name=String(req.body?.name||'');
-    // Weapon stock follows the global 3-level progression; only the old armor
-    // restriction remains location-specific.
+    if(category==='weapon'&&!ZONE_MAP_LOCATION1_PISTOLS.has(name))
+        return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
-        return res.status(400).json({success:false,error:'Этот костюм продаётся на другой локации'});
+        return res.status(400).json({success:false,error:'У Жучары продаются только первые 29 костюмов'});
     return next();
 });
 
@@ -33,6 +41,19 @@ const ROSTOK_BARMAN_CONSUMABLES_SERVER=new Set([
     'Хлеб','Тушенка','Вода','Энергетик',
     'Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'
 ]);
+function rostokBarmanShotgunsServer(){
+    const list=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(item=>item&&!item.adminOnly);
+    const marked=list.filter(item=>String(item.progressionClass||'')==='shotgun');
+    if(marked.length===29)return marked;
+    const pistolStart=list.findIndex(item=>!!item.starterGear||String(item.name||'')==='Beretta 21A Bobcat'||Number(item.id)===86);
+    return pistolStart>=0?list.slice(pistolStart+29,pistolStart+58):[];
+}
+const ROSTOK_BARMAN_SHOTGUNS_SERVER=new Set(rostokBarmanShotgunsServer().map(item=>item.name));
+const ROSTOK_BARMAN_ARMOR_SERVER=new Set(
+    (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
+      .slice(29,58).map(item=>item.name)
+);
 app.post('/api/shop/buy',(req,res,next)=>{
     const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
     if(sourceVendor!=='barman')return next();
@@ -42,17 +63,16 @@ app.post('/api/shop/buy',(req,res,next)=>{
             return res.status(400).json({success:false,error:'Этого припаса у Бармена нет'});
         return next();
     }
-    if(!['weapon','armor'].includes(category))
-        return res.status(400).json({success:false,error:'Бармен торгует оружием, бронёй и припасами'});
-    const list=category==='weapon'?(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[])
-        :(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[]);
     let baseName=rawName;
     if(typeof parseGearNameServer==='function'){
         try{baseName=String(parseGearNameServer(rawName)?.baseName||rawName);}catch(_){}
     }
-    const item=list.find(row=>row&&String(row.name||'')===baseName);
-    if(!item||item.adminOnly||Number(item.tier||0)<4)
-        return res.status(400).json({success:false,error:'У Бармена оружие и броня доступны только с 4-го тира'});
+    if(category==='weapon'&&!ROSTOK_BARMAN_SHOTGUNS_SERVER.has(baseName))
+        return res.status(400).json({success:false,error:'У Бармена продаются только дробовики'});
+    if(category==='armor'&&!ROSTOK_BARMAN_ARMOR_SERVER.has(baseName))
+        return res.status(400).json({success:false,error:'У Бармена продаются костюмы с 30-го по 58-й'});
+    if(!['weapon','armor'].includes(category))
+        return res.status(400).json({success:false,error:'Бармен торгует дробовиками, бронёй и припасами'});
     return next();
 });
 
@@ -424,9 +444,9 @@ def insert_barman_guard(text):
         if end<0:
             raise RuntimeError('Не найден следующий маршрут покупки после блока Бармена.')
         block=text[start:end]
-        if 'ROSTOK_BARMAN_CONSUMABLES_SERVER' in block:
+        if BARMAN_GUARD.strip() in block:
             return text,False
-        # Upgrade the already-installed pre-consumables Barman middleware in place.
+        # Upgrade any older Barman middleware in place, including the tier-based version.
         return text[:start]+BARMAN_GUARD+text[end:],True
 
     pos=_next_shop_buy_route(text,0)
