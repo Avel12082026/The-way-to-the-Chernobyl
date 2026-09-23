@@ -94,7 +94,7 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
 }
 #rostokCampScreen .rostok-lower-hud{
   position:absolute;z-index:3;left:0;right:0;bottom:0;width:100%;
-  height:var(--rostok-hud-height,calc(100vw * 351 / 1536));
+  height:var(--rostok-hud-height,calc(100vw * 182 / 941));
   overflow:hidden;pointer-events:none;
 }
 #rostokCampScreen .rostok-lower-hud-artwork{
