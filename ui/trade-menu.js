@@ -25,27 +25,34 @@
   const vendors = {
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
-      stock: () => getShopCatalog(),
+      stock: () => {
+        const weaponOrder = typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons;
+        const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
+        return [
+          ...getShopCatalog().filter(item => item?.category === 'consumable'),
+          ...weaponOrder
+            .filter((w, i) => w && !w.adminOnly && (w.progressionClass === 'pistol' || (!w.progressionClass && i < 29)))
+            .map(w => ({...w, category:'weapon'})),
+          ...regularArmor.slice(0, 29).map(a => ({...a, category:'armor'}))
+        ];
+      },
       price: item => getBuyPrice(item.price),
       accepts: name => !artifact(name)?.isNamedArtifact,
       offer: name => ({coins: getSellPrice(name), tokens: 0})
     },
     barman: {
       title: () => 'БАРМЕН — ТОРГОВЛЯ',
-      // Rostok uses Zhuchara prices, but builds stock directly from the full
-      // weapon/armor catalogs so tier-4+ body armor/vests cannot disappear
-      // because of another trader's location filter.
-      stock: () => [
-        // Same consumables as Zhuchara: food, water/energy drinks, all medkits and Antirad.
-        ...getShopCatalog().filter(item => item?.category === 'consumable'),
-        ...(typeof WEAPON_PROGRESSION_ORDER!=='undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
-          .filter(w => w && !w.adminOnly && Number(w.tier) >= 4 && player.level >= Number(w.unlockLevel||0))
-          .map(w => ({...w, category:'weapon'})),
-        ...armorItems
-          .filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor &&
-            Number(a.tier) >= 4 && player.level >= Number(a.unlockLevel||0))
-          .map(a => ({...a, category:'armor'}))
-      ],
+      stock: () => {
+        const weaponOrder = typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons;
+        const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
+        return [
+          ...getShopCatalog().filter(item => item?.category === 'consumable'),
+          ...weaponOrder
+            .filter((w, i) => w && !w.adminOnly && (w.progressionClass === 'shotgun' || (!w.progressionClass && i >= 29 && i < 58)))
+            .map(w => ({...w, category:'weapon'})),
+          ...regularArmor.slice(29, 58).map(a => ({...a, category:'armor'}))
+        ];
+      },
       price: item => getBuyPrice(item.price),
       accepts: name => !artifact(name)?.isNamedArtifact,
       offer: name => ({coins: getSellPrice(name), tokens: 0}),
