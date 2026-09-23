@@ -7,7 +7,7 @@ path=ROOT/'tools/install_rostok_location.py'
 spec=importlib.util.spec_from_file_location('rostok_installer',path)
 mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
-assert mod.CACHE_KEY=='20260922-position4'
+assert mod.CACHE_KEY=='20260923-rostok-hud1'
 assert mod.MAP_SHA=='017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa'
 assert mod.BAR_SHA=='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
 assert mod.MAP_SIZE==(865,1536)
