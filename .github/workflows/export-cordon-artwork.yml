@@ -1,0 +1,20 @@
+name: Export Cordon artwork for HUD crop
+on:
+  push:
+    branches: [tmp/rostok-hud-inspect]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate artwork
+        run: |
+          test -s file_000000002bb08210800056ebfb1dce1f.png
+          file file_000000002bb08210800056ebfb1dce1f.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cordon-artwork-source
+          retention-days: 1
+          path: file_000000002bb08210800056ebfb1dce1f.png
