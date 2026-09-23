@@ -297,7 +297,9 @@ def patch(source):
             'weapon.unlockLevel=1+index*3',
             'npcLootDropChanceServer',
             'NPC_CONSUMABLE_LOOT_NAMES',
-            'weaponProgressionPlayerIndexServer(data)'
+            'weaponProgressionPlayerIndexServer(data)',
+            "sourceVendor==='zhuchara'&&cls==='pistol'",
+            "sourceVendor==='barman'&&cls==='shotgun'"
         )
         if all(x in source for x in current_required):
             return source,False
