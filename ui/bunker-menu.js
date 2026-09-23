@@ -485,7 +485,7 @@
           <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
           <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
           <section class="rostok-resources" aria-label="Ресурсы персонажа">
-            <div class="rostok-resource"><span>Столбайты</span><span id="rostokCoins">0</span></div>
+            <div class="rostok-resource"><span>Сталбайты</span><span id="rostokCoins">0</span></div>
             <div class="rostok-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
             <div class="rostok-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
           </section>
