@@ -29,10 +29,11 @@ for(const action of ['talk','trade','back'])assert(bunker.includes('data-barman-
 assert(bunker.includes("screen === 'main' && rostokReturnPending"),'Rostok sub-screen return interception missing');
 assert(bunker.includes("['inventory','kpk','warehouse'].includes(saved.place)"),'Rostok warehouse/PDA/inventory origin restore missing');
 assert(bunker.includes("function restorePlayerWorldPositionWhenReady"),'startup world-position restore poll missing');
-assert(bunker.includes("window.BunkerMenu = {version: '1.16.0'"),'BunkerMenu version not bumped');
+assert(bunker.includes("window.BunkerMenu = {version: '1.17.0'"),'BunkerMenu version not bumped');
 
-assert(bunker.includes('class="rostok-cordon-hud-artwork"'),'Rostok must reuse exact Cordon HUD artwork');
-assert(css.includes('.rostok-cordon-hud-artwork')&&css.includes('clip-path:inset(84.35% 0 0 0)'),'Cordon HUD raster overlay missing');
+assert(bunker.includes('id="rostokLowerHud"')&&bunker.includes('rostok-cordon-hud-artwork rostok-lower-hud-artwork'),'Rostok lower Cordon menu crop missing');
+assert(css.includes('.rostok-lower-hud')&&css.includes('object-position:center bottom'),'Cordon lower menu crop styling missing');
+assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized HUD strip must not return');
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
