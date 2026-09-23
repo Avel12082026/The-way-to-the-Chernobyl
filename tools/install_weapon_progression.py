@@ -65,6 +65,10 @@ app.post('/api/shop/buy',requireAuth,(req,res,next)=>{
         const name=String(req.body&&req.body.name||'');
         const entry=WEAPON_PROGRESSION_BY_NAME_SERVER.get(name);
         if(!entry)return next();
+        const sourceVendor=String(req.body&&req.body.sourceVendor||req.body&&req.body.vendor||'');
+        const cls=String(entry.weapon.progressionClass||'');
+        if((sourceVendor==='zhuchara'&&cls==='pistol')||(sourceVendor==='barman'&&cls==='shotgun'))
+            return next();
         const playerId=String(req.telegramUser.id);
         const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);
         if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
