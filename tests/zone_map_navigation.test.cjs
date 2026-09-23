@@ -71,7 +71,7 @@ assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be
 assert(js.includes('id="rostokBarmanHotspot"')&&js.includes('data-rostok-action="barman"'),'invisible Barman hotspot missing');
 assert(js.includes('id="rostokWarehouseHotspot"')&&js.includes('data-rostok-action="warehouse"'),'Rostok warehouse door hotspot missing');
 assert(css.includes('.rostok-warehouse-hotspot'),'Rostok warehouse hotspot CSS missing');
-assert(js.includes('class="rostok-cordon-hud-artwork"')&&js.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Rostok must reuse the exact Cordon HUD raster');
+assert(js.includes('rostok-cordon-hud-artwork rostok-lower-hud-artwork')&&js.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Rostok must reuse the exact Cordon HUD raster inside the clean crop');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
