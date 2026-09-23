@@ -97,10 +97,9 @@ body.smoker-hub-visible #menuMusicPanel,body.smoker-hub-visible #menuMusicButton
   height:var(--rostok-hud-height,calc(100vw * 351 / 1536));
   overflow:hidden;pointer-events:none;
 }
-#rostokCampScreen .rostok-cordon-hud-artwork,
 #rostokCampScreen .rostok-lower-hud-artwork{
   position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;
-  object-fit:cover;object-position:center bottom;
+  object-fit:fill;object-position:center;
   pointer-events:none;user-select:none;-webkit-user-drag:none;image-rendering:auto;
 }
 #rostokCampScreen .rostok-barman-hotspot{
