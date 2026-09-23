@@ -412,14 +412,54 @@ def upgrade_shop_guard_for_barman(text):
     if end<0:
         end=len(text)
     block=text[start:end]
+    changed=False
+
     old="if(String(req.body?.vendor||'')!=='zhuchara')return next();"
     new="if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();"
-    if new in block:
-        return text,False
-    if old not in block:
+    if old in block:
+        block=block.replace(old,new,1); changed=True
+    elif new not in block:
         raise RuntimeError('Не удалось обновить защиту магазина Жучары для Бармена.')
-    block=block.replace(old,new,1)
-    return text[:start]+block+text[end:],True
+
+    if 'zoneMapZhucharaPistolsServer' not in block:
+        armor_anchor='const ZONE_MAP_LOCATION1_ARMOR=new Set('
+        if armor_anchor not in block:
+            raise RuntimeError('Не найден список брони Жучары.')
+        pistol_defs="""function zoneMapZhucharaPistolsServer(){
+    const list=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(item=>item&&!item.adminOnly);
+    const marked=list.filter(item=>String(item.progressionClass||'')==='pistol');
+    if(marked.length===29)return marked;
+    const start=list.findIndex(item=>!!item.starterGear||String(item.name||'')==='Beretta 21A Bobcat'||Number(item.id)===86);
+    return start>=0?list.slice(start,start+29):[];
+}
+const ZONE_MAP_LOCATION1_PISTOLS=new Set(zoneMapZhucharaPistolsServer().map(item=>item.name));
+"""
+        block=block.replace(armor_anchor,pistol_defs+armor_anchor,1); changed=True
+
+    if '.slice(0,10).map(item=>item.name)' in block:
+        block=block.replace('.slice(0,10).map(item=>item.name)','.slice(0,29).map(item=>item.name)',1); changed=True
+    elif '.slice(0,29).map(item=>item.name)' not in block:
+        raise RuntimeError('Не удалось расширить список костюмов Жучары до 29.')
+
+    weapon_guard="""    if(category==='weapon'&&!ZONE_MAP_LOCATION1_PISTOLS.has(name))
+        return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
+"""
+    armor_guard="""    if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
+        return res.status(400).json({success:false,error:'У Жучары продаются только первые 29 костюмов'});
+"""
+    if "if(category==='weapon'&&!ZONE_MAP_LOCATION1_PISTOLS.has(name))" not in block:
+        armor_pos=block.find("    if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))")
+        if armor_pos<0:
+            raise RuntimeError('Не найден серверный фильтр брони Жучары.')
+        block=block[:armor_pos]+weapon_guard+block[armor_pos:]; changed=True
+    old_armor_error="return res.status(400).json({success:false,error:'Этот костюм продаётся на другой локации'});"
+    new_armor_error="return res.status(400).json({success:false,error:'У Жучары продаются только первые 29 костюмов'});"
+    if old_armor_error in block:
+        block=block.replace(old_armor_error,new_armor_error,1); changed=True
+    elif new_armor_error not in block:
+        raise RuntimeError('Не удалось обновить сообщение ограничения брони Жучары.')
+
+    return text[:start]+block+text[end:],changed
 
 def insert_position_route(text):
     if POSITION_MARK in text:
