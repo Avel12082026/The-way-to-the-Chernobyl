@@ -11,7 +11,7 @@ const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
 assert(js.includes("version: '0.6.4'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.18.0'"),'BunkerMenu version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.19.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
@@ -65,16 +65,16 @@ assert(css.includes('height:var(--rostok-hud-height')&&css.includes('object-fit:
 assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized Cordon strip crop must be removed');
 assert(css.includes('bottom:calc(var(--rostok-hud-height'),'Upper meters must be a separate overlay directly above the lower HUD');
 assert(css.includes('.rostok-health{top:62.70%')&&css.includes('visibility:visible!important;opacity:1!important'),'Rostok health row must stay inside the lower HUD');
-assert(js.includes('const lowerHudHeight = width * 351 / 1536'),'Rostok lower HUD must follow the approved menu aspect ratio');
+assert(js.includes('const lowerHudHeight = width * 182 / 941'),'Rostok lower HUD must follow the approved menu aspect ratio');
 assert(!js.includes('class="zone-map-back"'),'Zone maps must not show the top-left Back button');
 assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be removed');
 assert(js.includes('id="rostokBarmanHotspot"')&&js.includes('data-rostok-action="barman"'),'invisible Barman hotspot missing');
 assert(js.includes('id="rostokWarehouseHotspot"')&&js.includes('data-rostok-action="warehouse"'),'Rostok warehouse door hotspot missing');
 assert(css.includes('.rostok-warehouse-hotspot'),'Rostok warehouse hotspot CSS missing');
-assert(js.includes('id="rostokLowerHudArtwork"')&&js.includes('ui/rostok-lower-hud.webp?v=ddf15c7509a3'),'Rostok clean lower HUD asset missing');
-const rostokHud=fs.readFileSync('ui/rostok-lower-hud.webp');
-assert.equal(rostokHud.subarray(0,4).toString('ascii'),'RIFF','Rostok lower HUD is not WebP');
-assert(rostokHud.length>25000,'Rostok lower HUD asset unexpectedly small');
+assert(js.includes('id="rostokLowerHudArtwork"')&&js.includes('ui/rostok-lower-hud.png?v=09db18421007'),'Rostok clean lower HUD asset missing');
+const rostokHud=fs.readFileSync('ui/rostok-lower-hud.png');
+assert.equal(rostokHud.subarray(1,4).toString('ascii'),'PNG','Rostok lower HUD is not PNG');
+assert(rostokHud.length>200000,'Rostok lower HUD asset unexpectedly small');
 const rostokBlock=js.slice(js.indexOf('function ensureRostokCampScreen()'),js.indexOf('function openRostokCamp()',js.indexOf('function ensureRostokCampScreen()')));
 assert(!rostokBlock.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Old Cordon screenshot must not be used inside Rostok');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
