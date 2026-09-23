@@ -451,8 +451,15 @@
     const campScene = document.getElementById('rostokCampScene');
     if (!campScene) return;
     const viewport = window.visualViewport;
-    const w = viewport ? viewport.width : window.innerWidth;
-    const h = viewport ? viewport.height : window.innerHeight;
+    const viewportW = viewport ? viewport.width : window.innerWidth;
+    const viewportH = viewport ? viewport.height : window.innerHeight;
+    const layoutW = document.documentElement?.clientWidth || window.innerWidth || viewportW;
+    const layoutH = document.documentElement?.clientHeight || window.innerHeight || viewportH;
+    // Telegram/WebView can briefly report a visualViewport taller than the actually
+    // drawable fixed viewport. Use the smaller dimensions so the third (health)
+    // row of the lower Cordon HUD can never end up below the visible screen.
+    const w = Math.max(1, Math.min(viewportW || layoutW, layoutW || viewportW));
+    const h = Math.max(1, Math.min(viewportH || layoutH, layoutH || viewportH, window.innerHeight || viewportH));
     const ratio = 941 / 1672;
     const width = w <= h ? w : h * ratio;
     campScene.style.width = width + 'px';
@@ -475,10 +482,6 @@
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
-        <div class="rostok-progress-row" aria-label="Опыт и радиация">
-          <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
-          <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
-        </div>
         <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
         <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
         <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
@@ -490,6 +493,12 @@
         <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+"></button>
         <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
         <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
+        <!-- Upper meters are a separate overlay over the bar artwork. The full
+             lower Cordon HUD is laid out first and remains untouched underneath. -->
+        <div class="rostok-progress-row" aria-label="Опыт и радиация">
+          <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
+          <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
+        </div>
       </div>`;
     document.body.appendChild(el);
     rostokCampScreen = el;
@@ -1572,7 +1581,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.15.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.16.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
