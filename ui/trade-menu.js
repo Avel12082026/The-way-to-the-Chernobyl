@@ -26,13 +26,15 @@
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
       stock: () => {
-        const weaponOrder = typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons;
+        const weaponOrder = (typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
+          .filter(w => w && !w.adminOnly);
+        const markedPistols = weaponOrder.filter(w => w.progressionClass === 'pistol');
+        const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
+        const pistols = markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []);
         const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable'),
-          ...weaponOrder
-            .filter((w, i) => w && !w.adminOnly && (w.progressionClass === 'pistol' || (!w.progressionClass && i < 29)))
-            .map(w => ({...w, category:'weapon'})),
+          ...pistols.map(w => ({...w, category:'weapon'})),
           ...regularArmor.slice(0, 29).map(a => ({...a, category:'armor'}))
         ];
       },
@@ -43,13 +45,15 @@
     barman: {
       title: () => 'БАРМЕН — ТОРГОВЛЯ',
       stock: () => {
-        const weaponOrder = typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons;
+        const weaponOrder = (typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
+          .filter(w => w && !w.adminOnly);
+        const markedShotguns = weaponOrder.filter(w => w.progressionClass === 'shotgun');
+        const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
+        const shotguns = markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []);
         const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable'),
-          ...weaponOrder
-            .filter((w, i) => w && !w.adminOnly && (w.progressionClass === 'shotgun' || (!w.progressionClass && i >= 29 && i < 58)))
-            .map(w => ({...w, category:'weapon'})),
+          ...shotguns.map(w => ({...w, category:'weapon'})),
           ...regularArmor.slice(29, 58).map(a => ({...a, category:'armor'}))
         ];
       },
