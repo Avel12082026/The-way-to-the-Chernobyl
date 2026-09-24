@@ -2,7 +2,7 @@ const assert = require('node:assert/strict'), fs = require('node:fs'), vm = requ
 const fighters = require('../images/combat/fighters.js');
 const urls = [], transforms = [], draws = [], host = { setAttribute() {}, replaceChildren(...children) { this.children = children; } };
 let delayed = [];
-const ctx = { save() {}, restore() {}, translate() {}, rotate() {}, beginPath() {}, moveTo() {}, lineTo() {}, closePath() {}, clip() {}, scale(...s) { transforms.push(s); }, drawImage(image) { draws.push(image.url); }, clearRect() {}, fillRect() {} };
+const ctx = { save() {}, restore() {}, translate() {}, rotate() {}, beginPath() {}, moveTo() {}, lineTo() {}, closePath() {}, rect() {}, clip() {}, scale(...s) { transforms.push(s); }, drawImage(image) { draws.push(image.url); }, clearRect() {}, fillRect() {} };
 const env = {
   setTimeout, clearTimeout, console, performance: { now: () => 0 }, cancelAnimationFrame() {}, requestAnimationFrame() { return 1; },
   document: { getElementById: () => host, createElement: t => t === 'canvas' ? { setAttribute() {}, getContext: () => ctx } : { setAttribute() {} }, addEventListener() {} },

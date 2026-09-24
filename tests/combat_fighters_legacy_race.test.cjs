@@ -23,7 +23,7 @@ const legacy = {
   hide() {},
   react() {}
 };
-const ctx = { save() {}, restore() {}, translate() {}, scale() {}, drawImage() {}, clearRect() {}, fillRect() {} };
+const ctx = { save() {}, restore() {}, translate() {}, rotate() {}, scale() {}, beginPath() {}, moveTo() {}, lineTo() {}, closePath() {}, rect() {}, clip() {}, drawImage() {}, clearRect() {}, fillRect() {} };
 const env = {
   setTimeout, clearTimeout, console, performance: { now: () => 0 }, cancelAnimationFrame() {},
   Image: class {
