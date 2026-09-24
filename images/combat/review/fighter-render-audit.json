@@ -1,0 +1,86 @@
+[
+  {
+    "playerKey": "1:1",
+    "enemyKey": "40:1",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "40:1",
+    "enemyKey": "1:1",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "1:11",
+    "enemyKey": "40:11",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "40:11",
+    "enemyKey": "1:11",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "1:13",
+    "enemyKey": "40:13",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "40:13",
+    "enemyKey": "1:13",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "1:12",
+    "enemyKey": "40:12",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "40:12",
+    "enemyKey": "1:12",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "2:12",
+    "enemyKey": "7:12",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "7:12",
+    "enemyKey": "2:12",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "16:12",
+    "enemyKey": "29:12",
+    "background": "field",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "playerKey": "29:12",
+    "enemyKey": "16:12",
+    "background": "reactor",
+    "groundY": 940,
+    "rendered": true
+  }
+]

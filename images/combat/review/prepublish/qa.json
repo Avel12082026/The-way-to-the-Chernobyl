@@ -1,0 +1,166 @@
+{
+  "date": "2026-09-24",
+  "scope": "12 registered complete-character sprites; visual grip review plus measured alpha/bounds, not live-server validation.",
+  "correction": "40:13 eye/scope alignment corrected with whole-sprite imagegen and independently rechecked.",
+  "entries": [
+    {
+      "key": "1:12",
+      "sha256": "0d03a1a0d26bac1186e5dabfb2135471fe70e45d5b1e594195161d7591b7a860",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "40:12",
+      "sha256": "3d5bd78beb133222c0465e3464b602fca91a3b53be1d70fdd466afb94627acba",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "2:12",
+      "sha256": "48f66036938a5fcb6a9612ea123fb4b38d7ce32197c3a55c05b32969afc9e31f",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "7:12",
+      "sha256": "af6697540edcd839718e786d00cc82c11fc6b0492557185cc728c1c456b3f88f",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "16:12",
+      "sha256": "678b63c94f6a43a5ef7f352e31f2f0268f0d08cb9b75786bc5ae366c3096278e",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "29:12",
+      "sha256": "b1d9c7b1a1bbc33708be92ed1b053d6a1222460755332e516f2b0e279c8f6374",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "1:1",
+      "sha256": "ccf2417b93b268a42dc0c797c1948e55999b1555ef3f9ce473a9569001b61826",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": null,
+      "stockContactsShoulder": null,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "40:1",
+      "sha256": "bca249124c2b7ade20dda687fd24f85c2e8a7d1f5c8e8e073c57fbabb5324c15",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": null,
+      "stockContactsShoulder": null,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "1:11",
+      "sha256": "e134587ed3924cb697752b0dab932ce7af73fd1c5c787f7868f378c7ac593374",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "40:11",
+      "sha256": "e4a28050d729a16b14142812fa94cbca6dcb25943f932aabcce5520759c52d15",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "1:13",
+      "sha256": "7f941d6260fa39e6555a27f0773cb48250f1f14302ec1a7764d93895f17f3e18",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    },
+    {
+      "key": "40:13",
+      "sha256": "ad9931a915b659edad77979472dcedfbecb631ca94d45dd84c34ba487a57b1d0",
+      "enlargedGripReviewed": true,
+      "fingersAndWristsIntact": true,
+      "gripInsidePrimaryHand": true,
+      "foreEndSupported": true,
+      "stockContactsShoulder": true,
+      "transparentCorners": true,
+      "opaqueBodyUncropped": true,
+      "status": "pass"
+    }
+  ],
+  "verification": {
+    "productionScenesRendered": 12,
+    "bothSidesPerFighter": true,
+    "correctedSvdScenesViewed": true,
+    "groundingAndBackgroundTests": {
+      "passed": 20,
+      "failed": 0
+    },
+    "scriptsPassed": [
+      "combat_fighters.test.cjs",
+      "combat_animation.test.cjs",
+      "combat_equipment_binding.test.cjs"
+    ],
+    "liveServerTested": false
+  }
+}

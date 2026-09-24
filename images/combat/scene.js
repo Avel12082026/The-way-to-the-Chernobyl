@@ -9,7 +9,7 @@ function load(url){
   const im=new Image();let finished=false;
   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+url)),20000);
   function finish(error){if(finished)return;finished=true;clearTimeout(timer);im.onload=im.onerror=null;if(error){cache.delete(url);reject(error);}else resolve(im);}
-  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v=20260914-combat4';
+  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v=20260924-grip-review2';
  });cache.set(url,p);if(cache.size>12)cache.delete(cache.keys().next().value);return p;
 }
 function mount(){
@@ -22,8 +22,50 @@ function mount(){
 }
 function status(message,canRetry=false){host.hidden=false;canvas.hidden=true;caption.textContent=message;retry.hidden=!canRetry;host.setAttribute('aria-label',message);}
 function hide(){ticket++;signature='';config=pictures=reaction=null;cancelAnimationFrame(frame);frame=0;if(host)host.hidden=true;}
-function draw(now=0){if(!config||!pictures||host.hidden)return;const ctx=canvas.getContext('2d'),elapsed=reaction?now-reaction.start:Infinity,active=elapsed>=0&&elapsed<870&&!reduced.matches;ctx.clearRect(0,0,1536,1024);ctx.drawImage(pictures[0],0,0,1536,1024);root.CombatLayout.drawCreature(ctx,pictures[1],config.species,active&&reaction.enemyAttack&&elapsed>=(reaction.shot?220:0)?Math.sin(Math.PI*Math.min(1,(elapsed-(reaction.shot?220:0))/650))*32:0);ctx.save();if(active&&reaction.shot)ctx.translate(0,Math.sin(Math.PI*Math.min(1,elapsed/220))*12);if(pictures[2]&&pictures[3])root.CombatLayout.drawForeground(ctx,pictures[2],pictures[3],config.weaponId);ctx.restore();caption.textContent=`${config.enemy.name} · ${Math.max(0,Number(config.enemy.hp)||0)} HP${config.pending?' · Ход выполняется…':''}`;host.setAttribute('aria-label','Бой: '+caption.textContent);}
-async function show(next){if(!mount())return false;if(!root.CombatAssets||!root.COMBAT_ASSETS||!root.CombatLayout){hide();status('Не удалось загрузить интерфейс боя. Перезапусти игру.');return false;}const token=next.enemy?.battleToken,visual=root.CombatAssets.getVisuals(next.enemy,variant(token)),weapon=root.COMBAT_ASSETS.pistols.find(w=>w.id===Number(next.weaponId)),armor=Number(next.armor);if(!token){hide();return false;}if(!visual.ready){config={...next};signature='';ticket++;pictures=null;status('Для этого противника изображение пока недоступно.');return false;}config={...next,weaponId:weapon?.id,species:visual.species,enemy:{...next.enemy}};const key=[token,visual.species,weapon?.id,armor].join('|');if(signature===key){draw(performance.now());return true;}cancelAnimationFrame(frame);signature=key;pictures=reaction=null;status('Загрузка сцены боя…');const request=++ticket;try{const foreground=weapon?.ready&&root.COMBAT_ASSETS.armorIds.includes(armor)?Promise.all(['images/combat/'+weapon.image,`images/anomaly/hands/${armor}_right.webp`].map(load)).catch(()=>[null,null]):Promise.resolve([null,null]);const [background,mutant,hands]=await Promise.all([load(visual.background),load(visual.mutant),foreground]);const loaded=[background,mutant,...hands];if(request!==ticket)return false;pictures=loaded;host.hidden=false;canvas.hidden=false;retry.hidden=true;draw(performance.now());return true;}catch(e){if(request===ticket){signature='';pictures=null;status('Не удалось загрузить сцену боя. Можно повторить загрузку.',true);console.warn('[combat scene]',e);}return false;}}
+function draw(now=0){
+ if(!config||!pictures||host.hidden)return;
+ const ctx=canvas.getContext('2d'),elapsed=reaction?now-reaction.start:Infinity;
+ const active=elapsed>=0&&elapsed<870&&!reduced.matches;
+ const recoil=active&&reaction.shot?-Math.sin(Math.PI*Math.min(1,elapsed/220))*10:0;
+ const lunge=active&&reaction.enemyAttack&&elapsed>=(reaction.shot?220:0)?Math.sin(Math.PI*Math.min(1,(elapsed-(reaction.shot?220:0))/650))*32:0;
+ ctx.clearRect(0,0,1536,1024);
+ if(pictures.background)ctx.drawImage(pictures.background,0,0,1536,1024);
+ else {ctx.fillStyle='#242922';ctx.fillRect(0,0,1536,1024);}
+ root.CombatFighters?.draw(ctx,pictures.player,'player',recoil,{fit:config.playerSprite,...config.stage});
+ if(pictures.enemy)root.CombatFighters.draw(ctx,pictures.enemy,'enemy',-lunge,{fit:config.enemySprite,...config.stage});
+ else if(pictures.mutant){ctx.save();ctx.translate(496,0);root.CombatLayout.drawCreature(ctx,pictures.mutant,config.species,lunge);ctx.restore();}
+ const missing=[];
+ if(!pictures.player)missing.push('Облик игрока ещё не готов');
+ if(!pictures.enemy&&!pictures.mutant)missing.push('Облик противника ещё не готов');
+ caption.textContent=`${config.enemy.name} · ${Math.max(0,Number(config.enemy.hp)||0)} HP${config.pending?' · Ход выполняется…':''}${missing.length?' · '+missing.join(' · '):''}`;
+ host.setAttribute('aria-label','Игрок слева, противник справа. Бой: '+caption.textContent);
+}
+async function show(next){
+ if(!mount())return false;
+ if(!root.CombatAssets||!root.COMBAT_ASSETS||!root.CombatLayout||!root.CombatFighters||!root.CombatBackgrounds){hide();status('Не удалось загрузить интерфейс боя. Перезапусти игру.');return false;}
+ const token=next.enemy?.battleToken;
+ if(!token){hide();return false;}
+ const visual=root.CombatAssets.getVisuals(next.enemy,variant(token));
+ const player=root.CombatFighters.resolve({armorId:next.armor,weaponId:next.weaponId});
+ const enemy=root.CombatFighters.resolve(next.enemyGear);
+ const stage=root.CombatBackgrounds.resolve({playerLevel:next.playerLevel,battleToken:token});
+ config={...next,stage,playerSprite:player,enemySprite:enemy,species:visual.species,enemy:{...next.enemy}};
+ const key=[token,visual.species,stage.id,player.key,enemy.key].join('|');
+ if(signature===key){draw(performance.now());return true;}
+ cancelAnimationFrame(frame);signature=key;pictures=reaction=null;status('Загрузка сцены боя…');
+ const request=++ticket;
+ try{
+  const [background,mutant,playerImage,enemyImage]=await Promise.all([
+   load(stage.image),
+   visual.ready?load(visual.mutant):null,
+   player.ready?load(player.image):null,
+   !visual.ready&&enemy.ready?load(enemy.image):null
+  ]);
+  if(request!==ticket)return false;
+  pictures={background,mutant,player:playerImage,enemy:enemyImage};
+  host.hidden=false;canvas.hidden=false;retry.hidden=true;draw(performance.now());return true;
+ }catch(e){if(request===ticket){signature='';pictures=null;status('Не удалось загрузить сцену боя. Можно повторить загрузку.',true);console.warn('[combat scene]',e);}return false;}
+}
 function react(token,result,action){if(!config||token!==config.enemy.battleToken||!result?.success)return;if(action==='attack'&&Number.isFinite(result.enemyHp))config.enemy.hp=result.enemyHp;reaction={start:performance.now(),shot:action==='attack',enemyAttack:!!result.enemyTurn&&!result.victoryReady&&!result.died};cancelAnimationFrame(frame);function animate(now){frame=0;draw(now);if(config&&reaction&&!document.hidden&&!reduced.matches&&now-reaction.start<(reaction.shot?870:650))frame=requestAnimationFrame(animate);}if(!document.hidden)frame=requestAnimationFrame(animate);}
 document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(frame);frame=0;reaction=null;if(!document.hidden)draw(performance.now());});
 root.CombatScene={show,hide,react};

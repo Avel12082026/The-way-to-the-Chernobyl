@@ -1,0 +1,80 @@
+[
+  {
+    "id": "field",
+    "image": "images/combat/backgrounds/side/field.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "flesh-1",
+    "image": "images/combat/backgrounds/flesh/1.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "flesh-2",
+    "image": "images/combat/backgrounds/flesh/2.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "flesh-3",
+    "image": "images/combat/backgrounds/flesh/3.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "chernobyl-dog-1",
+    "image": "images/combat/backgrounds/chernobyl-dog/1.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "chernobyl-dog-2",
+    "image": "images/combat/backgrounds/chernobyl-dog/2.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "chernobyl-dog-3",
+    "image": "images/combat/backgrounds/chernobyl-dog/3.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "boar-1",
+    "image": "images/combat/backgrounds/boar/1.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "boar-2",
+    "image": "images/combat/backgrounds/boar/2.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "boar-3",
+    "image": "images/combat/backgrounds/boar/3.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "hinge-1",
+    "image": "images/combat/backgrounds/hinge/1.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "hinge-2",
+    "image": "images/combat/backgrounds/hinge/2.png",
+    "groundY": 940,
+    "rendered": true
+  },
+  {
+    "id": "reactor",
+    "image": "images/combat/backgrounds/side/reactor.png",
+    "groundY": 940,
+    "rendered": true
+  }
+]

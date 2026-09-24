@@ -1,0 +1,76 @@
+[
+  {
+    "key": "2:12",
+    "image": "images/combat/fighters/2-12.png",
+    "width": 1024,
+    "height": 1536,
+    "soleY": 1429,
+    "feet": [
+      {
+        "x": 104,
+        "y": 1425,
+        "rx": 77,
+        "ry": 16
+      },
+      {
+        "x": 688,
+        "y": 1390,
+        "rx": 142,
+        "ry": 16
+      }
+    ],
+    "transparentPixels": 1099279,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "visual": "AK-74 identifiable; connected hands on pistol grip and wood fore-end; stock at shoulder; suit preserved. Existing heavy stance used as reference with arm adjustment.",
+    "method": "built-in imagegen",
+    "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/2-heavy.png",
+    "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/12.png",
+    "promptSummary": "Insert exact wood AK-74 into existing heavy pose. Preserve costume, headgear and body. Connected hands wrap grip/fore-end, buttstock meets shoulder. Full right-facing 1024x1536 transparent sprite; no separate limbs or muzzle flash."
+  },
+  {
+    "key": "7:12",
+    "image": "images/combat/fighters/7-12.png",
+    "width": 1024,
+    "height": 1536,
+    "soleY": 1471,
+    "feet": [
+      {
+        "x": 132,
+        "y": 1467,
+        "rx": 96,
+        "ry": 16
+      },
+      {
+        "x": 769,
+        "y": 1453,
+        "rx": 158,
+        "ry": 16
+      }
+    ],
+    "transparentPixels": 1016156,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "visual": "AK-74 identifiable; connected hands on pistol grip and wood fore-end; stock at shoulder; suit preserved. Existing heavy stance used as reference with arm adjustment.",
+    "method": "built-in imagegen",
+    "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/7-heavy.png",
+    "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/12.png",
+    "promptSummary": "Insert exact wood AK-74 into existing heavy pose. Preserve costume, headgear and body. Connected hands wrap grip/fore-end, buttstock meets shoulder. Full right-facing 1024x1536 transparent sprite; no separate limbs or muzzle flash."
+  }
+]

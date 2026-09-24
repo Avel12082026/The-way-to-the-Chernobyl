@@ -1,0 +1,278 @@
+[
+  {
+    "key": "1:12",
+    "file": "images/combat/fighters/1-12.png",
+    "sha256": "0d03a1a0d26bac1186e5dabfb2135471fe70e45d5b1e594195161d7591b7a860",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1016435,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1478,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "40:12",
+    "file": "images/combat/fighters/40-12.png",
+    "sha256": "3d5bd78beb133222c0465e3464b602fca91a3b53be1d70fdd466afb94627acba",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 901258,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1502,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "2:12",
+    "file": "images/combat/fighters/2-12.png",
+    "sha256": "48f66036938a5fcb6a9612ea123fb4b38d7ce32197c3a55c05b32969afc9e31f",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1099279,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1429,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "7:12",
+    "file": "images/combat/fighters/7-12.png",
+    "sha256": "af6697540edcd839718e786d00cc82c11fc6b0492557185cc728c1c456b3f88f",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1016156,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1471,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "16:12",
+    "file": "images/combat/fighters/16-12.png",
+    "sha256": "678b63c94f6a43a5ef7f352e31f2f0268f0d08cb9b75786bc5ae366c3096278e",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1017299,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1473,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "29:12",
+    "file": "images/combat/fighters/29-12.png",
+    "sha256": "b1d9c7b1a1bbc33708be92ed1b053d6a1222460755332e516f2b0e279c8f6374",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 990954,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1492,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "1:1",
+    "file": "images/combat/fighters/1-1.png",
+    "sha256": "ccf2417b93b268a42dc0c797c1948e55999b1555ef3f9ce473a9569001b61826",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1140443,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1422,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "40:1",
+    "file": "images/combat/fighters/40-1.png",
+    "sha256": "bca249124c2b7ade20dda687fd24f85c2e8a7d1f5c8e8e073c57fbabb5324c15",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 956377,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1515,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "1:11",
+    "file": "images/combat/fighters/1-11.png",
+    "sha256": "e134587ed3924cb697752b0dab932ce7af73fd1c5c787f7868f378c7ac593374",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1064832,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1463,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "40:11",
+    "file": "images/combat/fighters/40-11.png",
+    "sha256": "e4a28050d729a16b14142812fa94cbca6dcb25943f932aabcce5520759c52d15",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 955918,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1497,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "1:13",
+    "file": "images/combat/fighters/1-13.png",
+    "sha256": "7f941d6260fa39e6555a27f0773cb48250f1f14302ec1a7764d93895f17f3e18",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 1100753,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1419,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  },
+  {
+    "key": "40:13",
+    "file": "images/combat/fighters/40-13.png",
+    "sha256": "ad9931a915b659edad77979472dcedfbecb631ca94d45dd84c34ba487a57b1d0",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "transparentPixels": 982203,
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "soleY": 1410,
+    "poseMethod": "Existing whole pose edited with weapon reference; no separate body-part layers."
+  }
+]

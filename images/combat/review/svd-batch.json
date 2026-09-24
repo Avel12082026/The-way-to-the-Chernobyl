@@ -1,0 +1,252 @@
+{
+  "method": "built-in imagegen; existing complete aiming character pose edited with original SVD weapon reference",
+  "date": "2026-09-24",
+  "entries": [
+    {
+      "armorId": 1,
+      "weaponId": 13,
+      "characterSource": "asset_sources/side-combat-checkpoint/weapon-fit/aiming-extremes/bases/1-aiming.png",
+      "weaponSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/13.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-a691528d-2c01-4b53-9939-0e6a7e9a9d30.png",
+      "output": "images/combat/fighters/1-13.png",
+      "prompt": "Use case: compositing. Edit target Image 1 is an EXISTING FULL-BODY GAME CHARACTER in tan hooded camouflage light armor, bare face, brown short hair and beard, dark knee pads, black lace-up boots, brown belt and backpack straps. Preserve EXACT armor identity and full-body stance, legs and boots. Supporting insert Image 2 is the exact equipped weapon: SVD rifle with long thin barrel, wooden ventilated fore-end, wooden skeleton thumbhole buttstock, black cheek pad, small black magazine and attached black telescopic scope. Put that exact SVD naturally into the existing character's raised hands, aiming horizontally RIGHT, stock firmly seated in the right shoulder, right hand around the SVD's wooden thumbhole grip with index finger at trigger, left hand supporting under the WOODEN FORE-END well forward of the magazine. Both arms must stay anatomically connected and naturally posed as a single complete illustration; small necessary repositioning of hands and elbows is allowed. Face must aim along scope with eye clearly BEHIND eyepiece and visible eye-relief space, never scope passing through face. Entire character, both boots and full rifle muzzle must fit comfortably inside a PORTRAIT 1024x1536 image; shrink whole figure uniformly for room if needed, never shorten rifle. Preserve original realistic illustrated game style and original costume. Background genuinely transparent alpha, no floor, no shadow, no brown glow, no text, no frame. One complete finished character with weapon, never detached parts.",
+      "correctionPrompt": "Precise correction of this complete transparent game sprite. Everything is already correct EXCEPT the scope touches the brow: create a VISIBLE GAP of about 25 pixels between the man's brow/nose and the scope's rubber eyepiece by drawing his WHOLE HEAD 30 pixels farther BACK (to LEFT), connected naturally to same neck/hood, still looking RIGHT and aligned with scope. Preserve exact man identity, tan camouflage suit, all armor, boots, rifle design/position/size, entire existing natural hands and arms with grip and support, body posture, whole canvas and full-body composition. Do NOT move scope/rifle toward character. The head is behind the scope with visible open air in between. Keep fully transparent background (real alpha), remove any background brown glow, floor/shadow. Exactly the same complete 1024x1536 portrait sprite with only head position corrected.",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1419,
+      "feet": [
+        {
+          "x": 91,
+          "y": 1415,
+          "rx": 63,
+          "ry": 14,
+          "opaqueBottom": 1418
+        },
+        {
+          "x": 695,
+          "y": 1393,
+          "rx": 126,
+          "ry": 14,
+          "opaqueBottom": 1396
+        }
+      ],
+      "weaponApproxSpan": [
+        244,
+        1010
+      ],
+      "weaponApproxLength": 766,
+      "visualQA": {
+        "viewedFullSprite": true,
+        "viewedNativeScaleGripCropOnCheckerboard": true,
+        "facesRight": true,
+        "muzzleFacesRight": true,
+        "svdFeaturesPresent": true,
+        "firingHandWrapsThumbholeGrip": true,
+        "supportHandOnWoodenForeEnd": true,
+        "stockButtTouchesShoulderRegion": true,
+        "scopeSeparatedFromFace": true,
+        "bootsComplete": true,
+        "separateArmPartsUsed": false,
+        "status": "accepted-for-game-review",
+        "notes": [
+          "Existing whole-character aiming pose used as edit target; small natural whole-arm adjustments fit the SVD.",
+          "Initial generation placed eyepiece against brow/visor; corrected complete head placement and rechecked visible gap.",
+          "Costume and SVD identities are visually preserved; generated illustration is not pixel-identical to source weapon.",
+          "Original generated alpha retained. SVD approximate lengths 766 px and approximately 750 px differ by about 2% after final heavy-suit correction across the two armor sprites.",
+          "Two isolated one-pixel antialias edge speckles remain, with alpha at most 17/255; no visible opaque background."
+        ]
+      },
+      "alphaQA": {
+        "mode": "RGBA",
+        "min": 0,
+        "max": 254,
+        "fullyTransparentPixels": 1100753,
+        "opaqueOver200Pixels": 440939,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBox": [
+          28,
+          141,
+          1010,
+          1419
+        ],
+        "componentsAbove16": 3,
+        "opaqueBodyTouchesEdge": false,
+        "alphaPreserved": true,
+        "minorDisconnectedComponents": {
+          "count": 2,
+          "pixelsEach": 1,
+          "maxAlpha": 17
+        }
+      },
+      "sha256": "7f941d6260fa39e6555a27f0773cb48250f1f14302ec1a7764d93895f17f3e18"
+    },
+    {
+      "armorId": 40,
+      "weaponId": 13,
+      "characterSource": "asset_sources/side-combat-checkpoint/weapon-fit/aiming-extremes/bases/40-aiming.png",
+      "weaponSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/13.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-5ea261fd-be0f-4ccc-8add-b6a869a1bfd1.png",
+      "output": "images/combat/fighters/40-13.png",
+      "prompt": "Use case: compositing. Edit target Image 1 is an EXISTING FULL-BODY GAME CHARACTER in massive charcoal steel exoskeleton with yellow edge trims and bolts, orange-yellow eye visor, helmet and round respirator, tubes, armored gloves, large shin plates and boots. Preserve EXACT armor identity, helmet, visor, respirator, yellow trims, costume, full-body stance, legs and boots. Supporting insert Image 2 is the exact equipped SVD rifle: long thin barrel, wooden ventilated fore-end, wooden skeleton thumbhole buttstock and black cheek pad, small black magazine and black telescopic scope. Draw the reference SVD naturally into the existing raised hands, aiming horizontally RIGHT. Buttstock firmly rests against shoulder armor without penetrating it. Right hand wraps wooden thumbhole grip; index finger at trigger. Left hand cups underside of WOODEN FORE-END forward of magazine. Small necessary adjustment of hands and elbows is allowed; all joints stay anatomically connected as one complete character, no separate pasted limbs. Adjust head or gun position to leave a CLEAR visible eye-relief gap between visor and scope rear eyepiece. Scope and stock must NEVER overlap visor/respirator or pass through the face. Eyes look through scope from behind it. Entire character, both boots, full rifle muzzle inside PORTRAIT 1024x1536 frame, roomy margins, shrink whole figure uniformly if needed, never shorten rifle. Preserve original detailed realistic game illustration style. Background genuinely transparent alpha with ZERO brown glow, no floor, no shadow, no text/frame/watermark. One complete sprite with weapon.",
+      "correctionPrompt": "Precise correction of this complete transparent game sprite. Everything is correct EXCEPT scope eyepiece touches visor/mask. Create a VISIBLE OPEN-AIR GAP of about 25 pixels between helmet visor/mask and scope rear eyepiece by drawing the WHOLE HELMET AND RESPIRATOR 35 pixels farther BACK (LEFT) and a little down, connected naturally to same neck and tubes, still looking RIGHT with eyes on scope axis. Preserve exact helmet shape, visor, respirator, charcoal armor and yellow trim, ALL costume pieces, boots, SVD rifle design/position/size, entire natural hands and arms with grip and fore-end support, legs and full body. Do NOT move scope toward character. Mask/head stay visibly behind scope with clear air between. Stock remains pressed to shoulder, never penetrates mask. Real alpha transparent background, remove brown glow and any floor/shadow. Exactly same complete 1024x1536 portrait sprite, no cropped body.",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1410,
+      "feet": [
+        {
+          "x": 80.5,
+          "y": 1406,
+          "rx": 71.5,
+          "ry": 14
+        },
+        {
+          "x": 659,
+          "y": 1392,
+          "rx": 167,
+          "ry": 14
+        }
+      ],
+      "weaponApproxLength": 750,
+      "visualQA": {
+        "viewedFullSprite": true,
+        "viewedNativeScaleGripCropOnCheckerboard": true,
+        "facesRight": true,
+        "muzzleFacesRight": true,
+        "svdFeaturesPresent": true,
+        "firingHandWrapsThumbholeGrip": true,
+        "supportHandOnWoodenForeEnd": true,
+        "stockButtTouchesShoulderRegion": true,
+        "scopeSeparatedFromFace": true,
+        "bootsComplete": true,
+        "separateArmPartsUsed": false,
+        "status": "accepted-after-prepublication-correction",
+        "notes": [
+          "Whole sprite corrected with imagegen to align eye and scope. No separate body-part layers.",
+          "Full sprite and enlarged grip crop reviewed: primary hand encloses grip, support fingers wrap wooden fore-end, stock contacts shoulder armor; no cut fingers.",
+          "Narrow visible gap separates visor/mask from eyepiece.",
+          "Approximate SVD length 750px vs 766px in light suit, about 2% difference. Armor and weapon identity retained; image is not pixel-identical to reference.",
+          "Original generated alpha retained; all corners fully transparent."
+        ],
+        "eyeAlignedWithScope": true,
+        "intactFingers": true,
+        "independentlyReviewed": true
+      },
+      "alphaQA": {
+        "mode": "RGBA",
+        "min": 0,
+        "max": 254,
+        "fullyTransparentPixels": 982203,
+        "opaqueOver200Pixels": 550448,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBox": [
+          9,
+          49,
+          1012,
+          1410
+        ],
+        "opaqueBodyTouchesEdge": false,
+        "alphaPreserved": true
+      },
+      "sha256": "ad9931a915b659edad77979472dcedfbecb631ca94d45dd84c34ba487a57b1d0",
+      "revisionHistory": [
+        {
+          "reason": "Prepublication review found eye above scope axis; earlier grip and clearance were accepted.",
+          "previous": {
+            "armorId": 40,
+            "weaponId": 13,
+            "characterSource": "asset_sources/side-combat-checkpoint/weapon-fit/aiming-extremes/bases/40-aiming.png",
+            "weaponSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/13.png",
+            "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-9ed03203-6c2a-47d9-8453-443c57ca5cf0.png",
+            "output": "images/combat/fighters/40-13.png",
+            "prompt": "Use case: compositing. Edit target Image 1 is an EXISTING FULL-BODY GAME CHARACTER in massive charcoal steel exoskeleton with yellow edge trims and bolts, orange-yellow eye visor, helmet and round respirator, tubes, armored gloves, large shin plates and boots. Preserve EXACT armor identity, helmet, visor, respirator, yellow trims, costume, full-body stance, legs and boots. Supporting insert Image 2 is the exact equipped SVD rifle: long thin barrel, wooden ventilated fore-end, wooden skeleton thumbhole buttstock and black cheek pad, small black magazine and black telescopic scope. Draw the reference SVD naturally into the existing raised hands, aiming horizontally RIGHT. Buttstock firmly rests against shoulder armor without penetrating it. Right hand wraps wooden thumbhole grip; index finger at trigger. Left hand cups underside of WOODEN FORE-END forward of magazine. Small necessary adjustment of hands and elbows is allowed; all joints stay anatomically connected as one complete character, no separate pasted limbs. Adjust head or gun position to leave a CLEAR visible eye-relief gap between visor and scope rear eyepiece. Scope and stock must NEVER overlap visor/respirator or pass through the face. Eyes look through scope from behind it. Entire character, both boots, full rifle muzzle inside PORTRAIT 1024x1536 frame, roomy margins, shrink whole figure uniformly if needed, never shorten rifle. Preserve original detailed realistic game illustration style. Background genuinely transparent alpha with ZERO brown glow, no floor, no shadow, no text/frame/watermark. One complete sprite with weapon.",
+            "correctionPrompt": "Precise correction of this complete transparent game sprite. Everything is correct EXCEPT scope eyepiece touches visor/mask. Create a VISIBLE OPEN-AIR GAP of about 25 pixels between helmet visor/mask and scope rear eyepiece by drawing the WHOLE HELMET AND RESPIRATOR 35 pixels farther BACK (LEFT) and a little down, connected naturally to same neck and tubes, still looking RIGHT with eyes on scope axis. Preserve exact helmet shape, visor, respirator, charcoal armor and yellow trim, ALL costume pieces, boots, SVD rifle design/position/size, entire natural hands and arms with grip and fore-end support, legs and full body. Do NOT move scope toward character. Mask/head stay visibly behind scope with clear air between. Stock remains pressed to shoulder, never penetrates mask. Real alpha transparent background, remove brown glow and any floor/shadow. Exactly same complete 1024x1536 portrait sprite, no cropped body.",
+            "width": 1024,
+            "height": 1536,
+            "soleY": 1425,
+            "feet": [
+              {
+                "x": 78,
+                "y": 1421,
+                "rx": 67,
+                "ry": 14,
+                "opaqueBottom": 1424
+              },
+              {
+                "x": 638,
+                "y": 1407,
+                "rx": 150,
+                "ry": 14,
+                "opaqueBottom": 1410
+              }
+            ],
+            "weaponApproxSpan": [
+              251,
+              1009
+            ],
+            "weaponApproxLength": 758,
+            "visualQA": {
+              "viewedFullSprite": true,
+              "viewedNativeScaleGripCropOnCheckerboard": true,
+              "facesRight": true,
+              "muzzleFacesRight": true,
+              "svdFeaturesPresent": true,
+              "firingHandWrapsThumbholeGrip": true,
+              "supportHandOnWoodenForeEnd": true,
+              "stockButtTouchesShoulderRegion": true,
+              "scopeSeparatedFromFace": true,
+              "bootsComplete": true,
+              "separateArmPartsUsed": false,
+              "status": "accepted-for-game-review",
+              "notes": [
+                "Existing whole-character aiming pose used as edit target; small natural whole-arm adjustments fit the SVD.",
+                "Initial generation placed eyepiece against brow/visor; corrected complete head placement and rechecked visible gap.",
+                "Costume and SVD identities are visually preserved; generated illustration is not pixel-identical to source weapon.",
+                "Original generated alpha retained. SVD approximate lengths 766 px and 758 px differ by 1.05% across the two armor sprites.",
+                "Two isolated one-pixel antialias edge speckles remain, with alpha at most 19/255; no visible opaque background."
+              ]
+            },
+            "alphaQA": {
+              "mode": "RGBA",
+              "min": 0,
+              "max": 254,
+              "fullyTransparentPixels": 1019105,
+              "opaqueOver200Pixels": 519913,
+              "corners": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "opaqueBBox": [
+                11,
+                97,
+                1009,
+                1425
+              ],
+              "componentsAbove16": 3,
+              "opaqueBodyTouchesEdge": false,
+              "alphaPreserved": true,
+              "minorDisconnectedComponents": {
+                "count": 2,
+                "pixelsEach": 1,
+                "maxAlpha": 19
+              }
+            },
+            "sha256": "0f7ef7d8b4d9dcccefb390f84bdcc587c9f9100ea6dba57ee0d3f7a5642f54c4"
+          }
+        }
+      ],
+      "aimCorrectionPrompt": "Precise whole-character pose correction. EDIT this full-body transparent heavy Titan-Pro armored character holding SVD. Preserve same 1024x1536 frame, exact armor plates yellow trim helmet amber visor respirator tubes stance legs boots. Preserve same SVD size, length, wood skeleton stock, magazine, handguard, scope design, muzzle location horizontally. CURRENT ERROR: eye behind amber visor is at y250 but scope optical center line is y282, so he is looking OVER the scope. Correct aiming: RAISE the ENTIRE SVD and connected gripping hands approximately 30 pixels so scope optical centerline aligns horizontally with the visible pupil at y250. Whole gun remains horizontal. Both arms remain naturally connected, primary fingers wrapped around thumbhole grip with index at trigger, supporting fingers wrapped under wooden FORE-END, not magazine. Buttstock firmly in shoulder pocket. Preserve clearly visible eye relief gap between visor and rubber eyepiece, no scope through face/visor. May minimally adjust helmet tilt if needed so pupil truly looks through central lens; no separate layers or bodyparts. Preserve weapon width approx 758 pixels. Outside this aiming correction keep body legs feet and armor identity unchanged. Full figure, both boot soles and muzzle uncut. Real transparent alpha background, no ground or shadow or glow or checkerboard. No text no muzzleflash. Output one completed game sprite."
+    }
+  ]
+}

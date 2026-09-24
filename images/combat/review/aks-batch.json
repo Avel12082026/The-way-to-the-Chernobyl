@@ -1,0 +1,170 @@
+{
+  "method": "built-in imagegen; whole-character editing with original weapon reference",
+  "date": "2026-09-24",
+  "entries": [
+    {
+      "armorId": 1,
+      "weaponId": 11,
+      "characterSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/1-heavy.png",
+      "weaponSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/11.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-6e6fa157-a4e0-4de7-8f99-6a35cc7837fd.png",
+      "output": "images/combat/fighters/1-11.png",
+      "prompt": "Use case: compositing. Asset type: full-body combat game sprite, portrait 1024x1536, real transparent background.\nImage1 is the exact existing light-armored male character to edit. Image2 is the exact AKS-74U gun to insert, with its unusually short barrel, compact reddish wood handguard, triangular metal skeleton stock, brown pistol grip and curved reddish-brown magazine.\nEdit Image1 to put Image2 into his two existing hands so he holds this AKS-74U aimed horizontally RIGHT. Keep the entire costume, bare face, hair, hood down, fabric color/pattern, knee pads, boots, legs, body proportions and foot positions from Image1 unchanged. Preserve the established whole-body pose as much as possible. Because this gun is short, bend the support arm inward as one connected anatomical arm so its palm and fingers grip the short wooden fore-end from below, forward of magazine, behind muzzle. Rear firing hand wraps the pistol grip with thumb on opposite side and index finger at trigger guard. Stock is extended back and its butt meets the shoulder, with sensible overlap behind upper arm. Raise the hands only as necessary for this physical contact. Do not put the supporting hand around the magazine or muzzle. Weapon geometry must remain recognizably the exact short AKS-74U reference, no scope, no long barrel, no full-size AK-74 substitution. Weapon not oversized: real shoulder-to-muzzle length about 73 cm. Correctly occlude gun with fingers where they wrap it. Produce one complete, coherent character holding this weapon, not body parts or layers. Keep whole head and both boots in frame with clear margin. Face and barrel point right. Transparent pixels around silhouette and through visible openings, no background, no glow, no shadow, no lettering, no insignia, no muzzle flash.",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1463,
+      "feet": [
+        {
+          "x": 168,
+          "y": 1459,
+          "rx": 76,
+          "ry": 14,
+          "opaqueBottom": 1462
+        },
+        {
+          "x": 812,
+          "y": 1431,
+          "rx": 119,
+          "ry": 14,
+          "opaqueBottom": 1434
+        }
+      ],
+      "alphaQA": {
+        "mode": "RGBA",
+        "min": 0,
+        "max": 254,
+        "fullyTransparentPixels": 1064832,
+        "opaqueOver200Pixels": 481690,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBox": [
+          83,
+          64,
+          986,
+          1463
+        ],
+        "componentsAbove16": 1,
+        "opaqueBodyTouchesEdge": false,
+        "alphaPreserved": true
+      },
+      "visualQA": {
+        "viewedFullSprite": true,
+        "viewedNativeScaleGripCropOnCheckerboard": true,
+        "facesRight": true,
+        "muzzleFacesRight": true,
+        "shortAKS74UFeaturesPresent": true,
+        "firingHandWrapsPistolGrip": true,
+        "supportHandOnWoodenForeEnd": true,
+        "stockButtTouchesShoulderRegion": true,
+        "bootsComplete": true,
+        "separateArmPartsUsed": false,
+        "status": "accepted-for-game-review",
+        "notes": [
+          "Whole pose edited to bring supporting hand inward for short AKS-74U.",
+          "Armor and weapon identities visually preserved; generated output is not pixel-identical to source.",
+          "Original generated alpha retained; isolated exterior speckles are limited to alpha 16 or below.",
+          "This is a heavy-weapon ready stance, not a certified ADS sight-line pose."
+        ]
+      },
+      "sha256": "e134587ed3924cb697752b0dab932ce7af73fd1c5c787f7868f378c7ac593374"
+    },
+    {
+      "armorId": 40,
+      "weaponId": 11,
+      "characterSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/40-heavy.png",
+      "weaponSource": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/11.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-4965d0d3-92b8-4a13-95dc-a137134bd230.png",
+      "output": "images/combat/fighters/40-11.png",
+      "prompt": "Use case: precise-object-edit. Image1 is the target 1024x1536 whole heavy exosuit sprite with AKS-74U. Image2 is ONLY a reference for the correct SIZE of the same AKS-74U on a lighter character.\nMake just one correction to Image1: its AKS-74U is currently about 18% oversized. Uniformly REDUCE THE COMPLETE WEAPON by about 14% around its shoulder contact point: stock, receiver, handguard, grip, magazine and muzzle all reduce together with identical aspect ratios. On the 1024px-wide canvas the gun should span roughly x315 to x905 (590px butt-to-muzzle), rather than x315 to x990. Keep the stock butt touching the same shoulder area. The muzzle therefore ends approximately 85px LEFT of its original position, leaving 115px transparent space to the right. Compare Image2: the AKS-74U must now be practically the SAME SIZE in pixels as Image2's AKS-74U, despite Image1's bulky armor. DO NOT enlarge weapon just because armor is heavy.\nNaturally redraw the two connected hands and forearms just enough to hold the smaller gun: firing hand fully wraps the pistol grip, support palm and fingers curl around the wooden fore-end from underneath, never magazine or muzzle. Arms remain connected whole limbs with same armored plates and gloves. No floating grip or stock. Do not change anything else: preserve exact full character height, helmet and visor, head position, gas mask, armor identity and colors, hoses, body silhouette, legs, boots, and foot locations. Keep same side-view direction RIGHT and same heavy-weapon ready pose. No detached parts or modular layers. The output is one complete transparent PNG portrait 1024x1536, actual alpha transparency all around, no background, glow, ground, labels, or shadow.",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1497,
+      "feet": [
+        {
+          "x": 144,
+          "y": 1493,
+          "rx": 74,
+          "ry": 14,
+          "opaqueBottom": 1496
+        },
+        {
+          "x": 786,
+          "y": 1456,
+          "rx": 92,
+          "ry": 14,
+          "opaqueBottom": 1459
+        }
+      ],
+      "alphaQA": {
+        "mode": "RGBA",
+        "min": 0,
+        "max": 254,
+        "fullyTransparentPixels": 955918,
+        "opaqueOver200Pixels": 585151,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "opaqueBBox": [
+          74,
+          12,
+          914,
+          1497
+        ],
+        "componentsAbove16": 1,
+        "opaqueBodyTouchesEdge": false,
+        "alphaPreserved": true
+      },
+      "visualQA": {
+        "viewedFullSprite": true,
+        "viewedNativeScaleGripCropOnCheckerboard": true,
+        "facesRight": true,
+        "muzzleFacesRight": true,
+        "shortAKS74UFeaturesPresent": true,
+        "firingHandWrapsPistolGrip": true,
+        "supportHandOnWoodenForeEnd": true,
+        "stockButtTouchesShoulderRegion": true,
+        "bootsComplete": true,
+        "separateArmPartsUsed": false,
+        "status": "accepted-for-game-review",
+        "notes": [
+          "Whole pose edited to bring supporting hand inward for short AKS-74U.",
+          "Armor and weapon identities visually preserved; generated output is not pixel-identical to source.",
+          "Original generated alpha retained; isolated exterior speckles are limited to alpha 16 or below.",
+          "This is a heavy-weapon ready stance, not a certified ADS sight-line pose.",
+          "Oversized first version replaced after root review; revised heavy weapon width approximately matches light version (572 vs 573 pixels)."
+        ]
+      },
+      "sha256": "e4a28050d729a16b14142812fa94cbca6dcb25943f932aabcce5520759c52d15",
+      "revisions": [
+        {
+          "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-7a273543-5252-4316-ae89-aa490dc9d842.png",
+          "prompt": "Use case: compositing. Asset type: full-body combat game sprite, portrait 1024x1536, real transparent background.\nImage1 is the exact existing heavy exosuit character to edit. Image2 is the exact AKS-74U gun to insert, with its unusually short barrel, compact reddish wood handguard, triangular metal skeleton stock, brown pistol grip and curved reddish-brown magazine.\nEdit Image1 to put Image2 into his two existing hands so he holds this AKS-74U aimed horizontally RIGHT. Keep the entire exoskeleton, helmet, amber visor, round mask filters, breathing hoses, armor plates with gold trim, fingerless black gloves, boots, legs, body proportions and foot positions from Image1 unchanged. Preserve the established whole-body pose as much as possible. Because this gun is short, bend the support arm inward as one connected anatomical arm so its palm and fingers grip the short wooden fore-end from below, forward of magazine, behind muzzle. Rear firing hand wraps the pistol grip with thumb on opposite side and index finger at trigger guard. Stock is extended back and its butt meets the shoulder armor, with sensible overlap behind upper arm. Raise the hands only as necessary for this physical contact. Do not put the supporting hand around the magazine or muzzle. Weapon geometry must remain recognizably the exact short AKS-74U reference, no scope, no long barrel, no full-size AK-74 substitution. Weapon not oversized: real shoulder-to-muzzle length about 73 cm. Correctly occlude gun with fingers where they wrap it. Produce one complete coherent character holding this weapon, not body parts or layers. Keep whole head and both boots in frame with clear margin. Face and barrel point right. Transparent pixels around silhouette and through visible openings, no background, no glow, no shadow, no lettering, no insignia, no muzzle flash.",
+          "sha256": "27724a272362c56806c11a00d7adf9d22333412c172d7ec041f96d68981745f9",
+          "rejectedReason": "Weapon about 18% wider in pixels than the light-suit version. Replaced by whole-character scale correction."
+        }
+      ],
+      "scaleQA": {
+        "method": "Visual butt-to-muzzle x span on native 1024px-wide PNG",
+        "heavyApproxSpan": [
+          342,
+          914
+        ],
+        "lightApproxSpan": [
+          411,
+          984
+        ],
+        "heavyWidth": 572,
+        "lightWidth": 573,
+        "relativeWidthDifference": 0.0017,
+        "note": "Approximate image measurement, not exact source-gun pixel equality. Whole-character edit preserved costume and restored consistent weapon scale."
+      }
+    }
+  ]
+}

@@ -759,7 +759,9 @@ button:active {filter:brightness(1.18);}
 <script src="images/combat/catalog.js?v=4"></script>
 <script src="images/combat/assets.js?v=1"></script>
 <script src="images/combat/layout.js?v=4"></script>
-<script src="images/combat/scene.js?v=6"></script>
+<script src="images/combat/backgrounds.js?v=1"></script>
+<script src="images/combat/fighters.js?v=4"></script>
+<script src="images/combat/scene.js?v=9"></script>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
 <script src="images/anomaly/detector-layout.js?v=1"></script>
@@ -5115,19 +5117,43 @@ function startBattle(enemy) {
 
     function updateCombatScene() {
         if (!currentEnemy || !raidActive || currentEnemy.friendly || !document.getElementById('raidScreen')?.classList.contains('active')) { window.CombatScene?.hide(); return; }
-        // Combat has one right pistol hand; cancel any pending two-hand search scene.
+        // The battle scene owns both complete combatants.
         window.AnomalyScene?.hide();
-        const armorFile = ARMOR_CHAR_IMAGES[parseGearName(player.armor?.name || '').baseName] || '';
-        const armor = Number((armorFile.match(/armor_char_(\d+)/) || [])[1]) || 1;
-        const weaponName = parseGearName(player.weapon?.name || '').baseName;
-        const weapon = weapons.find(w => w.name === weaponName) || weapons.find(w => w.id === Number(player.weapon?.id));
         if (!window.CombatScene) {
             const host = document.getElementById('combatScene');
-            host.hidden = false;
-            host.textContent = 'Не удалось загрузить интерфейс боя. Перезапусти игру.';
+            if (host) {
+                host.hidden = false;
+                host.textContent = 'Не удалось загрузить интерфейс боя. Перезапусти игру.';
+            }
             return;
         }
-        window.CombatScene.show({enemy:currentEnemy, armor, weaponId:weapon?.id, pending:battleTurn !== 0});
+        const resolveItem = (owner, slot, catalog) => {
+            const item = owner[slot];
+            const names = [item?.name, owner[`${slot}Name`], typeof item === 'string' ? item : ''];
+            for (const name of names) {
+                if (!name) continue;
+                const match = catalog.find(entry => entry.name === parseGearName(name).baseName);
+                if (match) return match;
+            }
+            for (const id of [item?.id, item?.[`${slot}Id`], owner[`${slot}Id`]]) {
+                if ((typeof id !== 'number' && typeof id !== 'string') || String(id).trim() === '') continue;
+                const match = catalog.find(entry => entry.id === Number(id));
+                if (match) return match;
+            }
+            return null;
+        };
+        // Catalog IDs and portrait numbers differ for some suits; always use the name mapping.
+        const resolveArmor = owner => {
+            const item = resolveItem(owner, 'armor', armorItems);
+            const file = item ? ARMOR_CHAR_IMAGES[item.name] || '' : '';
+            return Number((file.match(/armor_char_(\d+)/) || [])[1]) || null;
+        };
+        const armor = resolveArmor(player);
+        const weapon = resolveItem(player, 'weapon', weapons);
+        const enemyArmor = resolveArmor(currentEnemy);
+        const enemyWeapon = resolveItem(currentEnemy, 'weapon', weapons);
+        window.CombatScene.show({enemy:currentEnemy, armor, weaponId:weapon?.id, playerLevel:player.level,
+            enemyGear:{armorId:enemyArmor,weaponId:enemyWeapon?.id}, pending:battleTurn !== 0});
     }
     function renderBattleButtons() {
         updateCombatScene();

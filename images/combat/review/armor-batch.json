@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-24",
+  "method": "built-in-imagegen whole-character edits",
+  "status": "accepted-after-visual-and-alpha-review",
+  "entries": [
+    {
+      "armorId": 16,
+      "weaponId": 12,
+      "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/16-heavy.png",
+      "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/12.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-b3eddd90-d428-4dbb-ba67-09a68c99a4b5.png",
+      "image": "images/combat/fighters/16-12.png",
+      "prompt": "Use case: compositing. Edit the FIRST input into one finished transparent full-body 2D combat sprite. The first image is the exact existing character costume16 and stance to preserve. The second is the exact AK-74 rifle to insert: fixed reddish wooden buttstock, matching reddish wooden handguard, curved orange-brown magazine, black steel barrel, standard iron sights, NO optic. Paint this rifle into the character's existing hands at upper-chest height, barrel pointing RIGHT, stock firmly contacting the near shoulder. The near right hand wraps the pistol grip just behind the magazine, index finger at trigger guard; far left hand supports wooden fore-end from below. Permit small natural whole-arm pose correction to obtain realistic stock and hand contacts, but preserve the character, costume, green digital camouflage, helmet/goggles, balaclava, fingerless gloves, armor/pouches, holster, knee pads, boots, full-body spread leg stance, facing RIGHT. Keep the entire weapon anatomically normal and proportionate (not an oversized rifle), barrel comfortably inside frame. Draw a single coherent character holding the actual reference rifle, no disconnected spare body parts. Preserve original costume identity and colors. Blank insignia patches, no new logos, no muzzle flash. Output PORTRAIT 1024x1536, true transparent RGBA background, no backdrop, no cast shadow, no floor, no checkerboard painted into pixels. Whole head and both complete boot soles visible with margins.",
+      "review": {
+        "costumeIdentity": "pass: green digital camouflage, helmet/goggles, face cover, fingerless gloves, pouches, holster, knee pads and boots preserved",
+        "weaponIdentity": "pass: fixed wood AK-74 with wood fore-end, orange curved magazine, iron sights; no optic",
+        "primaryGrip": "pass: gloved fingers wrap pistol grip behind magazine, index finger at trigger guard",
+        "supportGrip": "pass: fingerless support glove cups wooden fore-end",
+        "stockContact": "pass: wood buttstock seats against near shoulder",
+        "fullBody": "pass: helmet, muzzle and both boots complete",
+        "direction": "right",
+        "separateBodyPartLayers": false
+      },
+      "alpha": {
+        "mode": "RGBA",
+        "width": 1024,
+        "height": 1536,
+        "min": 0,
+        "max": 254,
+        "transparentPixels": 1017299,
+        "opaqueOver200Pixels": 524182,
+        "cornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "edgeAlphaMax": 1
+      },
+      "opaqueBBox": [
+        67,
+        75,
+        1001,
+        1473
+      ],
+      "ground": {
+        "soleY": 1472,
+        "feet": [
+          {
+            "x": 148,
+            "y": 1469,
+            "rx": 70,
+            "ry": 14,
+            "opaqueBottomY": 1472
+          },
+          {
+            "x": 768,
+            "y": 1436,
+            "rx": 116,
+            "ry": 14,
+            "opaqueBottomY": 1439
+          }
+        ]
+      },
+      "sha256": "678b63c94f6a43a5ef7f352e31f2f0268f0d08cb9b75786bc5ae366c3096278e"
+    },
+    {
+      "armorId": 29,
+      "weaponId": 12,
+      "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/29-heavy.png",
+      "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/12.png",
+      "generatedSource": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-c286e709-0fa9-4b49-b16b-682d0c376aec.png",
+      "image": "images/combat/fighters/29-12.png",
+      "prompt": "Use case: compositing. Edit the FIRST input into one finished transparent full-body 2D combat sprite. The first image is the exact existing character armor costume29 and stance to preserve. The second image is exact AK-74 rifle to insert, fixed reddish wooden buttstock, matching reddish wooden handguard, curved orange-brown magazine, black steel barrel, standard iron sights, NO scope. Paint that rifle directly into both existing hands at raised chest height, pointing RIGHT; buttstock seated firmly against near right shoulder. Right trigger hand grasps pistol grip behind magazine with finger at trigger, left support hand cups wooden fore-end. Natural complete arm pose corrections permitted to fit rifle realistically. Keep identical costume29 equipment identity: tan-green camouflage, camouflaged tactical helmet with mounted multi-lens nightvision unit folded up, goggles and full respirator mask, armored shoulders, four tall magazine pouches across lower chest, dark fingerless gloves, side holster, thighstraps, patterned kneepads and black boots. Preserve whole-body spread stance and RIGHT facing. Full rifle must have realistic consistent AK-74 shape with no added sight, no muzzle flash, no insignia. One unified painted character; no separate limb pieces or extra hands. Output portrait1024x1536 with complete head and both complete boot soles, safe margins. A true transparent alpha background, NOT a painted dark background, no halo, no environment, no floor or ground shadow.",
+      "review": {
+        "costumeIdentity": "pass: tan-green camouflage, helmet with nightvision optics, goggles/respirator, shoulder armor, magazine pouches, holster, thigh straps, patterned kneepads and boots preserved",
+        "weaponIdentity": "pass: fixed wood AK-74 with wood fore-end, orange curved magazine, iron sights; no optic",
+        "primaryGrip": "pass: gloved fingers wrap pistol grip behind magazine, index finger at trigger guard",
+        "supportGrip": "pass: fingerless support glove cups wooden fore-end",
+        "stockContact": "pass: wood buttstock seats against near shoulder",
+        "fullBody": "pass: helmet, muzzle and both boots complete",
+        "direction": "right",
+        "separateBodyPartLayers": false
+      },
+      "alpha": {
+        "mode": "RGBA",
+        "width": 1024,
+        "height": 1536,
+        "min": 0,
+        "max": 254,
+        "transparentPixels": 990954,
+        "opaqueOver200Pixels": 553206,
+        "cornerAlpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "edgeAlphaMax": 0
+      },
+      "opaqueBBox": [
+        46,
+        42,
+        1002,
+        1492
+      ],
+      "ground": {
+        "soleY": 1491,
+        "feet": [
+          {
+            "x": 125,
+            "y": 1488,
+            "rx": 68,
+            "ry": 14,
+            "opaqueBottomY": 1491
+          },
+          {
+            "x": 668,
+            "y": 1448,
+            "rx": 133,
+            "ry": 14,
+            "opaqueBottomY": 1451
+          }
+        ]
+      },
+      "sha256": "b1d9c7b1a1bbc33708be92ed1b053d6a1222460755332e516f2b0e279c8f6374"
+    }
+  ]
+}

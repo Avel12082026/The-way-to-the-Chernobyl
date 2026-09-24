@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "prompts": {"light":"Use case: compositing. Asset type: finished full-body side-view combat character sprite, transparent PNG, 1024x1536 portrait. Image1 is the EDIT TARGET: existing light armor #1 pistol pose. Image2 is the EXACT INSERT weapon #1, Makarov pistol, worn dark steel slide and brown checkered grip, no attachments. Inpaint this exact pistol naturally into the existing two-handed grip. Retain the original same man, facial identity, tan hooded suit, all pockets, straps, kneepads, boots, texture, stance, limb lengths, torso, and canvas framing. Do not redesign the character or append disembodied hand parts. Modify only hands/fingers as necessary to enclose the pistol handle anatomically. Both hands grip a SINGLE handle: trigger hand high under slide, support hand wrapped around primary hand, a little brown grip heel remains visible below hand. The pistol is adult realistic compact Makarov size, around 17cm long (roughly length of visible palm), not a giant weapon. Barrel horizontal aiming RIGHT, face aiming RIGHT toward opponent. Trigger finger correctly meets trigger inside guard, other fingers below guard, fingers never over barrel/slide. Keep full uncropped figure with both soles and margins, no floor/background/shadow, transparent alpha throughout empty regions and between legs. Same painterly realistic game sprite style as source. No muzzle flash, no duplicates, no text. Preserve source pose/armor exactly, integrate pistol lighting.","heavyInitial":"Use case: compositing. Asset type: finished full-body side-view combat character sprite, transparent PNG, 1024x1536 portrait. Image1 is the EDIT TARGET: existing bulky armor #40 pistol pose. Image2 is the EXACT INSERT weapon #1 Makarov pistol, worn dark steel slide with a small engraved star, compact frame, reddish brown checkered grip, no attachments. Inpaint this exact pistol naturally into the existing two-handed grip. Retain same armor identity, helmet and yellow goggles, respirator, tubes, yellow trim, each armored plate and fingerless black gloves, heavy boots, stance, texture and canvas composition. Do not redesign armor, body, or pose. Do not append separate hands or limbs. Modify only fingers as needed to wrap ONE pistol handle. Trigger hand high under slide, support hand around primary hand, small brown grip heel visible below gloves. Makarov realistically small 17cm long, approximately 1 adult palm long; pistol slide about 145pixels if adult figure height1450pixels, identical physical size to light armor character. Barrel horizontal pointing RIGHT and helmet gaze toward RIGHT toward enemy. Trigger finger correctly at trigger in guard, remaining fingers below guard, clear slide and barrel. Preserve complete uncropped figure and both soles with small margin. Actual transparent alpha empty areas, no background, no glow, no floor, no cast shadow, no checker pattern. No muzzle flash or extra gun. Preserve painterly realistic sprite style and same lighting. Change only weapon insertion and local finger contours.","heavyCorrection":"Use case: precise-object-edit. Image1 is EDIT TARGET, finished heavy armor #40 with Makarov pistol. Image2 is size/composition reference: light armor #1 holding the SAME Makarov. Image3 is exact pistol identity reference. Correct ONLY the Makarov in image1: it is about 13% too large relative to adult height. Reduce its visible slide length from about190 pixels to about168 pixels on the same1024x1536 canvas. Keep rear pistol slide/grip location near x752 y195 and shorten muzzle toward x920 instead x943; maintain natural grip with correct trigger finger inside guard and support hand around the primary hand. The adult figure in image1 is about1500 pixels tall, versus1330pixels in image2, so same real-sized gun must be only1.128 times image2 gun. Maintain EXACT same whole heavy body, pose, gloves, boots, armor plates, yellow outlines, helmet, goggles, face direction and composition from image1. No separate hand overlay, no new limbs. Transparent PNG alpha background, no floor, no glow/shadow, no checkerboard. Full uncropped figure. Retain worn dark steel slide and brown checkered compact Makarov handle. Barrel points horizontal RIGHT. No muzzle flash. Do not change any other content or resize the whole character. Output portrait1024x1536."},
+  "created": "2026-09-24",
+  "status": "2 visually accepted complete sprites; runtime integration and screenshot QA handled separately",
+  "sprites": [
+    {
+      "armorId": 1,
+      "weaponId": 1,
+      "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/1-pistol.png",
+      "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/1.png",
+      "generatedOriginal": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-116a8fcf-e9b8-46c0-9c39-59c96938f7eb.png",
+      "image": "images/combat/fighters/1-1.png",
+      "generator": "built-in imagegen",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1421,
+      "feet": [
+        {
+          "x": 195.0,
+          "y": 1421,
+          "rx": 63.0,
+          "ry": 14
+        },
+        {
+          "x": 774.0,
+          "y": 1394,
+          "rx": 115.0,
+          "ry": 14
+        }
+      ],
+      "rgba": true,
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "transparentPixelCount": 1140443,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bboxAlpha200": [
+        123,
+        92,
+        987,
+        1422
+      ],
+      "sha256": "ccf2417b93b268a42dc0c797c1948e55999b1555ef3f9ce473a9569001b61826",
+      "visualQA": {
+        "approvedForIntegration": true,
+        "direction": "right",
+        "fullBody": true,
+        "armorIdentityPreserved": true,
+        "sourcePosePreserved": true,
+        "weaponIdentity": "Makarov PM, compact dark slide, brown grip",
+        "twoHandGrip": "visually reviewed as continuous, grip enclosed by hands",
+        "triggerContact": "visible index finger inside trigger guard",
+        "emptyBackgroundAlpha": "verified numerically",
+        "notes": "Whole original light-armour pistol pose retained. Makarov outline, grip heel, two-hand wrap and trigger contact visually reviewed. Gun about148px long over1330px body."
+      }
+    },
+    {
+      "armorId": 40,
+      "weaponId": 1,
+      "sourceCharacter": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/characters/40-pistol.png",
+      "sourceWeapon": "asset_sources/side-combat-checkpoint/weapon-fit/fitting/weapons/1.png",
+      "generatedOriginal": "/workspace/scratch/e3fc66bcd3e3/generated_images/exec-66688ca3-5802-45a4-ba95-1df2854e1844.png",
+      "image": "images/combat/fighters/40-1.png",
+      "generator": "built-in imagegen",
+      "width": 1024,
+      "height": 1536,
+      "soleY": 1514,
+      "feet": [
+        {
+          "x": 199.5,
+          "y": 1514,
+          "rx": 79.5,
+          "ry": 14
+        },
+        {
+          "x": 874.5,
+          "y": 1435,
+          "rx": 85.5,
+          "ry": 14
+        }
+      ],
+      "rgba": true,
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "transparentPixelCount": 956377,
+      "alphaCorners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bboxAlpha200": [
+        118,
+        13,
+        961,
+        1515
+      ],
+      "sha256": "bca249124c2b7ade20dda687fd24f85c2e8a7d1f5c8e8e073c57fbabb5324c15",
+      "visualQA": {
+        "approvedForIntegration": true,
+        "direction": "right",
+        "fullBody": true,
+        "armorIdentityPreserved": true,
+        "sourcePosePreserved": true,
+        "weaponIdentity": "Makarov PM, compact dark slide, brown grip",
+        "twoHandGrip": "visually reviewed as continuous, grip enclosed by hands",
+        "triggerContact": "visible index finger inside trigger guard",
+        "emptyBackgroundAlpha": "verified numerically",
+        "notes": "Whole original heavy-armour pistol pose retained. First output pistol too large and corrected with imagegen. Corrected gun about156px long over1500px body, approximately6percent smaller relative to height than light variant. Both remain visually plausible; not a mathematically identical weapon scale."
+      }
+    }
+  ]
+}
