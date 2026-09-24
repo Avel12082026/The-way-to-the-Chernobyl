@@ -10,7 +10,7 @@ function load(url){
   const im=new Image();let finished=false;
   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+url)),20000);
   function finish(error){if(finished)return;finished=true;clearTimeout(timer);im.onload=im.onerror=null;if(error){cache.delete(url);reject(error);}else resolve(im);}
-  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v=20260914-combat4';
+  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v=modular-pistols-20260924';
  });cache.set(url,p);if(cache.size>12)cache.delete(cache.keys().next().value);return p;
 }
 function mount(){
@@ -41,7 +41,7 @@ function draw(now=0){
 async function show(next){
  const readyPlayer=root.CombatFighters?.resolve({armorId:next.armor,weaponId:next.weaponId}).ready;
  const readyEnemy=root.CombatFighters?.resolve(next.enemyGear).ready;
- if(!readyPlayer&&!readyEnemy){hide();host=canvas=caption=retry=null;if(legacyChildren)document.getElementById('combatScene')?.replaceChildren(...legacyChildren);legacyActive=true;const result=await legacy.show(next);legacyChildren=Array.from(document.getElementById('combatScene')?.children||[]);return result;}
+ if(!readyPlayer&&!readyEnemy){hide();host=canvas=caption=retry=null;if(legacyChildren)document.getElementById('combatScene')?.replaceChildren(...legacyChildren);legacyActive=true;const pending=legacy.show(next);legacyChildren=Array.from(document.getElementById('combatScene')?.children||[]);return await pending;}
  if(legacyActive){legacy.hide();legacyActive=false;host=canvas=caption=retry=null;}
  if(!mount())return false;
  if(!root.CombatAssets||!root.COMBAT_ASSETS||!root.CombatLayout||!root.CombatFighters){hide();status('Не удалось загрузить интерфейс боя. Перезапусти игру.');return false;}
@@ -59,8 +59,8 @@ async function show(next){
   const [background,mutant,playerImage,enemyImage]=await Promise.all([
    visual.ready?load(visual.background):null,
    visual.ready?load(visual.mutant):null,
-   player.ready?load(player.image):null,
-   !visual.ready&&enemy.ready?load(enemy.image):null
+   root.CombatFighters.load(player,load),
+   !visual.ready?root.CombatFighters.load(enemy,load):null
   ]);
   if(request!==ticket)return false;
   pictures={background,mutant,player:playerImage,enemy:enemyImage};
