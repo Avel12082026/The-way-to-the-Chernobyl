@@ -5,12 +5,12 @@ const cache=new Map();let host,canvas,caption,retry,config,pictures,signature=''
 const reduced=root.matchMedia('(prefers-reduced-motion: reduce)');
 function variant(token){let h=0;for(const c of String(token))h=(h*31+c.charCodeAt(0))>>>0;return h%3;}
 function load(url){
- if(cache.has(url))return cache.get(url);
+ if(cache.has(url)){const cached=cache.get(url);cache.delete(url);cache.set(url,cached);return cached;}
  const p=new Promise((resolve,reject)=>{
   const im=new Image();let finished=false;
   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+url)),20000);
   function finish(error){if(finished)return;finished=true;clearTimeout(timer);im.onload=im.onerror=null;if(error){cache.delete(url);reject(error);}else resolve(im);}
-  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v=modular-pistols-20260924';
+  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v='+encodeURIComponent(root.CombatFighters?.data.version||'modular-shotguns-v1');
  });cache.set(url,p);if(cache.size>12)cache.delete(cache.keys().next().value);return p;
 }
 function mount(){
@@ -76,3 +76,4 @@ function react(token,result,action){
 document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(frame);frame=0;reaction=null;if(!document.hidden)draw(performance.now());});
 root.CombatScene={show,hide,react};
 })(window);
+
