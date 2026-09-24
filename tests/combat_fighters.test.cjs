@@ -1,6 +1,8 @@
 const assert = require('node:assert/strict');
 const f = require('../images/combat/fighters.js');
 const shotgunIds = [20,106,107,108,109,110,111,19,112,113,114,32,115,116,44,117,62,118,50,119,56,120,121,68,122,123,74,124,125];
+const automaticIds=[11,12,37,21,26,17,38,45,57,69,67,43,16,15,25,18,10,63,51,75,61,59,71,77,22,29,53,47,65];
+const heavyIds=[...shotgunIds,...automaticIds];
 function context() {
   const calls = [];
   return { calls, ...Object.fromEntries(['save','restore','translate','rotate','scale','drawImage','beginPath','moveTo','lineTo','closePath','rect','clip'].map(name => [name, (...args) => calls.push([name, ...args])])) };
@@ -9,7 +11,7 @@ function context() {
   const oldWeapons = Object.fromEntries(Object.entries(f.data.weapons).filter(([, w]) => (w.pose || 'pistol') === 'pistol'));
   assert.equal(Object.keys(f.data.characters).length, 96);
   assert.equal(Object.keys(oldWeapons).length, 26);
-  assert.deepEqual(Object.keys(f.data.weapons).filter(id => f.data.weapons[id].pose === 'heavy').map(Number).sort((a,b)=>a-b), shotgunIds.slice().sort((a,b)=>a-b));
+  assert.deepEqual(Object.keys(f.data.weapons).filter(id => f.data.weapons[id].pose === 'heavy').map(Number).sort((a,b)=>a-b), heavyIds.slice().sort((a,b)=>a-b));
   for (const character of Object.values(f.data.characters)) assert.ok(character.poses.pistol && character.poses.heavy);
   for (const key of Object.keys(f.data.pairAdjustments)) assert.ok(f.data.weapons[key.split('-')[1]]);
   const urls = new Set();
@@ -17,7 +19,7 @@ function context() {
   for (const armorId of Object.keys(f.data.characters)) {
     for (const weaponId of Object.keys(f.data.weapons)) {
       const gear = f.resolve({ armorId, weaponId });
-      const pose = shotgunIds.includes(Number(weaponId)) ? 'heavy' : 'pistol';
+      const pose = heavyIds.includes(Number(weaponId)) ? 'heavy' : 'pistol';
       assert.equal(gear.ready, true);
       assert.equal(gear.pose, pose);
       assert.equal(gear.character, f.data.characters[armorId].poses[pose]);
@@ -32,17 +34,19 @@ function context() {
         const hasHands = !Array.isArray(gear.character.handMasks) || gear.character.handMasks.some(p => Array.isArray(p) && p.length >= 3 && p.every(v => Array.isArray(v) && v.length === 2 && v.every(Number.isFinite)));
         const handSource = Array.isArray(gear.character.handMasks) ? gear.body : gear.hands;
         const guard=gear.weapon.foregroundGuard,hasGuard=Array.isArray(guard)&&guard.length===4&&guard.every(Number.isFinite)&&guard[2]>0&&guard[3]>0;
-        assert.deepEqual(ctx.calls.filter(c => c[0] === 'drawImage').map(c => c[1].url), [gear.body, gear.gun, ...(forearm ? [gear.body] : []), ...(hasHands ? [handSource] : []), ...(hasGuard ? [gear.gun] : [])]);
+        const compact=gear.pose==='heavy'&&Array.isArray(gear.supportArm)&&gear.supportArm.length>=3&&Array.isArray(gear.adjustment?.supportShift)&&gear.adjustment.supportShift.length===2;
+        const handPasses=compact?(Array.isArray(gear.character.handMasks)?gear.character.handMasks.filter(p=>Array.isArray(p)&&p.length>=3).length:2):(hasHands?1:0);
+        assert.deepEqual(ctx.calls.filter(c => c[0] === 'drawImage').map(c => c[1].url), [...Array(compact?2:1).fill(gear.body), gear.gun, ...(forearm ? [gear.body] : []), ...Array(handPasses).fill(handSource), ...(hasGuard ? [gear.gun] : [])]);
         assert.deepEqual(ctx.calls.filter(c => c[0] === 'scale')[0], ['scale', (side === 'enemy' ? -1 : 1) * 800/1536, 800/1536]);
         assert.equal(ctx.calls.filter(c => c[0] === 'save').length, ctx.calls.filter(c => c[0] === 'restore').length);
       }
       combinations++;
     }
   }
-  assert.equal(combinations, 96 * (26 + 29));
-  assert.equal(urls.size, 96 * 2 * 2 + 26 + 29);
+  assert.equal(combinations, 96 * (26 + 29 + 29));
+  assert.equal(urls.size, 96 * 2 * 2 + 26 + 29 + 29);
   assert.equal(f.resolve({ armorId: 999, weaponId: 20 }).ready, false);
-  assert.equal(f.resolve({ armorId: 1, weaponId: 11 }).ready, false);
+  assert.equal(f.resolve({ armorId: 1, weaponId: 9999 }).ready, false);
   assert.equal(f.resolve(null).ready, false);
   assert.equal(await f.load(f.resolve(null), () => { throw Error('must not load missing gear'); }), null);
   assert.equal(f.draw(context(), null, 'player'), false);

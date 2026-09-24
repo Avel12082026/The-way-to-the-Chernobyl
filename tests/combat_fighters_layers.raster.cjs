@@ -5,7 +5,8 @@ const f = require('../images/combat/fighters.js');
 let nativeCanvas;
 const candidates = [
   '@napi-rs/canvas',
-  ...(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES ? [path.join(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES, '@napi-rs/canvas')] : [])
+  ...(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES ? [path.join(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES, '@napi-rs/canvas')] : []),
+  '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas'
 ];
 for (const name of candidates) {
   try { nativeCanvas = require(name); break; } catch (error) { if (error.code !== 'MODULE_NOT_FOUND') throw error; }
