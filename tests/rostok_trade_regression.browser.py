@@ -172,10 +172,16 @@ async def main():
             await travel.wait_for(state='visible')
             assert await page.locator('#zoneMapTravelDestination').inner_text()==title
             assert asset in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
-            # CI uses an offline browser; inject the exact repository WebP bytes so the
-            # screenshot shows the same destination artwork the deployed client requests.
-            local_asset=ROOT/'images'/'combat'/'environments'/asset
-            data_uri='data:image/webp;base64,'+base64.b64encode(local_asset.read_bytes()).decode()
+            # CI uses an offline browser; inject the exact bytes requested by the client.
+            # Kordon's authored travel art is stored losslessly as small base64 chunks so
+            # the same source can also be reconstructed on the live VPS.
+            if asset=='zone-travel/kordon.webp':
+                chunks=[ROOT/'assets'/'zone-travel'/f'kordon.part{i:02d}.b64' for i in range(4)]
+                encoded=''.join(p.read_text(encoding='utf-8').strip() for p in chunks)
+                raw=base64.b64decode(encoded,validate=True)
+            else:
+                raw=(ROOT/'images'/'combat'/'environments'/asset).read_bytes()
+            data_uri='data:image/webp;base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
             await page.wait_for_timeout(80)
             await page.screenshot(path=str(OUT/filename),full_page=True)
