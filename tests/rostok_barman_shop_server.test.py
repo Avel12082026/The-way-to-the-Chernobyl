@@ -69,7 +69,7 @@ with tempfile.TemporaryDirectory() as td:
 zhuchara_js=r"""
 const SHOP_WEAPONS=Array.from({length:29},(_,i)=>({id:100+i,name:'P'+(i+1),progressionClass:'pistol',starterGear:i===0}));
 const SHOP_ARMOR=Array.from({length:60},(_,i)=>({id:i+1,name:'A'+(i+1)})).reverse();
-function parseGearNameServer(name){return {baseName:String(name).replace(/ \\+\\d+$/,'')};}
+function parseGearNameServer(name){return {baseName:String(name).replace(/ \+\d+$/,'')};}
 const handlers=[];
 const app={post(path,...fns){if(path==='/api/shop/buy')handlers.push(...fns)}};
 """+mod.SHOP_GUARD+r"""
