@@ -16,8 +16,8 @@ assert mod.BAR_SIZE==(941,1672)
 sample='<link href="ui/bunker-menu.css?v=old"><script src="ui/bunker-menu.js?v=old"></script>'
 sample=mod.bump_cache(sample,'bunker-menu.css')
 sample=mod.bump_cache(sample,'bunker-menu.js')
-assert 'ui/bunker-menu.css?v=20260925-zone-travel1' in sample
-assert 'ui/bunker-menu.js?v=20260925-zone-travel1' in sample
+assert 'ui/bunker-menu.css?v=20260925-zone-travel2' in sample
+assert 'ui/bunker-menu.js?v=20260925-zone-travel2' in sample
 
 source=path.read_text(encoding='utf-8')
 assert 'PIL' not in source and 'ImageMagick' not in source and 'convert ' not in source
