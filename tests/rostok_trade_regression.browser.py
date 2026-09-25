@@ -160,10 +160,10 @@ async def main():
         await page.set_viewport_size({'width':390,'height':844})
         await page.evaluate("player.level=1000;window.__zoneMapTravelMs=260")
         travel_cases=[
-            (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','06.webp'),
-            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','zone-travel/kordon.webp'),
-            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','11.webp'),
-            (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','16.webp'),
+            (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','images/anomaly/background.jpg'),
+            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','file_000000002bb08210800056ebfb1dce1f.png'),
+            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','images/combat/environments/11.webp'),
+            (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','images/combat/environments/16.webp'),
         ]
         for origin,point_id,filename,title,asset in travel_cases:
             await page.evaluate("(loc)=>{ZoneMap.setLocation(loc);ZoneMap.open('camp')}",origin)
@@ -172,16 +172,11 @@ async def main():
             await travel.wait_for(state='visible')
             assert await page.locator('#zoneMapTravelDestination').inner_text()==title
             assert asset in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
-            # CI uses an offline browser; inject the exact bytes requested by the client.
-            # Kordon's authored travel art is stored losslessly as small base64 chunks so
-            # the same source can also be reconstructed on the live VPS.
-            if asset=='zone-travel/kordon.webp':
-                chunks=[ROOT/'assets'/'zone-travel'/f'kordon.part{i:02d}.b64' for i in range(4)]
-                encoded=''.join(p.read_text(encoding='utf-8').strip() for p in chunks)
-                raw=base64.b64decode(encoded,validate=True)
-            else:
-                raw=(ROOT/'images'/'combat'/'environments'/asset).read_bytes()
-            data_uri='data:image/webp;base64,'+base64.b64encode(raw).decode()
+            # CI runs offline: feed the same repository background that the real client requests.
+            raw=(ROOT/asset).read_bytes()
+            suffix=Path(asset).suffix.lower()
+            mime='image/jpeg' if suffix in ('.jpg','.jpeg') else ('image/png' if suffix=='.png' else 'image/webp')
+            data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
             await page.wait_for_timeout(80)
             await page.screenshot(path=str(OUT/filename),full_page=True)
