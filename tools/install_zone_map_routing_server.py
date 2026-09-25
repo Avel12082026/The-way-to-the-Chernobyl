@@ -24,14 +24,20 @@ function zoneMapZhucharaPistolsServer(){
     return start>=0?list.slice(start,start+29):[];
 }
 const ZONE_MAP_LOCATION1_PISTOLS=new Set(zoneMapZhucharaPistolsServer().map(item=>item.name));
-const ZONE_MAP_LOCATION1_ARMOR=new Set(
-    (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
-      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
-      .slice(0,29).map(item=>item.name)
-);
+function zoneMapZhucharaArmorServer(){
+    const list=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor);
+    const byId=list.filter(item=>Number(item.id)>=1&&Number(item.id)<=29);
+    return byId.length===29?byId:list.slice(0,29);
+}
+const ZONE_MAP_LOCATION1_ARMOR=new Set(zoneMapZhucharaArmorServer().map(item=>item.name));
 app.post('/api/shop/buy',(req,res,next)=>{
     if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();
-    const category=String(req.body?.category||''),name=String(req.body?.name||'');
+    const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    let name=rawName;
+    if(typeof parseGearNameServer==='function'){
+        try{name=String(parseGearNameServer(rawName)?.baseName||rawName);}catch(_){}
+    }
     if(category==='weapon'&&!ZONE_MAP_LOCATION1_PISTOLS.has(name))
         return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
@@ -54,11 +60,13 @@ function rostokBarmanShotgunsServer(){
     return pistolStart>=0?list.slice(pistolStart+29,pistolStart+58):[];
 }
 const ROSTOK_BARMAN_SHOTGUNS_SERVER=new Set(rostokBarmanShotgunsServer().map(item=>item.name));
-const ROSTOK_BARMAN_ARMOR_SERVER=new Set(
-    (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
-      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
-      .slice(29,58).map(item=>item.name)
-);
+function rostokBarmanArmorServer(){
+    const list=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor);
+    const byId=list.filter(item=>Number(item.id)>=30&&Number(item.id)<=58);
+    return byId.length===29?byId:list.slice(29,58);
+}
+const ROSTOK_BARMAN_ARMOR_SERVER=new Set(rostokBarmanArmorServer().map(item=>item.name));
 app.post('/api/shop/buy',(req,res,next)=>{
     const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
     if(sourceVendor!=='barman')return next();
@@ -446,8 +454,36 @@ const ZONE_MAP_LOCATION1_PISTOLS=new Set(zoneMapZhucharaPistolsServer().map(item
 
     if '.slice(0,10).map(item=>item.name)' in block:
         block=block.replace('.slice(0,10).map(item=>item.name)','.slice(0,29).map(item=>item.name)',1); changed=True
-    elif '.slice(0,29).map(item=>item.name)' not in block:
+    elif '.slice(0,29).map(item=>item.name)' not in block and 'zoneMapZhucharaArmorServer' not in block:
         raise RuntimeError('Не удалось расширить список костюмов Жучары до 29.')
+
+    if 'zoneMapZhucharaArmorServer' not in block:
+        old_armor_def="""const ZONE_MAP_LOCATION1_ARMOR=new Set(
+    (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor)
+      .slice(0,29).map(item=>item.name)
+);"""
+        new_armor_def="""function zoneMapZhucharaArmorServer(){
+    const list=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isResearchSuit&&!item.isPremiumArmor);
+    const byId=list.filter(item=>Number(item.id)>=1&&Number(item.id)<=29);
+    return byId.length===29?byId:list.slice(0,29);
+}
+const ZONE_MAP_LOCATION1_ARMOR=new Set(zoneMapZhucharaArmorServer().map(item=>item.name));"""
+        if old_armor_def not in block:
+            raise RuntimeError('Не найден позиционный список брони Жучары для обновления.')
+        block=block.replace(old_armor_def,new_armor_def,1); changed=True
+
+    old_names="    const category=String(req.body?.category||''),name=String(req.body?.name||'');"
+    if old_names in block:
+        new_names="""    const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    let name=rawName;
+    if(typeof parseGearNameServer==='function'){
+        try{name=String(parseGearNameServer(rawName)?.baseName||rawName);}catch(_){}
+    }"""
+        block=block.replace(old_names,new_names,1); changed=True
+    elif "rawName=String(req.body?.name||'')" not in block:
+        raise RuntimeError('Не удалось нормализовать имя брони Жучары.')
 
     weapon_guard="""    if(category==='weapon'&&!ZONE_MAP_LOCATION1_PISTOLS.has(name))
         return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
