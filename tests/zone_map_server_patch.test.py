@@ -41,6 +41,9 @@ assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert mod.BARMAN_MARK in patched
 assert mod.POSITION_MARK in patched
+assert mod.TECHNICIAN_BUY_MARK in patched
+assert "sourceVendor==='technician'" in patched
+assert "req.body.vendor='leonov'" in patched
 assert "app.post('/api/player/position'" in patched
 assert "sourceVendor||'')==='barman'" in patched
 assert "app.get('/api/zone-map/:location'" in patched
