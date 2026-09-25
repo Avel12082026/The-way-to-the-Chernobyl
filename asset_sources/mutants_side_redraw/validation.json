@@ -1,5 +1,5 @@
 {
-  "version": "mutants-side-20260925-v1",
+  "version": "mutants-side-20260925-v2",
   "complete": true,
   "counts": {
     "catalogSpecies": 29,
@@ -1993,74 +1993,67 @@
       "metadata": "asset_sources/mutants_side_redraw/controller.json"
     },
     "stronglav": {
-      "width": 1254,
-      "height": 1254,
-      "groundY": 1220,
+      "width": 1199,
+      "height": 1312,
+      "groundY": 1305,
       "visibleAlphaBBox": [
-        154,
-        32,
-        1181,
-        1221
+        44,
+        19,
+        1195,
+        1306
       ],
       "bottomGroups": [
         {
-          "x": 612.0,
-          "y": 1166,
-          "width": 211
+          "x": 595.5,
+          "y": 1276,
+          "width": 300
         },
         {
-          "x": 768.0,
-          "y": 1144,
-          "width": 37
-        },
-        {
-          "x": 1026.5,
-          "y": 1220,
-          "width": 272
+          "x": 1062.0,
+          "y": 1305,
+          "width": 255
         }
       ],
       "connectedSupportGroups": [
         {
-          "x": 691.5,
-          "y": 1166,
-          "width": 370
+          "x": 603.5,
+          "y": 1276,
+          "width": 316
         },
         {
-          "x": 1035.5,
-          "y": 1220,
-          "width": 290
+          "x": 1064.5,
+          "y": 1305,
+          "width": 260
         }
       ],
-      "alphaZeroFraction": 0.60428,
-      "alphaVisibleFraction": 0.368022,
+      "alphaZeroFraction": 0.655646,
+      "alphaVisibleFraction": 0.328151,
       "alphaRange": [
         0,
         255
       ],
-      "edgeAlphaMax": 1,
+      "edgeAlphaMax": 3,
       "transparentExterior": true,
       "contact": {
-        "width": 1254,
-        "height": 1254,
-        "groundY": 1220,
+        "width": 1199,
+        "height": 1312,
+        "groundY": 1305,
         "feet": [
           {
-            "x": 691.5,
-            "y": 1166,
-            "width": 370
+            "x": 603.5,
+            "y": 1276,
+            "width": 316
           },
           {
-            "x": 1035.5,
-            "y": 1220,
-            "width": 290
+            "x": 1064.5,
+            "y": 1305,
+            "width": 260
           }
         ],
         "floating": false
       },
-      "warnings": [
-        "contact feet measured from bottom alpha groups"
-      ],
-      "visualQA": "passed: newly drawn left-facing hunchback, one visible eye directed left, reference mouth tentacles and muscular anatomy retained, full unclipped silhouette",
+      "warnings": [],
+      "visualQA": "passed: four mouth tentacles, left-facing predatory gaze and attack, darker skin, elongated muscular legs, powerful scarred body, no body hair/spikes/external ridge, sparse gray hair from head only, localized blood-stained hands and faint eye glow, entire silhouette inside transparent frame.",
       "metadata": "asset_sources/mutants_side_redraw/stronglav.json"
     },
     "chimera": {

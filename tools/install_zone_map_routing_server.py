@@ -9,6 +9,11 @@ ROUTE_MARK='// ZONE_MAP_ROUTING_V4'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
 POSITION_MARK='// PLAYER_WORLD_POSITION_V1'
+UNIQUE_MUTANT_MARK='// UNIQUE_STRONGLAV_MAP_POOL_V1'
+UNIQUE_MUTANT_GUARD="""    // UNIQUE_STRONGLAV_MAP_POOL_V1
+    // Filter after tier routing so the remaining location tiers never shift.
+    pool=pool.filter(m=>!['стронглав','самка стронглава'].includes(String(m.name||'').trim().toLowerCase()));
+"""
 
 SHOP_GUARD=r"""// ZONE_MAP_LOCATION1_SHOP_V1
 function zoneMapZhucharaPistolsServer(){
@@ -197,6 +202,9 @@ function zoneMapMutantPayload(data,zoneTier){
         const internalTier=internalTiers[Math.min(internalTiers.length-1,Math.max(0,zoneTier-2))];
         pool=list.filter(m=>(Number(m.tier)||0)===internalTier);
     }
+    // UNIQUE_STRONGLAV_MAP_POOL_V1
+    // Filter after tier routing so the remaining location tiers never shift.
+    pool=pool.filter(m=>!['стронглав','самка стронглава'].includes(String(m.name||'').trim().toLowerCase()));
     if(!pool.length)return null;
     const pick=pool[Math.floor(Math.random()*pool.length)];
     const baseHp=Math.max(1,Number(pick.hp)||1);
@@ -494,6 +502,25 @@ def insert_barman_guard(text):
         raise RuntimeError('Не найден маршрут покупки для защиты Бармена.')
     return text[:pos]+BARMAN_GUARD+text[pos:],True
 
+def exclude_unique_map_mutants(text):
+    """Upgrade the existing map selector without changing its roster/tier mapping."""
+    start=text.find('function zoneMapMutantPayload(data,zoneTier){')
+    if start<0:
+        raise RuntimeError('Не найден поддерживаемый генератор мутантов карты. Ничего не изменено.')
+    end=text.find("app.post('/api/raid/zone-step'",start)
+    if end<0:
+        raise RuntimeError('Не найдена граница генератора мутантов карты. Ничего не изменено.')
+    block=text[start:end]
+    if UNIQUE_MUTANT_MARK in block:
+        if UNIQUE_MUTANT_GUARD.strip() not in block:
+            raise RuntimeError('Обнаружено неполное исключение Стронглава из встреч карты.')
+        return text,False
+    anchor='    if(!pool.length)return null;'
+    if block.count(anchor)!=1 or '    let pool=[];' not in block:
+        raise RuntimeError('Неизвестный формат пула мутантов карты. Ничего не изменено.')
+    block=block.replace(anchor,UNIQUE_MUTANT_GUARD+anchor,1)
+    return text[:start]+block+text[end:],True
+
 def patch(source):
     has_v4=ROUTE_MARK in source
     old_marks=[mark for mark in OLD_ROUTE_MARKS if mark in source]
@@ -527,6 +554,8 @@ def patch(source):
     changed=changed or barman_changed
     text,position_changed=insert_position_route(text)
     changed=changed or position_changed
+    text,unique_changed=exclude_unique_map_mutants(text)
+    changed=changed or unique_changed
     return text,changed
 
 def run(cmd,**kw):

@@ -1,6 +1,6 @@
 {
   "source": "actual manifest.js",
-  "version": "mutants-side-20260925-v1",
+  "version": "mutants-side-20260925-v2",
   "groundY": 940,
   "playerFeet": [
     {
@@ -1150,38 +1150,38 @@
     {
       "id": "stronglav",
       "imageSize": [
-        1254,
-        1254
+        1199,
+        1312
       ],
       "sourceBounds": [
-        154,
-        32,
-        1181,
-        1221
+        44,
+        19,
+        1195,
+        1306
       ],
-      "transparentFraction": 0.6,
+      "transparentFraction": 0.66,
       "floating": false,
       "grounded": true,
-      "scale": 0.61,
+      "scale": 0.66,
       "sceneBounds": [
-        819.05,
-        220.61,
-        1440.95,
-        940.61
+        739.91,
+        90.66,
+        1500.09,
+        940.66
       ],
-      "sceneHeight": 720,
-      "sceneWidth": 621.9,
+      "sceneHeight": 850,
+      "sceneWidth": 760.18,
       "overlapPixels": 0,
       "feet": [
         {
-          "x": 1144.53,
-          "y": 907.3,
-          "width": 224.05
+          "x": 1109.43,
+          "y": 920.85,
+          "width": 208.7
         },
         {
-          "x": 1352.84,
+          "x": 1413.9,
           "y": 940,
-          "width": 175.61
+          "width": 171.72
         }
       ],
       "clippedInScene": false
@@ -1281,10 +1281,28 @@
     "facing": "All mutant heads face left toward the player",
     "alpha": "No rectangular backgrounds or visible halos in composed scenes",
     "ground": "27 grounded species remain on floor940; two poltergeists retain hovering placement",
-    "scale": "13 per-species fit adjustments verified; humanoids 640–660px, stronglav720px, pseudogiant875×585px, moose857×780px, chimeras525px high, boar335px high",
+    "scale": "13 per-species fit adjustments verified; humanoids 640–660px, stronglav850px, pseudogiant875×585px, moose857×780px, chimeras525px high, boar335px high",
     "collisionPixels": 0,
     "clippedSpecies": 0,
-    "horizontalBounds": "Every visible sprite remains within x590–1525; nearestx648.66, rightmost1524"
+    "horizontalBounds": "Every visible sprite remains within x590–1525; nearestx648.66, rightmost1524",
+    "stronglavV2": "Passed current Stronglav revision: taller dark-skinned muscular Bloodsucker relative, longer legs, four mouth tentacles, scarred hairless body, sparse gray head tufts, no spikes/chitin/external spinal ridge; left-facing. Reviewed on both real environment backgrounds and light/dark alpha plates. Visible height850px versus Bloodsucker650px and Chimera525px, grounded on y940, no clipping or player collision."
   },
-  "verification": "Canvas composition using the actual game layout, manifest, player assets and two environment backgrounds; static pose."
+  "verification": "Canvas composition using actual game layout, manifest, player assets and two environment backgrounds; static pose. Original full29 review retained for unchanged28 species. Stronglav alone revalidated for v2 against Bloodsucker and Chimera comparison scenes plus light/dark alpha composites; other species entries preserved.",
+  "stronglavRevision": {
+    "version": "mutants-side-20260925-v2",
+    "image": "images/combat/mutants-side/stronglav.png",
+    "metadata": "asset_sources/mutants_side_redraw/stronglav.json",
+    "alphaZeroFraction": 0.655646,
+    "edgeAlphaMax": 3,
+    "alphaVisibleThreshold": 16,
+    "fullyTransparentExteriorPresent": true,
+    "visualReview": "passed",
+    "reviewBackgrounds": [
+      "images/combat/environments/01.webp",
+      "images/combat/environments/20.webp",
+      "solid light",
+      "solid dark"
+    ],
+    "uniqueEncounterRestriction": "Design requirement only; server restriction not applied by this artwork change."
+  }
 }

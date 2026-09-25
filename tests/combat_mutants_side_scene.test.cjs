@@ -3,7 +3,7 @@ const {layout,drawCreature}=require('../images/combat/layout.js');
 
 const html=fs.readFileSync(__dirname+'/../index.html','utf8');
 assert.ok(html.indexOf('images/combat/mutants-side/manifest.js')<html.indexOf('images/combat/side-scene.js'),'Side manifest loads before the scene');
-assert.match(html,/mutants-side\/manifest\.js\?v=mutants-side-20260925-v1/);
+assert.match(html,/mutants-side\/manifest\.js\?v=mutants-side-20260925-v2/);
 
 const legacyGround=JSON.stringify(layout.creatureGround),legacyFit=JSON.stringify(layout.creatures);
 const contact={width:1200,height:800,groundY:735,feet:[{x:230,y:730,width:95},{x:925,y:735,width:85}],floating:false};
