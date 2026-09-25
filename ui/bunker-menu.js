@@ -36,6 +36,13 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
+  const ZONE_TRAVEL_CACHE = '20260925-zone-travel1';
+  const ZONE_TRAVEL_ASSETS = Object.freeze({
+    1:'images/combat/environments/01.webp',
+    2:'images/combat/environments/06.webp',
+    3:'images/combat/environments/11.webp',
+    4:'images/combat/environments/16.webp'
+  });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
       {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:44.28,y:4.07,targetLocation:2,unlock:'first-location-gear'},
@@ -703,12 +710,34 @@
     return Number.isFinite(override) && override >= 0 ? override : ZONE_TRAVEL_MS;
   }
 
+  function zoneTravelArtworkUrl(location) {
+    const path = ZONE_TRAVEL_ASSETS[Number(location)] || ZONE_TRAVEL_ASSETS[1];
+    return path + '?v=' + ZONE_TRAVEL_CACHE;
+  }
+
+  function prepareZoneTravelArtwork(location) {
+    const target = Number(location);
+    const overlay = document.getElementById('zoneMapTravel');
+    const image = document.getElementById('zoneMapTravelArtwork');
+    const title = document.getElementById('zoneMapTravelDestination');
+    const url = zoneTravelArtworkUrl(target);
+    const name = ZONE_MAP_NAMES[target] || ('Локация ' + target);
+    if (overlay) overlay.style.setProperty('--zone-travel-image', 'url("' + url + '")');
+    if (image) {
+      image.alt = 'Переход на локацию ' + name;
+      image.src = url;
+    }
+    if (title) title.textContent = name.toLocaleUpperCase('ru-RU');
+  }
+
   function setZoneTravelProgress(value) {
     const pct = clamp(Math.round(Number(value) || 0), 0, 100);
     const fill = document.getElementById('zoneMapTravelFill');
     const text = document.getElementById('zoneMapTravelPercent');
     if (fill) fill.style.width = pct + '%';
     if (text) text.textContent = pct + '%';
+    const bar = document.querySelector('#zoneMapTravel .zone-map-travel-bar');
+    if (bar) bar.setAttribute('aria-valuenow', String(pct));
   }
 
   async function travelToZoneLocation(targetLocation) {
@@ -725,6 +754,7 @@
     zoneMapTravelling = true;
 
     if (route) route.textContent = fromName + ' → ' + toName;
+    prepareZoneTravelArtwork(target);
     setZoneTravelProgress(0);
     el.classList.add('travelling');
     if (overlay) overlay.hidden = false;
@@ -771,13 +801,18 @@
         </div>
       </div>
       <div id="zoneMapTravel" class="zone-map-travel" hidden>
-        <div class="zone-map-travel-panel">
+        <img id="zoneMapTravelArtwork" class="zone-map-travel-artwork" alt="" draggable="false">
+        <div class="zone-map-travel-shade" aria-hidden="true"></div>
+        <div class="zone-map-travel-heading">
           <div class="zone-map-travel-caption">ПЕРЕХОД МЕЖДУ ЛОКАЦИЯМИ</div>
+          <div id="zoneMapTravelDestination" class="zone-map-travel-destination"></div>
+        </div>
+        <div class="zone-map-travel-bottom">
           <div id="zoneMapTravelRoute" class="zone-map-travel-route"></div>
-          <div class="zone-map-travel-bar" role="progressbar" aria-label="Загрузка карты">
+          <div id="zoneMapTravelPercent" class="zone-map-travel-percent">0%</div>
+          <div class="zone-map-travel-bar" role="progressbar" aria-label="Загрузка карты" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
             <div id="zoneMapTravelFill" class="zone-map-travel-fill"></div>
           </div>
-          <div id="zoneMapTravelPercent" class="zone-map-travel-percent">0%</div>
         </div>
       </div>`;
     document.body.appendChild(el);
@@ -1567,7 +1602,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.6.4',
+    version: '0.6.5',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
