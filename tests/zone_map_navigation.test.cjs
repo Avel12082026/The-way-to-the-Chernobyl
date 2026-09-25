@@ -19,6 +19,10 @@ assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII A
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
 assert(js.includes("1:'/images/zone-travel/kordon.webp'")&&js.includes("2:'images/combat/environments/06.webp'")&&js.includes("3:'images/combat/environments/11.webp'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
+const kordonTravelB64=[0,1,2,3].map(i=>fs.readFileSync('assets/zone-travel/kordon.part'+String(i).padStart(2,'0')+'.b64','utf8').trim()).join('');
+const kordonTravelBytes=Buffer.from(kordonTravelB64,'base64');
+assert.equal(kordonTravelBytes.subarray(0,4).toString('ascii'),'RIFF','Kordon travel artwork is not WebP');
+assert.equal(kordonTravelBytes.length,30422,'Kordon travel artwork source is incomplete');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
 assert(js.includes('20260922-position3'),'Rostok map cache key missing');
 
