@@ -1,0 +1,36 @@
+name: Bar HUD and Cordon trade review
+on:
+  push:
+    branches: [fix/bar-hud-cordon-trade-20260925]
+    paths: ['.github/workflows/bar-cordon-review.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - name: Archive source and relevant HUD artwork
+        run: |
+          python3 - <<'PY'
+          import subprocess, pathlib, zipfile
+          files=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with zipfile.ZipFile('bar-cordon-source.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for name in files:
+                  p=pathlib.Path(name)
+                  if not p.is_file() or name.startswith('asset_sources/'):
+                      continue
+                  source=p.suffix.lower() in {'.js','.cjs','.py','.css','.html','.json','.md','.yml','.xml'}
+                  hud=name.startswith('ui/') and any(k in p.name for k in ('bunker','rostok','bar-'))
+                  if source or hud:
+                      z.write(p,name)
+              z.writestr('REVIEW_SOURCE_SHA.txt',subprocess.check_output(['git','rev-parse','HEAD']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bar-cordon-source
+          path: bar-cordon-source.zip
+          if-no-files-found: error
+          retention-days: 3
