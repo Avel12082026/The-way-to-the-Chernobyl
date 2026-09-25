@@ -11,13 +11,23 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Read-only bar image
+        with:
+          ref: 4b87db936529ef5e53ff504d1819a6da6788ab11
+      - name: Export source for merge review
         run: |
-          mkdir -p artwork-out
-          curl --fail --silent --show-error --retry 1 --max-time 25 https://213-176-92-184.sslip.io/api/zone-camp/4 -o artwork-out/rostok-bar.png
-          sha256sum artwork-out/rostok-bar.png
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          paths=set()
+          for pattern in ('index.html','package*.json','*.md','*.json','*.js','*.css','ui/**/*','inventory/**/*','tools/**/*','tests/**/*','server_patches/**/*','.github/workflows/**/*','file_000000002bb08210800056ebfb1dce1f.png'):
+              for p in Path('.').glob(pattern):
+                  if p.is_file(): paths.add(p)
+          with zipfile.ZipFile('source-snapshot.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in sorted(paths): z.write(p,p.as_posix())
+          print('Files:',len(paths))
+          PY
       - uses: actions/upload-artifact@v4
         with:
-          name: rostok-bar-readonly-20260925
+          name: current-rostok-review-4b87db9
           retention-days: 3
-          path: artwork-out/
+          path: source-snapshot.zip
