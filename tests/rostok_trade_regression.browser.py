@@ -52,6 +52,9 @@ async def main():
             return new Response(r.text,{status:r.status,headers:{'Content-Type':'application/json'}});
         }}""")
         html=(ROOT/'index.html').read_text()
+        # set_content() has about:blank as its document URL; give relative game assets
+        # the same base URL they have on the deployed GitHub Pages client.
+        html=html.replace('<head>','<head><base href="https://avel12082026.github.io/The-way-to-the-Chernobyl/">',1)
         def script(m):
             src=m[1].split('?')[0];f=ROOT/src
             code=TG if 'telegram-web-app.js' in src else f.read_text() if f.is_file() else ''
