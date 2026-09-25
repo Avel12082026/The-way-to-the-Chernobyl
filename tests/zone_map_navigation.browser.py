@@ -76,7 +76,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.20.0' && window.ZoneMap?.version==='0.6.6'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.20.0' && window.ZoneMap?.version==='0.6.7'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -95,7 +95,9 @@ async def main():
         travel=page.locator('#zoneMapTravel')
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelDestination').inner_text()=='СВАЛКА'
-        assert '06.webp' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert 'images/anomaly/background.jpg' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='anomaly'
+        assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==0
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
