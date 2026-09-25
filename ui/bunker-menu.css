@@ -217,15 +217,46 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   filter:brightness(.72) saturate(.82) contrast(1.06);
   user-select:none;-webkit-user-drag:none;pointer-events:none;
 }
+#zoneMapScreen .zone-map-travel-scene{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;}
+#zoneMapScreen .zone-travel-actor,#zoneMapScreen .zone-travel-mutant,#zoneMapScreen .zone-travel-weapon,#zoneMapScreen .zone-travel-artifact{
+  position:absolute;display:block;object-fit:contain;filter:drop-shadow(0 8px 12px #000c);user-select:none;-webkit-user-drag:none;
+}
+#zoneMapScreen .zone-travel-actor{bottom:5%;width:67%;height:64%;z-index:3;}
+#zoneMapScreen .zone-travel-actor-left{left:-21%;}
+#zoneMapScreen .zone-travel-actor-right{right:-21%;transform:scaleX(-1);}
+#zoneMapScreen .zone-travel-mutant{left:50%;bottom:14%;width:53%;height:43%;z-index:4;transform:translateX(-50%);}
+#zoneMapScreen .zone-travel-weapon{bottom:27%;width:49%;height:22%;z-index:5;}
+#zoneMapScreen .zone-travel-weapon-left{left:2%;transform:rotate(-7deg);}
+#zoneMapScreen .zone-travel-weapon-right{right:2%;transform:scaleX(-1) rotate(-7deg);}
+#zoneMapScreen .zone-travel-anomaly-field{
+  position:absolute;z-index:2;left:18%;right:18%;bottom:19%;height:35%;border-radius:50%;
+  background:radial-gradient(circle,#fff9 0 2%,#d4b86bbb 5%,#c58f3a77 17%,#91703844 33%,transparent 67%);
+  box-shadow:0 0 28px #e9c768aa,0 0 80px #8f6b3288;animation:zoneTravelPulse 1.4s ease-in-out infinite alternate;
+}
+#zoneMapScreen .zone-travel-artifact{z-index:6;left:50%;bottom:31%;width:18%;height:18%;transform:translateX(-50%);filter:drop-shadow(0 0 16px #f1d16c);}
+#zoneMapScreen[data-scene=""] .zone-map-travel-scene{display:none;}
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{filter:brightness(.28) saturate(.7) hue-rotate(175deg) contrast(1.08);}
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-travel-moon{
+  position:absolute;z-index:3;left:14%;top:7%;width:72px;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 38% 38%,#fff,#e6e9dc 57%,#aab4be 100%);box-shadow:0 0 25px #d7e4ff99,0 0 70px #91a7c966;
+}
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-travel-campfire{
+  position:absolute;z-index:4;left:50%;bottom:25%;width:28%;height:17%;transform:translateX(-50%);
+  background:radial-gradient(ellipse at 50% 75%,#fff3aacc 0 7%,#ff9b32cc 12%,#d9481599 28%,transparent 63%);
+  filter:blur(1px);box-shadow:0 0 45px #ff7a1f99;
+}
+#zoneMapScreen .zone-map-travel[data-scene="anomaly"] .zone-map-travel-artwork{filter:brightness(.58) saturate(.75) contrast(1.08);}
+#zoneMapScreen .zone-map-travel[data-scene="mutant"] .zone-map-travel-artwork{filter:brightness(.55) saturate(.74) contrast(1.12);}
+@keyframes zoneTravelPulse{from{transform:scale(.94);opacity:.72}to{transform:scale(1.05);opacity:1}}
 #zoneMapScreen .zone-map-travel-shade{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
+  position:absolute;inset:0;z-index:6;pointer-events:none;
   background:
     linear-gradient(180deg,rgba(4,5,4,.56) 0%,rgba(4,5,4,.12) 30%,rgba(4,5,4,.18) 62%,rgba(3,4,3,.90) 88%,#030403 100%),
     radial-gradient(circle at 50% 42%,transparent 28%,rgba(0,0,0,.52) 100%);
   box-shadow:inset 0 0 0 2px #6f5937,inset 0 0 28px #000;
 }
 #zoneMapScreen .zone-map-travel-heading{
-  position:absolute;z-index:3;left:7%;right:7%;top:max(34px,5.5dvh);
+  position:absolute;z-index:7;left:7%;right:7%;top:max(34px,5.5dvh);
   text-align:center;text-shadow:0 3px 6px #000,0 0 14px #000;
 }
 #zoneMapScreen .zone-map-travel-caption{
@@ -237,7 +268,7 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   letter-spacing:1.2px;text-transform:uppercase;
 }
 #zoneMapScreen .zone-map-travel-bottom{
-  position:absolute;z-index:4;left:6%;right:6%;
+  position:absolute;z-index:8;left:6%;right:6%;
   bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px);
   text-align:center;
 }
