@@ -7,9 +7,9 @@
       "habitat": 0,
       "mutant": "mutants/tushkan.png",
       "backgrounds": [
-        "backgrounds/flesh/1.png",
-        "backgrounds/flesh/2.png",
-        "backgrounds/flesh/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -20,9 +20,9 @@
       "habitat": 0,
       "mutant": "mutants/blind-dog.png",
       "backgrounds": [
-        "backgrounds/chernobyl-dog/1.png",
-        "backgrounds/flesh/1.png",
-        "backgrounds/zombie/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -33,9 +33,9 @@
       "habitat": 0,
       "mutant": "mutants/chernobyl-dog.png",
       "backgrounds": [
-        "backgrounds/chernobyl-dog/1.png",
-        "backgrounds/chernobyl-dog/2.png",
-        "backgrounds/chernobyl-dog/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -46,9 +46,9 @@
       "habitat": 0,
       "mutant": "mutants/krakozyabra.png",
       "backgrounds": [
-        "backgrounds/chernobyl-dog/2.png",
-        "backgrounds/boar/2.png",
-        "backgrounds/flesh/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -59,9 +59,9 @@
       "habitat": 0,
       "mutant": "mutants/flesh.png",
       "backgrounds": [
-        "backgrounds/flesh/1.png",
-        "backgrounds/flesh/2.png",
-        "backgrounds/flesh/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -72,9 +72,9 @@
       "habitat": 1,
       "mutant": "mutants/boar.png",
       "backgrounds": [
-        "backgrounds/boar/1.png",
-        "backgrounds/boar/2.png",
-        "backgrounds/boar/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -85,9 +85,9 @@
       "habitat": 1,
       "mutant": "mutants/isotope.png",
       "backgrounds": [
-        "backgrounds/isotope/1.png",
-        "backgrounds/isotope/2.png",
-        "backgrounds/isotope/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -98,9 +98,9 @@
       "habitat": 1,
       "mutant": "mutants/hinge.png",
       "backgrounds": [
-        "backgrounds/hinge/1.png",
-        "backgrounds/hinge/2.png",
-        "backgrounds/hinge/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -111,9 +111,9 @@
       "habitat": 1,
       "mutant": "mutants/zombie.png",
       "backgrounds": [
-        "backgrounds/zombie/1.png",
-        "backgrounds/zombie/2.png",
-        "backgrounds/zombie/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -124,9 +124,9 @@
       "habitat": 2,
       "mutant": "mutants/pseudodog.png",
       "backgrounds": [
-        "backgrounds/boar/1.png",
-        "backgrounds/chernobyl-dog/2.png",
-        "backgrounds/chernobyl-dog/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -137,9 +137,9 @@
       "habitat": 2,
       "mutant": "mutants/lynx.png",
       "backgrounds": [
-        "backgrounds/boar/1.png",
-        "backgrounds/boar/3.png",
-        "backgrounds/chernobyl-dog/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -150,9 +150,9 @@
       "habitat": 2,
       "mutant": "mutants/chupacabra.png",
       "backgrounds": [
-        "backgrounds/flesh/1.png",
-        "backgrounds/flesh/2.png",
-        "backgrounds/zombie/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -163,9 +163,9 @@
       "habitat": 2,
       "mutant": "mutants/psydog.png",
       "backgrounds": [
-        "backgrounds/hinge/1.png",
-        "backgrounds/hinge/2.png",
-        "backgrounds/chernobyl-dog/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -176,9 +176,9 @@
       "habitat": 2,
       "mutant": "mutants/bayun.png",
       "backgrounds": [
-        "backgrounds/flesh/3.png",
-        "backgrounds/chernobyl-dog/2.png",
-        "backgrounds/boar/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -189,9 +189,9 @@
       "habitat": 3,
       "mutant": "mutants/snork.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/zombie/1.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -202,9 +202,9 @@
       "habitat": 3,
       "mutant": "mutants/stregun.png",
       "backgrounds": [
-        "backgrounds/boar/2.png",
-        "backgrounds/chernobyl-dog/3.png",
-        "backgrounds/isotope/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -215,9 +215,9 @@
       "habitat": 3,
       "mutant": "mutants/owl.png",
       "backgrounds": [
-        "backgrounds/boar/1.png",
-        "backgrounds/boar/3.png",
-        "backgrounds/hinge/1.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -228,9 +228,9 @@
       "habitat": 3,
       "mutant": "mutants/bloodsucker.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/chernobyl-dog/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -241,9 +241,9 @@
       "habitat": 4,
       "mutant": "mutants/poltergeist.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/isotope/1.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -254,9 +254,9 @@
       "habitat": 4,
       "mutant": "mutants/fire-poltergeist.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/isotope/2.png",
-        "backgrounds/zombie/1.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -267,9 +267,9 @@
       "habitat": 4,
       "mutant": "mutants/fracture.png",
       "backgrounds": [
-        "backgrounds/zombie/1.png",
-        "backgrounds/zombie/2.png",
-        "backgrounds/zombie/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -280,9 +280,9 @@
       "habitat": 5,
       "mutant": "mutants/burer.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/zombie/1.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -293,9 +293,9 @@
       "habitat": 5,
       "mutant": "mutants/moose.png",
       "backgrounds": [
-        "backgrounds/boar/1.png",
-        "backgrounds/boar/3.png",
-        "backgrounds/chernobyl-dog/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -306,9 +306,9 @@
       "habitat": 5,
       "mutant": "mutants/controller.png",
       "backgrounds": [
-        "backgrounds/hinge/2.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/isotope/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -319,9 +319,9 @@
       "habitat": 5,
       "mutant": "mutants/stronglav.png",
       "backgrounds": [
-        "backgrounds/isotope/3.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/hinge/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -332,9 +332,9 @@
       "habitat": 6,
       "mutant": "mutants/chimera.png",
       "backgrounds": [
-        "backgrounds/chernobyl-dog/3.png",
-        "backgrounds/hinge/2.png",
-        "backgrounds/isotope/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -345,9 +345,9 @@
       "habitat": 6,
       "mutant": "mutants/electrochimera.png",
       "backgrounds": [
-        "backgrounds/hinge/2.png",
-        "backgrounds/isotope/1.png",
-        "backgrounds/isotope/2.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -358,9 +358,9 @@
       "habitat": 6,
       "mutant": "mutants/observer.png",
       "backgrounds": [
-        "backgrounds/hinge/2.png",
-        "backgrounds/zombie/3.png",
-        "backgrounds/isotope/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     },
@@ -371,9 +371,9 @@
       "habitat": 6,
       "mutant": "mutants/pseudogiant.png",
       "backgrounds": [
-        "backgrounds/isotope/2.png",
-        "backgrounds/zombie/1.png",
-        "backgrounds/zombie/3.png"
+        "environments/01.webp",
+        "environments/02.webp",
+        "environments/03.webp"
       ],
       "ready": true
     }

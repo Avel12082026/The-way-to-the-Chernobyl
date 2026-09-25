@@ -1,25 +1,147 @@
 {
-  "tushkan": ["flesh/1", "flesh/2", "flesh/3"],
-  "blind-dog": ["chernobyl-dog/1", "flesh/1", "zombie/2"],
-  "krakozyabra": ["chernobyl-dog/2", "boar/2", "flesh/3"],
-  "pseudodog": ["boar/1", "chernobyl-dog/2", "chernobyl-dog/3"],
-  "lynx": ["boar/1", "boar/3", "chernobyl-dog/3"],
-  "chupacabra": ["flesh/1", "flesh/2", "zombie/2"],
-  "psydog": ["hinge/1", "hinge/2", "chernobyl-dog/3"],
-  "bayun": ["flesh/3", "chernobyl-dog/2", "boar/3"],
-  "snork": ["isotope/3", "zombie/3", "zombie/1"],
-  "stregun": ["boar/2", "chernobyl-dog/3", "isotope/2"],
-  "owl": ["boar/1", "boar/3", "hinge/1"],
-  "bloodsucker": ["isotope/3", "zombie/3", "chernobyl-dog/3"],
-  "poltergeist": ["isotope/3", "zombie/3", "isotope/1"],
-  "fire-poltergeist": ["isotope/3", "isotope/2", "zombie/1"],
-  "fracture": ["zombie/1", "zombie/2", "zombie/3"],
-  "burer": ["isotope/3", "zombie/3", "zombie/1"],
-  "moose": ["boar/1", "boar/3", "chernobyl-dog/2"],
-  "controller": ["hinge/2", "zombie/3", "isotope/3"],
-  "stronglav": ["isotope/3", "zombie/3", "hinge/2"],
-  "chimera": ["chernobyl-dog/3", "hinge/2", "isotope/2"],
-  "electrochimera": ["hinge/2", "isotope/1", "isotope/2"],
-  "observer": ["hinge/2", "zombie/3", "isotope/3"],
-  "pseudogiant": ["isotope/2", "zombie/1", "zombie/3"]
+  "tushkan": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "blind-dog": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "chernobyl-dog": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "krakozyabra": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "flesh": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "boar": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "isotope": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "hinge": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "zombie": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "pseudodog": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "lynx": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "chupacabra": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "psydog": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "bayun": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "snork": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "stregun": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "owl": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "bloodsucker": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "poltergeist": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "fire-poltergeist": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "fracture": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "burer": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "moose": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "controller": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "stronglav": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "chimera": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "electrochimera": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "observer": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ],
+  "pseudogiant": [
+    "environments/01.webp",
+    "environments/02.webp",
+    "environments/03.webp"
+  ]
 }

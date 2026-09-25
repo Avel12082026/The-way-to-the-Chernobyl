@@ -29,9 +29,16 @@ function draw(now=0){
  ctx.clearRect(0,0,1536,1024);
  if(pictures.background)ctx.drawImage(pictures.background,0,0,1536,1024);
  else {ctx.fillStyle='#242922';ctx.fillRect(0,0,1536,1024);}
+ root.CombatEffects?.drawGroundShadow(ctx,root.CombatFighters?.feet?.(pictures.player,'player'));
+ if(pictures.enemy)root.CombatEffects?.drawGroundShadow(ctx,root.CombatFighters.feet?.(pictures.enemy,'enemy'));
  root.CombatFighters?.draw(ctx,pictures.player,'player');
  if(pictures.enemy)root.CombatFighters.draw(ctx,pictures.enemy,'enemy');
  else if(pictures.mutant){ctx.save();ctx.translate(496,0);root.CombatLayout.drawCreature(ctx,pictures.mutant,config.species,0);ctx.restore();}
+ if(reaction&&!reduced.matches){
+  const elapsed=now-reaction.start;
+  if(reaction.shot)root.CombatEffects?.drawMuzzleFlash(ctx,root.CombatFighters.muzzle?.(pictures.player,'player'),{age:elapsed});
+  if(reaction.enemyShot)root.CombatEffects?.drawMuzzleFlash(ctx,root.CombatFighters.muzzle?.(pictures.enemy,'enemy'),{age:elapsed-reaction.enemyDelay});
+ }
  const missing=[];
  if(!pictures.player)missing.push('Облик игрока ещё не готов');
  if(!pictures.enemy&&!pictures.mutant)missing.push('Облик противника ещё не готов');
@@ -48,16 +55,17 @@ async function show(next){
  const token=next.enemy?.battleToken;
  if(!token){hide();return false;}
  const visual=root.CombatAssets.getVisuals(next.enemy,variant(token));
+ const environment=root.CombatEnvironments?.select(next);
  const player=root.CombatFighters.resolve({armorId:next.armor,weaponId:next.weaponId});
  const enemy=root.CombatFighters.resolve(next.enemyGear);
- config={...next,species:visual.species,enemy:{...next.enemy}};
- const key=[token,visual.species,player.key,enemy.key].join('|');
+ config={...next,species:visual.species,environment,enemy:{...next.enemy}};
+ const key=[token,visual.species,environment?.id,player.key,enemy.key].join('|');
  if(signature===key){draw(performance.now());return true;}
  cancelAnimationFrame(frame);signature=key;pictures=reaction=null;status('Загрузка сцены боя…');
  const request=++ticket;
  try{
   const [background,mutant,playerImage,enemyImage]=await Promise.all([
-   visual.ready?load(visual.background):null,
+   environment?load(environment.path):(visual.ready?load(visual.background):null),
    visual.ready?load(visual.mutant):null,
    root.CombatFighters.load(player,load),
    !visual.ready?root.CombatFighters.load(enemy,load):null
@@ -71,9 +79,18 @@ function react(token,result,action){
  if(legacyActive)return legacy.react(token,result,action);
  if(!config||token!==config.enemy.battleToken||!result?.success)return;
  if(action==='attack'&&Number.isFinite(result.enemyHp))config.enemy.hp=result.enemyHp;
- draw();
+ const now=performance.now();
+ reaction={start:now,shot:action==='attack'&&!!pictures?.player,enemyShot:!!result.enemyTurn&&!result.victoryReady&&!!pictures?.enemy,enemyDelay:action==='attack'?240:0};
+ cancelAnimationFrame(frame);frame=0;draw(now);
+ function animate(time){
+  frame=0;if(!config||!reaction||document.hidden)return;
+  draw(time);
+  const duration=reaction.enemyShot?reaction.enemyDelay+130:130;
+  if(!reduced.matches&&time-reaction.start<duration)frame=requestAnimationFrame(animate);
+  else {reaction=null;draw(time);}
+ }
+ if(!document.hidden&&!reduced.matches)frame=requestAnimationFrame(animate);
 }
 document.addEventListener('visibilitychange',()=>{cancelAnimationFrame(frame);frame=0;reaction=null;if(!document.hidden)draw(performance.now());});
 root.CombatScene={show,hide,react};
 })(window);
-

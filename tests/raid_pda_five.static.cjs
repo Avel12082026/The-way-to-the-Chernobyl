@@ -7,14 +7,15 @@ const css=fs.readFileSync('ui/raid-kpk-polish.css','utf8');
 const raid=fs.readFileSync('ui/raid-kpk-polish.js','utf8');
 
 assert(html.includes('ui/raid-kpk-polish.css?v=20260920-five1'));
-assert(html.includes('ui/raid-kpk-polish.js?v=20260920-five1'));
+assert(/ui\/raid-kpk-polish\.js\?v=[^"'\s]+/.test(html));
 assert(html.includes('🪙 Сталбайты: ${data.coins ?? 0}'));
 assert(html.includes('🧬 Сталкоины: ${data.breedCredits ?? 0}'));
 assert(!html.includes('ПЕРСОНАЛЬНЫЙ ТЕРМИНАЛ'));
 assert(css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
 assert(css.includes('#raidVisualStage')&&css.includes('#raidUtilityButtons'));
 assert(css.includes('aspect-ratio:3/2')&&css.includes('#raidIdleScene'));
-assert(raid.includes('RAID_IDLE_BACKGROUNDS')&&raid.includes('ensureRaidIdleScene')&&raid.includes('observeRaidLogForBackground'));
+assert(raid.includes('window.CombatEnvironments?.select({zoneLocation,')&&raid.includes('ensureRaidIdleScene')&&raid.includes('observeRaidLogForBackground'));
+assert(!raid.includes('images/combat/backgrounds/'),'idle raid must not retain deleted background assets');
 assert(css.includes('max-height:230px!important'));
 assert(css.includes('overflow-y:hidden!important')&&css.includes('overscroll-behavior:none!important'));
 const navBlock=css.slice(css.indexOf('#raidNavButtons{'),css.indexOf('#raidNavButtons>button'));

@@ -120,20 +120,6 @@ function ensureRaidUtilityRow(raid) {
   return row;
 }
 
-const RAID_IDLE_BACKGROUNDS=[
-  'images/combat/backgrounds/boar/1.png',
-  'images/combat/backgrounds/chernobyl-dog/1.png',
-  'images/combat/backgrounds/flesh/1.png',
-  'images/combat/backgrounds/hinge/1.png',
-  'images/combat/backgrounds/isotope/1.png',
-  'images/combat/backgrounds/zombie/1.png',
-  'images/combat/backgrounds/boar/2.png',
-  'images/combat/backgrounds/chernobyl-dog/2.png',
-  'images/combat/backgrounds/flesh/2.png',
-  'images/combat/backgrounds/hinge/2.png',
-  'images/combat/backgrounds/isotope/2.png',
-  'images/combat/backgrounds/zombie/2.png'
-];
 let raidIdleBackgroundIndex=0;
 let raidObservedLog=null;
 let raidLogBackgroundObserver=null;
@@ -153,9 +139,14 @@ function ensureRaidIdleScene(visual){
   return idle;
 }
 function paintRaidIdleBackground(idle){
-  if(!idle||!RAID_IDLE_BACKGROUNDS.length)return;
-  const url=RAID_IDLE_BACKGROUNDS[raidIdleBackgroundIndex%RAID_IDLE_BACKGROUNDS.length];
+  if(!idle)return;
+  const zoneLocation=window.ZoneMap?.location??window.__zoneLocation??window.GamePosition?.current?.zoneLocation??1;
+  const environment=window.CombatEnvironments?.select({zoneLocation,battleToken:'raid-idle-'+raidIdleBackgroundIndex});
+  // Cordon is the safe initial fallback before the environment provider loads.
+  const path=environment?.path||'images/combat/environments/01.webp';
+  const url=path+'?v='+encodeURIComponent(window.CombatEnvironments?.version||'combat-environments-zones-v2');
   if(idle.getAttribute('src')!==url)idle.setAttribute('src',url);
+  idle.alt=environment?.label||'Кордон';
 }
 function syncRaidIdleVisibility(visual,idle){
   if(!visual||!idle)return;
@@ -171,7 +162,7 @@ function observeRaidLogForBackground(log,visual,idle){
   raidLogBackgroundObserver=new MutationObserver(()=>{
     syncRaidIdleVisibility(visual,idle);
     if(idle.hidden)return;
-    raidIdleBackgroundIndex=(raidIdleBackgroundIndex+1)%RAID_IDLE_BACKGROUNDS.length;
+    raidIdleBackgroundIndex=(raidIdleBackgroundIndex+1)>>>0;
     paintRaidIdleBackground(idle);
   });
   raidLogBackgroundObserver.observe(log,{childList:true,characterData:true,subtree:true});

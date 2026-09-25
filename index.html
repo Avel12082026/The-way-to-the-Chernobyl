@@ -756,12 +756,14 @@ button:active {filter:brightness(1.18);}
 #characterPortraitStatus button { display:block; width:auto; min-height:32px; margin:5px auto 0; font-size:11px; }
 </style>
 <link rel="stylesheet" href="images/combat/scene.css?v=2">
-<script src="images/combat/catalog.js?v=4"></script>
+<script src="images/combat/catalog.js?v=combat-environments-flashes-v1"></script>
 <script src="images/combat/assets.js?v=1"></script>
-<script src="images/combat/layout.js?v=4"></script>
-<script src="images/combat/scene.js?v=6"></script>
-<script src="images/combat/fighters.js?v=modular-rifles-v1"></script>
-<script src="images/combat/side-scene.js?v=modular-rifles-v1"></script>
+<script src="images/combat/layout.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/environments-v2.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/effects.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/scene.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/fighters.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/side-scene.js?v=combat-environments-flashes-v1"></script>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
 <script src="images/anomaly/detector-layout.js?v=1"></script>
@@ -5098,7 +5100,7 @@ button:active {filter:brightness(1.18);}
     }
 
 function startBattle(enemy) {
-        currentEnemy={...enemy};
+        currentEnemy={...enemy,zoneLocation:enemy.zoneLocation??window.ZoneMap?.location??window.__zoneLocation??player?.worldPosition?.zoneLocation??1};
         battleMedkitsUsed=0;
         raidLogs=raidLogs||[];
         const nameWithFaction=enemy.faction?`${enemy.name} — Фракция (${enemy.faction.name.toUpperCase()})`:enemy.name;
@@ -5142,7 +5144,7 @@ function startBattle(enemy) {
             host.textContent = 'Не удалось загрузить интерфейс боя. Перезапусти игру.';
             return;
         }
-        window.CombatScene.show({enemy:currentEnemy, armor:playerGear.armorId, weaponId:playerGear.weaponId, enemyGear, pending:battleTurn !== 0});
+        window.CombatScene.show({enemy:currentEnemy, armor:playerGear.armorId, weaponId:playerGear.weaponId, enemyGear, zoneLocation:currentEnemy.zoneLocation??window.ZoneMap?.location??window.__zoneLocation??player?.worldPosition?.zoneLocation??1, pending:battleTurn !== 0});
     }
     function renderBattleButtons() {
         updateCombatScene();
@@ -8159,7 +8161,7 @@ function startBattle(enemy) {
 <script src="ui/terminology-market.js?v=cd42e2a7acba"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
 <script src="ui/trader-hubs.js?v=20260922-position3"></script>
-<script src="ui/raid-kpk-polish.js?v=20260920-five1"></script>
+<script src="ui/raid-kpk-polish.js?v=combat-environments-flashes-v1"></script>
 
 <!-- RAID_FIVE_20260920_V1 -->
 <script src="ui/item-reference.js?v=20260920-five1"></script>

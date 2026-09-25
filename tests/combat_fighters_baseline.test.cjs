@@ -19,7 +19,7 @@ characters[20].poses.heavy.handMasks[1]=oldMasks.handMasks[20][1];
 const oldWeapons=Object.fromEntries(oldWeaponIds.map(id=>[id,data.weapons[id]]));
 for(const id of oldWeaponIds)assert.ok(oldWeapons[id],'Missing previously published weapon '+id);
 const oldAdjustments=Object.fromEntries(Object.entries(data.pairAdjustments).filter(([key])=>oldWeaponIds.includes(Number(key.split('-')[1]))));
-assert.equal(data.version,'modular-rifles-v1');
+assert.equal(data.version,'combat-environments-flashes-v1');
 assert.equal(Object.keys(data.characters).length,96);
 assert.equal(Object.keys(oldWeapons).length,84);
 assert.equal(Object.keys(oldAdjustments).length,5568);

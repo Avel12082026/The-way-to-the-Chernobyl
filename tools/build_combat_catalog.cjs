@@ -5,7 +5,10 @@ const environments=require('../images/combat/environments.json');
 function array(name){return vm.runInNewContext(html.match(new RegExp('const '+name+' = (\\[[\\s\\S]*?\\n    \\]);'))[1]);}
 const mutants=array('mutants'),weapons=array('weapons');
 const ids='tushkan blind-dog chernobyl-dog krakozyabra flesh boar isotope hinge zombie pseudodog lynx chupacabra psydog bayun snork stregun owl bloodsucker poltergeist fire-poltergeist fracture burer moose controller stronglav chimera electrochimera observer pseudogiant'.split(' ');
-const species=mutants.slice(0,29).map((m,i)=>{const id=ids[i],mutant=`mutants/${id}.png`,backgrounds=environments[id]?environments[id].map(p=>`backgrounds/${p}.png`):[1,2,3].map(n=>`backgrounds/${id}/${n}.png`);return {id,name:m.name,tier:m.tier,habitat:Math.floor(m.tier/4),mutant,backgrounds,ready:[mutant,...backgrounds].every(p=>fs.existsSync(path.join(root,'images/combat',p)))};});
+// Scene selection is location-aware through environments-v2.js. These three
+// Cordon paths only support the legacy asset resolver if that provider is absent.
+const fallbackBackgrounds=['environments/01.webp','environments/02.webp','environments/03.webp'];
+const species=mutants.slice(0,29).map((m,i)=>{const id=ids[i],mutant=`mutants/${id}.png`,backgrounds=environments[id]||fallbackBackgrounds;return {id,name:m.name,tier:m.tier,habitat:Math.floor(m.tier/4),mutant,backgrounds,ready:[mutant,...backgrounds].every(p=>fs.existsSync(path.join(root,'images/combat',p)))};});
 if(mutants.length!==57||mutants.slice(29).some(m=>!m.name.startsWith('Самка ')))throw Error('Unexpected mutant roster');
 const entries=mutants.map((m,i)=>({name:m.name,tier:m.tier,species:ids[i<29?i:i-28]}));
 const pistolIds=[86,2,87,1,3,88,5,6,89,90,91,92,93,7,94,95,96,97,98,99,100,101,102,103,104,105];

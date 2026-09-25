@@ -27,7 +27,8 @@ const {drawForeground,drawCreature}=require('../images/combat/layout.js');
  for(const [i,id] of ['boar','flesh','isotope','zombie','chernobyl-dog','hinge'].entries()){
   const creature=await loadImage(root+`/images/combat/mutants/${id}.png`);
   for(let v=1;v<=3;v++){
-   const bg=await loadImage(root+`/images/combat/backgrounds/${id}/${v}.png`);
+   const background=require('../images/combat/catalog.json').species.find(species=>species.id===id).backgrounds[v-1];
+   const bg=await loadImage(root+'/images/combat/'+background);
    sc.drawImage(bg,0,0,1536,1024);drawCreature(sc,creature,id);
    drawForeground(sc,await loadImage(root+'/images/combat/pistols/87.png'),sleeve,87);
    ctx.drawImage(scene,(v-1)*512,i*341,512,341);
