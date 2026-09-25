@@ -181,7 +181,22 @@ async def main():
             mime='image/jpeg' if suffix in ('.jpg','.jpeg') else ('image/png' if suffix=='.png' else 'image/webp')
             data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
-            await page.wait_for_timeout(90)
+            # Force the exact repository overlay bytes into the offline browser too.
+            scene_imgs=page.locator('#zoneMapTravelScene img')
+            for n in range(await scene_imgs.count()):
+                node=scene_imgs.nth(n)
+                src=await node.get_attribute('src')
+                p=urlparse(src).path
+                prefix='/The-way-to-the-Chernobyl/'
+                if p.startswith(prefix): p=p[len(prefix):]
+                else: p=p.lstrip('/')
+                local=(ROOT/p).resolve()
+                assert local.is_relative_to(ROOT) and local.is_file(),(title,p)
+                ext=local.suffix.lower()
+                mime={'webp':'image/webp','png':'image/png','jpg':'image/jpeg','jpeg':'image/jpeg'}[ext.lstrip('.')]
+                uri='data:'+mime+';base64,'+base64.b64encode(local.read_bytes()).decode()
+                await node.evaluate("(e,src)=>{e.src=src;return e.decode()}",uri)
+            await page.wait_for_timeout(40)
             kind=await travel.get_attribute('data-scene')
             if title=='КОРДОН':
                 assert kind=='camp'
