@@ -36,17 +36,17 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260925-zone-travel3';
+  const ZONE_TRAVEL_CACHE = '20260925-zone-travel4';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Loading scenes use only assets that already exist in this game.
-    1:'file_000000002bb08210800056ebfb1dce1f.png',
+    1:'images/combat/environments/01.webp',
     2:'images/anomaly/background.jpg',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
-    1:{kind:'camp'},
+    1:{kind:'camp',actors:['images/combat/modular/characters/1-pistol.png','images/combat/modular/characters/6-pistol.png','images/combat/modular/characters/2-pistol.png']},
     // Svalka: artifact search in an anomaly. No mutants.
     2:{kind:'anomaly',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],artifact:'images/anomaly/items/medusa.webp'},
     // Agroprom and Rostok: firefights against mutants. No anomaly effects.
@@ -755,7 +755,9 @@
       if(config.kind==='camp'){
         const moon=document.createElement('div');moon.className='zone-travel-moon';
         const fire=document.createElement('div');fire.className='zone-travel-campfire';
-        scene.append(moon,fire);
+        scene.append(moon);
+        (config.actors||[]).forEach((src,i)=>addImage('zone-travel-camp-stalker zone-travel-camp-stalker-'+i,src,'Сталкер у костра'));
+        scene.append(fire);
       }else if(config.kind==='anomaly'){
         const field=document.createElement('div');field.className='zone-travel-anomaly-field';
         scene.append(field);
@@ -1642,7 +1644,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.6.7',
+    version: '0.6.8',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
