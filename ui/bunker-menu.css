@@ -199,35 +199,62 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
 #zoneMapScreen .zone-map-point:active{transform:translate(-50%,-50%);}
 #zoneMapScreen .zone-map-point:focus-visible{outline:2px solid #f0cf78;outline-offset:2px;opacity:1;}
 #zoneMapScreen .zone-map-travel{
-  position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
-  padding:20px;background:
-    radial-gradient(circle at 50% 40%,rgba(73,66,43,.22),rgba(5,6,5,.96) 58%),
-    #050605;
+  --zone-travel-image:none;
+  position:absolute;inset:0;z-index:20;overflow:hidden;background:#050605;
+  color:#ead8aa;isolation:isolate;
+}
+#zoneMapScreen .zone-map-travel::before{
+  content:"";position:absolute;inset:-28px;z-index:0;
+  background-image:var(--zone-travel-image);
+  background-size:cover;background-position:center;
+  filter:blur(18px) brightness(.34) saturate(.7);
+  transform:scale(1.08);
 }
 #zoneMapScreen .zone-map-travel[hidden]{display:none!important;}
-#zoneMapScreen .zone-map-travel-panel{
-  width:min(86vw,520px);padding:24px 20px;border:1px solid #77623e;border-radius:6px;
-  background:rgba(12,14,11,.96);box-shadow:0 10px 35px #000d,inset 0 0 0 1px #c3a6681c;
-  text-align:center;
+#zoneMapScreen .zone-map-travel-artwork{
+  position:absolute;inset:0;z-index:1;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  filter:brightness(.72) saturate(.82) contrast(1.06);
+  user-select:none;-webkit-user-drag:none;pointer-events:none;
+}
+#zoneMapScreen .zone-map-travel-shade{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(4,5,4,.56) 0%,rgba(4,5,4,.12) 30%,rgba(4,5,4,.18) 62%,rgba(3,4,3,.90) 88%,#030403 100%),
+    radial-gradient(circle at 50% 42%,transparent 28%,rgba(0,0,0,.52) 100%);
+  box-shadow:inset 0 0 0 2px #6f5937,inset 0 0 28px #000;
+}
+#zoneMapScreen .zone-map-travel-heading{
+  position:absolute;z-index:3;left:7%;right:7%;top:max(34px,5.5dvh);
+  text-align:center;text-shadow:0 3px 6px #000,0 0 14px #000;
 }
 #zoneMapScreen .zone-map-travel-caption{
-  margin-bottom:14px;color:#bda979;font:700 12px/1.2 'Russo One',Arial,sans-serif;
-  letter-spacing:.8px;
+  margin:0 0 12px;color:#d4bd83;font:700 clamp(11px,3.2vw,15px)/1.15 'Russo One',Arial,sans-serif;
+  letter-spacing:1.4px;
+}
+#zoneMapScreen .zone-map-travel-destination{
+  color:#ead7a4;font:800 clamp(30px,10vw,54px)/1 'Russo One',Arial,sans-serif;
+  letter-spacing:1.2px;text-transform:uppercase;
+}
+#zoneMapScreen .zone-map-travel-bottom{
+  position:absolute;z-index:4;left:6%;right:6%;
+  bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px);
+  text-align:center;
 }
 #zoneMapScreen .zone-map-travel-route{
-  margin-bottom:18px;color:#f0d79d;font:700 19px/1.15 'Russo One',Arial,sans-serif;
-  text-shadow:0 2px 3px #000;
-}
-#zoneMapScreen .zone-map-travel-bar{
-  position:relative;height:18px;overflow:hidden;border:1px solid #8d7447;border-radius:3px;
-  background:#181a15;box-shadow:inset 0 2px 7px #000b;
-}
-#zoneMapScreen .zone-map-travel-fill{
-  width:0;height:100%;background:linear-gradient(180deg,#b59a5a,#6f5e36);
-  box-shadow:0 0 10px #c9ad66aa;transition:width .12s linear;
+  margin-bottom:10px;color:#ead39b;font:700 clamp(15px,5vw,22px)/1.15 'Russo One',Arial,sans-serif;
+  text-shadow:0 2px 5px #000,0 0 12px #000;
 }
 #zoneMapScreen .zone-map-travel-percent{
-  margin-top:9px;color:#d8c28d;font:700 12px/1 Arial,sans-serif;
+  margin-bottom:8px;color:#dcc38a;font:700 14px/1 Arial,sans-serif;text-shadow:0 2px 4px #000;
+}
+#zoneMapScreen .zone-map-travel-bar{
+  position:relative;height:18px;overflow:hidden;border:1px solid #a88a50;border-radius:4px;
+  background:rgba(12,14,11,.92);box-shadow:inset 0 2px 8px #000d,0 2px 9px #000;
+}
+#zoneMapScreen .zone-map-travel-fill{
+  width:0;height:100%;background:linear-gradient(180deg,#c8aa63,#786238);
+  box-shadow:0 0 12px #d4b466aa;transition:width .12s linear;
 }
 #zoneMapScreen.travelling .zone-map-header,
 #zoneMapScreen.travelling .zone-map-frame{visibility:hidden;}
