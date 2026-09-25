@@ -36,22 +36,22 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260925-zone-travel4';
+  const ZONE_TRAVEL_CACHE = '20260925-zone-travel5';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
-    // Loading scenes use only assets that already exist in this game.
-    1:'images/combat/environments/01.webp',
+    // Kordon uses the dedicated Rookie Village night scene served by the game VPS.
+    1:'/images/zone-travel/kordon-village.webp',
     2:'images/anomaly/background.jpg',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
-    1:{kind:'camp',actors:['images/combat/modular/characters/1-pistol.png','images/combat/modular/characters/6-pistol.png','images/combat/modular/characters/2-pistol.png']},
+    1:{kind:'camp'},
     // Svalka: artifact search in an anomaly. No mutants.
-    2:{kind:'anomaly',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],artifact:'images/anomaly/items/medusa.webp'},
-    // Agroprom and Rostok: firefights against mutants. No anomaly effects.
-    3:{kind:'mutant',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],weapons:['images/combat/modular/weapons/11.png','images/combat/modular/weapons/12.png'],mutant:'images/combat/mutants/snork.png'},
-    4:{kind:'mutant',actors:['images/combat/modular/characters/45-heavy.png','images/combat/modular/characters/31-heavy.png'],weapons:['images/combat/modular/weapons/15.png','images/combat/modular/weapons/11.png'],mutant:'images/combat/mutants/bloodsucker.png'}
+    2:{kind:'anomaly',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],detector:'images/anomaly/items/riper.webp',artifact:'images/anomaly/items/medusa.webp'},
+    // Agroprom and Rostok: real game armor + weapons fitted by CombatFighters.
+    3:{kind:'mutant',fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}],mutant:'images/combat/mutants/snork.png'},
+    4:{kind:'mutant',fighters:[{armorId:45,weaponId:15},{armorId:31,weaponId:11}],mutant:'images/combat/mutants/bloodsucker.png'}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -726,6 +726,46 @@
     return base + '?v=' + ZONE_TRAVEL_CACHE;
   }
 
+  function loadZoneTravelImage(path) {
+    const raw=String(path||'');
+    const src=(raw.startsWith('/')?SERVER_URL+raw:raw)+'?v='+ZONE_TRAVEL_CACHE;
+    return new Promise((resolve,reject)=>{
+      const image=new Image();
+      image.onload=()=>resolve(image);
+      image.onerror=()=>reject(new Error('Не удалось загрузить '+raw));
+      image.src=src;
+    });
+  }
+
+  async function renderZoneTravelCombat(scene,config,token) {
+    const fighters=window.CombatFighters,effects=window.CombatEffects;
+    if(!scene||!fighters||!effects||!Array.isArray(config?.fighters)||config.fighters.length<2)return false;
+    const canvas=document.createElement('canvas');
+    canvas.className='zone-travel-combat-canvas';
+    canvas.width=1536;canvas.height=1024;canvas.dataset.ready='0';
+    scene.append(canvas);
+    const resolved=config.fighters.slice(0,2).map(gear=>fighters.resolve(gear));
+    if(resolved.some(gear=>!gear?.ready)){canvas.dataset.ready='error';return false;}
+    try{
+      const [left,right]=await Promise.all(resolved.map(gear=>fighters.load(gear,loadZoneTravelImage)));
+      if(scene.dataset.renderToken!==token||!left||!right)return false;
+      const ctx=canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      effects.drawGroundShadow(ctx,fighters.feet(left,'player'));
+      effects.drawGroundShadow(ctx,fighters.feet(right,'enemy'));
+      fighters.draw(ctx,left,'player');
+      fighters.draw(ctx,right,'enemy');
+      effects.drawMuzzleFlash(ctx,fighters.muzzle(left,'player'),{age:18});
+      effects.drawMuzzleFlash(ctx,fighters.muzzle(right,'enemy'),{age:18});
+      canvas.dataset.ready='1';
+      return true;
+    }catch(error){
+      canvas.dataset.ready='error';
+      console.warn('[zone travel combat]',error);
+      return false;
+    }
+  }
+
   function prepareZoneTravelArtwork(location) {
     const target = Number(location);
     const overlay = document.getElementById('zoneMapTravel');
@@ -752,21 +792,19 @@
         node.className=className;node.src=src+'?v='+ZONE_TRAVEL_CACHE;node.alt=alt;node.draggable=false;
         scene.append(node);return node;
       };
+      const renderToken=target+'-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+      scene.dataset.renderToken=renderToken;
       if(config.kind==='camp'){
-        const moon=document.createElement('div');moon.className='zone-travel-moon';
-        const fire=document.createElement('div');fire.className='zone-travel-campfire';
-        scene.append(moon);
-        (config.actors||[]).forEach((src,i)=>addImage('zone-travel-camp-stalker zone-travel-camp-stalker-'+i,src,'Сталкер у костра'));
-        scene.append(fire);
+        // The authored Kordon background already contains the moon, campfire and seated stalkers.
       }else if(config.kind==='anomaly'){
         const field=document.createElement('div');field.className='zone-travel-anomaly-field';
         scene.append(field);
         (config.actors||[]).forEach((src,i)=>addImage('zone-travel-actor zone-travel-actor-'+(i?'right':'left'),src,'Сталкер'));
+        addImage('zone-travel-detector',config.detector,'Детектор РИПЕР');
         addImage('zone-travel-artifact',config.artifact,'Артефакт Медуза');
       }else if(config.kind==='mutant'){
-        (config.actors||[]).forEach((src,i)=>addImage('zone-travel-actor zone-travel-actor-'+(i?'right':'left'),src,'Сталкер'));
-        (config.weapons||[]).forEach((src,i)=>addImage('zone-travel-weapon zone-travel-weapon-'+(i?'right':'left'),src,'Оружие'));
         addImage('zone-travel-mutant',config.mutant,'Мутант');
+        void renderZoneTravelCombat(scene,config,renderToken);
       }
     }
   }
@@ -1644,7 +1682,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.6.8',
+    version: '0.6.9',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
