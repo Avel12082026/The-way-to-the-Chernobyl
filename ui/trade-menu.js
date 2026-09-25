@@ -22,6 +22,9 @@
   const atBase = () => !raidActive && !inventoryOpenedFromRaid && vendor !== 'friendly';
   const ownedNames = () => Object.keys(player.inventory || {}).filter(n => availableCount(n));
   const artifact = name => findArtifactDef(name);
+  // Armor trader ranges are keyed by stable catalog IDs, never by array position.
+  // This keeps client/server stock aligned even if the catalog is reordered.
+  const regularArmorRange = (firstId, lastId) => armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor && Number(a.id) >= firstId && Number(a.id) <= lastId);
   const vendors = {
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
@@ -31,11 +34,11 @@
         const markedPistols = weaponOrder.filter(w => w.progressionClass === 'pistol');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
         const pistols = markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []);
-        const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
+        const zhucharaArmor = regularArmorRange(1, 29);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable'),
           ...pistols.map(w => ({...w, category:'weapon'})),
-          ...regularArmor.slice(0, 29).map(a => ({...a, category:'armor'}))
+          ...zhucharaArmor.map(a => ({...a, category:'armor'}))
         ];
       },
       price: item => getBuyPrice(item.price),
@@ -50,11 +53,11 @@
         const markedShotguns = weaponOrder.filter(w => w.progressionClass === 'shotgun');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
         const shotguns = markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []);
-        const regularArmor = armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor);
+        const barmanArmor = regularArmorRange(30, 58);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable'),
           ...shotguns.map(w => ({...w, category:'weapon'})),
-          ...regularArmor.slice(29, 58).map(a => ({...a, category:'armor'}))
+          ...barmanArmor.map(a => ({...a, category:'armor'}))
         ];
       },
       price: item => getBuyPrice(item.price),
@@ -519,7 +522,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.6', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.7', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
