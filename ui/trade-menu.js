@@ -241,8 +241,15 @@
       method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({initData: window.Telegram?.WebApp?.initData, ...payload})
     });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    return response.json();
+    // A JSON 4xx rejection is a confirmed refusal, not a lost transaction.
+    // Preserve its reason and basket; do not lock every vendor behind resync.
+    // Transport errors, malformed replies and 5xx remain ambiguous: no retry.
+    const result = await response.json();
+    if (!response.ok) {
+      if (response.status >= 400 && response.status < 500 && result?.success === false) return result;
+      throw new Error('HTTP ' + response.status);
+    }
+    return result;
   }
   function apply(result) {
     if (!result.inventory || Array.isArray(result.inventory) || typeof result.inventory !== 'object' || !Number.isFinite(result.coins)) throw new Error('Некорректный ответ сервера');
@@ -512,7 +519,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.5', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.6', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */

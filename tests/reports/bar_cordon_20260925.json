@@ -1,0 +1,221 @@
+{
+  "live_player_writes": 0,
+  "geometry": [
+    {
+      "viewport": [
+        320,
+        568
+      ],
+      "max_coordinate_error_px": 0
+    },
+    {
+      "viewport": [
+        360,
+        800
+      ],
+      "max_coordinate_error_px": 0
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "max_coordinate_error_px": 0
+    },
+    {
+      "viewport": [
+        412,
+        915
+      ],
+      "max_coordinate_error_px": 0
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "max_coordinate_error_px": 0
+    },
+    {
+      "viewport": [
+        1280,
+        720
+      ],
+      "max_coordinate_error_px": 0
+    }
+  ],
+  "purchases": [
+    {
+      "vendor": "zhuchara",
+      "category": "consumable",
+      "name": "Хлеб"
+    },
+    {
+      "vendor": "zhuchara",
+      "category": "weapon",
+      "name": "Beretta 21A Bobcat"
+    },
+    {
+      "vendor": "zhuchara",
+      "category": "armor",
+      "name": "Комбинезон Юность"
+    },
+    {
+      "vendor": "leonov",
+      "category": "consumable",
+      "name": "Аптечка гражданская"
+    },
+    {
+      "vendor": "leonov",
+      "category": "armor",
+      "name": "Исследовательский комбинезон A"
+    },
+    {
+      "vendor": "technician",
+      "category": "detector",
+      "name": "РИПЕР"
+    }
+  ],
+  "rejections": [
+    {
+      "vendor": "zhuchara",
+      "http": 400,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 401,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 403,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 404,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 409,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 422,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "zhuchara",
+      "http": 429,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 400,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 401,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 403,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 404,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 409,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 422,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "leonov",
+      "http": 429,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 400,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 401,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 403,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 404,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 409,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 422,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    },
+    {
+      "vendor": "technician",
+      "http": 429,
+      "basket_preserved": true,
+      "next_buy_succeeds": true
+    }
+  ],
+  "checks": [
+    "Cordon/Rostok exact shared geometry at six viewports",
+    "zero-value and live HUD updates",
+    "PDA/backpack taps and return to bar",
+    "real Cordon hub entry for all three vendors",
+    "every available merchant item category",
+    "21 JSON 4xx rejections preserve basket and do not block next purchase",
+    "lost response / HTTP 500 / malformed reply remain locked until resync",
+    "failed resync stays locked",
+    "no automatic retry of ambiguous writes"
+  ],
+  "status": "passed",
+  "javascript_errors": [],
+  "test_purchase_requests": 51
+}
