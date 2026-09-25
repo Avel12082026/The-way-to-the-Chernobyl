@@ -181,8 +181,18 @@ async def main():
             mime='image/jpeg' if suffix in ('.jpg','.jpeg') else ('image/png' if suffix=='.png' else 'image/webp')
             data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
-            await page.wait_for_timeout(500)
-            await page.locator('#zoneMapTravelScene img').evaluate_all("(nodes)=>Promise.all(nodes.map(n=>n.complete?true:new Promise(r=>{n.onload=n.onerror=()=>r(true)})))")
+            await page.wait_for_timeout(90)
+            kind=await travel.get_attribute('data-scene')
+            if title=='КОРДОН':
+                assert kind=='camp'
+                assert await page.locator('#zoneMapTravelScene .zone-travel-camp-stalker').count()==3
+            elif title=='СВАЛКА':
+                assert kind=='anomaly'
+                assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==0
+                assert await page.locator('#zoneMapTravelScene .zone-travel-artifact').count()==1
+            else:
+                assert kind=='mutant'
+                assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==1
             await page.screenshot(path=str(OUT/filename),full_page=True)
             await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         report['travel_screens']=[x[2] for x in travel_cases]
