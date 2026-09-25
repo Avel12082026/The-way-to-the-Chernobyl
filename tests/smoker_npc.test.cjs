@@ -23,6 +23,6 @@ assert(css.includes('#smokerHubScreen .smoker-hub-artwork')&&css.includes('objec
 const bytes=Buffer.from(b64,'base64');
 assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF','portrait is not WebP/RIFF');
 assert(bytes.length>30000,'portrait asset unexpectedly small');
-assert(index.includes('ui/bunker-menu.css?v=20260925-zone-travel2'));
-assert(index.includes('ui/bunker-menu.js?v=20260925-zone-travel2'));
+assert(index.includes('ui/bunker-menu.css?v=20260925-zone-travel3'));
+assert(index.includes('ui/bunker-menu.js?v=20260925-zone-travel3'));
 console.log('PASS: smoking stalker opens uncropped portrait with blurred fill, Talk/Back and cache wiring');
