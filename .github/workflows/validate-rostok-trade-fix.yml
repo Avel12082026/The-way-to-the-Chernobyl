@@ -1,0 +1,64 @@
+name: Validate Rostok HUD and trade fix
+on:
+  push:
+    branches: [fix/rostok-hud-trade-20260925]
+    paths: ['.github/workflows/validate-rostok-trade-fix.yml', 'tools/patch_rostok_hud_trade_v1.py']
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Apply scoped patch
+        run: python tools/patch_rostok_hud_trade_v1.py
+      - name: Static and server regression checks
+        run: |
+          node --check ui/bunker-menu.js
+          node --check ui/trade-menu.js
+          node tests/zone_map_navigation.test.cjs
+          node tests/rostok_barman_trade_client.test.cjs
+          node tests/smoker_npc.test.cjs
+          python tests/rostok_location_installer.test.py
+          python tests/rostok_barman_shop_server.test.py
+          python tests/zone_map_server_patch.test.py
+          git diff --check
+      - name: Browser and read-only artwork
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+          mkdir -p .validation/rostok-trade
+          curl --fail --silent --show-error --max-time 25 --retry 1 https://213-176-92-184.sslip.io/api/zone-camp/4 -o .validation/rostok-trade/rostok-bar.png
+          echo 'bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c  .validation/rostok-trade/rostok-bar.png' | sha256sum -c -
+      - name: Full-client functional and visual regression
+        run: |
+          python tests/rostok_trade_regression.browser.py
+          python tests/zone_map_navigation.browser.py
+          python tests/raid_quickslot.browser.py
+      - name: Save tested changes on fix branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html ui/bunker-menu.js ui/bunker-menu.css ui/trade-menu.js tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/rostok_barman_trade_client.test.cjs tests/smoker_npc.test.cjs tests/zone_map_navigation.test.cjs tests/zone_map_navigation.browser.py .github/workflows/zone-map-navigation.yml
+          git commit -m 'Fix full-client Rostok HUD alignment and trade rejection recovery'
+          git push origin HEAD:fix/rostok-hud-trade-20260925
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          paths=['index.html','ui/bunker-menu.js','ui/bunker-menu.css','ui/trade-menu.js','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/rostok_barman_trade_client.test.cjs','tests/smoker_npc.test.cjs','tests/zone_map_navigation.test.cjs','tests/zone_map_navigation.browser.py','tests/rostok_trade_regression.browser.py','.github/workflows/zone-map-navigation.yml']
+          def git(*args): return subprocess.check_output(['git',*args],text=True).strip()
+          result={'commit':git('rev-parse','HEAD'),'files':{p:git('hash-object',p) for p in paths}}
+          Path('.validation/rostok-trade/tested-files.json').write_text(json.dumps(result,indent=2))
+          print(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validated-rostok-hud-trade
+          retention-days: 7
+          path: .validation/rostok-trade/
