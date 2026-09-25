@@ -98,4 +98,31 @@ with tempfile.TemporaryDirectory() as td:
         raise AssertionError(proc.stdout+'\\n'+proc.stderr)
     assert 'ZHUCHARA ARMOR PASS' in proc.stdout
 
-print('PASS: stable-ID Zhuchara/Barman armor ranges and Barman stock validation')
+
+technician_js=r"""
+const handlers=[];
+const app={post(path,...fns){if(path==='/api/shop/buy')handlers.push(...fns)}};
+"""+mod.TECHNICIAN_BUY_ALIAS+r"""
+function call(body){
+  const req={body};
+  let next=false;
+  handlers[0](req,{},()=>{next=true});
+  return {body:req.body,next};
+}
+let r=call({vendor:'technician',sourceVendor:'technician',category:'detector',name:'РИПЕР'});
+if(!r.next||r.body.vendor!=='leonov')throw new Error('technician detector buy was not routed to server detector validation');
+r=call({vendor:'technician',sourceVendor:'technician',category:'armor',name:'A1'});
+if(!r.next||r.body.vendor!=='technician')throw new Error('technician non-detector buy must not be rewritten');
+r=call({vendor:'zhuchara',sourceVendor:'zhuchara',category:'detector',name:'РИПЕР'});
+if(!r.next||r.body.vendor!=='zhuchara')throw new Error('other vendors must not be rewritten');
+console.log('TECHNICIAN BUY PASS');
+"""
+with tempfile.TemporaryDirectory() as td:
+    candidate=Path(td)/'technician-buy.js'
+    candidate.write_text(technician_js,encoding='utf-8')
+    proc=subprocess.run(['node',str(candidate)],capture_output=True,text=True)
+    if proc.returncode:
+        raise AssertionError(proc.stdout+'\\n'+proc.stderr)
+    assert 'TECHNICIAN BUY PASS' in proc.stdout
+
+print('PASS: stable-ID Zhuchara/Barman armor ranges, Barman stock validation and Diesel detector purchases')
