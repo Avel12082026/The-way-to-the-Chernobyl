@@ -218,8 +218,12 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   user-select:none;-webkit-user-drag:none;pointer-events:none;
 }
 #zoneMapScreen .zone-map-travel-scene{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;}
-#zoneMapScreen .zone-travel-actor,#zoneMapScreen .zone-travel-mutant,#zoneMapScreen .zone-travel-weapon,#zoneMapScreen .zone-travel-artifact{
+#zoneMapScreen .zone-travel-actor,#zoneMapScreen .zone-travel-mutant,#zoneMapScreen .zone-travel-artifact,#zoneMapScreen .zone-travel-detector{
   position:absolute;display:block;object-fit:contain;filter:drop-shadow(0 8px 12px #000c);user-select:none;-webkit-user-drag:none;
+}
+#zoneMapScreen .zone-travel-combat-canvas{
+  position:absolute;z-index:3;left:50%;bottom:11%;width:160%;height:auto;
+  transform:translateX(-50%);filter:drop-shadow(0 8px 14px #000d);pointer-events:none;
 }
 #zoneMapScreen .zone-travel-actor{bottom:5%;width:67%;height:64%;z-index:3;}
 #zoneMapScreen .zone-travel-actor-left{left:-21%;}
@@ -234,8 +238,12 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   box-shadow:0 0 28px #e9c768aa,0 0 80px #8f6b3288;animation:zoneTravelPulse 1.4s ease-in-out infinite alternate;
 }
 #zoneMapScreen .zone-travel-artifact{z-index:6;left:50%;bottom:31%;width:18%;height:18%;transform:translateX(-50%);filter:drop-shadow(0 0 16px #f1d16c);}
+#zoneMapScreen .zone-travel-detector{
+  z-index:6;left:24%;bottom:35%;width:19%;height:17%;transform:rotate(12deg);
+  filter:drop-shadow(0 4px 8px #000d);
+}
 #zoneMapScreen[data-scene=""] .zone-map-travel-scene{display:none;}
-#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{filter:brightness(.28) saturate(.7) hue-rotate(175deg) contrast(1.08);}
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{filter:brightness(.72) saturate(.82) contrast(1.08);}
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-travel-moon{
   position:absolute;z-index:3;left:14%;top:7%;width:72px;aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle at 38% 38%,#fff,#e6e9dc 57%,#aab4be 100%);box-shadow:0 0 25px #d7e4ff99,0 0 70px #91a7c966;
@@ -254,9 +262,8 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
 #zoneMapScreen .zone-travel-camp-stalker-2{left:31%;bottom:12%;transform:scale(.70);opacity:.88;}
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-shade{
   background:
-    linear-gradient(180deg,rgba(2,8,18,.34) 0%,rgba(2,8,18,.18) 35%,rgba(2,6,12,.26) 62%,rgba(1,3,6,.83) 89%,#010204 100%),
-    radial-gradient(circle at 50% 72%,rgba(255,126,34,.16),transparent 25%),
-    radial-gradient(circle at 50% 42%,transparent 30%,rgba(0,0,0,.48) 100%);
+    linear-gradient(180deg,rgba(1,5,12,.18) 0%,rgba(1,5,12,.04) 38%,rgba(1,3,7,.12) 66%,rgba(1,2,4,.78) 90%,#010204 100%),
+    radial-gradient(circle at 50% 42%,transparent 38%,rgba(0,0,0,.34) 100%);
 }
 #zoneMapScreen .zone-map-travel[data-scene="anomaly"] .zone-map-travel-artwork{filter:brightness(.58) saturate(.75) contrast(1.08);}
 #zoneMapScreen .zone-map-travel[data-scene="mutant"] .zone-map-travel-artwork{filter:brightness(.55) saturate(.74) contrast(1.12);}
