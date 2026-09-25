@@ -134,10 +134,11 @@ async def main():
     idle_img=page.locator('#raidIdleScene')
     assert await idle_img.is_visible()
     first_bg=await idle_img.get_attribute('src')
-    assert first_bg and 'backgrounds/' in first_bg,first_bg
+    assert re.fullmatch(r'images/combat/environments/0[1-5]\.webp\?v=[^?]+',first_bg or ''),first_bg
     await page.evaluate("document.getElementById('raidLog').textContent='Фон должен смениться после шага';")
     await page.wait_for_timeout(30)
     second_bg=await idle_img.get_attribute('src')
+    assert re.fullmatch(r'images/combat/environments/0[1-5]\.webp\?v=[^?]+',second_bg or ''),second_bg
     assert second_bg!=first_bg,(first_bg,second_bg)
     idle_log_h=await page.locator('#raidLog').evaluate('e=>Math.round(e.getBoundingClientRect().height)')
     assert 82 <= idle_log_h <= 230,idle_log_h
