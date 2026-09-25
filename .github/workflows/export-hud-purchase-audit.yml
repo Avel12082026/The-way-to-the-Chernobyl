@@ -1,0 +1,32 @@
+name: Export HUD and purchase audit sources
+on:
+  push:
+    branches: [fix/rostok-hud-purchases-20260925]
+    paths: [.github/workflows/export-hud-purchase-audit.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package focused sources and real artwork
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          root=Path('.')
+          with ZipFile('hud-purchase-audit.zip','w',ZIP_DEFLATED) as z:
+              for p in root.rglob('*'):
+                  if not p.is_file() or '.git' in p.parts: continue
+                  rel=p.as_posix()
+                  keep=p.suffix in ('.js','.cjs','.mjs','.html','.css','.py','.json','.yml','.yaml','.md')
+                  keep=keep or rel.startswith(('ui/','inventory/','mobile/')) or rel=='file_000000002bb08210800056ebfb1dce1f.png'
+                  if keep and p.stat().st_size<20000000: z.write(p,rel)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hud-purchase-audit
+          path: hud-purchase-audit.zip
+          retention-days: 3
