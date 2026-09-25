@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "checks": {
+    "source": {
+      "weapons": 113,
+      "examinedRayPixels": 166236,
+      "minSolidAlpha": 130,
+      "maxExitAlpha": 126,
+      "maxAntialiasFringe": 0
+    },
+    "ground": {
+      "feetProjections": 43392,
+      "maxFootError": 0.00004788390248917335,
+      "maxFloorError": 0.000030338764190673828,
+      "groundSceneY": 940
+    },
+    "projection": {
+      "combinations": 10848,
+      "playerAndNPCProjections": 21696,
+      "actualGunPasses": 43392,
+      "maxProjectionError": 0.00013791037456856105,
+      "maxAngleError": 1.4416226479241345e-7,
+      "toleranceScenePixels": 0.5,
+      "offsetsTested": [
+        -13.25,
+        0,
+        13.25
+      ]
+    },
+    "flashRaster": {
+      "frames": 65088,
+      "agesMilliseconds": [
+        0,
+        65,
+        129
+      ],
+      "examinedPixels": 2399404032,
+      "visiblePixels": 46100778,
+      "maxBackwardDistance": 0.509941972094976,
+      "maxOriginGap": 0.7236958637786315,
+      "clippedFrames": 0,
+      "antialiasTolerancePixels": 1.01,
+      "originCoverageTolerancePixels": 1.75
+    }
+  },
+  "failures": []
+}

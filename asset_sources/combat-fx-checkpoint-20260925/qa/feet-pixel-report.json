@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "poses": 192,
+  "feet": 384,
+  "alphaSamples": 1002866,
+  "minimumSoleAlpha": 181,
+  "maximumSolidPixelsBelow": 0,
+  "failures": []
+}
