@@ -20,6 +20,7 @@ async def main():
             await route.fulfill(status=200,body=ONE_PX,content_type='image/png')
         await page.route('http://game.test/api/zone-map/*',image_route)
         await page.route('http://game.test/api/zone-camp/*',image_route)
+        await page.route('**/images/combat/environments/*',image_route)
 
         await page.set_content('''<!doctype html><html><body>
           <section id="mainMenu" style="display:block"><div id="bunkerScene">
@@ -75,7 +76,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.20.0' && window.ZoneMap?.version==='0.6.4'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.20.0' && window.ZoneMap?.version==='0.6.5'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -91,6 +92,10 @@ async def main():
 
         await page.evaluate('player.level=200')
         await page.locator('[data-zone-point="transition-to-2"]').click()
+        travel=page.locator('#zoneMapTravel')
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelDestination').inner_text()=='СВАЛКА'
+        assert '06.webp' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
