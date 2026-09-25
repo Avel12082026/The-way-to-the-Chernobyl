@@ -65,6 +65,14 @@ async def main():
         for rel,ver in [('file_000000002bb08210800056ebfb1dce1f.png','0503d3b544d1'),('ui/rostok-lower-hud.png','09db18421007')]:
             html=html.replace(rel+'?v='+ver,'data:image/png;base64,'+base64.b64encode((ROOT/rel).read_bytes()).decode())
         await context.route('**/*',lambda r:r.abort())
+        async def travel_art(route):
+            path=urlparse(route.request.url).path.lstrip('/')
+            local=(ROOT/path).resolve()
+            if local.is_relative_to(ROOT) and local.is_file() and local.suffix.lower()=='.webp':
+                await route.fulfill(status=200,body=local.read_bytes(),content_type='image/webp')
+            else:
+                await route.abort()
+        await context.route('**/images/combat/environments/*.webp',travel_art)
         await page.set_content(html,wait_until='domcontentloaded')
         await page.wait_for_function("window.TradeMenu && window.BunkerMenu && document.getElementById('coins').textContent==='127842'")
         await page.wait_for_timeout(200)
@@ -141,6 +149,29 @@ async def main():
             await page.evaluate("openScreen('main')");await page.wait_for_timeout(60)
             assert await page.locator('#rostokCampScreen').is_visible()
         report['hud_interactions']=['book consumed once','inventory opens and returns','PDA opens and returns','live empty/full updates']
+
+        # Capture the actual destination loading screens from the integrated client.
+        await page.set_viewport_size({'width':390,'height':844})
+        await page.evaluate("player.level=1000;window.__zoneMapTravelMs=260")
+        travel_cases=[
+            (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','06.webp'),
+            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','01.webp'),
+            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','11.webp'),
+            (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','16.webp'),
+        ]
+        for origin,point_id,filename,title,asset in travel_cases:
+            await page.evaluate("(loc)=>{ZoneMap.setLocation(loc);ZoneMap.open('camp')}",origin)
+            await page.locator(f'[data-zone-point="{point_id}"]').click()
+            travel=page.locator('#zoneMapTravel')
+            await travel.wait_for(state='visible')
+            assert await page.locator('#zoneMapTravelDestination').inner_text()==title
+            assert asset in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+            await page.wait_for_timeout(80)
+            await page.screenshot(path=str(OUT/filename),full_page=True)
+            await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        report['travel_screens']=[x[2] for x in travel_cases]
+        await bar()
+
         async def open_vendor(v):
             if await page.locator('#tradeMenu').is_visible():
                 await page.locator('#tradeMenu [data-trade-action="back"]').click()
