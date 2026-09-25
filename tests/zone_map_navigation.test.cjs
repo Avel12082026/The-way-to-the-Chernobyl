@@ -11,7 +11,7 @@ const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
 assert(js.includes("version: '0.6.4'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.19.0'"),'BunkerMenu version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
@@ -64,8 +64,8 @@ assert(js.includes('id="rostokLowerHud"')&&js.includes('rostok-lower-hud-artwork
 assert(css.includes('height:var(--rostok-hud-height')&&css.includes('object-fit:fill;object-position:center'),'Rostok must render only the clean lower menu artwork');
 assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized Cordon strip crop must be removed');
 assert(css.includes('bottom:calc(var(--rostok-hud-height'),'Upper meters must be a separate overlay directly above the lower HUD');
-assert(css.includes('.rostok-health{top:62.70%')&&css.includes('visibility:visible!important;opacity:1!important'),'Rostok health row must stay inside the lower HUD');
-assert(js.includes('const lowerHudHeight = width * 182 / 941'),'Rostok lower HUD must follow the approved menu aspect ratio');
+assert(css.includes('.rostok-health{top:calc(115.4544 * var(--bunker-vunit))'),'Rostok health must use the exact Cordon crop offset');
+assert(js.includes('const lowerHudHeight = h * 182 / 1672'),'Rostok lower HUD must follow the approved menu aspect ratio');
 assert(!js.includes('class="zone-map-back"'),'Zone maps must not show the top-left Back button');
 assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be removed');
 assert(js.includes('id="rostokBarmanHotspot"')&&js.includes('data-rostok-action="barman"'),'invisible Barman hotspot missing');

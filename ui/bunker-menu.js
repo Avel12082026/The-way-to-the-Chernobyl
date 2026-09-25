@@ -392,7 +392,8 @@
     text('knowledgeBooksHeader', books);
     const bookBtn = document.getElementById('bunkerReadBook');
     if (bookBtn) bookBtn.title = books ? `Использовать Опыт+ (осталось ${books})` : 'Опыт+ отсутствует';
-    for (const el of main.querySelectorAll('.bunker-resource > span[id]')) {
+    refreshRostokCamp();
+    for (const el of document.querySelectorAll('#mainMenu .bunker-resource > span[id], #rostokCampScreen .bunker-resource > span[id]')) {
       const size = Math.max(11, 21 - Math.max(0, el.textContent.length - 6) * 1.5);
       el.style.fontSize = `calc(${size} * var(--bunker-unit))`;
     }
@@ -455,7 +456,8 @@
     const h = Math.max(1, screenBox.height || window.innerHeight || 1);
     const ratio = 941 / 1672;
     const width = w <= h ? w : h * ratio;
-    const lowerHudHeight = width * 182 / 941;
+    // Match Cordon's vertical scale, not the artwork's natural aspect ratio.
+    const lowerHudHeight = h * 182 / 1672;
     campScene.style.width = width + 'px';
     campScene.style.height = h + 'px';
     campScene.style.setProperty('--bunker-unit', width / 941 + 'px');
@@ -480,23 +482,23 @@
              It contains no experience/radiation bars and no Cordon floor/stools. -->
         <div id="rostokLowerHud" class="rostok-lower-hud">
           <img id="rostokLowerHudArtwork" class="rostok-lower-hud-artwork" src="ui/rostok-lower-hud.png?v=09db18421007" width="941" height="182" alt="" aria-hidden="true" draggable="false">
-          <div id="rostokHunger" class="rostok-vital rostok-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text">0 / 100</span></div>
-          <div id="rostokThirst" class="rostok-vital rostok-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text">0 / 100</span></div>
-          <div id="rostokHealth" class="rostok-vital rostok-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text">0 / 100</span></div>
-          <section class="rostok-resources" aria-label="Ресурсы персонажа">
-            <div class="rostok-resource"><span>Сталбайты</span><span id="rostokCoins">0</span></div>
-            <div class="rostok-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
-            <div class="rostok-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
+          <div id="rostokHunger" class="rostok-vital rostok-hunger bunker-vital bunker-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHungerText" class="rostok-vital-text bunker-vital-text">0 / 100</span></div>
+          <div id="rostokThirst" class="rostok-vital rostok-thirst bunker-vital bunker-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokThirstText" class="rostok-vital-text bunker-vital-text">0 / 100</span></div>
+          <div id="rostokHealth" class="rostok-vital rostok-health bunker-vital bunker-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="rostokHealthText" class="rostok-vital-text bunker-vital-text">0 / 100</span></div>
+          <section class="rostok-resources bunker-resources" aria-label="Ресурсы персонажа">
+            <div class="rostok-resource bunker-resource"><span>Сталбайты</span><span id="rostokCoins">0</span></div>
+            <div class="rostok-resource bunker-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
+            <div class="rostok-resource bunker-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
           </section>
-          <button id="rostokReadBook" class="rostok-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+"></button>
-          <button id="rostokInventory" class="rostok-quick rostok-inventory" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
-          <button id="rostokPda" class="rostok-quick rostok-pda" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
+          <button id="rostokReadBook" class="rostok-read-book bunker-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+">Прочитать</button>
+          <button id="rostokInventory" class="rostok-quick rostok-inventory bunker-hotspot" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
+          <button id="rostokPda" class="rostok-quick rostok-pda bunker-hotspot" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
         </div>
         <!-- Experience and radiation are independent working overlays placed
              only after the clean lower menu has been laid out. -->
         <div class="rostok-progress-row" aria-label="Опыт и радиация">
-          <div id="rostokExperience" class="rostok-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text">Опыт: 0</span></div>
-          <div id="rostokRadiation" class="rostok-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text">Радиация: 0 / 100</span></div>
+          <div id="rostokExperience" class="rostok-progress bunker-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="rostokExperienceText" class="rostok-progress-text bunker-progress-text">Опыт: 0</span></div>
+          <div id="rostokRadiation" class="rostok-progress bunker-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="rostokRadiationText" class="rostok-progress-text bunker-progress-text">Радиация: 0 / 100</span></div>
         </div>
       </div>`;
     document.body.appendChild(el);
@@ -511,6 +513,7 @@
     });
     window.addEventListener('resize', layoutRostokCamp);
     window.visualViewport?.addEventListener('resize', layoutRostokCamp);
+    window.Telegram?.WebApp?.onEvent?.('viewportChanged', layoutRostokCamp);
     return el;
   }
 
@@ -1580,7 +1583,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.19.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.20.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
