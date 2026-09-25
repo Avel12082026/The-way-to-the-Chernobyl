@@ -74,11 +74,14 @@ async def main():
             if path.startswith(prefix): path=path[len(prefix):]
             else: path=path.lstrip('/')
             local=(ROOT/path).resolve()
-            if local.is_relative_to(ROOT) and local.is_file() and local.suffix.lower()=='.webp':
-                await route.fulfill(status=200,body=local.read_bytes(),content_type='image/webp')
+            suffix=local.suffix.lower()
+            mime={'.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg'}.get(suffix)
+            if local.is_relative_to(ROOT) and local.is_file() and mime:
+                await route.fulfill(status=200,body=local.read_bytes(),content_type=mime)
             else:
                 await route.abort()
-        await context.route('**/images/combat/environments/*.webp',travel_art)
+        for pattern in ('**/*.webp','**/*.png','**/*.jpg','**/*.jpeg'):
+            await context.route(pattern,travel_art)
         await page.set_content(html,wait_until='domcontentloaded')
         await page.wait_for_function("window.TradeMenu && window.BunkerMenu && document.getElementById('coins').textContent==='127842'")
         await page.wait_for_timeout(200)
@@ -178,7 +181,8 @@ async def main():
             mime='image/jpeg' if suffix in ('.jpg','.jpeg') else ('image/png' if suffix=='.png' else 'image/webp')
             data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
-            await page.wait_for_timeout(80)
+            await page.wait_for_timeout(500)
+            await page.locator('#zoneMapTravelScene img').evaluate_all("(nodes)=>Promise.all(nodes.map(n=>n.complete&&n.naturalWidth?true:new Promise(r=>{n.onload=n.onerror=()=>r(true)})))")
             await page.screenshot(path=str(OUT/filename),full_page=True)
             await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         report['travel_screens']=[x[2] for x in travel_cases]
