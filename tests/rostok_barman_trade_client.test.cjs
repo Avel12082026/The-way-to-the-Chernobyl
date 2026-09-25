@@ -10,16 +10,16 @@ assert(trade.includes("title: () => 'БАРМЕН — ТОРГОВЛЯ'"),'Barma
 assert(trade.includes("getShopCatalog().filter(item => item?.category === 'consumable')"),'Barman must inherit all Zhuchara consumables');
 assert(trade.includes("markedPistols.length === 29"),'Zhuchara 29-pistol class detection missing');
 assert(trade.includes("weaponOrder.slice(pistolStart, pistolStart + 29)"),'Zhuchara pistol fallback range missing');
-assert(trade.includes("regularArmor.slice(0, 29)"),'Zhuchara armor 1-29 range missing');
+assert(trade.includes("regularArmorRange(1, 29)"),'Zhuchara armor IDs 1-29 range missing');
 assert(trade.includes("markedShotguns.length === 29"),'Barman 29-shotgun class detection missing');
 assert(trade.includes("weaponOrder.slice(pistolStart + 29, pistolStart + 58)"),'Barman shotgun fallback range missing');
-assert(trade.includes("regularArmor.slice(29, 58)"),'Barman armor 30-58 range missing');
+assert(trade.includes("regularArmorRange(30, 58)"),'Barman armor IDs 30-58 range missing');
 assert(!trade.includes("Number(w.tier) >= 4"),'Old Barman weapon tier gate must be removed');
 assert(!trade.includes("Number(a.tier) >= 4"),'Old Barman armor tier gate must be removed');
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
 assert(trade.includes("sourceVendor: currentVendor"),'Barman source marker missing from requests');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
-assert(trade.includes("version: '1.3.6'"),'TradeMenu version not bumped');
+assert(trade.includes("version: '1.3.7'"),'TradeMenu version not bumped');
 
 assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot missing');
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
