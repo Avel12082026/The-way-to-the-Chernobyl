@@ -36,9 +36,9 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260925-zone-travel1';
+  const ZONE_TRAVEL_CACHE = '20260925-zone-travel2';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
-    1:'images/combat/environments/01.webp',
+    1:'/images/zone-travel/kordon.webp',
     2:'images/combat/environments/06.webp',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
@@ -712,7 +712,8 @@
 
   function zoneTravelArtworkUrl(location) {
     const path = ZONE_TRAVEL_ASSETS[Number(location)] || ZONE_TRAVEL_ASSETS[1];
-    return path + '?v=' + ZONE_TRAVEL_CACHE;
+    const base = String(path).startsWith('/') ? SERVER_URL + path : path;
+    return base + '?v=' + ZONE_TRAVEL_CACHE;
   }
 
   function prepareZoneTravelArtwork(location) {
@@ -1602,7 +1603,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.6.5',
+    version: '0.6.6',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
