@@ -1,0 +1,31 @@
+name: Rostok and trade inspection
+on:
+  push:
+    branches: [fix/rostok-hud-trade-20260925]
+    paths: ['.github/workflows/rostok-trade-inspect.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export focused source snapshot
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          paths=set()
+          for pattern in ('index.html','package*.json','*.md','*.json','*.js','*.css','ui/**','inventory/**','tools/**','tests/**','server_patches/**','.github/workflows/**','file_000000002bb08210800056ebfb1dce1f.png'):
+              for p in Path('.').glob(pattern):
+                  if p.is_file(): paths.add(p)
+          with zipfile.ZipFile('source-snapshot.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in sorted(paths): z.write(p,p.as_posix())
+          print('Files:',len(paths),'bytes:',Path('source-snapshot.zip').stat().st_size)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rostok-trade-source-20260925
+          retention-days: 3
+          path: source-snapshot.zip
