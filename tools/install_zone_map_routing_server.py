@@ -9,6 +9,7 @@ ROUTE_MARK='// ZONE_MAP_ROUTING_V4'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
 POSITION_MARK='// PLAYER_WORLD_POSITION_V1'
+TECHNICIAN_BUY_MARK='// CORDON_TECHNICIAN_DETECTOR_BUY_V1'
 UNIQUE_MUTANT_MARK='// UNIQUE_STRONGLAV_MAP_POOL_V1'
 UNIQUE_MUTANT_GUARD="""    // UNIQUE_STRONGLAV_MAP_POOL_V1
     // Filter after tier routing so the remaining location tiers never shift.
@@ -86,6 +87,18 @@ app.post('/api/shop/buy',(req,res,next)=>{
         return res.status(400).json({success:false,error:'У Бармена продаются костюмы с 30-го по 58-й'});
     if(!['weapon','armor'].includes(category))
         return res.status(400).json({success:false,error:'Бармен торгует дробовиками, бронёй и припасами'});
+    return next();
+});
+
+"""
+
+TECHNICIAN_BUY_ALIAS=r"""// CORDON_TECHNICIAN_DETECTOR_BUY_V1
+// Diesel owns detector sales on the client. Reuse the existing server-authoritative
+// Leonov detector validation without affecting Diesel's /api/shop/sell handling.
+app.post('/api/shop/buy',(req,res,next)=>{
+    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
+    if(req.body&&sourceVendor==='technician'&&String(req.body.vendor||'')==='technician'&&String(req.body.category||'')==='detector')
+        req.body.vendor='leonov';
     return next();
 });
 
@@ -518,6 +531,14 @@ def _next_shop_buy_route(text,after=0):
     positions=[p for p in positions if p>=0]
     return min(positions) if positions else -1
 
+def insert_technician_detector_buy(text):
+    if TECHNICIAN_BUY_MARK in text:
+        return text,False
+    pos=_next_shop_buy_route(text,0)
+    if pos<0:
+        raise RuntimeError('Не найден маршрут покупки для Дизеля.')
+    return text[:pos]+TECHNICIAN_BUY_ALIAS+text[pos:],True
+
 def insert_barman_guard(text):
     if BARMAN_MARK in text:
         start=text.find(BARMAN_MARK)
@@ -588,6 +609,8 @@ def patch(source):
     changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
     changed=changed or barman_changed
+    text,technician_changed=insert_technician_detector_buy(text)
+    changed=changed or technician_changed
     text,position_changed=insert_position_route(text)
     changed=changed or position_changed
     text,unique_changed=exclude_unique_map_mutants(text)
