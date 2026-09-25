@@ -24,6 +24,9 @@
 :is(#mainMenu,#rostokCampScreen) .bunker-progress-row { position:absolute; left:2%; top:86.6%; width:96%; height:2.1%; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:calc(10 * var(--bunker-unit)); pointer-events:none; }
 :is(#mainMenu,#rostokCampScreen) .bunker-progress { position:relative; overflow:hidden; border:calc(2 * var(--bunker-unit)) solid #8e7952; border-radius:calc(5 * var(--bunker-unit)); background:#11120f; }
 :is(#mainMenu,#rostokCampScreen) .bunker-progress-fill { position:absolute; inset:0 auto 0 0; height:100%; width:0; }
+/* Keep real progress fills visible in both shared HUDs. */
+:is(#mainMenu,#rostokCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }
+:is(#mainMenu,#rostokCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }
 :is(#mainMenu,#rostokCampScreen) .bunker-progress-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff4d3; font:600 calc(19 * var(--bunker-unit))/1 Arial,sans-serif; white-space:nowrap; text-shadow:0 1px 2px #000,1px 0 2px #000; }
 :is(#mainMenu,#rostokCampScreen) .bunker-vital { position:absolute; left:8.9%; width:30.1%; height:1.23%; overflow:hidden; border-radius:calc(12 * var(--bunker-unit)); background:#0c1110; border:calc(1 * var(--bunker-unit)) solid #625c44; pointer-events:none; }
 :is(#mainMenu,#rostokCampScreen) .bunker-hunger { top:91.00%; }

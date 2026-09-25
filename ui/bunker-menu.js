@@ -489,7 +489,7 @@
             <div class="rostok-resource bunker-resource"><span>Сталкоины</span><span id="rostokBreedCredits">0</span></div>
             <div class="rostok-resource bunker-resource"><span>Опыт+</span><span id="rostokKnowledgeBooks">0</span></div>
           </section>
-          <button id="rostokReadBook" class="rostok-read-book bunker-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+">Использовать</button>
+          <button id="rostokReadBook" class="rostok-read-book bunker-read-book" type="button" data-rostok-action="read" aria-label="Прочитать Опыт+">Прочитать</button>
           <button id="rostokInventory" class="rostok-quick rostok-inventory bunker-hotspot" style="left:70%;top:90.4%;width:13.9%;height:7.8%" type="button" data-rostok-action="inventory" aria-label="Рюкзак"></button>
           <button id="rostokPda" class="rostok-quick rostok-pda bunker-hotspot" style="left:84.1%;top:90.4%;width:13.7%;height:7.8%" type="button" data-rostok-action="kpk" aria-label="КПК"></button>
         </div>

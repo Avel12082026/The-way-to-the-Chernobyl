@@ -171,11 +171,11 @@ async def main():
         # The lower menu is its own clean artwork: no old exp/rad bars or Cordon floor/stools,
         # health stays inside it, and the upper two meters sit immediately above it.
         scene_box=await page.locator('#rostokCampScene').bounding_box()
-        lower_box=await page.locator('#rostokLowerHud').bounding_box()
+        lower_box=await page.locator('#rostokLowerHudArtwork').bounding_box()
         health_box=await page.locator('#rostokHealth').bounding_box()
         upper_box=await page.locator('.rostok-progress-row').bounding_box()
         assert scene_box and lower_box and health_box and upper_box
-        assert abs((lower_box['width']/lower_box['height'])-(941/182))<0.04,lower_box
+        assert abs(lower_box['height']-scene_box['height']*182/1672)<0.1,lower_box
         assert abs((lower_box['y']+lower_box['height'])-(scene_box['y']+scene_box['height']))<2,(scene_box,lower_box)
         assert health_box['y']>=lower_box['y'] and health_box['y']+health_box['height']<=lower_box['y']+lower_box['height']+1,(lower_box,health_box)
         gap=lower_box['y']-(upper_box['y']+upper_box['height'])
