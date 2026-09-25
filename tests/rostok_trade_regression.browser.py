@@ -69,7 +69,10 @@ async def main():
             html=html.replace(rel+'?v='+ver,'data:image/png;base64,'+base64.b64encode((ROOT/rel).read_bytes()).decode())
         await context.route('**/*',lambda r:r.abort())
         async def travel_art(route):
-            path=urlparse(route.request.url).path.lstrip('/')
+            path=urlparse(route.request.url).path
+            prefix='/The-way-to-the-Chernobyl/'
+            if path.startswith(prefix): path=path[len(prefix):]
+            else: path=path.lstrip('/')
             local=(ROOT/path).resolve()
             if local.is_relative_to(ROOT) and local.is_file() and local.suffix.lower()=='.webp':
                 await route.fulfill(status=200,body=local.read_bytes(),content_type='image/webp')
