@@ -13,7 +13,7 @@ const SHOP_WEAPONS=[
  ...Array.from({length:29},(_,i)=>({name:'S'+(i+1),progressionClass:'shotgun'})),
  {name:'ADMIN',progressionClass:'shotgun',adminOnly:true}
 ];
-const SHOP_ARMOR=Array.from({length:60},(_,i)=>({name:'A'+(i+1)}));
+const SHOP_ARMOR=Array.from({length:60},(_,i)=>({id:i+1,name:'A'+(i+1)}));
 function parseGearNameServer(name){return {baseName:String(name).replace(/ \+\d+$/,'')};}
 const handlers=[];
 const app={post(path,...fns){if(path==='/api/shop/buy')handlers.push(...fns)}};
@@ -63,4 +63,39 @@ with tempfile.TemporaryDirectory() as td:
         raise AssertionError(proc.stdout+'\n'+proc.stderr)
     assert 'RUNTIME PASS' in proc.stdout
 
-print('PASS: Barman accepts all 29 shotguns + armor 30-58 + consumables and rejects Zhuchara pistol/armor ranges')
+
+# Zhuchara armor must use stable IDs rather than array position. Reverse the
+# server catalogue to reproduce the live-order mismatch that broke armor buys.
+zhuchara_js=r"""
+const SHOP_WEAPONS=Array.from({length:29},(_,i)=>({id:100+i,name:'P'+(i+1),progressionClass:'pistol',starterGear:i===0}));
+const SHOP_ARMOR=Array.from({length:60},(_,i)=>({id:i+1,name:'A'+(i+1)})).reverse();
+function parseGearNameServer(name){return {baseName:String(name).replace(/ \\+\\d+$/,'')};}
+const handlers=[];
+const app={post(path,...fns){if(path==='/api/shop/buy')handlers.push(...fns)}};
+"""+mod.SHOP_GUARD+r"""
+function call(body){
+  let result={next:false,status:200,body:null};
+  const req={body};
+  const res={status(code){result.status=code;return this},json(body){result.body=body;return body}};
+  handlers[0](req,res,()=>{result.next=true});
+  return result;
+}
+for(const name of ['A1','A17','A29','A29 +3']){
+  const r=call({vendor:'zhuchara',sourceVendor:'zhuchara',category:'armor',name});
+  if(!r.next)throw new Error('Zhuchara armor blocked '+name+' '+JSON.stringify(r));
+}
+for(const name of ['A30','A58']){
+  const r=call({vendor:'zhuchara',sourceVendor:'zhuchara',category:'armor',name});
+  if(r.next||r.status!==400)throw new Error('out-of-range Zhuchara armor passed '+name);
+}
+console.log('ZHUCHARA ARMOR PASS');
+"""
+with tempfile.TemporaryDirectory() as td:
+    candidate=Path(td)/'zhuchara-armor.js'
+    candidate.write_text(zhuchara_js,encoding='utf-8')
+    proc=subprocess.run(['node',str(candidate)],capture_output=True,text=True)
+    if proc.returncode:
+        raise AssertionError(proc.stdout+'\\n'+proc.stderr)
+    assert 'ZHUCHARA ARMOR PASS' in proc.stdout
+
+print('PASS: stable-ID Zhuchara/Barman armor ranges and Barman stock validation')
