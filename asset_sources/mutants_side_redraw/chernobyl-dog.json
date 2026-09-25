@@ -7,7 +7,7 @@
   "promptProvenance": "reconstructed brief, not exact original prompt",
   "generation": "built-in image_gen",
   "mode": "reference-based redraw, recovered generated output",
-  "visualQA": "passed visual identity and leftward head/body/gaze; full tail, ears and claws present. Alpha checked; actual canvas compositing QA pending root.",
+  "visualQA": "passed: original identity and leftward head/body/gaze, full tail, ears and claws, true alpha; actual game canvas composition reviewed at420px visibleheight with feet grounded on y940, no player collision or canvas clipping.",
   "width": 1536,
   "height": 1024,
   "groundY": 982,
@@ -35,5 +35,18 @@
     ],
     "sampleOutsideAlpha0": true,
     "edgeMax": 1
+  },
+  "fit": {
+    "x": 284.98592,
+    "y": 474.04117,
+    "width": 698.93824,
+    "height": 465.95883
+  },
+  "scaleReview": {
+    "requirement": "Imposing large hound; user screenshot showed undersized Chernobyl dog",
+    "previousVisibleHeight": 274.02,
+    "targetVisibleHeight": 420,
+    "floorY": 940,
+    "referenceScreenshot": "03-1000456714.jpg"
   }
 }

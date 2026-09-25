@@ -1,0 +1,75 @@
+{
+  "approvedAt": "2026-09-25",
+  "userApproval": "И сохрани Strongglava. Strongglav хорошо получился очень.",
+  "selectedImage": "/workspace/scratch/77ccd889aecc/generated_images/exec-049ef19d-d584-4b14-9555-d58caa4304bb.png",
+  "intendedAsset": "images/combat/mutants-side/stronglav.png",
+  "design": {
+    "identity": "Уникальный древний разумный родственник кровососа, около трёх метров, массивный, широкоплечий, с длинными мощными ногами.",
+    "pose": "Спокойная прямая стойка, опущенные руки, хищный осмысленный взгляд влево на игрока.",
+    "skin": "Альбиносная светлая серо-розовая кожа; небольшие красные глаза. Старые полностью зажившие рубцы от пуль, порезов и укусов.",
+    "tentacles": "Много тонких длинных светлых щупалец, свисающих как борода и усы до груди. Красные только кончики, на целых — острые жала. Некоторые щупальца укорочены на разную длину, с закрытыми зажившими концами без жал.",
+    "hair": "Густые волосы на голове и в паховой/тазовой области почти до колен. Все волосы седые у корней, с переходом к тёмно-болотным концам. На остальных частях тела волос нет.",
+    "ears": "Заострённые уши, выступающие из волос.",
+    "feet": "Человеческие стопы и пальцы, по пять пальцев с когтями; когти и ноги без крови.",
+    "hands": "Крупные кисти и пальцы с когтями, локальные следы крови.",
+    "excludes": [
+      "шипы",
+      "хитиновые пластины",
+      "наружный позвоночный гребень",
+      "атакующая стойка",
+      "свежие открытые раны"
+    ],
+    "supersedes": "Промежуточные варианты с тёмной кожей, четырьмя толстыми щупальцами, отсутствием тазовых волос и боевой стойкой."
+  },
+  "sourceReferences": [
+    {
+      "role": "Массивное телосложение и личность",
+      "reference": "git:a46e98b7cad5ca56660a5754cca3db300c99c420:images/combat/mutants-side/stronglav.png"
+    },
+    {
+      "role": "Цветовая основа альбиноса A.R.E.A.",
+      "url": "https://media.moddb.com/images/members/4/3421/3420006/profile/bloodsucker_albino.png",
+      "page": "https://www.moddb.com/mods/area/addons/new-bloodsucker-models"
+    }
+  ],
+  "generationMethod": "Built-in image_gen; fresh drawing from original references, finishing pass from the fresh master, then actual alpha extraction.",
+  "prompts": [
+    {
+      "key": "stronglavFreshMasterPrompt",
+      "prompt": "Use case: stylized-concept.\nTask: CREATE A COMPLETELY NEW, freshly drawn, high-quality full-body illustration of STRONGLAV from the original reference sources and the finished character specification below. This is a NEW RENDER FROM SCRATCH, not a retouch, upscale, paint-over or color edit of any prior illustration. Build the anatomy, skin, face, hair and tentacles anew with clean natural detail.\n\nREFERENCE ROLES:\nImage 1 is our ORIGINAL massive Stronglav: use its recognizable powerful head, predatory heavy brow, great muscular bulk, tall long-legged proportions and huge clawed hands as the identity foundation. Its aggressive crouched pose, dark colors, four thick tentacles and bare pelvis are OLD designs, replaced by the specification below.\nImage 2 is the ORIGINAL A.R.E.A. albino color source: take the pale dirty ivory / ash-gray / subtle pink flesh palette and small red eyes. Do not copy its thin body, front T-pose, polygonal mesh, editor grid or guide lines.\n\nFINAL CHARACTER:\nA unique approximately three-meter-tall ancient sentient apex predator, a much larger and more powerfully built relative of a Bloodsucker. Broad massive chest and shoulders, strong neck, huge muscular arms and hands, very long powerful legs. Mature imposing anatomy with coherent natural muscles, no bloated toy-like forms. Strong thoughtful predatory face under a heavy brow, not gaunt or childlike. Small red eyes with subtle restrained luminosity. Pointed elf-like leathery ears projecting visibly out of the head hair.\n\nPOSE AND VIEW:\nStand completely UPRIGHT and CALMLY, with straight strong back, level broad shoulders, head held high, both arms lowered naturally beside the body, heavy relaxed clawed hands pointing down, long nearly straight legs and grounded feet in a subtle natural stagger. Convey ancient intelligence, patience and immense controlled strength. No lunge, roar, threatening reach or attack pose. Body and head in a readable left-facing three-quarter SIDE VIEW, watchful eyes directed at an unseen player to the LEFT, not at the camera.\n\nMOUTH TENTACLES:\nMany individually drawn VERY THIN flexible tendrils, approximately eighteen, hanging as a long beard and two lateral mustache strands to the chest. Pale ivory/light gray-pink shafts match his skin. ONLY the last small part of each intact tendril is crimson red, ending in a small sharp integrated organic red stinger. Slender fine pointed stingers, not giant blades. THREE of the tendrils are shorter at different lengths, showing ancient lost tips: dry pale rounded or puckered CLOSED scar tissue at their ends, no red stinger on those three and no open cross-section, raw stump or fresh blood. The remaining tendrils stay long and intact. Use graceful organic curves, clear individual strands and small gaps, not a solid tangled blob.\n\nHAIR:\nThick coarse flowing SCALP HAIR, swept back from the face and falling along the neck; thick shaggy PELVIC/GROIN HAIR growing naturally around the pelvis, covering the crotch/front/rear and draping in irregular locks almost to the knees. It is natural hair, not a cloth garment. ALL actual hair has SILVER-GRAY/WHITE ROOTS transitioning down each lock to very DARK DESATURATED SWAMP-GREEN ENDS. Real believable fine fibers grouped in natural locks. No hair on chest, arms, hands, lower legs or feet. Mouth tentacles are flesh, not hair.\n\nSKIN, SCARS AND EXTREMITIES:\nNatural pale albino skin with subtle uneven gray-pink tones, organic pores, fine wrinkles, slight translucency and a mostly MATTE finish. Many old battle scars from bullets, cuts and bites, fully healed: pale slightly raised or recessed irregular lines, closed puckered scar tissue; no red raw cuts, fresh wounds or black open holes. Localized old dark blood stains on HANDS, fingers and hand claws.\nFeet have recognizable HUMAN anatomy: heels, arches and FIVE flesh-covered human-shaped toes per foot, one broad inner big toe with four successively smaller toes. Sharp dark horn claws grow naturally from each toenail bed. Feet and toe claws are CLEAN with no blood. No exposed genitals.\nNO chitin, armor plates, horns, spines, external spinal ridge, clothes, weapons or props.\n\nRENDERING QUALITY:\nFresh professional realistic dark survival-horror character concept art, precise anatomical drawing, refined tactile organic materials, soft coherent directional illumination, excellent local definition without sharpening halos. Skin must NOT look like polished plastic, glass, a faceted gemstone, marble, metallic rubber or a tiled reptile scale pattern. No duplicated scars, smeared retouch patches or oversaturated pink highlights. Clearly differentiated matte skin, dry fibrous scars, coarse hair, flexible flesh tendrils and horn claws. Preserve readable shadows and natural color. Newly compose all details coherently.\n\nOUTPUT:\nOne complete creature alone in a high-resolution vertical full-body composition. Leave generous clear transparent padding around the head hair, all hands, toe claws and tendril tips; absolutely no cropping.\nTRUE TRANSPARENT RGBA ALPHA, including fine gaps between hair/tendrils/limbs. No environment, gray plane, floor, cast ground shadow, opaque background, vignette, haze, simulated checkerboard, text, labels or watermark."
+    },
+    {
+      "key": "stronglavFreshFinalPrompt",
+      "prompt": "Make one precise finishing correction to this NEWLY DRAWN Stronglav illustration. Preserve its clean natural realistic rendering, matte organic skin texture, anatomy, lighting, silhouette, pose, hair and all other details. Do NOT restyle, sharpen, smooth, add scaly patterns or rebuild the character.\n\nCorrect ONLY these three local details:\n1. HEALED SHORTENED TENTACLE ENDS: the few short mouth tentacles currently show red circular cut cross-sections. Cover every amputated end with CLOSED old PALE IVORY fibrous scar tissue: rounded or gently puckered mature scar cap, no exposed red cross-section, hollow opening, inner circle, blood or fresh flesh. Keep exactly the same short lengths and positions. The long intact tentacles retain their existing pointed crimson stingers; do not remove or recolor the intact stingers.\n2. OLD BODY SCARS: the long scars on the forehead, shoulder, chest, arms and legs currently have dark red groove-like centers. Make these injury lines fully CLOSED, OLD, PALE scar tissue instead: subtle desaturated ivory/silver-gray healed ridges or indentations with smooth irregular fibrous skin and natural mild shadow. No burgundy open slit, raw red border or inflamed tissue. Close the round bullet-injury marks with mature pale puckered skin too. Keep all the locations and overall scar shapes, retain visibility through gentle texture/value contrast, and preserve surrounding natural skin grain. Don't turn scars into glowing white painted lines.\n3. CLEAN FOOT CLAW BASES: remove the reddish blood/wound-looking rims around the TOE CLAW NAIL BEDS. Make those rims ordinary clean pale skin continuous with the human-shaped toes, claws still dark horn. Do not change any toe count or anatomy. Hands intentionally keep their existing old dark blood stains.\n\nEverything else MUST stay exactly as in this fresh illustration: calm upright massive body, long muscular legs, lowered arms, left-facing intelligent mature face/red eye, numerous thin PALE mouth tentacles with red stingers on intact tips, gray-rooted dark swamp-green tipped scalp and pelvic hair, pointed ears, full-body framing. Retain the new image's natural quality; no glossy/plastic/faceted skin and no retouch seams.\nKeep TRUE transparent alpha and all fine internal gaps. No new background, floor, shadow, haze, checkerboard, labels or text.\nOne additional local correction in this SAME finishing pass: shorten ONLY the overly long PELVIC/GROIN HAIR. Its longest ends must stop just ABOVE the tops of the KNEECAPS, around the lower thigh, not hang below the knees or down the calves. Trim the low hanging strands into natural irregular tapered locks, NOT a straight blunt haircut. Keep the same dense hair roots and overall upper-thigh coverage, and preserve silvery-gray roots transitioning to DARK SWAMP-GREEN ends even after shortening. Leave scalp hair untouched. Work directly from this original fresh render; retain its clean natural pore texture and fine anatomical detail everywhere."
+    },
+    {
+      "key": "stronglavFreshFinalAlphaPrompt",
+      "prompt": "BACKGROUND EXTRACTION ONLY. The supplied image contains a finished full-body fantasy creature over an UNWANTED baked gray-and-white checkerboard.\n\nRemove ALL checkerboard background completely and replace it with TRUE TRANSPARENT ALPHA (RGBA PNG). Remove checkerboard pixels from fine gaps between hair strands, tentacles, arms, torso, legs and claws too.\n\nPRESERVE THE CREATURE EXACTLY as it appears in this image: same pixels/appearance, shape, skin detail, healed scars, colors, pose, pale thin tentacles and red stingers, pale healed cut tendril ends, silver-to-dark-green head/pelvic hair, ears, hands, human toes and clean claws. Do not redraw or change the creature, do not smooth/sharpen its skin or hair, do not add or remove any character details. Preserve every strand and claw tip with clean natural antialiased alpha edges.\n\nThere must be NO visible background of any kind in the output: no checkerboard illustration, no white fill, gray fill, gradient, shadow, floor, halo or scenery. Export with actual transparent pixels outside the creature, not an image of transparency. Keep the same complete full-body portrait framing."
+    }
+  ],
+  "encounterIntent": {
+    "unique": true,
+    "ordinaryRandomEncounters": false,
+    "questAndMapMarker": "Будущая работа",
+    "uniqueArtifact": "Будущая работа",
+    "liveBackendExclusionApplied": false
+  },
+  "alphaQA": {
+    "mode": "RGBA",
+    "width": 1024,
+    "height": 1536,
+    "zeroAlphaFraction": 0.6263,
+    "visibleBBox": [
+      199,
+      6,
+      857,
+      1520
+    ],
+    "edgeAlphaMax": [
+      4,
+      0,
+      0,
+      0
+    ]
+  }
+}

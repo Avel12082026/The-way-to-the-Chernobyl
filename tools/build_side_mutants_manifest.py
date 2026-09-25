@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 
-VERSION = "mutants-side-20260925-v2"
+VERSION = "mutants-side-20260925-v3"
 FLOATING = {"poltergeist", "fire-poltergeist"}
 ALPHA_VISIBLE = 16  # Ignore sub-visible alpha=1 export residue, preserve pixels.
 

@@ -33,5 +33,31 @@
   "groundY": 984,
   "floating": false,
   "alphaZero": 675532,
-  "alphaTotal": 1572864
+  "alphaTotal": 1572864,
+  "fit": {
+    "x": 198.22245,
+    "y": 390.28249,
+    "width": 824.57627,
+    "height": 549.71751
+  },
+  "scaleReview": {
+    "requirement": "Flesh should reach the human player chest",
+    "referenceActor": {
+      "armorId": 1,
+      "weaponId": 86,
+      "body": "images/combat/modular/characters/1-pistol.png",
+      "sourceHeight": 1536,
+      "sourceGroundY": 1423,
+      "sourceChest": {
+        "x": 540,
+        "y": 450
+      },
+      "sceneScale": 0.5208333333333334,
+      "sceneChestY": 433.22916666666663
+    },
+    "referenceSelection": "Visible sternum below the raised forearms, above the waist belt; manually located on the actual player sprite",
+    "targetVisibleHeight": 506.77083333333337,
+    "targetSceneTopY": 433.22916666666663,
+    "floorY": 940
+  }
 }

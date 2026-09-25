@@ -1,6 +1,6 @@
 {
   "source": "actual manifest.js",
-  "version": "mutants-side-20260925-v2",
+  "version": "mutants-side-20260925-v3",
   "groundY": 940,
   "playerFeet": [
     {
@@ -255,26 +255,26 @@
       "transparentFraction": 0.51,
       "floating": false,
       "grounded": true,
-      "scale": 0.3,
+      "scale": 0.46,
       "sceneBounds": [
-        979.27,
-        666.28,
-        1428.14,
-        940.3
+        785.99,
+        520.46,
+        1474.01,
+        940.46
       ],
-      "sceneHeight": 274.02,
-      "sceneWidth": 448.87,
+      "sceneHeight": 420,
+      "sceneWidth": 688.02,
       "overlapPixels": 0,
       "feet": [
         {
-          "x": 1083.77,
-          "y": 936.73,
-          "width": 137.75
+          "x": 946.16,
+          "y": 934.99,
+          "width": 211.14
         },
         {
-          "x": 1345.61,
-          "y": 929.31,
-          "width": 66.2
+          "x": 1347.51,
+          "y": 923.62,
+          "width": 101.47
         }
       ],
       "clippedInScene": false
@@ -498,36 +498,36 @@
       "transparentFraction": 0.43,
       "floating": false,
       "grounded": true,
-      "scale": 0.31,
+      "scale": 0.54,
       "sceneBounds": [
-        966.31,
-        645.63,
-        1429.75,
-        940.31
+        711.94,
+        434.3,
+        1508.06,
+        940.54
       ],
-      "sceneHeight": 294.68,
-      "sceneWidth": 463.44,
+      "sceneHeight": 506.24,
+      "sceneWidth": 796.12,
       "overlapPixels": 0,
       "feet": [
         {
-          "x": 1015.38,
-          "y": 933.13,
-          "width": 63.75
+          "x": 796.22,
+          "y": 928.19,
+          "width": 109.51
         },
         {
-          "x": 1104.44,
-          "y": 939.38,
-          "width": 73.44
+          "x": 949.22,
+          "y": 938.93,
+          "width": 126.16
         },
         {
-          "x": 1270.06,
-          "y": 931.88,
-          "width": 60.63
+          "x": 1233.74,
+          "y": 926.04,
+          "width": 104.15
         },
         {
-          "x": 1395.06,
-          "y": 938.75,
-          "width": 65.63
+          "x": 1448.47,
+          "y": 937.85,
+          "width": 112.74
         }
       ],
       "clippedInScene": false
@@ -1150,38 +1150,38 @@
     {
       "id": "stronglav",
       "imageSize": [
-        1199,
-        1312
+        1024,
+        1536
       ],
       "sourceBounds": [
-        44,
-        19,
-        1195,
-        1306
+        199,
+        6,
+        857,
+        1520
       ],
-      "transparentFraction": 0.66,
+      "transparentFraction": 0.63,
       "floating": false,
       "grounded": true,
-      "scale": 0.66,
+      "scale": 0.58,
       "sceneBounds": [
-        739.91,
-        90.66,
-        1500.09,
-        940.66
+        959.86,
+        65.58,
+        1340.14,
+        940.58
       ],
-      "sceneHeight": 850,
-      "sceneWidth": 760.18,
+      "sceneHeight": 875,
+      "sceneWidth": 380.28,
       "overlapPixels": 0,
       "feet": [
         {
-          "x": 1109.43,
-          "y": 920.85,
-          "width": 208.7
+          "x": 1077.18,
+          "y": 898.97,
+          "width": 169.34
         },
         {
-          "x": 1413.9,
+          "x": 1287.26,
           "y": 940,
-          "width": 171.72
+          "width": 105.18
         }
       ],
       "clippedInScene": false
@@ -1281,19 +1281,27 @@
     "facing": "All mutant heads face left toward the player",
     "alpha": "No rectangular backgrounds or visible halos in composed scenes",
     "ground": "27 grounded species remain on floor940; two poltergeists retain hovering placement",
-    "scale": "13 per-species fit adjustments verified; humanoids 640–660px, stronglav850px, pseudogiant875×585px, moose857×780px, chimeras525px high, boar335px high",
+    "scale": "v3: Flesh reaches the actual human chest at sceneY433–434 (~507px high); Chernobyl dog420px; approved upright Stronglav875px versus Bloodsucker650px. Other26 species runtime fits unchanged.",
     "collisionPixels": 0,
     "clippedSpecies": 0,
     "horizontalBounds": "Every visible sprite remains within x590–1525; nearestx648.66, rightmost1524",
-    "stronglavV2": "Passed current Stronglav revision: taller dark-skinned muscular Bloodsucker relative, longer legs, four mouth tentacles, scarred hairless body, sparse gray head tufts, no spikes/chitin/external spinal ridge; left-facing. Reviewed on both real environment backgrounds and light/dark alpha plates. Visible height850px versus Bloodsucker650px and Chimera525px, grounded on y940, no clipping or player collision."
+    "stronglavV3": "Passed exact approved fresh illustration on real Cordon/Rostok scenes and light/dark alpha backgrounds: calm upright massive albino elder, pointed ear, numerous pale thin tendrils with red stingers and healed short ends, silver-to-swamp-green scalp/pelvic hair ending above knees, closed old scars, blood on hands only, clean human feet/claws. Complete silhouette and true alpha; no collision or clipping.",
+    "revalidatedSpecies": [
+      "chernobyl-dog",
+      "flesh",
+      "stronglav"
+    ],
+    "otherSpeciesEvidence": "Previous26 species entries retained unchanged; runtime manifest comparison against preceding release passed."
   },
-  "verification": "Canvas composition using actual game layout, manifest, player assets and two environment backgrounds; static pose. Original full29 review retained for unchanged28 species. Stronglav alone revalidated for v2 against Bloodsucker and Chimera comparison scenes plus light/dark alpha composites; other species entries preserved.",
+  "verification": "Canvas composition with actual game layout, manifest, player1/pistol86 assets and two environment backgrounds. Fresh v3 review of Flesh, Chernobyl dog and exact approved Stronglav, with Bloodsucker as size comparison; previous26 species review entries preserved unchanged.",
   "stronglavRevision": {
-    "version": "mutants-side-20260925-v2",
+    "version": "mutants-side-20260925-v3",
     "image": "images/combat/mutants-side/stronglav.png",
-    "metadata": "asset_sources/mutants_side_redraw/stronglav.json",
-    "alphaZeroFraction": 0.655646,
-    "edgeAlphaMax": 3,
+    "approvalProvenance": "asset_sources/mutants_side_redraw/stronglav-approved-design.json",
+    "approvedImageSHA256": "9a8663651f76f19aa0c3720ff7dc33a26801188ae19eb3edfb21a9a53e94c959",
+    "exactApprovedImageSaved": true,
+    "alphaZeroFraction": 0.626293,
+    "edgeAlphaMax": 4,
     "alphaVisibleThreshold": 16,
     "fullyTransparentExteriorPresent": true,
     "visualReview": "passed",
@@ -1303,6 +1311,36 @@
       "solid light",
       "solid dark"
     ],
-    "uniqueEncounterRestriction": "Design requirement only; server restriction not applied by this artwork change."
+    "uniqueEncounterRestriction": "Design requirement only; live server exclusion not applied by this artwork change."
+  },
+  "scaleRevision": {
+    "version": "mutants-side-20260925-v3",
+    "fleshChestReference": {
+      "requirement": "Flesh should reach the human player chest",
+      "referenceActor": {
+        "armorId": 1,
+        "weaponId": 86,
+        "body": "images/combat/modular/characters/1-pistol.png",
+        "sourceHeight": 1536,
+        "sourceGroundY": 1423,
+        "sourceChest": {
+          "x": 540,
+          "y": 450
+        },
+        "sceneScale": 0.5208333333333334,
+        "sceneChestY": 433.22916666666663
+      },
+      "referenceSelection": "Visible sternum below the raised forearms, above the waist belt; manually located on the actual player sprite",
+      "targetVisibleHeight": 506.77083333333337,
+      "targetSceneTopY": 433.22916666666663,
+      "floorY": 940
+    },
+    "actualFleshTopY": 434.3,
+    "chestAlignmentErrorPx": 1.07,
+    "chernobylDogVisibleHeight": 420,
+    "stronglavVisibleHeight": 875,
+    "collisionPixels": 0,
+    "clippedSpecies": 0,
+    "other26ManifestEntriesUnchanged": true
   }
 }

@@ -1,5 +1,5 @@
 {
-  "version": "mutants-side-20260925-v2",
+  "version": "mutants-side-20260925-v3",
   "complete": true,
   "counts": {
     "catalogSpecies": 29,
@@ -253,7 +253,7 @@
         "floating": false
       },
       "warnings": [],
-      "visualQA": "passed visual identity and leftward head/body/gaze; full tail, ears and claws present. Alpha checked; actual canvas compositing QA pending root.",
+      "visualQA": "passed: original identity and leftward head/body/gaze, full tail, ears and claws, true alpha; actual game canvas composition reviewed at420px visibleheight with feet grounded on y940, no player collision or canvas clipping.",
       "metadata": "asset_sources/mutants_side_redraw/chernobyl-dog.json"
     },
     "krakozyabra": {
@@ -1993,67 +1993,67 @@
       "metadata": "asset_sources/mutants_side_redraw/controller.json"
     },
     "stronglav": {
-      "width": 1199,
-      "height": 1312,
-      "groundY": 1305,
+      "width": 1024,
+      "height": 1536,
+      "groundY": 1519,
       "visibleAlphaBBox": [
-        44,
-        19,
-        1195,
-        1306
+        199,
+        6,
+        857,
+        1520
       ],
       "bottomGroups": [
         {
-          "x": 595.5,
-          "y": 1276,
-          "width": 300
+          "x": 330.5,
+          "y": 1448,
+          "width": 112
         },
         {
-          "x": 1062.0,
-          "y": 1305,
-          "width": 255
+          "x": 765.5,
+          "y": 1519,
+          "width": 182
         }
       ],
       "connectedSupportGroups": [
         {
-          "x": 603.5,
-          "y": 1276,
-          "width": 316
+          "x": 402.0,
+          "y": 1448,
+          "width": 293
         },
         {
-          "x": 1064.5,
-          "y": 1305,
-          "width": 260
+          "x": 765.5,
+          "y": 1519,
+          "width": 182
         }
       ],
-      "alphaZeroFraction": 0.655646,
-      "alphaVisibleFraction": 0.328151,
+      "alphaZeroFraction": 0.626293,
+      "alphaVisibleFraction": 0.354898,
       "alphaRange": [
         0,
-        255
+        254
       ],
-      "edgeAlphaMax": 3,
+      "edgeAlphaMax": 4,
       "transparentExterior": true,
       "contact": {
-        "width": 1199,
-        "height": 1312,
-        "groundY": 1305,
+        "width": 1024,
+        "height": 1536,
+        "groundY": 1519,
         "feet": [
           {
-            "x": 603.5,
-            "y": 1276,
-            "width": 316
+            "x": 402.0,
+            "y": 1448,
+            "width": 293
           },
           {
-            "x": 1064.5,
-            "y": 1305,
-            "width": 260
+            "x": 765.5,
+            "y": 1519,
+            "width": 182
           }
         ],
         "floating": false
       },
       "warnings": [],
-      "visualQA": "passed: four mouth tentacles, left-facing predatory gaze and attack, darker skin, elongated muscular legs, powerful scarred body, no body hair/spikes/external ridge, sparse gray hair from head only, localized blood-stained hands and faint eye glow, entire silhouette inside transparent frame.",
+      "visualQA": "passed: exact user-approved fresh albino elder Stronglav; calm upright leftward gaze, numerous thin pale mouth tendrils with red stingers and healed short ends, gray-rooted swamp-green-tipped scalp/pelvic hair ending above knees, pointed ears, old closed pale scars, blood-stained hands, clean human-shaped toes/claws; complete frame and true alpha on light/dark and game backgrounds",
       "metadata": "asset_sources/mutants_side_redraw/stronglav.json"
     },
     "chimera": {
