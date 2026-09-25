@@ -1,0 +1,39 @@
+{
+  "id": "chernobyl-dog",
+  "source": "images/combat/mutants/chernobyl-dog.png",
+  "output": "images/combat/mutants-side/chernobyl-dog.png",
+  "generatedSource": "/workspace/scratch/77ccd889aecc/generated_images/exec-07d6d48c-3eb9-4460-bcf0-ff93a3ac2241.png",
+  "prompt": "Recovered generated redraw; original exact generation prompt unavailable. Visual brief: original custom Chernobyl dog redrawn from its original reference facing left in side-view combat stance; full body, transparent background, scarred dark fur, saber canine teeth, enlarged front paws and bushy tail preserved.",
+  "promptProvenance": "reconstructed brief, not exact original prompt",
+  "generation": "built-in image_gen",
+  "mode": "reference-based redraw, recovered generated output",
+  "visualQA": "passed visual identity and leftward head/body/gaze; full tail, ears and claws present. Alpha checked; actual canvas compositing QA pending root.",
+  "width": 1536,
+  "height": 1024,
+  "groundY": 982,
+  "feet": [
+    [
+      363,
+      971
+    ],
+    [
+      1245,
+      946
+    ]
+  ],
+  "floating": false,
+  "alphaQA": {
+    "mode": "RGBA",
+    "min": 0,
+    "max": 254,
+    "zeroFraction": 0.5110696156819662,
+    "bboxAlphaGt16": [
+      11,
+      60,
+      1523,
+      983
+    ],
+    "sampleOutsideAlpha0": true,
+    "edgeMax": 1
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "tushkan",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-5f70235f-f203-45c7-8858-5d7194d2908a.png",
+  "prompt": "Use case: stylized-concept. Draw a NEW original realistic game enemy sprite based on this STALKER 2 Tushkan/rodent concept reference, keeping the signature hunched ratlike body, oversized hind legs, slender long forearms with claws, long thin tail with sparse tuft, sparse coarse back hair, mostly bare gray brown wrinkled skin, pointed muzzle, sharp rodent teeth and upright torn small ears. Change the camera completely: strict true 90-degree LEFT-facing SIDE PROFILE, entire torso, hips and face all facing LEFT edge toward opponent. Only ONE side of the face and one eye visible; never glance toward viewer. Crouched ground-ready stance with paws/claws near one horizontal baseline, preparing to spring at player to the left, not midair. Full body, tail and all paws uncut with 7% empty padding. Detailed gritty realistic rendered texture compatible with STALKER fan game sprite, soft neutral lighting, actual transparent RGBA background, no floor, no shadows, no fog, no text, no other characters. Reference provides design only; produce a new side-view illustration, not the front three-quarter pose.",
+  "reference": "https://www.ukr.net/ru/news/details/technologies/96841636.html",
+  "feet": [
+    {
+      "x": 300,
+      "y": 990,
+      "width": 240
+    },
+    {
+      "x": 1158,
+      "y": 998,
+      "width": 250
+    },
+    {
+      "x": 159,
+      "y": 936,
+      "width": 150
+    },
+    {
+      "x": 751,
+      "y": 925,
+      "width": 215
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: full body side profile left, no gaze at camera",
+  "width": 1536,
+  "height": 1024,
+  "groundY": 1003,
+  "floating": false,
+  "alphaZero": 1081669,
+  "alphaTotal": 1572864
+}

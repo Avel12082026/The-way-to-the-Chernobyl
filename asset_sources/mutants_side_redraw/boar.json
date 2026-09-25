@@ -1,0 +1,42 @@
+{
+  "id": "boar",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-fb65a304-d863-4591-ab14-94874a4f4f61.png",
+  "prompt": "Use case: stylized-concept. Create a completely new realistic full-body game combat sprite of a STALKER 2 mutated WILD BOAR, using attached image only as an appearance reference. Huge heavy barrel body, high shoulder hump, coarse bristly grey-brown fur, thick muscular squat legs with cloven hooves, mutated face with rugged plated growths above small side-looking eye, prominent tusks on upper snout and lower jaw as reference, small flattened pig ears, short curled tail. STRICT ORTHOGRAPHIC LEFT SIDE PROFILE: entire spine horizontal, snout and head pointing toward LEFT edge at imaginary player, one visible eye and one side of long boar muzzle; NEVER facing viewer, never three-quarter head. Braced low head charge-ready standing stance with all four hooves near same baseline, no jumping. Whole creature fully in frame with 6 percent transparent margin, no cut feet or tail. Detailed naturalistic gritty game rendering, neutral diffuse lighting, earthy colors, coherent anatomy. Single subject on actual RGBA transparent background. No floor, cast shadow, glow, halo, fog, scenery, text, watermark, labels.",
+  "reference": "https://artline.ua/storage/images/editor/editor_1747485708653091_0.webp",
+  "feet": [
+    {
+      "x": 457,
+      "y": 846,
+      "width": 128
+    },
+    {
+      "x": 693,
+      "y": 859,
+      "width": 142
+    },
+    {
+      "x": 1285,
+      "y": 844,
+      "width": 138
+    },
+    {
+      "x": 1622,
+      "y": 860,
+      "width": 158
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: full body left profile, one visible eye looking left, no camera gaze, characteristic boar muzzle tusks and coarse fur, four unclipped hooves, actual alpha transparency, no scenery or shadow",
+  "width": 1795,
+  "height": 876,
+  "groundY": 860,
+  "floating": false,
+  "alphaZero": 668522,
+  "alphaTotal": 1572420,
+  "fit": {
+    "x": 310.45396,
+    "y": 597.97203,
+    "width": 700.84499,
+    "height": 342.02797
+  }
+}

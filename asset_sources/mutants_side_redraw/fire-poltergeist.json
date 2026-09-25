@@ -1,0 +1,25 @@
+{
+  "id": "fire-poltergeist",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-05d5fce2-b4f5-474f-ac6d-9e971b9c38e0.png",
+  "prompt": "Use case: stylized-concept. Create ONE NEW original high-detail naturalistic side-view game sprite of the FIRE POLTERGEIST/PYROGEIST. Reference image 1: S.T.A.L.K.E.R. 2 artbook, use ONLY the creature on the LEFT labeled POLTERGEIST as anatomical reference; ignore the right Controller, all text, all backdrop. Reference image 2 is established project fire variant, use only restrained orange ember glow and charred skin palette, NOT its frontal pose or goblin face. Subject: levitating deformed humanoid upper body with oversized swollen domed head merged into hunched narrow shoulders, deeply furrowed masklike elongated human face, long thin arms with clawlike fingers, sagging oval abdominal sac, ribbed chest, two short tapered tissue stumps underneath and NO WALKING LEGS OR FEET. S2 poltergeist anatomy adapted to recognizable fire variant: soot-brown leathery wrinkled skin with subtle hot amber fissures on chest/hands and eye, several compact flame wisps clinging closely to shoulders and hands. Entire head and body MUST be strict LEFT SIDE PROFILE, nose and single visible eye and chest oriented horizontally to LEFT at imaginary opponent; no gaze into camera, no front torso, no symmetrical front portrait. Float in poised combat stance, near arm extended toward left with palm slightly curled casting fire, far arm behind, complete head arms fingertips and lower body stumps visible with generous margins. Gritty realistic detailed game asset, neutral diffuse illumination with soft orange internal glow. TRUE transparent background with clean alpha, absolutely NO background, NO floor, NO cast shadow, NO thick fog, no smoke cloud filling canvas, no text or logo. Full uncut character only. Newly reconstruct from reference into left profile, not a mirror of front art.",
+  "reference": "https://steamcommunity.com/sharedfiles/filedetails/?id=3569317769",
+  "referencePaths": [
+    "/workspace/scratch/77ccd889aecc/references/controller-poltergeist-s2.img",
+    "images/combat/mutants/fire-poltergeist.png"
+  ],
+  "research": [
+    "https://stalker.fandom.com/wiki/Pyrogeist",
+    "https://thenerdstash.com/stalker-2-how-to-kill-the-poltergeist-electric-fire-poltergeist-guide/"
+  ],
+  "researchNotes": "Inspected S2 artbook Poltergeist anatomy from Steam upload; variant's fire powers described in guides. Newly illustrated legless floating body with flame accents and left-oriented profile.",
+  "generation": "built-in",
+  "mode": "new-left-facing-sprite-from-inspected-references",
+  "visualQA": "passed: complete left-facing hovering creature; head gaze to left; legless lower torso with two tissue stumps; no camera gaze",
+  "width": 1536,
+  "height": 1024,
+  "groundY": 990,
+  "feet": [],
+  "floating": true,
+  "alphaZero": 1063780,
+  "alphaTotal": 1572864
+}

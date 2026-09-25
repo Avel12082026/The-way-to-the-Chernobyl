@@ -1,0 +1,1290 @@
+{
+  "source": "actual manifest.js",
+  "version": "mutants-side-20260925-v1",
+  "groundY": 940,
+  "playerFeet": [
+    {
+      "x": 173.07291666666666,
+      "y": 940,
+      "width": 61.458333333333336
+    },
+    {
+      "x": 473.33333333333337,
+      "y": 924.8958333333334,
+      "width": 111.97916666666667
+    }
+  ],
+  "species": [
+    {
+      "id": "bayun",
+      "imageSize": [
+        1672,
+        941
+      ],
+      "sourceBounds": [
+        58,
+        39,
+        1654,
+        904
+      ],
+      "transparentFraction": 0.56,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.28,
+      "sceneBounds": [
+        982.3,
+        697.13,
+        1430.94,
+        940.28
+      ],
+      "sceneHeight": 243.15,
+      "sceneWidth": 448.64,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1030.09,
+          "y": 929.32,
+          "width": 62.97
+        },
+        {
+          "x": 1080.13,
+          "y": 937.47,
+          "width": 64.09
+        },
+        {
+          "x": 1248.51,
+          "y": 935.5,
+          "width": 75.05
+        },
+        {
+          "x": 1360.1,
+          "y": 924.82,
+          "width": 49.75
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "blind-dog",
+      "imageSize": [
+        1611,
+        976
+      ],
+      "sourceBounds": [
+        32,
+        87,
+        1597,
+        921
+      ],
+      "transparentFraction": 0.63,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.29,
+      "sceneBounds": [
+        975.34,
+        696.98,
+        1431.92,
+        940.29
+      ],
+      "sceneHeight": 243.31,
+      "sceneWidth": 456.58,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1119.17,
+          "y": 938.25,
+          "width": 55.43
+        },
+        {
+          "x": 1317.55,
+          "y": 937.96,
+          "width": 62.73
+        },
+        {
+          "x": 1084.74,
+          "y": 930.37,
+          "width": 53.97
+        },
+        {
+          "x": 1389.03,
+          "y": 929.21,
+          "width": 45.22
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "bloodsucker",
+      "imageSize": [
+        1297,
+        1212
+      ],
+      "sourceBounds": [
+        75,
+        16,
+        1215,
+        1180
+      ],
+      "transparentFraction": 0.71,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.56,
+      "sceneBounds": [
+        811.7,
+        290.56,
+        1448.3,
+        940.56
+      ],
+      "sceneHeight": 650,
+      "sceneWidth": 636.6,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1113.25,
+          "y": 934.97,
+          "width": 167.53
+        },
+        {
+          "x": 1371.24,
+          "y": 940.56,
+          "width": 161.94
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "boar",
+      "imageSize": [
+        1795,
+        876
+      ],
+      "sourceBounds": [
+        90,
+        3,
+        1721,
+        861
+      ],
+      "transparentFraction": 0.43,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.39,
+      "sceneBounds": [
+        841.59,
+        605.39,
+        1478.41,
+        940.39
+      ],
+      "sceneHeight": 335,
+      "sceneWidth": 636.82,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 984.89,
+          "y": 934.53,
+          "width": 49.98
+        },
+        {
+          "x": 1077.03,
+          "y": 939.61,
+          "width": 55.44
+        },
+        {
+          "x": 1308.17,
+          "y": 933.75,
+          "width": 53.88
+        },
+        {
+          "x": 1439.75,
+          "y": 940,
+          "width": 61.69
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "burer",
+      "imageSize": [
+        1349,
+        1166
+      ],
+      "sourceBounds": [
+        33,
+        31,
+        1316,
+        1135
+      ],
+      "transparentFraction": 0.56,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.35,
+      "sceneBounds": [
+        977.5,
+        555.71,
+        1424.5,
+        940.35
+      ],
+      "sceneHeight": 384.64,
+      "sceneWidth": 447,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1190.72,
+          "y": 929.2,
+          "width": 94.07
+        },
+        {
+          "x": 1378.86,
+          "y": 940.35,
+          "width": 90.59
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "chernobyl-dog",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        11,
+        60,
+        1523,
+        983
+      ],
+      "transparentFraction": 0.51,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.3,
+      "sceneBounds": [
+        979.27,
+        666.28,
+        1428.14,
+        940.3
+      ],
+      "sceneHeight": 274.02,
+      "sceneWidth": 448.87,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1083.77,
+          "y": 936.73,
+          "width": 137.75
+        },
+        {
+          "x": 1345.61,
+          "y": 929.31,
+          "width": 66.2
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "chimera",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        46,
+        34,
+        1516,
+        987
+      ],
+      "transparentFraction": 0.51,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.55,
+      "sceneBounds": [
+        695.09,
+        415.55,
+        1504.91,
+        940.55
+      ],
+      "sceneHeight": 525,
+      "sceneWidth": 809.82,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 805.27,
+          "y": 920.72,
+          "width": 225.31
+        },
+        {
+          "x": 928.67,
+          "y": 938.9,
+          "width": 220.36
+        },
+        {
+          "x": 1210.73,
+          "y": 912.46,
+          "width": 169.12
+        },
+        {
+          "x": 1418.42,
+          "y": 933.94,
+          "width": 174.63
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "chupacabra",
+      "imageSize": [
+        1774,
+        887
+      ],
+      "sourceBounds": [
+        31,
+        83,
+        1749,
+        841
+      ],
+      "transparentFraction": 0.63,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.26,
+      "sceneBounds": [
+        974.21,
+        739.44,
+        1429.38,
+        940.26
+      ],
+      "sceneHeight": 200.82,
+      "sceneWidth": 455.17,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1055.28,
+          "y": 934.44,
+          "width": 58.02
+        },
+        {
+          "x": 1120.99,
+          "y": 939.74,
+          "width": 58.29
+        },
+        {
+          "x": 1235.71,
+          "y": 934.44,
+          "width": 55.37
+        },
+        {
+          "x": 1338.5,
+          "y": 939.21,
+          "width": 56.17
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "controller",
+      "imageSize": [
+        1223,
+        1286
+      ],
+      "sourceBounds": [
+        76,
+        32,
+        1193,
+        1267
+      ],
+      "transparentFraction": 0.69,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.53,
+      "sceneBounds": [
+        841.53,
+        280.53,
+        1438.47,
+        940.53
+      ],
+      "sceneHeight": 660,
+      "sceneWidth": 596.94,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1170.73,
+          "y": 910.07,
+          "width": 146.96
+        },
+        {
+          "x": 1385.56,
+          "y": 938.93,
+          "width": 117.57
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "electrochimera",
+      "imageSize": [
+        1526,
+        1031
+      ],
+      "sourceBounds": [
+        26,
+        32,
+        1502,
+        1015
+      ],
+      "transparentFraction": 0.52,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.53,
+      "sceneBounds": [
+        705.85,
+        415.53,
+        1494.15,
+        940.53
+      ],
+      "sceneHeight": 525,
+      "sceneWidth": 788.3,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 873.55,
+          "y": 934.66,
+          "width": 234.99
+        },
+        {
+          "x": 1396.95,
+          "y": 934.66,
+          "width": 174.64
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "fire-poltergeist",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        30,
+        14,
+        1518,
+        994
+      ],
+      "transparentFraction": 0.68,
+      "floating": true,
+      "grounded": false,
+      "scale": 0.29,
+      "sceneBounds": [
+        984.79,
+        509.1,
+        1420.73,
+        796.21
+      ],
+      "sceneHeight": 287.11,
+      "sceneWidth": 435.94,
+      "overlapPixels": 0,
+      "feet": [],
+      "clippedInScene": false
+    },
+    {
+      "id": "flesh",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        33,
+        42,
+        1516,
+        985
+      ],
+      "transparentFraction": 0.43,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.31,
+      "sceneBounds": [
+        966.31,
+        645.63,
+        1429.75,
+        940.31
+      ],
+      "sceneHeight": 294.68,
+      "sceneWidth": 463.44,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1015.38,
+          "y": 933.13,
+          "width": 63.75
+        },
+        {
+          "x": 1104.44,
+          "y": 939.38,
+          "width": 73.44
+        },
+        {
+          "x": 1270.06,
+          "y": 931.88,
+          "width": 60.63
+        },
+        {
+          "x": 1395.06,
+          "y": 938.75,
+          "width": 65.63
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "fracture",
+      "imageSize": [
+        1375,
+        1144
+      ],
+      "sourceBounds": [
+        271,
+        32,
+        1294,
+        1102
+      ],
+      "transparentFraction": 0.69,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.6,
+      "sceneBounds": [
+        834.06,
+        300.6,
+        1445.94,
+        940.6
+      ],
+      "sceneHeight": 640,
+      "sceneWidth": 611.88,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 959.07,
+          "y": 942.99,
+          "width": 179.44
+        },
+        {
+          "x": 1383.74,
+          "y": 938.21,
+          "width": 125.61
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "hinge",
+      "imageSize": [
+        1402,
+        1122
+      ],
+      "sourceBounds": [
+        103,
+        13,
+        1373,
+        1109
+      ],
+      "transparentFraction": 0.59,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.58,
+      "sceneBounds": [
+        749.2,
+        300.58,
+        1490.8,
+        940.58
+      ],
+      "sceneHeight": 640,
+      "sceneWidth": 741.6,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1108.32,
+          "y": 904.38,
+          "width": 216.06
+        },
+        {
+          "x": 1413.14,
+          "y": 940,
+          "width": 169.34
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "isotope",
+      "imageSize": [
+        1774,
+        887
+      ],
+      "sourceBounds": [
+        15,
+        41,
+        1755,
+        859
+      ],
+      "transparentFraction": 0.49,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.28,
+      "sceneBounds": [
+        955.19,
+        712.03,
+        1440.7,
+        940.28
+      ],
+      "sceneHeight": 228.25,
+      "sceneWidth": 485.51,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1015.18,
+          "y": 935.54,
+          "width": 90.68
+        },
+        {
+          "x": 1144.93,
+          "y": 940,
+          "width": 96.82
+        },
+        {
+          "x": 1230.03,
+          "y": 930.51,
+          "width": 78.13
+        },
+        {
+          "x": 1340.25,
+          "y": 934.98,
+          "width": 78.69
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "krakozyabra",
+      "imageSize": [
+        1619,
+        971
+      ],
+      "sourceBounds": [
+        32,
+        14,
+        1600,
+        957
+      ],
+      "transparentFraction": 0.53,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.29,
+      "sceneBounds": [
+        975.29,
+        666.53,
+        1430.48,
+        940.29
+      ],
+      "sceneHeight": 273.76,
+      "sceneWidth": 455.19,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1061.8,
+          "y": 934.19,
+          "width": 79.25
+        },
+        {
+          "x": 1119.86,
+          "y": 939.71,
+          "width": 83.32
+        },
+        {
+          "x": 1269.37,
+          "y": 928.97,
+          "width": 69.67
+        },
+        {
+          "x": 1364,
+          "y": 937.39,
+          "width": 61.54
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "lynx",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        49,
+        53,
+        1506,
+        970
+      ],
+      "transparentFraction": 0.49,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.31,
+      "sceneBounds": [
+        980.99,
+        659.71,
+        1426.82,
+        940.31
+      ],
+      "sceneHeight": 280.6,
+      "sceneWidth": 445.83,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1057.8,
+          "y": 937.25,
+          "width": 68.85
+        },
+        {
+          "x": 1135.52,
+          "y": 940,
+          "width": 67.32
+        },
+        {
+          "x": 1266.48,
+          "y": 936.02,
+          "width": 70.38
+        },
+        {
+          "x": 1394.69,
+          "y": 939.69,
+          "width": 64.26
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "moose",
+      "imageSize": [
+        1312,
+        1199
+      ],
+      "sourceBounds": [
+        14,
+        8,
+        1306,
+        1184
+      ],
+      "transparentFraction": 0.58,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.66,
+      "sceneBounds": [
+        651.53,
+        160.66,
+        1508.47,
+        940.66
+      ],
+      "sceneHeight": 780,
+      "sceneWidth": 856.94,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 913.52,
+          "y": 930.05,
+          "width": 100.82
+        },
+        {
+          "x": 1119.8,
+          "y": 938.01,
+          "width": 73.62
+        },
+        {
+          "x": 1282.3,
+          "y": 929.39,
+          "width": 76.28
+        },
+        {
+          "x": 1456.07,
+          "y": 934.69,
+          "width": 69.64
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "observer",
+      "imageSize": [
+        1199,
+        1312
+      ],
+      "sourceBounds": [
+        411,
+        24,
+        850,
+        1282
+      ],
+      "transparentFraction": 0.85,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.52,
+      "sceneBounds": [
+        1086.59,
+        290.52,
+        1313.41,
+        940.52
+      ],
+      "sceneHeight": 650,
+      "sceneWidth": 226.82,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1148.85,
+          "y": 925.02,
+          "width": 125.04
+        },
+        {
+          "x": 1259.94,
+          "y": 940,
+          "width": 106.44
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "owl",
+      "imageSize": [
+        1145,
+        1374
+      ],
+      "sourceBounds": [
+        32,
+        20,
+        1118,
+        1361
+      ],
+      "transparentFraction": 0.6,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.48,
+      "sceneBounds": [
+        886.8,
+        290.48,
+        1413.2,
+        940.48
+      ],
+      "sceneHeight": 650,
+      "sceneWidth": 526.4,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1105.89,
+          "y": 927.4,
+          "width": 189.52
+        },
+        {
+          "x": 1331.04,
+          "y": 940,
+          "width": 159.96
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "poltergeist",
+      "imageSize": [
+        1326,
+        1187
+      ],
+      "sourceBounds": [
+        32,
+        71,
+        1308,
+        1117
+      ],
+      "transparentFraction": 0.71,
+      "floating": true,
+      "grounded": false,
+      "scale": 0.34,
+      "sceneBounds": [
+        986.86,
+        426.27,
+        1419.89,
+        781.24
+      ],
+      "sceneHeight": 354.97,
+      "sceneWidth": 433.03,
+      "overlapPixels": 0,
+      "feet": [],
+      "clippedInScene": false
+    },
+    {
+      "id": "pseudodog",
+      "imageSize": [
+        1701,
+        925
+      ],
+      "sourceBounds": [
+        39,
+        14,
+        1684,
+        896
+      ],
+      "transparentFraction": 0.49,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.28,
+      "sceneBounds": [
+        976.78,
+        696.57,
+        1431.3,
+        940.28
+      ],
+      "sceneHeight": 243.71,
+      "sceneWidth": 454.52,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1024.3,
+          "y": 929.78,
+          "width": 59.96
+        },
+        {
+          "x": 1117.97,
+          "y": 938.89,
+          "width": 56.64
+        },
+        {
+          "x": 1246.73,
+          "y": 929.22,
+          "width": 54.99
+        },
+        {
+          "x": 1364.44,
+          "y": 933.64,
+          "width": 40.06
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "pseudogiant",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        58,
+        38,
+        1475,
+        985
+      ],
+      "transparentFraction": 0.51,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.62,
+      "sceneBounds": [
+        648.66,
+        355.62,
+        1524,
+        940.62
+      ],
+      "sceneHeight": 585,
+      "sceneWidth": 875.34,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 794.45,
+          "y": 933.2,
+          "width": 308.87
+        },
+        {
+          "x": 1412.81,
+          "y": 938.76,
+          "width": 237.83
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "psydog",
+      "imageSize": [
+        1701,
+        925
+      ],
+      "sourceBounds": [
+        24,
+        13,
+        1691,
+        907
+      ],
+      "transparentFraction": 0.46,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.28,
+      "sceneBounds": [
+        972.63,
+        693.26,
+        1433.24,
+        940.28
+      ],
+      "sceneHeight": 247.02,
+      "sceneWidth": 460.61,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1025.68,
+          "y": 929.78,
+          "width": 61.62
+        },
+        {
+          "x": 1103.33,
+          "y": 938.34,
+          "width": 73.22
+        },
+        {
+          "x": 1268,
+          "y": 928.12,
+          "width": 57.75
+        },
+        {
+          "x": 1368.58,
+          "y": 938.34,
+          "width": 61.06
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "snork",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        33,
+        31,
+        1505,
+        992
+      ],
+      "transparentFraction": 0.53,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.31,
+      "sceneBounds": [
+        976.1,
+        646.25,
+        1426.51,
+        940.31
+      ],
+      "sceneHeight": 294.06,
+      "sceneWidth": 450.41,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1117.46,
+          "y": 940,
+          "width": 107.1
+        },
+        {
+          "x": 1027.5,
+          "y": 925.01,
+          "width": 100.98
+        },
+        {
+          "x": 1241.08,
+          "y": 911.85,
+          "width": 104.34
+        },
+        {
+          "x": 1378.47,
+          "y": 932.04,
+          "width": 104.95
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "stregun",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        33,
+        137,
+        1502,
+        898
+      ],
+      "transparentFraction": 0.59,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.31,
+      "sceneBounds": [
+        976.1,
+        707.45,
+        1425.6,
+        940.31
+      ],
+      "sceneHeight": 232.86,
+      "sceneWidth": 449.5,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1170.1,
+          "y": 935.41,
+          "width": 53.24
+        },
+        {
+          "x": 1266.79,
+          "y": 939.69,
+          "width": 59.97
+        },
+        {
+          "x": 1322.17,
+          "y": 931.74,
+          "width": 50.79
+        },
+        {
+          "x": 1384.9,
+          "y": 939.39,
+          "width": 67.32
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "stronglav",
+      "imageSize": [
+        1254,
+        1254
+      ],
+      "sourceBounds": [
+        154,
+        32,
+        1181,
+        1221
+      ],
+      "transparentFraction": 0.6,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.61,
+      "sceneBounds": [
+        819.05,
+        220.61,
+        1440.95,
+        940.61
+      ],
+      "sceneHeight": 720,
+      "sceneWidth": 621.9,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1144.53,
+          "y": 907.3,
+          "width": 224.05
+        },
+        {
+          "x": 1352.84,
+          "y": 940,
+          "width": 175.61
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "tushkan",
+      "imageSize": [
+        1536,
+        1024
+      ],
+      "sourceBounds": [
+        28,
+        21,
+        1528,
+        1006
+      ],
+      "transparentFraction": 0.69,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.17,
+      "sceneBounds": [
+        1110.65,
+        776.64,
+        1359.67,
+        940.17
+      ],
+      "sceneHeight": 163.53,
+      "sceneWidth": 249.02,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1155.8,
+          "y": 937.51,
+          "width": 39.84
+        },
+        {
+          "x": 1298.25,
+          "y": 938.84,
+          "width": 41.5
+        },
+        {
+          "x": 1132.4,
+          "y": 928.54,
+          "width": 24.9
+        },
+        {
+          "x": 1230.68,
+          "y": 926.72,
+          "width": 35.69
+        }
+      ],
+      "clippedInScene": false
+    },
+    {
+      "id": "zombie",
+      "imageSize": [
+        1024,
+        1536
+      ],
+      "sourceBounds": [
+        27,
+        42,
+        1016,
+        1491
+      ],
+      "transparentFraction": 0.69,
+      "floating": false,
+      "grounded": true,
+      "scale": 0.45,
+      "sceneBounds": [
+        948.17,
+        290.45,
+        1391.83,
+        940.45
+      ],
+      "sceneHeight": 650,
+      "sceneWidth": 443.66,
+      "overlapPixels": 0,
+      "feet": [
+        {
+          "x": 1151.38,
+          "y": 938.65,
+          "width": 125.6
+        },
+        {
+          "x": 1339.79,
+          "y": 923.85,
+          "width": 103.17
+        }
+      ],
+      "clippedInScene": false
+    }
+  ],
+  "visualReview": {
+    "status": "passed",
+    "reviewedAll29": true,
+    "facing": "All mutant heads face left toward the player",
+    "alpha": "No rectangular backgrounds or visible halos in composed scenes",
+    "ground": "27 grounded species remain on floor940; two poltergeists retain hovering placement",
+    "scale": "13 per-species fit adjustments verified; humanoids 640–660px, stronglav720px, pseudogiant875×585px, moose857×780px, chimeras525px high, boar335px high",
+    "collisionPixels": 0,
+    "clippedSpecies": 0,
+    "horizontalBounds": "Every visible sprite remains within x590–1525; nearestx648.66, rightmost1524"
+  },
+  "verification": "Canvas composition using the actual game layout, manifest, player assets and two environment backgrounds; static pose."
+}

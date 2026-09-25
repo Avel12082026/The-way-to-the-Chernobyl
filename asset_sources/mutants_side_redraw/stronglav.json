@@ -1,0 +1,15 @@
+{
+  "id": "stronglav",
+  "source": "images/combat/mutants/stronglav.png",
+  "output": "images/combat/mutants-side/stronglav.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent full-body enemy sprite for a 2D side-view post-apocalyptic game.\nInput image: creature design/reference only. Redraw the SAME custom Stronglav mutant from scratch viewed from an entirely NEW side angle. Required strict 90-degree LEFT-facing profile: chest, hips, limbs and head face LEFT; camera sees the creature's left flank, ONE visible eye looking horizontally to LEFT edge toward the unseen opponent. No looking at camera and no frontal or three-quarter head.\nPreserve reference identity: huge bulky powerful bald hunchback humanoid with brown gray ridged scarred leathery wet skin, oversized shoulder muscles and forward-hunched neck, pale predatory eye and pointed ear, numerous long thick tapering fleshy tentacles flowing downward from its mouth, elongated arms ending in four thick clawed fingers, muscular bent legs and three prominent heavy clawed toes. Tentacle mouth is clearly visible protruding from the LEFT of the head in profile. No clothing, no weapons. Compact aggressive grounded stalking combat posture, both feet on SAME horizontal baseline, hands poised toward LEFT.\nGritty realistic 3D game creature art matching reference's texture and neutral brown palette; readable shape at game scale. Single creature isolated with actual alpha transparency, no painted background, floor or cast shadow. Full silhouette including tentacle tips, claws and feet inside frame, 8% transparent margin. Nothing clipped. No text, labels, watermark, extra creatures. This must be a fresh SIDE redraw, never a horizontal flip of the original.",
+  "generation": "built-in image_gen",
+  "visualQA": "passed: newly drawn left-facing hunchback, one visible eye directed left, reference mouth tentacles and muscular anatomy retained, full unclipped silhouette",
+  "floating": false,
+  "fit": {
+    "x": 229.79479,
+    "y": 180.63919,
+    "width": 759.36081,
+    "height": 759.36081
+  }
+}

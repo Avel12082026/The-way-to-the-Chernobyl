@@ -1,0 +1,36 @@
+{
+  "id": "bayun",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-ef264ae8-c265-47db-ba15-ab112b12f473.png",
+  "prompt": "Use case: stylized-concept. Create a NEW realistic game enemy sprite, STALKER 2 BAYUN mutant cat, using attached artwork strictly as design reference. Preserve mutant CAT identity: small pointed damaged cat ears, shortened feline muzzle, feline angular skull, harsh greenish side-looking eye, enormous snarling teeth, grey mangy skin, patchy ragged dark grey-brown fur along hunched back, elongated skinny legs with cat paws and hooked claws, hanging wrinkled throat skin flaps and paired swollen reddish throat sacks under cheek/neck for voice mimicry, thin long curved cat tail. DO NOT create dog, wolf or sabertooth tiger. NEW pose: strict 90-degree LEFT PROFILE orthographic side view, ALL of head, muzzle and body face LEFT at imagined player, ONLY one side of face and one eye visible, no camera gaze, no three-quarter face. Crouched ready to spring and slash, two front paws supported on the baseline and haunches compressed behind. Four distinct anatomically coherent legs. Entire cat including tail and all paws comfortably inside canvas with transparent margin. Gritty naturalistic painted game sprite with clear texture, neutral diffuse light. Actual clean RGBA transparent background, no ground, no shadow, no glow, no fog, no scenery, no labels or text.",
+  "reference": "https://images.cgames.de/images/gamestar/226/stalker-2-teaser_6190372.jpg",
+  "feet": [
+    {
+      "x": 228,
+      "y": 865,
+      "width": 224
+    },
+    {
+      "x": 406,
+      "y": 894,
+      "width": 228
+    },
+    {
+      "x": 1005,
+      "y": 887,
+      "width": 267
+    },
+    {
+      "x": 1402,
+      "y": 849,
+      "width": 177
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: full body left profile, only near eye, no camera gaze, cat ears/short feline muzzle, ragged coat, throat sacs and flap, four long intact legs and complete tail; actual clean alpha",
+  "groundY": 903,
+  "floating": false,
+  "width": 1672,
+  "height": 941,
+  "alphaZero": 874995,
+  "alphaTotal": 1573352
+}

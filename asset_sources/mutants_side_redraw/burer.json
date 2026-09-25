@@ -1,0 +1,33 @@
+{
+  "id": "burer",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-0abd8eda-cc20-4e7b-8f1e-569ef7c9a8c2.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent enemy sprite for side-view 2D combat. Draw a NEW original realistic Burer mutant based on the attached STALKER 2 screenshot: squat short extremely stocky humanoid, hunched back, deeply wrinkled fleshy face with bulbous nose, large bare hands, worn charcoal-gray hooded long coat, thick fabric folds and ragged hem, stout legs, one bare deformed foot and one battered dark boot. STRICT TRUE LEFT FACING 90 DEGREE PROFILE, like a zoological side elevation: nose points directly to left border, only the left-facing side of face, torso turned fully left, no frontal chest, no eye contact with camera. Burer reaching one broad hand forward to LEFT for a telekinetic attack against a player located offscreen left, second hand by belly, solid weight-bearing stance. Full body including hood and fingers and feet inside frame, 6 percent empty padding. Gritty naturalistic detailed 3D-game render texture, diffuse neutral lighting, drab gray-brown color. Draw only the Burer, do not copy scene or gun or HUD from reference. Genuine clean transparent alpha around full silhouette and between limbs. No opaque or semitransparent background, no brown vignette, no ground, no floor, no cast shadow, no fog or particles, no energy aura, no text, no watermark.",
+  "reference": "https://staticg.sportskeeda.com/editor/2024/11/6d4f8-17327938747418-1920.jpg",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/burer-s2.img",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, face and attack directed left at opponent; no camera gaze; transparent backdrop. Torso shows some three-quarter depth.",
+  "width": 1349,
+  "height": 1166,
+  "groundY": 1135,
+  "feet": [
+    {
+      "x": 645,
+      "y": 1103,
+      "width": 270
+    },
+    {
+      "x": 1185,
+      "y": 1135,
+      "width": 260
+    }
+  ],
+  "floating": false,
+  "alphaZero": 877851,
+  "alphaTotal": 1572934,
+  "alphaBounds": [
+    0,
+    17,
+    1335,
+    1150
+  ]
+}

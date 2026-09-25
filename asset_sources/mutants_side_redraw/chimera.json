@@ -1,0 +1,45 @@
+{
+  "id": "chimera",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-e42d9914-355d-4649-a951-c3788269dcc8.png",
+  "prompt": "Use case: stylized-concept. Create NEW realistic STALKER 2 CHIMERA full body combat sprite, referring to attached image 1 gameplay screenshot for true creature silhouette and image 2 existing game concept for readable close surface detail only. Hairless muscular quadruped mutant, immense hunched shoulders and arched spine, leathery mottled tan-grey brown skin, powerful rear thighs compressed to leap, very long forelimbs ending in huge clawed almost human hands, TWO ASYMMETRICAL HEADS: dominant large broad humanoid bestial head plus smaller atrophied head growing beside it at shoulder/neck. Both heads have short blunt snarling muzzle, sunken eyes, short pointed ears, no horns; no reptile/canine elongated muzzle. STRICT LEFT SIDE PROFILE orthographic view: full body and BOTH heads face LEFT toward imaginary player, each visible eye looks left, never at camera. Position little secondary head just above and behind main head so both left-facing profiles read clearly without rotating toward viewer. Crouched grounded before explosive pounce, all four extremities at same horizontal ground baseline, limbs not airborne. Preserve complete claws, feet, heads, whole body with margin. Gritty naturalistic detailed game art, earthy colors and neutral diffuse light. True transparent RGBA background, only ONE two-headed chimera, no floor, no cast shadow, no dust/fog/glow, no scene, no labels/text, no watermark.",
+  "reference": [
+    "https://staticg.sportskeeda.com/editor/2024/11/e6e27-17327928552180-1920.jpg?w=1045",
+    "images/combat/mutants/chimera.png"
+  ],
+  "feet": [
+    {
+      "x": 246,
+      "y": 951,
+      "width": 409
+    },
+    {
+      "x": 470,
+      "y": 984,
+      "width": 400
+    },
+    {
+      "x": 982,
+      "y": 936,
+      "width": 307
+    },
+    {
+      "x": 1359,
+      "y": 975,
+      "width": 317
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: large main head and smaller secondary head both look left, quadruped body in profile, both one-sided face profiles, crouched before pounce; complete claws and paws, alpha verified outside creature",
+  "groundY": 987,
+  "floating": false,
+  "width": 1536,
+  "height": 1024,
+  "alphaZero": 795839,
+  "alphaTotal": 1572864,
+  "fit": {
+    "x": 173.75341,
+    "y": 375.88667,
+    "width": 846.16999,
+    "height": 564.11333
+  }
+}

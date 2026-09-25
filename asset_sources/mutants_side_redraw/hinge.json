@@ -1,0 +1,39 @@
+{
+  "id": "hinge",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-ffc624ab-a6a4-48fb-96a1-7ced84ae3697.png",
+  "reference": "images/combat/mutants/hinge.png",
+  "prompt": "Use case: stylized-concept. Redraw the original hinge mutant as a new realistic game sprite, preserving its distinguishing appearance from images/combat/mutants/hinge.png. Hunched biped with extremely long clawed arms, thick gray pebbled skin, overlapping dark jagged plates over head, back and forearms, ragged dark waist cloth. Full body standing side profile facing LEFT toward player; head and gaze point left, never into camera. Clean transparent background, no ground, no shadow, no scenery, no lettering, no clipped limbs. Preserve generated alpha.",
+  "promptProvenance": "Reconstructed production specification for recovered generated output; original prior-call wording unavailable.",
+  "generation": "built-in (recovered existing output)",
+  "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+  "width": 1402,
+  "height": 1122,
+  "groundY": 1108,
+  "feet": [
+    {
+      "x": 718,
+      "y": 1047,
+      "width": 370
+    },
+    {
+      "x": 1240,
+      "y": 1108,
+      "width": 290
+    }
+  ],
+  "floating": false,
+  "alphaZero": 930815,
+  "alphaTotal": 1573044,
+  "visibleAlphaBBox": [
+    103,
+    13,
+    1373,
+    1109
+  ],
+  "fit": {
+    "x": 193.05109,
+    "y": 284.81752,
+    "width": 818.68613,
+    "height": 655.18248
+  }
+}

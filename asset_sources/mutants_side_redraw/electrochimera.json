@@ -1,0 +1,43 @@
+{
+  "id": "electrochimera",
+  "source": "images/combat/mutants/electrochimera.png",
+  "output": "images/combat/mutants-side/electrochimera.png",
+  "generatedSource": "/workspace/scratch/77ccd889aecc/generated_images/exec-2c741bba-0102-4c62-9b79-1f4bc5f643ca.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent enemy sprite for side-view combat.\nInput image is appearance reference of our original custom ELECTROCHIMERA mutant. Redraw this creature freshly from a completely new angle: STRICT LEFT-FACING 90 DEGREE SIDE PROFILE. The creature will stand on right and attack player on left. Both heads, snouts, eyes, shoulders, torso and hips all point exactly LEFT; do not look at camera; no front or three-quarter head.\nPreserve the original's distinctive hairless slate gray muscular quadrupedal humanoid monster: enormously raised hunchback shoulder girdle, long powerful front arms with four long splayed hooked claws, muscular bent rear legs with clawed feet, two asymmetrical heads next to each other at front of shoulders, main broad bald humanoid head with pointed ear and open fanged jaw, smaller shrunken skull-like second head leaning down beside it. In strict side profile the smaller far head may peek below the main jaw but BOTH point and snarl LEFT. Preserve cracked pebbly slate gray skin, pale ice blue eyes, tiny blue-white electric vein lines on FOREARMS ONLY (confined within silhouette). No huge lightning effects. No long tail.\nWhole creature shown head to rear toes, lunging crouch ready to spring left; weight supported on visible forward claws and rear feet at same baseline. Entire body lies in picture plane, one side visible. Detailed gritty realistic painted game sprite with neutral light. All claws and head complete, generous clear transparent padding on every side.\nBACKGROUND MUST BE REAL TRANSPARENT ALPHA. Isolated creature only, no floor, no ground, no scenery, no cast shadow, no mist, no glow around edges, no colored backdrop, no checkerboard pattern, no text or watermark.",
+  "generation": "built-in image_gen",
+  "mode": "reference-based new redraw",
+  "visualQA": "passed: all anatomy shown, two heads look left toward player, body oriented left, slate skin and local electricity retained, no environmental shadow",
+  "floating": false,
+  "width": 1526,
+  "height": 1031,
+  "groundY": 1014,
+  "feet": [
+    [
+      340,
+      1004
+    ],
+    [
+      1320,
+      1004
+    ]
+  ],
+  "alphaQA": {
+    "mode": "RGBA",
+    "min": 0,
+    "max": 255,
+    "zeroFraction": 0.5182526476095559,
+    "bboxAlphaGt16": [
+      26,
+      32,
+      1502,
+      1015
+    ],
+    "edgeMax": 1
+  },
+  "fit": {
+    "x": 195.96338,
+    "y": 389.36419,
+    "width": 815.00509,
+    "height": 550.63581
+  }
+}

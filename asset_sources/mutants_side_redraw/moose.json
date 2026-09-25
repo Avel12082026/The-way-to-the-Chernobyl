@@ -1,0 +1,45 @@
+{
+  "id": "moose",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-604213f6-eb42-43cb-83c5-c71a7859d735.png",
+  "prompt": "Use case: stylized-concept. Draw a NEW own full-body game sprite of the mutated ELK/MOOSE from STALKER 2 as shown in reference1 concept and reference2 gameplay. Signature enormous jagged broad palmated antlers, cloven hooves, dark coarse patchy fur and rough lumpy bony stone-like armored growths across shoulders/flanks. Retain this exact species' shape and details. Completely NEW STRICT 90-DEGREE LEFT-facing SIDE PROFILE: nose directly LEFT, entire neck and body side-on, one near eye visible, not turned toward camera. Ready to charge the player to its left with head slightly lowered but all antler tips visible. Four hoofed legs fully visible, planted at one ground baseline. Tail and all antlers/hooves uncut with comfortable 8% margin. Gritty naturalistic detailed realistic illustration for game sprite, neutral diffuse lighting. One creature only. Actual TRANSPARENT RGBA background, no scenery, no floor, no ground shadow, no mist, no labels/logo. Do not reuse the frontal reference composition.",
+  "references": [
+    "https://pics.alphacoders.com/pictures/view/653931",
+    "https://vgtimes.ru/guides/119097-gayd-po-monstram-mutantam-v-s.t.a.l.k.e.r.-2-heart-of-chornobyl-i-kak-ih-ubit.html"
+  ],
+  "feet": [
+    {
+      "x": 409,
+      "y": 1168,
+      "width": 152
+    },
+    {
+      "x": 720,
+      "y": 1180,
+      "width": 111
+    },
+    {
+      "x": 965,
+      "y": 1167,
+      "width": 115
+    },
+    {
+      "x": 1227,
+      "y": 1175,
+      "width": 105
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: side profile left, no gaze at camera",
+  "width": 1312,
+  "height": 1199,
+  "groundY": 1183,
+  "floating": false,
+  "alphaZero": 913377,
+  "alphaTotal": 1573088,
+  "fit": {
+    "x": 146.2449,
+    "y": 144.7449,
+    "width": 870.20408,
+    "height": 795.2551
+  }
+}

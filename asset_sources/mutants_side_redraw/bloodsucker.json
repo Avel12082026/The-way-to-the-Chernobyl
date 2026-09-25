@@ -1,0 +1,39 @@
+{
+  "id": "bloodsucker",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-94ba1a4c-8fe2-4cdc-8cdb-2af297c1b4b0.png",
+  "prompt": "Use case: stylized-concept. Create ONE NEW realistic game combat sprite of the S.T.A.L.K.E.R. 2 Bloodsucker using attached model-view sheet for identity. Preserve its exact recognizable proportions: tall lean powerful humanoid, pale gray-green scarred leathery skin, elongated bald forehead, small recessed dark eye, mouth fringed by four long narrow fleshy tentacles hanging to upper chest, broad shoulders but lean waist, long clawed humanlike hands, muscular bent human legs and elongated bare feet. No genitals, no sexual anatomy. Rebuild anatomy in TRUE STRICT 90-DEGREE LEFT SIDE PROFILE for side-scroller combat. See ONLY the left-facing side of the head and body, ONE eye; forehead and tentacled mouth point exactly horizontally LEFT toward player offscreen left. Shoulders overlap as seen directly from side; do not show broad front chest or both pectorals. Near claw arm raised forwards LEFT ready to slash, far arm behind it. Knees bent in stalking stance and both feet pointing LEFT with soles at same baseline. Whole creature from top of skull through tentacle tips, fingertips and toes must be uncut with comfortable 8% empty margin. Original detailed gritty realistic 3D-game render, soft neutral diffuse illumination, muted natural colors matching reference. Genuine completely transparent alpha background and clean anti-aliased edges, including gaps between tentacles and arms. Only ONE creature, do not reproduce the three reference views. No background black or brown, no vignette, floor, shadow, ground, mist, scenery, particles, writing, watermark or borders.",
+  "reference": "https://vgtimes.ru/guides/119097-gayd-po-monstram-mutantam-v-s.t.a.l.k.e.r.-2-heart-of-chornobyl-i-kak-ih-ubit.html",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/bloodsucker-s2.img",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, side-directed face and attack left, no camera gaze, transparent backdrop; torso has slight depth.",
+  "width": 1297,
+  "height": 1212,
+  "groundY": 1180,
+  "feet": [
+    {
+      "x": 615,
+      "y": 1170,
+      "width": 300
+    },
+    {
+      "x": 1077,
+      "y": 1180,
+      "width": 290
+    }
+  ],
+  "floating": false,
+  "alphaZero": 1110439,
+  "alphaTotal": 1571964,
+  "alphaBounds": [
+    0,
+    12,
+    1283,
+    1212
+  ],
+  "fit": {
+    "x": 273.81959,
+    "y": 263.19588,
+    "width": 724.26976,
+    "height": 676.80412
+  }
+}

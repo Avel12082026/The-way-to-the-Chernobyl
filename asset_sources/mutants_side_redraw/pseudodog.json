@@ -1,0 +1,36 @@
+{
+  "id": "pseudodog",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-e7c6b85f-2c23-44fb-8360-0b46d3f3a396.png",
+  "prompt": "Use case: stylized-concept. NEW original full-body realistic game sprite of STALKER 2 PSEUDODOG, attached image is appearance reference ONLY. Mutated wolf-like canine, stout muscular shoulders, hunched back, thick shaggy grey-brown dirty fur mane with patchy scars, short broad wrinkled snarl muzzle rather than normal long dog snout, small pointed dog ears, fierce natural side-looking eye, heavy jaws with irregular sharp teeth, strong clawed canine paws, bushy ragged long hanging tail. Keep recognisable pseudo-dog features from reference; do not copy pose. STRICT 90-DEGREE LEFT SIDE PROFILE orthographic side view, head and full body face LEFT toward imaginary player, only ONE visible eye and one side of muzzle, no camera-facing nostrils, no gaze at viewer, NO three-quarter view. Low braced predatory stalking combat stance preparing a bite lunge, all four paws grounded along horizontal baseline, full body and tail uncut with margin. Gritty naturalistic game art, diffuse neutral light, readable textured fur. Actual transparent RGBA background, one animal only, no ground or shadow, no fog/glow, no scene, no text/watermarks.",
+  "reference": "https://api.cybersportscore.com/media/news/n64050.jpeg",
+  "feet": [
+    {
+      "x": 211,
+      "y": 858,
+      "width": 217
+    },
+    {
+      "x": 550,
+      "y": 891,
+      "width": 205
+    },
+    {
+      "x": 1016,
+      "y": 856,
+      "width": 199
+    },
+    {
+      "x": 1442,
+      "y": 872,
+      "width": 145
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: whole body in left-facing combat profile, one visible eye looking left, pseudo-dog heavy shoulder mane and snarl preserved; four intact paws, full tail, actual alpha",
+  "groundY": 896,
+  "floating": false,
+  "width": 1701,
+  "height": 925,
+  "alphaZero": 769461,
+  "alphaTotal": 1573425
+}

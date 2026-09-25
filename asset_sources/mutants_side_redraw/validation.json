@@ -1,0 +1,2365 @@
+{
+  "version": "mutants-side-20260925-v1",
+  "complete": true,
+  "counts": {
+    "catalogSpecies": 29,
+    "catalogEntries": 57,
+    "validatedSpecies": 29,
+    "coveredEntries": 57,
+    "pendingSpecies": 0,
+    "errors": 0
+  },
+  "sharedSpeciesImages": true,
+  "pendingCatalogSpecies": [],
+  "pendingCatalogEntries": [],
+  "errors": [],
+  "species": {
+    "tushkan": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 1005,
+      "visibleAlphaBBox": [
+        28,
+        21,
+        1528,
+        1006
+      ],
+      "bottomGroups": [
+        {
+          "x": 269.0,
+          "y": 1003,
+          "width": 163
+        },
+        {
+          "x": 1158.0,
+          "y": 1005,
+          "width": 255
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 195.0,
+          "y": 946,
+          "width": 217
+        },
+        {
+          "x": 334.5,
+          "y": 1003,
+          "width": 294
+        },
+        {
+          "x": 1158.0,
+          "y": 1005,
+          "width": 255
+        }
+      ],
+      "alphaZeroFraction": 0.687707,
+      "alphaVisibleFraction": 0.26913,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 1005,
+        "feet": [
+          {
+            "x": 300,
+            "y": 990,
+            "width": 240
+          },
+          {
+            "x": 1158,
+            "y": 998,
+            "width": 250
+          },
+          {
+            "x": 159,
+            "y": 936,
+            "width": 150
+          },
+          {
+            "x": 751,
+            "y": 925,
+            "width": 215
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body side profile left, no gaze at camera",
+      "metadata": "asset_sources/mutants_side_redraw/tushkan.json"
+    },
+    "blind-dog": {
+      "width": 1611,
+      "height": 976,
+      "groundY": 920,
+      "visibleAlphaBBox": [
+        32,
+        87,
+        1597,
+        921
+      ],
+      "bottomGroups": [
+        {
+          "x": 476.5,
+          "y": 920,
+          "width": 282
+        },
+        {
+          "x": 1219.0,
+          "y": 916,
+          "width": 173
+        },
+        {
+          "x": 1448.0,
+          "y": 890,
+          "width": 147
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 446.5,
+          "y": 893,
+          "width": 222
+        },
+        {
+          "x": 560.0,
+          "y": 920,
+          "width": 199
+        },
+        {
+          "x": 1250.5,
+          "y": 916,
+          "width": 236
+        },
+        {
+          "x": 1451.5,
+          "y": 890,
+          "width": 154
+        }
+      ],
+      "alphaZeroFraction": 0.629542,
+      "alphaVisibleFraction": 0.348403,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1611,
+        "height": 976,
+        "groundY": 920,
+        "feet": [
+          {
+            "x": 525,
+            "y": 914,
+            "width": 190
+          },
+          {
+            "x": 1205,
+            "y": 913,
+            "width": 215
+          },
+          {
+            "x": 407,
+            "y": 887,
+            "width": 185
+          },
+          {
+            "x": 1450,
+            "y": 883,
+            "width": 155
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body side profile left, no gaze at camera",
+      "metadata": "asset_sources/mutants_side_redraw/blind-dog.json"
+    },
+    "chernobyl-dog": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 982,
+      "visibleAlphaBBox": [
+        11,
+        60,
+        1523,
+        983
+      ],
+      "bottomGroups": [
+        {
+          "x": 177.5,
+          "y": 933,
+          "width": 20
+        },
+        {
+          "x": 402.0,
+          "y": 982,
+          "width": 261
+        },
+        {
+          "x": 1144.0,
+          "y": 932,
+          "width": 17
+        },
+        {
+          "x": 1269.5,
+          "y": 950,
+          "width": 158
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 316.5,
+          "y": 982,
+          "width": 464
+        },
+        {
+          "x": 1246.0,
+          "y": 950,
+          "width": 223
+        }
+      ],
+      "alphaZeroFraction": 0.51107,
+      "alphaVisibleFraction": 0.463711,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 982,
+        "feet": [
+          {
+            "x": 363,
+            "y": 971,
+            "width": 464
+          },
+          {
+            "x": 1245,
+            "y": 946,
+            "width": 223
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed visual identity and leftward head/body/gaze; full tail, ears and claws present. Alpha checked; actual canvas compositing QA pending root.",
+      "metadata": "asset_sources/mutants_side_redraw/chernobyl-dog.json"
+    },
+    "krakozyabra": {
+      "width": 1619,
+      "height": 971,
+      "groundY": 956,
+      "visibleAlphaBBox": [
+        32,
+        14,
+        1600,
+        957
+      ],
+      "bottomGroups": [
+        {
+          "x": 406.0,
+          "y": 956,
+          "width": 437
+        },
+        {
+          "x": 1033.0,
+          "y": 924,
+          "width": 207
+        },
+        {
+          "x": 1363.5,
+          "y": 948,
+          "width": 174
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 422.5,
+          "y": 956,
+          "width": 470
+        },
+        {
+          "x": 1049.5,
+          "y": 924,
+          "width": 240
+        },
+        {
+          "x": 1377.0,
+          "y": 948,
+          "width": 201
+        }
+      ],
+      "alphaZeroFraction": 0.534578,
+      "alphaVisibleFraction": 0.422921,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1619,
+        "height": 971,
+        "groundY": 956,
+        "feet": [
+          {
+            "x": 330,
+            "y": 936,
+            "width": 273
+          },
+          {
+            "x": 530,
+            "y": 955,
+            "width": 287
+          },
+          {
+            "x": 1045,
+            "y": 918,
+            "width": 240
+          },
+          {
+            "x": 1371,
+            "y": 947,
+            "width": 212
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/krakozyabra.json"
+    },
+    "flesh": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 984,
+      "visibleAlphaBBox": [
+        33,
+        41,
+        1516,
+        985
+      ],
+      "bottomGroups": [
+        {
+          "x": 168.0,
+          "y": 962,
+          "width": 173
+        },
+        {
+          "x": 458.5,
+          "y": 984,
+          "width": 194
+        },
+        {
+          "x": 983.5,
+          "y": 961,
+          "width": 138
+        },
+        {
+          "x": 1398.5,
+          "y": 979,
+          "width": 154
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 203.5,
+          "y": 962,
+          "width": 244
+        },
+        {
+          "x": 482.0,
+          "y": 984,
+          "width": 241
+        },
+        {
+          "x": 1022.0,
+          "y": 961,
+          "width": 215
+        },
+        {
+          "x": 1410.5,
+          "y": 979,
+          "width": 178
+        }
+      ],
+      "alphaZeroFraction": 0.429492,
+      "alphaVisibleFraction": 0.547169,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 984,
+        "feet": [
+          {
+            "x": 190,
+            "y": 962,
+            "width": 204
+          },
+          {
+            "x": 475,
+            "y": 982,
+            "width": 235
+          },
+          {
+            "x": 1005,
+            "y": 958,
+            "width": 194
+          },
+          {
+            "x": 1405,
+            "y": 980,
+            "width": 210
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body left-facing profile, one eye and one side of muzzle visible, no camera gaze, S2 swollen scarred pig-like flesh with pointed heavy hooves. Apparent brown RGB outside creature confirmed alpha zero. No scenery/shadow; all four hooves fully visible.",
+      "metadata": "asset_sources/mutants_side_redraw/flesh.json"
+    },
+    "boar": {
+      "width": 1795,
+      "height": 876,
+      "groundY": 860,
+      "visibleAlphaBBox": [
+        90,
+        3,
+        1721,
+        861
+      ],
+      "bottomGroups": [
+        {
+          "x": 488.5,
+          "y": 845,
+          "width": 180
+        },
+        {
+          "x": 708.5,
+          "y": 860,
+          "width": 190
+        },
+        {
+          "x": 1302.0,
+          "y": 844,
+          "width": 157
+        },
+        {
+          "x": 1634.0,
+          "y": 858,
+          "width": 159
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 552.0,
+          "y": 845,
+          "width": 307
+        },
+        {
+          "x": 765.5,
+          "y": 860,
+          "width": 304
+        },
+        {
+          "x": 1337.0,
+          "y": 844,
+          "width": 227
+        },
+        {
+          "x": 1637.0,
+          "y": 858,
+          "width": 165
+        }
+      ],
+      "alphaZeroFraction": 0.425155,
+      "alphaVisibleFraction": 0.54635,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 5,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1795,
+        "height": 876,
+        "groundY": 860,
+        "feet": [
+          {
+            "x": 457,
+            "y": 846,
+            "width": 128
+          },
+          {
+            "x": 693,
+            "y": 859,
+            "width": 142
+          },
+          {
+            "x": 1285,
+            "y": 844,
+            "width": 138
+          },
+          {
+            "x": 1622,
+            "y": 860,
+            "width": 158
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body left profile, one visible eye looking left, no camera gaze, characteristic boar muzzle tusks and coarse fur, four unclipped hooves, actual alpha transparency, no scenery or shadow",
+      "metadata": "asset_sources/mutants_side_redraw/boar.json"
+    },
+    "isotope": {
+      "width": 1774,
+      "height": 887,
+      "groundY": 858,
+      "visibleAlphaBBox": [
+        15,
+        41,
+        1755,
+        859
+      ],
+      "bottomGroups": [
+        {
+          "x": 212.5,
+          "y": 843,
+          "width": 294
+        },
+        {
+          "x": 679.0,
+          "y": 858,
+          "width": 317
+        },
+        {
+          "x": 989.0,
+          "y": 826,
+          "width": 249
+        },
+        {
+          "x": 1392.0,
+          "y": 842,
+          "width": 265
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 235.0,
+          "y": 843,
+          "width": 339
+        },
+        {
+          "x": 708.5,
+          "y": 858,
+          "width": 376
+        },
+        {
+          "x": 1001.0,
+          "y": 826,
+          "width": 273
+        },
+        {
+          "x": 1395.0,
+          "y": 842,
+          "width": 271
+        }
+      ],
+      "alphaZeroFraction": 0.487117,
+      "alphaVisibleFraction": 0.497875,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 0,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1774,
+        "height": 887,
+        "groundY": 858,
+        "feet": [
+          {
+            "x": 230,
+            "y": 842,
+            "width": 325
+          },
+          {
+            "x": 695,
+            "y": 858,
+            "width": 347
+          },
+          {
+            "x": 1000,
+            "y": 824,
+            "width": 280
+          },
+          {
+            "x": 1395,
+            "y": 840,
+            "width": 282
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/isotope.json"
+    },
+    "hinge": {
+      "width": 1402,
+      "height": 1122,
+      "groundY": 1108,
+      "visibleAlphaBBox": [
+        103,
+        13,
+        1373,
+        1109
+      ],
+      "bottomGroups": [
+        {
+          "x": 136.5,
+          "y": 1072,
+          "width": 68
+        },
+        {
+          "x": 224.0,
+          "y": 1101,
+          "width": 47
+        },
+        {
+          "x": 355.0,
+          "y": 1074,
+          "width": 53
+        },
+        {
+          "x": 630.0,
+          "y": 1045,
+          "width": 21
+        },
+        {
+          "x": 1228.0,
+          "y": 1108,
+          "width": 289
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 242.0,
+          "y": 1101,
+          "width": 279
+        },
+        {
+          "x": 691.0,
+          "y": 1045,
+          "width": 305
+        },
+        {
+          "x": 1228.0,
+          "y": 1108,
+          "width": 289
+        }
+      ],
+      "alphaZeroFraction": 0.591729,
+      "alphaVisibleFraction": 0.382118,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1402,
+        "height": 1122,
+        "groundY": 1108,
+        "feet": [
+          {
+            "x": 718,
+            "y": 1047,
+            "width": 370
+          },
+          {
+            "x": 1240,
+            "y": 1108,
+            "width": 290
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/hinge.json"
+    },
+    "zombie": {
+      "width": 1024,
+      "height": 1536,
+      "groundY": 1490,
+      "visibleAlphaBBox": [
+        27,
+        42,
+        1016,
+        1491
+      ],
+      "bottomGroups": [
+        {
+          "x": 474.0,
+          "y": 1490,
+          "width": 273
+        },
+        {
+          "x": 900.5,
+          "y": 1455,
+          "width": 230
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 474.0,
+          "y": 1490,
+          "width": 273
+        },
+        {
+          "x": 900.5,
+          "y": 1455,
+          "width": 230
+        }
+      ],
+      "alphaZeroFraction": 0.692956,
+      "alphaVisibleFraction": 0.288485,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1024,
+        "height": 1536,
+        "groundY": 1490,
+        "feet": [
+          {
+            "x": 480,
+            "y": 1487,
+            "width": 280
+          },
+          {
+            "x": 900,
+            "y": 1454,
+            "width": 230
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: newly redrawn complete left-facing profile with reaching hand and no camera gaze",
+      "metadata": "asset_sources/mutants_side_redraw/zombie.json"
+    },
+    "pseudodog": {
+      "width": 1701,
+      "height": 925,
+      "groundY": 895,
+      "visibleAlphaBBox": [
+        39,
+        13,
+        1684,
+        896
+      ],
+      "bottomGroups": [
+        {
+          "x": 205.0,
+          "y": 863,
+          "width": 201
+        },
+        {
+          "x": 554.0,
+          "y": 895,
+          "width": 205
+        },
+        {
+          "x": 1004.0,
+          "y": 859,
+          "width": 177
+        },
+        {
+          "x": 1446.0,
+          "y": 874,
+          "width": 155
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 230.0,
+          "y": 863,
+          "width": 251
+        },
+        {
+          "x": 579.0,
+          "y": 895,
+          "width": 255
+        },
+        {
+          "x": 1044.0,
+          "y": 859,
+          "width": 257
+        },
+        {
+          "x": 1452.0,
+          "y": 874,
+          "width": 167
+        }
+      ],
+      "alphaZeroFraction": 0.489036,
+      "alphaVisibleFraction": 0.48506,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1701,
+        "height": 925,
+        "groundY": 895,
+        "feet": [
+          {
+            "x": 211,
+            "y": 858,
+            "width": 217
+          },
+          {
+            "x": 550,
+            "y": 891,
+            "width": 205
+          },
+          {
+            "x": 1016,
+            "y": 856,
+            "width": 199
+          },
+          {
+            "x": 1442,
+            "y": 872,
+            "width": 145
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: whole body in left-facing combat profile, one visible eye looking left, pseudo-dog heavy shoulder mane and snarl preserved; four intact paws, full tail, actual alpha",
+      "metadata": "asset_sources/mutants_side_redraw/pseudodog.json"
+    },
+    "lynx": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 969,
+      "visibleAlphaBBox": [
+        49,
+        53,
+        1506,
+        970
+      ],
+      "bottomGroups": [
+        {
+          "x": 294.5,
+          "y": 960,
+          "width": 232
+        },
+        {
+          "x": 550.5,
+          "y": 969,
+          "width": 218
+        },
+        {
+          "x": 996.0,
+          "y": 957,
+          "width": 231
+        },
+        {
+          "x": 1401.0,
+          "y": 968,
+          "width": 209
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 315.0,
+          "y": 960,
+          "width": 273
+        },
+        {
+          "x": 555.5,
+          "y": 969,
+          "width": 228
+        },
+        {
+          "x": 1018.5,
+          "y": 957,
+          "width": 276
+        },
+        {
+          "x": 1401.0,
+          "y": 968,
+          "width": 209
+        }
+      ],
+      "alphaZeroFraction": 0.488046,
+      "alphaVisibleFraction": 0.479607,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 969,
+        "feet": [
+          {
+            "x": 300,
+            "y": 960,
+            "width": 225
+          },
+          {
+            "x": 554,
+            "y": 969,
+            "width": 220
+          },
+          {
+            "x": 982,
+            "y": 956,
+            "width": 230
+          },
+          {
+            "x": 1401,
+            "y": 968,
+            "width": 210
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/lynx.json"
+    },
+    "chupacabra": {
+      "width": 1774,
+      "height": 887,
+      "groundY": 840,
+      "visibleAlphaBBox": [
+        31,
+        83,
+        1749,
+        841
+      ],
+      "bottomGroups": [
+        {
+          "x": 333.5,
+          "y": 821,
+          "width": 196
+        },
+        {
+          "x": 576.5,
+          "y": 840,
+          "width": 204
+        },
+        {
+          "x": 1010.0,
+          "y": 818,
+          "width": 181
+        },
+        {
+          "x": 1410.0,
+          "y": 839,
+          "width": 195
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 356.0,
+          "y": 821,
+          "width": 241
+        },
+        {
+          "x": 588.0,
+          "y": 840,
+          "width": 227
+        },
+        {
+          "x": 1027.0,
+          "y": 818,
+          "width": 215
+        },
+        {
+          "x": 1411.0,
+          "y": 839,
+          "width": 197
+        }
+      ],
+      "alphaZeroFraction": 0.625883,
+      "alphaVisibleFraction": 0.348261,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1774,
+        "height": 887,
+        "groundY": 840,
+        "feet": [
+          {
+            "x": 337,
+            "y": 819,
+            "width": 219
+          },
+          {
+            "x": 585,
+            "y": 839,
+            "width": 220
+          },
+          {
+            "x": 1018,
+            "y": 819,
+            "width": 209
+          },
+          {
+            "x": 1406,
+            "y": 837,
+            "width": 212
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/chupacabra.json"
+    },
+    "psydog": {
+      "width": 1701,
+      "height": 925,
+      "groundY": 906,
+      "visibleAlphaBBox": [
+        24,
+        13,
+        1691,
+        907
+      ],
+      "bottomGroups": [
+        {
+          "x": 195.0,
+          "y": 868,
+          "width": 177
+        },
+        {
+          "x": 496.0,
+          "y": 906,
+          "width": 247
+        },
+        {
+          "x": 1081.5,
+          "y": 868,
+          "width": 178
+        },
+        {
+          "x": 1447.5,
+          "y": 903,
+          "width": 198
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 252.5,
+          "y": 868,
+          "width": 292
+        },
+        {
+          "x": 529.5,
+          "y": 906,
+          "width": 314
+        },
+        {
+          "x": 1123.5,
+          "y": 868,
+          "width": 262
+        },
+        {
+          "x": 1449.0,
+          "y": 903,
+          "width": 201
+        }
+      ],
+      "alphaZeroFraction": 0.463141,
+      "alphaVisibleFraction": 0.506522,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 2,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1701,
+        "height": 925,
+        "groundY": 906,
+        "feet": [
+          {
+            "x": 216,
+            "y": 869,
+            "width": 223
+          },
+          {
+            "x": 497,
+            "y": 900,
+            "width": 265
+          },
+          {
+            "x": 1093,
+            "y": 863,
+            "width": 209
+          },
+          {
+            "x": 1457,
+            "y": 900,
+            "width": 221
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body left profile, single visible eye faces left, short broad snarl muzzle and small canine ears, pale shaggy coat, four intact paws and full tail; alpha transparency verified",
+      "metadata": "asset_sources/mutants_side_redraw/psydog.json"
+    },
+    "bayun": {
+      "width": 1672,
+      "height": 941,
+      "groundY": 903,
+      "visibleAlphaBBox": [
+        58,
+        39,
+        1654,
+        904
+      ],
+      "bottomGroups": [
+        {
+          "x": 143.5,
+          "y": 876,
+          "width": 40
+        },
+        {
+          "x": 348.5,
+          "y": 901,
+          "width": 320
+        },
+        {
+          "x": 1002.5,
+          "y": 903,
+          "width": 248
+        },
+        {
+          "x": 1413.5,
+          "y": 850,
+          "width": 92
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 361.5,
+          "y": 901,
+          "width": 476
+        },
+        {
+          "x": 1031.0,
+          "y": 903,
+          "width": 305
+        },
+        {
+          "x": 1402.0,
+          "y": 857,
+          "width": 165
+        }
+      ],
+      "alphaZeroFraction": 0.556134,
+      "alphaVisibleFraction": 0.406603,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1672,
+        "height": 941,
+        "groundY": 903,
+        "feet": [
+          {
+            "x": 228,
+            "y": 865,
+            "width": 224
+          },
+          {
+            "x": 406,
+            "y": 894,
+            "width": 228
+          },
+          {
+            "x": 1005,
+            "y": 887,
+            "width": 267
+          },
+          {
+            "x": 1402,
+            "y": 849,
+            "width": 177
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full body left profile, only near eye, no camera gaze, cat ears/short feline muzzle, ragged coat, throat sacs and flap, four long intact legs and complete tail; actual clean alpha",
+      "metadata": "asset_sources/mutants_side_redraw/bayun.json"
+    },
+    "snork": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 991,
+      "visibleAlphaBBox": [
+        33,
+        31,
+        1505,
+        992
+      ],
+      "bottomGroups": [
+        {
+          "x": 389.5,
+          "y": 989,
+          "width": 126
+        },
+        {
+          "x": 499.5,
+          "y": 991,
+          "width": 48
+        },
+        {
+          "x": 618.0,
+          "y": 972,
+          "width": 49
+        },
+        {
+          "x": 1287.5,
+          "y": 963,
+          "width": 234
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 337.5,
+          "y": 991,
+          "width": 610
+        },
+        {
+          "x": 1337.5,
+          "y": 963,
+          "width": 334
+        }
+      ],
+      "alphaZeroFraction": 0.53352,
+      "alphaVisibleFraction": 0.438342,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 991,
+        "feet": [
+          {
+            "x": 495,
+            "y": 991,
+            "width": 350
+          },
+          {
+            "x": 201,
+            "y": 942,
+            "width": 330
+          },
+          {
+            "x": 899,
+            "y": 899,
+            "width": 341
+          },
+          {
+            "x": 1348,
+            "y": 965,
+            "width": 343
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, face and attack left toward offscreen opponent, no camera gaze. RGBA background outside silhouette verified numerically alpha=0; RGB-only preview contains brown under fully transparent pixels. Torso shows some three-quarter depth.",
+      "metadata": "asset_sources/mutants_side_redraw/snork.json"
+    },
+    "stregun": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 897,
+      "visibleAlphaBBox": [
+        33,
+        137,
+        1502,
+        898
+      ],
+      "bottomGroups": [
+        {
+          "x": 206.0,
+          "y": 877,
+          "width": 191
+        },
+        {
+          "x": 603.0,
+          "y": 880,
+          "width": 35
+        },
+        {
+          "x": 735.5,
+          "y": 879,
+          "width": 26
+        },
+        {
+          "x": 908.0,
+          "y": 888,
+          "width": 35
+        },
+        {
+          "x": 1040.0,
+          "y": 897,
+          "width": 47
+        },
+        {
+          "x": 1093.5,
+          "y": 869,
+          "width": 20
+        },
+        {
+          "x": 1229.5,
+          "y": 877,
+          "width": 26
+        },
+        {
+          "x": 1286.0,
+          "y": 881,
+          "width": 29
+        },
+        {
+          "x": 1435.5,
+          "y": 893,
+          "width": 60
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 261.0,
+          "y": 877,
+          "width": 301
+        },
+        {
+          "x": 669.5,
+          "y": 880,
+          "width": 168
+        },
+        {
+          "x": 977.0,
+          "y": 897,
+          "width": 173
+        },
+        {
+          "x": 1163.0,
+          "y": 877,
+          "width": 159
+        },
+        {
+          "x": 1364.0,
+          "y": 893,
+          "width": 203
+        }
+      ],
+      "alphaZeroFraction": 0.594875,
+      "alphaVisibleFraction": 0.384507,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 897,
+        "feet": [
+          {
+            "x": 667,
+            "y": 882,
+            "width": 174
+          },
+          {
+            "x": 983,
+            "y": 896,
+            "width": 196
+          },
+          {
+            "x": 1164,
+            "y": 870,
+            "width": 166
+          },
+          {
+            "x": 1369,
+            "y": 895,
+            "width": 220
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: original identity preserved; full body faces left toward player, no camera gaze; clean visible alpha silhouette, no visible floor or scenery; nonzero alpha below 16 outside silhouette is visually imperceptible",
+      "metadata": "asset_sources/mutants_side_redraw/stregun.json"
+    },
+    "owl": {
+      "width": 1145,
+      "height": 1374,
+      "groundY": 1360,
+      "visibleAlphaBBox": [
+        32,
+        20,
+        1118,
+        1361
+      ],
+      "bottomGroups": [
+        {
+          "x": 399.5,
+          "y": 1334,
+          "width": 222
+        },
+        {
+          "x": 602.0,
+          "y": 1310,
+          "width": 71
+        },
+        {
+          "x": 948.5,
+          "y": 1360,
+          "width": 330
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 484.0,
+          "y": 1334,
+          "width": 391
+        },
+        {
+          "x": 948.5,
+          "y": 1360,
+          "width": 330
+        }
+      ],
+      "alphaZeroFraction": 0.598958,
+      "alphaVisibleFraction": 0.375431,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 0,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1145,
+        "height": 1374,
+        "groundY": 1360,
+        "feet": [
+          {
+            "x": 484.0,
+            "y": 1334,
+            "width": 391
+          },
+          {
+            "x": 948.5,
+            "y": 1360,
+            "width": 330
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [
+        "contact feet measured from bottom alpha groups"
+      ],
+      "visualQA": "passed: newly drawn left-facing owl humanoid, one visible eye directed left, signature feather arms, unclipped claws, transparent background",
+      "metadata": "asset_sources/mutants_side_redraw/owl.json"
+    },
+    "bloodsucker": {
+      "width": 1297,
+      "height": 1212,
+      "groundY": 1179,
+      "visibleAlphaBBox": [
+        75,
+        16,
+        1215,
+        1180
+      ],
+      "bottomGroups": [
+        {
+          "x": 614.0,
+          "y": 1173,
+          "width": 299
+        },
+        {
+          "x": 1071.0,
+          "y": 1179,
+          "width": 287
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 614.0,
+          "y": 1173,
+          "width": 299
+        },
+        {
+          "x": 1071.0,
+          "y": 1179,
+          "width": 287
+        }
+      ],
+      "alphaZeroFraction": 0.706402,
+      "alphaVisibleFraction": 0.270726,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1297,
+        "height": 1212,
+        "groundY": 1179,
+        "feet": [
+          {
+            "x": 615,
+            "y": 1170,
+            "width": 300
+          },
+          {
+            "x": 1077,
+            "y": 1180,
+            "width": 290
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, side-directed face and attack left, no camera gaze, transparent backdrop; torso has slight depth.",
+      "metadata": "asset_sources/mutants_side_redraw/bloodsucker.json"
+    },
+    "poltergeist": {
+      "width": 1326,
+      "height": 1187,
+      "groundY": 1116,
+      "visibleAlphaBBox": [
+        32,
+        71,
+        1308,
+        1117
+      ],
+      "bottomGroups": [
+        {
+          "x": 868.5,
+          "y": 1088,
+          "width": 26
+        },
+        {
+          "x": 1021.5,
+          "y": 1116,
+          "width": 28
+        },
+        {
+          "x": 1238.0,
+          "y": 1112,
+          "width": 119
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 949.0,
+          "y": 1116,
+          "width": 281
+        },
+        {
+          "x": 1234.0,
+          "y": 1112,
+          "width": 147
+        }
+      ],
+      "alphaZeroFraction": 0.707532,
+      "alphaVisibleFraction": 0.278649,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1326,
+        "height": 1187,
+        "groundY": 1116,
+        "feet": [],
+        "floating": true
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, side-directed face and attack left, no camera gaze, transparent backdrop; torso has slight depth.",
+      "metadata": "asset_sources/mutants_side_redraw/poltergeist.json"
+    },
+    "fire-poltergeist": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 993,
+      "visibleAlphaBBox": [
+        30,
+        14,
+        1518,
+        994
+      ],
+      "bottomGroups": [
+        {
+          "x": 983.5,
+          "y": 961,
+          "width": 22
+        },
+        {
+          "x": 1089.5,
+          "y": 993,
+          "width": 26
+        },
+        {
+          "x": 1456.0,
+          "y": 937,
+          "width": 21
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 1032.0,
+          "y": 993,
+          "width": 217
+        },
+        {
+          "x": 1460.0,
+          "y": 937,
+          "width": 115
+        }
+      ],
+      "alphaZeroFraction": 0.676333,
+      "alphaVisibleFraction": 0.292186,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 993,
+        "feet": [],
+        "floating": true
+      },
+      "warnings": [],
+      "visualQA": "passed: complete left-facing hovering creature; head gaze to left; legless lower torso with two tissue stumps; no camera gaze",
+      "metadata": "asset_sources/mutants_side_redraw/fire-poltergeist.json"
+    },
+    "fracture": {
+      "width": 1375,
+      "height": 1144,
+      "groundY": 1101,
+      "visibleAlphaBBox": [
+        271,
+        32,
+        1294,
+        1102
+      ],
+      "bottomGroups": [
+        {
+          "x": 482.5,
+          "y": 1101,
+          "width": 284
+        },
+        {
+          "x": 766.5,
+          "y": 1095,
+          "width": 166
+        },
+        {
+          "x": 1174.5,
+          "y": 1091,
+          "width": 154
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 490.5,
+          "y": 1101,
+          "width": 300
+        },
+        {
+          "x": 758.5,
+          "y": 1095,
+          "width": 206
+        },
+        {
+          "x": 1174.5,
+          "y": 1091,
+          "width": 238
+        }
+      ],
+      "alphaZeroFraction": 0.694617,
+      "alphaVisibleFraction": 0.283402,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 0,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1375,
+        "height": 1144,
+        "groundY": 1101,
+        "feet": [
+          {
+            "x": 480,
+            "y": 1106,
+            "width": 300
+          },
+          {
+            "x": 1190,
+            "y": 1098,
+            "width": 210
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [
+        "groundY corrected from 1108 to measured 1101"
+      ],
+      "visualQA": "passed: entire mutant newly reconstructed in left-facing side combat stance; huge arm hangs toward ground; no camera gaze; two complete bare feet",
+      "metadata": "asset_sources/mutants_side_redraw/fracture.json"
+    },
+    "burer": {
+      "width": 1349,
+      "height": 1166,
+      "groundY": 1134,
+      "visibleAlphaBBox": [
+        33,
+        31,
+        1316,
+        1135
+      ],
+      "bottomGroups": [
+        {
+          "x": 646.5,
+          "y": 1106,
+          "width": 260
+        },
+        {
+          "x": 1186.5,
+          "y": 1134,
+          "width": 246
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 666.0,
+          "y": 1106,
+          "width": 299
+        },
+        {
+          "x": 1093.0,
+          "y": 1134,
+          "width": 433
+        }
+      ],
+      "alphaZeroFraction": 0.558098,
+      "alphaVisibleFraction": 0.426051,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1349,
+        "height": 1166,
+        "groundY": 1134,
+        "feet": [
+          {
+            "x": 645,
+            "y": 1103,
+            "width": 270
+          },
+          {
+            "x": 1185,
+            "y": 1135,
+            "width": 260
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, face and attack directed left at opponent; no camera gaze; transparent backdrop. Torso shows some three-quarter depth.",
+      "metadata": "asset_sources/mutants_side_redraw/burer.json"
+    },
+    "moose": {
+      "width": 1312,
+      "height": 1199,
+      "groundY": 1183,
+      "visibleAlphaBBox": [
+        14,
+        8,
+        1307,
+        1184
+      ],
+      "bottomGroups": [
+        {
+          "x": 417.5,
+          "y": 1174,
+          "width": 152
+        },
+        {
+          "x": 721.0,
+          "y": 1183,
+          "width": 109
+        },
+        {
+          "x": 980.0,
+          "y": 1170,
+          "width": 159
+        },
+        {
+          "x": 1225.0,
+          "y": 1179,
+          "width": 115
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 436.0,
+          "y": 1174,
+          "width": 189
+        },
+        {
+          "x": 718.5,
+          "y": 1183,
+          "width": 114
+        },
+        {
+          "x": 1010.5,
+          "y": 1170,
+          "width": 220
+        },
+        {
+          "x": 1237.0,
+          "y": 1179,
+          "width": 139
+        }
+      ],
+      "alphaZeroFraction": 0.580627,
+      "alphaVisibleFraction": 0.388047,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 6,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1312,
+        "height": 1199,
+        "groundY": 1183,
+        "feet": [
+          {
+            "x": 409,
+            "y": 1168,
+            "width": 152
+          },
+          {
+            "x": 720,
+            "y": 1180,
+            "width": 111
+          },
+          {
+            "x": 965,
+            "y": 1167,
+            "width": 115
+          },
+          {
+            "x": 1227,
+            "y": 1175,
+            "width": 105
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: side profile left, no gaze at camera",
+      "metadata": "asset_sources/mutants_side_redraw/moose.json"
+    },
+    "controller": {
+      "width": 1223,
+      "height": 1286,
+      "groundY": 1266,
+      "visibleAlphaBBox": [
+        76,
+        32,
+        1193,
+        1267
+      ],
+      "bottomGroups": [
+        {
+          "x": 690.5,
+          "y": 1217,
+          "width": 252
+        },
+        {
+          "x": 1090.5,
+          "y": 1266,
+          "width": 200
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 694.0,
+          "y": 1217,
+          "width": 259
+        },
+        {
+          "x": 1091.5,
+          "y": 1266,
+          "width": 202
+        }
+      ],
+      "alphaZeroFraction": 0.687424,
+      "alphaVisibleFraction": 0.296496,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1223,
+        "height": 1286,
+        "groundY": 1266,
+        "feet": [
+          {
+            "x": 692,
+            "y": 1210,
+            "width": 275
+          },
+          {
+            "x": 1094,
+            "y": 1264,
+            "width": 220
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, face and attack directed left at opponent; no camera gaze; transparent backdrop. Torso shows some three-quarter depth.",
+      "metadata": "asset_sources/mutants_side_redraw/controller.json"
+    },
+    "stronglav": {
+      "width": 1254,
+      "height": 1254,
+      "groundY": 1220,
+      "visibleAlphaBBox": [
+        154,
+        32,
+        1181,
+        1221
+      ],
+      "bottomGroups": [
+        {
+          "x": 612.0,
+          "y": 1166,
+          "width": 211
+        },
+        {
+          "x": 768.0,
+          "y": 1144,
+          "width": 37
+        },
+        {
+          "x": 1026.5,
+          "y": 1220,
+          "width": 272
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 691.5,
+          "y": 1166,
+          "width": 370
+        },
+        {
+          "x": 1035.5,
+          "y": 1220,
+          "width": 290
+        }
+      ],
+      "alphaZeroFraction": 0.60428,
+      "alphaVisibleFraction": 0.368022,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1254,
+        "height": 1254,
+        "groundY": 1220,
+        "feet": [
+          {
+            "x": 691.5,
+            "y": 1166,
+            "width": 370
+          },
+          {
+            "x": 1035.5,
+            "y": 1220,
+            "width": 290
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [
+        "contact feet measured from bottom alpha groups"
+      ],
+      "visualQA": "passed: newly drawn left-facing hunchback, one visible eye directed left, reference mouth tentacles and muscular anatomy retained, full unclipped silhouette",
+      "metadata": "asset_sources/mutants_side_redraw/stronglav.json"
+    },
+    "chimera": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 986,
+      "visibleAlphaBBox": [
+        46,
+        34,
+        1516,
+        987
+      ],
+      "bottomGroups": [
+        {
+          "x": 56.5,
+          "y": 939,
+          "width": 22
+        },
+        {
+          "x": 133.0,
+          "y": 948,
+          "width": 35
+        },
+        {
+          "x": 195.0,
+          "y": 928,
+          "width": 45
+        },
+        {
+          "x": 463.0,
+          "y": 986,
+          "width": 385
+        },
+        {
+          "x": 912.5,
+          "y": 937,
+          "width": 22
+        },
+        {
+          "x": 964.0,
+          "y": 926,
+          "width": 29
+        },
+        {
+          "x": 1361.0,
+          "y": 975,
+          "width": 301
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 353.0,
+          "y": 986,
+          "width": 615
+        },
+        {
+          "x": 988.5,
+          "y": 937,
+          "width": 308
+        },
+        {
+          "x": 1363.0,
+          "y": 975,
+          "width": 305
+        }
+      ],
+      "alphaZeroFraction": 0.505981,
+      "alphaVisibleFraction": 0.472698,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 986,
+        "feet": [
+          {
+            "x": 246,
+            "y": 951,
+            "width": 409
+          },
+          {
+            "x": 470,
+            "y": 984,
+            "width": 400
+          },
+          {
+            "x": 982,
+            "y": 936,
+            "width": 307
+          },
+          {
+            "x": 1359,
+            "y": 975,
+            "width": 317
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: large main head and smaller secondary head both look left, quadruped body in profile, both one-sided face profiles, crouched before pounce; complete claws and paws, alpha verified outside creature",
+      "metadata": "asset_sources/mutants_side_redraw/chimera.json"
+    },
+    "electrochimera": {
+      "width": 1526,
+      "height": 1031,
+      "groundY": 1014,
+      "visibleAlphaBBox": [
+        26,
+        32,
+        1502,
+        1015
+      ],
+      "bottomGroups": [
+        {
+          "x": 278.5,
+          "y": 1014,
+          "width": 304
+        },
+        {
+          "x": 1324.0,
+          "y": 1013,
+          "width": 327
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 320.5,
+          "y": 1014,
+          "width": 440
+        },
+        {
+          "x": 987.0,
+          "y": 947,
+          "width": 349
+        },
+        {
+          "x": 1324.0,
+          "y": 1013,
+          "width": 327
+        }
+      ],
+      "alphaZeroFraction": 0.518253,
+      "alphaVisibleFraction": 0.462993,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1526,
+        "height": 1031,
+        "groundY": 1014,
+        "feet": [
+          {
+            "x": 340,
+            "y": 1004,
+            "width": 440
+          },
+          {
+            "x": 1320,
+            "y": 1004,
+            "width": 327
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: all anatomy shown, two heads look left toward player, body oriented left, slate skin and local electricity retained, no environmental shadow",
+      "metadata": "asset_sources/mutants_side_redraw/electrochimera.json"
+    },
+    "observer": {
+      "width": 1199,
+      "height": 1312,
+      "groundY": 1281,
+      "visibleAlphaBBox": [
+        411,
+        24,
+        850,
+        1282
+      ],
+      "bottomGroups": [
+        {
+          "x": 630.0,
+          "y": 1281,
+          "width": 439
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 531.5,
+          "y": 1252,
+          "width": 242
+        },
+        {
+          "x": 746.5,
+          "y": 1281,
+          "width": 206
+        }
+      ],
+      "alphaZeroFraction": 0.849432,
+      "alphaVisibleFraction": 0.133857,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "edgeAlphaMax": 0,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1199,
+        "height": 1312,
+        "groundY": 1281,
+        "feet": [
+          {
+            "x": 531.5,
+            "y": 1252,
+            "width": 242
+          },
+          {
+            "x": 746.5,
+            "y": 1281,
+            "width": 206
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [
+        "contact feet measured from bottom alpha groups"
+      ],
+      "visualQA": "passed: newly drawn left-profile observer, two same-side stacked eyes look left, other eyes occluded, skeletal anatomy and loincloth retained, unclipped silhouette",
+      "metadata": "asset_sources/mutants_side_redraw/observer.json"
+    },
+    "pseudogiant": {
+      "width": 1536,
+      "height": 1024,
+      "groundY": 984,
+      "visibleAlphaBBox": [
+        58,
+        38,
+        1475,
+        985
+      ],
+      "bottomGroups": [
+        {
+          "x": 298.0,
+          "y": 974,
+          "width": 481
+        },
+        {
+          "x": 1289.5,
+          "y": 984,
+          "width": 370
+        }
+      ],
+      "connectedSupportGroups": [
+        {
+          "x": 298.0,
+          "y": 974,
+          "width": 481
+        },
+        {
+          "x": 1289.5,
+          "y": 984,
+          "width": 370
+        }
+      ],
+      "alphaZeroFraction": 0.50819,
+      "alphaVisibleFraction": 0.471395,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "edgeAlphaMax": 1,
+      "transparentExterior": true,
+      "contact": {
+        "width": 1536,
+        "height": 1024,
+        "groundY": 984,
+        "feet": [
+          {
+            "x": 294,
+            "y": 973,
+            "width": 500
+          },
+          {
+            "x": 1295,
+            "y": 982,
+            "width": 385
+          }
+        ],
+        "floating": false
+      },
+      "warnings": [],
+      "visualQA": "passed: full figure, face and attack left toward offscreen opponent, no camera gaze. RGBA background outside silhouette verified numerically alpha=0; RGB-only preview contains brown under fully transparent pixels. Torso shows some three-quarter depth.",
+      "metadata": "asset_sources/mutants_side_redraw/pseudogiant.json"
+    }
+  }
+}

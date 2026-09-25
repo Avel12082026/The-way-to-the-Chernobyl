@@ -1,0 +1,22 @@
+{
+  "id": "poltergeist",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-08718f83-b952-4585-85d9-f323b2636e6d.png",
+  "prompt": "Use case: stylized-concept. Create a NEW original detailed realistic transparent side-view combat sprite based on ONLY THE LEFT CREATURE labeled POLTERGEIST in the attached S.T.A.L.K.E.R. 2 artbook reference. Ignore the right creature. The Poltergeist true form is a legless hovering humanoid upper torso: enlarged bald deformed skull merging into hunched shoulders, deep-set small eyes, distorted flat human face, elongated thin arms ending in bent fingers, emaciated wrinkled ribcage and sagging bloated abdomen with leathery damaged gray-pink skin, lower torso ends in exactly two short tapering vestigial tissue appendages with NO legs and NO feet. Keep the uncanny anatomical silhouette recognizable without adding graphic open wounds or new exposed organs. The entire creature must be newly drawn in STRICT 90 DEGREE LEFT-FACING LATERAL PROFILE like a diagram viewed perpendicular to its side: forehead and nose and gaze point horizontally LEFT toward enemy player, only one eye visible, chest does not face the viewer, long near arm reaches left for telekinetic attack, far arm hangs back, torso levitates upright in air. The whole floating creature inside image with roomy 8 percent transparent margin, body occupies center. Gritty realistic muted natural color, detailed skin, diffuse soft neutral lighting. Actual RGBA alpha transparency everywhere outside the silhouette and between arms. NO ground, no floor, no cast shadow, no scene, no atmospheric backdrop, no glow, no energy ball, no flames or particles, no text, no watermark, no border. This is a true-form levitating torso sprite, not an upright walking mutant.",
+  "reference": "https://steamcommunity.com/sharedfiles/filedetails/?id=3569317769",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/controller-poltergeist-s2.img",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, side-directed face and attack left, no camera gaze, transparent backdrop; torso has slight depth.",
+  "width": 1326,
+  "height": 1187,
+  "groundY": null,
+  "feet": [],
+  "floating": true,
+  "alphaZero": 1113629,
+  "alphaTotal": 1573962,
+  "alphaBounds": [
+    0,
+    17,
+    1311,
+    1187
+  ]
+}

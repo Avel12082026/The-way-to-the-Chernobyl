@@ -1,0 +1,47 @@
+{
+  "id": "pseudogiant",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-2b5b5d38-fe0e-433c-a96e-76f87b27390e.png",
+  "prompt": "Use case: stylized-concept. Draw a NEW original realistic transparent game enemy sprite of the S.T.A.L.K.E.R. 2 Pseudogiant based on attached screenshot for identifying anatomy. ONE giant abnormally wide heavy fleshy humanoid torso with a huge distorted human head fused directly into front of the body, almost no neck, asymmetric small human eyes, broad gaping toothed mouth, leathery dirty tan-pink wrinkled skin, sparse coarse hair on rounded hunched back. Characteristic anatomy: TWO HUGE weight-bearing hand-foot forelimbs, and vestigial tiny dangling underbody limbs; not an upright human, not a dinosaur, not a four-legged dog. REDRAW IT IN EXACT LEFT-FACING SIDE ELEVATION: the huge head projects toward the LEFT EDGE, only one eye and side of nose visible, side of body facing camera with no frontal chest or frontal face. Creature looks directly toward an imaginary player offscreen left, ready to stomp with one gigantic limb. Entire creature fully visible including every limb with 8 percent padding. Keep near and far foot bases aligned on a common horizontal baseline. Gritty detailed naturalistic 3D game-render quality, diffuse neutral light, muted earthy colors, readable body forms. Genuine transparent alpha background. DO NOT include the warehouse, ground, any floor or shadow, dark vignette, haze, scenery, other creatures, HUD, text, logos or watermarks. No fake transparency checkerboard.",
+  "reference": "https://vgtimes.ru/news/109346-v-novom-video-s.t.a.l.k.e.r.-2-pokazali-obnovlennogo-psevdogiganta.html",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/pseudogiant-s2.img",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, face and attack left toward offscreen opponent, no camera gaze. RGBA background outside silhouette verified numerically alpha=0; RGB-only preview contains brown under fully transparent pixels. Torso shows some three-quarter depth.",
+  "width": 1536,
+  "height": 1024,
+  "groundY": 982,
+  "feet": [
+    {
+      "x": 294,
+      "y": 973,
+      "width": 500
+    },
+    {
+      "x": 1295,
+      "y": 982,
+      "width": 385
+    }
+  ],
+  "floating": false,
+  "alphaZero": 799313,
+  "alphaTotal": 1572864,
+  "alphaBounds": [
+    0,
+    15,
+    1524,
+    1024
+  ],
+  "alphaBackgroundSamples": {
+    "(100, 100)": 0,
+    "(400, 10)": 0,
+    "(100, 500)": 0,
+    "(100, 700)": 0,
+    "(700, 750)": 0,
+    "(1300, 100)": 0
+  },
+  "fit": {
+    "x": 116.83316,
+    "y": 307.434,
+    "width": 948.849,
+    "height": 632.566
+  }
+}

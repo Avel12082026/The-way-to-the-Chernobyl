@@ -1,0 +1,38 @@
+{
+  "id": "zombie",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-11ee6f32-02c4-4237-bd2d-c2daf6bbb7c0.png",
+  "prompt": "Use case: stylized-concept. Redraw the reference's zombie as a NEW original detailed game sprite for side-view combat. Reference is appearance identity, NOT pose. Preserve this unarmed emaciated bald gray-skinned adult humanoid mutant, sunken blank pale eyes, worn dark charcoal torn work jacket and ragged trousers, bare feet, slightly open mouth and reaching grasping hands. STRICT 90 DEGREE TRUE LEFT SIDE PROFILE: nose, mouth, gaze, chest and entire body oriented LEFT toward the imaginary player beyond left edge. Only one eye visible. Must NOT look at camera. Full figure from top of head to both bare feet fully visible, no crop. Hunched slow advancing stance, one arm reaching toward LEFT at chest height, other arm lowered, feet offset naturally along one horizontal ground baseline. Realistic gritty naturalistic S.T.A.L.K.E.R.-inspired survival game creature rendering matching original texture quality. Diffuse neutral lighting, desaturated gray and earth palette. One single character, centered within generous clear margins. Actually transparent background, clean alpha, no environment, no floor, no cast shadow, no haze, no text, no frame, no weapons, no extra limbs. Reconstruct side view anatomy anew, do not merely mirror or reuse the front-facing torso.",
+  "reference": "images/combat/mutants/zombie.png",
+  "research": [
+    "https://stalker.fandom.com/wiki/Zombie",
+    "https://stalker.fandom.com/wiki/List_of_mutants"
+  ],
+  "researchNotes": "Search distinguishes cut unarmed Zombie from S2 armed Zombified Stalker; retained established project's unarmed humanoid design and fully reconstructed profile.",
+  "generation": "built-in",
+  "mode": "redraw-from-project-reference",
+  "visualQA": "passed: newly redrawn complete left-facing profile with reaching hand and no camera gaze",
+  "width": 1024,
+  "height": 1536,
+  "groundY": 1490,
+  "feet": [
+    {
+      "x": 480,
+      "y": 1487,
+      "width": 280
+    },
+    {
+      "x": 900,
+      "y": 1454,
+      "width": 230
+    }
+  ],
+  "floating": false,
+  "alphaZero": 1089926,
+  "alphaTotal": 1572864,
+  "fit": {
+    "x": 440.0628,
+    "y": 250.97308,
+    "width": 459.35128,
+    "height": 689.02692
+  }
+}

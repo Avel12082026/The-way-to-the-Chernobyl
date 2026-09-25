@@ -1,0 +1,36 @@
+{
+  "id": "blind-dog",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-30cd4fd5-4ddb-4830-964a-ee439b967290.png",
+  "prompt": "Use case: stylized-concept. Draw a NEW original polished realistic game sprite of the BLIND DOG mutant, using reference image 1 from a STALKER 2 visual guide as main appearance guide: emaciated medium canine, very short patchy dirty gray brown fur over leathery scarred skin, long narrow dog muzzle, small damaged folded dog ears (NOT enormous upright bat ears), sunken blind eyes, visible ribcage, long thin hanging tail. Do not copy the forest or rocks. STRICT TRUE 90 DEGREE SIDE PROFILE facing LEFT, head and entire body in profile toward the left edge at imaginary player, only one side of the muzzle, no looking into camera. Fully visible four legs with paws resting on same horizontal baseline, alert low stalking combat stance about to rush and bite, not jumping. Body and tail fully uncut with comfortable margin. Detailed gritty naturalistic rendering, diffuse neutral light, balanced earthy colors, readable at game sprite size. One mutant only, actual transparent background with clean alpha, no ground, no shadow, no fog, no scenery, no text or logos. Must be a newly illustrated creature from the reference in side stance.",
+  "reference": "https://egamersworld.com/blog/stalker-2s-deadliest-enemies-and-ruthless-factions-2_Y9zpyZUh",
+  "feet": [
+    {
+      "x": 525,
+      "y": 914,
+      "width": 190
+    },
+    {
+      "x": 1205,
+      "y": 913,
+      "width": 215
+    },
+    {
+      "x": 407,
+      "y": 887,
+      "width": 185
+    },
+    {
+      "x": 1450,
+      "y": 883,
+      "width": 155
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: full body side profile left, no gaze at camera",
+  "width": 1611,
+  "height": 976,
+  "groundY": 919,
+  "floating": false,
+  "alphaZero": 989852,
+  "alphaTotal": 1572336
+}

@@ -1,0 +1,53 @@
+{
+  "id": "snork",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-f7eccc69-a8ef-45ef-9627-58e029707507.png",
+  "prompt": "Use case: precise-object-edit. Repair the attached SNORK game sprite. Keep its creature identity, battered gas mask with dangling corrugated hose, ripped drab military clothes, tall worn combat boots, long bare arms and elongated fingers, quality and surface detail. Essential edits: REMOVE THE ENTIRE BROWN/BLACK BLURRED BACKGROUND, all haze and vignette, creating genuinely fully transparent RGBA alpha outside creature and between limbs. Redraw body in TRUE STRICT LEFT-FACING SIDE PROFILE, like a character side elevation with camera perpendicular to torso; do not retain a three-quarter frontal chest or spread towards viewer. Gas mask and head point horizontally LEFT, one lens only visible, eyes aim at opponent offscreen LEFT. Very low crouch on long arms and deeply bent legs, back arched, ready to leap LEFT. All four supporting hands/boots naturally based on one horizontal floor level, but do NOT DRAW A FLOOR. Full body including every finger, hose and boot inside image, with 8% completely empty transparent padding. No scenery, no brown vignette, no background or foreground shadow, no fog, no frame, no writing or watermark. This must be an isolated game sprite with genuine alpha, not a creature on a dark backdrop.",
+  "reference": "/workspace/scratch/77ccd889aecc/references/snork.jpg",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/snork.jpg",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, face and attack left toward offscreen opponent, no camera gaze. RGBA background outside silhouette verified numerically alpha=0; RGB-only preview contains brown under fully transparent pixels. Torso shows some three-quarter depth.",
+  "width": 1536,
+  "height": 1024,
+  "groundY": 991,
+  "feet": [
+    {
+      "x": 495,
+      "y": 991,
+      "width": 350
+    },
+    {
+      "x": 201,
+      "y": 942,
+      "width": 330
+    },
+    {
+      "x": 899,
+      "y": 899,
+      "width": 341
+    },
+    {
+      "x": 1348,
+      "y": 965,
+      "width": 343
+    }
+  ],
+  "floating": false,
+  "alphaZero": 839154,
+  "alphaTotal": 1572864,
+  "alphaBounds": [
+    0,
+    23,
+    1507,
+    1002
+  ],
+  "alphaBackgroundSamples": {
+    "(100, 100)": 0,
+    "(400, 10)": 0,
+    "(100, 500)": 0,
+    "(100, 700)": 0,
+    "(700, 750)": 0,
+    "(1300, 100)": 0
+  },
+  "editReference": "/workspace/scratch/77ccd889aecc/generated_images/exec-b49bc626-5b8c-41c4-b95b-b2cce0b2b18b.png",
+  "originalPrompt": "Use case: stylized-concept. Asset type: one full-body transparent combat sprite for a 2D side-view S.T.A.L.K.E.R. fan game. Primary request: draw a NEW original realistic Snork mutant based on the attached visual references. Image 1 is game visual reference for Snork identity; Image 2 is our previous art for surface detail only, NOT its frontal pose. The Snork is a mutated human wearing a battered black rubber gas mask with round glass lenses, a dangling corrugated respirator hose, shredded drab military shirt, ripped dark combat trousers and battered army boots; pale scarred muscular bare forearms and clawlike elongated fingers. Pose: very low predatory crouch, arched back, bent hind legs poised to spring LEFT at the player, long hands bearing weight ahead of the body. STRICT 90-DEGREE LEFT-FACING LATERAL PROFILE: the entire head, gas-mask face, chest, shoulders, pelvis, knees, hands and feet all point left across the screen. Camera perpendicular to side of creature, one eye lens visible, never toward the viewer, never frontal or three-quarter. Full body and every finger/boot/hose uncut within image with 6% transparent padding. Gritty detailed realistic painted 3D-game-sprite quality, neutral soft studio light showing texture, muted earthy colors, believable anatomy. Truly transparent alpha background. No floor, no ground, no cast shadow, no atmosphere, no scenery, no other characters, no weapons, no text, no watermark, no frame. Do not copy the original front-facing pose; redraw new side anatomy.\n"
+}

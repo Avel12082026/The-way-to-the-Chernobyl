@@ -1,0 +1,15 @@
+{
+  "id": "owl",
+  "source": "images/combat/mutants/owl.png",
+  "output": "images/combat/mutants-side/owl.png",
+  "prompt": "Use case: stylized-concept. Production transparent enemy sprite for a 2D side-view post-apocalyptic combat game.\nInput image: appearance/reference only, the existing custom owl mutant. Redraw this SAME creature from scratch in a DIFFERENT viewpoint: strict orthographic 90-degree LEFT-facing side profile, full body, head and entire gaze pointing toward the LEFT EDGE at the unseen player. This is NOT a mirror flip of the frontal reference. Camera sees one side of its body and one amber eye, never both eyes or frontal face.\nPreserve design: tall humanoid owl monster, dense mottled charcoal gray/brown layered feathers, long feather-covered humanlike arms ending in large scaly clawed hands, owl ear tufts, small hooked dark beak, sharp amber eye, long digitigrade scaly bird legs and large taloned feet. No ordinary bird proportions. Slight forward stalking crouch, arms ready to swipe toward LEFT. Both feet planted on one horizontal ground baseline. Large body silhouette readable at game scale.\nStyle: gritty realistic detailed game creature art matching reference colors and materials, soft neutral directional light with readable silhouette. Full creature from tufts to claws completely inside frame with 8% transparent margin. Isolated on actual transparent background; clean alpha and feather edges. No scene, ground plane, floor, cast shadow, text, props, border, watermark, glowing backdrop, checkerboard pixels. Never facing viewer; no three-quarter view; head also exact left profile. One creature only.",
+  "generation": "built-in image_gen",
+  "visualQA": "passed: newly drawn left-facing owl humanoid, one visible eye directed left, signature feather arms, unclipped claws, transparent background",
+  "floating": false,
+  "fit": {
+    "x": 375.29008,
+    "y": 274.00447,
+    "width": 554.99627,
+    "height": 665.99553
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "fracture",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-ddd0d27a-8670-4f8d-8dc4-93fd7a76a60d.png",
+  "prompt": "Use case: stylized-concept. Redraw this established project's IZLOM / FRACTURE mutant into a newly illustrated LEFT-FACING SIDE COMBAT SPRITE. Preserve reference identity and materials: gaunt hunched humanoid with sparse matted hair, leathery pink-brown scarred skin, large ears, ragged dirty olive work shirt with torn short sleeves, gray patched and torn trousers, bare feet. Its defining mutation is ONE exceptionally elongated hypertrophied arm reaching almost to the ground with huge long fingers, while the other arm is normal length. Show oversized arm on the visible near side, anatomically connected to shoulder and with readable elbow; keep two arms only. STRICT 90-DEGREE SIDE PROFILE facing LEFT: nose, single visible eye, mouth, chest and whole body point left at imagined enemy; no camera gaze, no three-quarter front pose. Hunched leaning combat stance advancing toward left, gigantic hand low and poised to swing forward, other hand reaching at waist height. Full figure uncut from top of head to all fingers and bare feet, visible sole ground line under both feet; generous transparent margins on ALL sides. Realistic detailed gritty naturalistic game sprite with muted earthy colors and neutral diffuse lighting. Isolated on actual transparent background with clean alpha: no scenery, floor, shadow, fog, aura, text, logo or weapon. Newly reconstruct the entire body in side profile rather than reusing front view. No gory wounds.",
+  "reference": "images/combat/mutants/fracture.png",
+  "research": [
+    "https://stalker.fandom.com/wiki/Izlom",
+    "https://www.playground.ru/stalker_shadow_of_chernobyl/guide/s_t_a_l_k_e_r_shadow_of_chernobyl_naselenie_zony_suschestva-1202301"
+  ],
+  "researchNotes": "Izlom/Fracture is cut series content, recognized by one hypertrophied arm. Web reference timed out; retained existing project appearance with left-facing reconstruction.",
+  "generation": "built-in",
+  "mode": "redraw-from-project-reference",
+  "visualQA": "passed: entire mutant newly reconstructed in left-facing side combat stance; huge arm hangs toward ground; no camera gaze; two complete bare feet",
+  "width": 1375,
+  "height": 1144,
+  "groundY": 1108,
+  "feet": [
+    {
+      "x": 480,
+      "y": 1106,
+      "width": 300
+    },
+    {
+      "x": 1190,
+      "y": 1098,
+      "width": 210
+    }
+  ],
+  "floating": false,
+  "alphaZero": 1092632,
+  "alphaTotal": 1573000,
+  "fit": {
+    "x": 175.96262,
+    "y": 255.73832,
+    "width": 822.42991,
+    "height": 684.26168
+  }
+}

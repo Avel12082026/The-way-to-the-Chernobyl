@@ -1,0 +1,41 @@
+{
+  "id": "psydog",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-5e8b56a5-b458-4df5-9cf2-964a1fcb4a57.png",
+  "prompt": "Use case: stylized-concept. NEW original full body realistic game sprite of PSY-DOG mutant from STALKER series. Image1 existing psydog is the pale-white coat/eye reference, image2 STALKER 2 pseudo-dog is the correct creature anatomy/muzzle reference: draw a pale dirty white/silver-furred psychic variant of the muscular squat wolf mutant. Thick shaggy dirty pale grey-white mane over shoulders, scarred exposed grey skin at ribs and haunches, short broad wrinkled snarl muzzle with powerful jagged-toothed jaws, SMALL battered dog ears like second image (not enormous bat ears of first image), pale ice-grey side-looking eye, strong clawed canine feet, full ragged bushy tail. STRICT TRUE LEFT 90-degree SIDE PROFILE: spine horizontal, head and whole body point LEFT, only one side of face and one eye visible, no camera gaze, no three-quarter face. Braced alert stalking posture, forelegs planted and hindlegs bent ready to spring/bite; all four paws on horizontal baseline, not airborne. One real animal only, no clones, aura or visual psychic effects. Fully visible whole body with all paws/tail uncut and clear margin. Detailed gritty naturalistic game asset with neutral diffuse light and readable pale fur. Genuinely transparent RGBA background, no floor/ground, shadow, glow, fog, scenery, words or watermarks.",
+  "reference": [
+    "images/combat/mutants/psydog.png",
+    "https://api.cybersportscore.com/media/news/n64050.jpeg",
+    "https://stalker.fandom.com/wiki/Psy_dog"
+  ],
+  "referenceNote": "S2 psydog screenshot lookup succeeded but image URL download timed out; used existing white psydog and downloaded S2 pseudo-dog anatomy reference. White fur distinction confirmed in series lore.",
+  "feet": [
+    {
+      "x": 216,
+      "y": 869,
+      "width": 223
+    },
+    {
+      "x": 497,
+      "y": 900,
+      "width": 265
+    },
+    {
+      "x": 1093,
+      "y": 863,
+      "width": 209
+    },
+    {
+      "x": 1457,
+      "y": 900,
+      "width": 221
+    }
+  ],
+  "generation": "built-in",
+  "visualQA": "passed: full body left profile, single visible eye faces left, short broad snarl muzzle and small canine ears, pale shaggy coat, four intact paws and full tail; alpha transparency verified",
+  "groundY": 907,
+  "floating": false,
+  "width": 1701,
+  "height": 925,
+  "alphaZero": 728718,
+  "alphaTotal": 1573425
+}

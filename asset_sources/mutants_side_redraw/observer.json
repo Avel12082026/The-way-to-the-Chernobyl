@@ -1,0 +1,15 @@
+{
+  "id": "observer",
+  "source": "images/combat/mutants/observer.png",
+  "output": "images/combat/mutants-side/observer.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent enemy sprite for 2D side-view combat.\nInput image: appearance reference, our original custom Observer mutant. Redraw this exact creature from scratch as full-body STRICT LEFT-FACING SIDE PROFILE, not a horizontal flip. Body and head rotated complete 90 degrees from front: one side of ribcage, pelvis and face visible. All eyes point to LEFT toward the unseen player, NEVER toward the camera. No three-quarter face.\nPreserve its signature identity: extremely tall and spindly bald hairless pale ivory humanoid, elongated oval bulbous skull and narrow chin, long thin neck, skeletal ribcage, sinewy very long arms ending in long thin clawed fingers, long thin legs and large bare clawed feet. It has FOUR glossy black eyes total arranged as two stacked eyes on each side of face: in this strict left-side profile show ONLY the TWO stacked black eyes on the visible side, with the far-side eyes fully occluded. Tiny slit mouth, no protruding nose, no ears, pale veiny leathery skin. The original ragged dark gray-brown loincloth stays. Slight forward lean in a quiet stalking stance, arms hanging low and subtly bent toward left, both feet planted on same horizontal baseline.\nGritty realistic detailed game creature render with skin texture and neutral soft light. Preserve original proportions, color, eerie delicate anatomy. Single full-body creature isolated on real transparent background. Entire head, fingers and feet uncut, 8% empty transparent margin. No background or floor, NO cast shadow, text, label, watermark, extra props, glowing effects, or other subjects. Exact side-facing skull and gaze are crucial.",
+  "generation": "built-in image_gen",
+  "visualQA": "passed: newly drawn left-profile observer, two same-side stacked eyes look left, other eyes occluded, skeletal anatomy and loincloth retained, unclipped silhouette",
+  "floating": false,
+  "fit": {
+    "x": 378.22496,
+    "y": 262.09857,
+    "width": 619.5151,
+    "height": 677.90143
+  }
+}

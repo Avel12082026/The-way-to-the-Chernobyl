@@ -1,0 +1,39 @@
+{
+  "id": "controller",
+  "source": "/workspace/scratch/77ccd889aecc/generated_images/exec-b773b792-f112-4345-a358-22d7d1f004bd.png",
+  "prompt": "Use case: stylized-concept. Asset type: transparent enemy sprite for side-view 2D combat. Draw a NEW original realistic Controller mutant using ONLY THE RIGHT-HAND CREATURE in this reference artbook spread. S.T.A.L.K.E.R. 2 Controller identity: large swollen bald lumpy cranium with a few wispy hairs, small deep sunken eyes, swollen disfigured human facial features, thick neck and stooped shoulder girdle, pale gray-ochre mottled damaged skin, rounded pot belly, long thick arms and large hands, ragged charcoal trousers cut below knees, thick malformed lower legs and large bare humanlike feet. Shirtless nonsexual creature, absolutely no exposed genitals. STRICT TRUE LEFT FACING 90 DEGREE PROFILE like a character side elevation: forehead, nose and gaze exactly LEFT at an offscreen opponent, only one eye visible, side of ribcage only, no face or torso towards viewer. One hand raised reaching LEFT as if starting a mental attack, second low, knees softly bent, planted weight bearing stance. Whole body visible with all extremities uncut and 6 percent empty margin. Muted earthy gritty realistic detailed game-render texture, neutral diffuse light. Transparent RGBA sprite only. Do not include the left monster, labels or artbook background. No opaque or translucent backdrop, no shadow, floor, fog, effects, scene, text or watermark.",
+  "reference": "https://images.steamusercontent.com/ugc/11941164280644320566/5B34936ED4816456054F4A90FFB9B6089C288B56/?imw=1598",
+  "referencePath": "/workspace/scratch/77ccd889aecc/references/controller-poltergeist-s2.img",
+  "generation": "built-in",
+  "visualQA": "passed: full figure, face and attack directed left at opponent; no camera gaze; transparent backdrop. Torso shows some three-quarter depth.",
+  "width": 1223,
+  "height": 1286,
+  "groundY": 1264,
+  "feet": [
+    {
+      "x": 692,
+      "y": 1210,
+      "width": 275
+    },
+    {
+      "x": 1094,
+      "y": 1264,
+      "width": 220
+    }
+  ],
+  "floating": false,
+  "alphaZero": 1081165,
+  "alphaTotal": 1572778,
+  "alphaBounds": [
+    0,
+    17,
+    1209,
+    1286
+  ],
+  "fit": {
+    "x": 304.91498,
+    "y": 252.74494,
+    "width": 653.58704,
+    "height": 687.25506
+  }
+}

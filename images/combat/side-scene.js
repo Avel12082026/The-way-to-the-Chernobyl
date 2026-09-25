@@ -4,14 +4,15 @@ const legacy=root.CombatScene;let legacyActive=false,legacyChildren=null;
 const cache=new Map();let host,canvas,caption,retry,config,pictures,signature='',ticket=0,frame=0,reaction;
 const reduced=root.matchMedia('(prefers-reduced-motion: reduce)');
 function variant(token){let h=0;for(const c of String(token))h=(h*31+c.charCodeAt(0))>>>0;return h%3;}
-function load(url){
- if(cache.has(url)){const cached=cache.get(url);cache.delete(url);cache.set(url,cached);return cached;}
+function load(url,version=root.CombatFighters?.data.version||'modular-shotguns-v1'){
+ const source=url+'?v='+encodeURIComponent(version);
+ if(cache.has(source)){const cached=cache.get(source);cache.delete(source);cache.set(source,cached);return cached;}
  const p=new Promise((resolve,reject)=>{
   const im=new Image();let finished=false;
   const timer=setTimeout(()=>finish(new Error('Image load timed out: '+url)),20000);
-  function finish(error){if(finished)return;finished=true;clearTimeout(timer);im.onload=im.onerror=null;if(error){cache.delete(url);reject(error);}else resolve(im);}
-  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=url+'?v='+encodeURIComponent(root.CombatFighters?.data.version||'modular-shotguns-v1');
- });cache.set(url,p);if(cache.size>12)cache.delete(cache.keys().next().value);return p;
+  function finish(error){if(finished)return;finished=true;clearTimeout(timer);im.onload=im.onerror=null;if(error){cache.delete(source);reject(error);}else resolve(im);}
+  im.onload=()=>finish();im.onerror=()=>finish(new Error(url));im.src=source;
+ });cache.set(source,p);if(cache.size>12)cache.delete(cache.keys().next().value);return p;
 }
 function mount(){
  if(host)return true;host=document.getElementById('combatScene');if(!host)return false;
@@ -33,7 +34,7 @@ function draw(now=0){
  if(pictures.enemy)root.CombatEffects?.drawGroundShadow(ctx,root.CombatFighters.feet?.(pictures.enemy,'enemy'));
  root.CombatFighters?.draw(ctx,pictures.player,'player');
  if(pictures.enemy)root.CombatFighters.draw(ctx,pictures.enemy,'enemy');
- else if(pictures.mutant){ctx.save();ctx.translate(496,0);root.CombatLayout.drawCreature(ctx,pictures.mutant,config.species,0);ctx.restore();}
+ else if(pictures.mutant){ctx.save();ctx.translate(496,0);root.CombatLayout.drawCreature(ctx,pictures.mutant,config.species,0,config.mutantAppearance);ctx.restore();}
  if(reaction&&!reduced.matches){
   const elapsed=now-reaction.start;
   if(reaction.shot)root.CombatEffects?.drawMuzzleFlash(ctx,root.CombatFighters.muzzle?.(pictures.player,'player'),{age:elapsed});
@@ -58,15 +59,20 @@ async function show(next){
  const environment=root.CombatEnvironments?.select(next);
  const player=root.CombatFighters.resolve({armorId:next.armor,weaponId:next.weaponId});
  const enemy=root.CombatFighters.resolve(next.enemyGear);
- config={...next,species:visual.species,environment,enemy:{...next.enemy}};
- const key=[token,visual.species,environment?.id,player.key,enemy.key].join('|');
+ const sideCandidate=root.CombatMutantsSide?.species?.[visual.species];
+ // The new artwork already faces the player on the left; do not mirror it.
+ const mutantAppearance=visual.ready&&sideCandidate?.facing==='left'&&sideCandidate.image?sideCandidate:undefined;
+ const mutantPath=mutantAppearance?.image||visual.mutant;
+ const mutantVersion=mutantAppearance?root.CombatMutantsSide.version:undefined;
+ config={...next,species:visual.species,environment,mutantAppearance,enemy:{...next.enemy}};
+ const key=[token,visual.species,environment?.id,player.key,enemy.key,mutantPath,mutantVersion].join('|');
  if(signature===key){draw(performance.now());return true;}
  cancelAnimationFrame(frame);signature=key;pictures=reaction=null;status('Загрузка сцены боя…');
  const request=++ticket;
  try{
   const [background,mutant,playerImage,enemyImage]=await Promise.all([
    environment?load(environment.path):(visual.ready?load(visual.background):null),
-   visual.ready?load(visual.mutant):null,
+   visual.ready?load(mutantPath,mutantVersion):null,
    root.CombatFighters.load(player,load),
    !visual.ready?root.CombatFighters.load(enemy,load):null
   ]);
