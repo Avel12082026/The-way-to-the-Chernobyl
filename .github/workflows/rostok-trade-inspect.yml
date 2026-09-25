@@ -17,7 +17,7 @@ jobs:
           from pathlib import Path
           import zipfile
           paths=set()
-          for pattern in ('index.html','package*.json','*.md','*.json','*.js','*.css','ui/**','inventory/**','tools/**','tests/**','server_patches/**','.github/workflows/**','file_000000002bb08210800056ebfb1dce1f.png'):
+          for pattern in ('index.html','package*.json','*.md','*.json','*.js','*.css','ui/**/*','inventory/**/*','tools/**/*','tests/**/*','server_patches/**/*','.github/workflows/**/*','file_000000002bb08210800056ebfb1dce1f.png'):
               for p in Path('.').glob(pattern):
                   if p.is_file(): paths.add(p)
           with zipfile.ZipFile('source-snapshot.zip','w',zipfile.ZIP_DEFLATED) as z:
