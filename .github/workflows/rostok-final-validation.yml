@@ -5,6 +5,9 @@ on:
     paths: ['.github/workflows/rostok-final-validation.yml']
 permissions:
   contents: write
+concurrency:
+  group: final-rostok-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -23,8 +26,14 @@ jobs:
           p=Path('ui/bunker-menu.css');s=p.read_text()
           a=':is(#mainMenu,#rostokCampScreen) .bunker-progress-fill { position:absolute; inset:0 auto 0 0; height:100%; width:0; }'
           assert s.count(a)==1
-          s=s.replace(a,a+'\n/* Keep real progress fills visible in both shared HUDs. */\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }')
+          if 'Keep real progress fills visible' not in s:
+              s=s.replace(a,a+'\n/* Keep real progress fills visible in both shared HUDs. */\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }')
           p.write_text(s)
+          p=Path('ui/bunker-menu.js');s=p.read_text()
+          a='data-rostok-action="read" aria-label="Прочитать Опыт+">Использовать</button>'
+          b='data-rostok-action="read" aria-label="Прочитать Опыт+">Прочитать</button>'
+          assert a in s or b in s
+          p.write_text(s.replace(a,b))
           for name in ['index.html','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/smoker_npc.test.cjs','tests/rostok_barman_trade_client.test.cjs']:
               p=Path(name);s=p.read_text()
               s=s.replace('20260925-cordon-hud-trade1','20260925-hud-trade-final2').replace('20260923-rostok-hud4','20260925-hud-trade-final2')
@@ -36,7 +45,7 @@ jobs:
           s=s.replace("page.locator('#rostokLowerHud').screenshot(","page.locator('#rostokLowerHudArtwork').screenshot(")
           a="        await page.set_viewport_size({'width':390,'height':768});await bar()"
           assert s.count(a)==1
-          s=s.replace(a,a+"\n        for name in ['Experience','Radiation']:\n            assert await page.locator('#rostok'+name+' > div').evaluate('(e)=>getComputedStyle(e).backgroundImage')!='none', name+' missing visible fill'\n")
+          s=s.replace(a,a+"\n        assert await page.locator('#rostokReadBook').inner_text()==await page.locator('#bunkerReadBook').inner_text()\n        for name in ['Experience','Radiation']:\n            assert await page.locator('#rostok'+name+' > div').evaluate('(e)=>getComputedStyle(e).backgroundImage')!='none', name+' missing visible fill'\n")
           p.write_text(s)
           PY
       - name: Static and server checks
@@ -67,13 +76,13 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html ui/bunker-menu.css tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/smoker_npc.test.cjs tests/rostok_barman_trade_client.test.cjs tests/rostok_trade_regression.browser.py
-          git commit -m 'Complete visible Rostok progress fills and full-client regression coverage'
+          git add index.html ui/bunker-menu.css ui/bunker-menu.js tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/smoker_npc.test.cjs tests/rostok_barman_trade_client.test.cjs tests/rostok_trade_regression.browser.py
+          git commit -m 'Complete visible Rostok progress fills, exact book button, and regression coverage'
           git push origin HEAD:fix/rostok-progress-final-20260925
           python - <<'PY'
           import json,subprocess
           from pathlib import Path
-          paths=['index.html','ui/bunker-menu.css','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/smoker_npc.test.cjs','tests/rostok_barman_trade_client.test.cjs','tests/rostok_trade_regression.browser.py']
+          paths=['index.html','ui/bunker-menu.css','ui/bunker-menu.js','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/smoker_npc.test.cjs','tests/rostok_barman_trade_client.test.cjs','tests/rostok_trade_regression.browser.py']
           def git(*a):return subprocess.check_output(['git',*a],text=True).strip()
           result={'commit':git('rev-parse','HEAD'),'files':{p:git('hash-object',p) for p in paths}}
           Path('.validation/rostok-trade/tested-files.json').write_text(json.dumps(result,indent=2))
