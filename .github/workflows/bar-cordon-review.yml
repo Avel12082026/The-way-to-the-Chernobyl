@@ -2,35 +2,65 @@ name: Bar HUD and Cordon trade review
 on:
   push:
     branches: [fix/bar-hud-cordon-trade-20260925]
-    paths: ['.github/workflows/bar-cordon-review.yml']
+    paths:
+      - '.github/workflows/bar-cordon-review.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: bar-cordon-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  snapshot:
+  validate:
+    if: github.ref == 'refs/heads/fix/bar-hud-cordon-trade-20260925'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-        with: {persist-credentials: false}
-      - name: Archive source and relevant HUD artwork
-        run: |
-          python3 - <<'PY'
-          import subprocess, pathlib, zipfile
-          files=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
-          with zipfile.ZipFile('bar-cordon-source.zip','w',zipfile.ZIP_DEFLATED) as z:
-              for name in files:
-                  p=pathlib.Path(name)
-                  if not p.is_file() or name.startswith('asset_sources/'):
-                      continue
-                  source=p.suffix.lower() in {'.js','.cjs','.py','.css','.html','.json','.md','.yml','.xml'}
-                  hud=name.startswith('ui/') and any(k in p.name for k in ('bunker','rostok','bar-'))
-                  if source or hud:
-                      z.write(p,name)
-              z.writestr('REVIEW_SOURCE_SHA.txt',subprocess.check_output(['git','rev-parse','HEAD']))
-          PY
-      - uses: actions/upload-artifact@v4
         with:
-          name: bar-cordon-source
-          path: bar-cordon-source.zip
-          if-no-files-found: error
-          retention-days: 3
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Apply targeted patch and verify idempotency
+        run: |
+          python tools/apply_bar_cordon_fix.py
+          git diff > /tmp/bar-cordon-first.patch
+          python tools/apply_bar_cordon_fix.py
+          git diff > /tmp/bar-cordon-second.patch
+          cmp /tmp/bar-cordon-first.patch /tmp/bar-cordon-second.patch
+          node --check ui/bunker-menu.js
+          node --check ui/trade-menu.js
+          node tests/rostok_barman_trade_client.test.cjs
+          node tests/zone_map_navigation.test.cjs
+          python tests/rostok_barman_shop_server.test.py
+      - name: Install browser test runtime
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Full client HUD and merchant regression (isolated API fixtures)
+        run: |
+          python tests/bar_cordon_regression.browser.py
+          cp /tmp/bar-cordon-first.patch .validation/bar-cordon/client.patch
+          sha256sum index.html ui/bunker-menu.js ui/bunker-menu.css ui/trade-menu.js ui/rostok-lower-hud.png > .validation/bar-cordon/SHA256SUMS
+      - name: Commit only validated client changes to review branch
+        run: |
+          mkdir -p tests/reports
+          cp .validation/bar-cordon/report.json tests/reports/bar_cordon_20260925.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html ui/bunker-menu.js ui/bunker-menu.css ui/trade-menu.js tests/rostok_barman_trade_client.test.cjs tests/zone_map_navigation.test.cjs tests/zone_map_navigation.browser.py tests/reports/bar_cordon_20260925.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: align bar HUD exactly with Cordon and unblock confirmed trade refusals'
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi
+          git rev-parse HEAD > .validation/bar-cordon/VALIDATED_COMMIT.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bar-cordon-validation
+          path: .validation/bar-cordon
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
