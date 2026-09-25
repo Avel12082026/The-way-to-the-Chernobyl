@@ -1,0 +1,87 @@
+name: Final Rostok rendering and trader validation
+on:
+  push:
+    branches: [fix/rostok-progress-final-20260925]
+    paths: ['.github/workflows/rostok-final-validation.yml']
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Complete visible progress fills and cache regression
+        run: |
+          curl --fail --silent --show-error --max-time 30 https://raw.githubusercontent.com/Avel12082026/The-way-to-the-Chernobyl/339548821c4555dfb4ed2eefc6d296c3f6bea1dc/tests/rostok_trade_regression.browser.py -o tests/rostok_trade_regression.browser.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('ui/bunker-menu.css');s=p.read_text()
+          a=':is(#mainMenu,#rostokCampScreen) .bunker-progress-fill { position:absolute; inset:0 auto 0 0; height:100%; width:0; }'
+          assert s.count(a)==1
+          s=s.replace(a,a+'\n/* Keep real progress fills visible in both shared HUDs. */\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }\n:is(#mainMenu,#rostokCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }')
+          p.write_text(s)
+          for name in ['index.html','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/smoker_npc.test.cjs','tests/rostok_barman_trade_client.test.cjs']:
+              p=Path(name);s=p.read_text()
+              s=s.replace('20260925-cordon-hud-trade1','20260925-hud-trade-final2').replace('20260923-rostok-hud4','20260925-hud-trade-final2')
+              if name=='tests/smoker_npc.test.cjs':s=s.replace("window.BunkerMenu = {version: '1.19.0'","window.BunkerMenu = {version: '1.20.0'")
+              p.write_text(s)
+          p=Path('tests/rostok_trade_regression.browser.py');s=p.read_text()
+          s=s.replace("page.locator('#rostokLowerHud').bounding_box()","page.locator('#rostokLowerHudArtwork').bounding_box()")
+          s=s.replace('0<=gap<20','0<=gap<max(20,h*0.04)')
+          s=s.replace("page.locator('#rostokLowerHud').screenshot(","page.locator('#rostokLowerHudArtwork').screenshot(")
+          a="        await page.set_viewport_size({'width':390,'height':768});await bar()"
+          assert s.count(a)==1
+          s=s.replace(a,a+"\n        for name in ['Experience','Radiation']:\n            assert await page.locator('#rostok'+name+' > div').evaluate('(e)=>getComputedStyle(e).backgroundImage')!='none', name+' missing visible fill'\n")
+          p.write_text(s)
+          PY
+      - name: Static and server checks
+        run: |
+          node --check ui/bunker-menu.js
+          node --check ui/trade-menu.js
+          node tests/zone_map_navigation.test.cjs
+          node tests/rostok_barman_trade_client.test.cjs
+          node tests/smoker_npc.test.cjs
+          python tests/rostok_location_installer.test.py
+          python tests/rostok_barman_shop_server.test.py
+          python tests/zone_map_server_patch.test.py
+          git diff --check
+      - name: Prepare browser and read-only bar artwork
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+          mkdir -p .validation/rostok-trade
+          curl --fail --silent --show-error --max-time 25 --retry 1 https://213-176-92-184.sslip.io/api/zone-camp/4 -o .validation/rostok-trade/rostok-bar.png
+          echo 'bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c  .validation/rostok-trade/rostok-bar.png' | sha256sum -c -
+      - name: Full-client regression and visual checks
+        run: |
+          python tests/rostok_trade_regression.browser.py
+          python tests/bar_cordon_regression.browser.py
+          python tests/zone_map_navigation.browser.py
+          python tests/raid_quickslot.browser.py
+      - name: Save validated application files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html ui/bunker-menu.css tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/smoker_npc.test.cjs tests/rostok_barman_trade_client.test.cjs tests/rostok_trade_regression.browser.py
+          git commit -m 'Complete visible Rostok progress fills and full-client regression coverage'
+          git push origin HEAD:fix/rostok-progress-final-20260925
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          paths=['index.html','ui/bunker-menu.css','tools/install_rostok_location.py','tests/rostok_location_installer.test.py','tests/smoker_npc.test.cjs','tests/rostok_barman_trade_client.test.cjs','tests/rostok_trade_regression.browser.py']
+          def git(*a):return subprocess.check_output(['git',*a],text=True).strip()
+          result={'commit':git('rev-parse','HEAD'),'files':{p:git('hash-object',p) for p in paths}}
+          Path('.validation/rostok-trade/tested-files.json').write_text(json.dumps(result,indent=2))
+          print(json.dumps(result,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-rostok-hud-trade
+          retention-days: 7
+          path: .validation/rostok-trade/
