@@ -47,9 +47,72 @@ async function flush(p) { delayed.splice(0).forEach(f => f()); return await p; }
   await flush(scene.show({...automatic,armor:96}));
   assert.equal(urls.length,beforeAutomatics+2,'Automatic on another cached armor uses the same gun image');
   assert.ok(draws.slice(-4).every(url=>!url.includes('-pistol')),'Automatic keeps the ready two-handed pose');
+  const beforeRifles = urls.length;
+  const rifle = { ...automatic, weaponId: 14, enemyGear: { armorId: 1, weaponId: 14 } };
+  assert.equal(await flush(scene.show(rifle)), true);
+  assert.equal(urls.length, beforeRifles + 1, 'Rifle shares cached heavy body/hands and one gun between player and NPC');
+  assert.equal(await flush(scene.show({ ...rifle, weaponId: 46, enemyGear: { armorId: 1, weaponId: 46 } })), true);
+  assert.equal(urls.length, beforeRifles + 2, 'Changing rifle loads only its weapon image');
+  assert.equal(await flush(scene.show({ ...rifle, armor: 96, enemyGear: { armorId: 96, weaponId: 14 } })), true);
+  assert.equal(urls.length, beforeRifles + 2, 'Another cached armor reuses the rifle image');
+
+  const armorIds = Object.keys(fighters.data.characters).map(Number).sort((a, b) => a - b);
+  assert.deepEqual(armorIds, Array.from({ length: 96 }, (_, i) => i + 1), 'All existing armors are exercised');
+  assert.equal(Object.keys(fighters.data.weapons).length, 113, 'Candidate contains all 113 weapons');
+  const sequence = [86, 20, 11, 14, 46, 86];
+  for (const armorId of armorIds) {
+    for (let step = 0; step < sequence.length; step++) {
+      const weaponId = sequence[step];
+      const gear = { armorId, weaponId };
+      const resolved = fighters.resolve(gear);
+      const expectedPose = weaponId === 86 ? 'pistol' : 'heavy';
+      assert.equal(resolved.ready, true, `Armor ${armorId}, weapon ${weaponId} is available`);
+      assert.equal(resolved.pose, expectedPose, `Armor ${armorId}, weapon ${weaponId} chooses the correct pose`);
+      const beforeUrls = urls.length, beforeDraws = draws.length, beforeTransforms = transforms.length;
+      const next = { ...pistol, armor: armorId, weaponId, enemyGear: gear };
+      assert.equal(await flush(scene.show(next)), true, `Armor ${armorId}, weapon ${weaponId} scene renders`);
+      const sceneDraws = draws.slice(beforeDraws);
+      const suffix = '?v=' + fighters.data.version;
+      const allowed = new Set([resolved.body, resolved.hands, resolved.gun].map(url => url + suffix));
+      assert.ok(sceneDraws.length >= 4, `Armor ${armorId}, weapon ${weaponId} draws both fighters`);
+      assert.ok(sceneDraws.every(url => allowed.has(url)), `Armor ${armorId}, weapon ${weaponId} does not retain previous gear`);
+      assert.ok(sceneDraws.filter(url => url === resolved.body + suffix).length >= 2, `Armor ${armorId} body is drawn for player and NPC`);
+      assert.ok(sceneDraws.filter(url => url === resolved.gun + suffix).length >= 2, `Weapon ${weaponId} is drawn for player and NPC`);
+      assert.ok(transforms.slice(beforeTransforms).some(s => s[0] < 0), `Armor ${armorId}, weapon ${weaponId} reflects the NPC`);
+      const newUrls = urls.slice(beforeUrls);
+      assert.equal(new Set(newUrls).size, newUrls.length, `Armor ${armorId}, weapon ${weaponId} shares concurrent player/NPC loads`);
+      if (step >= 2 && step <= 4) {
+        assert.ok(newUrls.length <= 1 && newUrls.every(url => url === resolved.gun + suffix),
+          `Armor ${armorId}: switching heavy weapons reuses body/hands`);
+      }
+      if (step === sequence.length - 1) {
+        assert.equal(newUrls.length, 0, `Armor ${armorId}: returning to the pistol reuses its cached pose`);
+      }
+    }
+  }
+  assert.ok(urls.every(url => url.endsWith('?v=' + fighters.data.version)), 'Every rifle and armor load uses the current cache revision');
+
+  const latestRifle = { ...rifle, armor: 96, weaponId: 46, enemyGear: { armorId: 96, weaponId: 46 } };
+  const supersededRifle = scene.show({ ...latestRifle, weaponId: 42, enemyGear: { armorId: 96, weaponId: 42 } });
+  const currentRifle = scene.show(latestRifle);
+  assert.equal(await flush(currentRifle), true, 'A newer rifle selection completes');
+  const afterCurrentRifle = draws.length;
+  assert.equal(await supersededRifle, false, 'A stale rifle selection cannot overwrite newer equipment');
+  assert.equal(draws.length, afterCurrentRifle, 'Stale rifle completion adds no old equipment draws');
+  assert.equal(host.hidden, false);
+
+  const hiddenRifle = scene.show({ ...latestRifle, weaponId: 55, enemyGear: { armorId: 96, weaponId: 55 } });
+  const beforeHide = draws.length;
+  scene.hide();
+  assert.equal(await flush(hiddenRifle), false, 'A rifle load finishing after hide is discarded');
+  assert.equal(draws.length, beforeHide, 'Hidden rifle completion does not redraw');
+  assert.equal(host.hidden, true);
+  assert.equal(await flush(scene.show(latestRifle)), true, 'Rifle scene reopens after a cancelled load');
+  assert.equal(host.hidden, false);
+
   const stale = scene.show({ ...shotgun, weaponId: 107 });
   scene.hide();
   assert.equal(await flush(stale), false);
   assert.equal(host.hidden, true);
-  console.log('PASS: automatic/shotgun/pistol switching, shared images, NPC reflection, HP, missing gear, legacy transition and stale loads');
+  console.log('PASS: rifle/automatic/shotgun/pistol switching across 96 armors, shared images, NPC reflection, HP, missing gear, legacy transition and stale loads');
 })().catch(error => { console.error(error); process.exitCode = 1; });

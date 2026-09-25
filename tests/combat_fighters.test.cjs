@@ -2,7 +2,8 @@ const assert = require('node:assert/strict');
 const f = require('../images/combat/fighters.js');
 const shotgunIds = [20,106,107,108,109,110,111,19,112,113,114,32,115,116,44,117,62,118,50,119,56,120,121,68,122,123,74,124,125];
 const automaticIds=[11,12,37,21,26,17,38,45,57,69,67,43,16,15,25,18,10,63,51,75,61,59,71,77,22,29,53,47,65];
-const heavyIds=[...shotgunIds,...automaticIds];
+const rifleIds=[14,46,42,13,24,23,28,36,30,40,31,27,70,76,39,60,48,64,33,35,66,52,58,49,54,72,78,73,55];
+const heavyIds=[...shotgunIds,...automaticIds,...rifleIds];
 function context() {
   const calls = [];
   return { calls, ...Object.fromEntries(['save','restore','translate','rotate','scale','drawImage','beginPath','moveTo','lineTo','closePath','rect','clip'].map(name => [name, (...args) => calls.push([name, ...args])])) };
@@ -11,6 +12,8 @@ function context() {
   const oldWeapons = Object.fromEntries(Object.entries(f.data.weapons).filter(([, w]) => (w.pose || 'pistol') === 'pistol'));
   assert.equal(Object.keys(f.data.characters).length, 96);
   assert.equal(Object.keys(oldWeapons).length, 26);
+  assert.equal(Object.keys(f.data.weapons).length,113);
+  assert.equal(Object.keys(f.data.pairAdjustments).length,8352);
   assert.deepEqual(Object.keys(f.data.weapons).filter(id => f.data.weapons[id].pose === 'heavy').map(Number).sort((a,b)=>a-b), heavyIds.slice().sort((a,b)=>a-b));
   for (const character of Object.values(f.data.characters)) assert.ok(character.poses.pistol && character.poses.heavy);
   for (const key of Object.keys(f.data.pairAdjustments)) assert.ok(f.data.weapons[key.split('-')[1]]);
@@ -23,6 +26,7 @@ function context() {
       assert.equal(gear.ready, true);
       assert.equal(gear.pose, pose);
       assert.equal(gear.character, f.data.characters[armorId].poses[pose]);
+      if(rifleIds.includes(Number(weaponId))){const a=gear.adjustment;assert.ok(a&&[a.size,a.dx,a.dy,a.angle].every(Number.isFinite)&&a.size>0,`Missing rifle fit ${armorId}-${weaponId}`);if(a.supportShift!==undefined)assert.ok(Array.isArray(a.supportShift)&&a.supportShift.length===2&&a.supportShift.every(Number.isFinite));}
       assert.equal(gear.body, `images/combat/modular/characters/${armorId}-${pose}.png`);
       assert.equal(gear.hands, `images/combat/modular/hands/${armorId}-${pose}.png`);
       assert.equal(gear.gun, `images/combat/modular/weapons/${weaponId}.png`);
@@ -43,8 +47,8 @@ function context() {
       combinations++;
     }
   }
-  assert.equal(combinations, 96 * (26 + 29 + 29));
-  assert.equal(urls.size, 96 * 2 * 2 + 26 + 29 + 29);
+  assert.equal(combinations, 96 * (26 + 29 + 29 + 29));
+  assert.equal(urls.size, 96 * 2 * 2 + 26 + 29 + 29 + 29);
   assert.equal(f.resolve({ armorId: 999, weaponId: 20 }).ready, false);
   assert.equal(f.resolve({ armorId: 1, weaponId: 9999 }).ready, false);
   assert.equal(f.resolve(null).ready, false);
