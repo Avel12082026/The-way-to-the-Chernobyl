@@ -74,10 +74,12 @@ assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in pat
 # Barman gets all 29 shotguns + armor 30-58.
 assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
 assert "ZONE_MAP_LOCATION1_PISTOLS" in patched
-assert ".slice(0,29)" in patched
+assert "zoneMapZhucharaArmorServer" in patched
+assert "Number(item.id)>=1&&Number(item.id)<=29" in patched
 assert "У Жучары продаются только пистолеты" in patched
 assert "ROSTOK_BARMAN_SHOTGUNS_SERVER" in patched
-assert ".slice(29,58)" in patched
+assert "rostokBarmanArmorServer" in patched
+assert "Number(item.id)>=30&&Number(item.id)<=58" in patched
 assert "У Бармена продаются только дробовики" in patched
 assert "У Бармена продаются костюмы с 30-го по 58-й" in patched
 assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
