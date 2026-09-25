@@ -36,12 +36,22 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260925-zone-travel2';
+  const ZONE_TRAVEL_CACHE = '20260925-zone-travel3';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
-    1:'/images/zone-travel/kordon.webp',
-    2:'images/combat/environments/06.webp',
+    // Loading scenes use only assets that already exist in this game.
+    1:'file_000000002bb08210800056ebfb1dce1f.png',
+    2:'images/anomaly/background.jpg',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
+  });
+  const ZONE_TRAVEL_SCENES = Object.freeze({
+    // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
+    1:{kind:'camp'},
+    // Svalka: artifact search in an anomaly. No mutants.
+    2:{kind:'anomaly',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],artifact:'images/anomaly/items/medusa.webp'},
+    // Agroprom and Rostok: firefights against mutants. No anomaly effects.
+    3:{kind:'mutant',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],weapons:['images/combat/modular/weapons/11.png','images/combat/modular/weapons/12.png'],mutant:'images/combat/mutants/snork.png'},
+    4:{kind:'mutant',actors:['images/combat/modular/characters/45-heavy.png','images/combat/modular/characters/31-heavy.png'],weapons:['images/combat/modular/weapons/15.png','images/combat/modular/weapons/11.png'],mutant:'images/combat/mutants/bloodsucker.png'}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -721,14 +731,42 @@
     const overlay = document.getElementById('zoneMapTravel');
     const image = document.getElementById('zoneMapTravelArtwork');
     const title = document.getElementById('zoneMapTravelDestination');
+    const scene = document.getElementById('zoneMapTravelScene');
     const url = zoneTravelArtworkUrl(target);
     const name = ZONE_MAP_NAMES[target] || ('Локация ' + target);
-    if (overlay) overlay.style.setProperty('--zone-travel-image', 'url("' + url + '")');
+    if (overlay) {
+      overlay.dataset.scene = ZONE_TRAVEL_SCENES[target]?.kind || '';
+      overlay.style.setProperty('--zone-travel-image', 'url("' + url + '")');
+    }
     if (image) {
       image.alt = 'Переход на локацию ' + name;
       image.src = url;
     }
     if (title) title.textContent = name.toLocaleUpperCase('ru-RU');
+    if (scene) {
+      scene.replaceChildren();
+      const config = ZONE_TRAVEL_SCENES[target] || {};
+      const addImage = (className,src,alt='') => {
+        if (!src) return null;
+        const node=document.createElement('img');
+        node.className=className;node.src=src+'?v='+ZONE_TRAVEL_CACHE;node.alt=alt;node.draggable=false;
+        scene.append(node);return node;
+      };
+      if(config.kind==='camp'){
+        const moon=document.createElement('div');moon.className='zone-travel-moon';
+        const fire=document.createElement('div');fire.className='zone-travel-campfire';
+        scene.append(moon,fire);
+      }else if(config.kind==='anomaly'){
+        const field=document.createElement('div');field.className='zone-travel-anomaly-field';
+        scene.append(field);
+        (config.actors||[]).forEach((src,i)=>addImage('zone-travel-actor zone-travel-actor-'+(i?'right':'left'),src,'Сталкер'));
+        addImage('zone-travel-artifact',config.artifact,'Артефакт Медуза');
+      }else if(config.kind==='mutant'){
+        (config.actors||[]).forEach((src,i)=>addImage('zone-travel-actor zone-travel-actor-'+(i?'right':'left'),src,'Сталкер'));
+        (config.weapons||[]).forEach((src,i)=>addImage('zone-travel-weapon zone-travel-weapon-'+(i?'right':'left'),src,'Оружие'));
+        addImage('zone-travel-mutant',config.mutant,'Мутант');
+      }
+    }
   }
 
   function setZoneTravelProgress(value) {
@@ -803,6 +841,7 @@
       </div>
       <div id="zoneMapTravel" class="zone-map-travel" hidden>
         <img id="zoneMapTravelArtwork" class="zone-map-travel-artwork" alt="" draggable="false">
+        <div id="zoneMapTravelScene" class="zone-map-travel-scene" aria-hidden="true"></div>
         <div class="zone-map-travel-shade" aria-hidden="true"></div>
         <div class="zone-map-travel-heading">
           <div class="zone-map-travel-caption">ПЕРЕХОД МЕЖДУ ЛОКАЦИЯМИ</div>
@@ -1603,7 +1642,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.6.6',
+    version: '0.6.7',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
