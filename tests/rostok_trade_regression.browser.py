@@ -182,7 +182,7 @@ async def main():
             data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
             await page.wait_for_timeout(500)
-            await page.locator('#zoneMapTravelScene img').evaluate_all("(nodes)=>Promise.all(nodes.map(n=>n.complete&&n.naturalWidth?true:new Promise(r=>{n.onload=n.onerror=()=>r(true)})))")
+            await page.locator('#zoneMapTravelScene img').evaluate_all("(nodes)=>Promise.all(nodes.map(n=>n.complete?true:new Promise(r=>{n.onload=n.onerror=()=>r(true)})))")
             await page.screenshot(path=str(OUT/filename),full_page=True)
             await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         report['travel_screens']=[x[2] for x in travel_cases]
