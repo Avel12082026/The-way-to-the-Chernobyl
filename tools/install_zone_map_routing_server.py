@@ -534,6 +534,12 @@ def _next_shop_buy_route(text,after=0):
 def insert_technician_detector_buy(text):
     if TECHNICIAN_BUY_MARK in text:
         return text,False
+    # Keep this compatibility middleware outside the Barman/Zhuchara guarded
+    # blocks so their exact-block upgrade checks remain idempotent.
+    for mark in (BARMAN_MARK,SHOP_MARK):
+        pos=text.find(mark)
+        if pos>=0:
+            return text[:pos]+TECHNICIAN_BUY_ALIAS+text[pos:],True
     pos=_next_shop_buy_route(text,0)
     if pos<0:
         raise RuntimeError('Не найден маршрут покупки для Дизеля.')
