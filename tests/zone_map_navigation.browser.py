@@ -102,9 +102,9 @@ async def main():
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
 
-        # New Svalka artwork is 864x1536 and must remain fully proportional.
+        # New Svalka artwork is 941x1672 and must remain fully proportional.
         canvas2=await page.locator('#zoneMapCanvas').bounding_box()
-        assert abs((canvas2['width']/canvas2['height'])-(864/1536))<0.02,canvas2
+        assert abs((canvas2['width']/canvas2['height'])-(941/1672))<0.02,canvas2
 
         # Bottom Svalka transition returns to Kordon through the loading screen.
         await page.locator('[data-zone-point="transition-to-1"]').click()
