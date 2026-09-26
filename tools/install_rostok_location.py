@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse, hashlib, os, re, shutil, subprocess, tempfile, time, urllib.request
 
 SERVICE='pocketzone.service'
-CACHE_KEY='20260926-agroprom-map-hq1'
+CACHE_KEY='20260926-rostok-map-hq1'
 MAP_SHA='faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'
 BAR_SHA='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
 MAP_SIZE=(865,1536)
