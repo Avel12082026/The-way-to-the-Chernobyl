@@ -50,6 +50,7 @@ assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
 assert "1:'zone-map1.png'" in patched
 assert "2:'zone-map2.png'" in patched
+assert "3:'zone-map3.png'" in patched
 assert "4:'zone-map4.jpg'" in patched
 assert "4:'rostok-bar.png'" in patched
 assert "if(![1,2,3,4].includes(zoneLocation))" in patched
@@ -104,6 +105,7 @@ assert "sourceVendor||'')==='barman'" in v4_upgraded
 assert v4_upgraded.count(mod.ROUTE_MARK)==1
 assert "1:'zone-map1.png'" in v4_upgraded
 assert "2:'zone-map2.png'" in v4_upgraded
+assert "3:'zone-map3.png'" in v4_upgraded
 
 # A live V4 with the first Barman middleware (before consumables were added)
 # must be upgraded in place instead of being treated as already current.
@@ -142,7 +144,7 @@ upgraded,changed3=mod.patch(v3)
 assert changed3
 assert mod.ROUTE_MARK in upgraded
 assert "// ZONE_MAP_ROUTING_V3" not in upgraded
-assert "1:'zone-map1.png'" in upgraded and "2:'zone-map2.png'" in upgraded
+assert "1:'zone-map1.png'" in upgraded and "2:'zone-map2.png'" in upgraded and "3:'zone-map3.png'" in upgraded
 assert "4:'zone-map4.jpg'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
@@ -170,7 +172,7 @@ v3_live=source.replace(
 upgraded_live,changed_live=mod.patch(v3_live)
 assert changed_live
 assert mod.ROUTE_MARK in upgraded_live
-assert "1:'zone-map1.png'" in upgraded_live and "2:'zone-map2.png'" in upgraded_live
+assert "1:'zone-map1.png'" in upgraded_live and "2:'zone-map2.png'" in upgraded_live and "3:'zone-map3.png'" in upgraded_live
 assert "// ZONE_MAP_ROUTING_V3" not in upgraded_live
 assert "const PVE_ADAPTIVE_COMBAT_V1=true;" in upgraded_live
 assert upgraded_live.count("app.post('/api/raid/zone-step'")==1
