@@ -95,8 +95,8 @@ async def main():
         travel=page.locator('#zoneMapTravel')
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelDestination').inner_text()=='СВАЛКА'
-        assert 'images/anomaly/background.jpg' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
-        assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='anomaly'
+        assert '/images/zone-travel/svalka-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='location'
         assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==0
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
