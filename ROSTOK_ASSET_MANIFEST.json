@@ -1,17 +1,17 @@
 {
-  "version": "2026-09-22-rostok1",
+  "version": "2026-09-26-rostok-map-hq1",
   "policy": "Original image bytes only. No resizing, transcoding, recompression, quality reduction, or format conversion.",
   "assets": [
     {
       "logical_name": "Rostok zone map",
       "server_path": "ui/zone-map4.jpg",
-      "original_library_name": "1000456659.png",
+      "original_library_name": "1000456657.png",
       "actual_format": "JPEG",
       "width": 865,
       "height": 1536,
-      "size_bytes": 392088,
-      "sha256": "017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa",
-      "note": "The supplied file had a .png name but JPEG bytes. It is renamed to .jpg without changing any bytes."
+      "size_bytes": 438558,
+      "sha256": "faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee",
+      "note": "The supplied file has a .png name but JPEG bytes. It is stored as zone-map4.jpg byte-for-byte with no resizing, transcoding, or recompression."
     },
     {
       "logical_name": "Rostok 100 RADS camp/bar",
