@@ -36,7 +36,7 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-rostok-original1';
+  const ZONE_TRAVEL_CACHE = '20260926-barman-hub1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -493,7 +493,7 @@
     el.setAttribute('aria-label', 'Россток — бар 100 RADS');
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
-        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/images/traders/barman-hub.png?v=${ZONE_TRAVEL_CACHE}" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
