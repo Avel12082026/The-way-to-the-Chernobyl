@@ -301,7 +301,10 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
                     .filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly);
                 if(pool.length){
                     const a=pool[Math.floor(Math.random()*pool.length)];
-                    const payload={...a,tier:zoneTier,attemptsUsed:0,resolved:false};
+                    const tierArtifacts=zoneTier===5
+                        ?(Array.isArray(a.artifacts)?a.artifacts:[]).filter(name=>(Array.isArray(SHOP_ARTIFACTS)?SHOP_ARTIFACTS:[]).some(item=>item&&item.name===name&&Number(item.tier)===5))
+                        :a.artifacts;
+                    const payload={...a,artifacts:tierArtifacts,tier:zoneTier,attemptsUsed:0,resolved:false};
                     pendingType='anomaly';pendingPayload=JSON.stringify(payload);event={type:'anomaly',anomaly:payload};
                 }
             }else if(zoneKind==='mutant'&&roll<0.20){
