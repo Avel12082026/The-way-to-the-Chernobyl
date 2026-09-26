@@ -17,12 +17,12 @@ assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'locat
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
-assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
-assert(js.includes("kind:'camp'")&&js.includes("kind:'location'")&&js.includes("kind:'mutant'"),'travel scene types missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'"),'destination loading artwork for four current locations missing');
+assert(js.includes("kind:'camp'")&&js.includes("kind:'location'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
-assert(js.includes("3:{kind:'location'}")&&js.includes("images/combat/mutants/bloodsucker.png"),'Agroprom authored loading screen or Rostok mutant loading overlay missing');
-assert(js.includes("fighters:[{armorId:45,weaponId:15},{armorId:31,weaponId:11}]")&&js.includes("fighters.resolve")&&js.includes("renderZoneTravelCombat"),'Rostok combat fighter loading renderer missing');
+assert(js.includes("3:{kind:'location'}")&&js.includes("4:{kind:'location'}"),'Agroprom/Rostok authored loading screens missing');
+assert(js.includes("renderZoneTravelCombat"),'travel combat renderer helper missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
 const campTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="camp"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
