@@ -201,13 +201,9 @@ async def main():
             if title=='КОРДОН':
                 assert kind=='camp'
                 assert await page.locator('#zoneMapTravelScene img').count()==0
-            elif title=='СВАЛКА':
-                assert kind=='anomaly'
-                assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==0
-                assert await page.locator('#zoneMapTravelScene .zone-travel-artifact').count()==1
             else:
-                assert kind=='mutant'
-                assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==1
+                assert kind=='location'
+                assert await page.locator('#zoneMapTravelScene img').count()==0
             await page.screenshot(path=str(OUT/filename),full_page=True)
             await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         report['travel_screens']=[x[2] for x in travel_cases]
