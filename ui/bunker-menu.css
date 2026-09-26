@@ -244,7 +244,15 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
 }
 #zoneMapScreen[data-scene=""] .zone-map-travel-scene{display:none;}
 #zoneMapScreen .zone-map-travel[data-scene="camp"]::before{display:none;}
+#zoneMapScreen .zone-map-travel[data-scene="location"]::before{display:none;}
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{
+  inset:0;left:0;top:0;
+  width:100%;height:100%;max-width:none;max-height:none;
+  transform:none;
+  object-fit:contain;object-position:center;
+  filter:none;image-rendering:auto;
+}
+#zoneMapScreen .zone-map-travel[data-scene="location"] .zone-map-travel-artwork{
   inset:0;left:0;top:0;
   width:100%;height:100%;max-width:none;max-height:none;
   transform:none;
@@ -269,6 +277,8 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
 #zoneMapScreen .zone-travel-camp-stalker-2{left:31%;bottom:12%;transform:scale(.70);opacity:.88;}
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-scene,
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-shade{display:none;}
+#zoneMapScreen .zone-map-travel[data-scene="location"] .zone-map-travel-scene,
+#zoneMapScreen .zone-map-travel[data-scene="location"] .zone-map-travel-shade{display:none;}
 #zoneMapScreen .zone-map-travel[data-scene="anomaly"] .zone-map-travel-artwork{filter:brightness(.58) saturate(.75) contrast(1.08);}
 #zoneMapScreen .zone-map-travel[data-scene="mutant"] .zone-map-travel-artwork{filter:brightness(.55) saturate(.74) contrast(1.12);}
 @keyframes zoneTravelPulse{from{transform:scale(.94);opacity:.72}to{transform:scale(1.05);opacity:1}}
@@ -284,6 +294,9 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   text-align:center;text-shadow:0 3px 6px #000,0 0 14px #000;
 }
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-heading{
+  display:none;
+}
+#zoneMapScreen .zone-map-travel[data-scene="location"] .zone-map-travel-heading{
   display:none;
 }
 #zoneMapScreen .zone-map-travel-caption{
