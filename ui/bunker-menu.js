@@ -26,7 +26,7 @@
   let worldPositionTimer = 0;
   let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Локация 5'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Тёмная долина'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
@@ -37,7 +37,7 @@
     4: {path:'/api/zone-map/4', width:865, height:1536},
     5: {path:'/api/zone-map/5', width:941, height:1672}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-location5-map1';
+  const ZONE_TRAVEL_CACHE = '20260926-dark-valley1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -112,14 +112,14 @@
       {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:93.76,y:89.32,targetLocation:2,unlock:'none'}
     ],
     5: [
-      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:66.45,y:5.76,targetLocation:4,unlock:'none'},
+      {id:'transition-5-future-top',kind:'transition',label:'Переход на будущую локацию',x:66.45,y:5.76,future:true},
       {id:'enemy-5-1',kind:'enemy',label:'Наёмники',x:51.30,y:9.84},
       {id:'mutant-5-1',kind:'mutant',label:'Мутанты',x:15.11,y:35.05},
       {id:'anomaly-5-1',kind:'anomaly',label:'Аномалия',x:44.42,y:46.86},
       {id:'anomaly-5-2',kind:'anomaly',label:'Аномалия',x:59.68,y:61.21},
       {id:'mutant-5-2',kind:'mutant',label:'Мутанты',x:76.91,y:76.71},
       {id:'enemy-5-2',kind:'enemy',label:'Наёмники',x:17.32,y:78.37},
-      {id:'transition-5-future-bottom',kind:'transition',label:'Переход на будущую локацию',x:37.41,y:88.40,future:true}
+      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:37.41,y:88.40,targetLocation:4,unlock:'none'}
     ]
   });
 
