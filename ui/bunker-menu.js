@@ -26,7 +26,7 @@
   let worldPositionTimer = 0;
   let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Локация 5'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
@@ -34,9 +34,10 @@
     1: {path:'/api/zone-map/1', width:941, height:1672},
     2: {path:'/api/zone-map/2', width:941, height:1672},
     3: {path:'/api/zone-map/3', width:940, height:1673},
-    4: {path:'/api/zone-map/4', width:865, height:1536}
+    4: {path:'/api/zone-map/4', width:865, height:1536},
+    5: {path:'/api/zone-map/5', width:941, height:1672}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-rostok-map-hq1';
+  const ZONE_TRAVEL_CACHE = '20260926-location5-map1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -45,7 +46,9 @@
     // NII Agroprom uses the approved people-free loading artwork served byte-for-byte by the game server.
     3:'/images/zone-travel/agroprom-loading.png',
     // Rostok uses the approved guarded factory loading artwork served byte-for-byte by the game server.
-    4:'/images/zone-travel/rostok-loading.png'
+    4:'/images/zone-travel/rostok-loading.png',
+    // Until a dedicated loading illustration is approved, location 5 uses its exact map image without effects.
+    5:'/api/zone-map/5'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
@@ -54,7 +57,8 @@
     2:{kind:'location'},
     // Agroprom and Rostok: real game armor + weapons fitted by CombatFighters.
     3:{kind:'location'},
-    4:{kind:'location'}
+    4:{kind:'location'},
+    5:{kind:'location'}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -101,11 +105,21 @@
       {id:'camp-4',kind:'camp',label:'Бар «100 RADS»',x:65.32,y:37.76},
       {id:'enemy-4-3',kind:'enemy',label:'Наёмники',x:20.81,y:41.28},
       {id:'mutant-4-1',kind:'mutant',label:'Мутанты',x:35.38,y:69.99},
-      {id:'transition-4-future-left',kind:'transition',label:'Переход на будущую локацию',x:6.94,y:78.78,future:true},
+      {id:'transition-to-5',kind:'transition',label:'Переход на Локацию 5',x:6.94,y:78.78,targetLocation:5,unlock:'none'},
       {id:'anomaly-4-3',kind:'anomaly',label:'Аномалия',x:71.91,y:82.36},
       {id:'mutant-4-2',kind:'mutant',label:'Мутанты',x:20.92,y:86.13},
       {id:'mutant-4-3',kind:'mutant',label:'Мутанты',x:45.66,y:88.80},
       {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:93.76,y:89.32,targetLocation:2,unlock:'none'}
+    ],
+    5: [
+      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:66.45,y:5.76,targetLocation:4,unlock:'none'},
+      {id:'enemy-5-1',kind:'enemy',label:'Наёмники',x:51.30,y:9.84},
+      {id:'mutant-5-1',kind:'mutant',label:'Мутанты',x:15.11,y:35.05},
+      {id:'anomaly-5-1',kind:'anomaly',label:'Аномалия',x:44.42,y:46.86},
+      {id:'anomaly-5-2',kind:'anomaly',label:'Аномалия',x:59.68,y:61.21},
+      {id:'mutant-5-2',kind:'mutant',label:'Мутанты',x:76.91,y:76.71},
+      {id:'enemy-5-2',kind:'enemy',label:'Наёмники',x:17.32,y:78.37},
+      {id:'transition-5-future-bottom',kind:'transition',label:'Переход на будущую локацию',x:37.41,y:88.40,future:true}
     ]
   });
 
