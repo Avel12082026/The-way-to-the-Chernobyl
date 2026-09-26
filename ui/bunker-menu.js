@@ -36,7 +36,7 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-kordon-village1';
+  const ZONE_TRAVEL_CACHE = '20260926-kordon-village2';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the approved Rookie Village night artwork stored with the client.
     1:'images/zone-travel/kordon-village.webp',
