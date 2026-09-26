@@ -1032,6 +1032,10 @@
         await travelToZoneLocation(4);
         return;
       }
+      if (target === 5) {
+        await travelToZoneLocation(5);
+        return;
+      }
       if (point?.future) {
         if (!secondPistolDecadeReady()) {
           if (typeof showGameAlert === 'function') {
