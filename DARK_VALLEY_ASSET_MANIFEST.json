@@ -1,0 +1,16 @@
+{
+  "version": "2026-09-26-dark-valley1",
+  "policy": "Original image bytes only. No resizing, transcoding, recompression, quality reduction, or format conversion.",
+  "assets": [
+    {
+      "logical_name": "Dark Valley zone map",
+      "server_path": "ui/zone-map5.png",
+      "original_library_name": "постапокалиптическая_карта_заброшенного_комплекса.png",
+      "actual_format": "PNG",
+      "width": 941,
+      "height": 1672,
+      "size_bytes": 3559503,
+      "sha256": "c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9"
+    }
+  ]
+}
