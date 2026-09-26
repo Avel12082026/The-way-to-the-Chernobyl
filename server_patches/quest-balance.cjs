@@ -405,7 +405,6 @@ module.exports=function installQuestBalance({
     const result=db.prepare("UPDATE quest_receipts SET status='abandoned' WHERE player_id=? AND quest_id=? AND status='accepted'").run(id,quest.id);
     if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
     q.accepted=q.accepted.filter(x=>x.id!==quest.id);q.activeIds=q.activeIds.filter(id=>id!==quest.id);q.activeId=q.activeIds[0]||null;
-    if(refreshVendor(quest.vendor))q.offerEpoch[quest.vendor]=integer(q.offerEpoch[quest.vendor])+1;
     save(id,data);return publicState(id,data);
   })());
   endpoint('/turn-in',(id,body)=>db.transaction(()=>{
@@ -423,6 +422,7 @@ module.exports=function installQuestBalance({
     const result=db.prepare("UPDATE quest_receipts SET status='completed',payload=? WHERE player_id=? AND quest_id=? AND status='accepted'").run(JSON.stringify(done),id,quest.id);
     if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
     q.accepted=q.accepted.filter(x=>x.id!==quest.id);q.activeIds=q.activeIds.filter(id=>id!==quest.id);q.activeId=q.activeIds[0]||null;
+    if(refreshVendor(quest.vendor))q.offerEpoch[quest.vendor]=integer(q.offerEpoch[quest.vendor])+1;
     save(id,data);
     return {reward:quest.reward,coins:data.coins,inventory:data.inventory,quickSlots:data.quickSlots,...publicState(id,data)};
   })());
