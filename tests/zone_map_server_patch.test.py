@@ -73,6 +73,10 @@ assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
 assert "if(zoneLocation===3)npc.faction='Военные'" in patched
 assert "if(zoneLocation===4)npc.faction='Наёмники'" in patched
 assert "if(zoneLocation===5)npc.faction='Наёмники'" in patched
+assert "else if(zoneTier===5)" in patched
+assert "pool=list.filter(m=>(Number(m.tier)||0)===5)" in patched
+assert "tierArtifacts=zoneTier===5" in patched
+assert "Number(item.tier)===5" in patched
 assert "npc.tier=zoneTier" in patched
 
 # Mutants/anomalies are routed by the logical location tier; Rostok therefore yields tier 4.
