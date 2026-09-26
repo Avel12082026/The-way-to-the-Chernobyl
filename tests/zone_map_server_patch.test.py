@@ -48,6 +48,7 @@ assert "app.post('/api/player/position'" in patched
 assert "sourceVendor||'')==='barman'" in patched
 assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
+assert "1:'zone-map1.png'" in patched
 assert "4:'zone-map4.jpg'" in patched
 assert "4:'rostok-bar.png'" in patched
 assert "if(![1,2,3,4].includes(zoneLocation))" in patched
@@ -100,6 +101,7 @@ assert mod.BARMAN_MARK in v4_upgraded
 assert mod.POSITION_MARK in v4_upgraded
 assert "sourceVendor||'')==='barman'" in v4_upgraded
 assert v4_upgraded.count(mod.ROUTE_MARK)==1
+assert "1:'zone-map1.png'" in v4_upgraded
 
 # A live V4 with the first Barman middleware (before consumables were added)
 # must be upgraded in place instead of being treated as already current.
