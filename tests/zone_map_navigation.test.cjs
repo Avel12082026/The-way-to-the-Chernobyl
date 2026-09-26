@@ -95,7 +95,8 @@ assert(!rostokBlock.includes('/images/zone-travel/kordon-original.jpg'),'Kordon 
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
-assert(js.includes('/images/traders/barman-hub.png?v=')&&js.includes('id="barmanHubArtwork"'),'Barman approved portrait artwork missing');
+assert(js.includes('id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/images/traders/barman-hub.png?v=${ZONE_TRAVEL_CACHE}"'),'Barman approved portrait artwork missing');
+assert(js.includes('id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3"'),'Rostok bar overview must remain the bar scene until Barman is tapped');
 for(const [action,label] of [['talk','Говорить'],['trade','Торговля'],['back','Назад']]){
   assert(js.includes('data-barman-action="'+action+'"'),`Barman ${action} action missing`);
   assert(js.includes('>'+label+'</button>'),`Barman ${label} label missing`);
