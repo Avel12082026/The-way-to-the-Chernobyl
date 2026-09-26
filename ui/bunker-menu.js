@@ -36,19 +36,20 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-kordon-original1';
+  const ZONE_TRAVEL_CACHE = '20260926-svalka-original1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
-    2:'images/anomaly/background.jpg',
+    // Svalka uses the approved people-free loading artwork served byte-for-byte by the game server.
+    2:'/images/zone-travel/svalka-loading.png',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
     1:{kind:'camp'},
-    // Svalka: artifact search in an anomaly. No mutants.
-    2:{kind:'anomaly',actors:['images/combat/modular/characters/31-heavy.png','images/combat/modular/characters/16-heavy.png'],detector:'images/anomaly/items/riper.webp',artifact:'images/anomaly/items/medusa.webp'},
+    // Svalka: authored scrapyard loading artwork only. No people, anomaly overlays or mutants.
+    2:{kind:'location'},
     // Agroprom and Rostok: real game armor + weapons fitted by CombatFighters.
     3:{kind:'mutant',fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}],mutant:'images/combat/mutants/snork.png'},
     4:{kind:'mutant',fighters:[{armorId:45,weaponId:15},{armorId:31,weaponId:11}],mutant:'images/combat/mutants/bloodsucker.png'}
