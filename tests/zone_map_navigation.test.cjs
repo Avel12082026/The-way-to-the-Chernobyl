@@ -12,19 +12,20 @@ assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')
 
 assert(js.includes("version: '0.6.9'"),'ZoneMap API version mismatch');
 assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Локация 5'})"),'five map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
 assert(js.includes("id:'transition-to-1'")&&js.includes("id:'transition-to-3'")&&js.includes("id:'transition-to-4'")&&js.includes("id:'anomaly-2-1'")&&js.includes("id:'mutant-2-1'")&&js.includes("id:'enemy-2-1'"),'Svalka hotspot actions must remain wired after map replacement');
 assert(js.includes("3: {path:'/api/zone-map/3', width:940, height:1673}"),'NII Agroprom asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-3-1'")&&js.includes("id:'mutant-3-1'")&&js.includes("id:'enemy-3-1'"),'Agroprom hotspot actions must remain wired after map replacement');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
+assert(js.includes("5: {path:'/api/zone-map/5', width:941, height:1672}"),'location 5 asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-1-1'")&&js.includes("id:'mutant-1-1'")&&js.includes("id:'enemy-1-1'")&&js.includes("id:'camp-1'"),'Cordon hotspot actions must remain wired after map replacement');
-assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'"),'destination loading artwork for four current locations missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/api/zone-map/5'"),'destination loading artwork for five current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'location'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
-assert(js.includes("3:{kind:'location'}")&&js.includes("4:{kind:'location'}"),'Agroprom/Rostok authored loading screens missing');
+assert(js.includes("3:{kind:'location'}")&&js.includes("4:{kind:'location'}")&&js.includes("5:{kind:'location'}"),'Agroprom/Rostok/location 5 loading screens missing');
 assert(js.includes("renderZoneTravelCombat"),'travel combat renderer helper missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
@@ -53,7 +54,7 @@ assert(js.includes('Чтобы попасть на НИИ Агропром, до
 assert(js.includes('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.'),'Rostok gate warning missing');
 assert(js.includes('await travelToZoneLocation(4)'),'Rostok transition must use loading screen');
 
-const loc4Block=(js.match(/4: \[([\s\S]*?)\n    \]\n  \}\);/)||[])[1]||'';
+const loc4Block=(js.match(/4: \[([\s\S]*?)\n    \],\n    5:/)||[])[1]||'';
 assert.equal((loc4Block.match(/kind:'enemy'/g)||[]).length,3,'Rostok must have three human enemy markers');
 assert.equal((loc4Block.match(/label:'Наёмники'/g)||[]).length,3,'Rostok human enemies must be Mercenaries only');
 assert.equal((loc4Block.match(/kind:'mutant'/g)||[]).length,3,'Rostok mutant marker count changed');
@@ -62,6 +63,16 @@ assert.equal((loc4Block.match(/kind:'transition'/g)||[]).length,3,'Rostok transi
 assert.equal((loc4Block.match(/kind:'camp'/g)||[]).length,1,'Rostok must have one clickable camp');
 assert(loc4Block.includes("id:'camp-4'")&&loc4Block.includes("label:'Бар «100 RADS»'"),'Rostok camp/bar hotspot missing');
 assert(loc4Block.includes("id:'transition-to-2'")&&loc4Block.includes("x:93.76,y:89.32,targetLocation:2"),'Rostok -> Svalka transition must be bottom-right');
+assert(loc4Block.includes("id:'transition-to-5'")&&loc4Block.includes("x:6.94,y:78.78,targetLocation:5"),'Rostok bottom-left transition must open location 5');
+const loc5Block=(js.match(/5: \[([\s\S]*?)\n    \]\n  \}\);/)||[])[1]||'';
+assert.equal((loc5Block.match(/kind:'enemy'/g)||[]).length,2,'Location 5 must have two mercenary markers');
+assert.equal((loc5Block.match(/label:'Наёмники'/g)||[]).length,2,'Location 5 human enemies must be Mercenaries');
+assert.equal((loc5Block.match(/kind:'mutant'/g)||[]).length,2,'Location 5 must have two mutant markers');
+assert.equal((loc5Block.match(/kind:'anomaly'/g)||[]).length,2,'Location 5 must have two anomaly markers');
+assert.equal((loc5Block.match(/kind:'transition'/g)||[]).length,2,'Location 5 must have back and future transition markers');
+assert(loc5Block.includes("id:'transition-to-4'")&&loc5Block.includes("targetLocation:4"),'Location 5 must return to Rostok');
+assert(loc5Block.includes("transition-5-future-bottom")&&loc5Block.includes("future:true"),'Location 5 bottom transition must remain reserved');
+
 assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-position3'),'Rostok bar screen missing');
 assert(js.includes("if (zoneLocation === 4)")&&js.includes('openRostokCamp();'),'Rostok camp marker must open bar screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
