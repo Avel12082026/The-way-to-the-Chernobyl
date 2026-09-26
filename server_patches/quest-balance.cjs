@@ -9,7 +9,7 @@ module.exports=function installQuestBalance({
 }){
   if(!app||!db||typeof requireAuth!=='function')throw new Error('quest-balance: missing server dependencies');
 
-  const vendors=new Set(['leonov','zhuchara','diesel']);
+  const vendors=new Set(['leonov','zhuchara','barman','diesel']);
   const regularAnomalies=(RAID_ANOMALIES||[]).filter(a=>Number(a.tier)>=1&&Number(a.tier)<=8&&!a.isNamedArtifactAnomaly);
   const artifactByName=new Map((SHOP_ARTIFACTS||[]).filter(a=>!a.adminOnly).map(a=>[a.name,a]));
   const artifactMeta=new Map();
@@ -225,6 +225,8 @@ module.exports=function installQuestBalance({
     q.activeIds=[...new Set(active)].filter(id=>typeof id==='string'&&acceptedIds.has(id));
     q.activeId=q.activeIds[0]||null; // Compatibility with older clients.
     q.lastRaidReturnAt=integer(q.lastRaidReturnAt);
+    q.offerEpoch=q.offerEpoch&&typeof q.offerEpoch==='object'&&!Array.isArray(q.offerEpoch)?q.offerEpoch:{};
+    for(const vendor of ['zhuchara','barman'])q.offerEpoch[vendor]=integer(q.offerEpoch[vendor]);
     data.quests=q;return q;
   }
   function load(playerId){
@@ -279,13 +281,19 @@ module.exports=function installQuestBalance({
     const used=db.prepare('SELECT COUNT(*) AS n FROM quest_receipts WHERE player_id=? AND vendor=? AND day=?').get(playerId,vendor,today()).n;
     return Math.max(0,OFFERS_PER_VENDOR-Number(used));
   }
-  function rng(playerId,vendor,index){
-    return crypto.createHash('sha256').update([playerId,vendor,today(),index].join('|')).digest().readUInt32BE(0)/0x100000000;
+  const refreshVendor=vendor=>vendor==='zhuchara'||vendor==='barman';
+  const remainingOffers=(playerId,vendor)=>refreshVendor(vendor)?OFFERS_PER_VENDOR:remainingToday(playerId,vendor);
+  function rng(playerId,vendor,index,epoch=0){
+    return crypto.createHash('sha256').update([playerId,vendor,today(),epoch,index].join('|')).digest().readUInt32BE(0)/0x100000000;
   }
-  function sample(pool,count,playerId,vendor,offset=0){
+  function sample(pool,count,playerId,vendor,offset=0,epoch=0){
     const left=[...pool],out=[];
-    for(let i=0;i<count&&left.length;i++)out.push(left.splice(Math.floor(rng(playerId,vendor,offset+i)*left.length),1)[0]);
+    for(let i=0;i<count&&left.length;i++)out.push(left.splice(Math.floor(rng(playerId,vendor,offset+i,epoch)*left.length),1)[0]);
     return out;
+  }
+  function questTier(item){
+    if(item?.kind==='artifact')return integer(artifactMeta.get(item.name)?.tier,integer(item.tier));
+    return integer(item?.tier);
   }
   function band(items){
     const ordered=[...items].sort((a,b)=>(Number(a.unlockLevel??a.tier)||0)-(Number(b.unlockLevel??b.tier)||0)||(Number(a.price)||0)-(Number(b.price)||0)||a.name.localeCompare(b.name));
@@ -299,29 +307,41 @@ module.exports=function installQuestBalance({
     return Math.round(resolved.price*markup)*qty;
   }
   function makeOffers(playerId,data,vendor){
-    if(!vendors.has(vendor)||remainingToday(playerId,vendor)===0)return [];
+    if(!vendors.has(vendor)||remainingOffers(playerId,vendor)===0)return [];
     const level=Math.max(1,integer(data.level,1));
-    let candidates=[];
-    if(vendor==='zhuchara'||vendor==='diesel'){
-      const kind=vendor==='zhuchara'?'armor':'weapon';
-      candidates=band([...lookup.values()].filter(x=>x.kind===kind&&integer(x.unlockLevel,Number.MAX_SAFE_INTEGER)<=level));
+    const qstate=normalizeQuestState(data),epoch=refreshVendor(vendor)?integer(qstate.offerEpoch?.[vendor]):0;
+    const fixedTier=vendor==='zhuchara'?2:vendor==='barman'?5:0;
+    let candidates=[],selected=[];
+    if(fixedTier){
+      const kinds=['artifact','armor','weapon'];
+      candidates=kinds.flatMap((kind,index)=>sample(
+        [...lookup.values()].filter(x=>x.kind===kind&&questTier(x)===fixedTier),
+        1,playerId,vendor,100+index*10,epoch
+      ));
+      selected=candidates;
+    }else if(vendor==='diesel'){
+      candidates=band([...lookup.values()].filter(x=>x.kind==='weapon'&&integer(x.unlockLevel,Number.MAX_SAFE_INTEGER)<=level));
+      selected=sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30,epoch);
     }else{
       const artifactTier=Math.min(8,1+Math.floor(level/20));
       const mutantTier=Math.min(28,1+Math.floor(level/20));
       const lootTier=new Map((PVE_MUTANTS||[]).filter(m=>m.loot&&Number(m.lootChance)>0).map(m=>[m.loot,Number(m.tier)]));
-      const artBand=band([...lookup.values()].filter(x=>x.kind==='artifact'&&x.tier<=artifactTier));
+      const artBand=band([...lookup.values()].filter(x=>x.kind==='artifact'&&questTier(x)<=artifactTier));
       const lootBand=band([...lookup.values()].filter(x=>x.kind==='loot'&&lootTier.has(x.name)&&lootTier.get(x.name)<=mutantTier).map(x=>({...x,tier:lootTier.get(x.name)})));
-      // Guarantee both specialties when both pools are nonempty.
-      candidates=[...sample(artBand,2,playerId,vendor,10),...sample(lootBand,1,playerId,vendor,20)];
+      candidates=[...sample(artBand,2,playerId,vendor,10,epoch),...sample(lootBand,1,playerId,vendor,20,epoch)];
+      selected=sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30,epoch);
     }
-    return sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30).map((item,index)=>{
-      const qty=['weapon','armor'].includes(item.kind)?1:Math.min(3,1+Math.floor(level/200));
-      const id=crypto.createHash('sha256').update([playerId,vendor,today(),item.name,qty].join('|')).digest('hex').slice(0,24);
-      const saleValue=bestSale(item.name,qty,playerId),premium=.20+Math.min(.15,(Number(item.tier)||1)*.01);
-      const title=vendor==='leonov'?(item.kind==='loot'?'Образцы для лаборатории':'Артефакт для исследований'):vendor==='zhuchara'?'Броня для заказа':'Оружие для мастерской';
-      return {id,vendor,title,itemName:item.name,qty,kind:item.kind,reward:Math.max(saleValue+1,Math.ceil(saleValue*(1+premium))),saleValue,
-        levelAtOffer:level,difficulty:Number(item.tier)||1,index,day:today(),baseOnly:['weapon','armor'].includes(item.kind)};
-    }).filter(q=>!receipt(playerId,q.id)).slice(0,remainingToday(playerId,vendor));
+    return selected.map((item,index)=>{
+      const qty=fixedTier?1:(['weapon','armor'].includes(item.kind)?1:Math.min(3,1+Math.floor(level/200)));
+      const id=crypto.createHash('sha256').update([playerId,vendor,today(),epoch,item.name,qty].join('|')).digest('hex').slice(0,24);
+      const saleValue=bestSale(item.name,qty,playerId);
+      const reward=Math.max(saleValue+1,Math.ceil(saleValue*1.50));
+      const title=fixedTier
+        ?(item.kind==='artifact'?`Артефакт ${fixedTier} тира для заказа`:item.kind==='armor'?`Броня ${fixedTier} тира для заказа`:`Оружие ${fixedTier} тира для заказа`)
+        :vendor==='leonov'?(item.kind==='loot'?'Образцы для лаборатории':'Артефакт для исследований'):'Оружие для мастерской';
+      return {id,vendor,title,itemName:item.name,qty,kind:item.kind,reward,saleValue,
+        levelAtOffer:level,difficulty:questTier(item)||1,index,day:today(),offerEpoch:epoch,baseOnly:['weapon','armor'].includes(item.kind)};
+    }).filter(q=>!receipt(playerId,q.id)).slice(0,remainingOffers(playerId,vendor));
   }
   function history(playerId,before=0){
     const rows=before
@@ -344,12 +364,12 @@ module.exports=function installQuestBalance({
     });
   }
   const API='/api/quests';
-  app.get(API+'/version',(_req,res)=>res.json({success:true,version:2,balanceVersion:'20260920-five1',multiActive:true,maxAccepted:MAX_ACCEPTED,offersPerVendorPerDay:OFFERS_PER_VENDOR}));
+  app.get(API+'/version',(_req,res)=>res.json({success:true,version:2,balanceVersion:'20260926-tierquests1',multiActive:true,maxAccepted:MAX_ACCEPTED,offersPerVendorPerDay:OFFERS_PER_VENDOR,refreshAfterTurnIn:['zhuchara','barman']}));
   endpoint('/state',id=>publicState(id,load(id)));
   endpoint('/history',(id,body)=>history(id,integer(body.before)));
   endpoint('/offers',(id,body)=>{
     atBase(id);if(!vendors.has(body.vendor))throw new Error('Неизвестный заказчик');
-    return {offers:makeOffers(id,load(id),body.vendor),remainingToday:remainingToday(id,body.vendor)};
+    return {offers:makeOffers(id,load(id),body.vendor),remainingToday:remainingOffers(id,body.vendor)};
   });
   endpoint('/accept',(id,body)=>db.transaction(()=>{
     atBase(id);if(!vendors.has(body.vendor))throw new Error('Неизвестный заказчик');
@@ -385,6 +405,7 @@ module.exports=function installQuestBalance({
     const result=db.prepare("UPDATE quest_receipts SET status='abandoned' WHERE player_id=? AND quest_id=? AND status='accepted'").run(id,quest.id);
     if(result.changes!==1)throw new Error('Этот заказ уже закрыт');
     q.accepted=q.accepted.filter(x=>x.id!==quest.id);q.activeIds=q.activeIds.filter(id=>id!==quest.id);q.activeId=q.activeIds[0]||null;
+    if(refreshVendor(quest.vendor))q.offerEpoch[quest.vendor]=integer(q.offerEpoch[quest.vendor])+1;
     save(id,data);return publicState(id,data);
   })());
   endpoint('/turn-in',(id,body)=>db.transaction(()=>{
