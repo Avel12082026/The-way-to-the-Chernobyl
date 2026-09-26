@@ -1,0 +1,38 @@
+name: One-time location 5 cache bump
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bump-location5-cache-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump location 5 client cache
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          replacements={
+            'ui/bunker-menu.css?v=20260926-rostok-map-hq1':'ui/bunker-menu.css?v=20260926-location5-map1',
+            'ui/bunker-menu.js?v=20260926-rostok-map-hq1':'ui/bunker-menu.js?v=20260926-location5-map1',
+          }
+          for old,new in replacements.items():
+              if old not in s: raise SystemExit(f'missing cache ref: {old}')
+              s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit cache bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "chore: bust cache for location 5 map"
+          git push origin HEAD:main
