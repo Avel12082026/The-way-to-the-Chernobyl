@@ -17,7 +17,7 @@ assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'locat
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
-assert(js.includes("1:'images/zone-travel/kordon-village.webp'")&&js.includes("2:'images/anomaly/background.jpg'")&&js.includes("3:'images/combat/environments/11.webp'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'images/anomaly/background.jpg'")&&js.includes("3:'images/combat/environments/11.webp'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'anomaly'")&&js.includes("kind:'mutant'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("images/anomaly/items/medusa.webp")&&!js.includes("2:{kind:'anomaly'")===false,'Svalka artifact scene missing');
@@ -26,7 +26,9 @@ assert(js.includes("fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}]
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
 const campTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="camp"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
-assert(campTravelStyle.includes('width:auto')&&campTravelStyle.includes('height:auto')&&campTravelStyle.includes('max-width:100%')&&campTravelStyle.includes('max-height:100%')&&campTravelStyle.includes('object-fit:contain')&&campTravelStyle.includes('filter:none'),'Kordon camp loading artwork must keep intrinsic resolution without upscale or quality filters');
+assert(campTravelStyle.includes('width:100%')&&campTravelStyle.includes('height:100%')&&campTravelStyle.includes('object-fit:contain')&&campTravelStyle.includes('filter:none'),'Kordon camp loading artwork must render the exact source without visual filters');
+assert(css.includes('.zone-map-travel[data-scene="camp"]::before{display:none;}'),'Kordon must not use the blurred travel backdrop');
+assert(css.includes('.zone-map-travel[data-scene="camp"] .zone-map-travel-shade{display:none;}'),'Kordon must not use the shade/effect overlay');
 assert(js.includes('20260922-position3'),'Rostok map cache key missing');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
@@ -86,7 +88,7 @@ const rostokHud=fs.readFileSync('ui/rostok-lower-hud.png');
 assert.equal(rostokHud.subarray(1,4).toString('ascii'),'PNG','Rostok lower HUD is not PNG');
 assert(rostokHud.length>200000,'Rostok lower HUD asset unexpectedly small');
 const rostokBlock=js.slice(js.indexOf('function ensureRostokCampScreen()'),js.indexOf('function openRostokCamp()',js.indexOf('function ensureRostokCampScreen()')));
-assert(!rostokBlock.includes('images/zone-travel/kordon-village.webp'),'Old Cordon screenshot must not be used inside Rostok');
+assert(!rostokBlock.includes('/images/zone-travel/kordon-original.jpg'),'Kordon loading artwork must not be used inside Rostok');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
