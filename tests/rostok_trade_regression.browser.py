@@ -165,7 +165,7 @@ async def main():
         travel_cases=[
             (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','/images/zone-travel/svalka-loading.png','images/anomaly/background.jpg'),
             (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','/images/zone-travel/kordon-original.jpg','images/zone-travel/kordon-village.webp'),
-            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','images/combat/environments/11.webp','images/combat/environments/11.webp'),
+            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','/images/zone-travel/agroprom-loading.png','images/combat/environments/11.webp'),
             (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','images/combat/environments/16.webp','images/combat/environments/16.webp'),
         ]
         for origin,point_id,filename,title,asset,fixture_asset in travel_cases:
