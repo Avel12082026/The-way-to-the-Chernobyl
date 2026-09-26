@@ -1023,7 +1023,7 @@
         return;
       }
       if (target === 4) {
-        if (!secondPistolDecadeReady()) {
+        if (zoneLocation !== 5 && !secondPistolDecadeReady()) {
           if (typeof showGameAlert === 'function') {
             showGameAlert('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.');
           }
