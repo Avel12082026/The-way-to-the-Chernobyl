@@ -26,7 +26,7 @@
   let worldPositionTimer = 0;
   let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Тёмная долина'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Темная долина'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
