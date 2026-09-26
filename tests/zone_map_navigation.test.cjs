@@ -25,6 +25,8 @@ assert(js.includes("images/combat/mutants/snork.png")&&js.includes("images/comba
 assert(js.includes("fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}]")&&js.includes("fighters.resolve")&&js.includes("renderZoneTravelCombat"),'in-game combat fighter loading renderer missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
+const campTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="camp"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
+assert(campTravelStyle.includes('width:auto')&&campTravelStyle.includes('height:auto')&&campTravelStyle.includes('max-width:100%')&&campTravelStyle.includes('max-height:100%')&&campTravelStyle.includes('object-fit:contain')&&campTravelStyle.includes('filter:none'),'Kordon camp loading artwork must keep intrinsic resolution without upscale or quality filters');
 assert(js.includes('20260922-position3'),'Rostok map cache key missing');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
