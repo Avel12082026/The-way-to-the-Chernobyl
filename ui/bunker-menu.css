@@ -243,7 +243,13 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   filter:drop-shadow(0 4px 8px #000d);
 }
 #zoneMapScreen[data-scene=""] .zone-map-travel-scene{display:none;}
-#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{filter:brightness(.72) saturate(.82) contrast(1.08);}
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-artwork{
+  inset:auto;left:50%;top:50%;
+  width:auto;height:auto;max-width:100%;max-height:100%;
+  transform:translate(-50%,-50%);
+  object-fit:contain;object-position:center;
+  filter:none;image-rendering:auto;
+}
 #zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-travel-moon{
   position:absolute;z-index:3;left:14%;top:7%;width:72px;aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle at 38% 38%,#fff,#e6e9dc 57%,#aab4be 100%);box-shadow:0 0 25px #d7e4ff99,0 0 70px #91a7c966;
