@@ -220,6 +220,10 @@ function zoneMapMutantPayload(data,zoneTier){
     let pool=[];
     if(zoneTier<=1){
         pool=list.filter(m=>[0,1].includes(Number(m.tier)||0));
+    }else if(zoneTier===5){
+        // Dark Valley is explicitly a tier-5 location. Do not remap it through
+        // the ordered tier list: only native tier-5 mutants belong here.
+        pool=list.filter(m=>(Number(m.tier)||0)===5);
     }else{
         const internalTiers=[...new Set(list.map(m=>Number(m.tier)||0).filter(t=>t>1))].sort((a,b)=>a-b);
         const internalTier=internalTiers[Math.min(internalTiers.length-1,Math.max(0,zoneTier-2))];
