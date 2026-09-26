@@ -195,6 +195,6 @@ assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8','faf49a24a7b3a9965e137e82515366
 assert "(root/'ui'/'zone-map5.png',b'\\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9')" in installer
 assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c')" in installer
 assert "Файл локации изменён или пережат" in installer
-assert "Совместимость четырёх локаций" in installer
+assert "Совместимость пяти локаций" in installer
 
-print('PASS: V4 installer upgrades V3 and adds Rostok map/camp, Barman guard, persistent player position, Mercenary NPCs and tier-4 routing')
+print('PASS: V4 installer upgrades V3 and adds five map locations, Rostok camp, persistent position, Mercenary NPCs and tier-5 routing')
