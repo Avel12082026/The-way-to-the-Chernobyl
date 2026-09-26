@@ -190,7 +190,7 @@ function zoneMapLocationUnlocked(data,location){
         zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
     if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9);
     if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
-    if(location===5)return true;
+    if(location===5)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
     return false;
 }
 const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45},4:{hp:960,dmg:80}});
@@ -258,9 +258,11 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);if(!row)return{success:false,error:'Игрок не найден'};
             const data=safeParsePlayerData(row.data);
             if(!zoneMapLocationUnlocked(data,zoneLocation)){
-                const error=zoneLocation===4
-                    ?'Россток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
-                    :zoneLocation===3
+                const error=zoneLocation===5
+                    ?'Темная долина пока закрыта. Сначала должен быть открыт Россток.'
+                    :zoneLocation===4
+                      ?'Россток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
+                      :zoneLocation===3
                       ?'НИИ Агропром пока закрыт. Должны быть открыты последние 9 пистолетов.'
                       :'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.';
                 return{success:false,error};
