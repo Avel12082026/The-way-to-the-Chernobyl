@@ -36,10 +36,10 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-kordon-village2';
+  const ZONE_TRAVEL_CACHE = '20260926-kordon-original1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
-    // Kordon uses the approved Rookie Village night artwork stored with the client.
-    1:'images/zone-travel/kordon-village.webp',
+    // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
+    1:'/images/zone-travel/kordon-original.jpg',
     2:'images/anomaly/background.jpg',
     3:'images/combat/environments/11.webp',
     4:'images/combat/environments/16.webp'
