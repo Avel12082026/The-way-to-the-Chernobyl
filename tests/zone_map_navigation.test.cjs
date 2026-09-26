@@ -65,6 +65,7 @@ assert.equal((loc4Block.match(/kind:'camp'/g)||[]).length,1,'Rostok must have on
 assert(loc4Block.includes("id:'camp-4'")&&loc4Block.includes("label:'Бар «100 RADS»'"),'Rostok camp/bar hotspot missing');
 assert(loc4Block.includes("id:'transition-to-2'")&&loc4Block.includes("x:93.76,y:89.32,targetLocation:2"),'Rostok -> Svalka transition must be bottom-right');
 assert(loc4Block.includes("id:'transition-to-5'")&&loc4Block.includes("x:6.94,y:78.78,targetLocation:5"),'Rostok bottom-left transition must open location 5');
+assert(loc4Block.includes("label:'Переход на Темная долина'"),'Rostok transition must display Dark Valley name');
 const loc5Block=(js.match(/5: \[([\s\S]*?)\n    \]\n  \}\);/)||[])[1]||'';
 assert.equal((loc5Block.match(/kind:'enemy'/g)||[]).length,2,'Location 5 must have two mercenary markers');
 assert.equal((loc5Block.match(/label:'Наёмники'/g)||[]).length,2,'Location 5 human enemies must be Mercenaries');
