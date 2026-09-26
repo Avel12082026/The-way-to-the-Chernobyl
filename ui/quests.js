@@ -5,7 +5,8 @@ if (window.QuestSystem) return;
 const API = '/api/quests';
 const vendorMeta = {
   leonov:{name:'Леонов', title:'Эколог Леонов', role:'Эколог', kind:'артефакты и части мутантов'},
-  zhuchara:{name:'Жучара', title:'Торговец Жучара', role:'Торговец', kind:'броню'},
+  zhuchara:{name:'Жучара', title:'Торговец Жучара', role:'Торговец', kind:'артефакты, броню и оружие 2 тира'},
+  barman:{name:'Бармен', title:'Бармен 100 RADS', role:'Бармен', kind:'артефакты, броню и оружие 5 тира'},
   diesel:{name:'Дизель', title:'Техник Дизель', role:'Техник', kind:'оружие'}
 };
 let state={accepted:[],activeId:null,activeIds:[],multiActive:false,completed:[],completedCount:0,completedNextCursor:null};
@@ -290,6 +291,7 @@ async function loadHistory(){
 function portraitFor(vendor){
   if(vendor==='leonov')return document.querySelector('#leonovHubScreen img')?.src||'';
   if(vendor==='zhuchara')return document.querySelector('#zhucharaHubScreen img')?.src||'';
+  if(vendor==='barman')return document.querySelector('#barmanHubScreen img')?.src||'';
   if(vendor==='diesel')return document.querySelector('#dieselHubScreen img')?.src||'';
   return '';
 }
@@ -313,7 +315,13 @@ function renderDialogue(vendor,mode='root'){
   const mine=state.accepted.filter(q=>q.vendor===vendor);
   const ready=mine.filter(completeNow);
   if(mode==='offers'){
-    line.textContent=vendor==='leonov'?'Зона много чего выбрасывает наружу. Мне нужны образцы и трофеи.':vendor==='zhuchara'?'Иногда нужен не хабар, а конкретная броня. Есть работа.':'Нужны рабочие стволы. Чем дальше ходишь — тем интереснее заказ.';
+    line.textContent=vendor==='leonov'
+      ?'Зона много чего выбрасывает наружу. Мне нужны образцы и трофеи.'
+      :vendor==='zhuchara'
+        ?'Нужны вещи второго тира: артефакт, броня и оружие. Есть работа.'
+        :vendor==='barman'
+          ?'Нужны серьёзные вещи пятого тира: артефакт, броня и оружие.'
+          :'Нужны рабочие стволы. Чем дальше ходишь — тем интереснее заказ.';
     const list=document.createElement('div');list.className='dialogue-quest-list';
     const rows=offers[vendor]||[];
     if(!rows.length){const p=document.createElement('p');p.textContent='Новых заказов сейчас нет.';list.append(p);}
@@ -342,7 +350,13 @@ function renderDialogue(vendor,mode='root'){
     });
     responses.append(response('Назад','root'));
   }else{
-    line.textContent=vendor==='leonov'?'Артефакты — это язык Зоны. Но иногда мне нужны и образцы мутантов. Что хотел?':vendor==='zhuchara'?'В Зоне нет ненужного хлама. Есть лишь не та цена. Что принёс?':'Железо не врёт. Говори, зачем пришёл.';
+    line.textContent=vendor==='leonov'
+      ?'Артефакты — это язык Зоны. Но иногда мне нужны и образцы мутантов. Что хотел?'
+      :vendor==='zhuchara'
+        ?'В Зоне нет ненужного хлама. Есть лишь не та цена. Что принёс?'
+        :vendor==='barman'
+          ?'Ну что, сталкер? Работа есть. За хороший хабар и плачу хорошо.'
+          :'Железо не врёт. Говори, зачем пришёл.';
     responses.append(response('Какая у тебя есть работа?','offers'));
     if(ready.length)responses.append(response('Я принёс то, что ты просил.','turnin'));
     if(mine.length)responses.append(response('Хочу отказаться от задания.','abandon'));
@@ -398,7 +412,7 @@ ensurePdaButton();ensureTracker();
 setInterval(()=>{if(!pda.hidden||!dialogue.hidden||!tracker.hidden)renderAll();},1500);
 
 window.QuestSystem=Object.freeze({
-  version:'1.3.0',openPda,closePda,openTraderDialogue,closeDialogue,sync,
+  version:'1.3.1',openPda,closePda,openTraderDialogue,closeDialogue,sync,
   get state(){return state;},hasRequired:completeNow
 });
 sync().catch(()=>{});
