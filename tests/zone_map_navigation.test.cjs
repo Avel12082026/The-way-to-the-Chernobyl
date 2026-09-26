@@ -17,9 +17,9 @@ assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'locat
 assert(js.includes("2: {path:'/api/zone-map/2', width:864, height:1536}"),'location 2 asset missing');
 assert(js.includes("3: {path:'/api/zone-map/3', width:863, height:1536}"),'NII Agroprom asset missing');
 assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
-assert(js.includes("1:'images/combat/environments/01.webp'")&&js.includes("2:'images/anomaly/background.jpg'")&&js.includes("3:'images/combat/environments/11.webp'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
+assert(js.includes("1:'images/zone-travel/kordon-village.webp'")&&js.includes("2:'images/anomaly/background.jpg'")&&js.includes("3:'images/combat/environments/11.webp'")&&js.includes("4:'images/combat/environments/16.webp'"),'destination loading artwork for four current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'anomaly'")&&js.includes("kind:'mutant'"),'travel scene types missing');
-assert(js.includes("images/combat/modular/characters/1-pistol.png")&&js.includes("zone-travel-camp-stalker"),'Kordon Rookie Village camp stalkers missing');
+assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("images/anomaly/items/medusa.webp")&&!js.includes("2:{kind:'anomaly'")===false,'Svalka artifact scene missing');
 assert(js.includes("images/combat/mutants/snork.png")&&js.includes("images/combat/mutants/bloodsucker.png"),'in-game mutant loading overlays missing');
 assert(js.includes("images/combat/modular/weapons/11.png")&&js.includes("images/combat/modular/characters/31-heavy.png"),'in-game armor/weapon loading overlays missing');
