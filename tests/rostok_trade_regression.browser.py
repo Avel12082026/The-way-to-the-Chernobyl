@@ -164,7 +164,7 @@ async def main():
         await page.evaluate("player.level=1000;window.__zoneMapTravelMs=2200")
         travel_cases=[
             (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','images/anomaly/background.jpg'),
-            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','images/combat/environments/01.webp'),
+            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','images/zone-travel/kordon-village.webp'),
             (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','images/combat/environments/11.webp'),
             (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','images/combat/environments/16.webp'),
         ]
