@@ -224,6 +224,7 @@ async def main():
         await hotspot.click()
         barman=page.locator('#barmanHubScreen')
         assert await barman.is_visible()
+        assert '/images/traders/barman-hub.png' in (await page.locator('#barmanHubArtwork').get_attribute('src'))
         actions=page.locator('#barmanHubScreen [data-barman-action]')
         assert await actions.evaluate_all("(xs)=>xs.map(x=>x.dataset.barmanAction)")==['talk','trade','back']
         await page.locator('#barmanHubScreen [data-barman-action="talk"]').click()
