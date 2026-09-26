@@ -25,6 +25,7 @@ assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot mis
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
 assert(bunker.includes('data-rostok-action="warehouse"'),'Rostok warehouse action missing');
 assert(bunker.includes('aria-label="Бармен"'),'Barman hotspot/name missing');
+assert(bunker.includes('/images/traders/barman-hub.png?v='),'Barman portrait asset missing');
 for(const action of ['talk','trade','back'])assert(bunker.includes('data-barman-action="'+action+'"'),'Barman '+action+' missing');
 assert(bunker.includes("screen === 'main' && rostokReturnPending"),'Rostok sub-screen return interception missing');
 assert(bunker.includes("['inventory','kpk','warehouse'].includes(saved.place)"),'Rostok warehouse/PDA/inventory origin restore missing');
