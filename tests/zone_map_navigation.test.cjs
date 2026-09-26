@@ -22,14 +22,14 @@ assert(js.includes("kind:'camp'")&&js.includes("kind:'location'")&&js.includes("
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
 assert(js.includes("3:{kind:'location'}")&&js.includes("images/combat/mutants/bloodsucker.png"),'Agroprom authored loading screen or Rostok mutant loading overlay missing');
-assert(js.includes("fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}]")&&js.includes("fighters.resolve")&&js.includes("renderZoneTravelCombat"),'in-game combat fighter loading renderer missing');
+assert(js.includes("fighters:[{armorId:45,weaponId:15},{armorId:31,weaponId:11}]")&&js.includes("fighters.resolve")&&js.includes("renderZoneTravelCombat"),'Rostok combat fighter loading renderer missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
 const campTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="camp"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
 assert(campTravelStyle.includes('width:100%')&&campTravelStyle.includes('height:100%')&&campTravelStyle.includes('object-fit:contain')&&campTravelStyle.includes('filter:none'),'Kordon camp loading artwork must render the exact source without visual filters');
-const svalkaTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="location"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
-assert(svalkaTravelStyle.includes('width:100%')&&svalkaTravelStyle.includes('height:100%')&&svalkaTravelStyle.includes('object-fit:contain')&&svalkaTravelStyle.includes('filter:none'),'Svalka loading artwork must render the exact source without visual filters');
-assert(css.includes('[data-scene="location"] .zone-map-travel-scene')&&css.includes('[data-scene="location"] .zone-map-travel-shade{display:none;}'),'Svalka loading artwork must not receive overlay effects');
+const locationTravelStyle=(css.match(/#zoneMapScreen \.zone-map-travel\[data-scene="location"\] \.zone-map-travel-artwork\{([^}]*)\}/)||[])[1]||'';
+assert(locationTravelStyle.includes('width:100%')&&locationTravelStyle.includes('height:100%')&&locationTravelStyle.includes('object-fit:contain')&&locationTravelStyle.includes('filter:none'),'Svalka/Agroprom loading artwork must render the exact source without visual filters');
+assert(css.includes('[data-scene="location"] .zone-map-travel-scene')&&css.includes('[data-scene="location"] .zone-map-travel-shade{display:none;}'),'Svalka/Agroprom loading artwork must not receive overlay effects');
 assert(css.includes('.zone-map-travel[data-scene="camp"]::before{display:none;}'),'Kordon must not use the blurred travel backdrop');
 assert(css.includes('.zone-map-travel[data-scene="camp"] .zone-map-travel-shade{display:none;}'),'Kordon must not use the shade/effect overlay');
 assert(js.includes('20260922-position3'),'Rostok map cache key missing');
