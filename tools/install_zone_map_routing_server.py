@@ -149,7 +149,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V4
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.jpg'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.jpg'});
 const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
@@ -611,6 +611,13 @@ def patch(source):
         text=insert_before_one(text,["app.listen("],ZONE_ROUTE,'app.listen')
         changed=True
 
+    old_cordon="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.jpg',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.jpg'});"
+    new_cordon="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.jpg',3:'zone-map3.jpg',4:'zone-map4.jpg'});"
+    if old_cordon in text:
+        text=text.replace(old_cordon,new_cordon,1);changed=True
+    elif new_cordon not in text:
+        raise RuntimeError('Не найден поддерживаемый маршрут карты Кордона.')
+
     text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
     changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
@@ -635,7 +642,7 @@ def main():
     path=args.server.resolve(strict=True)
     root=path.parent
     assets=[
-        (root/'ui'/'zone-map1.jpg',b'\xff\xd8',None),
+        (root/'ui'/'zone-map1.png',b'\x89PNG','711511ce136d60a0a625bf352ea42c221ab950c6e5937406a2a68ef79bcb2864'),
         (root/'ui'/'zone-map2.jpg',b'\xff\xd8',None),
         (root/'ui'/'zone-map3.jpg',b'\xff\xd8',None),
         # Rostok assets are copied byte-for-byte. The checksums deliberately reject
