@@ -65,7 +65,7 @@ async def main():
             f=ROOT/m[1].split('?')[0]
             return '<style>'+f.read_text()+'</style>' if f.is_file() else ''
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',css,html)
-        for rel,ver in [('images/zone-travel/kordon-village.webp','0503d3b544d1'),('ui/rostok-lower-hud.png','09db18421007')]:
+        for rel,ver in [('ui/rostok-lower-hud.png','09db18421007')]:
             html=html.replace(rel+'?v='+ver,'data:image/png;base64,'+base64.b64encode((ROOT/rel).read_bytes()).decode())
         await context.route('**/*',lambda r:r.abort())
         async def travel_art(route):
@@ -163,12 +163,12 @@ async def main():
         await page.set_viewport_size({'width':390,'height':844})
         await page.evaluate("player.level=1000;window.__zoneMapTravelMs=2200")
         travel_cases=[
-            (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','images/anomaly/background.jpg'),
-            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','images/zone-travel/kordon-village.webp'),
-            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','images/combat/environments/11.webp'),
-            (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','images/combat/environments/16.webp'),
+            (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','images/anomaly/background.jpg','images/anomaly/background.jpg'),
+            (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','/images/zone-travel/kordon-original.jpg','images/zone-travel/kordon-village.webp'),
+            (2,'transition-to-3','zone-travel-agroprom.png','НИИ АГРОПРОМ','images/combat/environments/11.webp','images/combat/environments/11.webp'),
+            (2,'transition-to-4','zone-travel-rostok.png','РОССТОК','images/combat/environments/16.webp','images/combat/environments/16.webp'),
         ]
-        for origin,point_id,filename,title,asset in travel_cases:
+        for origin,point_id,filename,title,asset,fixture_asset in travel_cases:
             await page.evaluate("(loc)=>{ZoneMap.setLocation(loc);ZoneMap.open('camp')}",origin)
             await page.locator(f'[data-zone-point="{point_id}"]').click()
             travel=page.locator('#zoneMapTravel')
@@ -176,8 +176,8 @@ async def main():
             assert await page.locator('#zoneMapTravelDestination').inner_text()==title
             assert asset in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
             # CI runs offline: feed the same repository background that the real client requests.
-            raw=(ROOT/asset).read_bytes()
-            suffix=Path(asset).suffix.lower()
+            raw=(ROOT/fixture_asset).read_bytes()
+            suffix=Path(fixture_asset).suffix.lower()
             mime='image/jpeg' if suffix in ('.jpg','.jpeg') else ('image/png' if suffix=='.png' else 'image/webp')
             data_uri='data:'+mime+';base64,'+base64.b64encode(raw).decode()
             await page.locator('#zoneMapTravelArtwork').evaluate("(e,src)=>{e.src=src;return e.decode()}",data_uri)
