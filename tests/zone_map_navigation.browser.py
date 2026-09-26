@@ -257,6 +257,8 @@ async def main():
         travel=page.locator('#zoneMapTravel')
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → НИИ Агропром'
+        assert '/images/zone-travel/agroprom-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='location'
         await page.wait_for_function("ZoneMap.location===3")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
@@ -299,6 +301,8 @@ async def main():
         await page.locator('[data-zone-point="transition-to-2"]').click()
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelRoute').inner_text()=='НИИ Агропром → Свалка'
+        assert '/images/zone-travel/svalka-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='location'
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Свалка'
