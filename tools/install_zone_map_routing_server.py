@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install/upgrade map-routed raids for four locations and the first-location shop limits."""
+"""Install/upgrade map-routed raids for five locations and the first-location shop limits."""
 from pathlib import Path
 import argparse, hashlib, os, shutil, subprocess, tempfile, time
 
@@ -118,7 +118,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
         if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
         const data=safeParsePlayerData(row.data);
         let zoneLocation=Number(req.body?.zoneLocation||1);
-        if(![1,2,3,4].includes(zoneLocation)||!zoneMapLocationUnlocked(data,zoneLocation))zoneLocation=1;
+        if(![1,2,3,4,5].includes(zoneLocation)||!zoneMapLocationUnlocked(data,zoneLocation))zoneLocation=1;
         let place=String(req.body?.place||'cordon-camp');
         if(!PLAYER_WORLD_POSITION_PLACES.has(place))place='cordon-camp';
         let origin=String(req.body?.origin||'cordon-camp');
@@ -149,7 +149,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V4
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});
 const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
@@ -190,6 +190,7 @@ function zoneMapLocationUnlocked(data,location){
         zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
     if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9);
     if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
+    if(location===5)return true;
     return false;
 }
 const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45},4:{hp:960,dmg:80}});
@@ -211,6 +212,7 @@ function zoneMapNpcPayload(data,zoneTier,zoneLocation){
     if(zoneLocation===2)npc.faction='Бандиты';
     if(zoneLocation===3)npc.faction='Военные';
     if(zoneLocation===4)npc.faction='Наёмники';
+    if(zoneLocation===5)npc.faction='Наёмники';
     return npc;
 }
 function zoneMapMutantPayload(data,zoneTier){
@@ -243,7 +245,7 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
     const zoneLocation=Number(req.body?.zoneLocation||1);
     if(!['enemy','mutant','anomaly'].includes(zoneKind))
         return res.status(400).json({success:false,error:'Неизвестная точка на карте'});
-    if(![1,2,3,4].includes(zoneLocation))
+    if(![1,2,3,4,5].includes(zoneLocation))
         return res.status(400).json({success:false,error:'Неизвестная локация'});
     try{
         const tx=db.transaction(()=>{
@@ -617,6 +619,8 @@ def patch(source):
     new_svalka="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.jpg',4:'zone-map4.jpg'});"
     old_agroprom="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.jpg',4:'zone-map4.jpg'});"
     new_agroprom="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg'});"
+    old_location5="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg'});"
+    new_location5="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});"
     if old_cordon in text:
         text=text.replace(old_cordon,new_cordon,1);changed=True
     elif new_cordon not in text and new_svalka not in text and new_agroprom not in text:
@@ -627,8 +631,12 @@ def patch(source):
         raise RuntimeError('Не найден поддерживаемый маршрут карты Свалки.')
     if old_agroprom in text:
         text=text.replace(old_agroprom,new_agroprom,1);changed=True
-    elif new_agroprom not in text:
+    elif new_agroprom not in text and new_location5 not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут карты НИИ Агропром.')
+    if old_location5 in text:
+        text=text.replace(old_location5,new_location5,1);changed=True
+    elif new_location5 not in text:
+        raise RuntimeError('Не найден поддерживаемый маршрут пятой локации.')
 
     text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
     changed=changed or shop_barman_changed
@@ -660,6 +668,7 @@ def main():
         # Rostok assets are copied byte-for-byte. The checksums deliberately reject
         # any rescale/re-encode/recompression before the server update is applied.
         (root/'ui'/'zone-map4.jpg',b'\xff\xd8','faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'),
+        (root/'ui'/'zone-map5.png',b'\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9'),
         (root/'ui'/'rostok-bar.png',b'\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'),
     ]
     for asset,signature,expected_sha256 in assets:
@@ -682,7 +691,7 @@ def main():
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Совместимость четырёх локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
+            print('Совместимость пяти локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
