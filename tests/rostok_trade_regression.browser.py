@@ -65,7 +65,7 @@ async def main():
             f=ROOT/m[1].split('?')[0]
             return '<style>'+f.read_text()+'</style>' if f.is_file() else ''
         html=re.sub(r'<link\b[^>]*href="([^"]+)"[^>]*>',css,html)
-        for rel,ver in [('file_000000002bb08210800056ebfb1dce1f.png','0503d3b544d1'),('ui/rostok-lower-hud.png','09db18421007')]:
+        for rel,ver in [('images/zone-travel/kordon-village.webp','0503d3b544d1'),('ui/rostok-lower-hud.png','09db18421007')]:
             html=html.replace(rel+'?v='+ver,'data:image/png;base64,'+base64.b64encode((ROOT/rel).read_bytes()).decode())
         await context.route('**/*',lambda r:r.abort())
         async def travel_art(route):
