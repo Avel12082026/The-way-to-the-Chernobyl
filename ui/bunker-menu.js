@@ -579,7 +579,8 @@
     el.addEventListener('click', event => {
       const action = event.target.closest('[data-barman-action]')?.dataset.barmanAction;
       if (action === 'talk') {
-        if (typeof showGameAlert === 'function') showGameAlert('Бармен: Что принёс, сталкер? Посмотрим, чем можно торговаться.');
+        if (window.QuestSystem?.openTraderDialogue) window.QuestSystem.openTraderDialogue('barman');
+        else if (typeof showGameAlert === 'function') showGameAlert('Бармен: Что принёс, сталкер? Работа есть.');
         return;
       }
       if (action === 'trade') {
