@@ -10,7 +10,7 @@ assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()')
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
-assert(js.includes("version: '0.6.8'"),'ZoneMap API version mismatch');
+assert(js.includes("version: '0.6.9'"),'ZoneMap API version mismatch');
 assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток'})"),'four map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:890, height:1536}"),'location 1 asset missing');
@@ -84,7 +84,7 @@ const rostokHud=fs.readFileSync('ui/rostok-lower-hud.png');
 assert.equal(rostokHud.subarray(1,4).toString('ascii'),'PNG','Rostok lower HUD is not PNG');
 assert(rostokHud.length>200000,'Rostok lower HUD asset unexpectedly small');
 const rostokBlock=js.slice(js.indexOf('function ensureRostokCampScreen()'),js.indexOf('function openRostokCamp()',js.indexOf('function ensureRostokCampScreen()')));
-assert(!rostokBlock.includes('file_000000002bb08210800056ebfb1dce1f.png'),'Old Cordon screenshot must not be used inside Rostok');
+assert(!rostokBlock.includes('images/zone-travel/kordon-village.webp'),'Old Cordon screenshot must not be used inside Rostok');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
