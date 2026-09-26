@@ -39,10 +39,10 @@ assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized HUD strip m
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
-  'ui/bunker-menu.js?v=20260926-barman-hub2',
-  'ui/bunker-menu.css?v=20260926-barman-hub2',
+  'ui/bunker-menu.js?v=20260926-tierquests1',
+  'ui/bunker-menu.css?v=20260926-tierquests1',
   'ui/trade-menu.js?v=20260925-zhuchara-armor-id1',
-  'ui/trader-hubs.js?v=20260922-position3'
+  'ui/trader-hubs.js?v=20260926-tierquests1'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
 console.log('PASS: Rostok Barman has 29 shotguns + armor 30-58; Zhuchara has 29 pistols + armor 1-29');
