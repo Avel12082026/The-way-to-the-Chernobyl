@@ -274,9 +274,9 @@ async def main():
         assert all(p['label']=='Военные' for p in points3 if p['kind']=='enemy')
         assert not any(p['kind']=='camp' for p in points3)
 
-        # Native proportions of the supplied 863x1536 Agroprom map are preserved.
+        # Native proportions of the supplied 940x1673 Agroprom map are preserved.
         canvas3=await page.locator('#zoneMapCanvas').bounding_box()
-        assert abs((canvas3['width']/canvas3['height'])-(863/1536))<0.02,canvas3
+        assert abs((canvas3['width']/canvas3['height'])-(940/1673))<0.02,canvas3
 
         # A Military marker starts a tier-3 routed raid.
         enemy3=next(p for p in points3 if p['kind']=='enemy')
