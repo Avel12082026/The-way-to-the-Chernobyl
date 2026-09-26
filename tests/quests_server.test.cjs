@@ -150,9 +150,16 @@ function call(path,body={}){
  const zNext=(await call('/api/quests/offers',{vendor:'zhuchara'})).body.offers;assert.equal(zNext.length,3);
  assert(zNext.every(q=>!zFirst.includes(q.id)),'Zhuchara must refresh offers after turn-in');
 
- // Barman gives exactly one tier-5 artifact, armor and weapon quest.
+ // Barman gives exactly one tier-5 artifact, armor and weapon quest and refreshes after hand-in.
  r=await call('/api/quests/offers',{vendor:'barman'});assert.equal(r.code,200);assert.equal(r.body.offers.length,3);
  assert.deepEqual(new Set(r.body.offers.map(q=>q.kind)),new Set(['artifact','armor','weapon']));
  assert(r.body.offers.every(q=>q.difficulty===5&&q.qty===1));
+ const bFirst=r.body.offers.map(q=>q.id),bQuest=r.body.offers[0];
+ let bData=JSON.parse(db.rows.get('p1').data);bData.inventory[bQuest.itemName]=1;db.rows.set('p1',{data:JSON.stringify(bData)});
+ assert.equal((await call('/api/quests/accept',{vendor:'barman',questId:bQuest.id})).code,200);
+ r=await call('/api/quests/turn-in',{vendor:'barman',questId:bQuest.id});assert.equal(r.code,200);
+ assert.equal(r.body.reward,Math.max(bQuest.saleValue+1,Math.ceil(bQuest.saleValue*1.5)));
+ const bNext=(await call('/api/quests/offers',{vendor:'barman'})).body.offers;assert.equal(bNext.length,3);
+ assert(bNext.every(q=>!bFirst.includes(q.id)),'Barman must refresh offers after turn-in');
  console.log('quests server: OK');
 })().catch(e=>{console.error(e);process.exitCode=1});
