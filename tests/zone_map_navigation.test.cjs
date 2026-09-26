@@ -12,7 +12,7 @@ assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')
 
 assert(js.includes("version: '0.7.0'"),'ZoneMap API version mismatch');
 assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Тёмная долина'})"),'five map titles missing');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Темная долина'})"),'five map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
 assert(js.includes("id:'transition-to-1'")&&js.includes("id:'transition-to-3'")&&js.includes("id:'transition-to-4'")&&js.includes("id:'anomaly-2-1'")&&js.includes("id:'mutant-2-1'")&&js.includes("id:'enemy-2-1'"),'Svalka hotspot actions must remain wired after map replacement');
