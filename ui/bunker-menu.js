@@ -36,7 +36,7 @@
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-agroprom-original1';
+  const ZONE_TRAVEL_CACHE = '20260926-rostok-original1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -44,7 +44,8 @@
     2:'/images/zone-travel/svalka-loading.png',
     // NII Agroprom uses the approved people-free loading artwork served byte-for-byte by the game server.
     3:'/images/zone-travel/agroprom-loading.png',
-    4:'images/combat/environments/16.webp'
+    // Rostok uses the approved guarded factory loading artwork served byte-for-byte by the game server.
+    4:'/images/zone-travel/rostok-loading.png'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
@@ -53,7 +54,7 @@
     2:{kind:'location'},
     // Agroprom and Rostok: real game armor + weapons fitted by CombatFighters.
     3:{kind:'location'},
-    4:{kind:'mutant',fighters:[{armorId:45,weaponId:15},{armorId:31,weaponId:11}],mutant:'images/combat/mutants/bloodsucker.png'}
+    4:{kind:'location'}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
