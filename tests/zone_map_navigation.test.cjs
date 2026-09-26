@@ -22,7 +22,7 @@ assert(js.includes("kind:'camp'")&&js.includes("kind:'anomaly'")&&js.includes("k
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("images/anomaly/items/medusa.webp")&&!js.includes("2:{kind:'anomaly'")===false,'Svalka artifact scene missing');
 assert(js.includes("images/combat/mutants/snork.png")&&js.includes("images/combat/mutants/bloodsucker.png"),'in-game mutant loading overlays missing');
-assert(js.includes("images/combat/modular/weapons/11.png")&&js.includes("images/combat/modular/characters/31-heavy.png"),'in-game armor/weapon loading overlays missing');
+assert(js.includes("fighters:[{armorId:31,weaponId:11},{armorId:16,weaponId:12}]")&&js.includes("CombatFighters.resolve")&&js.includes("renderZoneTravelCombat"),'in-game combat fighter loading renderer missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
 assert(js.includes('20260922-position3'),'Rostok map cache key missing');
