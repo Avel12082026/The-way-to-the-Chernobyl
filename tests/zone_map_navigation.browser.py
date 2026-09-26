@@ -157,6 +157,28 @@ async def main():
         assert all(p['label']=='Наёмники' for p in points4 if p['kind']=='enemy')
         back4=next(p for p in points4 if p['id']=='transition-to-2')
         assert abs(back4['x']-93.76)<0.01 and abs(back4['y']-89.32)<0.01,back4
+        next5=next(p for p in points4 if p['id']=='transition-to-5')
+        assert abs(next5['x']-6.94)<0.01 and abs(next5['y']-78.78)<0.01,next5
+
+        # Bottom-left Rostok transition opens the new fifth location.
+        await page.locator('[data-zone-point="transition-to-5"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Локация 5'
+        assert '/api/zone-map/5' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        await page.wait_for_function("ZoneMap.location===5")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Локация 5'
+        points5=await page.evaluate('ZoneMap.points')
+        assert len(points5)==8,points5
+        assert sum(p['kind']=='enemy' for p in points5)==2
+        assert sum(p['kind']=='mutant' for p in points5)==2
+        assert sum(p['kind']=='anomaly' for p in points5)==2
+        assert all(p['label']=='Наёмники' for p in points5 if p['kind']=='enemy')
+        back5=next(p for p in points5 if p['id']=='transition-to-4')
+        assert abs(back5['x']-66.45)<0.01 and abs(back5['y']-5.76)<0.01,back5
+        await page.locator('[data-zone-point="transition-to-4"]').click()
+        await page.wait_for_function("ZoneMap.location===4")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
         canvas4=await page.locator('#zoneMapCanvas').bounding_box()
         assert abs((canvas4['width']/canvas4['height'])-(865/1536))<0.02,canvas4
