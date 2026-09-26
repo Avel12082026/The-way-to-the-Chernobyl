@@ -105,7 +105,7 @@
       {id:'camp-4',kind:'camp',label:'Бар «100 RADS»',x:65.32,y:37.76},
       {id:'enemy-4-3',kind:'enemy',label:'Наёмники',x:20.81,y:41.28},
       {id:'mutant-4-1',kind:'mutant',label:'Мутанты',x:35.38,y:69.99},
-      {id:'transition-to-5',kind:'transition',label:'Переход на Локацию 5',x:6.94,y:78.78,targetLocation:5,unlock:'none'},
+      {id:'transition-to-5',kind:'transition',label:'Переход на Темная долина',x:6.94,y:78.78,targetLocation:5,unlock:'none'},
       {id:'anomaly-4-3',kind:'anomaly',label:'Аномалия',x:71.91,y:82.36},
       {id:'mutant-4-2',kind:'mutant',label:'Мутанты',x:20.92,y:86.13},
       {id:'mutant-4-3',kind:'mutant',label:'Мутанты',x:45.66,y:88.80},
