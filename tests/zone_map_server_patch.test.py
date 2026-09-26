@@ -52,8 +52,9 @@ assert "1:'zone-map1.png'" in patched
 assert "2:'zone-map2.png'" in patched
 assert "3:'zone-map3.png'" in patched
 assert "4:'zone-map4.jpg'" in patched
+assert "5:'zone-map5.png'" in patched
 assert "4:'rostok-bar.png'" in patched
-assert "if(![1,2,3,4].includes(zoneLocation))" in patched
+assert "if(![1,2,3,4,5].includes(zoneLocation))" in patched
 assert "const zoneTier=zoneLocation" in patched
 
 # Location 3 remains the last-nine-pistol branch.
@@ -64,12 +65,14 @@ assert "НИИ Агропром пока закрыт. Должны быть о�
 # Rostok is location/tier 4 and unlocks on the second decade of pistols.
 assert "ZONE_MAP_SECOND_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(10,20)" in patched
 assert "if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
+assert "if(location===5)return true" in patched
 assert "Россток пока закрыт. Должна быть открыта вторая десятка пистолетов." in patched
 
 # Human factions are location-specific.
 assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
 assert "if(zoneLocation===3)npc.faction='Военные'" in patched
 assert "if(zoneLocation===4)npc.faction='Наёмники'" in patched
+assert "if(zoneLocation===5)npc.faction='Наёмники'" in patched
 assert "npc.tier=zoneTier" in patched
 
 # Mutants/anomalies are routed by the logical location tier; Rostok therefore yields tier 4.
@@ -146,6 +149,7 @@ assert mod.ROUTE_MARK in upgraded
 assert "// ZONE_MAP_ROUTING_V3" not in upgraded
 assert "1:'zone-map1.png'" in upgraded and "2:'zone-map2.png'" in upgraded and "3:'zone-map3.png'" in upgraded
 assert "4:'zone-map4.jpg'" in upgraded
+assert "5:'zone-map5.png'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
 assert "const LATER_PATCH_SHOULD_SURVIVE=true;" in upgraded
@@ -188,6 +192,7 @@ with tempfile.TemporaryDirectory() as td:
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
 assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8','faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee')" in installer
+assert "(root/'ui'/'zone-map5.png',b'\\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9')" in installer
 assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c')" in installer
 assert "Файл локации изменён или пережат" in installer
 assert "Совместимость четырёх локаций" in installer
