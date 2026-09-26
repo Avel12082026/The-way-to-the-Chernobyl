@@ -163,11 +163,11 @@ async def main():
         # Bottom-left Rostok transition opens the new fifth location.
         await page.locator('[data-zone-point="transition-to-5"]').click()
         await travel.wait_for(state='visible')
-        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Тёмная долина'
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Темная долина'
         assert '/api/zone-map/5' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===5")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
-        assert await page.locator('#zoneMapTitle').inner_text()=='Тёмная долина'
+        assert await page.locator('#zoneMapTitle').inner_text()=='Темная долина'
         points5=await page.evaluate('ZoneMap.points')
         assert len(points5)==8,points5
         assert sum(p['kind']=='enemy' for p in points5)==2
