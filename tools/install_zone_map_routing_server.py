@@ -659,7 +659,7 @@ def main():
         (root/'ui'/'zone-map3.png',b'\x89PNG','042f961231de0ca30e839ac9675b51ac38169814baf757b4727d157dae022641'),
         # Rostok assets are copied byte-for-byte. The checksums deliberately reject
         # any rescale/re-encode/recompression before the server update is applied.
-        (root/'ui'/'zone-map4.jpg',b'\xff\xd8','017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa'),
+        (root/'ui'/'zone-map4.jpg',b'\xff\xd8','faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'),
         (root/'ui'/'rostok-bar.png',b'\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'),
     ]
     for asset,signature,expected_sha256 in assets:
