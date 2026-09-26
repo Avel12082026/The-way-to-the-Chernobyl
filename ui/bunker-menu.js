@@ -31,12 +31,12 @@
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
   const ZONE_MAP_ASSETS = Object.freeze({
-    1: {path:'/api/zone-map/1', width:890, height:1536},
+    1: {path:'/api/zone-map/1', width:941, height:1672},
     2: {path:'/api/zone-map/2', width:864, height:1536},
     3: {path:'/api/zone-map/3', width:863, height:1536},
     4: {path:'/api/zone-map/4', width:865, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-barman-hub2';
+  const ZONE_TRAVEL_CACHE = '20260926-cordon-map-hq1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -688,7 +688,7 @@
 
   function zoneMapAssetUrl(location) {
     const config = ZONE_MAP_ASSETS[location] || ZONE_MAP_ASSETS[1];
-    return `${SERVER_URL}${config.path}?v=20260922-position3`;
+    return `${SERVER_URL}${config.path}?v=${ZONE_TRAVEL_CACHE}`;
   }
 
   function preloadZoneMapArtwork(location) {
