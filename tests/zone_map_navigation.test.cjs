@@ -53,6 +53,7 @@ assert(js.includes("targetLocation:3,unlock:'last-nine-pistols'"),'NII Agroprom 
 assert(js.includes('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.'),'last-nine warning missing');
 assert(js.includes('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.'),'Rostok gate warning missing');
 assert(js.includes('await travelToZoneLocation(4)'),'Rostok transition must use loading screen');
+assert(js.includes('await travelToZoneLocation(5)'),'Rostok bottom-left transition must open location 5 through the loading screen');
 
 const loc4Block=(js.match(/4: \[([\s\S]*?)\n    \],\n    5:/)||[])[1]||'';
 assert.equal((loc4Block.match(/kind:'enemy'/g)||[]).length,3,'Rostok must have three human enemy markers');
