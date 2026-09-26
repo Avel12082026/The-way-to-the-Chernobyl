@@ -5,7 +5,7 @@ import argparse, hashlib, os, re, shutil, subprocess, tempfile, time, urllib.req
 
 SERVICE='pocketzone.service'
 CACHE_KEY='20260926-agroprom-map-hq1'
-MAP_SHA='017f3b41e187a44f33505bd007374ae3a2281c2cefc7bdda1c1ab0bc69ac22aa'
+MAP_SHA='faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'
 BAR_SHA='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
 MAP_SIZE=(865,1536)
 BAR_SIZE=(941,1672)
