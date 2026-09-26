@@ -200,7 +200,7 @@ async def main():
             kind=await travel.get_attribute('data-scene')
             if title=='КОРДОН':
                 assert kind=='camp'
-                assert await page.locator('#zoneMapTravelScene .zone-travel-camp-stalker').count()==3
+                assert await page.locator('#zoneMapTravelScene img').count()==0
             elif title=='СВАЛКА':
                 assert kind=='anomaly'
                 assert await page.locator('#zoneMapTravelScene .zone-travel-mutant').count()==0
