@@ -54,23 +54,31 @@ const weapons=[
  {name:'ПМ',tier:1,price:200,unlockLevel:1},
  {name:'АК-74',tier:2,price:1000,unlockLevel:50},
  {name:'СВД',tier:3,price:3000,unlockLevel:100},
+ {name:'РПК',tier:5,price:7000,unlockLevel:200},
  {name:'Админ-пушка',tier:14,price:999999,dmg:999999,unlockLevel:1,adminOnly:true}
 ];
 const armor=[
  {name:'Юность',tier:1,price:200,unlockLevel:1},
  {name:'Беркут',tier:2,price:1500,unlockLevel:50},
  {name:'СЕВА',tier:3,price:4000,unlockLevel:100},
+ {name:'Экзоскелет',tier:5,price:9000,unlockLevel:200},
  {name:'Админ-броня',tier:14,price:999999,armor:9999,hitAbsorption:9999,unlockLevel:1,adminOnly:true}
 ];
 const artifacts=[
  {name:'А1',tier:1,price:100,stats:{health:4,hunger:-3}},
  {name:'А2',tier:1,price:200,stats:{health:4,hunger:-3}},
  {name:'А3',tier:1,price:300,stats:{health:4,hunger:-3}},
+ {name:'А2Т',tier:2,price:600,stats:{health:5,hunger:-3}},
+ {name:'А5Т',tier:5,price:1800,stats:{health:8,hunger:-2}},
  {name:'Админ-артефакт',tier:1,price:999999,stats:{health:999,hunger:999},adminOnly:true}
 ];
 const loot=[{name:'Хвост',price:200},{name:'Ухо',price:500}];
 const mutants=[{name:'Тушкан',tier:0,loot:'Хвост',lootChance:50},{name:'Пёс',tier:1,loot:'Ухо',lootChance:50}];
-const anomalies=[{id:1,name:'Жарка',tier:1,artifacts:['А1','А2','А3','Админ-артефакт']}];
+const anomalies=[
+ {id:1,name:'Жарка',tier:1,artifacts:['А1','А2','А3','Админ-артефакт']},
+ {id:2,name:'Электра',tier:2,artifacts:['А2Т']},
+ {id:5,name:'Разлом',tier:5,artifacts:['А5Т']}
+];
 const data={level:120,coins:0,inventory:{},quests:{}};
 const db=new FakeDB(data);
 function sell(name){
@@ -130,7 +138,21 @@ function call(path,body={}){
  assert.deepEqual(r.body.activeIds,[offer2.id]);
  // Leonov never asks for armor or guns.
  r=await call('/api/quests/offers',{vendor:'leonov'});assert(r.body.offers.every(q=>artifacts.some(a=>a.name===q.itemName&&!a.adminOnly)||loot.some(l=>l.name===q.itemName)));
- // Zhuchara only asks for armor.
- r=await call('/api/quests/offers',{vendor:'zhuchara'});assert(r.body.offers.every(q=>armor.some(a=>a.name===q.itemName&&!a.adminOnly)));
+ // Zhuchara gives exactly one tier-2 artifact, armor and weapon quest.
+ r=await call('/api/quests/offers',{vendor:'zhuchara'});assert.equal(r.code,200);assert.equal(r.body.offers.length,3);
+ assert.deepEqual(new Set(r.body.offers.map(q=>q.kind)),new Set(['artifact','armor','weapon']));
+ assert(r.body.offers.every(q=>q.difficulty===2&&q.qty===1));
+ const zFirst=r.body.offers.map(q=>q.id),zQuest=r.body.offers[0];
+ let zData=JSON.parse(db.rows.get('p1').data);zData.inventory[zQuest.itemName]=1;db.rows.set('p1',{data:JSON.stringify(zData)});
+ assert.equal((await call('/api/quests/accept',{vendor:'zhuchara',questId:zQuest.id})).code,200);
+ r=await call('/api/quests/turn-in',{vendor:'zhuchara',questId:zQuest.id});assert.equal(r.code,200);
+ assert.equal(r.body.reward,Math.max(zQuest.saleValue+1,Math.ceil(zQuest.saleValue*1.5)),'quest payout must be 150% of ordinary sale value');
+ const zNext=(await call('/api/quests/offers',{vendor:'zhuchara'})).body.offers;assert.equal(zNext.length,3);
+ assert(zNext.every(q=>!zFirst.includes(q.id)),'Zhuchara must refresh offers after turn-in');
+
+ // Barman gives exactly one tier-5 artifact, armor and weapon quest.
+ r=await call('/api/quests/offers',{vendor:'barman'});assert.equal(r.code,200);assert.equal(r.body.offers.length,3);
+ assert.deepEqual(new Set(r.body.offers.map(q=>q.kind)),new Set(['artifact','armor','weapon']));
+ assert(r.body.offers.every(q=>q.difficulty===5&&q.qty===1));
  console.log('quests server: OK');
 })().catch(e=>{console.error(e);process.exitCode=1});
