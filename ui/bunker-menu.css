@@ -279,6 +279,9 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   position:absolute;z-index:7;left:7%;right:7%;top:max(34px,5.5dvh);
   text-align:center;text-shadow:0 3px 6px #000,0 0 14px #000;
 }
+#zoneMapScreen .zone-map-travel[data-scene="camp"] .zone-map-travel-heading{
+  display:none;
+}
 #zoneMapScreen .zone-map-travel-caption{
   margin:0 0 12px;color:#d4bd83;font:700 clamp(11px,3.2vw,15px)/1.15 'Russo One',Arial,sans-serif;
   letter-spacing:1.4px;
