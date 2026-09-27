@@ -51,7 +51,7 @@ assert "app.get('/api/zone-camp/:location'" in patched
 assert "1:'zone-map1.png'" in patched
 assert "2:'zone-map2.png'" in patched
 assert "3:'zone-map3.png'" in patched
-assert "4:'zone-map4.jpg'" in patched
+assert "4:'zone-map4.png'" in patched
 assert "5:'zone-map5.png'" in patched
 assert "4:'rostok-bar.png'" in patched
 assert "if(![1,2,3,4,5].includes(zoneLocation))" in patched
@@ -153,7 +153,7 @@ assert changed3
 assert mod.ROUTE_MARK in upgraded
 assert "// ZONE_MAP_ROUTING_V3" not in upgraded
 assert "1:'zone-map1.png'" in upgraded and "2:'zone-map2.png'" in upgraded and "3:'zone-map3.png'" in upgraded
-assert "4:'zone-map4.jpg'" in upgraded
+assert "4:'zone-map4.png'" in upgraded
 assert "5:'zone-map5.png'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
@@ -196,7 +196,7 @@ with tempfile.TemporaryDirectory() as td:
 
 installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
-assert "(root/'ui'/'zone-map4.jpg',b'\\xff\\xd8','faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee')" in installer
+assert "(root/'ui'/'zone-map4.png',b'\\x89PNG','67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3')" in installer
 assert "(root/'ui'/'zone-map5.png',b'\\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9')" in installer
 assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c')" in installer
 assert "Файл локации изменён или пережат" in installer
