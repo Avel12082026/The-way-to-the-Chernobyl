@@ -53,8 +53,10 @@ assert "2:'zone-map2.png'" in patched
 assert "3:'zone-map3.png'" in patched
 assert "4:'zone-map4.png'" in patched
 assert "5:'zone-map5.png'" in patched
+assert "6:'zone-map6.png'" in patched
 assert "4:'rostok-bar.png'" in patched
-assert "if(![1,2,3,4,5].includes(zoneLocation))" in patched
+assert "6:'yantar-bunker.png'" in patched
+assert "if(![1,2,3,4,5,6].includes(zoneLocation))" in patched
 assert "const zoneTier=zoneLocation" in patched
 
 # Location 3 remains the last-nine-pistol branch.
@@ -66,7 +68,9 @@ assert "НИИ Агропром пока закрыт. Должны быть о�
 assert "ZONE_MAP_SECOND_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(10,20)" in patched
 assert "if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
 assert "if(location===5)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
+assert "if(location===6)return zoneMapLocationUnlocked(data,5)" in patched
 assert "Росток пока закрыт. Должна быть открыта вторая десятка пистолетов." in patched
+assert "Янтарь пока закрыт. Сначала должна быть открыта Темная долина." in patched
 
 # Human factions are location-specific.
 assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
@@ -74,11 +78,13 @@ assert "if(zoneLocation===3)npc.faction='Военные'" in patched
 assert "if(zoneLocation===4)npc.faction='Наёмники'" in patched
 assert "if(zoneLocation===5)npc.faction='Наёмники'" in patched
 assert "Темная долина пока закрыта. Сначала должен быть открыт Росток." in patched
-assert "else if(zoneTier===5)" in patched
-assert "pool=list.filter(m=>(Number(m.tier)||0)===5)" in patched
+assert "else if(zoneTier===5||zoneTier===6)" in patched
+assert "pool=list.filter(m=>(Number(m.tier)||0)===zoneTier)" in patched
 assert "tierArtifacts=zoneTier===5" in patched
 assert "Number(item.tier)===5" in patched
 assert "npc.tier=zoneTier" in patched
+assert "'yantar-bunker'" in patched
+assert "origin==='yantar-bunker'&&zoneMapLocationUnlocked(data,6)" in patched
 
 # Mutants/anomalies are routed by the logical location tier; Rostok therefore yields tier 4.
 assert "sourceTier" in patched and "tier:zoneTier" in patched
@@ -155,7 +161,9 @@ assert "// ZONE_MAP_ROUTING_V3" not in upgraded
 assert "1:'zone-map1.png'" in upgraded and "2:'zone-map2.png'" in upgraded and "3:'zone-map3.png'" in upgraded
 assert "4:'zone-map4.png'" in upgraded
 assert "5:'zone-map5.png'" in upgraded
+assert "6:'zone-map6.png'" in upgraded
 assert "4:'rostok-bar.png'" in upgraded
+assert "6:'yantar-bunker.png'" in upgraded
 assert mod.SHOP_MARK in upgraded
 assert "const LATER_PATCH_SHOULD_SURVIVE=true;" in upgraded
 
@@ -198,8 +206,10 @@ installer=path.read_text(encoding='utf-8')
 assert "OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_ROUTING_V3')" in installer
 assert "(root/'ui'/'zone-map4.png',b'\\x89PNG','67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3')" in installer
 assert "(root/'ui'/'zone-map5.png',b'\\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9')" in installer
+assert "(root/'ui'/'zone-map6.png',b'\\x89PNG','20b64cf0096afad57bf3efbef2ac41a572f7879116ba45664b84290d41bb2b9f')" in installer
 assert "(root/'ui'/'rostok-bar.png',b'\\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c')" in installer
+assert "(root/'ui'/'yantar-bunker.png',b'\\x89PNG','25ef6f6783b475f373a737ce0a6c0e13ac5f583908586da41d6dfeb01d802974')" in installer
 assert "Файл локации изменён или пережат" in installer
-assert "Совместимость пяти локаций" in installer
+assert "Совместимость шести локаций" in installer
 
-print('PASS: V4 installer upgrades V3 and adds five map locations, Rostok camp, persistent position, Mercenary NPCs and tier-5 routing')
+print('PASS: V4 installer upgrades V3 and adds six map locations, Rostok/Yantar camps, persistent position and tier-5/tier-6 routing')
