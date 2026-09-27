@@ -5,6 +5,9 @@ on:
     paths:
       - 'index.html'
       - 'ui/bunker-menu.*'
+      - 'ui/cordon-zhuchara-camp.png'
+      - 'ui/cordon-zhuchara-hub.png'
+      - 'tests/cordon_zhuchara.test.cjs'
       - 'tests/rostok_barman_shop_server.test.py'
       - 'tests/rostok_barman_trade_client.test.cjs'
       - 'ui/trade-menu.js'
@@ -37,6 +40,9 @@ on:
     paths:
       - 'index.html'
       - 'ui/bunker-menu.*'
+      - 'ui/cordon-zhuchara-camp.png'
+      - 'ui/cordon-zhuchara-hub.png'
+      - 'tests/cordon_zhuchara.test.cjs'
       - 'ui/trader-hubs.js'
       - 'ui/diesel-yantar.jpg'
       - 'ui/leonov-yantar.jpg'
@@ -74,6 +80,7 @@ jobs:
           node --check ui/trade-menu.js
           node --check ui/trader-hubs.js
           node tests/zone_map_navigation.test.cjs
+          node tests/cordon_zhuchara.test.cjs
           node tests/rostok_barman_trade_client.test.cjs
           node tests/smoker_npc.test.cjs
           node tests/yantar_portraits.test.cjs
