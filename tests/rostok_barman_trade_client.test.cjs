@@ -42,7 +42,7 @@ for(const ref of [
   'ui/bunker-menu.js?v=20260927-yantar-portraits1',
   'ui/bunker-menu.css?v=20260927-yantar1',
   'ui/trade-menu.js?v=20260925-zhuchara-armor-id1',
-  'ui/trader-hubs.js?v=20260927-yantar-portraits1'
+  'ui/trader-hubs.js?v=20260927-talk-quests1'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
 console.log('PASS: Rostok Barman has 29 shotguns + armor 30-58; Zhuchara has 29 pistols + armor 1-29');
