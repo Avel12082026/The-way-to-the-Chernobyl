@@ -37,6 +37,7 @@ assert(block,'Zhuchara hub block missing');
 for(const [id,label] of [['trade','Торговля'],['talk','Говорить'],['back','Назад']]){
   assert(block.includes("{id:'"+id+"', label:'"+label+"'}"),'Zhuchara action missing: '+label);
 }
+assert.equal((block.match(/\{id:'/g)||[]).length,3,'Zhuchara must have exactly three gameplay buttons');
 assert(!block.includes("id:'quests'"),'Zhuchara must not have a separate Quests button');
 
 const enter=(bunker.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
