@@ -21,7 +21,7 @@ assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-3-1'")&&js.
 assert(js.includes("4: {path:'/api/zone-map/4', width:941, height:1672}"),'Rostok asset missing');
 assert(js.includes("5: {path:'/api/zone-map/5', width:941, height:1672}"),'location 5 asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-1-1'")&&js.includes("id:'mutant-1-1'")&&js.includes("id:'enemy-1-1'")&&js.includes("id:'camp-1'"),'Cordon hotspot actions must remain wired after map replacement');
-assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/api/zone-map/5'"),'destination loading artwork for five current locations missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/images/zone-travel/dark-valley-loading.png'"),'destination loading artwork for five current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'location'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
