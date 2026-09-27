@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install/upgrade map-routed raids for five locations and the first-location shop limits."""
+"""Install/upgrade map-routed raids for six locations and the first-location shop limits."""
 from pathlib import Path
 import argparse, hashlib, os, shutil, subprocess, tempfile, time
 
@@ -106,10 +106,10 @@ app.post('/api/shop/buy',(req,res,next)=>{
 
 POSITION_ROUTE=r"""// PLAYER_WORLD_POSITION_V1
 const PLAYER_WORLD_POSITION_PLACES=new Set([
-    'cordon-camp','zone-map','rostok-bar','barman','inventory','kpk',
+    'cordon-camp','zone-map','rostok-bar','yantar-bunker','barman','inventory','kpk',
     'warehouse','arena','market','chat','zhuchara','diesel','leonov','smoker'
 ]);
-const PLAYER_WORLD_POSITION_ORIGINS=new Set(['cordon-camp','zone-map','rostok-bar']);
+const PLAYER_WORLD_POSITION_ORIGINS=new Set(['cordon-camp','zone-map','rostok-bar','yantar-bunker']);
 
 app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000),(req,res)=>{
     const playerId=String(req.telegramUser.id);
@@ -118,7 +118,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
         if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
         const data=safeParsePlayerData(row.data);
         let zoneLocation=Number(req.body?.zoneLocation||1);
-        if(![1,2,3,4,5].includes(zoneLocation)||!zoneMapLocationUnlocked(data,zoneLocation))zoneLocation=1;
+        if(![1,2,3,4,5,6].includes(zoneLocation)||!zoneMapLocationUnlocked(data,zoneLocation))zoneLocation=1;
         let place=String(req.body?.place||'cordon-camp');
         if(!PLAYER_WORLD_POSITION_PLACES.has(place))place='cordon-camp';
         let origin=String(req.body?.origin||'cordon-camp');
@@ -127,10 +127,17 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
         if(['rostok-bar','barman'].includes(place)){
             if(zoneMapLocationUnlocked(data,4)){zoneLocation=4;origin='rostok-bar';}
             else{zoneLocation=1;place='cordon-camp';origin='cordon-camp';}
-        }else if(['cordon-camp','zhuchara','diesel','leonov','smoker','arena','market','chat'].includes(place)){
+        }else if(place==='yantar-bunker'){
+            if(zoneMapLocationUnlocked(data,6)){zoneLocation=6;origin='yantar-bunker';}
+            else{zoneLocation=1;place='cordon-camp';origin='cordon-camp';}
+        }else if(['diesel','leonov'].includes(place)){
+            if(origin==='yantar-bunker'&&zoneMapLocationUnlocked(data,6))zoneLocation=6;
+            else{zoneLocation=1;origin='cordon-camp';}
+        }else if(['cordon-camp','zhuchara','smoker','arena','market','chat'].includes(place)){
             zoneLocation=1;origin='cordon-camp';
         }else if(['inventory','kpk','warehouse'].includes(place)){
             if(origin==='rostok-bar'&&zoneMapLocationUnlocked(data,4))zoneLocation=4;
+            else if(origin==='yantar-bunker'&&zoneMapLocationUnlocked(data,6))zoneLocation=6;
             else{zoneLocation=1;origin='cordon-camp';}
         }else if(place==='zone-map'){
             origin='zone-map';
@@ -149,8 +156,8 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V4
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png'});
-const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png',6:'zone-map6.png'});
+const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png',6:'yantar-bunker.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
     if(!file)return res.status(404).end();
@@ -191,6 +198,7 @@ function zoneMapLocationUnlocked(data,location){
     if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9);
     if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
     if(location===5)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
+    if(location===6)return zoneMapLocationUnlocked(data,5);
     return false;
 }
 const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45},4:{hp:960,dmg:80}});
@@ -220,10 +228,10 @@ function zoneMapMutantPayload(data,zoneTier){
     let pool=[];
     if(zoneTier<=1){
         pool=list.filter(m=>[0,1].includes(Number(m.tier)||0));
-    }else if(zoneTier===5){
-        // Dark Valley is explicitly a tier-5 location. Do not remap it through
-        // the ordered tier list: only native tier-5 mutants belong here.
-        pool=list.filter(m=>(Number(m.tier)||0)===5);
+    }else if(zoneTier===5||zoneTier===6){
+        // Dark Valley and Yantar are explicit location tiers. Do not remap them
+        // through the ordered tier list: use only native mutants of that tier.
+        pool=list.filter(m=>(Number(m.tier)||0)===zoneTier);
     }else{
         const internalTiers=[...new Set(list.map(m=>Number(m.tier)||0).filter(t=>t>1))].sort((a,b)=>a-b);
         const internalTier=internalTiers[Math.min(internalTiers.length-1,Math.max(0,zoneTier-2))];
@@ -249,7 +257,7 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
     const zoneLocation=Number(req.body?.zoneLocation||1);
     if(!['enemy','mutant','anomaly'].includes(zoneKind))
         return res.status(400).json({success:false,error:'Неизвестная точка на карте'});
-    if(![1,2,3,4,5].includes(zoneLocation))
+    if(![1,2,3,4,5,6].includes(zoneLocation))
         return res.status(400).json({success:false,error:'Неизвестная локация'});
     try{
         const tx=db.transaction(()=>{
@@ -258,7 +266,9 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);if(!row)return{success:false,error:'Игрок не найден'};
             const data=safeParsePlayerData(row.data);
             if(!zoneMapLocationUnlocked(data,zoneLocation)){
-                const error=zoneLocation===5
+                const error=zoneLocation===6
+                    ?'Янтарь пока закрыт. Сначала должна быть открыта Темная долина.'
+                    :zoneLocation===5
                     ?'Темная долина пока закрыта. Сначала должен быть открыт Росток.'
                     :zoneLocation===4
                       ?'Росток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
@@ -531,10 +541,29 @@ const ZONE_MAP_LOCATION1_ARMOR=new Set(zoneMapZhucharaArmorServer().map(item=>it
 
 def insert_position_route(text):
     if POSITION_MARK in text:
-        return text,False
+        start=text.find(POSITION_MARK)
+        end=text.find('app.listen(',start)
+        if end<0:
+            raise RuntimeError('Не найдена граница маршрута позиции игрока.')
+        current=text[start:end]
+        if current.strip()==POSITION_ROUTE.strip():
+            return text,False
+        return text[:start]+POSITION_ROUTE+text[end:],True
     if ROUTE_MARK not in text:
         raise RuntimeError('Нельзя добавить позицию игрока без ZONE_MAP_ROUTING_V4.')
     return insert_before_one(text,["app.listen("],POSITION_ROUTE,'app.listen для позиции игрока'),True
+
+def refresh_zone_route(text):
+    if ROUTE_MARK not in text:
+        return text,False
+    start=text.find(ROUTE_MARK)
+    end=_find_handler_block_end(text,start)
+    if end<0:
+        raise RuntimeError('Не удалось определить границу ZONE_MAP_ROUTING_V4.')
+    current=text[start:end]
+    if current.strip()==ZONE_ROUTE.strip():
+        return text,False
+    return text[:start]+ZONE_ROUTE+text[end:],True
 
 def _next_shop_buy_route(text,after=0):
     anchors=["app.post('/api/shop/buy'","app.post(\"/api/shop/buy\""]
@@ -632,6 +661,7 @@ def patch(source):
     new_location5="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});"
     old_rostok_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});"
     new_rostok_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png'});"
+    new_yantar_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png',6:'zone-map6.png'});"
     if old_cordon in text:
         text=text.replace(old_cordon,new_cordon,1);changed=True
     elif new_cordon not in text and new_svalka not in text and new_agroprom not in text and new_location5 not in text and new_rostok_png not in text:
@@ -650,9 +680,11 @@ def patch(source):
         raise RuntimeError('Не найден поддерживаемый маршрут пятой локации.')
     if old_rostok_png in text:
         text=text.replace(old_rostok_png,new_rostok_png,1);changed=True
-    elif new_rostok_png not in text:
+    elif new_rostok_png not in text and new_yantar_png not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут карты Ростока.')
 
+    text,route_refresh_changed=refresh_zone_route(text)
+    changed=changed or route_refresh_changed
     text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
     changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
@@ -684,7 +716,9 @@ def main():
         # any rescale/re-encode/recompression before the server update is applied.
         (root/'ui'/'zone-map4.png',b'\x89PNG','67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3'),
         (root/'ui'/'zone-map5.png',b'\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9'),
+        (root/'ui'/'zone-map6.png',b'\x89PNG','20b64cf0096afad57bf3efbef2ac41a572f7879116ba45664b84290d41bb2b9f'),
         (root/'ui'/'rostok-bar.png',b'\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'),
+        (root/'ui'/'yantar-bunker.png',b'\x89PNG','25ef6f6783b475f373a737ce0a6c0e13ac5f583908586da41d6dfeb01d802974'),
     ]
     for asset,signature,expected_sha256 in assets:
         if not asset.is_file():
@@ -706,7 +740,7 @@ def main():
         candidate.write_text(new_text,encoding='utf-8')
         run(['node','--check',str(candidate)],timeout=30)
         if args.check:
-            print('Совместимость пяти локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
+            print('Совместимость шести локаций, тиров и маршрутов подтверждена. Файлы не изменены.')
             return
 
     if os.geteuid()!=0:
