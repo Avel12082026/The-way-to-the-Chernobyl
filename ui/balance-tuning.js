@@ -6,11 +6,9 @@ const CATCH_MIN=2;
 const CATCH_MAX=18;
 
 const RESEARCH_UNLOCKS=[[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];
-function researchTier(level){
-  const lv=Math.max(1,Number(level)||1);
-  let tier=0;
-  for(const [value,required] of RESEARCH_UNLOCKS)if(lv>=required)tier=value;
-  return tier;
+function researchTier(_level){
+  // Research suits are no longer level-gated. All normal research tiers are visible.
+  return 14;
 }
 function rebalanceResearchPrices(){
   if(typeof armorItems==='undefined')return [];
@@ -73,19 +71,13 @@ function itemReferenceMeta(name){
   const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
   const parsed=typeof parseGearName==='function'?parseGearName(clean):{baseName:clean,level:0};
   const base=parsed?.baseName||clean;
-  let def=null, minLevel=1;
+  let def=null, minLevel='Уровень не требуется';
   if(typeof weapons!=='undefined')def=weapons.find(x=>x.name===base)||def;
   if(def){
-    minLevel=def.adminOnly?'Только администратор':Math.max(1,Number(def.unlockLevel)||1);
+    minLevel=def.adminOnly?'Только администратор':'Уровень не требуется';
   }else if(typeof armorItems!=='undefined'){
     def=armorItems.find(x=>x.name===base)||def;
-    if(def){
-      if(def.adminOnly)minLevel='Только администратор';
-      else if(def.isResearchSuit){
-        const row=RESEARCH_UNLOCKS.find(([tier])=>Number(tier)===Number(def.tier));
-        minLevel=row?row[1]:1;
-      }else minLevel=Math.max(1,Number(def.unlockLevel)||1);
-    }
+    if(def)minLevel=def.adminOnly?'Только администратор':'Уровень не требуется';
   }
   if(!def&&typeof detectors!=='undefined')def=detectors.find(x=>x.name===base)||def;
   if(!def&&typeof consumables!=='undefined')def=consumables.find(x=>x.name===clean)||def;
@@ -111,9 +103,9 @@ if(typeof nativeInfo==='function'){
         const box=document.createElement('div');
         box.className='item-reference-meta';
         box.style.cssText='font-size:12px;color:#cfc7aa;margin:0 0 10px;background:#111;padding:8px;border:1px solid #4a4230;border-radius:6px;';
-        const levelText=typeof meta.minLevel==='number'?String(meta.minLevel):meta.minLevel;
+        const levelText=meta.minLevel;
         const priceText=meta.price===null?'не определена':('≈ '+meta.price.toLocaleString('ru-RU')+' сталбайтов');
-        box.innerHTML='<div><b>Можно использовать с уровня:</b> '+levelText+'</div><div><b>Средняя цена:</b> '+priceText+'</div>';
+        box.innerHTML='<div><b>Доступ:</b> '+levelText+'</div><div><b>Средняя цена:</b> '+priceText+'</div>';
         const firstInfo=body.querySelector('div[style*="font-size:12px"]');
         if(firstInfo)body.insertBefore(box,firstInfo);else body.append(box);
       }
@@ -133,7 +125,7 @@ if(typeof nativeInfo==='function'){
 }
 
 window.GameBalanceTuning=Object.freeze({
-  version:'1.1.0',
+  version:'1.2.0',
   maxUpgradeLevel:50,
   maxUpgradeBonusPct:0.25,
   byteUpgradeThreshold:25,
