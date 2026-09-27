@@ -36,7 +36,7 @@ assert(html.includes("if(!raidActive||!raidSessionToken||currentEnemy||currentAn
 assert(html.includes("} else if (currentAnomaly) {\n            renderAnomalyButtons();"),'return-to-raid must restore resolved anomaly completion UI');
 assert(html.includes("if(currentAnomaly){showGameAlert('Сначала завершите аномалию.');return;}"),'raid end must remain blocked until anomaly finish clears server pending state');
 const balance=fs.readFileSync('ui/balance-tuning.js','utf8');
-assert(balance.includes('Можно использовать с уровня:')&&balance.includes('Средняя цена:'),'item info reference metadata missing');
+assert(balance.includes('<b>Доступ:</b>')&&balance.includes('Уровень не требуется')&&balance.includes('Средняя цена:'),'money-only item info metadata missing');
 
 assert(html.includes("radiation: 'радиозащита'"),'radiation protection must be labelled Радиозащита');
 assert(html.includes('Math.abs(Number(statsObj.radiationLeak) || 0)'),'artifact Radiation +N must remain harmful regardless of stored sign');
