@@ -194,7 +194,7 @@
       origin = 'yantar-bunker';
     } else if (['diesel','leonov'].includes(place)) {
       if (origin === 'yantar-bunker') location = 6;
-      else { location = 1; origin = 'cordon-camp'; }
+      else { location = 1; place = 'cordon-camp'; origin = 'cordon-camp'; }
     } else if (['cordon-camp','zhuchara','smoker','arena','market','chat'].includes(place)) {
       location = 1;
       origin = 'cordon-camp';
@@ -1832,7 +1832,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.21.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, closeYantarCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.21.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, closeYantarCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
