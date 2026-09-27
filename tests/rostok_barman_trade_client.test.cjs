@@ -19,7 +19,7 @@ assert(!trade.includes("Number(a.tier) >= 4"),'Old Barman armor tier gate must b
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
 assert(trade.includes("let sourceVendor = currentVendor"),'trade source-vendor routing missing');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
-assert(trade.includes("version: '1.3.8'"),'TradeMenu version not bumped');
+assert(trade.includes("version: '1.3.9'"),'TradeMenu version not bumped');
 
 assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot missing');
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
@@ -41,8 +41,8 @@ assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling
 for(const ref of [
   'ui/bunker-menu.js?v=20260927-yantar-portraits1',
   'ui/bunker-menu.css?v=20260927-yantar1',
-  'ui/trade-menu.js?v=20260927-yantar-leonov-shop1',
-  'ui/trader-hubs.js?v=20260927-talk-quests1'
+  'ui/trade-menu.js?v=20260927-money-only1',
+  'ui/trader-hubs.js?v=20260927-money-only1'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
 console.log('PASS: Rostok Barman has 29 shotguns + armor 30-58; Zhuchara has 29 pistols + armor 1-29');
