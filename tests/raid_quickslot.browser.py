@@ -86,7 +86,7 @@ async def main():
     await cdp.detach()
     assert len(writes)==1,writes
     info_text=await page.locator('#itemInfoModalBody').inner_text()
-    assert 'Уровень использования:' in info_text,info_text
+    assert 'Уровень не требуется' in info_text,info_text
     assert 'Средняя цена рынка' in info_text,info_text
     await page.locator('#itemInfoModal button').last.click()
 
