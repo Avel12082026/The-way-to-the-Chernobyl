@@ -66,14 +66,14 @@ assert "НИИ Агропром пока закрыт. Должны быть о�
 assert "ZONE_MAP_SECOND_PISTOLS_SERVER=ZONE_MAP_PISTOLS_SERVER.slice(10,20)" in patched
 assert "if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
 assert "if(location===5)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10)" in patched
-assert "Россток пока закрыт. Должна быть открыта вторая десятка пистолетов." in patched
+assert "Росток пока закрыт. Должна быть открыта вторая десятка пистолетов." in patched
 
 # Human factions are location-specific.
 assert "if(zoneLocation===2)npc.faction='Бандиты'" in patched
 assert "if(zoneLocation===3)npc.faction='Военные'" in patched
 assert "if(zoneLocation===4)npc.faction='Наёмники'" in patched
 assert "if(zoneLocation===5)npc.faction='Наёмники'" in patched
-assert "Темная долина пока закрыта. Сначала должен быть открыт Россток." in patched
+assert "Темная долина пока закрыта. Сначала должен быть открыт Росток." in patched
 assert "else if(zoneTier===5)" in patched
 assert "pool=list.filter(m=>(Number(m.tier)||0)===5)" in patched
 assert "tierArtifacts=zoneTier===5" in patched
