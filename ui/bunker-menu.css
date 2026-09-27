@@ -156,6 +156,42 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
   object-fit:cover;object-position:center top;
 }
 
+
+
+/* Yantar scientist bunker. The approved 941x1672 artwork is shown unfiltered; invisible hotspots map the two traders and two bunker doors. */
+#yantarCampScreen.yantar-camp-screen{
+  display:none;position:fixed;inset:0;z-index:1550;overflow:hidden;
+  place-items:center;width:100%;height:100%;min-height:0;max-height:none;
+  min-width:0;max-width:none;margin:0;padding:0;box-sizing:border-box;
+  border:0!important;border-image:none!important;border-radius:0!important;
+  box-shadow:none!important;background:#0a0c0c!important;
+}
+#yantarCampScreen.active{display:grid;}
+#yantarCampScreen .yantar-camp-scene{
+  position:relative;width:100%;height:100%;overflow:hidden;flex:none;
+  --bunker-unit:1px;--bunker-vunit:1px;
+}
+#yantarCampScreen .yantar-camp-artwork{
+  position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:fill;
+  image-rendering:auto;filter:none;pointer-events:none;user-select:none;-webkit-user-drag:none;
+}
+#yantarCampScreen .yantar-hotspot{
+  position:absolute;z-index:4;margin:0;padding:0;border:0;background:transparent;
+  color:transparent;opacity:.001;cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+#yantarCampScreen .yantar-hotspot:focus-visible{
+  opacity:.08;outline:2px solid #e4c477;outline-offset:-2px;
+}
+#yantarCampScreen .yantar-exit-hotspot{left:0;top:27.5%;width:18%;height:37%;}
+#yantarCampScreen .yantar-leonov-hotspot{left:18%;top:29%;width:31%;height:34%;}
+#yantarCampScreen .yantar-diesel-hotspot{left:51%;top:29%;width:31%;height:34%;}
+#yantarCampScreen .yantar-warehouse-hotspot{right:0;top:27.5%;width:18%;height:37%;}
+body.yantar-camp-visible{overflow:hidden!important;}
+body.yantar-camp-visible #menuMusicPanel,
+body.yantar-camp-visible #menuMusicButton,
+body.yantar-camp-visible .admin-btn{display:none!important;}
+
 /* Zone map. Artwork keeps its original aspect ratio; the map itself is never stretched. */
 #zoneMapScreen.zone-map-screen{
   display:none;position:fixed;inset:0;z-index:1650;overflow:hidden;
