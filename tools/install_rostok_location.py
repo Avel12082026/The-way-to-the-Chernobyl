@@ -4,10 +4,10 @@ from pathlib import Path
 import argparse, hashlib, os, re, shutil, subprocess, tempfile, time, urllib.request
 
 SERVICE='pocketzone.service'
-CACHE_KEY='20260926-dark-valley2'
-MAP_SHA='faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'
+CACHE_KEY='20260927-rostok-map-final1'
+MAP_SHA='67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3'
 BAR_SHA='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
-MAP_SIZE=(865,1536)
+MAP_SIZE=(941,1672)
 BAR_SIZE=(941,1672)
 
 def sha256(data):
@@ -40,7 +40,7 @@ def jpeg_size(data):
 
 def png_size(data):
     if len(data)<24 or data[:8]!=b'\x89PNG\r\n\x1a\n':
-        raise RuntimeError('Изображение бара не PNG.')
+        raise RuntimeError('Изображение не PNG.')
     return int.from_bytes(data[16:20],'big'),int.from_bytes(data[20:24],'big')
 
 def validate_asset(path,expected_sha,expected_size,kind):
@@ -48,7 +48,7 @@ def validate_asset(path,expected_sha,expected_size,kind):
     actual=sha256(data)
     if actual!=expected_sha:
         raise RuntimeError(f'{kind} изменён или пережат: SHA256 {actual}, ожидался {expected_sha}')
-    size=jpeg_size(data) if kind=='Карта Росстока' else png_size(data)
+    size=png_size(data)
     if size!=expected_size:
         raise RuntimeError(f'{kind}: неверный размер {size[0]}x{size[1]}, ожидался {expected_size[0]}x{expected_size[1]}')
     return data
@@ -147,7 +147,7 @@ def main():
     stamp=time.strftime('%Y%m%d_%H%M%S')
     backup=root/f'BACKUP_BEFORE_ROSTOK_{stamp}'
     backup.mkdir()
-    tracked=[server,ui/'zone-map4.jpg',ui/'rostok-bar.png']
+    tracked=[server,ui/'zone-map4.png',ui/'rostok-bar.png']
     if not args.server_only:
         tracked=[ui/'bunker-menu.js',ui/'bunker-menu.css',index]+tracked
     existed={}
@@ -156,7 +156,7 @@ def main():
         if p.exists(): shutil.copy2(p,backup/p.name)
 
     try:
-        write_atomic(ui/'zone-map4.jpg',map_data)
+        write_atomic(ui/'zone-map4.png',map_data)
         write_atomic(ui/'rostok-bar.png',bar_data)
         if not args.server_only:
             write_atomic(ui/'bunker-menu.js',client_js)
@@ -177,11 +177,11 @@ def main():
             if sha256(probe.stdout)!=expected:
                 raise RuntimeError('API вернул изменённое изображение: '+url)
 
-        if sha256((ui/'zone-map4.jpg').read_bytes())!=MAP_SHA or sha256((ui/'rostok-bar.png').read_bytes())!=BAR_SHA:
+        if sha256((ui/'zone-map4.png').read_bytes())!=MAP_SHA or sha256((ui/'rostok-bar.png').read_bytes())!=BAR_SHA:
             raise RuntimeError('Контрольная сумма изображения изменилась после установки.')
 
         print('РОССТОК УСТАНОВЛЕН' + (' (server-only).' if args.server_only else '.'))
-        print('Карта 865x1536 и бар 941x1672 сохранены байт-в-байт, без пережатия.')
+        print('Карта 941x1672 и бар 941x1672 сохранены байт-в-байт, без пережатия.')
         print('Backup:',backup)
     except Exception:
         for p in tracked:
