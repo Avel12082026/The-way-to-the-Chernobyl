@@ -14,7 +14,7 @@ const app={post(path,...fns){routes[path]=fns.at(-1)}};
 const requireAuth=(_req,_res,next)=>next();
 const rateLimit=()=> (_req,_res,next)=>next();
 function safeParsePlayerData(raw){return JSON.parse(raw)}
-function zoneMapLocationUnlocked(_data,location){return [1,2,3,4].includes(Number(location))}
+function zoneMapLocationUnlocked(_data,location){return [1,2,3,4,5,6].includes(Number(location))}
 const db={prepare(sql){
   if(sql.startsWith('SELECT data FROM players'))return{get(){return{data:JSON.stringify(playerData)}}};
   if(sql.startsWith('UPDATE players SET data='))return{run(raw){playerData=JSON.parse(raw);return{changes:1}}};
@@ -36,6 +36,18 @@ if(!r.body?.success||playerData.worldPosition.zoneLocation!==4||playerData.world
 
 r=call({zoneLocation:4,place:'kpk',origin:'rostok-bar'});
 if(playerData.worldPosition.zoneLocation!==4||playerData.worldPosition.origin!=='rostok-bar')throw Error('Rostok PDA origin lost');
+
+r=call({zoneLocation:6,place:'yantar-bunker',origin:'yantar-bunker'});
+if(!r.body?.success||playerData.worldPosition.zoneLocation!==6||playerData.worldPosition.place!=='yantar-bunker'||playerData.worldPosition.origin!=='yantar-bunker')throw Error('Yantar bunker save failed');
+
+r=call({zoneLocation:6,place:'warehouse',origin:'yantar-bunker'});
+if(playerData.worldPosition.zoneLocation!==6||playerData.worldPosition.origin!=='yantar-bunker')throw Error('Yantar warehouse origin lost');
+
+r=call({zoneLocation:6,place:'leonov',origin:'yantar-bunker'});
+if(playerData.worldPosition.zoneLocation!==6||playerData.worldPosition.place!=='leonov'||playerData.worldPosition.origin!=='yantar-bunker')throw Error('Yantar Leonov origin lost');
+
+r=call({zoneLocation:6,place:'diesel',origin:'yantar-bunker'});
+if(playerData.worldPosition.zoneLocation!==6||playerData.worldPosition.place!=='diesel'||playerData.worldPosition.origin!=='yantar-bunker')throw Error('Yantar Diesel origin lost');
 
 r=call({zoneLocation:4,place:'zhuchara',origin:'zone-map'});
 if(playerData.worldPosition.zoneLocation!==1||playerData.worldPosition.origin!=='cordon-camp')throw Error('Cordon trader not normalized');
@@ -62,6 +74,7 @@ with tempfile.TemporaryDirectory() as td:
 source=path.read_text(encoding='utf-8')
 assert mod.POSITION_MARK in mod.POSITION_ROUTE
 assert "'warehouse'" in mod.POSITION_ROUTE
+assert "'yantar-bunker'" in mod.POSITION_ROUTE
 assert "updatedAt:Date.now()" in mod.POSITION_ROUTE
 
-print('PASS: player world position persists map/bar/warehouse/PDA and normalizes physical locations')
+print('PASS: player world position persists Cordon/Rostok/Yantar physical origins and normalizes locations')
