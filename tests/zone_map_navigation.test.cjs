@@ -10,9 +10,9 @@ assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()')
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
-assert(js.includes("version: '0.7.0'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина'})"),'five map titles missing');
+assert(js.includes("version: '0.8.0'"),'ZoneMap API version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.21.0'"),'BunkerMenu version mismatch');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина',6:'Янтарь'})"),'six map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
 assert(js.includes("id:'transition-to-1'")&&js.includes("id:'transition-to-3'")&&js.includes("id:'transition-to-4'")&&js.includes("id:'anomaly-2-1'")&&js.includes("id:'mutant-2-1'")&&js.includes("id:'enemy-2-1'"),'Svalka hotspot actions must remain wired after map replacement');
@@ -20,12 +20,13 @@ assert(js.includes("3: {path:'/api/zone-map/3', width:940, height:1673}"),'NII A
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-3-1'")&&js.includes("id:'mutant-3-1'")&&js.includes("id:'enemy-3-1'"),'Agroprom hotspot actions must remain wired after map replacement');
 assert(js.includes("4: {path:'/api/zone-map/4', width:941, height:1672}"),'Rostok asset missing');
 assert(js.includes("5: {path:'/api/zone-map/5', width:941, height:1672}"),'location 5 asset missing');
+assert(js.includes("6: {path:'/api/zone-map/6', width:864, height:1536}"),'Yantar map asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-1-1'")&&js.includes("id:'mutant-1-1'")&&js.includes("id:'enemy-1-1'")&&js.includes("id:'camp-1'"),'Cordon hotspot actions must remain wired after map replacement');
-assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/images/zone-travel/dark-valley-loading.png'"),'destination loading artwork for five current locations missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/images/zone-travel/dark-valley-loading.png'")&&js.includes("6:'/api/zone-map/6'"),'destination loading artwork for six current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'location'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
-assert(js.includes("3:{kind:'location'}")&&js.includes("4:{kind:'location'}")&&js.includes("5:{kind:'location'}"),'Agroprom/Rostok/location 5 loading screens missing');
+assert(js.includes("3:{kind:'location'}")&&js.includes("4:{kind:'location'}")&&js.includes("5:{kind:'location'}")&&js.includes("6:{kind:'location'}"),'Agroprom/Rostok/Dark Valley/Yantar loading screens missing');
 assert(js.includes("renderZoneTravelCombat"),'travel combat renderer helper missing');
 assert(js.includes('prepareZoneTravelArtwork(target)')&&js.includes('zoneMapTravelDestination'),'travel screen must select artwork by destination');
 assert(css.includes('.zone-map-travel-artwork')&&css.includes('.zone-map-travel-bottom')&&css.includes('bottom:calc(max(18px,env(safe-area-inset-bottom)) + 18px)'), 'travel artwork or bottom progress layout missing');
@@ -36,7 +37,7 @@ assert(locationTravelStyle.includes('width:100%')&&locationTravelStyle.includes(
 assert(css.includes('[data-scene="location"] .zone-map-travel-scene')&&css.includes('[data-scene="location"] .zone-map-travel-shade{display:none;}'),'Svalka/Agroprom loading artwork must not receive overlay effects');
 assert(css.includes('.zone-map-travel[data-scene="camp"]::before{display:none;}'),'Kordon must not use the blurred travel backdrop');
 assert(css.includes('.zone-map-travel[data-scene="camp"] .zone-map-travel-shade{display:none;}'),'Kordon must not use the shade/effect overlay');
-assert(js.includes('20260922-position3'),'Rostok map cache key missing');
+assert(js.includes("const ZONE_TRAVEL_CACHE = '20260927-yantar1'"),'Yantar cache key missing');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
 assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must keep bottom/left/top transition markers');
@@ -66,18 +67,30 @@ assert(loc4Block.includes("id:'camp-4'")&&loc4Block.includes("label:'Бар «10
 assert(loc4Block.includes("id:'transition-to-2'")&&loc4Block.includes("x:93.76,y:89.32,targetLocation:2"),'Rostok -> Svalka transition must be bottom-right');
 assert(loc4Block.includes("id:'transition-to-5'")&&loc4Block.includes("x:6.94,y:78.78,targetLocation:5"),'Rostok bottom-left transition must open location 5');
 assert(loc4Block.includes("label:'Переход на Темная долина'"),'Rostok transition must display Dark Valley name');
-const loc5Block=(js.match(/5: \[([\s\S]*?)\n    \]\n  \}\);/)||[])[1]||'';
-assert.equal((loc5Block.match(/kind:'enemy'/g)||[]).length,2,'Location 5 must have two mercenary markers');
-assert.equal((loc5Block.match(/label:'Наёмники'/g)||[]).length,2,'Location 5 human enemies must be Mercenaries');
-assert.equal((loc5Block.match(/kind:'mutant'/g)||[]).length,2,'Location 5 must have two mutant markers');
-assert.equal((loc5Block.match(/kind:'anomaly'/g)||[]).length,2,'Location 5 must have two anomaly markers');
-assert.equal((loc5Block.match(/kind:'transition'/g)||[]).length,2,'Location 5 must have back and future transition markers');
+const loc5Block=(js.match(/5: \[([\s\S]*?)\n    \],\n    6:/)||[])[1]||'';
+assert.equal((loc5Block.match(/kind:'enemy'/g)||[]).length,2,'Dark Valley must have two mercenary markers');
+assert.equal((loc5Block.match(/label:'Наёмники'/g)||[]).length,2,'Dark Valley human enemies must be Mercenaries');
+assert.equal((loc5Block.match(/kind:'mutant'/g)||[]).length,2,'Dark Valley must have two mutant markers');
+assert.equal((loc5Block.match(/kind:'anomaly'/g)||[]).length,2,'Dark Valley must have two anomaly markers');
+assert.equal((loc5Block.match(/kind:'transition'/g)||[]).length,2,'Dark Valley must have Rostok and Yantar transitions');
 assert(loc5Block.includes("id:'transition-to-4'")&&loc5Block.includes("x:37.41,y:88.40,targetLocation:4"),'Dark Valley bottom transition must return to Rostok');
-assert(loc5Block.includes("transition-5-future-top")&&loc5Block.includes("x:66.45,y:5.76")&&loc5Block.includes("future:true"),'Dark Valley top transition must remain reserved');
+assert(loc5Block.includes("id:'transition-to-6'")&&loc5Block.includes("x:66.45,y:5.76,targetLocation:6"),'Dark Valley top transition must open Yantar');
+
+const loc6Block=(js.match(/6: \[([\s\S]*?)\n    \]\n  \}\);/)||[])[1]||'';
+assert.equal((loc6Block.match(/kind:'enemy'/g)||[]).length,0,'Yantar must not add human enemy markers');
+assert.equal((loc6Block.match(/kind:'mutant'/g)||[]).length,4,'Yantar must have four tier-6 mutant markers');
+assert.equal((loc6Block.match(/kind:'anomaly'/g)||[]).length,2,'Yantar must have two tier-6 anomaly markers');
+assert.equal((loc6Block.match(/kind:'camp'/g)||[]).length,1,'Yantar must have one scientist camp marker');
+assert.equal((loc6Block.match(/kind:'transition'/g)||[]).length,1,'Yantar must have one return transition');
+assert(loc6Block.includes("id:'camp-6'")&&loc6Block.includes("label:'Лагерь сталкеров'"),'Yantar scientist camp hotspot missing');
+assert(loc6Block.includes("id:'transition-to-5'")&&loc6Block.includes("targetLocation:5"),'Yantar must return to Dark Valley');
 
 assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-position3'),'Rostok bar screen missing');
+assert(js.includes('function ensureYantarCampScreen()')&&js.includes('/api/zone-camp/6?v='),'Yantar scientist bunker screen missing');
+assert(js.includes('data-yantar-action="leonov"')&&js.includes('data-yantar-action="diesel"')&&js.includes('data-yantar-action="warehouse"')&&js.includes('data-yantar-action="exit"'),'Yantar bunker hotspots missing');
 assert(js.includes("if (zoneLocation === 4)")&&js.includes('openRostokCamp();'),'Rostok camp marker must open bar screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
+assert(js.includes("if (zoneLocation === 6)")&&js.includes('openYantarCamp();'),'Yantar camp marker must open scientist bunker');
 
 const zoneCss=css.slice(css.indexOf('/* Zone map.'));
 assert(zoneCss.includes('object-fit:contain'),'maps must keep original proportions');
@@ -110,6 +123,8 @@ const rostokBlock=js.slice(js.indexOf('function ensureRostokCampScreen()'),js.in
 assert(!rostokBlock.includes('/images/zone-travel/kordon-original.jpg'),'Kordon loading artwork must not be used inside Rostok');
 assert(js.includes('window.GamePosition = Object.freeze')&&js.includes('restorePlayerWorldPositionWhenReady'),'persistent world position API missing');
 assert(js.includes("saveWorldPosition('rostok-bar','rostok-bar')"),'Rostok bar position save missing');
+assert(js.includes("saveWorldPosition('yantar-bunker','yantar-bunker')"),'Yantar bunker position save missing');
+assert(js.includes("origin === 'yantar-bunker'"),'Yantar return context missing');
 assert(js.includes("el.id = 'barmanHubScreen'"),'Barman hub screen missing');
 assert(js.includes("window.QuestSystem?.openTraderDialogue")&&js.includes("openTraderDialogue('barman')"),'Barman talk must open quest dialogue');
 assert(js.includes('id="barmanHubArtwork" class="trader-portrait-artwork" src="${SERVER_URL}/images/traders/barman-hub.png?v=${ZONE_TRAVEL_CACHE}"'),'Barman approved portrait artwork missing');
