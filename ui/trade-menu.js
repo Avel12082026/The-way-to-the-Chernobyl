@@ -92,7 +92,7 @@
         if (!isYantarLeonovContext()) {
           return [
             ...supplies,
-            ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))
+            ...armorItems.filter(a => a.isResearchSuit && !a.adminOnly).map(a => ({...a, category: 'armor'}))
           ];
         }
         return [
@@ -109,7 +109,7 @@
     technician: {
       title: () => 'ТЕХНИК ДИЗЕЛЬ — ТОРГОВЛЯ',
       // Detectors are sold by Diesel now; use the same level gate that previously lived at Leonov.
-      stock: () => detectors.filter(d => d.tier <= getDetectorUnlockTier(player.level)).map(d => ({...d, category: 'detector'})),
+      stock: () => detectors.filter(d => d && !d.adminOnly).map(d => ({...d, category: 'detector'})),
       price: item => getBuyPrice(item.price),
       accepts: name => !!getEquipSlotType(name),
       offer: name => ({coins: Math.round(getSellPrice(name) * (getEquipSlotType(name) === 'detector' ? 1.10 : 1.02)), tokens: 0})
@@ -558,7 +558,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.8', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.9', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
