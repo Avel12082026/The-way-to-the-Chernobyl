@@ -22,7 +22,7 @@ assert(hubs.includes("ui/leonov-yantar.jpg?v=' + YANTAR_PORTRAIT_CACHE"),'Leonov
 assert(hubs.includes("YANTAR_PORTRAIT_CACHE = '20260927-yantar-portraits1'"),'portrait cache key missing');
 assert(bunker.includes('src="ui/leonov-yantar.jpg?v=20260927-yantar-portraits1"'),'Leonov hub still starts with old portrait');
 assert(index.includes('ui/bunker-menu.js?v=20260927-yantar-portraits1'),'Bunker menu cache was not bumped');
-assert(index.includes('ui/trader-hubs.js?v=20260927-talk-quests1'),'Trader hubs cache was not bumped');
+assert(index.includes('ui/trader-hubs.js?v=20260927-money-only1'),'Trader hubs cache was not bumped');
 assert(hubs.includes("openTraderDialogue('leonov')"),'Leonov Talk must open quests/dialogue');
 assert(hubs.includes("openTraderDialogue('diesel')"),'Diesel Talk must open quests/dialogue');
 assert(!hubs.includes('data-leonov-action="quests"'),'Leonov must not have a separate Quests button');
