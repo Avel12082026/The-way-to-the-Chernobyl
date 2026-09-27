@@ -17,9 +17,9 @@ assert(trade.includes("regularArmorRange(30, 58)"),'Barman armor IDs 30-58 range
 assert(!trade.includes("Number(w.tier) >= 4"),'Old Barman weapon tier gate must be removed');
 assert(!trade.includes("Number(a.tier) >= 4"),'Old Barman armor tier gate must be removed');
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
-assert(trade.includes("sourceVendor: currentVendor"),'Barman source marker missing from requests');
+assert(trade.includes("let sourceVendor = currentVendor"),'trade source-vendor routing missing');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
-assert(trade.includes("version: '1.3.7'"),'TradeMenu version not bumped');
+assert(trade.includes("version: '1.3.8'"),'TradeMenu version not bumped');
 
 assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot missing');
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
@@ -41,7 +41,7 @@ assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling
 for(const ref of [
   'ui/bunker-menu.js?v=20260927-yantar-portraits1',
   'ui/bunker-menu.css?v=20260927-yantar1',
-  'ui/trade-menu.js?v=20260925-zhuchara-armor-id1',
+  'ui/trade-menu.js?v=20260927-yantar-leonov-shop1',
   'ui/trader-hubs.js?v=20260927-talk-quests1'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
