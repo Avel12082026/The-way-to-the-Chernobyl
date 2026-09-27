@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),{DatabaseSync}=require('node:sqlite');
 const install=require('../server_patches/quest-balance.cjs');
 const sql=new DatabaseSync(':memory:');
-sql.exec('CREATE TABLE players(id TEXT PRIMARY KEY,data TEXT,last_seen INTEGER); CREATE TABLE raid_sessions(player_id TEXT); CREATE TABLE pve_battles(player_id TEXT);');
+sql.exec('CREATE TABLE players(id TEXT PRIMARY KEY,data TEXT,last_seen INTEGER); CREATE TABLE raid_sessions(player_id TEXT,pending_type TEXT); CREATE TABLE pve_battles(player_id TEXT);');
 sql.prepare('INSERT INTO players VALUES(?,?,0)').run('1',JSON.stringify({level:100,coins:100,inventory:{},quests:{}}));
 const db={exec:s=>sql.exec(s),prepare:s=>sql.prepare(s),transaction:fn=>(...args)=>{sql.exec('BEGIN');try{const r=fn(...args);sql.exec('COMMIT');return r;}catch(e){sql.exec('ROLLBACK');throw e;}}};
 const routes={},app={post:(url,...hs)=>routes[url]=hs.at(-1),get:(url,fn)=>routes[url]=fn};
@@ -29,10 +29,17 @@ const legacy=read();delete legacy.quests.activeIds;legacy.quests.activeId=ids[0]
 assert.deepEqual(call('/state').body.activeIds,[ids[0]]);
 legacy.quests.activeIds=[];save(legacy);assert.deepEqual(call('/state').body.activeIds,[]);
 call('/activate',{questIds:ids});
-sql.prepare('INSERT INTO raid_sessions VALUES(?)').run('1');
-const before=JSON.stringify(read());assert.equal(call('/turn-in',{questId:ids[0],vendor:'diesel'}).code,400);assert.equal(JSON.stringify(read()),before);sql.exec('DELETE FROM raid_sessions');
+// Regression: returning to a camp can leave a passive raid_session row with no pending encounter.
+// That stale/passive row must not block handing an already-owned quest item to the NPC.
+sql.prepare('INSERT INTO raid_sessions(player_id,pending_type) VALUES(?,NULL)').run('1');
 r=call('/turn-in',{questId:ids[0],vendor:'diesel',reward:999999,qty:0});assert.equal(r.code,200);
 assert.equal(read().coins,100+offers[0].reward);assert.deepEqual(r.body.activeIds,ids.slice(1));
+sql.exec('DELETE FROM raid_sessions');
+
+// A real unresolved encounter still blocks turn-in and must not mutate the profile.
+sql.prepare('INSERT INTO raid_sessions(player_id,pending_type) VALUES(?,?)').run('1','battle');
+const before=JSON.stringify(read());assert.equal(call('/turn-in',{questId:ids[1],vendor:'diesel'}).code,400);assert.equal(JSON.stringify(read()),before);sql.exec('DELETE FROM raid_sessions');
+
 const paid=read().coins;assert.equal(call('/turn-in',{questId:ids[0],vendor:'diesel'}).code,400);assert.equal(read().coins,paid);
 assert.equal(call('/abandon',{questId:ids[1],vendor:'diesel'}).code,200);assert.deepEqual(call('/state').body.activeIds,[ids[2]]);
-console.log('PASS: SQLite multi-quest migration, single/batch activation, deactivation, persistence, immediate hand-in, base-only guard, no duplicate payout');
+console.log('PASS: SQLite multi-quest migration, immediate hand-in, passive raid-session return, active-encounter guard, no duplicate payout');
