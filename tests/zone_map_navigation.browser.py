@@ -183,7 +183,7 @@ async def main():
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
         canvas4=await page.locator('#zoneMapCanvas').bounding_box()
-        assert abs((canvas4['width']/canvas4['height'])-(865/1536))<0.02,canvas4
+        assert abs((canvas4['width']/canvas4['height'])-(941/1672))<0.02,canvas4
 
         # Rostok camp marker opens the 100 RADS artwork with the full Cordon-style working hub.
         await page.locator('[data-zone-point="camp-4"]').click()
