@@ -89,7 +89,7 @@ async def main():
         await page.evaluate("showItemInfoModal('Медуза')")
         modal=page.locator('#itemInfoModal');await modal.wait_for(state='visible')
         await page.wait_for_function("document.querySelector('#itemInfoModal .item-reference-market')?.textContent.includes('66,67')")
-        txt=await modal.locator('.item-reference').inner_text();assert 'сталкоинов' in txt and 'сталбайтов' in txt and 'Уровень использования: 1' in txt,txt
+        txt=await modal.locator('.item-reference').inner_text();assert 'сталкоинов' in txt and 'сталбайтов' in txt and 'Уровень не требуется' in txt,txt
         await modal.locator('button').last.click()
         suit=await page.evaluate("armorItems.find(a=>a.isResearchSuit&&!a.adminOnly&&a.tier===4).name")
         await page.evaluate("n=>{player.inventory[n]=1;openItemActions(n)}",suit)
