@@ -16,6 +16,7 @@ class FakeDB{
     if(sql.startsWith('UPDATE players SET data=? WHERE id=?'))return{run:(data,id)=>{if(!this.rows.has(id))return{changes:0};this.rows.set(id,{data});return{changes:1};}};
     if(sql.startsWith('SELECT data FROM players'))return{get:id=>this.rows.get(id)};
     if(sql.startsWith('UPDATE players SET data='))return{run:(data,_last,id)=>{this.rows.set(id,{data});return{changes:1};}};
+    if(sql.startsWith('SELECT pending_type FROM raid_sessions'))return{get:id=>this.raid.has(id)?{pending_type:this.raid.get(id)||null}:undefined};
     if(sql.startsWith('SELECT 1 FROM raid_sessions'))return{get:id=>this.raid.has(id)?{1:1}:undefined};
     if(sql.startsWith('SELECT 1 FROM pve_battles'))return{get:id=>this.battles.has(id)?{1:1}:undefined};
     if(sql.startsWith('SELECT status,payload FROM quest_receipts'))return{get:(id,qid)=>{
