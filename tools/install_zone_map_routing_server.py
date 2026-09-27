@@ -180,7 +180,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
             else{zoneLocation=1;place='cordon-camp';origin='cordon-camp';}
         }else if(['diesel','leonov'].includes(place)){
             if(origin==='yantar-bunker'&&zoneMapLocationUnlocked(data,6))zoneLocation=6;
-            else{zoneLocation=1;origin='cordon-camp';}
+            else{zoneLocation=1;place='cordon-camp';origin='cordon-camp';}
         }else if(['cordon-camp','zhuchara','smoker','arena','market','chat'].includes(place)){
             zoneLocation=1;origin='cordon-camp';
         }else if(['inventory','kpk','warehouse'].includes(place)){
