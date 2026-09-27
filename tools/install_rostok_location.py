@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse, hashlib, os, re, shutil, subprocess, tempfile, time, urllib.request
 
 SERVICE='pocketzone.service'
-CACHE_KEY='20260927-dark-valley-loading1'
+CACHE_KEY='20260927-yantar1'
 MAP_SHA='67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3'
 BAR_SHA='bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'
 MAP_SIZE=(941,1672)
