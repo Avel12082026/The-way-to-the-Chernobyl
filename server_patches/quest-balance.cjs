@@ -240,9 +240,12 @@ module.exports=function installQuestBalance({
     if(result.changes!==1)throw new Error('Не удалось сохранить профиль');
   }
   function atBase(playerId){
-    if(db.prepare('SELECT 1 FROM raid_sessions WHERE player_id=?').get(playerId) ||
-       db.prepare('SELECT 1 FROM pve_battles WHERE player_id=?').get(playerId))
-      throw new Error('Сначала вернись на базу и поговори с заказчиком');
+    // A passive raid session can remain while the player is already back at a camp/hub.
+    // Only an unresolved encounter or live PvE battle must block quest hand-in/actions.
+    const raid=db.prepare('SELECT pending_type FROM raid_sessions WHERE player_id=?').get(playerId);
+    const battle=db.prepare('SELECT 1 FROM pve_battles WHERE player_id=?').get(playerId);
+    if(battle || (raid && raid.pending_type))
+      throw new Error('Сначала заверши текущую встречу и поговори с заказчиком');
   }
   const cleanName=name=>String(name||'').replace(/[\u200B\u200C\u200D\u2060\uFEFF]+$/,'');
   function parsed(name){return parseGearNameServer(cleanName(name));}
