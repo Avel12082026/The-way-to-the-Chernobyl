@@ -64,8 +64,9 @@ function rebalanceArtifacts(){
 const artifactModel=rebalanceArtifacts();
 const researchPrices=rebalanceResearchPrices();
 
-// Replace only the research-suit availability gate. Normal armor progression is preserved.
+// Merchant availability is no longer tied to player level.
 try{window.getResearchSuitUnlockTier=researchTier;}catch(_){}
+try{window.getDetectorUnlockTier=()=>Number.MAX_SAFE_INTEGER;}catch(_){}
 
 function itemReferenceMeta(name){
   const clean=typeof stripInvisibleSuffix==='function'?stripInvisibleSuffix(name):String(name||'').replace(/[\u200B\u200C]+$/,'');
