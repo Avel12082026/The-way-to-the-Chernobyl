@@ -66,8 +66,9 @@
         ? 'original-864x1536-jpeg'
         : 'hq-864x1536-q88';
     const promise = (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => {
-      if (img.naturalWidth !== 864 || img.naturalHeight !== 1536) {
-        console.error('[Trader portrait size]', key, img.naturalWidth, img.naturalHeight);
+      const expected = key === 'zhuchara' ? [941, 1672] : [864, 1536];
+      if (img.naturalWidth !== expected[0] || img.naturalHeight !== expected[1]) {
+        console.error('[Trader portrait size]', key, img.naturalWidth, img.naturalHeight, 'expected', expected[0], expected[1]);
         return false;
       }
       return true;
@@ -258,7 +259,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.4.4',
+    version:'1.4.5',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
