@@ -164,7 +164,7 @@ async def main():
         await page.locator('[data-zone-point="transition-to-5"]').click()
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelRoute').inner_text()=='Росток → Темная долина'
-        assert '/api/zone-map/5' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert '/images/zone-travel/dark-valley-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===5")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Темная долина'
@@ -179,6 +179,9 @@ async def main():
         future5=next(p for p in points5 if p['id']=='transition-5-future-top')
         assert abs(future5['x']-66.45)<0.01 and abs(future5['y']-5.76)<0.01 and future5.get('future') is True,future5
         await page.locator('[data-zone-point="transition-to-4"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Темная долина → Росток'
+        assert '/images/zone-travel/rostok-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===4")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
