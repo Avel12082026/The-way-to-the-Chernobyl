@@ -135,18 +135,18 @@ async def main():
         assert await page.evaluate('ZoneMap.secondPistolDecadeReady()') is False
         await page.locator('[data-zone-point="transition-to-4"]').click()
         assert await page.evaluate('ZoneMap.location')==2
-        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.'
+        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='Чтобы попасть в Росток, должна быть открыта вторая десятка пистолетов.'
 
         await page.evaluate('player.level=400')
         assert await page.evaluate('ZoneMap.secondPistolDecadeReady()') is True
         await page.locator('[data-zone-point="transition-to-4"]').click()
         await travel.wait_for(state='visible')
-        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → Россток'
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Свалка → Росток'
         assert '/images/zone-travel/rostok-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         assert await page.locator('#zoneMapTravel').get_attribute('data-scene')=='location'
         await page.wait_for_function("ZoneMap.location===4")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
-        assert await page.locator('#zoneMapTitle').inner_text()=='Россток'
+        assert await page.locator('#zoneMapTitle').inner_text()=='Росток'
 
         points4=await page.evaluate('ZoneMap.points')
         assert len(points4)==13,points4
@@ -163,7 +163,7 @@ async def main():
         # Bottom-left Rostok transition opens the new fifth location.
         await page.locator('[data-zone-point="transition-to-5"]').click()
         await travel.wait_for(state='visible')
-        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Темная долина'
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Росток → Темная долина'
         assert '/api/zone-map/5' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===5")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
@@ -267,7 +267,7 @@ async def main():
         # Rostok return to Svalka is the bottom-right marker.
         await page.locator('[data-zone-point="transition-to-2"]').click()
         await travel.wait_for(state='visible')
-        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Россток → Свалка'
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Росток → Свалка'
         await page.wait_for_function("ZoneMap.location===2")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
 
