@@ -634,15 +634,15 @@ def patch(source):
     new_rostok_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png'});"
     if old_cordon in text:
         text=text.replace(old_cordon,new_cordon,1);changed=True
-    elif new_cordon not in text and new_svalka not in text and new_agroprom not in text and new_location5 not in text:
+    elif new_cordon not in text and new_svalka not in text and new_agroprom not in text and new_location5 not in text and new_rostok_png not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут карты Кордона.')
     if old_svalka in text:
         text=text.replace(old_svalka,new_svalka,1);changed=True
-    elif new_svalka not in text and new_agroprom not in text and new_location5 not in text:
+    elif new_svalka not in text and new_agroprom not in text and new_location5 not in text and new_rostok_png not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут карты Свалки.')
     if old_agroprom in text:
         text=text.replace(old_agroprom,new_agroprom,1);changed=True
-    elif new_agroprom not in text and new_location5 not in text:
+    elif new_agroprom not in text and new_location5 not in text and new_rostok_png not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут карты НИИ Агропром.')
     if old_location5 in text:
         text=text.replace(old_location5,new_location5,1);changed=True
