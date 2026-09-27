@@ -8,6 +8,7 @@ OLD_ROUTE_MARKS=('// ZONE_MAP_ROUTING_V1','// ZONE_MAP_ROUTING_V2','// ZONE_MAP_
 ROUTE_MARK='// ZONE_MAP_ROUTING_V4'
 SHOP_MARK='// ZONE_MAP_LOCATION1_SHOP_V1'
 BARMAN_MARK='// ROSTOK_BARMAN_SHOP_V1'
+YANTAR_LEONOV_MARK='// YANTAR_LEONOV_SHOP_V1'
 POSITION_MARK='// PLAYER_WORLD_POSITION_V1'
 TECHNICIAN_BUY_MARK='// CORDON_TECHNICIAN_DETECTOR_BUY_V1'
 UNIQUE_MUTANT_MARK='// UNIQUE_STRONGLAV_MAP_POOL_V1'
@@ -33,7 +34,8 @@ function zoneMapZhucharaArmorServer(){
 }
 const ZONE_MAP_LOCATION1_ARMOR=new Set(zoneMapZhucharaArmorServer().map(item=>item.name));
 app.post('/api/shop/buy',(req,res,next)=>{
-    if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();
+    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
+    if(String(req.body?.vendor||'')!=='zhuchara'||sourceVendor==='barman'||sourceVendor==='leonov-yantar')return next();
     const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
     let name=rawName;
     if(typeof parseGearNameServer==='function'){
@@ -91,6 +93,52 @@ app.post('/api/shop/buy',(req,res,next)=>{
 });
 
 """
+YANTAR_LEONOV_GUARD=r"""// YANTAR_LEONOV_SHOP_V1
+function yantarLeonovAutomaticServer(){
+    const list=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(item=>item&&!item.adminOnly);
+    const marked=list.filter(item=>String(item.progressionClass||'')==='automatic');
+    if(marked.length===29)return marked;
+    const pistolStart=list.findIndex(item=>!!item.starterGear||String(item.name||'')==='Beretta 21A Bobcat'||Number(item.id)===86);
+    return pistolStart>=0?list.slice(pistolStart+58,pistolStart+87):[];
+}
+const YANTAR_LEONOV_WEAPONS_SERVER=new Set(yantarLeonovAutomaticServer().map(item=>item.name));
+function yantarLeonovArmorServer(){
+    const list=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+      .filter(item=>item&&!item.adminOnly&&!item.isPremiumArmor);
+    const byId=list.filter(item=>Number(item.id)>58).sort((a,b)=>Number(a.id)-Number(b.id));
+    return byId.length>=29?byId.slice(0,29):list.slice(58,87);
+}
+const YANTAR_LEONOV_ARMOR_SERVER=new Set(yantarLeonovArmorServer().map(item=>item.name));
+app.post('/api/shop/buy',(req,res,next)=>{
+    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
+    if(sourceVendor!=='leonov-yantar')return next();
+    const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
+    let baseName=rawName;
+    if(typeof parseGearNameServer==='function'){
+        try{baseName=String(parseGearNameServer(rawName)?.baseName||rawName);}catch(_){}
+    }
+    if(category==='weapon'){
+        if(!YANTAR_LEONOV_WEAPONS_SERVER.has(baseName))
+            return res.status(400).json({success:false,error:'На Янтаре у Леонова продаются следующие 29 стволов после Бармена'});
+        req.body.vendor='zhuchara';
+        return next();
+    }
+    if(category==='armor'){
+        if(!YANTAR_LEONOV_ARMOR_SERVER.has(baseName))
+            return res.status(400).json({success:false,error:'На Янтаре у Леонова продаются следующие 29 костюмов после Бармена'});
+        const armor=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[]).find(item=>item&&String(item.name||'')===baseName);
+        req.body.vendor=armor?.isResearchSuit?'leonov':'zhuchara';
+        return next();
+    }
+    if(category==='consumable'){
+        req.body.vendor='leonov';
+        return next();
+    }
+    return res.status(400).json({success:false,error:'Этого товара у Леонова на Янтаре нет'});
+});
+
+"""
+
 
 TECHNICIAN_BUY_ALIAS=r"""// CORDON_TECHNICIAN_DETECTOR_BUY_V1
 // Diesel owns detector sales on the client. Reuse the existing server-authoritative
@@ -465,11 +513,14 @@ def upgrade_shop_guard_for_barman(text):
     changed=False
 
     old="if(String(req.body?.vendor||'')!=='zhuchara')return next();"
-    new="if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();"
+    barman_only="if(String(req.body?.vendor||'')!=='zhuchara'||String(req.body?.sourceVendor||'')==='barman')return next();"
+    new="const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');\n    if(String(req.body?.vendor||'')!=='zhuchara'||sourceVendor==='barman'||sourceVendor==='leonov-yantar')return next();"
     if old in block:
         block=block.replace(old,new,1); changed=True
+    elif barman_only in block:
+        block=block.replace(barman_only,new,1); changed=True
     elif new not in block:
-        raise RuntimeError('Не удалось обновить защиту магазина Жучары для Бармена.')
+        raise RuntimeError('Не удалось обновить защиту магазина Жучары для Бармена и Янтаря.')
 
     if 'zoneMapZhucharaPistolsServer' not in block:
         armor_anchor='const ZONE_MAP_LOCATION1_ARMOR=new Set('
@@ -605,6 +656,29 @@ def insert_barman_guard(text):
         raise RuntimeError('Не найден маршрут покупки для защиты Бармена.')
     return text[:pos]+BARMAN_GUARD+text[pos:],True
 
+def insert_yantar_leonov_guard(text):
+    if YANTAR_LEONOV_MARK in text:
+        start=text.find(YANTAR_LEONOV_MARK)
+        first=_next_shop_buy_route(text,start)
+        if first<0:
+            raise RuntimeError('Маркер магазина Леонова на Янтаре есть, но маршрут покупки не найден.')
+        end=_next_shop_buy_route(text,first+1)
+        if end<0:
+            raise RuntimeError('Не найден следующий маршрут покупки после блока Леонова на Янтаре.')
+        block=text[start:end]
+        if YANTAR_LEONOV_GUARD.strip() in block:
+            return text,False
+        return text[:start]+YANTAR_LEONOV_GUARD+text[end:],True
+
+    for mark in (SHOP_MARK,BARMAN_MARK):
+        pos=text.find(mark)
+        if pos>=0:
+            return text[:pos]+YANTAR_LEONOV_GUARD+text[pos:],True
+    pos=_next_shop_buy_route(text,0)
+    if pos<0:
+        raise RuntimeError('Не найден маршрут покупки для магазина Леонова на Янтаре.')
+    return text[:pos]+YANTAR_LEONOV_GUARD+text[pos:],True
+
 def exclude_unique_map_mutants(text):
     """Upgrade the existing map selector without changing its roster/tier mapping."""
     start=text.find('function zoneMapMutantPayload(data,zoneTier){')
@@ -689,6 +763,8 @@ def patch(source):
     changed=changed or shop_barman_changed
     text,barman_changed=insert_barman_guard(text)
     changed=changed or barman_changed
+    text,yantar_shop_changed=insert_yantar_leonov_guard(text)
+    changed=changed or yantar_shop_changed
     text,technician_changed=insert_technician_detector_buy(text)
     changed=changed or technician_changed
     text,position_changed=insert_position_route(text)
