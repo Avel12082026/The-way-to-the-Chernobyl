@@ -21,6 +21,6 @@ assert "x:10.50,y:47.49,targetLocation:3" in js
 assert "id:'transition-to-4'" in js and "label:'Переход на Росток'" in js
 assert "x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'" in js
 assert "transition-future-top" not in js
-assert "20260927-dark-valley-loading1" in js
+assert "20260927-yantar1" in js
 
 print('PASS: lossless 941x1672 Svalka PNG, hotspots and active transitions verified')
