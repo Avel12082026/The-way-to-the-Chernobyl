@@ -12,7 +12,7 @@ assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')
 
 assert(js.includes("version: '0.7.0'"),'ZoneMap API version mismatch');
 assert(js.includes("window.BunkerMenu = {version: '1.20.0'"),'BunkerMenu version mismatch');
-assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Темная долина'})"),'five map titles missing');
+assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина'})"),'five map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
 assert(js.includes("id:'transition-to-1'")&&js.includes("id:'transition-to-3'")&&js.includes("id:'transition-to-4'")&&js.includes("id:'anomaly-2-1'")&&js.includes("id:'mutant-2-1'")&&js.includes("id:'enemy-2-1'"),'Svalka hotspot actions must remain wired after map replacement');
@@ -43,7 +43,7 @@ assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must k
 assert.equal((loc2Block.match(/kind:'enemy'/g)||[]).length,3,'Svalka bandit marker count changed');
 assert.equal((loc2Block.match(/kind:'mutant'/g)||[]).length,3,'Svalka mutant marker count changed');
 assert.equal((loc2Block.match(/kind:'anomaly'/g)||[]).length,2,'Svalka anomaly marker count changed');
-assert(loc2Block.includes("id:'transition-to-4'")&&loc2Block.includes("label:'Переход на Россток'"),'Svalka top -> Rostok transition missing');
+assert(loc2Block.includes("id:'transition-to-4'")&&loc2Block.includes("label:'Переход на Росток'"),'Svalka top -> Rostok transition missing');
 assert(loc2Block.includes("x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'"),'Svalka top Rostok hotspot is not aligned');
 assert(!loc2Block.includes("transition-future-top"),'Svalka top transition must now be active');
 assert(loc2Block.includes("x:62.82,y:71.62,targetLocation:1"),'Svalka bottom transition hotspot is not aligned');
@@ -51,7 +51,7 @@ assert(loc2Block.includes("x:10.50,y:47.49,targetLocation:3"),'Svalka left trans
 
 assert(js.includes("targetLocation:3,unlock:'last-nine-pistols'"),'NII Agroprom transition must use last-nine gate');
 assert(js.includes('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.'),'last-nine warning missing');
-assert(js.includes('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.'),'Rostok gate warning missing');
+assert(js.includes('Чтобы попасть в Росток, должна быть открыта вторая десятка пистолетов.'),'Rostok gate warning missing');
 assert(js.includes('await travelToZoneLocation(4)'),'Rostok transition must use loading screen');
 assert(js.includes('await travelToZoneLocation(5)'),'Rostok bottom-left transition must open location 5 through the loading screen');
 
