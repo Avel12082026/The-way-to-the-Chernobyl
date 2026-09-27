@@ -149,7 +149,7 @@ app.post('/api/player/position',requireAuth,rateLimit('player-position',40,10000
 """
 
 ZONE_ROUTE=r"""// ZONE_MAP_ROUTING_V4
-const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});
+const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png'});
 const ZONE_CAMP_FILES=Object.freeze({4:'rostok-bar.png'});
 app.get('/api/zone-map/:location',(req,res)=>{
     const location=Number(req.params.location||0),file=ZONE_MAP_FILES[location];
@@ -630,6 +630,8 @@ def patch(source):
     new_agroprom="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg'});"
     old_location5="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg'});"
     new_location5="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});"
+    old_rostok_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.jpg',5:'zone-map5.png'});"
+    new_rostok_png="const ZONE_MAP_FILES=Object.freeze({1:'zone-map1.png',2:'zone-map2.png',3:'zone-map3.png',4:'zone-map4.png',5:'zone-map5.png'});"
     if old_cordon in text:
         text=text.replace(old_cordon,new_cordon,1);changed=True
     elif new_cordon not in text and new_svalka not in text and new_agroprom not in text and new_location5 not in text:
@@ -644,8 +646,12 @@ def patch(source):
         raise RuntimeError('Не найден поддерживаемый маршрут карты НИИ Агропром.')
     if old_location5 in text:
         text=text.replace(old_location5,new_location5,1);changed=True
-    elif new_location5 not in text:
+    elif new_location5 not in text and new_rostok_png not in text:
         raise RuntimeError('Не найден поддерживаемый маршрут пятой локации.')
+    if old_rostok_png in text:
+        text=text.replace(old_rostok_png,new_rostok_png,1);changed=True
+    elif new_rostok_png not in text:
+        raise RuntimeError('Не найден поддерживаемый маршрут карты Росстока.')
 
     text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
     changed=changed or shop_barman_changed
@@ -676,7 +682,7 @@ def main():
         (root/'ui'/'zone-map3.png',b'\x89PNG','042f961231de0ca30e839ac9675b51ac38169814baf757b4727d157dae022641'),
         # Rostok assets are copied byte-for-byte. The checksums deliberately reject
         # any rescale/re-encode/recompression before the server update is applied.
-        (root/'ui'/'zone-map4.jpg',b'\xff\xd8','faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee'),
+        (root/'ui'/'zone-map4.png',b'\x89PNG','67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3'),
         (root/'ui'/'zone-map5.png',b'\x89PNG','c33cb6e2095b23067f48e494f95405a26145191635ae4d2c0f25a721616229c9'),
         (root/'ui'/'rostok-bar.png',b'\x89PNG','bf138d0c05afc2c4d65c504a135d35a1b3af3ecf74ebe8e740d7c3be5b17054c'),
     ]
