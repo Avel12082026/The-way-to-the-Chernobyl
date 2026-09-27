@@ -68,6 +68,7 @@ async def main():
           window.openScreen=(name)=>{window.__calls.open.push(name);document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));document.getElementById('mainMenu').style.display=name==='main'?'block':'none';};
           window.showGameAlert=(m)=>window.__calls.alerts.push(String(m));
           window.TradeMenu={open:(id)=>{window.__calls.trade=id;return true;}};
+          window.TraderHubs={openDiesel:(origin)=>{window.__calls.dieselOrigin=origin;return true;}};
           window.useKnowledgeBookFromHeader=async()=>{window.__calls.read=(window.__calls.read||0)+1;player.inventory['Книга знаний']=Math.max(0,(player.inventory['Книга знаний']||0)-1);player.exp+=10;};
           window.fetch=async(input,init={})=>{
             const url=String(input);
@@ -76,7 +77,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.20.0' && window.ZoneMap?.version==='0.7.0'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.21.0' && window.ZoneMap?.version==='0.8.0'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -176,8 +177,68 @@ async def main():
         assert all(p['label']=='Наёмники' for p in points5 if p['kind']=='enemy')
         back5=next(p for p in points5 if p['id']=='transition-to-4')
         assert abs(back5['x']-37.41)<0.01 and abs(back5['y']-88.40)<0.01,back5
-        future5=next(p for p in points5 if p['id']=='transition-5-future-top')
-        assert abs(future5['x']-66.45)<0.01 and abs(future5['y']-5.76)<0.01 and future5.get('future') is True,future5
+        next6=next(p for p in points5 if p['id']=='transition-to-6')
+        assert abs(next6['x']-66.45)<0.01 and abs(next6['y']-5.76)<0.01 and next6['targetLocation']==6,next6
+
+        # The former upper Dark Valley placeholder is now the active route to Yantar.
+        await page.locator('[data-zone-point="transition-to-6"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Темная долина → Янтарь'
+        assert '/api/zone-map/6' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        await page.wait_for_function("ZoneMap.location===6")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+        assert await page.locator('#zoneMapTitle').inner_text()=='Янтарь'
+
+        points6=await page.evaluate('ZoneMap.points')
+        assert len(points6)==8,points6
+        assert sum(p['kind']=='enemy' for p in points6)==0
+        assert sum(p['kind']=='mutant' for p in points6)==4
+        assert sum(p['kind']=='anomaly' for p in points6)==2
+        assert sum(p['kind']=='camp' for p in points6)==1
+        assert sum(p['kind']=='transition' for p in points6)==1
+        camp6=next(p for p in points6 if p['id']=='camp-6')
+        assert camp6['label']=='Лагерь сталкеров'
+        back6=next(p for p in points6 if p['id']=='transition-to-5')
+        assert back6['targetLocation']==5
+
+        # Yantar map keeps the approved 864x1536 aspect ratio.
+        canvas6=await page.locator('#zoneMapCanvas').bounding_box()
+        assert abs((canvas6['width']/canvas6['height'])-(864/1536))<0.02,canvas6
+
+        # Scientist camp opens the approved bunker scene. Warehouse returns to this bunker,
+        # Diesel receives the Yantar origin, and the left Exit door returns to the Yantar map.
+        await page.locator('[data-zone-point="camp-6"]').click()
+        yantar=page.locator('#yantarCampScreen')
+        assert await yantar.is_visible()
+        assert '/api/zone-camp/6' in (await page.locator('#yantarCampArtwork').get_attribute('src'))
+        for action in ['exit','leonov','diesel','warehouse']:
+            assert await page.locator(f'[data-yantar-action="{action}"]').is_visible(),action
+
+        await page.locator('[data-yantar-action="warehouse"]').click()
+        assert (await page.evaluate('window.__calls.open.at(-1)'))=='warehouse'
+        position_calls=await page.evaluate("""window.__calls.fetches.filter(x=>x.url.endsWith('/api/player/position'))""")
+        assert any(x['body'] and x['body'].get('place')=='warehouse' and x['body'].get('origin')=='yantar-bunker' and x['body'].get('zoneLocation')==6 for x in position_calls),position_calls
+        await page.evaluate("openScreen('main')")
+        assert await yantar.is_visible()
+        assert await page.evaluate('ZoneMap.location')==6
+
+        await page.locator('[data-yantar-action="diesel"]').click()
+        assert await page.evaluate('window.__calls.dieselOrigin')=='yantar-bunker'
+        await page.evaluate('BunkerMenu.openYantarCamp()')
+        assert await yantar.is_visible()
+
+        await page.locator('[data-yantar-action="exit"]').click()
+        assert await zone.is_visible()
+        assert await page.evaluate('ZoneMap.location')==6
+        assert await page.locator('#zoneMapTitle').inner_text()=='Янтарь'
+
+        # Yantar has one return route, back to Dark Valley.
+        await page.locator('[data-zone-point="transition-to-5"]').click()
+        await travel.wait_for(state='visible')
+        assert await page.locator('#zoneMapTravelRoute').inner_text()=='Янтарь → Темная долина'
+        await page.wait_for_function("ZoneMap.location===5")
+        await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
+
         await page.locator('[data-zone-point="transition-to-4"]').click()
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelRoute').inner_text()=='Темная долина → Росток'
