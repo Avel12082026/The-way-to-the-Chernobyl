@@ -1,17 +1,17 @@
 {
-  "version": "2026-09-26-rostok-map-hq1",
+  "version": "2026-09-27-rostok-map-final1",
   "policy": "Original image bytes only. No resizing, transcoding, recompression, quality reduction, or format conversion.",
   "assets": [
     {
       "logical_name": "Rostok zone map",
-      "server_path": "ui/zone-map4.jpg",
-      "original_library_name": "1000456657.png",
-      "actual_format": "JPEG",
-      "width": 865,
-      "height": 1536,
-      "size_bytes": 438558,
-      "sha256": "faf49a24a7b3a9965e137e8251536639d5adb738673d1d9b14295c733cc11cee",
-      "note": "The supplied file has a .png name but JPEG bytes. It is stored as zone-map4.jpg byte-for-byte with no resizing, transcoding, or recompression."
+      "server_path": "ui/zone-map4.png",
+      "original_library_name": "постапокалиптическая_карта_промзоны_и_болот.png",
+      "actual_format": "PNG",
+      "width": 941,
+      "height": 1672,
+      "size_bytes": 3427547,
+      "sha256": "67aa5efe961a9470c684f2863e17ed76d4bb70773d02b00c33b578ceca0268f3",
+      "note": "Approved final Rostok map with the bar marker. Stored byte-for-byte as PNG with no resizing, transcoding, or recompression."
     },
     {
       "logical_name": "Rostok 100 RADS camp/bar",
