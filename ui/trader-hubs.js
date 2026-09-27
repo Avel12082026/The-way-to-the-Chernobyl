@@ -87,13 +87,6 @@
       talk.textContent = 'Говорить';
       nav.append(talk);
     }
-    if (!nav.querySelector('[data-leonov-action="quests"]')) {
-      const quests = document.createElement('button');
-      quests.type = 'button';
-      quests.dataset.leonovAction = 'quests';
-      quests.textContent = 'Квесты';
-      nav.append(quests);
-    }
     if (!nav.querySelector('[data-leonov-action="back"]')) {
       const back = document.createElement('button');
       back.type = 'button';
@@ -101,7 +94,7 @@
       back.textContent = 'Назад';
       nav.append(back);
     }
-    hub.dataset.actionCount = '5';
+    hub.dataset.actionCount = '4';
     hub.dataset.bottomActions = 'ready';
     bindPortrait('leonov', hub.querySelector('#leonovHubArtwork'));
     return true;
@@ -112,16 +105,8 @@
     if (!talk) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    say('Леонов: Артефакты — это язык Зоны. Главное — уметь слушать.');
-  }, true);
-
-  document.addEventListener('click', event => {
-    const quests = event.target.closest?.('#leonovHubScreen [data-leonov-action="quests"]');
-    if (!quests) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
     if (window.QuestSystem?.openTraderDialogue) window.QuestSystem.openTraderDialogue('leonov');
-    else say('Леонов: Сейчас список заданий недоступен. Загляни позже.');
+    else say('Леонов: Артефакты — это язык Зоны. Главное — уметь слушать.');
   }, true);
 
   new MutationObserver(() => decorateLeonov()).observe(document.body, {childList:true, subtree:true});
@@ -215,7 +200,6 @@
         {id:'trade', label:'Торговля'},
         {id:'upgrade', label:'Улучшить'},
         {id:'talk', label:'Говорить'},
-        {id:'quests', label:'Квесты'},
         {id:'back', label:'Назад'}
       ]
     });
@@ -236,10 +220,8 @@
           if (typeof window.openTechnicianTab === 'function') window.openTechnicianTab('upgrade');
         }
       } else if (action === 'talk') {
-        say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
-      } else if (action === 'quests') {
         if (window.QuestSystem?.openTraderDialogue) window.QuestSystem.openTraderDialogue('diesel');
-        else say('Дизель: Сейчас заказов нет. Загляни позже.');
+        else say('Дизель: Железо не врёт. Приноси — посмотрим, что из него ещё можно выжать.');
       } else if (action === 'back') {
         hideDiesel();
         if (dieselReturnOrigin === 'yantar-bunker' && window.BunkerMenu?.openYantarCamp) return window.BunkerMenu.openYantarCamp();
@@ -273,7 +255,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.4.1',
+    version:'1.4.2',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
