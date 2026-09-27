@@ -7,11 +7,14 @@ const css=fs.readFileSync('ui/bunker-menu.css','utf8');
 const html=fs.readFileSync('ui/bunker-menu.html','utf8');
 
 assert(html.includes('id="bunkerRaid"')&&html.includes('BunkerMenu.enterRaid()'),'raid door wiring changed unexpectedly');
+assert(html.includes('ui/cordon-zhuchara-camp.png?v=20260927-cordon-zhuchara1'),'Cordon must use approved Zhuchara-only camp artwork');
+assert(html.includes('id="bunkerZhuchara"')&&html.includes('id="bunkerWarehouse"'),'Cordon Zhuchara/Warehouse hotspots missing');
+assert(!html.includes('id="bunkerLeonov"')&&!html.includes('id="bunkerDiesel"')&&!html.includes('id="bunkerSmoker"')&&!html.includes('id="bunkerArena"'),'Removed Cordon NPC/activity hotspots must stay absent');
 const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
 assert(js.includes("version: '0.8.0'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.21.0'"),'BunkerMenu version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.21.1'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина',6:'Янтарь'})"),'six map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
