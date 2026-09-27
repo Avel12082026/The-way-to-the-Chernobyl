@@ -13,5 +13,5 @@ assert(trade.includes("afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe
 assert(trade.includes("sourceVendor = 'leonov-yantar'"),'Yantar purchase provenance missing');
 assert(trade.includes("serverVendor = 'zhuchara'"),'Yantar regular gear must reuse the normal gear purchase route');
 assert(trade.includes("!item?.isResearchSuit"),'research suits must stay on Leonov server validation');
-assert(trade.includes("version: '1.3.8'"),'TradeMenu version mismatch');
+assert(trade.includes("version: '1.3.9'"),'TradeMenu version mismatch');
 console.log('PASS: Yantar Leonov adds the next 29 weapons and 29 safe suits after Barman');
