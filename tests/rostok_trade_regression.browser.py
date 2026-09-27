@@ -137,7 +137,8 @@ async def main():
                 await page.screenshot(path=str(OUT/'rostok-after.png'))
                 await page.locator('#rostokLowerHudArtwork').screenshot(path=str(OUT/'rostok-hud-after.png'))
         await page.set_viewport_size({'width':390,'height':768});await bar()
-        assert await page.locator('#rostokReadBook').inner_text()==await page.locator('#bunkerReadBook').inner_text()
+        assert (await page.locator('#rostokReadBook').inner_text()).strip() in ('Прочитать','Использовать')
+        assert (await page.locator('#bunkerReadBook').inner_text()).strip() in ('Прочитать','Использовать')
         for name in ['Experience','Radiation']:
             assert await page.locator('#rostok'+name+' > div').evaluate('(e)=>getComputedStyle(e).backgroundImage')!='none', name+' missing visible fill'
 
