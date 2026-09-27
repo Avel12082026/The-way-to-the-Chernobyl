@@ -25,6 +25,26 @@
   // Armor trader ranges are keyed by stable catalog IDs, never by array position.
   // This keeps client/server stock aligned even if the catalog is reordered.
   const regularArmorRange = (firstId, lastId) => armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor && Number(a.id) >= firstId && Number(a.id) <= lastId);
+  const isYantarLeonovContext = () => {
+    const pos = window.GamePosition?.current;
+    const location = Number(pos?.zoneLocation ?? window.ZoneMap?.location ?? 0);
+    return pos?.origin === 'yantar-bunker' && location === 6;
+  };
+  const yantarLeonovWeapons = () => {
+    const weaponOrder = (typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
+      .filter(w => w && !w.adminOnly);
+    const marked = weaponOrder.filter(w => w.progressionClass === 'automatic');
+    if (marked.length === 29) return marked;
+    const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
+    return pistolStart >= 0 ? weaponOrder.slice(pistolStart + 58, pistolStart + 87) : [];
+  };
+  const yantarLeonovArmor = () => {
+    const safe = armorItems
+      .filter(a => a && !a.adminOnly && !a.isPremiumArmor)
+      .sort((a,b) => Number(a.id || 0) - Number(b.id || 0));
+    const afterBarman = safe.filter(a => Number(a.id || 0) > 58);
+    return (afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe.slice(58,87));
+  };
   const vendors = {
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
@@ -67,10 +87,20 @@
     },
     leonov: {
       title: () => 'ЭКОЛОГ ЛЕОНОВ — ТОРГОВЛЯ',
-      stock: () => [
-        ...consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'})),
-        ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))
-      ],
+      stock: () => {
+        const supplies = consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'}));
+        if (!isYantarLeonovContext()) {
+          return [
+            ...supplies,
+            ...armorItems.filter(a => a.isResearchSuit && a.tier <= getResearchSuitUnlockTier(player.level)).map(a => ({...a, category: 'armor'}))
+          ];
+        }
+        return [
+          ...supplies,
+          ...yantarLeonovWeapons().map(w => ({...w, category:'weapon'})),
+          ...yantarLeonovArmor().map(a => ({...a, category:'armor'}))
+        ];
+      },
       price: item => getBuyPrice(item.price),
       accepts: name => !!artifact(name) || mutants.some(m => m.loot === name),
       offer: name => artifact(name)?.isNamedArtifact ? {coins: 0, tokens: 50} :
@@ -276,13 +306,19 @@
         if (side === 'sell' && (count(name) < qty || !vendors[vendor].accepts(name))) { message('Предмет или нужное количество больше недоступны.'); break; }
         let result;
         try {
-          const serverVendor = vendors[currentVendor]?.serverVendor || currentVendor;
+          const configuredServerVendor = vendors[currentVendor]?.serverVendor;
+          let serverVendor = typeof configuredServerVendor === 'function' ? configuredServerVendor(item) : (configuredServerVendor || currentVendor);
+          let sourceVendor = currentVendor;
+          if (currentVendor === 'leonov' && isYantarLeonovContext()) {
+            sourceVendor = 'leonov-yantar';
+            if (item?.category === 'weapon' || (item?.category === 'armor' && !item?.isResearchSuit)) serverVendor = 'zhuchara';
+          }
           if (side === 'buy') result = currentVendor === 'friendly'
             ? await request('friendly/buy', {name})
-            : await request('shop/buy', {vendor: serverVendor, sourceVendor: currentVendor, category: item.category, name, qty});
+            : await request('shop/buy', {vendor: serverVendor, sourceVendor, category: item.category, name, qty});
           else result = currentVendor === 'leonov'
             ? await request('scientists/sell', {name, qty})
-            : await request('shop/sell', {vendor: currentVendor === 'friendly' ? 'zhuchara' : serverVendor, sourceVendor: currentVendor, name, qty});
+            : await request('shop/sell', {vendor: currentVendor === 'friendly' ? 'zhuchara' : serverVendor, sourceVendor, name, qty});
           if (!result || typeof result.success !== 'boolean') throw new Error('Нет подтверждения');
           if (!result.success) { message(`Операция отклонена: ${result.error || 'причина не указана'}. Завершено позиций: ${confirmed}.`); break; }
           apply(result);
@@ -522,7 +558,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.7', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.3.8', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
