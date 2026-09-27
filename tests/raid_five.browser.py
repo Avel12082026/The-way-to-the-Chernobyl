@@ -94,11 +94,11 @@ async def main():
         suit=await page.evaluate("armorItems.find(a=>a.isResearchSuit&&!a.adminOnly&&a.tier===4).name")
         await page.evaluate("n=>{player.inventory[n]=1;openItemActions(n)}",suit)
         item=page.locator('#itemActionModal');await item.wait_for(state='visible')
-        assert '135' in await item.locator('.item-reference-level').text_content()
+        assert 'Уровень не требуется' in await item.locator('.item-reference-level').text_content()
         assert await item.locator('.item-reference').count()==1
         await page.screenshot(path=str(out/'item-reference.png'))
         assert not errors,errors
-        report={'status':'passed','multiActive':3,'scroll':report,'exp':'0/25/75/100% at 3 mobile sizes','item':'use level + separate-currency weighted mean + inventory modal','mutations':len(writes)}
+        report={'status':'passed','multiActive':3,'scroll':report,'exp':'0/25/75/100% at 3 mobile sizes','item':'money-only access + separate-currency weighted mean + inventory modal','mutations':len(writes)}
         (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False))
         await browser.close()
 asyncio.run(main())
