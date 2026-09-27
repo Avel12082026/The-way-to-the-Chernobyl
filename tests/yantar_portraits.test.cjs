@@ -27,7 +27,9 @@ assert(index.includes('ui/trader-hubs.js?v=20260927-yantar-portraits1'),'Trader 
 for(const action of ['selection','trade','talk','quests','back']){
   assert((bunker+hubs).includes('data-leonov-action="'+action+'"'),'Leonov action missing: '+action);
 }
+const dieselBlock=(hubs.match(/function ensureDieselHub\(\)[\s\S]*?return dieselHub;\n  }/)||[])[0]||'';
+assert(dieselBlock,'Diesel hub block missing');
 for(const action of ['trade','upgrade','talk','quests','back']){
-  assert(hubs.includes("{id:'"+action+"'")||hubs.includes('data-trader-action'), 'Diesel action wiring missing: '+action);
+  assert(dieselBlock.includes("{id:'"+action+"', label:"), 'Diesel action wiring missing: '+action);
 }
 console.log('PASS: Yantar Leonov/Diesel portraits are byte-exact and existing actions remain wired');
