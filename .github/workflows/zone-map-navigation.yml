@@ -10,6 +10,9 @@ on:
       - 'ui/trade-menu.js'
       - 'tests/player_world_position_server.test.py'
       - 'ui/trader-hubs.js'
+      - 'ui/diesel-yantar.jpg'
+      - 'ui/leonov-yantar.jpg'
+      - 'tests/yantar_portraits.test.cjs'
       - 'ui/zone-map.webp.b64'
       - 'ui/zone-map-v2-*.b64'
       - 'ui/zone-map2-hq-*.b64'
@@ -32,6 +35,10 @@ on:
     paths:
       - 'index.html'
       - 'ui/bunker-menu.*'
+      - 'ui/trader-hubs.js'
+      - 'ui/diesel-yantar.jpg'
+      - 'ui/leonov-yantar.jpg'
+      - 'tests/yantar_portraits.test.cjs'
       - 'ui/zone-map.webp.b64'
       - 'ui/zone-map-v2-*.b64'
       - 'tests/zone_map_navigation*'
@@ -65,6 +72,7 @@ jobs:
           node tests/zone_map_navigation.test.cjs
           node tests/rostok_barman_trade_client.test.cjs
           node tests/smoker_npc.test.cjs
+          node tests/yantar_portraits.test.cjs
           python3 -m py_compile tests/zone_map_navigation.browser.py tests/raid_quickslot.browser.py tools/install_zone_map_routing_server.py tests/zone_map_server_patch.test.py
           python3 -m py_compile tools/install_svalka_map2.py tests/svalka_map_asset.test.py
           python3 -m py_compile tools/install_rostok_location.py tests/rostok_location_installer.test.py tests/rostok_server_only.test.py tests/rostok_barman_shop_server.test.py tests/player_world_position_server.test.py
