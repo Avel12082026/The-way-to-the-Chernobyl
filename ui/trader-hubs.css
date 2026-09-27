@@ -2,7 +2,7 @@
 #leonovHubScreen .leonov-back{display:none!important}
 #leonovHubScreen .leonov-actions{
   left:2.5%!important;right:2.5%!important;bottom:max(10px,env(safe-area-inset-bottom))!important;
-  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:4px!important;
+  display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important;
 }
 #leonovHubScreen .leonov-actions button{
   min-width:0!important;min-height:46px!important;padding:6px 3px!important;
@@ -22,6 +22,7 @@
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;
 }
 .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions{grid-template-columns:repeat(4,minmax(0,1fr))}
+.trader-portrait-screen[data-action-count="5"] .trader-portrait-actions{grid-template-columns:repeat(5,minmax(0,1fr))}
 .trader-portrait-actions button{
   min-width:0;min-height:46px;margin:0;padding:7px 4px;border:2px solid #9b7b4d;border-radius:4px;
   background:linear-gradient(180deg,rgba(54,43,27,.96),rgba(24,20,14,.98));color:#ead7a9;
@@ -30,6 +31,7 @@
   touch-action:manipulation;-webkit-tap-highlight-color:transparent;
 }
 .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:clamp(8px,2.35vw,13px);padding-left:2px;padding-right:2px;white-space:nowrap}
+.trader-portrait-screen[data-action-count="5"] .trader-portrait-actions button{font-size:clamp(7px,2.05vw,11px);padding-left:1px;padding-right:1px;white-space:nowrap}
 .trader-portrait-actions button:active{transform:scale(.98);opacity:.86}
 .trader-portrait-actions button:focus-visible{outline:2px solid #e4c477;outline-offset:2px}
 body.trader-portrait-visible{overflow:hidden!important}
@@ -38,6 +40,7 @@ body.trader-portrait-visible #menuMusicPanel,body.trader-portrait-visible #menuM
   #leonovHubScreen .leonov-actions,.trader-portrait-actions{gap:2px!important;left:1.5%!important;right:1.5%!important}
   #leonovHubScreen .leonov-actions button,.trader-portrait-actions button{padding-left:2px!important;padding-right:2px!important;letter-spacing:0!important}
   .trader-portrait-screen[data-action-count="4"] .trader-portrait-actions button{font-size:7.6px!important}
+  .trader-portrait-screen[data-action-count="5"] .trader-portrait-actions button{font-size:6.7px!important}
 }
 
 
