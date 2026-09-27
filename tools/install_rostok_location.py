@@ -21,7 +21,7 @@ def fetch(base,relative):
 
 def jpeg_size(data):
     if len(data)<4 or data[:2]!=b'\xff\xd8':
-        raise RuntimeError('Карта Росстока не JPEG.')
+        raise RuntimeError('Карта Ростока не JPEG.')
     i=2
     while i+9<len(data):
         if data[i]!=0xff:
@@ -36,7 +36,7 @@ def jpeg_size(data):
             h=int.from_bytes(data[i+3:i+5],'big');w=int.from_bytes(data[i+5:i+7],'big')
             return w,h
         i+=length
-    raise RuntimeError('Не удалось прочитать размер карты Росстока.')
+    raise RuntimeError('Не удалось прочитать размер карты Ростока.')
 
 def png_size(data):
     if len(data)<24 or data[:8]!=b'\x89PNG\r\n\x1a\n':
@@ -100,20 +100,20 @@ def main():
     for p in required:
         if not p.exists(): raise RuntimeError('Не найден обязательный файл: '+str(p))
 
-    map_data=validate_asset(args.map.resolve(strict=True),MAP_SHA,MAP_SIZE,'Карта Росстока')
-    bar_data=validate_asset(args.bar.resolve(strict=True),BAR_SHA,BAR_SIZE,'Бар Росстока')
+    map_data=validate_asset(args.map.resolve(strict=True),MAP_SHA,MAP_SIZE,'Карта Ростока')
+    bar_data=validate_asset(args.bar.resolve(strict=True),BAR_SHA,BAR_SIZE,'Бар Ростока')
 
     client_js=fetch(args.base,'ui/bunker-menu.js')
     client_css=fetch(args.base,'ui/bunker-menu.css')
     server_installer=fetch(args.base,'tools/install_zone_map_routing_server.py')
     js_text=client_js.decode('utf-8');css_text=client_css.decode('utf-8')
-    if "4:'Россток'" not in js_text or "id:'transition-to-4'" not in js_text or "id:'camp-4'" not in js_text:
-        raise RuntimeError('Загруженный bunker-menu.js не содержит полной реализации Росстока.')
+    if "4:'Росток'" not in js_text or "id:'transition-to-4'" not in js_text or "id:'camp-4'" not in js_text:
+        raise RuntimeError('Загруженный bunker-menu.js не содержит полной реализации Ростока.')
     if '#rostokCampScreen.rostok-camp-screen' not in css_text:
-        raise RuntimeError('Загруженный bunker-menu.css не содержит экрана бара Росстока.')
+        raise RuntimeError('Загруженный bunker-menu.css не содержит экрана бара Ростока.')
     installer_text=server_installer.decode('utf-8')
     if '// ZONE_MAP_ROUTING_V4' not in installer_text or '// ROSTOK_BARMAN_SHOP_V1' not in installer_text or '// PLAYER_WORLD_POSITION_V1' not in installer_text or MAP_SHA not in installer_text or BAR_SHA not in installer_text:
-        raise RuntimeError('Серверный установщик не соответствует пакету Росстока.')
+        raise RuntimeError('Серверный установщик не соответствует пакету Ростока.')
 
     index_old=None
     index_new=None
@@ -141,7 +141,7 @@ def main():
             candidate=Path(td)/'server.candidate.js'
             candidate.write_text(candidate_text,encoding='utf-8')
             run(['node','--check',str(candidate)],timeout=30)
-        print('CHECK OK: Россток, изображения, Бармен и сохранение позиции проверены на живом server.js; сервер не изменён.' + (' Режим server-only.' if args.server_only else ''))
+        print('CHECK OK: Росток, изображения, Бармен и сохранение позиции проверены на живом server.js; сервер не изменён.' + (' Режим server-only.' if args.server_only else ''))
         return
 
     stamp=time.strftime('%Y%m%d_%H%M%S')
@@ -180,7 +180,7 @@ def main():
         if sha256((ui/'zone-map4.png').read_bytes())!=MAP_SHA or sha256((ui/'rostok-bar.png').read_bytes())!=BAR_SHA:
             raise RuntimeError('Контрольная сумма изображения изменилась после установки.')
 
-        print('РОССТОК УСТАНОВЛЕН' + (' (server-only).' if args.server_only else '.'))
+        print('РОСТОК УСТАНОВЛЕН' + (' (server-only).' if args.server_only else '.'))
         print('Карта 941x1672 и бар 941x1672 сохранены байт-в-байт, без пережатия.')
         print('Backup:',backup)
     except Exception:
