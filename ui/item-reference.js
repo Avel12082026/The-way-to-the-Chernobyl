@@ -2,7 +2,6 @@
 (() => {
 'use strict';
 if(window.ItemReference)return;
-const RESEARCH_LEVELS=[[4,135],[5,175],[6,220],[7,265],[8,305],[9,350],[10,395],[11,440],[12,480],[13,525],[14,570]];
 const clean=n=>String(n||'').replace(/[\u200B\u200C\u200D\u2060\uFEFF]+$/,'');
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -13,11 +12,9 @@ function describe(name){
   for(const [k,rows] of catalogs){def=rows.find(x=>x.name===parsed.baseName);if(def){kind=k;break;}}
   if(!def&&typeof findArtifactDef==='function'){def=findArtifactDef(raw);if(def)kind='artifact';}
   if(!def&&typeof mutants!=='undefined'){const m=mutants.find(x=>x.loot===raw);if(m){def={name:raw,price:m.lootPrice};kind='loot';}}
-  let level=1;
-  if(kind==='weapon'||kind==='armor')level=def?.starterGear?1:Math.max(1,Number(def?.unlockLevel)||1);
-  if(def?.isResearchSuit)level=RESEARCH_LEVELS.find(([tier])=>tier===Number(def.tier))?.[1]??null;
-  const requirement=def?.adminOnly?'Только для администратора':level===null?'Уровень использования: не задан':'Уровень использования: '+level;
-  const purchase=kind==='detector'&&Number(def.tier)<=8?'Покупка у торговца: с '+Math.max(1,(Number(def.tier)-1)*20)+' уровня':null;
+  const level=null;
+  const requirement=def?.adminOnly?'Только для администратора':'Уровень не требуется';
+  const purchase=kind==='detector'?'Покупка у торговца: доступно без требования уровня':null;
   const price=Number(def?.price);
   const reference=def?.adminOnly?'Особый предмет — обычная стоимость не применяется':def?.isNamedArtifact?'Цена сдачи Леонову: 50 сталкоинов':Number.isFinite(price)&&price>0?'Ориентировочная стоимость: '+money(price)+' сталбайтов (каталог'+(Number(parsed.level)>0?', без оценки улучшений':'')+')':'Ориентировочная стоимость: нет данных';
   // Only gear copies are merged by visible name/+level. Distinct crafted artifacts
@@ -77,5 +74,5 @@ if(typeof nativeInfo==='function')window.getItemInfoHtml=function(name){
   return infoDepth>0?String(html||'')+block(name):html;
 };
 new MutationObserver(()=>{if(!scheduled){scheduled=true;queueMicrotask(hydrate);}}).observe(document.body,{subtree:true,childList:true});
-window.ItemReference=Object.freeze({version:'1.0.0',describe,meanFor});
+window.ItemReference=Object.freeze({version:'1.1.0',describe,meanFor});
 })();
