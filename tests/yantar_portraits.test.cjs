@@ -23,13 +23,17 @@ assert(hubs.includes("YANTAR_PORTRAIT_CACHE = '20260927-yantar-portraits1'"),'po
 assert(bunker.includes('src="ui/leonov-yantar.jpg?v=20260927-yantar-portraits1"'),'Leonov hub still starts with old portrait');
 assert(index.includes('ui/bunker-menu.js?v=20260927-yantar-portraits1'),'Bunker menu cache was not bumped');
 assert(index.includes('ui/trader-hubs.js?v=20260927-yantar-portraits1'),'Trader hubs cache was not bumped');
+assert(hubs.includes("openTraderDialogue('leonov')"),'Leonov Talk must open quests/dialogue');
+assert(hubs.includes("openTraderDialogue('diesel')"),'Diesel Talk must open quests/dialogue');
+assert(!hubs.includes('data-leonov-action="quests"'),'Leonov must not have a separate Quests button');
+assert(!hubs.includes("{id:'quests', label:'Квесты'}"),'Diesel must not have a separate Quests button');
 
-for(const action of ['selection','trade','talk','quests','back']){
+for(const action of ['selection','trade','talk','back']){
   assert((bunker+hubs).includes('data-leonov-action="'+action+'"'),'Leonov action missing: '+action);
 }
 const dieselBlock=(hubs.match(/function ensureDieselHub\(\)[\s\S]*?return dieselHub;\n  }/)||[])[0]||'';
 assert(dieselBlock,'Diesel hub block missing');
-for(const action of ['trade','upgrade','talk','quests','back']){
+for(const action of ['trade','upgrade','talk','back']){
   assert(dieselBlock.includes("{id:'"+action+"', label:"), 'Diesel action wiring missing: '+action);
 }
 console.log('PASS: Yantar Leonov/Diesel portraits are byte-exact and existing actions remain wired');
