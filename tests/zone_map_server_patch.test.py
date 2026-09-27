@@ -40,12 +40,13 @@ assert changed
 assert mod.ROUTE_MARK in patched
 assert mod.SHOP_MARK in patched
 assert mod.BARMAN_MARK in patched
+assert mod.YANTAR_LEONOV_MARK in patched
 assert mod.POSITION_MARK in patched
 assert mod.TECHNICIAN_BUY_MARK in patched
 assert "sourceVendor==='technician'" in patched
 assert "req.body.vendor='leonov'" in patched
 assert "app.post('/api/player/position'" in patched
-assert "sourceVendor||'')==='barman'" in patched
+assert "sourceVendor==='barman'||sourceVendor==='leonov-yantar'" in patched
 assert "app.get('/api/zone-map/:location'" in patched
 assert "app.get('/api/zone-camp/:location'" in patched
 assert "1:'zone-map1.png'" in patched
@@ -91,7 +92,8 @@ assert "sourceTier" in patched and "tier:zoneTier" in patched
 assert ".filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly)" in patched
 
 # Trader stock is split explicitly: Zhuchara gets all 29 pistols + armor 1-29;
-# Barman gets all 29 shotguns + armor 30-58.
+# Barman gets all 29 shotguns + armor 30-58; Yantar Leonov gets the
+# next 29 automatic weapons and next 29 non-admin/non-premium suits.
 assert "ZONE_MAP_FIRST_PISTOLS_SERVER" in patched and "ZONE_MAP_FIRST_ARMOR_SERVER" in patched
 assert "ZONE_MAP_LOCATION1_PISTOLS" in patched
 assert "zoneMapZhucharaArmorServer" in patched
@@ -102,6 +104,14 @@ assert "rostokBarmanArmorServer" in patched
 assert "Number(item.id)>=30&&Number(item.id)<=58" in patched
 assert "У Бармена продаются только дробовики" in patched
 assert "У Бармена продаются костюмы с 30-го по 58-й" in patched
+assert "YANTAR_LEONOV_WEAPONS_SERVER" in patched
+assert "String(item.progressionClass||'')==='automatic'" in patched
+assert "pistolStart+58,pistolStart+87" in patched
+assert "YANTAR_LEONOV_ARMOR_SERVER" in patched
+assert ".filter(item=>item&&!item.adminOnly&&!item.isPremiumArmor)" in patched
+assert "list.slice(58,87)" in patched
+assert "sourceVendor!=='leonov-yantar'" in patched
+assert "req.body.vendor=armor?.isResearchSuit?'leonov':'zhuchara'" in patched
 assert "Beretta 21A Bobcat" in mod.ZONE_ROUTE
 
 again,changed2=mod.patch(patched)
@@ -109,13 +119,17 @@ assert not changed2 and again==patched
 
 # An already-installed V4 from before the Barman feature must gain the new guard
 # without replacing the V4 route again.
-v4_old=patched.replace(mod.BARMAN_GUARD,'')
-v4_old=v4_old.replace("||String(req.body?.sourceVendor||'')==='barman'","")
+v4_old=patched.replace(mod.BARMAN_GUARD,'').replace(mod.YANTAR_LEONOV_GUARD,'')
+v4_old=v4_old.replace(
+    "    const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');\n    if(String(req.body?.vendor||'')!=='zhuchara'||sourceVendor==='barman'||sourceVendor==='leonov-yantar')return next();",
+    "    if(String(req.body?.vendor||'')!=='zhuchara')return next();"
+)
 v4_upgraded,v4_changed=mod.patch(v4_old)
 assert v4_changed
 assert mod.BARMAN_MARK in v4_upgraded
+assert mod.YANTAR_LEONOV_MARK in v4_upgraded
 assert mod.POSITION_MARK in v4_upgraded
-assert "sourceVendor||'')==='barman'" in v4_upgraded
+assert "sourceVendor==='barman'||sourceVendor==='leonov-yantar'" in v4_upgraded
 assert v4_upgraded.count(mod.ROUTE_MARK)==1
 assert "1:'zone-map1.png'" in v4_upgraded
 assert "2:'zone-map2.png'" in v4_upgraded
@@ -212,4 +226,4 @@ assert "(root/'ui'/'yantar-bunker.png',b'\\x89PNG','25ef6f6783b475f373a737ce0a6c
 assert "Файл локации изменён или пережат" in installer
 assert "Совместимость шести локаций" in installer
 
-print('PASS: V4 installer upgrades V3 and adds six map locations, Rostok/Yantar camps, persistent position and tier-5/tier-6 routing')
+print('PASS: V4 installer adds six locations plus Yantar Leonov 29+29 progression stock')
