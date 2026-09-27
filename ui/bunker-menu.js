@@ -1297,7 +1297,7 @@
     el.className = 'leonov-hub-screen';
     el.setAttribute('aria-label', 'Эколог Леонов');
     el.innerHTML = `
-      <img id="leonovHubArtwork" class="leonov-hub-artwork" alt="Эколог Леонов за прилавком" draggable="false">
+      <img id="leonovHubArtwork" class="leonov-hub-artwork" src="ui/leonov-yantar.jpg?v=20260927-yantar-portraits1" width="864" height="1536" alt="Эколог Леонов за бронированным стеклом" draggable="false">
       <button class="leonov-back" type="button" data-leonov-action="back" aria-label="Назад">← Назад</button>
       <nav class="leonov-actions" aria-label="Действия у Леонова">
         <button type="button" data-leonov-action="selection">Селекция</button>
@@ -1314,19 +1314,11 @@
     });
     if (!leonovImageLoaded) {
       leonovImageLoaded = true;
-      fetch('ui/leonov-portrait.webp.b64?v=20260918')
-        .then(r => {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
-          return r.text();
-        })
-        .then(b64 => {
-          const image = document.getElementById('leonovHubArtwork');
-          if (image) image.src = 'data:image/webp;base64,' + b64.trim();
-        })
-        .catch(() => {
-          const image = document.getElementById('leonovHubArtwork');
-          if (image) image.alt = 'Не удалось загрузить изображение Леонова';
-        });
+      const image = document.getElementById('leonovHubArtwork');
+      if (image) {
+        image.decoding = 'async';
+        image.dataset.portraitQuality = 'original-864x1536-jpeg';
+      }
     }
     return el;
   }
