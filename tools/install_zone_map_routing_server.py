@@ -259,9 +259,9 @@ app.post('/api/raid/zone-step',requireAuth,rateLimit('raid-zone-step',20,10000),
             const data=safeParsePlayerData(row.data);
             if(!zoneMapLocationUnlocked(data,zoneLocation)){
                 const error=zoneLocation===5
-                    ?'Темная долина пока закрыта. Сначала должен быть открыт Россток.'
+                    ?'Темная долина пока закрыта. Сначала должен быть открыт Росток.'
                     :zoneLocation===4
-                      ?'Россток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
+                      ?'Росток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
                       :zoneLocation===3
                       ?'НИИ Агропром пока закрыт. Должны быть открыты последние 9 пистолетов.'
                       :'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.';
@@ -651,7 +651,7 @@ def patch(source):
     if old_rostok_png in text:
         text=text.replace(old_rostok_png,new_rostok_png,1);changed=True
     elif new_rostok_png not in text:
-        raise RuntimeError('Не найден поддерживаемый маршрут карты Росстока.')
+        raise RuntimeError('Не найден поддерживаемый маршрут карты Ростока.')
 
     text,shop_barman_changed=upgrade_shop_guard_for_barman(text)
     changed=changed or shop_barman_changed
