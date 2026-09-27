@@ -16,7 +16,10 @@
   let smokerImageLoaded = false;
   let rostokCampScreen = null;
   let barmanHubScreen = null;
+  let yantarCampScreen = null;
   let rostokReturnPending = false;
+  let yantarReturnPending = false;
+  let leonovReturnOrigin = 'cordon-camp';
   let zoneMapScreen = null;
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
@@ -26,7 +29,7 @@
   let worldPositionTimer = 0;
   let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина',6:'Янтарь'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
@@ -35,9 +38,10 @@
     2: {path:'/api/zone-map/2', width:941, height:1672},
     3: {path:'/api/zone-map/3', width:940, height:1673},
     4: {path:'/api/zone-map/4', width:941, height:1672},
-    5: {path:'/api/zone-map/5', width:941, height:1672}
+    5: {path:'/api/zone-map/5', width:941, height:1672},
+    6: {path:'/api/zone-map/6', width:864, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260927-dark-valley-loading1';
+  const ZONE_TRAVEL_CACHE = '20260927-yantar1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -48,7 +52,9 @@
     // Rostok uses the approved guarded factory loading artwork served byte-for-byte by the game server.
     4:'/images/zone-travel/rostok-loading.png',
     // Dark Valley uses the approved people-free loading artwork served byte-for-byte by the game server.
-    5:'/images/zone-travel/dark-valley-loading.png'
+    5:'/images/zone-travel/dark-valley-loading.png',
+    // Until a dedicated Yantar loading painting is approved, the exact authored Yantar map is used without recompression.
+    6:'/api/zone-map/6'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
@@ -58,7 +64,8 @@
     // Agroprom and Rostok: real game armor + weapons fitted by CombatFighters.
     3:{kind:'location'},
     4:{kind:'location'},
-    5:{kind:'location'}
+    5:{kind:'location'},
+    6:{kind:'location'}
   });
   const ZONE_MAP_POINTS = Object.freeze({
     1: [
@@ -112,7 +119,7 @@
       {id:'transition-to-2',kind:'transition',label:'Переход на Свалку',x:93.76,y:89.32,targetLocation:2,unlock:'none'}
     ],
     5: [
-      {id:'transition-5-future-top',kind:'transition',label:'Переход на будущую локацию',x:66.45,y:5.76,future:true},
+      {id:'transition-to-6',kind:'transition',label:'Переход на Янтарь',x:66.45,y:5.76,targetLocation:6,unlock:'none'},
       {id:'enemy-5-1',kind:'enemy',label:'Наёмники',x:51.30,y:9.84},
       {id:'mutant-5-1',kind:'mutant',label:'Мутанты',x:15.11,y:35.05},
       {id:'anomaly-5-1',kind:'anomaly',label:'Аномалия',x:44.42,y:46.86},
@@ -120,6 +127,16 @@
       {id:'mutant-5-2',kind:'mutant',label:'Мутанты',x:76.91,y:76.71},
       {id:'enemy-5-2',kind:'enemy',label:'Наёмники',x:17.32,y:78.37},
       {id:'transition-to-4',kind:'transition',label:'Переход на Росток',x:37.41,y:88.40,targetLocation:4,unlock:'none'}
+    ],
+    6: [
+      {id:'mutant-6-1',kind:'mutant',label:'Мутанты',x:36.40,y:23.97},
+      {id:'anomaly-6-1',kind:'anomaly',label:'Аномалия',x:14.99,y:30.16},
+      {id:'mutant-6-2',kind:'mutant',label:'Мутанты',x:88.59,y:30.01},
+      {id:'camp-6',kind:'camp',label:'Лагерь сталкеров',x:13.40,y:40.86},
+      {id:'anomaly-6-2',kind:'anomaly',label:'Аномалия',x:49.47,y:55.82},
+      {id:'mutant-6-3',kind:'mutant',label:'Мутанты',x:78.72,y:55.62},
+      {id:'transition-to-5',kind:'transition',label:'Переход на Темная долина',x:7.09,y:78.48,targetLocation:5,unlock:'none'},
+      {id:'mutant-6-4',kind:'mutant',label:'Мутанты',x:47.77,y:80.35}
     ]
   });
 
@@ -160,23 +177,30 @@
   }
 
   const WORLD_POSITION_PLACES = new Set([
-    'cordon-camp','zone-map','rostok-bar','barman','inventory','kpk',
+    'cordon-camp','zone-map','rostok-bar','yantar-bunker','barman','inventory','kpk',
     'warehouse','arena','market','chat','zhuchara','diesel','leonov','smoker'
   ]);
 
   function normalizeWorldPosition(raw) {
     let location = ZONE_MAP_ASSETS[Number(raw?.zoneLocation)] ? Number(raw.zoneLocation) : 1;
     let place = WORLD_POSITION_PLACES.has(String(raw?.place||'')) ? String(raw.place) : 'cordon-camp';
-    let origin = ['cordon-camp','zone-map','rostok-bar'].includes(String(raw?.origin||'')) ? String(raw.origin) : 'cordon-camp';
+    let origin = ['cordon-camp','zone-map','rostok-bar','yantar-bunker'].includes(String(raw?.origin||'')) ? String(raw.origin) : 'cordon-camp';
 
     if (['rostok-bar','barman'].includes(place)) {
       location = 4;
       origin = 'rostok-bar';
-    } else if (['cordon-camp','zhuchara','diesel','leonov','smoker','arena','market','chat'].includes(place)) {
+    } else if (place === 'yantar-bunker') {
+      location = 6;
+      origin = 'yantar-bunker';
+    } else if (['diesel','leonov'].includes(place)) {
+      if (origin === 'yantar-bunker') location = 6;
+      else { location = 1; origin = 'cordon-camp'; }
+    } else if (['cordon-camp','zhuchara','smoker','arena','market','chat'].includes(place)) {
       location = 1;
       origin = 'cordon-camp';
     } else if (['inventory','kpk','warehouse'].includes(place)) {
       if (origin === 'rostok-bar') location = 4;
+      else if (origin === 'yantar-bunker') location = 6;
       else { location = 1; origin = 'cordon-camp'; }
     } else if (place === 'zone-map') {
       origin = 'zone-map';
@@ -234,6 +258,9 @@
     if (saved.origin === 'rostok-bar' && saved.zoneLocation === 4 && ['inventory','kpk','warehouse'].includes(saved.place)) {
       rostokReturnPending = true;
     }
+    if (saved.origin === 'yantar-bunker' && saved.zoneLocation === 6 && ['inventory','kpk','warehouse'].includes(saved.place)) {
+      yantarReturnPending = true;
+    }
     const finish = () => {
       worldPositionRestoring = false;
       worldPositionLast = JSON.stringify(saved);
@@ -241,6 +268,7 @@
     const openSaved = (attempt = 0) => {
       try {
         if (saved.place === 'rostok-bar') openRostokCamp();
+        else if (saved.place === 'yantar-bunker') openYantarCamp();
         else if (saved.place === 'barman') openBarmanHub();
         else if (saved.place === 'zone-map') openZoneMap('camp');
         else if (saved.place === 'zhuchara') {
@@ -248,12 +276,12 @@
           else if (attempt < 20) return setTimeout(()=>openSaved(attempt+1),50);
           else openScreen('main');
         } else if (saved.place === 'diesel') {
-          if (window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel();
+          if (window.TraderHubs?.openDiesel) window.TraderHubs.openDiesel(saved.origin);
           else if (attempt < 20) return setTimeout(()=>openSaved(attempt+1),50);
           else openScreen('main');
         } else if (saved.place === 'leonov') {
-          if (window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov();
-          else if (typeof openLeonov === 'function') openLeonov();
+          if (window.BunkerMenu?.openLeonov) window.BunkerMenu.openLeonov(saved.origin);
+          else if (typeof openLeonov === 'function') openLeonov(saved.origin);
           else openScreen('main');
         } else if (saved.place === 'smoker') {
           if (window.BunkerMenu?.openSmoker) window.BunkerMenu.openSmoker();
@@ -650,10 +678,87 @@
     openZoneMap('camp');
   }
 
+  function layoutYantarCamp() {
+    if (!yantarCampScreen || !yantarCampScreen.classList.contains('active')) return;
+    const campScene = document.getElementById('yantarCampScene');
+    if (campScene) layoutCampScene(campScene);
+  }
+
+  function ensureYantarCampScreen() {
+    if (yantarCampScreen) return yantarCampScreen;
+    const el = document.createElement('section');
+    el.id = 'yantarCampScreen';
+    el.className = 'yantar-camp-screen screen';
+    el.setAttribute('aria-label', 'Янтарь — бункер учёных');
+    el.innerHTML = `
+      <div id="yantarCampScene" class="yantar-camp-scene">
+        <img id="yantarCampArtwork" class="yantar-camp-artwork" src="${SERVER_URL}/api/zone-camp/6?v=${ZONE_TRAVEL_CACHE}" width="941" height="1672" alt="Бункер учёных на Янтаре: эколог Леонов, техник Дизель, выход и склад" draggable="false">
+        <button class="yantar-hotspot yantar-exit-hotspot" type="button" data-yantar-action="exit" aria-label="Выход на карту Янтаря"></button>
+        <button class="yantar-hotspot yantar-leonov-hotspot" type="button" data-yantar-action="leonov" aria-label="Эколог Леонов"></button>
+        <button class="yantar-hotspot yantar-diesel-hotspot" type="button" data-yantar-action="diesel" aria-label="Техник Дизель"></button>
+        <button class="yantar-hotspot yantar-warehouse-hotspot" type="button" data-yantar-action="warehouse" aria-label="Склад"></button>
+      </div>`;
+    document.body.appendChild(el);
+    yantarCampScreen = el;
+    el.addEventListener('click', event => {
+      const action = event.target.closest('[data-yantar-action]')?.dataset.yantarAction;
+      if (action === 'exit') return closeYantarCamp();
+      if (action === 'warehouse') return openYantarDestination('warehouse');
+      if (action === 'leonov') {
+        el.classList.remove('active');
+        document.body.classList.remove('yantar-camp-visible');
+        return openLeonov('yantar-bunker');
+      }
+      if (action === 'diesel') {
+        el.classList.remove('active');
+        document.body.classList.remove('yantar-camp-visible');
+        return window.TraderHubs?.openDiesel?.('yantar-bunker');
+      }
+    });
+    window.addEventListener('resize', layoutYantarCamp);
+    window.visualViewport?.addEventListener('resize', layoutYantarCamp);
+    return el;
+  }
+
+  function openYantarCamp() {
+    yantarReturnPending = false;
+    setZoneLocation(6);
+    saveWorldPosition('yantar-bunker','yantar-bunker');
+    const el = ensureYantarCampScreen();
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+    main.style.display = 'none';
+    const chat = document.getElementById('embeddedChatWidget');
+    if (chat) chat.style.display = 'none';
+    el.classList.add('active');
+    document.body.classList.add('yantar-camp-visible');
+    requestAnimationFrame(layoutYantarCamp);
+    return el;
+  }
+
+  function openYantarDestination(screen) {
+    yantarReturnPending = true;
+    saveWorldPosition(screen,'yantar-bunker',true);
+    if (yantarCampScreen) yantarCampScreen.classList.remove('active');
+    document.body.classList.remove('yantar-camp-visible');
+    setZoneLocation(6);
+    if (typeof openScreen === 'function') openScreen(screen);
+  }
+
+  function closeYantarCamp() {
+    if (yantarCampScreen) yantarCampScreen.classList.remove('active');
+    document.body.classList.remove('yantar-camp-visible');
+    setZoneLocation(6);
+    openZoneMap('yantar-bunker');
+  }
+
   function patchRostokReturnNavigation() {
     const nativeOpen = window.openScreen;
     if (typeof nativeOpen !== 'function' || nativeOpen.__rostokReturnAware) return;
     const wrapped = function(screen) {
+      if (screen === 'main' && yantarReturnPending) {
+        yantarReturnPending = false;
+        return openYantarCamp();
+      }
       if (screen === 'main' && rostokReturnPending) {
         rostokReturnPending = false;
         return openRostokCamp();
@@ -952,6 +1057,7 @@
     if (zoneMapOrigin === 'raid' && typeof raidActive !== 'undefined' && raidActive && typeof returnToRaid === 'function') {
       return returnToRaid();
     }
+    if (zoneMapOrigin === 'yantar-bunker') return openYantarCamp();
     if (typeof openScreen === 'function') openScreen('main');
   }
 
@@ -978,6 +1084,14 @@
     const kind = point?.kind || '';
     if (kind === 'camp') {
       setZoneRaidKind('');
+      if (zoneLocation === 6) {
+        hideZoneMap();
+        if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
+          await endRaid();
+        }
+        openYantarCamp();
+        return;
+      }
       if (zoneLocation === 4) {
         hideZoneMap();
         if (typeof raidActive !== 'undefined' && raidActive && typeof endRaid === 'function') {
@@ -1034,6 +1148,10 @@
       }
       if (target === 5) {
         await travelToZoneLocation(5);
+        return;
+      }
+      if (target === 6) {
+        await travelToZoneLocation(6);
         return;
       }
       if (point?.future) {
@@ -1213,8 +1331,11 @@
     return el;
   }
 
-  function openLeonov() {
-    saveWorldPosition('leonov','cordon-camp');
+  function openLeonov(origin = '') {
+    if (origin === 'yantar-bunker' || origin === 'cordon-camp') leonovReturnOrigin = origin;
+    else if (window.GamePosition?.current?.origin === 'yantar-bunker') leonovReturnOrigin = 'yantar-bunker';
+    else if (!leonovScreen?.classList.contains('active')) leonovReturnOrigin = 'cordon-camp';
+    saveWorldPosition('leonov',leonovReturnOrigin);
     const el = ensureLeonovScreen();
     el.classList.add('active');
     document.body.classList.add('leonov-hub-visible');
@@ -1223,6 +1344,7 @@
   function closeLeonov() {
     if (leonovScreen) leonovScreen.classList.remove('active');
     document.body.classList.remove('leonov-hub-visible');
+    if (leonovReturnOrigin === 'yantar-bunker') return openYantarCamp();
     if (typeof openScreen === 'function') openScreen('main');
   }
 
@@ -1602,7 +1724,7 @@
       cleanup();
       mode = 'hub';
       nativeExit();
-      openLeonov();
+      openLeonov('cordon-camp');
     };
 
     // Any legacy entry to the scientist screen now lands on the two-choice Leonov hub.
@@ -1678,7 +1800,7 @@
         } else if (['inventory','kpk'].includes(screen)) {
           saveWorldPosition(screen,rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp');
         } else if (screen === 'warehouse') {
-          saveWorldPosition(screen,rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp');
+          saveWorldPosition(screen,yantarReturnPending && zoneLocation===6 ? 'yantar-bunker' : (rostokReturnPending && zoneLocation===4 ? 'rostok-bar' : 'cordon-camp'));
         } else if (['arena','market','chat'].includes(screen)) {
           saveWorldPosition(screen,'cordon-camp');
         } else if (screen === 'raid') {
@@ -1704,7 +1826,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.7.0',
+    version: '0.8.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1718,7 +1840,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.20.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.21.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, closeYantarCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
