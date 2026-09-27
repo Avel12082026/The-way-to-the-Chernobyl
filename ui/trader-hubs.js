@@ -32,6 +32,7 @@
 
   const YANTAR_PORTRAIT_CACHE = '20260927-yantar-portraits1';
   function portraitSource(key) {
+    if (key === 'zhuchara') return 'ui/cordon-zhuchara-hub.png?v=20260927-cordon-zhuchara1';
     if (key === 'leonov') return 'ui/leonov-yantar.jpg?v=' + YANTAR_PORTRAIT_CACHE;
     if (key === 'diesel') return 'ui/diesel-yantar.jpg?v=' + YANTAR_PORTRAIT_CACHE;
     const b64 = window.TRADER_PORTRAIT_DATA?.[key];
@@ -59,9 +60,11 @@
     observer.observe(img, {attributes: true, attributeFilter: ['src']});
     img.decoding = 'async';
     img.setAttribute('src', src);
-    img.dataset.portraitQuality = (key === 'leonov' || key === 'diesel')
-      ? 'original-864x1536-jpeg'
-      : 'hq-864x1536-q88';
+    img.dataset.portraitQuality = key === 'zhuchara'
+      ? 'original-941x1672-png'
+      : (key === 'leonov' || key === 'diesel')
+        ? 'original-864x1536-jpeg'
+        : 'hq-864x1536-q88';
     const promise = (img.decode ? img.decode().catch(() => {}) : Promise.resolve()).then(() => {
       if (img.naturalWidth !== 864 || img.naturalHeight !== 1536) {
         console.error('[Trader portrait size]', key, img.naturalWidth, img.naturalHeight);
@@ -255,7 +258,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.4.3',
+    version:'1.4.4',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
