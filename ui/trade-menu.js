@@ -108,7 +108,7 @@
     },
     technician: {
       title: () => 'ТЕХНИК ДИЗЕЛЬ — ТОРГОВЛЯ',
-      // Detectors are sold by Diesel now; use the same level gate that previously lived at Leonov.
+      // Detectors are sold by Diesel and are visible immediately; money is the purchase gate.
       stock: () => detectors.filter(d => d && !d.adminOnly).map(d => ({...d, category: 'detector'})),
       price: item => getBuyPrice(item.price),
       accepts: name => !!getEquipSlotType(name),
