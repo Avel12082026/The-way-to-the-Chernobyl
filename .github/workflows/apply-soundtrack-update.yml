@@ -26,17 +26,6 @@ jobs:
               raise SystemExit('menu-music cache tag not found')
           p.write_text(s)
 
-          p=Path('server.js')
-          s=p.read_text()
-          if "app.use('/audio', express.static(AUDIO_DIR" not in s:
-              anchor="app.use('/icons', express.static(ICONS_DIR, { maxAge: '5m' }));"
-              pos=s.find(anchor)
-              if pos < 0:
-                  raise SystemExit('server audio anchor not found')
-              end=s.find('\n',pos)
-              block="\nconst AUDIO_DIR = path.join(__dirname, 'audio');\nif (!fs.existsSync(AUDIO_DIR)) fs.mkdirSync(AUDIO_DIR, { recursive: true });\napp.use('/audio', express.static(AUDIO_DIR, { maxAge: '1h', immutable: false }));"
-              s=s[:end]+block+s[end:]
-          p.write_text(s)
           PY
 
           mkdir -p audio
@@ -51,7 +40,6 @@ jobs:
           test "$(stat -c %s audio/zone-ambient-04.mp3)" = "5031541"
           test "$(stat -c %s audio/zone-ambient-05.mp3)" = "8258389"
           test "$(stat -c %s audio/zone-ambient-06.mp3)" = "8101909"
-          node --check server.js
           node tests/background_music.test.cjs
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
