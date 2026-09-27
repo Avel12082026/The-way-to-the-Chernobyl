@@ -34,10 +34,10 @@
     1: {path:'/api/zone-map/1', width:941, height:1672},
     2: {path:'/api/zone-map/2', width:941, height:1672},
     3: {path:'/api/zone-map/3', width:940, height:1673},
-    4: {path:'/api/zone-map/4', width:865, height:1536},
+    4: {path:'/api/zone-map/4', width:941, height:1672},
     5: {path:'/api/zone-map/5', width:941, height:1672}
   });
-  const ZONE_TRAVEL_CACHE = '20260926-dark-valley2';
+  const ZONE_TRAVEL_CACHE = '20260927-rostok-map-final1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
