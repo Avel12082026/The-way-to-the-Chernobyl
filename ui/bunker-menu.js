@@ -26,7 +26,7 @@
   let worldPositionTimer = 0;
   let worldPositionLast = '';
   const ZONE_TRAVEL_MS = 4500;
-  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Россток',5:'Темная долина'});
+  const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина'});
   const ZONE_ROUTE_STORAGE = 'pocketzone.zoneRoute.v2';
   const ZONE_LOCATION_STORAGE = 'pocketzone.zoneLocation.v1';
   const zoneRouteKinds = new Set(['enemy', 'mutant', 'anomaly']);
@@ -75,7 +75,7 @@
       {id:'enemy-1-4',kind:'enemy',label:'NPC',x:18.30,y:90.71}
     ],
     2: [
-      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'},
+      {id:'transition-to-4',kind:'transition',label:'Переход на Росток',x:68.26,y:24.48,targetLocation:4,unlock:'second-pistol-decade'},
       {id:'mutant-2-1',kind:'mutant',label:'Мутанты',x:18.70,y:28.69},
       {id:'mutant-2-2',kind:'mutant',label:'Мутанты',x:87.03,y:25.38},
       {id:'anomaly-2-1',kind:'anomaly',label:'Аномалия',x:81.06,y:42.12},
@@ -119,7 +119,7 @@
       {id:'anomaly-5-2',kind:'anomaly',label:'Аномалия',x:59.68,y:61.21},
       {id:'mutant-5-2',kind:'mutant',label:'Мутанты',x:76.91,y:76.71},
       {id:'enemy-5-2',kind:'enemy',label:'Наёмники',x:17.32,y:78.37},
-      {id:'transition-to-4',kind:'transition',label:'Переход на Россток',x:37.41,y:88.40,targetLocation:4,unlock:'none'}
+      {id:'transition-to-4',kind:'transition',label:'Переход на Росток',x:37.41,y:88.40,targetLocation:4,unlock:'none'}
     ]
   });
 
@@ -504,10 +504,10 @@
     const el = document.createElement('section');
     el.id = 'rostokCampScreen';
     el.className = 'rostok-camp-screen screen';
-    el.setAttribute('aria-label', 'Россток — бар 100 RADS');
+    el.setAttribute('aria-label', 'Росток — бар 100 RADS');
     el.innerHTML = `
       <div id="rostokCampScene" class="rostok-camp-scene">
-        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бар 100 RADS в Росстоке" draggable="false">
+        <img id="rostokCampArtwork" class="rostok-camp-artwork" src="${SERVER_URL}/api/zone-camp/4?v=20260922-position3" width="941" height="1672" alt="Бар 100 RADS в Ростоке" draggable="false">
         <button class="rostok-camp-back" type="button" data-rostok-action="map">← Карта</button>
         <button id="rostokBarmanHotspot" class="rostok-barman-hotspot" type="button" data-rostok-action="barman" aria-label="Бармен"></button>
         <button id="rostokWarehouseHotspot" class="rostok-warehouse-hotspot" type="button" data-rostok-action="warehouse" aria-label="Склад"></button>
@@ -1025,7 +1025,7 @@
       if (target === 4) {
         if (zoneLocation !== 5 && !secondPistolDecadeReady()) {
           if (typeof showGameAlert === 'function') {
-            showGameAlert('Чтобы попасть в Россток, должна быть открыта вторая десятка пистолетов.');
+            showGameAlert('Чтобы попасть в Росток, должна быть открыта вторая десятка пистолетов.');
           }
           return;
         }
