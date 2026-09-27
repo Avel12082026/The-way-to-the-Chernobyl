@@ -18,7 +18,7 @@ assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'locat
 assert(js.includes("id:'transition-to-1'")&&js.includes("id:'transition-to-3'")&&js.includes("id:'transition-to-4'")&&js.includes("id:'anomaly-2-1'")&&js.includes("id:'mutant-2-1'")&&js.includes("id:'enemy-2-1'"),'Svalka hotspot actions must remain wired after map replacement');
 assert(js.includes("3: {path:'/api/zone-map/3', width:940, height:1673}"),'NII Agroprom asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-3-1'")&&js.includes("id:'mutant-3-1'")&&js.includes("id:'enemy-3-1'"),'Agroprom hotspot actions must remain wired after map replacement');
-assert(js.includes("4: {path:'/api/zone-map/4', width:865, height:1536}"),'Rostok asset missing');
+assert(js.includes("4: {path:'/api/zone-map/4', width:941, height:1672}"),'Rostok asset missing');
 assert(js.includes("5: {path:'/api/zone-map/5', width:941, height:1672}"),'location 5 asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-1-1'")&&js.includes("id:'mutant-1-1'")&&js.includes("id:'enemy-1-1'")&&js.includes("id:'camp-1'"),'Cordon hotspot actions must remain wired after map replacement');
 assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/api/zone-map/5'"),'destination loading artwork for five current locations missing');
