@@ -4,6 +4,11 @@
   if (window.TerminologyMarketPatch) return;
 
   const replacements = [
+    ['МАГАЗИН БАЙТ', 'МАГАЗИН СТАЛБАЙТОВ'],
+    ['БАЙТОВ', 'СТАЛБАЙТОВ'],
+    ['БАЙТА', 'СТАЛБАЙТА'],
+    ['БАЙТЫ', 'СТАЛБАЙТЫ'],
+    ['БАЙТ', 'СТАЛБАЙТ'],
     ['Магазин Байт', 'Магазин Сталбайтов'],
     ['магазин Байт', 'магазин Сталбайтов'],
     ['Жетонов сталкера', 'Сталкоинов'],
@@ -70,7 +75,7 @@
       }
       if (node.nodeType !== Node.ELEMENT_NODE) return;
       if (/^(SCRIPT|STYLE|NOSCRIPT)$/i.test(node.tagName)) return;
-      for (const attr of ['aria-label', 'title', 'placeholder']) {
+      for (const attr of ['aria-label', 'title', 'placeholder', 'alt']) {
         if (!node.hasAttribute(attr)) continue;
         const value = node.getAttribute(attr);
         const next = rewriteText(value);
@@ -96,7 +101,7 @@
       childList:true,
       characterData:true,
       attributes:true,
-      attributeFilter:['aria-label','title','placeholder']
+      attributeFilter:['aria-label','title','placeholder','alt']
     });
   }
 

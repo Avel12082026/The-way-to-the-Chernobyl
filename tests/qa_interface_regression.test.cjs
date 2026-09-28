@@ -12,6 +12,7 @@ vm.runInContext(terminology.slice(start, end) + '\nthis.rewriteText = rewriteTex
 
 for (const [input, expected] of [
   ['⭐ Магазин Байт', '⭐ Магазин Сталбайтов'],
+  ['МАГАЗИН БАЙТ', 'МАГАЗИН СТАЛБАЙТОВ'],
   ['Байтов: 10', 'Сталбайтов: 10'],
   ['Байт', 'Сталбайт'],
   ['Магазин Сталбайтов', 'Магазин Сталбайтов'],
