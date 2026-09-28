@@ -14,7 +14,7 @@ const enter=(js.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'raid door must open location 1 map first');
 
 assert(js.includes("version: '0.8.0'"),'ZoneMap API version mismatch');
-assert(js.includes("window.BunkerMenu = {version: '1.21.1'"),'BunkerMenu version mismatch');
+assert(js.includes("window.BunkerMenu = {version: '1.22.0'"),'BunkerMenu version mismatch');
 assert(js.includes("const ZONE_MAP_NAMES = Object.freeze({1:'Кордон',2:'Свалка',3:'НИИ Агропром',4:'Росток',5:'Темная долина',6:'Янтарь'})"),'six map titles missing');
 assert(js.includes("1: {path:'/api/zone-map/1', width:941, height:1672}"),'location 1 asset missing');
 assert(js.includes("2: {path:'/api/zone-map/2', width:941, height:1672}"),'location 2 asset missing');
@@ -91,6 +91,10 @@ assert(loc6Block.includes("id:'transition-to-5'")&&loc6Block.includes("targetLoc
 assert(js.includes('function ensureRostokCampScreen()')&&js.includes('/api/zone-camp/4?v=20260922-position3'),'Rostok bar screen missing');
 assert(js.includes('function ensureYantarCampScreen()')&&js.includes('/api/zone-camp/6?v='),'Yantar scientist bunker screen missing');
 assert(js.includes('data-yantar-action="leonov"')&&js.includes('data-yantar-action="diesel"')&&js.includes('data-yantar-action="warehouse"')&&js.includes('data-yantar-action="exit"'),'Yantar bunker hotspots missing');
+assert(js.includes('id="yantarLowerHud"')&&js.includes('ui/rostok-lower-hud.png?v=09db18421007'),'Yantar lower HUD artwork missing');
+assert(['Health','Hunger','Thirst','Experience','Radiation'].every(k=>js.includes('id="yantar'+k+'"')),'Yantar meters missing');
+assert(js.includes('id="yantarInventory"')&&js.includes('id="yantarPda"')&&js.includes('id="yantarReadBook"'),'Yantar lower HUD controls missing');
+assert(js.includes('function openYantarWarehouse()')&&js.includes("return openYantarDestination('warehouse')"),'Yantar trade-to-warehouse return bridge missing');
 assert(js.includes("if (zoneLocation === 4)")&&js.includes('openRostokCamp();'),'Rostok camp marker must open bar screen');
 assert(js.includes('zoneKind: zoneRaidKind, zoneLocation'),'raid route must carry selected location');
 assert(js.includes("if (zoneLocation === 6)")&&js.includes('openYantarCamp();'),'Yantar camp marker must open scientist bunker');
