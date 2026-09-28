@@ -115,7 +115,7 @@ assert(js.includes('id="rostokLowerHud"')&&js.includes('rostok-lower-hud-artwork
 assert(css.includes('height:var(--rostok-hud-height')&&css.includes('object-fit:fill;object-position:center'),'Rostok must render only the clean lower menu artwork');
 assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized Cordon strip crop must be removed');
 assert(css.includes('.rostok-progress-row{z-index:5;}')&&js.includes('rostok-progress-row bunker-progress-row'), 'Upper meters must overlay the lower HUD in Cordon coordinates');
-assert(css.includes(':is(#mainMenu,#rostokCampScreen) .bunker-health { top:96.02%; }'), 'Both camps must keep health at the identical visible position');
+assert(css.includes(':is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-health { top:96.02%; }'), 'Cordon, Rostok and Yantar must keep health at the identical visible position');
 assert(js.includes("target.style.setProperty('--rostok-hud-height', h * 182 / 1672 + 'px')")&&js.includes('layoutCampScene(scene);')&&js.includes('layoutCampScene(campScene);'), 'HUD crop must follow the same vertical scaling as Cordon');
 assert(!js.includes('class="zone-map-back"'),'Zone maps must not show the top-left Back button');
 assert(!js.includes('data-zone-map-action="back"'),'Zone-map Back action must be removed');
