@@ -184,7 +184,7 @@ async def main():
         await page.locator('[data-zone-point="transition-to-6"]').click()
         await travel.wait_for(state='visible')
         assert await page.locator('#zoneMapTravelRoute').inner_text()=='Темная долина → Янтарь'
-        assert '/api/zone-map/6' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
+        assert '/images/zone-travel/yantar-loading.png' in (await page.locator('#zoneMapTravelArtwork').get_attribute('src'))
         await page.wait_for_function("ZoneMap.location===6")
         await page.wait_for_function("document.getElementById('zoneMapTravel')?.hidden===true")
         assert await page.locator('#zoneMapTitle').inner_text()=='Янтарь'
