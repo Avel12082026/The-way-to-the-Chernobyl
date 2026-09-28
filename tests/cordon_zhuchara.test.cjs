@@ -42,7 +42,7 @@ assert(!block.includes("id:'quests'"),'Zhuchara must not have a separate Quests 
 
 const enter=(bunker.match(/async function enterRaid\(\) \{([\s\S]*?)\n  \}/)||[])[1]||'';
 assert(enter.includes("setZoneLocation(1)")&&enter.includes("openZoneMap('camp')"),'Exit must open Cordon map first');
-assert(index.includes('ui/bunker-menu.js?v=20260928-yantar-hud1'),'Cordon bunker cache key missing');
+assert(index.includes('ui/bunker-menu.js?v=20260928-yantar-loading1'),'Cordon bunker cache key missing');
 assert(index.includes('ui/trader-hubs.js?v=20260927-cordon-zhuchara2'),'Zhuchara hub cache key missing');
 
 console.log('PASS: Cordon is Zhuchara-only; exact artwork, portrait, Exit, Warehouse and 3 gameplay buttons are wired');
