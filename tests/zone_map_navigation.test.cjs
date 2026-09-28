@@ -1,6 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
+const crypto=require('node:crypto');
 
 const js=fs.readFileSync('ui/bunker-menu.js','utf8');
 const css=fs.readFileSync('ui/bunker-menu.css','utf8');
@@ -25,7 +26,7 @@ assert(js.includes("4: {path:'/api/zone-map/4', width:941, height:1672}"),'Rosto
 assert(js.includes("5: {path:'/api/zone-map/5', width:941, height:1672}"),'location 5 asset missing');
 assert(js.includes("6: {path:'/api/zone-map/6', width:864, height:1536}"),'Yantar map asset missing');
 assert(js.includes("id:'transition-to-2'")&&js.includes("id:'anomaly-1-1'")&&js.includes("id:'mutant-1-1'")&&js.includes("id:'enemy-1-1'")&&js.includes("id:'camp-1'"),'Cordon hotspot actions must remain wired after map replacement');
-assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/images/zone-travel/dark-valley-loading.png'")&&js.includes("6:'/api/zone-map/6'"),'destination loading artwork for six current locations missing');
+assert(js.includes("1:'/images/zone-travel/kordon-original.jpg'")&&js.includes("2:'/images/zone-travel/svalka-loading.png'")&&js.includes("3:'/images/zone-travel/agroprom-loading.png'")&&js.includes("4:'/images/zone-travel/rostok-loading.png'")&&js.includes("5:'/images/zone-travel/dark-valley-loading.png'")&&js.includes("6:'/images/zone-travel/yantar-loading.png'"),'destination loading artwork for six current locations missing');
 assert(js.includes("kind:'camp'")&&js.includes("kind:'location'"),'travel scene types missing');
 assert(js.includes("1:{kind:'camp'}"),'Kordon must use a single authored Rookie Village camp scene');
 assert(js.includes("2:{kind:'location'}"),'Svalka must use one authored people-free loading artwork without overlays');
@@ -40,7 +41,12 @@ assert(locationTravelStyle.includes('width:100%')&&locationTravelStyle.includes(
 assert(css.includes('[data-scene="location"] .zone-map-travel-scene')&&css.includes('[data-scene="location"] .zone-map-travel-shade{display:none;}'),'Svalka/Agroprom loading artwork must not receive overlay effects');
 assert(css.includes('.zone-map-travel[data-scene="camp"]::before{display:none;}'),'Kordon must not use the blurred travel backdrop');
 assert(css.includes('.zone-map-travel[data-scene="camp"] .zone-map-travel-shade{display:none;}'),'Kordon must not use the shade/effect overlay');
-assert(js.includes("const ZONE_TRAVEL_CACHE = '20260927-yantar1'"),'Yantar cache key missing');
+assert(js.includes("const ZONE_TRAVEL_CACHE = '20260928-yantar-loading1'"),'Yantar cache key missing');
+const yantarLoading=fs.readFileSync('images/zone-travel/yantar-loading.png');
+assert.equal(yantarLoading.length,2615900,'Yantar loading artwork byte length changed');
+assert.equal(crypto.createHash('sha256').update(yantarLoading).digest('hex'),'716ac0d68d00b646e89d270e4078327dd12c2c5be3ed557cbf173727e548f495','Yantar loading artwork was recompressed or altered');
+assert.equal(yantarLoading.readUInt32BE(16),941,'Yantar loading artwork width changed');
+assert.equal(yantarLoading.readUInt32BE(20),1672,'Yantar loading artwork height changed');
 
 const loc2Block=(js.match(/2: \[([\s\S]*?)\n    \],\n    3:/)||[])[1]||'';
 assert.equal((loc2Block.match(/kind:'transition'/g)||[]).length,3,'Svalka must keep bottom/left/top transition markers');
