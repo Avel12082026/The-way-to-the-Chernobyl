@@ -8,6 +8,8 @@ on:
       - 'ui/cordon-zhuchara-camp.png'
       - 'ui/cordon-zhuchara-hub.png'
       - 'tests/cordon_zhuchara.test.cjs'
+      - 'tools/install_warehouse_passive_raid_fix.py'
+      - 'tests/warehouse_passive_raid.test.py'
       - 'tests/rostok_barman_shop_server.test.py'
       - 'tests/rostok_barman_trade_client.test.cjs'
       - 'ui/trade-menu.js'
@@ -43,6 +45,8 @@ on:
       - 'ui/cordon-zhuchara-camp.png'
       - 'ui/cordon-zhuchara-hub.png'
       - 'tests/cordon_zhuchara.test.cjs'
+      - 'tools/install_warehouse_passive_raid_fix.py'
+      - 'tests/warehouse_passive_raid.test.py'
       - 'ui/trader-hubs.js'
       - 'ui/diesel-yantar.jpg'
       - 'ui/leonov-yantar.jpg'
@@ -81,6 +85,8 @@ jobs:
           node --check ui/trader-hubs.js
           node tests/zone_map_navigation.test.cjs
           node tests/cordon_zhuchara.test.cjs
+          python3 -m py_compile tools/install_warehouse_passive_raid_fix.py tests/warehouse_passive_raid.test.py
+          python3 tests/warehouse_passive_raid.test.py
           node tests/rostok_barman_trade_client.test.cjs
           node tests/smoker_npc.test.cjs
           node tests/yantar_portraits.test.cjs
