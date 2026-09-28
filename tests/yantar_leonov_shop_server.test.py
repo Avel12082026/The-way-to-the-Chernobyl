@@ -8,9 +8,14 @@ spec=importlib.util.spec_from_file_location('zone_map_installer',path)
 mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
 
 js=r"""
+// Match production initialization order: the Yantar guard is created before
+// buildWeaponProgressionServer() adds progressionClass. Raw catalog order is
+// automatics, rifles, pistols, shotguns.
 const SHOP_WEAPONS=[
- ...Array.from({length:29},(_,i)=>({name:'A'+(i+1),progressionClass:'automatic'})),
- ...Array.from({length:29},(_,i)=>({name:'S'+(i+1),progressionClass:'shotgun'}))
+ ...Array.from({length:29},(_,i)=>({name:'A'+(i+1)})),
+ ...Array.from({length:29},(_,i)=>({name:'RIF'+(i+1)})),
+ ...Array.from({length:29},(_,i)=>({name:i===0?'Beretta 21A Bobcat':'P'+(i+1),starterGear:i===0})),
+ ...Array.from({length:29},(_,i)=>({name:'S'+(i+1)}))
 ];
 const SHOP_ARMOR=[
  ...Array.from({length:58},(_,i)=>({id:i+1,name:'B'+(i+1)})),
@@ -32,8 +37,10 @@ function call(body){
 }
 let r=call({vendor:'leonov',sourceVendor:'leonov-yantar',category:'weapon',name:'A1'});
 if(!r.next||r.body.vendor!=='zhuchara')throw Error('Yantar automatic not routed');
+r=call({vendor:'leonov',sourceVendor:'leonov-yantar',category:'weapon',name:'RIF1'});
+if(r.code!==400||r.next)throw Error('rifle leaked into Yantar automatic block');
 r=call({vendor:'leonov',sourceVendor:'leonov-yantar',category:'weapon',name:'S1'});
-if(r.code!==400||r.next)throw Error('wrong weapon class allowed');
+if(r.code!==400||r.next)throw Error('shotgun leaked into Yantar automatic block');
 r=call({vendor:'leonov',sourceVendor:'leonov-yantar',category:'armor',name:'Y22'});
 if(!r.next||r.body.vendor!=='zhuchara')throw Error('Yantar regular suit not routed');
 r=call({vendor:'leonov',sourceVendor:'leonov-yantar',category:'armor',name:'R7'});
@@ -52,4 +59,4 @@ with tempfile.TemporaryDirectory() as td:
     proc=subprocess.run(['node',str(p)],capture_output=True,text=True)
     if proc.returncode: raise AssertionError(proc.stdout+'\n'+proc.stderr)
     assert 'PASS' in proc.stdout
-print('PASS: Yantar Leonov server allows only the next 29 automatic weapons and 29 safe suits')
+print('PASS: Yantar Leonov server builds its 29 automatic weapons correctly before progressionClass annotation')
