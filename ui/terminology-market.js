@@ -38,16 +38,24 @@
 
   function rewriteText(value) {
     let text = String(value ?? '');
-    // Protect already-renamed Stalbyte words so repeated MutationObserver passes are idempotent.
-    const protectedWords = [];
-    text = text.replace(/Сталбайт(?:ы|а|ов)?|сталбайт(?:ы|а|ов)?/g, word => {
-      const token = '@@__STALBYTE_' + protectedWords.length + '__@@';
-      protectedWords.push(word);
+    // Protect final terminology before and during conversion. Some final words
+    // contain a legacy source word (e.g. «Сталбайтов» contains «байт»), so a
+    // simple replacement loop would rewrite its own output on the same pass.
+    const protectedValues = [];
+    const protect = finalValue => {
+      const token = '@@__TERM_' + protectedValues.length + '__@@';
+      protectedValues.push(finalValue);
       return token;
-    });
-    for (const [from, to] of replacements) text = text.split(from).join(to);
-    text = text.replace(/@@__STALBYTE_(\d+)__@@/g, (_, index) => protectedWords[Number(index)] || '');
-    return text;
+    };
+    const finalTerms = [...new Set(replacements.map(([, to]) => to))]
+      .sort((a, b) => b.length - a.length);
+    for (const finalTerm of finalTerms) {
+      if (text.includes(finalTerm)) text = text.split(finalTerm).join(protect(finalTerm));
+    }
+    for (const [from, to] of replacements) {
+      if (text.includes(from)) text = text.split(from).join(protect(to));
+    }
+    return text.replace(/@@__TERM_(\d+)__@@/g, (_, index) => protectedValues[Number(index)] || '');
   }
 
   function rewriteTree(root) {

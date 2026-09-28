@@ -1192,7 +1192,7 @@
       if (target === 2) {
         if (zoneLocation === 1 && !firstLocationToSecondReady()) {
           if (typeof showGameAlert === 'function') {
-            showGameAlert('У меня еще недостаточно хорошое снаряжения чтобы идти на свалку');
+            showGameAlert('У меня ещё недостаточно хорошего снаряжения, чтобы идти на Свалку.');
           }
           return;
         }
