@@ -10,6 +10,10 @@ on:
       - 'tests/cordon_zhuchara.test.cjs'
       - 'tools/install_warehouse_passive_raid_fix.py'
       - 'tests/warehouse_passive_raid.test.py'
+      - 'tools/install_yantar_trade_fixes.py'
+      - 'tests/yantar_trade_server_patch.test.py'
+      - 'tools/install_yantar_trade_fixes.py'
+      - 'tests/yantar_trade_server_patch.test.py'
       - 'tests/rostok_barman_shop_server.test.py'
       - 'tests/rostok_barman_trade_client.test.cjs'
       - 'ui/trade-menu.js'
@@ -87,6 +91,8 @@ jobs:
           node tests/cordon_zhuchara.test.cjs
           python3 -m py_compile tools/install_warehouse_passive_raid_fix.py tests/warehouse_passive_raid.test.py
           python3 tests/warehouse_passive_raid.test.py
+          python3 -m py_compile tools/install_yantar_trade_fixes.py tests/yantar_trade_server_patch.test.py
+          python3 tests/yantar_trade_server_patch.test.py
           node tests/rostok_barman_trade_client.test.cjs
           node tests/smoker_npc.test.cjs
           node tests/yantar_portraits.test.cjs
