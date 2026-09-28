@@ -41,7 +41,7 @@
     5: {path:'/api/zone-map/5', width:941, height:1672},
     6: {path:'/api/zone-map/6', width:864, height:1536}
   });
-  const ZONE_TRAVEL_CACHE = '20260927-yantar1';
+  const ZONE_TRAVEL_CACHE = '20260928-yantar-loading1';
   const ZONE_TRAVEL_ASSETS = Object.freeze({
     // Kordon uses the exact 864x1536 artwork supplied by the owner, served byte-for-byte by the game server.
     1:'/images/zone-travel/kordon-original.jpg',
@@ -53,8 +53,8 @@
     4:'/images/zone-travel/rostok-loading.png',
     // Dark Valley uses the approved people-free loading artwork served byte-for-byte by the game server.
     5:'/images/zone-travel/dark-valley-loading.png',
-    // Until a dedicated Yantar loading painting is approved, the exact authored Yantar map is used without recompression.
-    6:'/api/zone-map/6'
+    // Yantar uses the approved hill-view scientist bunker artwork, served byte-for-byte without recompression.
+    6:'/images/zone-travel/yantar-loading.png'
   });
   const ZONE_TRAVEL_SCENES = Object.freeze({
     // Kordon: quiet Rookie Village at night. No anomaly and no mutants.
