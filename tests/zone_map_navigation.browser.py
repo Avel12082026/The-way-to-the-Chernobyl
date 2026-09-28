@@ -89,7 +89,7 @@ async def main():
 
         # Location 2 remains gated by first ten pistols + first ten armor.
         await page.locator('[data-zone-point="transition-to-2"]').click()
-        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='У меня еще недостаточно хорошое снаряжения чтобы идти на свалку'
+        assert (await page.evaluate('window.__calls.alerts.at(-1)'))=='У меня ещё недостаточно хорошего снаряжения, чтобы идти на Свалку.'
 
         await page.evaluate('player.level=200')
         await page.locator('[data-zone-point="transition-to-2"]').click()
