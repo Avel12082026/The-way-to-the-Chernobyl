@@ -13,5 +13,8 @@ assert(trade.includes("afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe
 assert(trade.includes("sourceVendor = 'leonov-yantar'"),'Yantar purchase provenance missing');
 assert(trade.includes("serverVendor = 'zhuchara'"),'Yantar regular gear must reuse the normal gear purchase route');
 assert(trade.includes("!item?.isResearchSuit"),'research suits must stay on Leonov server validation');
-assert(trade.includes("version: '1.3.9'"),'TradeMenu version mismatch');
-console.log('PASS: Yantar Leonov adds the next 29 weapons and 29 safe suits after Barman');
+assert(trade.includes("version: '1.4.0'"),'TradeMenu version mismatch');
+assert(trade.includes("slot === 'weapon' || slot === 'armor'"),'Leonov must accept weapons and armor');
+assert(trade.includes("vendorId === 'technician' && isVizir(item)")&&trade.includes("tokens:200"),'Vizir must cost 200 stalkcoins in Diesel trade');
+assert(trade.includes("window.BunkerMenu?.openYantarWarehouse"),'Leonov trade warehouse must preserve Yantar return');
+console.log('PASS: Yantar Leonov progression stock, gear buyback, Vizir stalkcoin price and warehouse return are wired');
