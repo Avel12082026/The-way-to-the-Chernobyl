@@ -7,14 +7,14 @@
   box-shadow:none; isolation:isolate;
 }
 #bunkerScene { position:relative; width:100%; height:100%; flex:none; overflow:hidden; --bunker-unit:1px; }
-:is(#mainMenu,#rostokCampScreen) .bunker-artwork { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:fill; pointer-events:none; user-select:none; -webkit-user-drag:none; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-artwork { position:absolute; inset:0; display:block; width:100%; height:100%; object-fit:fill; pointer-events:none; user-select:none; -webkit-user-drag:none; }
 #mainMenu .cordon-lower-hud-artwork{
   position:absolute;z-index:2;inset:auto 0 0;display:block;width:100%;
   height:10.8851674641%;object-fit:fill;object-position:center;
   pointer-events:none;user-select:none;-webkit-user-drag:none;image-rendering:auto;
 }
-:is(#mainMenu,#rostokCampScreen) .bunker-hotspots { position:absolute; inset:0; pointer-events:none; }
-:is(#mainMenu,#rostokCampScreen) button.bunker-hotspot {
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-hotspots { position:absolute; inset:0; pointer-events:none; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-hotspot {
   position:absolute; display:block; pointer-events:auto; padding:0!important; margin:0!important;
   min-width:0!important; min-height:0!important; max-width:none; max-height:none; border:0!important;
   border-image:none!important; border-radius:0; background:transparent!important;
@@ -22,32 +22,32 @@
   text-shadow:none; appearance:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
   cursor:pointer; transition:none; transform:none!important; filter:none!important; opacity:1!important;
 }
-:is(#mainMenu,#rostokCampScreen) button.bunker-hotspot::before,:is(#mainMenu,#rostokCampScreen) button.bunker-hotspot::after,
-:is(#mainMenu,#rostokCampScreen) button.bunker-read-book::before,:is(#mainMenu,#rostokCampScreen) button.bunker-read-book::after { display:none!important; content:none!important; }
-:is(#mainMenu,#rostokCampScreen) button.bunker-hotspot:focus-visible,:is(#mainMenu,#rostokCampScreen) button.bunker-read-book:focus-visible { outline:2px solid #e4c477; outline-offset:-2px; }
-:is(#mainMenu,#rostokCampScreen) button.bunker-hotspot:disabled { cursor:wait; }
-:is(#mainMenu,#rostokCampScreen) .bunker-progress-row { position:absolute; left:2%; top:86.6%; width:96%; height:2.1%; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:calc(10 * var(--bunker-unit)); pointer-events:none; }
-:is(#mainMenu,#rostokCampScreen) .bunker-progress { position:relative; overflow:hidden; border:calc(2 * var(--bunker-unit)) solid #8e7952; border-radius:calc(5 * var(--bunker-unit)); background:#11120f; }
-:is(#mainMenu,#rostokCampScreen) .bunker-progress-fill { position:absolute; inset:0 auto 0 0; height:100%; width:0; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-hotspot::before,:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-hotspot::after,
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-read-book::before,:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-read-book::after { display:none!important; content:none!important; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-hotspot:focus-visible,:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-read-book:focus-visible { outline:2px solid #e4c477; outline-offset:-2px; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-hotspot:disabled { cursor:wait; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress-row { position:absolute; left:2%; top:86.6%; width:96%; height:2.1%; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:calc(10 * var(--bunker-unit)); pointer-events:none; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress { position:relative; overflow:hidden; border:calc(2 * var(--bunker-unit)) solid #8e7952; border-radius:calc(5 * var(--bunker-unit)); background:#11120f; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress-fill { position:absolute; inset:0 auto 0 0; height:100%; width:0; }
 /* Keep real progress fills visible in both shared HUDs. */
-:is(#mainMenu,#rostokCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }
-:is(#mainMenu,#rostokCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }
-:is(#mainMenu,#rostokCampScreen) .bunker-progress-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff4d3; font:600 calc(19 * var(--bunker-unit))/1 Arial,sans-serif; white-space:nowrap; text-shadow:0 1px 2px #000,1px 0 2px #000; }
-:is(#mainMenu,#rostokCampScreen) .bunker-vital { position:absolute; left:8.9%; width:30.1%; height:1.23%; overflow:hidden; border-radius:calc(12 * var(--bunker-unit)); background:#0c1110; border:calc(1 * var(--bunker-unit)) solid #625c44; pointer-events:none; }
-:is(#mainMenu,#rostokCampScreen) .bunker-hunger { top:91.00%; }
-:is(#mainMenu,#rostokCampScreen) .bunker-thirst { top:93.51%; }
-:is(#mainMenu,#rostokCampScreen) .bunker-health { top:96.02%; }
-:is(#mainMenu,#rostokCampScreen) .bunker-vital-fill { position:absolute; inset:0 auto 0 0; width:0; height:100%; border-radius:inherit; }
-:is(#mainMenu,#rostokCampScreen) .bunker-hunger .bunker-vital-fill { background:linear-gradient(90deg,#ad7930,#e2b953); }
-:is(#mainMenu,#rostokCampScreen) .bunker-thirst .bunker-vital-fill { background:linear-gradient(90deg,#167999,#47c3e9); }
-:is(#mainMenu,#rostokCampScreen) .bunker-health .bunker-vital-fill { background:linear-gradient(90deg,#9f3434,#de655b); }
-:is(#mainMenu,#rostokCampScreen) .bunker-vital-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff6e0; font:600 calc(17 * var(--bunker-unit))/1 Arial,sans-serif; text-shadow:0 1px 2px #000,1px 0 2px #000; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress .expBarFill { background:linear-gradient(90deg,#547332,#b2bb74); }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress .radiationBarFill { background:linear-gradient(90deg,#aa8b3b,#a8522d); }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-progress-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff4d3; font:600 calc(19 * var(--bunker-unit))/1 Arial,sans-serif; white-space:nowrap; text-shadow:0 1px 2px #000,1px 0 2px #000; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-vital { position:absolute; left:8.9%; width:30.1%; height:1.23%; overflow:hidden; border-radius:calc(12 * var(--bunker-unit)); background:#0c1110; border:calc(1 * var(--bunker-unit)) solid #625c44; pointer-events:none; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-hunger { top:91.00%; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-thirst { top:93.51%; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-health { top:96.02%; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-vital-fill { position:absolute; inset:0 auto 0 0; width:0; height:100%; border-radius:inherit; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-hunger .bunker-vital-fill { background:linear-gradient(90deg,#ad7930,#e2b953); }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-thirst .bunker-vital-fill { background:linear-gradient(90deg,#167999,#47c3e9); }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-health .bunker-vital-fill { background:linear-gradient(90deg,#9f3434,#de655b); }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-vital-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff6e0; font:600 calc(17 * var(--bunker-unit))/1 Arial,sans-serif; text-shadow:0 1px 2px #000,1px 0 2px #000; }
 /* Opaque interiors cover the painted sample numbers even when the real value is 0. */
-:is(#mainMenu,#rostokCampScreen) .bunker-resources { position:absolute; left:40.9%; top:90.65%; width:27.15%; height:7.15%; padding:calc(4 * var(--bunker-unit)) calc(7 * var(--bunker-unit)); border:0; background:#101310; color:#c9bd99; }
-:is(#mainMenu,#rostokCampScreen) .bunker-resource { display:flex; align-items:center; justify-content:space-between; gap:calc(6 * var(--bunker-unit)); height:calc(26 * var(--bunker-vunit, var(--bunker-unit))); min-width:0; font:calc(17.5 * var(--bunker-unit))/1.05 Arial,sans-serif; white-space:nowrap; }
-:is(#mainMenu,#rostokCampScreen) .bunker-resource > span:first-child { flex:1; min-width:0; }
-:is(#mainMenu,#rostokCampScreen) .bunker-resource > span[id] { flex:none; color:#efcf73; font-weight:700; font-size:calc(21 * var(--bunker-unit)); font-variant-numeric:tabular-nums; }
-:is(#mainMenu,#rostokCampScreen) button.bunker-read-book {
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-resources { position:absolute; left:40.9%; top:90.65%; width:27.15%; height:7.15%; padding:calc(4 * var(--bunker-unit)) calc(7 * var(--bunker-unit)); border:0; background:#101310; color:#c9bd99; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-resource { display:flex; align-items:center; justify-content:space-between; gap:calc(6 * var(--bunker-unit)); height:calc(26 * var(--bunker-vunit, var(--bunker-unit))); min-width:0; font:calc(17.5 * var(--bunker-unit))/1.05 Arial,sans-serif; white-space:nowrap; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-resource > span:first-child { flex:1; min-width:0; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-resource > span[id] { flex:none; color:#efcf73; font-weight:700; font-size:calc(21 * var(--bunker-unit)); font-variant-numeric:tabular-nums; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-read-book {
   position:absolute; left:41.65%; top:95.47%; width:15.4%; height:1.97%; z-index:2; min-height:0!important; min-width:0!important; max-height:none;
   display:flex; align-items:center; justify-content:center; padding:0!important; margin:0!important;
   border:calc(2 * var(--bunker-unit)) solid #998053!important; border-image:none!important; border-radius:0;
@@ -55,10 +55,10 @@
   color:#e1d0a1!important; font:calc(20 * var(--bunker-unit))/1 Arial,sans-serif!important;
   text-transform:none; letter-spacing:0; text-shadow:none; touch-action:manipulation; pointer-events:auto;
 }
-:is(#mainMenu,#rostokCampScreen) button.bunker-read-book:disabled { cursor:wait; opacity:.65; }
-:is(#mainMenu,#rostokCampScreen) .bunker-message { position:absolute; left:12%; bottom:12%; width:76%; z-index:4; padding:10px; border:1px solid #8e7952; background:#111d; color:#f0dbac; font:12px/1.3 Arial,sans-serif; text-align:center; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) button.bunker-read-book:disabled { cursor:wait; opacity:.65; }
+:is(#mainMenu,#rostokCampScreen,#yantarCampScreen) .bunker-message { position:absolute; left:12%; bottom:12%; width:76%; z-index:4; padding:10px; border:1px solid #8e7952; background:#111d; color:#f0dbac; font:12px/1.3 Arial,sans-serif; text-align:center; }
 body.bunker-menu-visible #menuMusicPanel,body.bunker-menu-visible #menuMusicButton,body.bunker-menu-visible .admin-btn { display:none!important; }
-@media(prefers-reduced-motion:reduce){ :is(#mainMenu,#rostokCampScreen) * { transition:none!important; } }
+@media(prefers-reduced-motion:reduce){ :is(#mainMenu,#rostokCampScreen,#yantarCampScreen) * { transition:none!important; } }
 
 /* Leonov first-person counter screen. Only Selection and Trade are primary actions. */
 #leonovHubScreen.leonov-hub-screen{display:none;position:fixed;inset:0;z-index:1600;background:#050605;overflow:hidden;}
@@ -192,6 +192,18 @@ body.rostok-camp-visible .admin-btn{display:none!important;}
 #yantarCampScreen .yantar-leonov-hotspot{left:18%;top:29%;width:31%;height:34%;}
 #yantarCampScreen .yantar-diesel-hotspot{left:51%;top:29%;width:31%;height:34%;}
 #yantarCampScreen .yantar-warehouse-hotspot{right:0;top:27.5%;width:18%;height:37%;}
+#yantarCampScreen .yantar-lower-hud{
+  position:absolute;z-index:3;inset:0;width:100%;height:100%;overflow:hidden;
+  pointer-events:none;
+}
+#yantarCampScreen .yantar-lower-hud-artwork{
+  position:absolute;z-index:0;inset:auto 0 0;display:block;width:100%;
+  height:var(--rostok-hud-height,10.8851674641%);object-fit:fill;object-position:center;
+  pointer-events:none;user-select:none;-webkit-user-drag:none;image-rendering:auto;
+}
+#yantarCampScreen .yantar-progress-row{z-index:5;}
+#yantarCampScreen .yantar-lower-hud .bunker-hotspot,
+#yantarCampScreen .yantar-lower-hud .bunker-read-book{pointer-events:auto;}
 body.yantar-camp-visible{overflow:hidden!important;}
 body.yantar-camp-visible #menuMusicPanel,
 body.yantar-camp-visible #menuMusicButton,
