@@ -106,7 +106,7 @@ assert "У Бармена продаются только дробовики" in
 assert "У Бармена продаются костюмы с 30-го по 58-й" in patched
 assert "YANTAR_LEONOV_WEAPONS_SERVER" in patched
 assert "String(item.progressionClass||'')==='automatic'" in patched
-assert "pistolStart+58,pistolStart+87" in patched
+assert "return list.length>=29?list.slice(0,29):[]" in patched
 assert "YANTAR_LEONOV_ARMOR_SERVER" in patched
 assert ".filter(item=>item&&!item.adminOnly&&!item.isPremiumArmor)" in patched
 assert "list.slice(58,87)" in patched
