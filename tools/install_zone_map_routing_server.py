@@ -98,8 +98,9 @@ function yantarLeonovAutomaticServer(){
     const list=(Array.isArray(SHOP_WEAPONS)?SHOP_WEAPONS:[]).filter(item=>item&&!item.adminOnly);
     const marked=list.filter(item=>String(item.progressionClass||'')==='automatic');
     if(marked.length===29)return marked;
-    const pistolStart=list.findIndex(item=>!!item.starterGear||String(item.name||'')==='Beretta 21A Bobcat'||Number(item.id)===86);
-    return pistolStart>=0?list.slice(pistolStart+58,pistolStart+87):[];
+    // This guard is initialized before buildWeaponProgressionServer() annotates progressionClass.
+    // In the raw SHOP_WEAPONS catalog the first 29 regular entries are the automatic/LMG block.
+    return list.length>=29?list.slice(0,29):[];
 }
 const YANTAR_LEONOV_WEAPONS_SERVER=new Set(yantarLeonovAutomaticServer().map(item=>item.name));
 function yantarLeonovArmorServer(){
