@@ -102,9 +102,18 @@
         ];
       },
       price: item => getBuyPrice(item.price),
-      accepts: name => !!artifact(name) || mutants.some(m => m.loot === name),
-      offer: name => artifact(name)?.isNamedArtifact ? {coins: 0, tokens: 50} :
-        {coins: Math.round(getSellPrice(name) * (artifact(name) ? 1.35 : 1.20)), tokens: 0}
+      accepts: name => {
+        const slot = getEquipSlotType(name);
+        return !!artifact(name) || mutants.some(m => m.loot === name) || slot === 'weapon' || slot === 'armor';
+      },
+      offer: name => {
+        const art = artifact(name);
+        if (art?.isNamedArtifact) return {coins:0, tokens:50};
+        const isLoot = mutants.some(m => m.loot === name);
+        const slot = getEquipSlotType(name);
+        const multiplier = art ? 1.35 : (isLoot ? 1.20 : ((slot === 'weapon' || slot === 'armor') ? 1 : 0));
+        return {coins: multiplier ? Math.round(getSellPrice(name) * multiplier) : 0, tokens:0};
+      }
     },
     technician: {
       title: () => 'ТЕХНИК ДИЗЕЛЬ — ТОРГОВЛЯ',
@@ -151,6 +160,12 @@
   const message = s => { el('tradeStatus').textContent = s; };
   const stock = () => new Map(vendors[vendor].stock().map(item => [item.name, item]));
   const offerText = value => [value.coins ? `${money(value.coins)} сталбайтов` : '', value.tokens ? `${money(value.tokens)} сталкоинов` : ''].filter(Boolean).join(' + ') || '0 сталбайтов';
+  const isVizir = item => !!item && item.category === 'detector' && String(item.name).toUpperCase() === 'ВИЗИРЬ';
+  const buyCost = (vendorId, item) => (vendorId === 'technician' && isVizir(item))
+    ? {coins:0, tokens:200}
+    : {coins:number(vendors[vendorId].price(item)), tokens:0};
+  const buyCostText = cost => offerText(cost);
+  const canAfford = cost => number(player.coins) >= number(cost.coins) && number(player.breedCredits) >= number(cost.tokens);
   const labelName = name => stripInvisibleSuffix(name);
 
   function cell(name, source, detail) {
@@ -185,7 +200,13 @@
       const empty = document.createElement('div'); empty.className = 'slot trade-empty'; empty.setAttribute('aria-hidden', 'true'); grid.append(empty);
     }
   }
-  function limit(side, name) { return side === 'sell' ? count(name) : vendor === 'friendly' ? 1 : 999; }
+  function limit(side, name) {
+    if (side === 'sell') return count(name);
+    if (vendor === 'friendly') return 1;
+    const item = stock().get(name);
+    if (vendor === 'technician' && isVizir(item)) return 1;
+    return 999;
+  }
   function reconcile() {
     const goods = stock();
     for (const [name, qty] of queues.buy) if (!goods.has(name) || qty < 1) queues.buy.delete(name);
@@ -204,11 +225,11 @@
     el('tradeHunger').textContent = 'Сытость ' + Math.round(number(player.hunger));
     el('tradeThirst').textContent = 'Вода ' + Math.round(number(player.thirst));
     el('tradeBalance').textContent = money(player.coins) + ' сталбайтов · ' + money(player.breedCredits) + ' сталкоинов';
-    const nextStock = JSON.stringify([vendor, [...goods].map(([name, item]) => [name, config.price(item)])]);
+    const nextStock = JSON.stringify([vendor, [...goods].map(([name, item]) => [name, buyCost(vendor,item)])]);
     if (nextStock !== stockSignature) {
       stockSignature = nextStock;
       const grid = el('tradeStock'); grid.replaceChildren();
-      for (const [name, item] of goods) grid.append(cell(name, 'stock', money(config.price(item))));
+      for (const [name, item] of goods) grid.append(cell(name, 'stock', buyCostText(buyCost(vendor,item))));
       fillEmpty(grid, VISIBLE_GRID_SLOTS, 7);
     }
     el('tradeStockNote').hidden = goods.size > 0;
@@ -230,13 +251,15 @@
       for (const [name, qty] of queues[side]) grid.append(cell(name, side, '×' + qty));
       fillEmpty(grid, MAX_SLOTS, 3);
     }
-    const buySum = [...queues.buy].reduce((sum, [name, qty]) => sum + config.price(goods.get(name)) * qty, 0);
+    const buySum = [...queues.buy].reduce((sum, [name, qty]) => {
+      const value = buyCost(vendor, goods.get(name)); sum.coins += value.coins * qty; sum.tokens += value.tokens * qty; return sum;
+    }, {coins:0, tokens:0});
     const sellSum = [...queues.sell].reduce((sum, [name, qty]) => {
       const value = config.offer(name); sum.coins += value.coins * qty; sum.tokens += value.tokens * qty; return sum;
     }, {coins: 0, tokens: 0});
-    el('tradeBuyTotal').textContent = 'Итого: ' + money(buySum) + ' сталбайтов';
+    el('tradeBuyTotal').textContent = 'Итого: ' + buyCostText(buySum);
     el('tradeSellTotal').textContent = 'Итого: ' + offerText(sellSum);
-    el('tradeBuy').disabled = busy || needsSync || !queues.buy.size || buySum > number(player.coins);
+    el('tradeBuy').disabled = busy || needsSync || !queues.buy.size || !canAfford(buySum);
     el('tradeSell').disabled = busy || needsSync || !queues.sell.size;
     el('tradeWarehouse').disabled = busy || needsSync || !atBase();
     el('tradeWarehouseNote').hidden = atBase();
@@ -302,7 +325,8 @@
       await waitForSaveQueue();
       for (const [name, qty] of entries) {
         const goods = stock(), item = goods.get(name);
-        if (side === 'buy' && (!item || vendors[vendor].price(item) * qty > number(player.coins))) { message('Недостаточно Байт или товар больше недоступен.'); break; }
+        const cost = side === 'buy' && item ? buyCost(vendor,item) : {coins:0,tokens:0};
+        if (side === 'buy' && (!item || !canAfford({coins:cost.coins * qty,tokens:cost.tokens * qty}))) { message('Недостаточно сталбайтов/сталкоинов или товар больше недоступен.'); break; }
         if (side === 'sell' && (count(name) < qty || !vendors[vendor].accepts(name))) { message('Предмет или нужное количество больше недоступны.'); break; }
         let result;
         try {
@@ -403,7 +427,16 @@
       }
       render(); message('Товары до выбранной нормы добавлены в слоты покупки. Проверь сумму и нажми «Купить».'); return;
     }
-    if (action === 'warehouse') { if (atBase() && !needsSync) { hide(); native.openScreen('warehouse'); } return; }
+    if (action === 'warehouse') {
+      if (atBase() && !needsSync) {
+        const yantarLeonov = vendor === 'leonov' && isYantarLeonovContext();
+        hide();
+        if (yantarLeonov && window.BunkerMenu?.openYantarWarehouse) return void window.BunkerMenu.openYantarWarehouse();
+        if (typeof window.openScreen === 'function') window.openScreen('warehouse');
+        else native.openScreen('warehouse');
+      }
+      return;
+    }
     if (action === 'remove' && editing) { queues[editing.side].delete(editing.name); editing = null; render(); return; }
     if (source === 'buy' || source === 'sell') {
       queues[source].delete(name);
@@ -558,7 +591,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.3.9', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.4.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
