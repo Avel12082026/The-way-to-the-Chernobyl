@@ -77,7 +77,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.21.1' && window.ZoneMap?.version==='0.8.0'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.22.0' && window.ZoneMap?.version==='0.8.0'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
