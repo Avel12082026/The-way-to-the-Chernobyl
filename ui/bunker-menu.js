@@ -435,6 +435,7 @@
   function refresh() {
     if (typeof player !== 'object' || !player) return;
     refreshRostokCamp();
+    refreshYantarCamp();
     for (const [key, label] of [['health', 'Здоровье'], ['hunger', 'Сытость'], ['thirst', 'Жажда']]) {
       const name = key[0].toUpperCase() + key.slice(1);
       const max = Math.max(1, finite(player['max' + name], 100));
@@ -678,10 +679,58 @@
     openZoneMap('camp');
   }
 
+  function refreshYantarCamp() {
+    if (!yantarCampScreen || typeof player !== 'object' || !player) return;
+    for (const [key, label] of [['health', 'Здоровье'], ['hunger', 'Сытость'], ['thirst', 'Жажда']]) {
+      const name = key[0].toUpperCase() + key.slice(1);
+      const max = Math.max(1, finite(player['max' + name], 100));
+      const value = Math.max(0, finite(player[key]));
+      meter('yantar' + name, value, max, label);
+      text('yantar' + name + 'Text', Math.round(value) + ' / ' + Math.round(max));
+    }
+    const need = Math.max(1, finite(expNeededForLevel(player.level), 1));
+    const exp = Math.max(0, Math.floor(finite(player.exp)));
+    const radiation = clamp(finite(player.radiation), 0, 100);
+    meter('yantarExperience', exp, need, 'Опыт');
+    meter('yantarRadiation', radiation, 100, 'Радиация');
+    text('yantarExperienceText', `Опыт: ${exp} / ${need}`);
+    text('yantarRadiationText', `Радиация: ${Math.round(radiation)} / 100`);
+    text('yantarCoins', Math.max(0, finite(player.coins)));
+    text('yantarBreedCredits', Math.max(0, finite(player.breedCredits)));
+    const books = Math.max(0, finite(player.inventory?.['Книга знаний']));
+    text('yantarKnowledgeBooks', books);
+    for (const el of yantarCampScreen.querySelectorAll('.bunker-resource > span[id]')) {
+      const size = Math.max(11, 21 - Math.max(0, el.textContent.length - 6) * 1.5);
+      el.style.fontSize = `calc(${size} * var(--bunker-unit))`;
+    }
+    const bookBtn = document.getElementById('yantarReadBook');
+    if (bookBtn) {
+      bookBtn.disabled = readingBook;
+      bookBtn.title = books ? `Использовать Опыт+ (осталось ${books})` : 'Опыт+ отсутствует';
+    }
+  }
+
+  async function readYantarBook() {
+    if (readingBook || enteringRaid) return;
+    readingBook = true;
+    const btn = document.getElementById('yantarReadBook');
+    if (btn) btn.disabled = true;
+    try {
+      await useKnowledgeBookFromHeader();
+    } finally {
+      readingBook = false;
+      if (btn) btn.disabled = false;
+      refreshYantarCamp();
+    }
+  }
+
   function layoutYantarCamp() {
     if (!yantarCampScreen || !yantarCampScreen.classList.contains('active')) return;
     const campScene = document.getElementById('yantarCampScene');
-    if (campScene) layoutCampScene(campScene);
+    if (campScene) {
+      layoutCampScene(campScene);
+      refreshYantarCamp();
+    }
   }
 
   function ensureYantarCampScreen() {
@@ -697,6 +746,24 @@
         <button class="yantar-hotspot yantar-leonov-hotspot" type="button" data-yantar-action="leonov" aria-label="Эколог Леонов"></button>
         <button class="yantar-hotspot yantar-diesel-hotspot" type="button" data-yantar-action="diesel" aria-label="Техник Дизель"></button>
         <button class="yantar-hotspot yantar-warehouse-hotspot" type="button" data-yantar-action="warehouse" aria-label="Склад"></button>
+        <div id="yantarLowerHud" class="yantar-lower-hud">
+          <img id="yantarLowerHudArtwork" class="yantar-lower-hud-artwork" src="ui/rostok-lower-hud.png?v=09db18421007" width="941" height="182" alt="" aria-hidden="true" draggable="false">
+          <div id="yantarHunger" class="yantar-vital bunker-vital bunker-hunger" role="progressbar" aria-label="Сытость" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="yantarHungerText" class="bunker-vital-text">0 / 100</span></div>
+          <div id="yantarThirst" class="yantar-vital bunker-vital bunker-thirst" role="progressbar" aria-label="Жажда" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="yantarThirstText" class="bunker-vital-text">0 / 100</span></div>
+          <div id="yantarHealth" class="yantar-vital bunker-vital bunker-health" role="progressbar" aria-label="Здоровье" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bunker-vital-fill"></div><span id="yantarHealthText" class="bunker-vital-text">0 / 100</span></div>
+          <section class="yantar-resources bunker-resources" aria-label="Ресурсы персонажа">
+            <div class="bunker-resource"><span>Сталбайты</span><span id="yantarCoins">0</span></div>
+            <div class="bunker-resource"><span>Сталкоины</span><span id="yantarBreedCredits">0</span></div>
+            <div class="bunker-resource"><span>Опыт+</span><span id="yantarKnowledgeBooks">0</span></div>
+          </section>
+          <button id="yantarReadBook" class="bunker-read-book" type="button" data-yantar-action="read" aria-label="Использовать Опыт+">Использовать</button>
+          <button id="yantarInventory" class="bunker-hotspot" style="left:70%;top:90.4%;width:13.9%;height:7.8%" type="button" data-yantar-action="inventory" aria-label="Рюкзак"></button>
+          <button id="yantarPda" class="bunker-hotspot" style="left:84.1%;top:90.4%;width:13.7%;height:7.8%" type="button" data-yantar-action="kpk" aria-label="КПК"></button>
+        </div>
+        <div class="yantar-progress-row bunker-progress-row" aria-label="Опыт и радиация">
+          <div id="yantarExperience" class="bunker-progress" role="progressbar" aria-label="Опыт" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="expBarFill bunker-progress-fill"></div><span id="yantarExperienceText" class="bunker-progress-text">Опыт: 0</span></div>
+          <div id="yantarRadiation" class="bunker-progress" role="progressbar" aria-label="Радиация" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="radiationBarFill bunker-progress-fill"></div><span id="yantarRadiationText" class="bunker-progress-text">Радиация: 0 / 100</span></div>
+        </div>
       </div>`;
     document.body.appendChild(el);
     yantarCampScreen = el;
@@ -704,6 +771,8 @@
       const action = event.target.closest('[data-yantar-action]')?.dataset.yantarAction;
       if (action === 'exit') return closeYantarCamp();
       if (action === 'warehouse') return openYantarDestination('warehouse');
+      if (action === 'inventory' || action === 'kpk') return openYantarDestination(action);
+      if (action === 'read') return readYantarBook();
       if (action === 'leonov') {
         el.classList.remove('active');
         document.body.classList.remove('yantar-camp-visible');
@@ -742,6 +811,10 @@
     document.body.classList.remove('yantar-camp-visible');
     setZoneLocation(6);
     if (typeof openScreen === 'function') openScreen(screen);
+  }
+
+  function openYantarWarehouse() {
+    return openYantarDestination('warehouse');
   }
 
   function closeYantarCamp() {
@@ -1832,7 +1905,7 @@
     secondPistolDecadeReady,
     lastNinePistolsReady
   });
-  window.BunkerMenu = {version: '1.21.1', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, closeYantarCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.22.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, openYantarWarehouse, closeYantarCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
