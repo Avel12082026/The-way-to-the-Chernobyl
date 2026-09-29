@@ -3994,7 +3994,8 @@ button:active {filter:brightness(1.18);}
     }
 
     // Короткое читаемое время сообщения/последнего визита: "14:32" для сегодняшних, "27.08 14:32"
-    // для более старых — не хотим просто печатать сырой timestamp    function formatShortTime(ts) {
+    // для более старых — не хотим просто печатать сырой timestamp
+    function formatShortTime(ts) {
         if (!ts) return '';
         const d = new Date(ts);
         const now = new Date();
