@@ -1,0 +1,452 @@
+--- a/server.js
++++ b/server.js
+@@ -641,6 +641,14 @@
+ const SHOP_ARMOR = [{"name":"Комбинезон Юность","tier":1,"price":130,"unlockLevel":1,"starterGear":true,"armor":5,"hitAbsorption":3,"stats":{"anomaly_Воронка":1,"anomaly_Печка":1,"anomaly_Мясорубка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Куртка кожаная армейская","tier":1,"price":140,"unlockLevel":10,"armor":6,"hitAbsorption":3,"stats":{"anomaly_Жарка":1,"anomaly_Мясорубка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Ватник утеплённый","tier":1,"price":220,"unlockLevel":15,"armor":7,"hitAbsorption":4,"stats":{"anomaly_Кислотный туман":1,"anomaly_Воронка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Плащ-палатка ОЗК","tier":1,"price":430,"unlockLevel":25,"armor":8,"hitAbsorption":4,"stats":{"anomaly_Кислотный туман":1,"anomaly_Печка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Комбинезон Комбат","tier":1,"price":840,"unlockLevel":30,"armor":9,"hitAbsorption":5,"stats":{"anomaly_Электра":1,"anomaly_Жарка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Роба сталкера","tier":1,"price":1500,"unlockLevel":40,"armor":11,"hitAbsorption":6,"stats":{"anomaly_Карусель":1,"anomaly_Печка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет Барьер","tier":2,"price":2550,"unlockLevel":45,"armor":12,"hitAbsorption":6,"stats":{"anomaly_Электра":1,"anomaly_Печка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Разгрузка тактическая с бронепанелями","tier":2,"price":3950,"unlockLevel":55,"armor":13,"hitAbsorption":7,"stats":{"anomaly_Воронка":1,"anomaly_Мясорубка":1},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б23","tier":2,"price":5850,"unlockLevel":60,"armor":15,"hitAbsorption":8,"stats":{"anomaly_Печка":2,"anomaly_Мясорубка":2},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Беркут","tier":2,"price":8250,"unlockLevel":70,"armor":17,"hitAbsorption":9,"stats":{"anomaly_Кислотный туман":2,"anomaly_Карусель":1},"adminOnly":false,"isResearchSuit":false},{"name":"Комбинезон Свобода-Новобранец","tier":2,"price":11500,"unlockLevel":75,"armor":18,"hitAbsorption":10,"stats":{"anomaly_Воронка":2,"anomaly_Мясорубка":2},"adminOnly":false,"isResearchSuit":false},{"name":"Комбинезон Долг","tier":2,"price":15000,"unlockLevel":85,"armor":20,"hitAbsorption":10,"stats":{"anomaly_Печка":2,"anomaly_Электра":1},"adminOnly":false,"isResearchSuit":false},{"name":"Комбинезон Ветер","tier":3,"price":19500,"unlockLevel":90,"armor":22,"hitAbsorption":11,"stats":{"anomaly_Электра":2,"anomaly_Печка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Скат","tier":3,"price":24500,"unlockLevel":100,"armor":23,"hitAbsorption":12,"stats":{"anomaly_Мясорубка":2,"anomaly_Электра":2,"anomaly_Плазменная сфера":2},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм Периметр-5","tier":3,"price":30500,"unlockLevel":105,"armor":25,"hitAbsorption":13,"stats":{"anomaly_Воронка":2,"anomaly_Карусель":2},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б43 Ратник","tier":3,"price":38000,"unlockLevel":115,"armor":27,"hitAbsorption":14,"stats":{"anomaly_Кислотный туман":2,"anomaly_Плазменная сфера":2,"anomaly_Мясорубка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет Долга «Скала»","tier":3,"price":46000,"unlockLevel":120,"armor":29,"hitAbsorption":15,"stats":{"anomaly_Мясорубка":2,"anomaly_Кислотный туман":2,"anomaly_Электра":2},"adminOnly":false,"isResearchSuit":false},{"name":"Комбинезон Заря","tier":3,"price":55000,"unlockLevel":130,"armor":31,"hitAbsorption":16,"stats":{"anomaly_Жарка":3,"anomaly_Кислотный туман":1,"anomaly_Воронка":2},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет Выход","tier":4,"price":65000,"unlockLevel":135,"armor":33,"hitAbsorption":17,"stats":{"anomaly_Плазменная сфера":2,"anomaly_Воронка":3,"anomaly_Печка":2},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б45 Ратник-2","tier":4,"price":76500,"unlockLevel":145,"armor":34,"hitAbsorption":18,"stats":{"anomaly_Карусель":2,"anomaly_Воронка":2,"anomaly_Мясорубка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм Монолит-Патрульный","tier":4,"price":89500,"unlockLevel":150,"armor":36,"hitAbsorption":19,"stats":{"anomaly_Электра":3,"anomaly_Печка":3,"anomaly_Воронка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм СИРИУС","tier":4,"price":105000,"unlockLevel":160,"armor":38,"hitAbsorption":20,"stats":{"anomaly_Кислотный туман":3,"anomaly_Воронка":4,"anomaly_Карусель":3},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Легион-Лайт","tier":4,"price":120000,"unlockLevel":165,"armor":40,"hitAbsorption":21,"stats":{"anomaly_Печка":3,"anomaly_Плазменная сфера":2},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Стража-Финал","tier":5,"price":135000,"unlockLevel":175,"armor":42,"hitAbsorption":22,"stats":{"anomaly_Электра":2,"anomaly_Мясорубка":3,"anomaly_Плазменная сфера":2},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Монолит","tier":5,"price":155000,"unlockLevel":180,"armor":44,"hitAbsorption":23,"stats":{"anomaly_Кислотный туман":5,"anomaly_Электра":2,"anomaly_Воронка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм СКАТ-9М","tier":5,"price":175000,"unlockLevel":190,"armor":47,"hitAbsorption":24,"stats":{"anomaly_Карусель":2,"anomaly_Кислотный туман":4,"anomaly_Воронка":5},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б47 Ратник-3","tier":5,"price":195000,"unlockLevel":195,"armor":49,"hitAbsorption":25,"stats":{"anomaly_Мясорубка":4,"anomaly_Воронка":3,"anomaly_Кислотный туман":5},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Легион","tier":5,"price":220000,"unlockLevel":205,"armor":51,"hitAbsorption":26,"stats":{"anomaly_Карусель":4,"anomaly_Печка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б57 Ратник-Элит","tier":5,"price":245000,"unlockLevel":215,"armor":53,"hitAbsorption":27,"stats":{"anomaly_Жарка":3,"anomaly_Плазменная сфера":2,"anomaly_Кислотный туман":3},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Штурмовик","tier":6,"price":270000,"unlockLevel":220,"armor":55,"hitAbsorption":28,"stats":{"anomaly_Воронка":2,"anomaly_Жарка":3,"anomaly_Мясорубка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм СЕВА","tier":6,"price":300000,"unlockLevel":230,"armor":57,"hitAbsorption":29,"stats":{"anomaly_Кислотный туман":3,"anomaly_Мясорубка":3,"anomaly_Электра":5},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм Долг-Элит","tier":6,"price":330000,"unlockLevel":235,"armor":59,"hitAbsorption":30,"stats":{"anomaly_Воронка":4,"anomaly_Плазменная сфера":5},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б13 Модерн","tier":6,"price":365000,"unlockLevel":245,"armor":62,"hitAbsorption":31,"stats":{"anomaly_Электра":5,"anomaly_Воронка":2,"anomaly_Кислотный туман":4},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Абсолют-2","tier":6,"price":400000,"unlockLevel":250,"armor":64,"hitAbsorption":32,"stats":{"anomaly_Печка":5,"anomaly_Мясорубка":6,"anomaly_Карусель":6},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Стража-Легенда","tier":6,"price":440000,"unlockLevel":260,"armor":66,"hitAbsorption":33,"stats":{"anomaly_Кислотный туман":5,"anomaly_Печка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Гроза","tier":7,"price":480000,"unlockLevel":265,"armor":68,"hitAbsorption":34,"stats":{"anomaly_Плазменная сфера":4,"anomaly_Воронка":6},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б59 Элит","tier":7,"price":520000,"unlockLevel":275,"armor":71,"hitAbsorption":36,"stats":{"anomaly_Кислотный туман":6,"anomaly_Карусель":3,"anomaly_Воронка":3},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б49 Ратник-4","tier":7,"price":565000,"unlockLevel":280,"armor":73,"hitAbsorption":37,"stats":{"anomaly_Кислотный туман":6,"anomaly_Карусель":6,"anomaly_Жарка":6},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Ветер-Штурм","tier":7,"price":610000,"unlockLevel":290,"armor":75,"hitAbsorption":38,"stats":{"anomaly_Карусель":4,"anomaly_Плазменная сфера":5},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм Титан-Про","tier":7,"price":660000,"unlockLevel":295,"armor":77,"hitAbsorption":39,"stats":{"anomaly_Плазменная сфера":4,"anomaly_Жарка":3,"anomaly_Мясорубка":5},"adminOnly":false,"isResearchSuit":false},{"name":"Прототип Брони X-17","tier":8,"price":715000,"unlockLevel":305,"armor":80,"hitAbsorption":40,"stats":{"anomaly_Электра":3,"anomaly_Плазменная сфера":7,"anomaly_Карусель":6},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Монолит-Элит","tier":8,"price":770000,"unlockLevel":310,"armor":82,"hitAbsorption":41,"stats":{"anomaly_Печка":3,"anomaly_Кислотный туман":6},"adminOnly":false,"isResearchSuit":false},{"name":"Бронекостюм Титан","tier":8,"price":825000,"unlockLevel":320,"armor":84,"hitAbsorption":42,"stats":{"anomaly_Карусель":6,"anomaly_Кислотный туман":4,"anomaly_Плазменная сфера":4},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Аванпост","tier":8,"price":885000,"unlockLevel":325,"armor":87,"hitAbsorption":44,"stats":{"anomaly_Плазменная сфера":7,"anomaly_Карусель":4},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Стража","tier":8,"price":950000,"unlockLevel":335,"armor":89,"hitAbsorption":45,"stats":{"anomaly_Жарка":6,"anomaly_Печка":4,"anomaly_Плазменная сфера":8},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Затвор-Броня","tier":8,"price":1000000,"unlockLevel":340,"armor":92,"hitAbsorption":46,"stats":{"anomaly_Воронка":6,"anomaly_Печка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б51 Ратник-5","tier":9,"price":1100000,"unlockLevel":350,"armor":94,"hitAbsorption":47,"stats":{"anomaly_Мясорубка":4,"anomaly_Воронка":6,"anomaly_Плазменная сфера":3},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Раскат","tier":9,"price":1150000,"unlockLevel":355,"armor":96,"hitAbsorption":48,"stats":{"anomaly_Мясорубка":8,"anomaly_Карусель":8},"adminOnly":false,"isResearchSuit":false},{"name":"Защитный костюм Периметр","tier":9,"price":1250000,"unlockLevel":365,"armor":99,"hitAbsorption":50,"stats":{"anomaly_Печка":7,"anomaly_Плазменная сфера":6,"anomaly_Мясорубка":5},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Форпост","tier":9,"price":1300000,"unlockLevel":370,"armor":101,"hitAbsorption":51,"stats":{"anomaly_Мясорубка":7,"anomaly_Жарка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Стража-Элит","tier":9,"price":1400000,"unlockLevel":380,"armor":104,"hitAbsorption":52,"stats":{"anomaly_Кислотный туман":8,"anomaly_Электра":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б61 Легенда","tier":9,"price":1500000,"unlockLevel":385,"armor":106,"hitAbsorption":53,"stats":{"anomaly_Плазменная сфера":5,"anomaly_Печка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б53 Ратник-6","tier":10,"price":1550000,"unlockLevel":395,"armor":109,"hitAbsorption":55,"stats":{"anomaly_Электра":5,"anomaly_Карусель":7},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Стрелка","tier":10,"price":1650000,"unlockLevel":405,"armor":111,"hitAbsorption":56,"stats":{"anomaly_Мясорубка":5,"anomaly_Плазменная сфера":6},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Последний Рубеж","tier":10,"price":1750000,"unlockLevel":410,"armor":114,"hitAbsorption":57,"stats":{"anomaly_Мясорубка":9,"anomaly_Кислотный туман":5,"anomaly_Плазменная сфера":5},"adminOnly":false,"isResearchSuit":false},{"name":"Костюм Абсолют","tier":10,"price":1850000,"unlockLevel":420,"armor":116,"hitAbsorption":58,"stats":{"anomaly_Воронка":4,"anomaly_Кислотный туман":8},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Периметр-Финал","tier":10,"price":1950000,"unlockLevel":425,"armor":119,"hitAbsorption":60,"stats":{"anomaly_Кислотный туман":5,"anomaly_Мясорубка":4},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б55 Ратник-Финал","tier":10,"price":2050000,"unlockLevel":435,"armor":121,"hitAbsorption":61,"stats":{"anomaly_Кислотный туман":6,"anomaly_Печка":6,"anomaly_Жарка":7},"adminOnly":false,"isResearchSuit":false},{"name":"Бронежилет 6Б63 Легенда-Финал","tier":11,"price":2200000,"unlockLevel":440,"armor":124,"hitAbsorption":62,"stats":{"anomaly_Жарка":10,"anomaly_Воронка":6},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Бастион-2","tier":11,"price":2300000,"unlockLevel":450,"armor":126,"hitAbsorption":63,"stats":{"anomaly_Печка":6,"anomaly_Воронка":10,"anomaly_Мясорубка":6},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Монолит-11","tier":11,"price":2400000,"unlockLevel":455,"armor":129,"hitAbsorption":65,"stats":{"anomaly_Электра":8,"anomaly_Жарка":5},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Свобода","tier":11,"price":2550000,"unlockLevel":465,"armor":132,"hitAbsorption":66,"stats":{"anomaly_Мясорубка":9,"anomaly_Электра":9,"anomaly_Карусель":7},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Атлант","tier":11,"price":2650000,"unlockLevel":470,"armor":134,"hitAbsorption":67,"stats":{"anomaly_Карусель":5,"anomaly_Мясорубка":9,"anomaly_Воронка":10},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм СЭВ","tier":12,"price":2800000,"unlockLevel":480,"armor":137,"hitAbsorption":69,"stats":{"anomaly_Электра":7,"anomaly_Мясорубка":9},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Чистое небо","tier":12,"price":2900000,"unlockLevel":485,"armor":140,"hitAbsorption":70,"stats":{"anomaly_Мясорубка":9,"anomaly_Жарка":6,"anomaly_Печка":8},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Титан-Экстрим","tier":12,"price":3050000,"unlockLevel":495,"armor":142,"hitAbsorption":71,"stats":{"anomaly_Карусель":9,"anomaly_Мясорубка":7},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Периметр-1","tier":12,"price":3200000,"unlockLevel":500,"armor":145,"hitAbsorption":72,"stats":{"anomaly_Кислотный туман":6,"anomaly_Жарка":8,"anomaly_Электра":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Периметр-2","tier":12,"price":3350000,"unlockLevel":510,"armor":147,"hitAbsorption":74,"stats":{"anomaly_Кислотный туман":8,"anomaly_Карусель":10},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Титан-Лайт","tier":12,"price":3500000,"unlockLevel":515,"armor":150,"hitAbsorption":75,"stats":{"anomaly_Карусель":8,"anomaly_Жарка":8,"anomaly_Печка":6},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Штурмовой","tier":13,"price":3650000,"unlockLevel":525,"armor":153,"hitAbsorption":76,"stats":{"anomaly_Печка":11,"anomaly_Воронка":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Периметр-Финал","tier":13,"price":3850000,"unlockLevel":530,"armor":155,"hitAbsorption":78,"stats":{"anomaly_Воронка":9,"anomaly_Печка":8,"anomaly_Кислотный туман":6},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Бастион-Финал","tier":13,"price":4000000,"unlockLevel":540,"armor":158,"hitAbsorption":79,"stats":{"anomaly_Электра":5,"anomaly_Воронка":11,"anomaly_Мясорубка":5},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Периметр-3","tier":13,"price":4150000,"unlockLevel":545,"armor":161,"hitAbsorption":80,"stats":{"anomaly_Электра":11,"anomaly_Карусель":6,"anomaly_Печка":12},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Крепость","tier":13,"price":4350000,"unlockLevel":555,"armor":164,"hitAbsorption":82,"stats":{"anomaly_Печка":11,"anomaly_Карусель":6,"anomaly_Мясорубка":8},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Периметр-4","tier":13,"price":4500000,"unlockLevel":560,"armor":166,"hitAbsorption":83,"stats":{"anomaly_Плазменная сфера":8,"anomaly_Печка":8},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Крепость-2","tier":14,"price":4700000,"unlockLevel":570,"armor":169,"hitAbsorption":85,"stats":{"anomaly_Печка":11,"anomaly_Плазменная сфера":8,"anomaly_Электра":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Реликт","tier":14,"price":4900000,"unlockLevel":575,"armor":172,"hitAbsorption":86,"stats":{"anomaly_Воронка":9,"anomaly_Мясорубка":10},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Возмездие","tier":14,"price":5100000,"unlockLevel":585,"armor":174,"hitAbsorption":87,"stats":{"anomaly_Печка":11,"anomaly_Плазменная сфера":10},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Бастион","tier":14,"price":5300000,"unlockLevel":590,"armor":177,"hitAbsorption":89,"stats":{"anomaly_Электра":8,"anomaly_Мясорубка":7,"anomaly_Печка":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет","tier":14,"price":5500000,"unlockLevel":600,"armor":180,"hitAbsorption":90,"stats":{"anomaly_Плазменная сфера":12,"anomaly_Электра":8},"adminOnly":false,"isResearchSuit":false},{"name":"Броня Зоны","tier":14,"price":234000,"isPremiumArmor":true,"armor":180,"hitAbsorption":90,"stats":{"anomaly_Плазменная сфера":9,"anomaly_Мясорубка":10},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Титан-Финал","tier":14,"price":235300,"isPremiumArmor":true,"armor":181,"hitAbsorption":91,"stats":{"anomaly_Печка":13,"anomaly_Карусель":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзоскелет Абсолют-Финал","tier":14,"price":236600,"isPremiumArmor":true,"armor":182,"hitAbsorption":91,"stats":{"anomaly_Печка":12,"anomaly_Жарка":11},"adminOnly":false,"isResearchSuit":false},{"name":"Экзокостюм Апокалипсис","tier":14,"price":237900,"isPremiumArmor":true,"armor":183,"hitAbsorption":92,"stats":{"anomaly_Жарка":7,"anomaly_Воронка":11,"anomaly_Мясорубка":8},"adminOnly":false,"isResearchSuit":false},{"name":"Плащ тёмного сталкера","tier":14,"price":666000,"armor":666,"hitAbsorption":333,"stats":{"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666},"adminOnly":true,"isResearchSuit":false},{"name":"Исследовательский комбинезон A","tier":4,"price":9360,"armor":25,"hitAbsorption":13,"stats":{"radiation":12,"anomaly_Жарка":11,"anomaly_Электра":10,"anomaly_Воронка":14,"anomaly_Кислотный туман":9,"anomaly_Карусель":12,"anomaly_Мясорубка":11,"anomaly_Печка":8,"anomaly_Плазменная сфера":9},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон B","tier":5,"price":20966,"armor":41,"hitAbsorption":21,"stats":{"radiation":15,"anomaly_Жарка":17,"anomaly_Электра":11,"anomaly_Воронка":16,"anomaly_Кислотный туман":10,"anomaly_Карусель":20,"anomaly_Мясорубка":10,"anomaly_Печка":11,"anomaly_Плазменная сфера":17},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон C","tier":6,"price":29390,"armor":47,"hitAbsorption":24,"stats":{"radiation":18,"anomaly_Жарка":17,"anomaly_Электра":21,"anomaly_Воронка":19,"anomaly_Кислотный туман":23,"anomaly_Карусель":12,"anomaly_Мясорубка":23,"anomaly_Печка":13,"anomaly_Плазменная сфера":17},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон D","tier":7,"price":43992,"armor":50,"hitAbsorption":25,"stats":{"radiation":21,"anomaly_Жарка":21,"anomaly_Электра":19,"anomaly_Воронка":17,"anomaly_Кислотный туман":20,"anomaly_Карусель":15,"anomaly_Мясорубка":23,"anomaly_Печка":19,"anomaly_Плазменная сфера":23},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон E","tier":8,"price":62127,"armor":52,"hitAbsorption":26,"stats":{"radiation":24,"anomaly_Жарка":26,"anomaly_Электра":21,"anomaly_Воронка":27,"anomaly_Кислотный туман":30,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":19,"anomaly_Плазменная сфера":17},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон F","tier":9,"price":85948,"armor":54,"hitAbsorption":27,"stats":{"radiation":27,"anomaly_Жарка":21,"anomaly_Электра":21,"anomaly_Воронка":22,"anomaly_Кислотный туман":20,"anomaly_Карусель":24,"anomaly_Мясорубка":26,"anomaly_Печка":35,"anomaly_Плазменная сфера":19},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон G","tier":10,"price":120510,"armor":55,"hitAbsorption":28,"stats":{"radiation":30,"anomaly_Жарка":33,"anomaly_Электра":21,"anomaly_Воронка":23,"anomaly_Кислотный туман":39,"anomaly_Карусель":24,"anomaly_Мясорубка":37,"anomaly_Печка":36,"anomaly_Плазменная сфера":21},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон H","tier":11,"price":169486,"armor":63,"hitAbsorption":32,"stats":{"radiation":33,"anomaly_Жарка":32,"anomaly_Электра":26,"anomaly_Воронка":41,"anomaly_Кислотный туман":40,"anomaly_Карусель":30,"anomaly_Мясорубка":26,"anomaly_Печка":24,"anomaly_Плазменная сфера":44},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон I","tier":12,"price":227425,"armor":72,"hitAbsorption":36,"stats":{"radiation":36,"anomaly_Жарка":38,"anomaly_Электра":35,"anomaly_Воронка":46,"anomaly_Кислотный туман":28,"anomaly_Карусель":25,"anomaly_Мясорубка":28,"anomaly_Печка":39,"anomaly_Плазменная сфера":32},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон J","tier":13,"price":310284,"armor":83,"hitAbsorption":42,"stats":{"radiation":39,"anomaly_Жарка":38,"anomaly_Электра":28,"anomaly_Воронка":45,"anomaly_Кислотный туман":33,"anomaly_Карусель":34,"anomaly_Мясорубка":47,"anomaly_Печка":38,"anomaly_Плазменная сфера":47},"adminOnly":false,"isResearchSuit":true},{"name":"Исследовательский комбинезон K","tier":14,"price":428220,"armor":99,"hitAbsorption":50,"stats":{"radiation":42,"anomaly_Жарка":40,"anomaly_Электра":32,"anomaly_Воронка":48,"anomaly_Кислотный туман":32,"anomaly_Карусель":51,"anomaly_Мясорубка":48,"anomaly_Печка":45,"anomaly_Плазменная сфера":51},"adminOnly":false,"isResearchSuit":true}];
+ const SHOP_DETECTORS = [{"name":"РИПЕР","tier":1,"price":182},{"name":"ПОЛЯРНАЯ ЗВЕЗДА","tier":2,"price":910},{"name":"СВЕРЧОК","tier":3,"price":2730},{"name":"ХАМЕЛЕОН","tier":4,"price":6370},{"name":"БУРАН","tier":5,"price":12740},{"name":"ГРОМ","tier":6,"price":21840},{"name":"ВЕДЬМАК","tier":7,"price":32760},{"name":"СВЕТЛЯК","tier":8,"price":47320},{"name":"ВИЗИРЬ","tier":9,"price":0}];
+ const SHOP_CONSUMABLES = [{"name":"Хлеб","type":"food","restore":25,"price":26},{"name":"Тушенка","type":"food","restore":100,"price":52},{"name":"Вода","type":"water","restore":25,"price":20},{"name":"Энергетик","type":"water","restore":100,"price":52},{"name":"Аптечка гражданская","type":"medkit","restore":50,"price":130},{"name":"Аптечка армейская","type":"medkit","restore":100,"price":195},{"name":"Аптечка научная","type":"medkit","restore":150,"radiationRemove":100,"price":400},{"name":"Антирад","type":"antirad","radiationRemove":100,"foodCost":50,"waterCost":50,"price":200}];
++const MEDKIT_PRICE_V2=Object.freeze({
++    'Аптечка гражданская':750,
++    'Аптечка армейская':2000,
++    'Аптечка научная':6000
++});
++for(const item of SHOP_CONSUMABLES){
++    if(Object.prototype.hasOwnProperty.call(MEDKIT_PRICE_V2,item.name))item.price=MEDKIT_PRICE_V2[item.name];
++}
+ 
+ // Таблица отметок "разовая миграция уже выполнена" — некоторые миграции (например, выдача
+ // предмета каждому игроку) НЕЛЬЗЯ просто повторять на каждом перезапуске сервера, иначе игроки
+@@ -760,16 +768,10 @@
+     return tier;
+ }
+ 
+-// Открыт ли товар этому игроку — та же логика, что unlockByTierAndLevel на клиенте: первые 3
+-// предмета тира открыты сразу по достижении тира, остальные 3 — только с level >= tier*10
++// Обычное оружие и броня больше не блокируются уровнем игрока.
++ // Доступ определяют торговец/достигнутая часть Зоны и наличие денег.
+ function isShopItemUnlocked(item, fullList, playerTier, playerLevel) {
+-    if (item.adminOnly) return false;
+-    if (item.isResearchSuit) return false; // исследовательские комбинезоны — только у Леонова
+-    if (item.tier > playerTier) return false;
+-    const tierItems = fullList.filter(x => x.tier === item.tier);
+-    const indexInTier = tierItems.indexOf(item);
+-    if (indexInTier < 3) return true;
+-    return playerLevel >= item.tier * 10;
++    return !!item && !item.adminOnly && !item.isPremiumArmor && !item.isResearchSuit;
+ }
+ 
+ // Скидка от перка "Интеллект" — та же формула, что getBuyPrice на клиенте
+@@ -1170,28 +1172,46 @@
+     return byId.length===29?byId:list.slice(0,29);
+ }
+ const ZONE_MAP_LOCATION1_ARMOR=new Set(zoneMapZhucharaArmorServer().map(item=>item.name));
+-// WEAPON_UNLOCK_EVERY_3_LEVELS_V1
++// WEAPON_UNLOCK_EVERY_3_LEVELS_V1 (legacy metadata only; purchases are NOT level-gated)
++// WEAPON_TIER_ECONOMY_V2
++const WEAPON_TIER_PRICE_RANGES=Object.freeze({
++    1:[150,5000],2:[7000,18000],3:[22000,45000],
++    4:[55000,100000],5:[120000,200000],6:[230000,350000],
++    7:[400000,600000],8:[700000,950000],9:[1050000,1350000],
++    10:[1500000,2000000],11:[2200000,2900000],12:[3200000,4200000]
++});
++function weaponTierForProgressionIndexServer(index){
++    const i=Math.max(0,Math.min(115,Math.floor(Number(index)||0)));
++    const within=i%29,base=Math.floor(i/29)*3;
++    return base+(within<10?1:within<20?2:3);
++}
++function weaponPriceForProgressionIndexServer(index){
++    const tier=weaponTierForProgressionIndexServer(index);
++    const within=Math.floor(Number(index)||0)%29;
++    const local=within<10?within:within<20?within-10:within-20;
++    const count=within<20?10:9;
++    const [lo,hi]=WEAPON_TIER_PRICE_RANGES[tier];
++    const raw=lo+(hi-lo)*(count<=1?0:local/(count-1));
++    const step=raw<10000?50:raw<100000?500:5000;
++    return index===0?150:Math.max(150,Math.round(raw/step)*step);
++}
+ function buildWeaponProgressionServer(list){
+     const regular=(Array.isArray(list)?list:[]).filter(w=>w&&!w.adminOnly);
+     const classSize=29;
+-    if(regular.length!==classSize*4)
+-        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: ожидалось 116 обычных стволов');
++    if(regular.length!==classSize*4)throw new Error('WEAPON_TIER_ECONOMY_V2: ожидалось 116 обычных стволов');
+     const pistolStart=regular.findIndex(w=>!!(w&&w.starterGear)||String(w&&w.name||'')==='Beretta 21A Bobcat'||Number(w&&w.id)===86);
+-    if(pistolStart!==classSize*2)
+-        throw new Error('WEAPON_UNLOCK_EVERY_3_LEVELS_V1: нарушена структура каталога оружия');
+-    const automatics=regular.slice(0,classSize);
+-    const rifles=regular.slice(classSize,classSize*2);
+-    const pistols=regular.slice(classSize*2,classSize*3);
+-    const shotguns=regular.slice(classSize*3,classSize*4);
+-    // Live SHOP_WEAPONS historically did not carry starterGear on Beretta.
+-    // Restore that canonical marker so the already-installed map gates also
+-    // recognise the pistol block correctly.
++    if(pistolStart!==classSize*2)throw new Error('WEAPON_TIER_ECONOMY_V2: нарушена структура каталога оружия');
++    const automatics=regular.slice(0,classSize),rifles=regular.slice(classSize,classSize*2);
++    const pistols=regular.slice(classSize*2,classSize*3),shotguns=regular.slice(classSize*3,classSize*4);
+     if(pistols[0]&&!pistols[0].starterGear)pistols[0].starterGear=true;
+     const ordered=[...pistols,...shotguns,...automatics,...rifles];
+     ordered.forEach((weapon,index)=>{
++        weapon.legacyTier=Number(weapon.tier)||1;
+         weapon.progressionIndex=index;
+-        weapon.unlockLevel=1+index*3;
++        weapon.unlockLevel=1+index*3; // metadata/sorting only; not a purchase gate
+         weapon.progressionClass=index<29?'pistol':index<58?'shotgun':index<87?'automatic':'rifle';
++        weapon.tier=weaponTierForProgressionIndexServer(index);
++        weapon.price=weaponPriceForProgressionIndexServer(index);
+     });
+     return ordered;
+ }
+@@ -1199,6 +1219,27 @@
+ const WEAPON_PROGRESSION_BY_NAME_SERVER=new Map(WEAPON_PROGRESSION_SERVER.map((w,i)=>[w.name,{weapon:w,index:i}]));
+ const WEAPON_PROGRESSION_NAMES_SERVER=new Set(WEAPON_PROGRESSION_SERVER.map(w=>w.name));
+ 
++// ARMOR_LOCATION_TIERS_V1: 80 обычных комплектов равномерно распределены по T1-T11
++// в порядке их существующей силы. Уровень игрока броню не блокирует.
++const ARMOR_TIER_SIZES_SERVER=Object.freeze([8,8,8,7,7,7,7,7,7,7,7]);
++function armorTierForProgressionIndexServer(index){
++    let cursor=0;
++    for(let tier=1;tier<=ARMOR_TIER_SIZES_SERVER.length;tier++){
++        cursor+=ARMOR_TIER_SIZES_SERVER[tier-1];
++        if(index<cursor)return tier;
++    }
++    return ARMOR_TIER_SIZES_SERVER.length;
++}
++(function applyArmorLocationTiersServer(){
++    const regular=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
++      .filter(a=>a&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
++    regular.forEach((armor,index)=>{
++        armor.legacyTier=Number(armor.tier)||1;
++        armor.progressionIndex=index;
++        armor.tier=armorTierForProgressionIndexServer(index);
++    });
++})();
++
+ function weaponProgressionBaseNameServer(value){
+     const raw=typeof value==='string'?value:String(value&&value.name||'');
+     if(typeof parseGearNameServer==='function'){
+@@ -2145,7 +2186,7 @@
+         radiation:Number(data.radiation)||0,
+         stats:data.stats||{},
+         worldPosition:data.worldPosition||null,
+-        lastSafeCamp:data.lastSafeCamp||null
++        lastSafeCamp:data.lastSafeCamp||null,healingEffect:pveHealingPublic(data)
+     };
+ }
+ 
+@@ -2266,32 +2307,73 @@
+     data.hunger=Number(data.maxHunger)||100;
+     data.thirst=Number(data.maxThirst)||100;
+     data.radiation=0;
++    delete data.healingEffect;
+     const respawn=pveResolveDeathSafeCamp(data);
+     data.worldPosition={...respawn,updatedAt:Date.now()};
+     data.lastSafeCamp={...respawn,updatedAt:Date.now()};
+ }
+ 
+-function pveApplyConsumableServer(data,item) {
+-    if(!item) return;
+-    const maxHealth=Math.max(1,Number(data.maxHealth)||100);
+-    const maxHunger=Math.max(1,Number(data.maxHunger)||100);
+-    const maxThirst=Math.max(1,Number(data.maxThirst)||100);
+-    if(item.type==='food') data.hunger=Math.min(maxHunger,(Number(data.hunger)||0)+(Number(item.restore)||0));
+-    if(item.type==='water') data.thirst=Math.min(maxThirst,(Number(data.thirst)||0)+(Number(item.restore)||0));
+-    if(item.type==='medkit'){
+-        data.health=Math.min(maxHealth,(Number(data.health)||0)+(Number(item.restore)||0));
++const MEDKIT_HEAL_TICKS=5;
++const MEDKIT_HEAL_INTERVAL_MS=2000;
++function pveHealingActive(data){return !!(data&&data.healingEffect&&Number(data.healingEffect.ticksRemaining)>0);}
++function pveHealingPublic(data){
++    if(!pveHealingActive(data))return null;
++    const e=data.healingEffect;
++    return {itemName:String(e.itemName||''),ticksRemaining:Number(e.ticksRemaining)||0,
++        healPerTick:Number(e.healPerTick)||0,totalRestore:Number(e.totalRestore)||0,
++        nextTickAt:Number(e.lastTickAt||0)+MEDKIT_HEAL_INTERVAL_MS};
++}
++function pveHealingTick(data,now=Date.now()){
++    if(!pveHealingActive(data))return{healed:0,active:false};
++    const e=data.healingEffect,maxHealth=Math.max(1,Number(data.maxHealth)||100);
++    const before=Math.max(0,Number(data.health)||0);
++    const planned=Math.max(0,Math.min(Number(e.healPerTick)||0,Number(e.remainingRestore)||0));
++    data.health=Math.min(maxHealth,before+planned);
++    const healed=Math.max(0,Math.round((data.health-before)*10)/10);
++    e.remainingRestore=Math.max(0,(Number(e.remainingRestore)||0)-planned);
++    e.ticksRemaining=Math.max(0,(Number(e.ticksRemaining)||0)-1);
++    e.lastTickAt=Number(now)||Date.now();
++    if(healed>0&&!e.vitalityGranted){
+         const prev=Math.max(0,Number(data.vitality)||0);
+         data.vitality=Math.min(100,prev+0.1);
+         data.maxHealth=(Number(data.maxHealth)||100)+(data.vitality-prev);
+-        data.health=Math.min(Number(data.maxHealth)||100,data.health);
++        e.vitalityGranted=true;
++    }
++    if(e.ticksRemaining<=0||e.remainingRestore<=0)delete data.healingEffect;
++    return{healed,active:pveHealingActive(data),effect:pveHealingPublic(data)};
++}
++function pveSyncHealingByTime(data,now=Date.now()){
++    let healed=0,changed=false;
++    while(pveHealingActive(data)&&now-(Number(data.healingEffect.lastTickAt)||now)>=MEDKIT_HEAL_INTERVAL_MS){
++        const tickAt=(Number(data.healingEffect.lastTickAt)||now)+MEDKIT_HEAL_INTERVAL_MS;
++        const r=pveHealingTick(data,tickAt);healed+=Number(r.healed)||0;changed=true;
++    }
++    return{healed:Math.round(healed*10)/10,changed,effect:pveHealingPublic(data)};
++}
++function pveAdvanceHealingTurn(data){return pveHealingActive(data)?pveHealingTick(data,Date.now()):{healed:0,active:false,effect:null};}
++function pveCanStartMedkit(data,item){
++    if(pveHealingActive(data))return{ok:false,error:'Предыдущая аптечка ещё действует'};
++    const maxHealth=Math.max(1,Number(data.maxHealth)||100),health=Math.max(0,Number(data.health)||0);
++    const rad=Math.max(0,Number(data.radiation)||0),radRemove=Math.max(0,Number(item&&item.radiationRemove)||0);
++    if(health>=maxHealth&&!(radRemove>0&&rad>0))return{ok:false,error:'Лечение сейчас не требуется'};
++    return{ok:true};
++}
++function pveApplyConsumableServer(data,item) {
++    if(!item)return{success:false};
++    const maxHunger=Math.max(1,Number(data.maxHunger)||100),maxThirst=Math.max(1,Number(data.maxThirst)||100);
++    if(item.type==='food')data.hunger=Math.min(maxHunger,(Number(data.hunger)||0)+(Number(item.restore)||0));
++    if(item.type==='water')data.thirst=Math.min(maxThirst,(Number(data.thirst)||0)+(Number(item.restore)||0));
++    if(item.type==='medkit'){
++        const total=Math.max(0,Number(item.restore)||0),per=Math.ceil(total/MEDKIT_HEAL_TICKS);
++        data.healingEffect={itemName:item.name,totalRestore:total,remainingRestore:total,
++            healPerTick:per,ticksRemaining:MEDKIT_HEAL_TICKS,lastTickAt:Date.now(),vitalityGranted:false};
+     }
+     if(item.type==='antirad'){
+         data.hunger=Math.max(0,(Number(data.hunger)||0)-(Number(item.foodCost)||0));
+         data.thirst=Math.max(0,(Number(data.thirst)||0)-(Number(item.waterCost)||0));
+     }
+-    if(Number(item.radiationRemove)>0){
+-        data.radiation=Math.max(0,(Number(data.radiation)||0)-Number(item.radiationRemove));
+-    }
++    if(Number(item.radiationRemove)>0)data.radiation=Math.max(0,(Number(data.radiation)||0)-Number(item.radiationRemove));
++    return{success:true,healingEffect:pveHealingPublic(data)};
+ }
+ 
+ function pveEnemyTurnServer(data,payload,kind) {
+@@ -2378,7 +2460,7 @@
+         vitality:Number(data.vitality)||0,agility:Number(data.agility)||0,strength:Number(data.strength)||0,
+         accuracy:Number(data.accuracy)||0,intellect:Number(data.intellect)||0,
+         stats:data.stats||{},hostileFactions:Array.isArray(data.hostileFactions)?data.hostileFactions:[],
+-        worldPosition:data.worldPosition||null,lastSafeCamp:data.lastSafeCamp||null
++        worldPosition:data.worldPosition||null,lastSafeCamp:data.lastSafeCamp||null,healingEffect:pveHealingPublic(data)
+     };
+ }
+ function raidSession(playerId,token){
+@@ -2391,12 +2473,9 @@
+ function raidCreateNpcPayload(data){
+     const tier=raidNpcTier(data);
+     const faction=RAID_FACTIONS[Math.floor(Math.random()*RAID_FACTIONS.length)];
+-    const safeWeapons=SHOP_WEAPONS.filter(w=>Number(w.tier)<=tier&&!w.adminOnly&&!w.isPremiumWeapon);
+-    const safeArmors=SHOP_ARMOR.filter(a=>Number(a.tier)<=tier&&!a.adminOnly&&!a.isPremiumArmor);
+-    const wt=Math.max(...safeWeapons.map(w=>Number(w.tier)||0));
+-    const at=Math.max(...safeArmors.map(a=>Number(a.tier)||0));
+-    const weaponPool=safeWeapons.filter(w=>Number(w.tier)===wt);
+-    const armorPool=safeArmors.filter(a=>Number(a.tier)===at);
++    const weaponTier=Math.max(1,Math.min(12,tier)),armorTier=Math.max(1,Math.min(11,tier));
++    const weaponPool=SHOP_WEAPONS.filter(w=>Number(w.tier)===weaponTier&&!w.adminOnly&&!w.isPremiumWeapon);
++    const armorPool=SHOP_ARMOR.filter(a=>Number(a.tier)===armorTier&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
+     const weapon=weaponPool[Math.floor(Math.random()*weaponPool.length)];
+     const armor=armorPool[Math.floor(Math.random()*armorPool.length)];
+     return {
+@@ -2422,21 +2501,17 @@
+     return {...pick,hp:balancedHp,kind:'mutant',enemyHp:balancedHp,maxEnemyHp:balancedHp,medkitsUsed:0};
+ }
+ function raidCreateLuckyReward(data){
+-    const encounterTier=raidEncounterTier(data), pool=[];
+-    const medNames=['Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'];
+-    for(const name of medNames) pool.push({weight:25,reward:{name,nonStacking:false,text:`Мне повезло, я нашёл ${name.toLowerCase()}!`}});
+-    const ranges=[{min:1,max:Math.min(4,encounterTier),weight:6},{min:4,max:Math.min(8,encounterTier),weight:3},{min:8,max:Math.min(13,encounterTier),weight:1}];
+-    for(const r of ranges){
+-        // Важно: premium/admin/research из случайного хабара исключены.
+-        const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)>=r.min&&Number(a.tier)<=r.max);
+-        if(arm.length){const p=arm[Math.floor(Math.random()*arm.length)];pool.push({weight:r.weight,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл броню!'}});}
+-        const weap=SHOP_WEAPONS.filter(w=>!w.adminOnly&&!w.isPremiumWeapon&&Number(w.tier)>=r.min&&Number(w.tier)<=r.max);
+-        if(weap.length){const p=weap[Math.floor(Math.random()*weap.length)];pool.push({weight:r.weight,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл оружие!'}});}
+-    }
+-    for(const r of [{min:1,max:4,weight:2},{min:4,max:6,weight:1}]){
+-        const arts=SHOP_ARTIFACTS.filter(a=>!a.adminOnly&&!a.isNamedArtifact&&Number(a.tier)>=r.min&&Number(a.tier)<=r.max);
+-        if(arts.length){const p=arts[Math.floor(Math.random()*arts.length)];pool.push({weight:r.weight,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл артефакт!'}});}
+-    }
++    const locationTier=Math.max(1,Math.min(11,Number(data?.worldPosition?.zoneLocation)||1)),pool=[];
++    for(const name of ['Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'])
++        pool.push({weight:25,reward:{name,nonStacking:false,text:`Мне повезло, я нашёл ${name.toLowerCase()}!`}});
++    const rarePlus=Math.random()<0.10?1:0;
++    const wt=Math.min(12,locationTier+rarePlus),at=Math.min(11,locationTier+rarePlus),rt=Math.min(8,locationTier+rarePlus);
++    const weap=SHOP_WEAPONS.filter(w=>!w.adminOnly&&!w.isPremiumWeapon&&Number(w.tier)===wt);
++    if(weap.length){const p=weap[Math.floor(Math.random()*weap.length)];pool.push({weight:5,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл оружие!'}});}
++    const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===at);
++    if(arm.length){const p=arm[Math.floor(Math.random()*arm.length)];pool.push({weight:5,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл броню!'}});}
++    const arts=SHOP_ARTIFACTS.filter(a=>!a.adminOnly&&!a.isNamedArtifact&&Number(a.tier)===rt);
++    if(arts.length){const p=arts[Math.floor(Math.random()*arts.length)];pool.push({weight:3,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл артефакт!'}});}
+     const total=pool.reduce((a,x)=>a+x.weight,0);let roll=Math.random()*total,chosen=pool[0];
+     for(const x of pool){if(roll<x.weight){chosen=x;break;}roll-=x.weight;}
+     return chosen.reward;
+@@ -2933,19 +3008,22 @@
+                     .filter(c=>c.type==='medkit' && (Number(data.inventory[c.name])||0)>0)
+                     .sort((a,b)=>(Number(b.restore)||0)-(Number(a.restore)||0));
+                 if(!medkits.length) return {success:false,error:'У вас нет аптечек'};
+-                const item=medkits[0];
++                const item=medkits[0],can=pveCanStartMedkit(data,item);
++                if(!can.ok)return{success:false,error:can.error};
+                 data.inventory[item.name]-=1;
+                 if(data.inventory[item.name]<=0) delete data.inventory[item.name];
+                 pveApplyConsumableServer(data,item);
+                 radiationDamage=pveRadiationDamage(data);
+                 p.medkitsUsed+=1;
+-                usedMedkit={name:item.name,restore:Number(item.restore)||0,remaining:PVE_BATTLE_MEDKIT_LIMIT-p.medkitsUsed};
++                usedMedkit={name:item.name,totalRestore:Number(item.restore)||0,
++                    healPerTick:Number(data.healingEffect?.healPerTick)||0,
++                    ticks:Number(data.healingEffect?.ticksRemaining)||0,
++                    remaining:PVE_BATTLE_MEDKIT_LIMIT-p.medkitsUsed};
+             }
+ 
+             let enemyTurn={hit:false,damage:0};
+-            if(p.enemyHp>0){
+-                enemyTurn=pveEnemyTurnServer(data,p,battle.enemy_kind);
+-            }
++            if(p.enemyHp>0)enemyTurn=pveEnemyTurnServer(data,p,battle.enemy_kind);
++            const healingTick=data.health>0?pveAdvanceHealingTurn(data):{healed:0,active:pveHealingActive(data),effect:pveHealingPublic(data)};
+ 
+             if(data.health<=0){
+                 pveApplyDeathNow(data);
+@@ -2954,7 +3032,7 @@
+                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+                 return {
+                     success:true,died:true,playerDamage,crit,usedMedkit,enemyTurn,
+-                    radiationDamage,turnEffects,state:pveSafePublicState(data)
++                    radiationDamage,turnEffects,healingTick,state:pveSafePublicState(data)
+                 };
+             }
+ 
+@@ -2966,7 +3044,7 @@
+             return {
+                 success:true,died:false,victoryReady:p.enemyHp<=0,
+                 enemyHp:p.enemyHp,maxEnemyHp:Number(p.maxEnemyHp)||Number(p.hp)||0,
+-                playerDamage,crit,usedMedkit,enemyTurn,radiationDamage,turnEffects,
++                playerDamage,crit,usedMedkit,enemyTurn,radiationDamage,turnEffects,healingTick,
+                 state:pveSafePublicState(data)
+             };
+         });
+@@ -3484,7 +3562,8 @@
+         radiationResist:Number(data.radiationResist)||0,
+         radiationLeakTotal:Number(data.radiationLeakTotal)||0,
+         anomalyResist:data.anomalyResist||{},
+-        namedArtifactBonus:data.namedArtifactBonus||{}
++        namedArtifactBonus:data.namedArtifactBonus||{},
++        healingEffect:pveHealingPublic(data)
+     };
+ }
+ 
+@@ -3657,22 +3736,27 @@
+                 if(item.type==='medkit'&&p.medkitsUsed>=PVE_BATTLE_MEDKIT_LIMIT)
+                     return{success:false,error:`Лимит аптечек на бой: ${PVE_BATTLE_MEDKIT_LIMIT}`};
+             }
++            if(!battle)pveSyncHealingByTime(data,Date.now());
++            if(item.type==='medkit'){
++                const can=pveCanStartMedkit(data,item);if(!can.ok)return{success:false,error:can.error};
++            }
+             data.inventory[itemName]-=1;if(data.inventory[itemName]<=0)delete data.inventory[itemName];
+             pveApplyConsumableServer(data,item);
+             if(battle&&item.type==='medkit')p.medkitsUsed+=1;
+             const radiationDamage=battle?pveRadiationDamage(data):0;
+             let enemyTurn={hit:false,damage:0};
+             if(battle&&data.health>0&&(Number(p.enemyHp??p.hp)||0)>0)enemyTurn=pveEnemyTurnServer(data,p,battle.enemy_kind);
++            const healingTick=battle&&data.health>0?pveAdvanceHealingTurn(data):{healed:0,active:pveHealingActive(data),effect:pveHealingPublic(data)};
+             if(data.health<=0){
+                 pveApplyDeathNow(data);
+                 db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
+                 db.prepare('DELETE FROM raid_sessions WHERE player_id=?').run(playerId);
+                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+-                return{success:true,died:true,state:pveSafePublicState(data),radiationDamage,enemyTurn};
++                return{success:true,died:true,state:pveSafePublicState(data),radiationDamage,enemyTurn,healingTick};
+             }
+             if(battle)db.prepare('UPDATE pve_battles SET payload=? WHERE player_id=? AND token=?').run(JSON.stringify(p),playerId,token);
+             db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+-            return{success:true,died:false,state:serverEquipmentState(data),radiationDamage,enemyTurn,
++            return{success:true,died:false,state:serverEquipmentState(data),radiationDamage,enemyTurn,healingTick,
+                 medkitsUsed:battle?Number(p.medkitsUsed)||0:0};
+         });
+         return res.json(tx());
+@@ -3753,6 +3837,10 @@
+     }
+     if (!row) return res.json(null);
+     const data = safeParsePlayerData(row.data);
++    if(targetId===actorId&&!db.prepare('SELECT 1 FROM pve_battles WHERE player_id=?').get(actorId)){
++        const healSync=pveSyncHealingByTime(data,Date.now());
++        if(healSync.changed)db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),actorId);
++    }
+     data.username = row.username;
+     data._stateVersion = Number(row.state_version) || 0;
+     const membership = getFactionMember(targetId);
+@@ -5405,27 +5493,24 @@
+ 
+ function zoneMapLuckyReward(zoneTier){
+     const locationTier=Math.max(1,Number(zoneTier)||1);
+-    const supplies=[
+-        ['Хлеб',20],['Вода',20],['Тушенка',18],['Энергетик',18],
+-        ['Аптечка гражданская',10],['Аптечка армейская',6],['Аптечка научная',2],['Антирад',6]
+-    ];
+-    const pickWeighted=list=>{let total=list.reduce((sum,x)=>sum+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list[list.length-1][0];};
+-    // Обычные припасы доминируют на любой локации. Чем глубже игрок в Зоне,
+-    // тем немного выше шанс именно снаряжения, но оно всё равно остаётся редкой находкой.
+-    const gearChance=Math.min(0.15,0.03+(locationTier-1)*0.01); // T1 3%, T6 8%, T11 13%
++    const supplies=[['Хлеб',20],['Вода',20],['Тушенка',18],['Энергетик',18],
++        ['Аптечка гражданская',10],['Аптечка армейская',6],['Аптечка научная',2],['Антирад',6]];
++    const pickWeighted=list=>{let total=list.reduce((sum,x)=>sum+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list.at(-1)[0];};
++    const gearChance=Math.min(0.15,0.03+(locationTier-1)*0.01);
+     let item=null,text='',lootTier=1;
+-    if(Math.random()>=gearChance){
+-        item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';
+-    }else{
+-        lootTier=Math.min(14,locationTier+(Math.random()<0.10?1:0));
+-        const kindRoll=Math.random();
++    if(Math.random()>=gearChance){item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';}
++    else{
++        const plus=Math.random()<0.10?1:0,kindRoll=Math.random();
+         if(kindRoll<0.45){
++            lootTier=Math.min(12,locationTier+plus);
+             const pool=SHOP_WEAPONS.filter(x=>x&&!x.adminOnly&&!x.isPremiumWeapon&&Number(x.tier)===lootTier);
+             if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл оружие ${lootTier}-го тира!`;}
+         }else if(kindRoll<0.80){
++            lootTier=Math.min(11,locationTier+plus);
+             const pool=SHOP_ARMOR.filter(x=>x&&!x.adminOnly&&!x.isPremiumArmor&&!x.isResearchSuit&&Number(x.tier)===lootTier);
+             if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл броню ${lootTier}-го тира!`;}
+         }else{
++            lootTier=Math.min(8,locationTier+plus);
+             const pool=SHOP_ARTIFACTS.filter(x=>x&&!x.adminOnly&&!x.isNamedArtifact&&Number(x.tier)===lootTier);
+             if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл артефакт ${lootTier}-го тира!`;}
+         }
+@@ -5455,12 +5540,9 @@
+     tier=Math.max(1,Math.min(PVE_NPC_MAX_TIER,Number(tier)||1));
+     const factionPool=RAID_FACTIONS.filter(f=>friendly?!raidIsFactionHostile(playerId,data,f):raidIsFactionHostile(playerId,data,f));
+     const faction=factionPool[Math.floor(Math.random()*factionPool.length)]||(friendly?'Сталкеры':'Бандиты');
+-    const safeWeapons=SHOP_WEAPONS.filter(w=>Number(w.tier)<=tier&&!w.adminOnly&&!w.isPremiumWeapon);
+-    const safeArmors=SHOP_ARMOR.filter(a=>Number(a.tier)<=tier&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
+-    const wt=Math.max(0,...safeWeapons.map(w=>Number(w.tier)||0));
+-    const at=Math.max(0,...safeArmors.map(a=>Number(a.tier)||0));
+-    const weaponPool=safeWeapons.filter(w=>Number(w.tier)===wt);
+-    const armorPool=safeArmors.filter(a=>Number(a.tier)===at);
++    const weaponTier=Math.max(1,Math.min(12,tier)),armorTier=Math.max(1,Math.min(11,tier));
++    const weaponPool=SHOP_WEAPONS.filter(w=>Number(w.tier)===weaponTier&&!w.adminOnly&&!w.isPremiumWeapon);
++    const armorPool=SHOP_ARMOR.filter(a=>Number(a.tier)===armorTier&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
+     const weapon=weaponPool[Math.floor(Math.random()*weaponPool.length)]||SHOP_WEAPONS.find(w=>!w.adminOnly);
+     const armor=armorPool[Math.floor(Math.random()*armorPool.length)]||SHOP_ARMOR.find(a=>!a.adminOnly);
+     const hp=Math.max(1,Number(PVE_NPC_TIER_HP[tier])||tier*480);
+@@ -5485,15 +5567,16 @@
+     return {...pick,kind:'mutant',tier,sourceTier:Number(pick.tier)||tier,hp,enemyHp:hp,maxEnemyHp:hp,medkitsUsed:0};
+ }
+ function zoneRouteLuckyReward(tier){
+-    tier=Math.max(1,Number(tier)||1);
+-    const pool=[];
++    tier=Math.max(1,Number(tier)||1);const pool=[];
+     for(const name of ['Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'])
+         pool.push({weight:24,reward:{name,nonStacking:false,text:`Мне повезло, я нашёл ${name.toLowerCase()}!`}});
+-    const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)<=tier);
++    const plus=Math.random()<0.10?1:0;
++    const armTier=Math.min(11,tier+plus),weaponTier=Math.min(12,tier+plus),artifactTier=Math.min(8,tier+plus);
++    const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===armTier);
+     if(arm.length){const x=arm[Math.floor(Math.random()*arm.length)];pool.push({weight:3,reward:{name:x.name,nonStacking:true,text:'Мне повезло, я нашёл броню!'}});}
+-    const weap=SHOP_WEAPONS.filter(w=>!w.adminOnly&&!w.isPremiumWeapon&&Number(w.tier)<=tier);
++    const weap=SHOP_WEAPONS.filter(w=>!w.adminOnly&&!w.isPremiumWeapon&&Number(w.tier)===weaponTier);
+     if(weap.length){const x=weap[Math.floor(Math.random()*weap.length)];pool.push({weight:3,reward:{name:x.name,nonStacking:true,text:'Мне повезло, я нашёл оружие!'}});}
+-    const art=SHOP_ARTIFACTS.filter(a=>!a.adminOnly&&!a.isNamedArtifact&&Number(a.tier)<=tier);
++    const art=SHOP_ARTIFACTS.filter(a=>!a.adminOnly&&!a.isNamedArtifact&&Number(a.tier)===artifactTier);
+     if(art.length){const x=art[Math.floor(Math.random()*art.length)];pool.push({weight:2,reward:{name:x.name,nonStacking:true,text:'Мне повезло, я нашёл артефакт!'}});}
+     const total=pool.reduce((sum,x)=>sum+x.weight,0);let roll=Math.random()*total,chosen=pool[0];
+     for(const x of pool){if(roll<x.weight){chosen=x;break;}roll-=x.weight;}
