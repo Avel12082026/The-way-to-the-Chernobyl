@@ -428,6 +428,11 @@
     try{
       setZoneTravelRoute(null);
       setZoneRaidKind('');
+      if(typeof player==='object'&&player){
+        const unlocked=new Set(Array.isArray(player.zoneUnlockedLocations)?player.zoneUnlockedLocations.map(Number):[]);
+        unlocked.add(target);
+        player.zoneUnlockedLocations=[...unlocked].filter(Number.isFinite).sort((a,b)=>a-b);
+      }
       if(typeof raidActive!=='undefined')raidActive=false;
       if(typeof raidSessionToken!=='undefined')raidSessionToken=null;
       if(typeof currentEnemy!=='undefined')currentEnemy=null;
