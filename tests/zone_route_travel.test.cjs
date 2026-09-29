@@ -19,6 +19,6 @@ const liveTransition=js.slice(
   js.indexOf("if (!zoneRouteKinds.has(kind))")
 );
 assert(liveTransition.includes('await beginZoneTravelRoute(point)'),'production transition does not start route');
-assert(html.includes('ui/bunker-menu.js?v=20260929-leonov-return1'),'route cache key missing');
+assert(html.includes('ui/bunker-menu.js?v=20260929-zone-economy3'),'route cache key missing');
 
 console.log('PASS: persistent 10-battle travel route client wiring');
