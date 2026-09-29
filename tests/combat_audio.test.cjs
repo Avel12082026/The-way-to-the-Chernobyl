@@ -11,7 +11,7 @@ function harness(options={}){
   createGain(){const gain={gain:{value:1},connections:[],connect(target){this.connections.push(target);},disconnect(){this.disconnected=true;}};gains.push(gain);return gain;}
   createDynamicsCompressor(){const node={threshold:{value:0},knee:{value:0},ratio:{value:1},attack:{value:0},release:{value:0},connections:[],connect(target){this.connections.push(target);}};compressors.push(node);return node;}
   createBufferSource(){const sound={playbackRate:{value:1},connections:[],connect(target){this.connections.push(target);},disconnect(){this.disconnected=true;},start(){this.startedAt=now;this.started=true;this.timer=window.setTimeout(()=>this.onended?.(),this.buffer.duration/this.playbackRate.value*1000);},stop(){this.stopped=true;window.clearTimeout(this.timer);this.onended?.();}};sources.push(sound);return sound;}
-  decodeAudioData(bytes,resolve){const buffer={bytes,duration:options.duration??.8};resolve(buffer);return Promise.resolve(buffer);}
+  decodeAudioData(bytes,resolve){const url=bytes.url||'',buffer={bytes,url,duration:url.includes('/reactions/')?(options.reactionDuration??.8):(options.duration??.8)};resolve(buffer);return Promise.resolve(buffer);}
   resume(){this.resumeCalls++;if(this.state==='closed')return Promise.reject(new Error('Context closed'));this.state='running';return Promise.resolve();}
  }
  const scene={show(next){originalCalls.push(['show',next]);return options.showResult??true;},react(...args){originalCalls.push(['react',...args,now]);return 'visual';},pulse(token,side){pulses.push({token,side,at:now});return true;},hide(){originalCalls.push(['hide']);}};
@@ -20,15 +20,16 @@ function harness(options={}){
  weapons[85]={name:'nonfirearm',profile:null};
  const window={document,location:{href:options.locationHref??document.baseURI},performance:{now:()=>now},URL,console,
   COMBAT_SOUND_BANK:{version:'test-v1',base:'audio/gunshots/',profiles:{pistol:{files:['pistol.mp3'],gain:1},rifle:{files:['rifle.mp3'],gain:.8}},weapons},
+  COMBAT_REACTION_BANK:options.reactions?{version:'hurt-v1',base:'audio/reactions/',reactions:{player:{files:['player-hurt-1.mp3','player-hurt-2.mp3'],gain:.85},enemy:{files:Array.from({length:8},(_,i)=>'enemy-hurt-'+(i+1)+'.mp3'),gain:.85}}}:undefined,
   CombatScene:scene,AudioContext:options.unsupported?undefined:FakeAudioContext,
   Audio(){throw Error('The soundtrack must not be accessed');},
   localStorage:{getItem(key){return key==='zone.combatSound'?(options.settings?JSON.stringify(options.settings):null):'{"enabled":true,"volume":0.25}';},setItem(key,value){storageWrites.push([key,value]);}},
-  fetch(url){fetches.push(url);return options.fetch?options.fetch(url):Promise.resolve({ok:true,arrayBuffer:()=>Promise.resolve(new ArrayBuffer(8))});},
+  fetch(url){fetches.push(url);return options.fetch?options.fetch(url):Promise.resolve({ok:true,arrayBuffer:()=>Promise.resolve(Object.assign(new ArrayBuffer(8),{url}))});},
   setTimeout(fn,delay){const id=nextTimer++;timers.set(id,{fn,at:now+delay});return id;},clearTimeout(id){timers.delete(id);},
   addEventListener(type,fn){add(windowListeners,type,fn);},dispatchEvent(event){for(const fn of windowListeners.get(event.type)||[])fn(event);},
   CustomEvent:class{constructor(type,details){this.type=type;this.detail=details.detail;}}
  };
- vm.runInNewContext(source,{window,URL,console});
+ vm.runInNewContext(source,{window,URL,console,Math:Object.assign(Object.create(Math),{random:options.random||Math.random})});
  const tick=ms=>{const target=now+ms;for(;;){let entry;for(const candidate of timers)if(candidate[1].at<=target&&(!entry||candidate[1].at<entry[1].at))entry=candidate;if(!entry)break;now=entry[1].at;timers.delete(entry[0]);entry[1].fn();}now=target;};
  const advance=async ms=>{await settle();const target=now+ms;for(;;){const times=Array.from(timers.values()).map(timer=>timer.at).filter(at=>at<=target);if(!times.length)break;tick(Math.min(...times)-now);await settle();}tick(target-now);await settle();};
  const dispatch=type=>{for(const fn of listeners.get(type)||[])fn({type});};
@@ -36,9 +37,90 @@ function harness(options={}){
  return {window,document,api:window.CombatAudio,scene,show,tick,advance,dispatch,contexts,sources,gains,compressors,fetches,originalCalls,pulses,storageWrites,timers,now:()=>now};
 }
 async function settle(){for(let i=0;i<16;i++)await Promise.resolve();}
-async function ready(h,scene={}){h.show(scene);await Promise.all([h.api.preload(scene.weaponId||1),h.api.preload(scene.enemyGear?.weaponId||2)]);await h.api.unlock();}
+async function ready(h,scene={}){h.show(scene);await Promise.all([h.api.preload(scene.weaponId||1),h.api.preload(scene.enemyGear?.weaponId||2),h.api.preloadReactions()]);await h.api.unlock();}
 const applied=h=>h.originalCalls.filter(call=>call[0]==='react');
 const won={success:true,playerDamage:0,victoryReady:true,enemyTurn:{hit:false,damage:0}};
+
+const hurts=(h,role)=>h.sources.filter(sound=>sound.buffer.url.includes('/reactions/'+(role?role+'-hurt-':'')));
+test('all ten reaction variants preload and each role avoids repeating its previous audible file',async()=>{
+ const h=harness({reactions:true,random:()=>0});await ready(h,{weaponId:85,enemyGear:{weaponId:0}});
+ const urls=h.fetches.filter(url=>url.includes('/reactions/'));
+ assert.equal(new Set(urls).size,10);assert.equal(urls.filter(url=>url.includes('/player-')).length,2);assert.equal(urls.filter(url=>url.includes('/enemy-')).length,8);
+ const enemyFiles=[],playerFiles=[];
+ for(let i=0;i<5;i++){
+  const presentation=h.scene.react('fight',{success:true,playerDamage:5,enemyTurn:{hit:true,damage:2}},'attack');
+  await h.advance(1120);assert.equal((await presentation).cancelled,false);
+  enemyFiles.push(hurts(h,'enemy').at(-1).buffer.url);playerFiles.push(hurts(h,'player').at(-1).buffer.url);
+ }
+ for(let i=1;i<5;i++){assert.notEqual(enemyFiles[i],enemyFiles[i-1]);assert.notEqual(playerFiles[i],playerFiles[i-1]);}
+ assert.equal(h.api.getState().hurtPlayed,10);assert.equal(h.api.getState().played,0);assert.equal(h.pulses.length,0);
+ assert.match(h.api.getState().lastReactionFiles.player,/^player-hurt-[12]\.mp3$/);
+ for(let i=0;i<8;i++){
+  const choice=harness({reactions:true,random:()=>i/8});await ready(choice,{weaponId:85,enemyGear:{weaponId:0}});
+  const presentation=choice.scene.react('fight',{success:true,playerDamage:1,victoryReady:true},'attack');await choice.advance(880);await presentation;
+  assert.match(hurts(choice,'enemy')[0].buffer.url,new RegExp('/enemy-hurt-'+(i+1)+'\\.mp3\\?'));
+ }
+});
+test('six-shot exchanges produce exactly one distinct wound per damaged actor and await both reaction tails',async()=>{
+ const h=harness({reactions:true});await ready(h,{weaponId:3,enemyGear:{weaponId:3}});
+ const result={success:true,playerDamage:9,died:true,enemyTurn:{hit:true,damage:999}};
+ const presentation=h.scene.react('fight',result,'attack');assert.equal(presentation,h.scene.react('fight',result,'attack'));
+ await h.advance(2119);assert.equal(applied(h).length,0);
+ assert.equal(h.sources.length,14);assert.equal(h.pulses.length,12);assert.equal(hurts(h,'enemy').length,1);assert.equal(hurts(h,'player').length,1);
+ assert.equal(hurts(h,'enemy')[0].startedAt,580);assert.equal(hurts(h,'player')[0].startedAt,1320);
+ assert.notEqual(hurts(h,'enemy')[0].buffer.url,hurts(h,'player')[0].buffer.url);assert(!h.sources.some(sound=>sound.stopped));
+ assert.equal(h.api.getState().played,12);assert.equal(h.api.getState().hurtPlayed,2);
+ await h.advance(1);assert.equal((await presentation).cancelled,false);assert.equal(applied(h)[0][5],2120);
+});
+test('a fatal NPC hit reacts once and its wound tail finishes before victory presentation',async()=>{
+ const h=harness({reactions:true,duration:.05});await ready(h);
+ const presentation=h.scene.react('fight',{success:true,playerDamage:5,victoryReady:true,enemyTurn:{hit:false,damage:0}},'attack');
+ await h.advance(1239);assert.equal(applied(h).length,0);assert.equal(h.sources.length,4);assert.equal(h.pulses.length,3);
+ assert.equal(hurts(h,'enemy')[0].startedAt,440);assert.equal(hurts(h,'player').length,0);
+ await h.advance(1);await presentation;assert.equal(applied(h)[0][5],1240);
+});
+test('strict damage and NPC identity gates exclude misses, radiation, unknown enemies and mutant human voices',async()=>{
+ const h=harness({reactions:true});await ready(h,{weaponId:85,enemyGear:{weaponId:0}});
+ for(const playerDamage of [0,-1,NaN,Infinity,undefined])await h.scene.react('fight',{success:true,playerDamage},'attack');
+ for(const enemyTurn of [{hit:false,damage:10},{damage:10},{hit:true,damage:0},{hit:true,damage:-2},{hit:true,damage:Infinity}])await h.scene.react('fight',{success:true,enemyTurn},'wait');
+ await h.scene.react('fight',{success:true,died:true,radiationDamage:20},'attack');
+ await h.scene.react('fight',{success:true,playerDamage:8},'consumable');
+ for(const enemy of [{battleToken:'fight',kind:'mutant'},{battleToken:'fight',kind:'npc',mutant:true},{battleToken:'fight',kind:'npc',isMutant:true},{battleToken:'fight',faction:'stalker'}]){
+  h.show({enemy,weaponId:85,enemyGear:{weaponId:0}});await h.scene.react('fight',{success:true,playerDamage:5,victoryReady:true},'attack');
+ }
+ assert.equal(h.sources.length,0);assert.equal(h.api.getState().hurtPlayed,0);assert.equal(h.pulses.length,0);
+});
+test('mutant and unarmed attacks hurt the player at the conceptual attack time, including nonattack actions',async()=>{
+ for(const action of ['wait','medkit','escape','consumable']){
+  const h=harness({reactions:true});await ready(h,{enemy:{battleToken:'fight',kind:'mutant'}});
+  const presentation=h.scene.react('fight',{success:true,enemyTurn:{hit:true,damage:4}},action);await h.advance(880);await presentation;
+  assert.equal(hurts(h,'player').length,1);assert.equal(hurts(h,'player')[0].startedAt,80);assert.equal(h.pulses.length,0);
+ }
+ const h=harness({reactions:true});await ready(h,{enemy:{battleToken:'fight',kind:'mutant'}});
+ const presentation=h.scene.react('fight',{success:true,playerDamage:5,enemyTurn:{hit:true,damage:4}},'attack');await h.advance(1480);await presentation;
+ assert.equal(hurts(h,'player')[0].startedAt,680);assert.equal(hurts(h,'enemy').length,0);assert.equal(h.pulses.length,3);
+ const unarmed=harness({reactions:true});await ready(unarmed,{enemyGear:{weaponId:0}});
+ const reply=unarmed.scene.react('fight',{success:true,enemyTurn:{hit:true,damage:4}},'wait');await unarmed.advance(880);await reply;assert.equal(hurts(unarmed,'player')[0].startedAt,80);
+});
+test('reaction cancellation and mute cannot add late voices or extra muzzle flashes',async()=>{
+ for(const cancelAt of [40,100]){
+  const h=harness({reactions:true});await ready(h,{enemy:{battleToken:'fight',kind:'mutant'}});
+  const presentation=h.scene.react('fight',{success:true,enemyTurn:{hit:true,damage:1}},'wait');await h.advance(cancelAt);h.scene.hide();assert.equal((await presentation).cancelled,true);
+  await h.advance(2000);assert.equal(hurts(h).length,cancelAt<80?0:1);assert.equal(applied(h).length,0);assert.equal(h.pulses.length,0);assert.equal(h.api.getState().activeVoices,0);
+ }
+ const muted=harness({reactions:true,settings:{enabled:false,volume:.65}});await ready(muted);
+ const presentation=muted.scene.react('fight',{success:true,playerDamage:5,victoryReady:true},'attack');await muted.advance(490);await presentation;
+ assert.equal(muted.sources.length,0);assert.equal(muted.pulses.length,3);assert.equal(muted.api.getState().hurtPlayed,0);
+});
+test('missing or slow optional reaction assets never hold up valid gunfire or replay a wound later',async()=>{
+ const delays=[];
+ const h=harness({reactions:true,fetch:url=>url.includes('/reactions/')?new Promise(resolve=>delays.push([url,resolve])):Promise.resolve({ok:true,arrayBuffer:()=>Promise.resolve(Object.assign(new ArrayBuffer(8),{url}))})});
+ h.show();await h.api.preload(1);await h.api.unlock();const presentation=h.scene.react('fight',{success:true,playerDamage:4,victoryReady:true},'attack');
+ await h.advance(1160);assert.equal((await presentation).cancelled,false);assert.equal(h.sources.length,3);assert.equal(hurts(h).length,0);
+ for(const [url,resolve] of delays)resolve({ok:true,arrayBuffer:()=>Promise.resolve(Object.assign(new ArrayBuffer(8),{url}))});await h.advance(2000);assert.equal(h.sources.length,3);
+ const missing=harness({reactions:true,fetch:url=>Promise.resolve(url.includes('/reactions/')?{ok:false,status:404}:{ok:true,arrayBuffer:()=>Promise.resolve(Object.assign(new ArrayBuffer(8),{url}))})});
+ await ready(missing);const accepted=missing.scene.react('fight',{success:true,playerDamage:4,victoryReady:true},'attack');await missing.advance(1160);assert.equal((await accepted).cancelled,false);assert.equal(missing.sources.length,3);
+});
 
 test('weapon series have exact pulse/start timing and apply damage after the final decoded tail',async()=>{
  for(const [weaponId,shots,intervalMs] of [[1,3,180],[2,3,100],[3,6,100],[4,2,350],[5,2,260],[6,3,260]]){

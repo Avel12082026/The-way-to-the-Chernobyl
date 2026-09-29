@@ -34,9 +34,29 @@ the existing server endpoint and applies its damage once. It does not multiply
 damage, consume extra turns or change server combat rules. Accepted results still
 apply if presentation is cancelled or fails, provided the same battle is active.
 
+## Wound reactions
+
+`audio/combat-reactions.js` adds two player hurt variants and eight hostile NPC
+variants: ten distinct recorded takes, 98,625 bytes in total. The player retains
+one voice with two variations; NPC recordings come from three other voice groups.
+The next clip is chosen randomly from the role's ready variants, excluding its
+previous clip. An unavailable alternate never delays the combat turn. Credits, original source hashes
+and processing details are in `audio/REACTION_SOURCES.md` and
+`audio/reaction-sources.json`.
+
+An NPC reacts once when an attack reports finite positive playerDamage and the
+server's enemy kind is `npc`. The player reacts once when enemyTurn.hit is true
+and its finite damage is positive, including attacks by mutants. Misses, fully
+absorbed hits and radiation alone do not trigger wound sounds. Human NPC vocals
+are not applied to mutant or unidentified targets.
+
+The reaction begins 80 ms after the relevant burst's final shot. Non-shooting
+enemy attacks still trigger the player's reaction. Reactions share the turn's
+cancellation and audio-tail wait, without adding flashes, damage or requests.
+
 Effects use a separate WebAudio bus and limiter. The existing soundtrack keeps
 playing through its own HTMLAudio element. The ♫ panel has independent music and
-gunshot controls; effects default to enabled at 65%, stored as `zone.combatSound`.
+«Звуки боя» controls; effects default to enabled at 65%, stored as `zone.combatSound`.
 The sound bank is served from the frontend origin, independently of SERVER_URL.
 
 ## Verification
@@ -47,7 +67,7 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
 - Client turn tests cover one server request, deferred lethal HP and rewards,
   duplicate taps, consumable locking, stale battles and presentation failures.
 - Existing combat effects, fighter scene, and legacy race tests passed.
-- Real Chromium 1243 smoke test passed: all 34 MP3s decode with nonzero samples;
+- Real Chromium 1243 smoke test passed: all 44 MP3s decode with distinct, nonzero samples;
   trusted input unlocks WebAudio; three shots overlap while music time advances;
   independent mutes, NPC timing/cancellation, duplicate suppression, reduced
   motion, saved settings and 320×480 settings layout work without browser errors.
@@ -55,6 +75,10 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
   paired sound/pulse starts, actual audio completion before the result boundary,
   3+2 and 6+6 player/NPC sequences with complete tails, and six visual pulses
   when effects are muted. The longest measured single-weapon case was 2.30 s.
+- Wound playback is identified by the actual decoded PCM: both player takes and
+  varying NPC takes use the correct role, never repeat consecutively, and play
+  once per damaging turn. Damage gates, the 80 ms reaction offset, full hurt
+  tails before final HP/death, mute and cancellation passed in Chromium.
 - Browser soundtrack transport uses a documented local PCM fixture; that test
   does not claim to validate the six externally hosted ambient recordings.
 

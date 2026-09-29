@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-29T11:57:30.049575+00:00",
+  "source": {
+    "title": "Male Grunt/Yelling sounds",
+    "creator": "HaelDB",
+    "source_page": "https://opengameart.org/content/male-gruntyelling-sounds",
+    "download_url": "https://opengameart.org/sites/default/files/yelling%20sounds.zip",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "license_note": "The creator page offers CC0 and OGA-BY 3.0; this bank uses the CC0 option.",
+    "license_checked_on": "2026-09-29",
+    "archive_sha256": "e9100a4e3b9dcd146993089970dc6097dcf9935fa4683b196040012bad65d67a",
+    "archive_bytes": 9715828,
+    "downloaded_utc": "2026-09-29T11:52:55.380211+00:00"
+  },
+  "selection_note": "Two distinct short grunt recordings for the player, and eight different short reactions from the other three file-prefix groups for human NPCs. No pitch-shifted duplicates. Voice grouping follows source filenames and the author's four-vocalist description.",
+  "qa_limitations": "Decoded signal and waveforms checked. Auditory playback was unavailable in the build environment; nonverbal classification follows the creator's grunt/yelling pack description and selected short durations. No generated speech, words or extra sounds were added.",
+  "build": {
+    "script": "tools/build_combat_reactions.py",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers"
+  },
+  "clips": [
+    {
+      "key": "player-hurt-1",
+      "path": "audio/reactions/player-hurt-1.mp3",
+      "sha256": "5cb4968407c59c4204b84872eec50741a1f99cf570ae0a086796fa5cea9f78e1",
+      "bytes": 7940,
+      "role": "player",
+      "source_vocalist_group": "vocalist-3",
+      "original_archive_member": "yelling sounds/3grunt1.wav",
+      "original_sha256": "57b3a59c39ffe74a1706bcb85c451443c3b388d1f6423827b2af4af508c8416b",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.5093424036281179,
+      "cut_end_seconds": 0.9431519274376418,
+      "duration_seconds": 0.4338095238095238,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": -1.2742722901748493e-05,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 0.5696014496399481,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.920989399249789,
+        "attack_seconds": 0.012018140589569161,
+        "final_sample": 5.8232103583577555e-08
+      }
+    },
+    {
+      "key": "player-hurt-2",
+      "path": "audio/reactions/player-hurt-2.mp3",
+      "sha256": "05170cb43aeda843372fdf8757b866aeb594a5fb4616f33d77b807bd1920d1f4",
+      "bytes": 12119,
+      "role": "player",
+      "source_vocalist_group": "vocalist-3",
+      "original_archive_member": "yelling sounds/3grunt2.wav",
+      "original_sha256": "a377c43f2151000713a45c18223c94e1de2e2393ad10569a391c1b9f96898544",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.28113378684807255,
+      "cut_end_seconds": 0.9736507936507937,
+      "duration_seconds": 0.6925170068027211,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": -3.028425453521777e-06,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 3.1220402749667593,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.983219326404903,
+        "attack_seconds": 0.01199546485260771,
+        "final_sample": 6.37483765331126e-07
+      }
+    },
+    {
+      "key": "enemy-hurt-1",
+      "path": "audio/reactions/enemy-hurt-1.mp3",
+      "sha256": "202deeabb3421d10b51bc5de62c7400bc1acd6432c5e2950aed9445f470509b7",
+      "bytes": 9194,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-1",
+      "original_archive_member": "yelling sounds/1yell1.wav",
+      "original_sha256": "d9fd329f37c07327bf6a3249ff9b30dad9ecec8762981c6d8eda225f892d028e",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.27900226757369617,
+      "cut_end_seconds": 0.7847619047619048,
+      "duration_seconds": 0.5057596371882086,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": -2.5008996090036817e-05,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 0.9384732241552197,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -6.002975999954774,
+        "attack_seconds": 0.01199546485260771,
+        "final_sample": 1.3592800769401947e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-2",
+      "path": "audio/reactions/enemy-hurt-2.mp3",
+      "sha256": "15e7a3dfe02124cf4ce127919eabe13ba69c46ee6e3de3a129d1dfd01388097a",
+      "bytes": 7104,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-1",
+      "original_archive_member": "yelling sounds/1yell9.wav",
+      "original_sha256": "da11a59a017ad4ed3f371ca0829c1f5f3d6a59106eee1ae914d39e04ffe08d6e",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.23294784580498867,
+      "cut_end_seconds": 0.6152380952380953,
+      "duration_seconds": 0.3822902494331066,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": -0.0001082861126633361,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 1.8854589346821387,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.977286961663283,
+        "attack_seconds": 0.01235827664399093,
+        "final_sample": -3.6378173717821483e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-3",
+      "path": "audio/reactions/enemy-hurt-3.mp3",
+      "sha256": "e12f1040552f82695da89e5accd6dbe837c206ea34a2496a94fc143a874f4eac",
+      "bytes": 8776,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-1",
+      "original_archive_member": "yelling sounds/1yell15.wav",
+      "original_sha256": "761a03d1ea2339ef26e11744c7aa7f641ba259acc1e3398516ca90eef3f3da1d",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.21290249433106576,
+      "cut_end_seconds": 0.686984126984127,
+      "duration_seconds": 0.47408163265306125,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": 5.683044946636073e-06,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 1.4043767942289254,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.967935949142599,
+        "attack_seconds": 0.008775510204081632,
+        "final_sample": -4.033680852444377e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-4",
+      "path": "audio/reactions/enemy-hurt-4.mp3",
+      "sha256": "a0bf981f59ba980e6be54603eaee0148c4ab5a7033a6612667b9b8984c5f9ba4",
+      "bytes": 8776,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-2",
+      "original_archive_member": "yelling sounds/2yell1.wav",
+      "original_sha256": "7c14c178f7d765cc60e20f72d296de8a6ad26172dcc98e69a36b4f817df7fa25",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.40458049886621317,
+      "cut_end_seconds": 0.8874149659863946,
+      "duration_seconds": 0.4828344671201814,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": 1.2728417004836956e-06,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 3.8875504182637153,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.966406722743378,
+        "attack_seconds": 0.01199546485260771,
+        "final_sample": -6.630124062212417e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-5",
+      "path": "audio/reactions/enemy-hurt-5.mp3",
+      "sha256": "941f11c8a36be9f674a303c3461f17c5802d6e868103650c8eca71a154598baa",
+      "bytes": 12119,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-2",
+      "original_archive_member": "yelling sounds/2yell10.wav",
+      "original_sha256": "718542b6a1ba707b613499f4510c2fe1eb063a28546cc608030bc63354e45b83",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.07040816326530612,
+      "cut_end_seconds": 0.7544897959183674,
+      "duration_seconds": 0.6840816326530612,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": 4.496953260968439e-05,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 2.009160087598176,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -6.079176576146534,
+        "attack_seconds": 0.012018140589569161,
+        "final_sample": 4.389987680042395e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-6",
+      "path": "audio/reactions/enemy-hurt-6.mp3",
+      "sha256": "132834d9cceae8be16b2031e31f2572f963a92b8b7a623111917ed3934dfb189",
+      "bytes": 10448,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-unprefixed",
+      "original_archive_member": "yelling sounds/yell12.wav",
+      "original_sha256": "7bc85e86d21552e525d2ffa82dd4276f2d46828593993018d4646ac68e4b1108",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.2236734693877551,
+      "cut_end_seconds": 0.8031972789115647,
+      "duration_seconds": 0.5795238095238096,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": 6.00488310738001e-05,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": -0.24553178518766033,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -6.005926686583775,
+        "attack_seconds": 0.012040816326530613,
+        "final_sample": 1.3040535122854635e-06
+      }
+    },
+    {
+      "key": "enemy-hurt-7",
+      "path": "audio/reactions/enemy-hurt-7.mp3",
+      "sha256": "3d54465d9be19ba36ebc2cf60d2fb2b10aa4abd52997e1e53421eb8b085acaca",
+      "bytes": 10030,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-unprefixed",
+      "original_archive_member": "yelling sounds/yell13.wav",
+      "original_sha256": "c48cac885dc87fb7a63d486320d96c39dc6f5e7994ee23ec2458a8fe1f8aa9ea",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.3078004535147392,
+      "cut_end_seconds": 0.8691156462585033,
+      "duration_seconds": 0.5613151927437642,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": -4.818322486244142e-05,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": 1.829149362789286,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -6.018956827429374,
+        "attack_seconds": 0.017142857142857144,
+        "final_sample": -9.370578482048586e-07
+      }
+    },
+    {
+      "key": "enemy-hurt-8",
+      "path": "audio/reactions/enemy-hurt-8.mp3",
+      "sha256": "1d87559243478788865b8ac9928d442ee92ab87a5a11f6d76e6d2017b933a5fd",
+      "bytes": 12119,
+      "role": "enemy",
+      "source_vocalist_group": "vocalist-unprefixed",
+      "original_archive_member": "yelling sounds/yell7.wav",
+      "original_sha256": "d6e6db12bdea249f86c476f660681d2e8bc34c513cdf21963f6368f5a6a097f7",
+      "original_bytes": 177556,
+      "original_duration_seconds": 1.0,
+      "cut_start_seconds": 0.18537414965986396,
+      "cut_end_seconds": 0.8745124716553287,
+      "duration_seconds": 0.6891383219954649,
+      "processing": {
+        "mono": true,
+        "sample_rate": 44100,
+        "codec": "MP3 libmp3lame",
+        "bitrate_bps": 128000,
+        "dc_removed": 0.00034259865060448647,
+        "highpass": "65 Hz second-order Butterworth, causal",
+        "fade_in_seconds": 0.004988662131519274,
+        "fade_out_seconds": 0.04498866213151927,
+        "gain_db": -0.10491823732178165,
+        "pitch_changed": false
+      },
+      "qa": {
+        "decoded_peak_dbfs": -5.982395602701455,
+        "attack_seconds": 0.012018140589569161,
+        "final_sample": -1.348746991425287e-06
+      }
+    }
+  ],
+  "bank": {
+    "player": [
+      "audio/reactions/player-hurt-1.mp3",
+      "audio/reactions/player-hurt-2.mp3"
+    ],
+    "enemy": [
+      "audio/reactions/enemy-hurt-1.mp3",
+      "audio/reactions/enemy-hurt-2.mp3",
+      "audio/reactions/enemy-hurt-3.mp3",
+      "audio/reactions/enemy-hurt-4.mp3",
+      "audio/reactions/enemy-hurt-5.mp3",
+      "audio/reactions/enemy-hurt-6.mp3",
+      "audio/reactions/enemy-hurt-7.mp3",
+      "audio/reactions/enemy-hurt-8.mp3"
+    ]
+  },
+  "total_output_bytes": 98625
+}

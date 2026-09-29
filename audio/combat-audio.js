@@ -14,8 +14,8 @@ const siteRoot=(()=>{
 let settings={enabled:true,volume:.65};
 try{const saved=JSON.parse(root.localStorage?.getItem(STORE)||'null');if(saved){settings.enabled=saved.enabled!==false;const volume=Number(saved.volume);if(Number.isFinite(volume))settings.volume=Math.max(0,Math.min(1,volume));}}catch(_){}
 let context=null,bus=null,limiter=null,active=null,epoch=0,audioEpoch=0,unsupported=false;
-const buffers=new Map(),voices=new Set(),pending=new Map(),seen=new WeakMap(),attached=new WeakSet(),presentations=new Set();
-const stats={played:0,dropped:0,errors:0,lastError:'',lastWeaponId:0,completedPresentations:0,cancelledPresentations:0};
+const buffers=new Map(),voices=new Set(),pending=new Map(),seen=new WeakMap(),attached=new WeakSet(),presentations=new Set(),lastReactionFiles=new Map();
+const stats={played:0,hurtPlayed:0,lastReaction:'',dropped:0,errors:0,lastError:'',lastWeaponId:0,completedPresentations:0,cancelledPresentations:0};
 const clock=()=>root.performance?.now?.()??Date.now();
 const levelOrOne=value=>value==null||!Number.isFinite(Number(value))?1:Number(value);
 function bank(){return root.COMBAT_SOUND_BANK;}
@@ -24,8 +24,13 @@ function describe(weaponId){
  if(!weapon||!profile||!Array.isArray(profile.files)||!profile.files.length)return null;
  return {catalog,weapon,profile,weaponId:Number(weaponId)};
 }
+function describeReaction(side){
+ const catalog=root.COMBAT_REACTION_BANK,profile=catalog?.reactions?.[side];
+ if(!profile||!Array.isArray(profile.files)||!profile.files.length)return null;
+ return {catalog,profile,reaction:side};
+}
 function sourceUrl(description,file){
- const url=new URL(file,new URL(description.catalog.base||'audio/gunshots/',siteRoot));
+ const url=new URL(file,new URL(description.catalog.base||(description.reaction?'audio/reactions/':'audio/gunshots/'),siteRoot));
  if(description.catalog.version)url.searchParams.set('v',description.catalog.version);
  return url.href;
 }
@@ -50,7 +55,7 @@ function loadBuffer(url){
  const audioContext=ensureContext();if(!audioContext)return {buffer:null,promise:Promise.resolve(null)};
  const entry={buffer:null,promise:null};
  entry.promise=Promise.resolve().then(()=>root.fetch(url)).then(response=>{
-  if(!response.ok)throw new Error('Gunshot HTTP '+response.status);
+  if(!response.ok)throw new Error('Combat sound HTTP '+response.status);
   return response.arrayBuffer();
  }).then(bytes=>new Promise((resolve,reject)=>{
   // Both promise and callback decodeAudioData are supported by mobile WebViews.
@@ -63,11 +68,13 @@ function loadBuffer(url){
  while(buffers.size>MAX_BUFFERS)buffers.delete(buffers.keys().next().value);
  return entry;
 }
-function preload(weaponId){
- const description=describe(weaponId);
+function preloadDescription(description){
  if(!description||!ensureContext())return Promise.resolve(false);
- return Promise.all(description.profile.files.slice(0,4).map(file=>loadBuffer(sourceUrl(description,file)).promise)).then(loaded=>loaded.some(Boolean));
+ const files=description.reaction?description.profile.files:description.profile.files.slice(0,4);
+ return Promise.all(files.map(file=>loadBuffer(sourceUrl(description,file)).promise)).then(loaded=>loaded.some(Boolean));
 }
+function preload(weaponId){return preloadDescription(describe(weaponId));}
+function preloadReactions(){return Promise.all(['player','enemy'].map(side=>preloadDescription(describeReaction(side)))).then(loaded=>loaded.some(Boolean));}
 function schedule(callback,delay,presentation,onCancel=()=>{}){
  const timer=root.setTimeout(()=>{pending.delete(timer);presentation?.timers.delete(timer);callback();},Math.max(0,delay));
  pending.set(timer,()=>{root.clearTimeout(timer);pending.delete(timer);presentation?.timers.delete(timer);onCancel();});
@@ -102,16 +109,18 @@ function startVoice(description,buffer,options,requestEpoch,requestedAt){
   while(voices.size>=MAX_VOICES)stopVoice(voices.values().next().value);
   const source=context.createBufferSource(),gain=context.createGain();
   source.buffer=buffer;
-  const rate=Number(description.weapon.rate)||1;
+  const rate=Number(description.weapon?.rate)||1;
   source.playbackRate.value=Math.max(.5,Math.min(2,rate));
-  const level=levelOrOne(description.profile.gain)*levelOrOne(description.weapon.gain)*levelOrOne(options.gain);
+  const level=levelOrOne(description.profile.gain)*levelOrOne(description.weapon?.gain)*levelOrOne(options.gain);
   gain.gain.value=Math.max(0,Math.min(2,level));
   source.connect(gain);gain.connect(bus);
   let resolveEnd;const finished=new Promise(resolve=>{resolveEnd=resolve;});
   const voice={source,gain,finished,resolveEnd,ended:false,durationMs:buffer.duration/source.playbackRate.value*1000};
   voices.add(voice);source.onended=()=>removeVoice(voice);
   try{source.start();}catch(error){removeVoice(voice);throw error;}
-  stats.played++;stats.lastWeaponId=description.weaponId;return voice;
+  if(description.reaction){stats.hurtPlayed++;stats.lastReaction=description.reaction;}
+  else{stats.played++;stats.lastWeaponId=description.weaponId;}
+  return voice;
  }catch(error){recordError(error);return false;}
 }
 function play(weaponId,options={}){
@@ -132,8 +141,9 @@ function play(weaponId,options={}){
 function rememberScene(next){
  const token=next?.enemy?.battleToken||null;
  if(token!==active?.token)cancelPending();
- active=token?{token,weaponId:Number(next.weaponId)||0,enemyWeaponId:next.enemy?.kind==='mutant'?0:Number(next.enemyGear?.weaponId)||0}:null;
- if(active){preload(active.weaponId);preload(active.enemyWeaponId);}
+ const enemy=next?.enemy,mutant=enemy?.kind==='mutant'||enemy?.mutant===true||enemy?.isMutant===true,enemyWeaponId=mutant?0:Number(next?.enemyGear?.weaponId)||0;
+ active=token?{token,weaponId:Number(next.weaponId)||0,enemyWeaponId,enemyIsNpc:!mutant&&enemy?.kind==='npc'}:null;
+ if(active){preload(active.weaponId);preload(active.enemyWeaponId);preloadReactions();}
 }
 function current(presentation){return !presentation.settled&&presentation.epoch===epoch&&active?.token===presentation.token&&!doc?.hidden;}
 function finishPresentation(presentation,cancelled){
@@ -153,7 +163,8 @@ function burst(weaponId){
  const sequence=description.weapon.burst||{};
  return {description,shots:Math.max(1,Math.min(8,Math.floor(Number(sequence.shots)||1))),intervalMs:Math.max(60,Math.min(1000,Number(sequence.intervalMs)||180))};
 }
-function readyBuffers(description){return description.profile.files.map(file=>buffers.get(sourceUrl(description,file))?.buffer).filter(Boolean);}
+function readyChoices(description){return description.profile.files.map(file=>({file,buffer:buffers.get(sourceUrl(description,file))?.buffer})).filter(choice=>choice.buffer);}
+function readyBuffers(description){return readyChoices(description).map(choice=>choice.buffer);}
 function prepare(presentation,series){
  if(!settings.enabled||settings.volume<=0||context?.state!=='running')return Promise.resolve();
  const loads=series.filter(Boolean).filter(item=>!readyBuffers(item.description).length).map(item=>preload(item.description.weaponId));
@@ -163,27 +174,41 @@ function prepare(presentation,series){
   Promise.all(loads).then(()=>{pending.get(timer)?.();resolve();});
  });
 }
+function sound(presentation,description,gain=1){
+ if(!current(presentation))return;
+ let choices=readyChoices(description);
+ if(description.reaction&&description.profile.files.length>1)choices=choices.filter(choice=>choice.file!==lastReactionFiles.get(description.reaction));
+ const choice=choices[Math.floor(Math.random()*choices.length)];
+ const voice=startVoice(description,choice?.buffer,{gain},presentation.epoch,clock());
+ if(voice){
+  presentation.voices.add(voice);presentation.ends.push(voice.finished);
+  if(description.reaction)lastReactionFiles.set(description.reaction,choice.file);
+ }
+}
 function pulse(presentation,series,side){
  if(!current(presentation))return;
- const available=readyBuffers(series.description),buffer=available[Math.floor(Math.random()*available.length)];
- const voice=startVoice(series.description,buffer,{gain:side==='enemy'?.78:1},presentation.epoch,clock());
- if(voice){presentation.voices.add(voice);presentation.ends.push(voice.finished);}
+ sound(presentation,series.description,side==='enemy'?.78:1);
  // This is the single timing source for a muzzle flash and its audible impulse.
  try{presentation.scene.pulse?.(presentation.token,side);}catch(error){recordError(error);}
  presentation.flashUntil=clock()+FLASH_MS;
 }
-async function runPresentation(presentation,playerSeries,enemySeries){
+async function runPresentation(presentation,playerSeries,enemySeries,reactions){
  await prepare(presentation,[playerSeries,enemySeries]);
  if(!current(presentation))return;
  const events=[];
  if(playerSeries)for(let i=0;i<playerSeries.shots;i++)events.push({at:i*playerSeries.intervalMs,series:playerSeries,side:'player'});
- const enemyDelay=playerSeries?(playerSeries.shots-1)*playerSeries.intervalMs+240:0;
+ const playerLast=playerSeries?(playerSeries.shots-1)*playerSeries.intervalMs:0;
+ const enemyDelay=playerSeries?playerLast+240:0;
  if(enemySeries)for(let i=0;i<enemySeries.shots;i++)events.push({at:enemyDelay+i*enemySeries.intervalMs,series:enemySeries,side:'enemy'});
+ // Wounds are once per accepted hit, never once per muzzle flash in a burst.
+ if(reactions.enemy)events.push({at:playerLast+80,reaction:reactions.enemy});
+ const enemyLast=enemySeries?enemyDelay+(enemySeries.shots-1)*enemySeries.intervalMs:(presentation.action==='attack'?playerLast+240:0);
+ if(reactions.player)events.push({at:enemyLast+80,reaction:reactions.player});
  if(!events.length){finishPresentation(presentation,false);return;}
  let remaining=events.length;
  function fire(event){
   if(!current(presentation))return;
-  pulse(presentation,event.series,event.side);
+  if(event.reaction)sound(presentation,event.reaction);else pulse(presentation,event.series,event.side);
   if(--remaining===0)Promise.all(presentation.ends).then(async()=>{
    if(!current(presentation))return;
    const delay=Math.max(0,presentation.flashUntil-clock());
@@ -204,8 +229,15 @@ function present(scene,originalReact,token,result,action){
  const playerSeries=action==='attack'&&Object.prototype.hasOwnProperty.call(result,'playerDamage')?burst(active.weaponId):null;
  // Misses still fire; radiation-only deaths contain no actual enemy attack.
  const enemySeries=active.enemyWeaponId>0&&!!result.enemyTurn&&!result.victoryReady&&(!result.died||Number(result.enemyTurn.damage)>0)?burst(active.enemyWeaponId):null;
+ const playerDamage=Number(result.playerDamage),enemyDamage=Number(result.enemyTurn?.damage);
+ const reactions={
+  enemy:action==='attack'&&Number.isFinite(playerDamage)&&playerDamage>0&&active.enemyIsNpc?describeReaction('enemy'):null,
+  player:result.enemyTurn?.hit===true&&Number.isFinite(enemyDamage)&&enemyDamage>0?describeReaction('player'):null
+ };
+ // Keep optional reaction variants warm without holding up weapon presentation.
+ if(reactions.player||reactions.enemy)preloadReactions();
  schedule(()=>{for(const voice of presentation.voices)stopVoice(voice);finishPresentation(presentation,false);},MAX_PRESENTATION_MS,presentation);
- runPresentation(presentation,playerSeries,enemySeries).catch(error=>{recordError(error);finishPresentation(presentation,false);});
+ runPresentation(presentation,playerSeries,enemySeries,reactions).catch(error=>{recordError(error);finishPresentation(presentation,false);});
  return promise;
 }
 function attach(scene=root.CombatScene){
@@ -217,8 +249,8 @@ function attach(scene=root.CombatScene){
  scene.hide=function(){active=null;cancelPending();return originalHide?.apply(this,arguments);};
  return true;
 }
-function getState(){return {supported:!unsupported,contextState:context?.state||'uninitialized',limiterEnabled:!!limiter,settings:getSettings(),activeToken:active?.token||null,cachedBuffers:buffers.size,activeVoices:voices.size,pendingShots:pending.size,activePresentations:presentations.size,...stats};}
-root.CombatAudio={getSettings,setEnabled,setVolume,unlock,stop,preload,play,getState,attach};
+function getState(){return {supported:!unsupported,contextState:context?.state||'uninitialized',limiterEnabled:!!limiter,settings:getSettings(),activeToken:active?.token||null,cachedBuffers:buffers.size,activeVoices:voices.size,pendingShots:pending.size,activePresentations:presentations.size,lastReactionFiles:Object.fromEntries(lastReactionFiles),...stats};}
+root.CombatAudio={getSettings,setEnabled,setVolume,unlock,stop,preload,preloadReactions,play,getState,attach};
 doc?.addEventListener('pointerdown',unlock,{passive:true,capture:true});
 doc?.addEventListener('keydown',unlock,{capture:true});
 doc?.addEventListener('visibilitychange',()=>{if(doc.hidden)stop();});

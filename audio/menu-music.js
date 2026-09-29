@@ -25,7 +25,7 @@ function init(){
  if(window.CombatAudio){
   panel.querySelector('#menuMusicTitle').textContent='Звук';
   const effects=document.createElement('section');effects.className='combat-sound-settings';
-  effects.innerHTML='<label><input id="combatSoundEnabled" type="checkbox"> Звуки выстрелов</label><label for="combatSoundVolume">Громкость выстрелов <output id="combatSoundValue"></output></label><input id="combatSoundVolume" type="range" min="0" max="100" step="1">';
+  effects.innerHTML='<label><input id="combatSoundEnabled" type="checkbox"> Звуки боя</label><label for="combatSoundVolume">Громкость боя <output id="combatSoundValue"></output></label><input id="combatSoundVolume" type="range" min="0" max="100" step="1">';
   panel.insertBefore(effects,panel.querySelector('#menuMusicClose'));
   const soundEnabled=effects.querySelector('#combatSoundEnabled'),soundVolume=effects.querySelector('#combatSoundVolume'),soundValue=effects.querySelector('output');
   function syncEffects(){const s=window.CombatAudio.getSettings();soundEnabled.checked=s.enabled;soundVolume.value=Math.round(s.volume*100);soundValue.value=soundVolume.value+'%';button.dataset.enabled=String(settings.enabled||s.enabled);}
