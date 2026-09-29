@@ -41,7 +41,7 @@ module.exports=function installQuestBalance({
   // normal armor curve. Price each one slightly above the cheapest normal armor
   // of the same tier; its physical armor remains lower while anomaly protection is higher.
   for(const suit of (SHOP_ARMOR||[]).filter(a=>a.isResearchSuit&&!a.adminOnly)){
-    const same=(SHOP_ARMOR||[]).filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)===Number(suit.tier));
+    const same=(SHOP_ARMOR||[]).filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.legacyTier??a.tier)===Number(suit.tier));
     if(same.length){
       const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
       suit.price=Math.round(floor*1.10);
@@ -323,7 +323,9 @@ module.exports=function installQuestBalance({
       ));
       selected=candidates;
     }else if(vendor==='diesel'){
-      candidates=band([...lookup.values()].filter(x=>x.kind==='weapon'&&integer(x.unlockLevel,Number.MAX_SAFE_INTEGER)<=level));
+      const unlocked=[Number(data?.worldPosition?.zoneLocation)||1,...(Array.isArray(data?.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number):[])];
+      const zoneTier=Math.max(1,Math.min(12,...unlocked.filter(Number.isFinite)));
+      candidates=band([...lookup.values()].filter(x=>x.kind==='weapon'&&questTier(x)<=zoneTier));
       selected=sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30,epoch);
     }else{
       const artifactTier=Math.min(8,1+Math.floor(level/20));
