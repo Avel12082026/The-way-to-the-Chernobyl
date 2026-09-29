@@ -25,6 +25,17 @@ assert(named.every(a=>a.tier===11),'all named anomalies must be T11');
 const ctx={artifacts,anomalies,armorItems,window:{},document:{getElementById(){return null},createElement(){return{append(){}}}},stripInvisibleSuffix:s=>s,console};
 ctx.window=ctx;vm.createContext(ctx);vm.runInContext(fs.readFileSync('ui/balance-tuning.js','utf8'),ctx);
 assert.equal(ctx.GameBalanceTuning.version,'1.4.0');
+const serverCatalogLine=patch.split('\n').find(line=>line.startsWith('+const SHOP_ARTIFACTS = '));
+assert(serverCatalogLine,'server artifact catalog must be present in patch');
+const serverCatalog=JSON.parse(serverCatalogLine.slice('+const SHOP_ARTIFACTS = '.length,-1));
+const serverByName=new Map(serverCatalog.map(a=>[a.name,a]));
+for(const [tier,names] of Object.entries(expected)){
+  for(const name of names){
+    const client=artifacts.find(a=>a.name===name),server=serverByName.get(name);
+    assert(server,'server artifact missing '+name);
+    assert.equal(JSON.stringify(server.stats),JSON.stringify(client.stats),'client/server stats mismatch '+name);
+  }
+}
 for(const [tier,minPos] of [[9,6],[10,7],[11,8]]){
   const rows=artifacts.filter(a=>Number(a.tier)===tier&&!a.adminOnly);
   for(const a of rows){
