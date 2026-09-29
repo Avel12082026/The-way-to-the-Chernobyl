@@ -1,0 +1,309 @@
+--- a/server.js
++++ b/server.js
+@@ -783,8 +783,8 @@
+     return value;
+ }
+ function getBuyPriceServer(basePrice, data) {
+-    const discount = getEffectiveIntellectServer(data) * 0.1;
+-    return Math.max(1, Math.round(basePrice - discount));
++    const discountPct=Math.min(0.06,Math.max(0,getEffectiveIntellectServer(data))*0.0005);
++    return Math.max(1,Math.round((Number(basePrice)||0)*(1-discountPct)));
+ }
+ 
+ // Подсчёт "неспекаемых" ячеек инвентаря (оружие/броня) — упрощённая версия клиентского лимита в
+@@ -939,7 +939,8 @@
+     data.inventory[name] -= qty;
+     if (data.inventory[name] <= 0) delete data.inventory[name];
+     data.coins += totalPrice;
+-    data.intellect = Math.min(100, data.intellect + 0.1 * qty); // точно +0.1 за каждую единицу
++    const intellectGain=0.1*Math.min(1,totalPrice/1000);
++    data.intellect=Math.min(100,Math.round((data.intellect+intellectGain)*1000)/1000);
+ 
+     db.prepare('UPDATE players SET data = ? WHERE id = ?').run(JSON.stringify(data), playerId);
+     res.json({ success: true, coins: data.coins, intellect: data.intellect, inventory: data.inventory, earned: totalPrice });
+@@ -1114,10 +1115,8 @@
+ }
+ const YANTAR_LEONOV_WEAPONS_SERVER=new Set(yantarLeonovAutomaticServer().map(item=>item.name));
+ function yantarLeonovArmorServer(){
+-    const list=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
+-      .filter(item=>item&&!item.adminOnly&&!item.isPremiumArmor);
+-    const byId=list.filter(item=>Number(item.id)>58).sort((a,b)=>Number(a.id)-Number(b.id));
+-    return byId.length>=29?byId.slice(0,29):list.slice(58,87);
++    return (Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[])
++      .filter(item=>item&&!item.adminOnly&&!item.isPremiumArmor&&!item.isResearchSuit);
+ }
+ const YANTAR_LEONOV_ARMOR_SERVER=new Set(yantarLeonovArmorServer().map(item=>item.name));
+ app.post('/api/shop/buy',(req,res,next)=>{
+@@ -1135,10 +1134,11 @@
+         return next();
+     }
+     if(category==='armor'){
+-        if(!YANTAR_LEONOV_ARMOR_SERVER.has(baseName))
+-            return res.status(400).json({success:false,error:'На Янтаре у Леонова продаются следующие 29 костюмов после Бармена'});
+         const armor=(Array.isArray(SHOP_ARMOR)?SHOP_ARMOR:[]).find(item=>item&&String(item.name||'')===baseName);
+-        req.body.vendor=armor?.isResearchSuit?'leonov':'zhuchara';
++        if(armor?.isResearchSuit){req.body.vendor='leonov';return next();}
++        if(!YANTAR_LEONOV_ARMOR_SERVER.has(baseName))
++            return res.status(400).json({success:false,error:'Эта обычная броня ещё не доступна у Леонова'});
++        req.body.vendor='zhuchara';
+         return next();
+     }
+     if(category==='consumable'){
+@@ -1379,19 +1379,47 @@
+     return next();
+ });
+ 
++function reachedZoneTierServer(data){
++    const values=[1,Number(data?.worldPosition?.zoneLocation)||1,
++        ...(Array.isArray(data?.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number):[])];
++    return Math.max(1,Math.min(11,...values.filter(Number.isFinite)));
++}
+ app.post('/api/shop/buy',requireAuth,(req,res,next)=>{
+     try{
+-        const name=String(req.body&&req.body.name||'');
+-        const entry=WEAPON_PROGRESSION_BY_NAME_SERVER.get(name);
+-        if(!entry)return next();
+-        const sourceVendor=String(req.body&&req.body.sourceVendor||req.body&&req.body.vendor||'');
+-        const cls=String(entry.weapon.progressionClass||'');
+-        if((sourceVendor==='zhuchara'&&cls==='pistol')||(sourceVendor==='barman'&&cls==='shotgun'))
+-            return next();
++        const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
++        if(!['zhuchara','barman','leonov-yantar'].includes(sourceVendor))return next();
++        const category=String(req.body?.category||''),rawName=String(req.body?.name||'');
++        if(!['weapon','armor'].includes(category))return next();
++        const row=db.prepare('SELECT data FROM players WHERE id=?').get(String(req.telegramUser.id));
++        if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
++        const data=safeParsePlayerData(row.data),reached=reachedZoneTierServer(data);
++        let baseName=rawName;try{baseName=parseGearNameServer(rawName)?.baseName||rawName;}catch(_){}
++        if(category==='weapon'){
++            const weapon=WEAPON_PROGRESSION_BY_NAME_SERVER.get(baseName)?.weapon;
++            if(!weapon)return res.status(400).json({success:false,error:'Оружие не найдено'});
++            const cls=String(weapon.progressionClass||''),tier=Number(weapon.tier)||1;
++            const allowed=sourceVendor==='zhuchara'
++                ? cls==='pistol'&&tier<=Math.min(3,reached)
++                : sourceVendor==='barman'
++                  ? cls==='shotgun'&&tier>=4&&tier<=Math.min(6,reached)
++                  : cls==='automatic'&&tier>=7&&tier<=Math.min(9,reached);
++            if(!allowed)return res.status(400).json({success:false,error:'Этот тир оружия ещё не открыт достигнутой частью Зоны'});
++        }else{
++            const armor=SHOP_ARMOR.find(a=>a&&a.name===baseName);
++            if(!armor||armor.adminOnly||armor.isPremiumArmor)return res.status(400).json({success:false,error:'Броня недоступна'});
++            if(armor.isResearchSuit)return next();
++            const tier=Number(armor.tier)||1;
++            const allowed=sourceVendor==='zhuchara'
++                ? tier<=Math.min(3,reached)
++                : sourceVendor==='barman'
++                  ? tier>=4&&tier<=Math.min(6,reached)
++                  : tier>=7&&tier<=Math.min(11,reached);
++            if(!allowed)return res.status(400).json({success:false,error:'Этот тир брони ещё не открыт достигнутой частью Зоны'});
++        }
+         return next();
+     }catch(e){
+-        console.error('[weapon progression shop]',e);
+-        return res.status(500).json({success:false,error:'Ошибка проверки уровня оружия'});
++        console.error('[zone economy shop]',e);
++        return res.status(500).json({success:false,error:'Ошибка проверки прогрессии магазина'});
+     }
+ });
+ 
+@@ -3087,7 +3115,7 @@
+             const named=data.namedArtifactBonus||{};
+             const agility=(Number(data.agility)||0)+(Number(named.agility)||0);
+             const baseRun=Math.max(0,Math.min(1,Number(p.runChance)||0.5));
+-            const chance=Math.min(1,baseRun+agility*0.01+(Number(bonuses.escapeChancePct)||0)/100);
++            const chance=Math.min(0.95,baseRun+agility*0.003+(Number(bonuses.escapeChancePct)||0)/100);
+ 
+             if(Math.random()<chance){
+                 const del=db.prepare('DELETE FROM pve_battles WHERE player_id=? AND token=?').run(playerId,token);
+@@ -3154,6 +3182,30 @@
+     ...NPC_CONSUMABLE_LOOT_NAMES
+ ]);
+ 
++function npcLootTrackedBaseServer(name){
++    const clean=pveBaseName(name);
++    let base=clean;
++    try{base=parseGearNameServer(clean).baseName||clean;}catch(_){}
++    if(NPC_LOOT_TRACKED_NAMES_SERVER.has(base))return base;
++    if(NPC_LOOT_TRACKED_NAMES_SERVER.has(clean))return clean;
++    return null;
++}
++function npcLootTrackedSnapshotServer(inventory){
++    const out={};
++    for(const [key,value] of Object.entries(inventory||{})){
++        if(npcLootTrackedBaseServer(key)&&Number(value)>0)out[key]=Number(value);
++    }
++    return out;
++}
++function npcLootRestoreSnapshotServer(inventory,snapshot){
++    for(const key of Object.keys(inventory||{})){
++        if(npcLootTrackedBaseServer(key))delete inventory[key];
++    }
++    for(const [key,value] of Object.entries(snapshot||{})){
++        if(Number(value)>0)inventory[key]=Number(value);
++    }
++}
++
+ function npcLootDropChanceServer(tier){
+     const t=Math.max(1,Math.min(14,Number(tier)||1));
+     // Tier 1: 36%; tier 14: 12.6%. Most NPC kills still yield no item.
+@@ -3210,14 +3262,12 @@
+                 const before=safeParsePlayerData(row.data);
+                 const requested=WEAPON_PROGRESSION_BY_NAME_SERVER.get(String(payload.weaponDrop||payload.weaponName||''))?.weapon
+                     ||weaponProgressionNpcWeaponServer(before);
+-                const snapshot={};
+                 const inv=before.inventory||{};
+-                for(const name of NPC_LOOT_TRACKED_NAMES_SERVER)snapshot[name]=Number(inv[name])||0;
+                 ctx={
+                     playerId,
+                     weapon:requested||null,
+                     tier:Math.max(1,Math.min(14,Number(payload.tier)||1)),
+-                    before:snapshot
++                    before:npcLootTrackedSnapshotServer(inv)
+                 };
+             }
+         }
+@@ -3233,22 +3283,25 @@
+                 const data=safeParsePlayerData(row.data);
+                 data.inventory=data.inventory||{};
+ 
+-                // Remove legacy guaranteed/random NPC gear/consumable drops first.
+-                for(const name of NPC_LOOT_TRACKED_NAMES_SERVER){
+-                    const before=Number(ctx.before[name])||0;
+-                    const now=Number(data.inventory[name])||0;
+-                    if(now>before){
+-                        if(before>0)data.inventory[name]=before;
+-                        else delete data.inventory[name];
+-                    }
+-                }
++                npcLootRestoreSnapshotServer(data.inventory,ctx.before);
+ 
+                 const chance=npcLootDropChanceServer(ctx.tier);
+-                let drop=null;
++                let drop=null,dropQty=0,inventoryFull=false;
+                 if(Math.random()<chance){
+                     drop=npcLootPickServer(ctx);
+-                    if(drop&&drop.name)
+-                        data.inventory[drop.name]=(Number(data.inventory[drop.name])||0)+1;
++                    if(drop&&drop.name){
++                        const titan=pveIsEquippedArmor(data,'Экзоскелет Титан-Финал');
++                        const wantedQty=titan?2:1;
++                        if(drop.kind==='weapon'||drop.kind==='armor'){
++                            const free=Math.max(0,50-countNonStackingSlotsServer(data.inventory));
++                            dropQty=Math.min(wantedQty,free);
++                            if(dropQty>0)pveAddItem(data,drop.name,dropQty,true);
++                            else inventoryFull=true;
++                        }else{
++                            dropQty=wantedQty;
++                            pveAddItem(data,drop.name,dropQty,false);
++                        }
++                    }
+                 }
+ 
+                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
+@@ -3261,18 +3314,20 @@
+                 body.rewards=rewards.filter(line=>
+                     ![...NPC_LOOT_TRACKED_NAMES_SERVER].some(name=>String(line).includes(name))
+                 );
+-                if(drop&&drop.name){
++                if(drop&&drop.name&&dropQty>0){
+                     const label=drop.kind==='weapon'?'Оружие':drop.kind==='armor'?'Броня':'Припасы';
+-                    body.rewards.push(label+' с NPC: '+drop.name);
++                    body.rewards.push(label+' с NPC: '+drop.name+(dropQty>1?' ×'+dropQty:''));
+                 }
+                 body.npcLootDrop={
+-                    dropped:!!(drop&&drop.name),
++                    dropped:!!(drop&&drop.name&&dropQty>0),
+                     kind:drop&&drop.kind||null,
+                     name:drop&&drop.name||null,
++                    qty:dropQty,
++                    inventoryFull,
+                     npcTier:ctx.tier,
+                     itemChance:chance
+                 };
+-                if(drop&&drop.kind==='weapon'){
++                if(drop&&dropQty>0&&drop.kind==='weapon'){
+                     body.npcWeaponDrop={
+                         name:drop.name,
+                         progressionIndex:Number(ctx.weapon&&ctx.weapon.progressionIndex)||0,
+@@ -3366,15 +3421,7 @@
+                 data.coins+=coins;
+                 data.exp+=Number(p.exp)||tier*50;
+                 rewards.push(`${coins} Байт`,`${Number(p.exp)||tier*50} EXP`);
+-
+-                pveAddItem(data,p.weaponName,1,true);
+-                pveAddItem(data,p.armorName,1,true);
+-                rewards.push(p.weaponName,p.armorName);
+-
+                 const titan=pveIsEquippedArmor(data,'Экзоскелет Титан-Финал');
+-                const medkit=tier<=4?'Аптечка гражданская':(tier<=9?'Аптечка армейская':'Аптечка научная');
+-                pveAddItem(data,medkit,titan?2:1,false);
+-                rewards.push(`${medkit}${titan?' ×2':''}`);
+ 
+                 if(p.faction==='Долг'){
+                     const maxLootTier=Math.max(1,Math.round(tier*8/PVE_NPC_MAX_TIER));
+@@ -5675,19 +5722,40 @@
+     const level=Math.max(1,Number(data&&data.level)||1);
+     return list.length>=count&&list.every(item=>level>=Number(item.unlockLevel||0));
+ }
++function migrateZoneRouteUnlocksStrict20260929(){
++    const migrationName='zone_route_unlocks_strict_20260929';
++    if(migrationAlreadyRan(migrationName))return;
++    let changed=0;
++    const rows=db.prepare('SELECT id,data FROM players').all();
++    const update=db.prepare('UPDATE players SET data=? WHERE id=?');
++    const tx=db.transaction(()=>{
++        for(const row of rows){
++            const data=safeParsePlayerData(row.data);
++            const existing=new Set(Array.isArray(data.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number).filter(Number.isInteger):[]);
++            let highest=Math.max(1,...existing);
++            const stored=Number(data?.worldPosition?.zoneLocation)||1;
++            if(stored>=2&&stored<=6)highest=Math.max(highest,stored);
++            const safe=Number(data?.lastSafeCamp?.zoneLocation)||1;
++            if(safe>=2&&safe<=6)highest=Math.max(highest,safe);
++            if(highest>1){
++                const before=JSON.stringify([...existing].sort((a,b)=>a-b));
++                for(let n=2;n<=highest;n++)existing.add(n);
++                data.zoneUnlockedLocations=[...existing].filter(n=>n>=2&&n<=11).sort((a,b)=>a-b);
++                if(JSON.stringify(data.zoneUnlockedLocations)!==before){update.run(JSON.stringify(data),row.id);changed++;}
++            }
++        }
++        markMigrationRan(migrationName);
++    });
++    tx();
++    if(changed)console.log('[migration] Зафиксированы достигнутые локации для '+changed+' игроков; уровень больше не открывает Зону');
++}
++migrateZoneRouteUnlocksStrict20260929();
++
+ function zoneMapLocationUnlocked(data,location){
+-    if(location===1)return true;
++    const loc=Number(location);
++    if(loc===1)return true;
+     const travelled=new Set(Array.isArray(data&&data.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number):[]);
+-    if(travelled.has(Number(location)))return true;
+-    // Backward compatibility for characters who had already unlocked locations
+-    // before route travel became server-authoritative.
+-    if(location===2)return zoneMapListUnlocked(data,ZONE_MAP_FIRST_PISTOLS_SERVER,10)&&
+-        zoneMapListUnlocked(data,ZONE_MAP_FIRST_ARMOR_SERVER,10);
+-    if(location===3)return zoneMapListUnlocked(data,ZONE_MAP_LAST_NINE_PISTOLS_SERVER,9);
+-    if(location===4)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
+-    if(location===5)return zoneMapListUnlocked(data,ZONE_MAP_SECOND_PISTOLS_SERVER,10);
+-    if(location===6)return zoneMapLocationUnlocked(data,5);
+-    return false;
++    return travelled.has(loc);
+ }
+ const ZONE_MAP_NPC_STATS=Object.freeze({1:{hp:240,dmg:28},2:{hp:480,dmg:45},4:{hp:960,dmg:80}});
+ function zoneMapNpcPayload(data,zoneTier,zoneLocation){
+@@ -5962,10 +6030,10 @@
+                     :zoneLocation===5
+                     ?'Темная долина пока закрыта. Сначала должен быть открыт Росток.'
+                     :zoneLocation===4
+-                      ?'Росток пока закрыт. Должна быть открыта вторая десятка пистолетов.'
++                      ?'Росток пока закрыт. Сначала завершите переход и наберите 10 побед.'
+                       :zoneLocation===3
+-                      ?'НИИ Агропром пока закрыт. Должны быть открыты последние 9 пистолетов.'
+-                      :'Вторая локация пока закрыта. Нужны первые 10 пистолетов и первые 10 костюмов.';
++                      ?'НИИ Агропром пока закрыт. Сначала завершите переход и наберите 10 побед.'
++                      :'Свалка пока закрыта. Сначала завершите переход и наберите 10 побед.';
+                 return{success:false,error};
+             }
+ 
