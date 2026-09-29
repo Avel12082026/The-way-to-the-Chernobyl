@@ -1,0 +1,158 @@
+--- server.js
++++ server.js
+@@ -2394,8 +2394,6 @@
+     for(const name of medNames) pool.push({weight:25,reward:{name,nonStacking:false,text:`Мне повезло, я нашёл ${name.toLowerCase()}!`}});
+     const ranges=[{min:1,max:Math.min(4,encounterTier),weight:6},{min:4,max:Math.min(8,encounterTier),weight:3},{min:8,max:Math.min(13,encounterTier),weight:1}];
+     for(const r of ranges){
+-        const bodies=PVE_MUTANTS.filter(m=>m.loot&&Number(m.tier)>=r.min&&Number(m.tier)<=r.max);
+-        if(bodies.length){const p=bodies[Math.floor(Math.random()*bodies.length)];pool.push({weight:r.weight,reward:{name:p.loot,nonStacking:false,text:'Мне повезло, я нашёл часть тела мутанта!'}});}
+         // Важно: premium/admin/research из случайного хабара исключены.
+         const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)>=r.min&&Number(a.tier)<=r.max);
+         if(arm.length){const p=arm[Math.floor(Math.random()*arm.length)];pool.push({weight:r.weight,reward:{name:p.name,nonStacking:true,text:'Мне повезло, я нашёл броню!'}});}
+@@ -5356,34 +5354,64 @@
+     return npc;
+ }
+ function zoneMapMutantPayload(data,zoneTier){
+-    const list=(Array.isArray(PVE_MUTANTS)?PVE_MUTANTS:[]).filter(m=>m&&!m.adminOnly);
+-    let pool=[];
+-    if(zoneTier<=1){
+-        pool=list.filter(m=>[0,1].includes(Number(m.tier)||0));
+-    }else if(zoneTier===5||zoneTier===6){
+-        // Dark Valley and Yantar are explicit location tiers. Do not remap them
+-        // through the ordered tier list: use only native mutants of that tier.
+-        pool=list.filter(m=>(Number(m.tier)||0)===zoneTier);
+-    }else{
+-        const internalTiers=[...new Set(list.map(m=>Number(m.tier)||0).filter(t=>t>1))].sort((a,b)=>a-b);
+-        const internalTier=internalTiers[Math.min(internalTiers.length-1,Math.max(0,zoneTier-2))];
+-        pool=list.filter(m=>(Number(m.tier)||0)===internalTier);
+-    }
+-    // UNIQUE_STRONGLAV_MAP_POOL_V1
+-    // Filter after tier routing so the remaining location tiers never shift.
++    const tier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    let pool=(Array.isArray(PVE_MUTANTS)?PVE_MUTANTS:[])
++        .filter(m=>m&&!m.adminOnly&&Number(m.tier)===tier);
+     pool=pool.filter(m=>!['стронглав','самка стронглава'].includes(String(m.name||'').trim().toLowerCase()));
+     if(!pool.length)return null;
+-    const pick=pool[Math.floor(Math.random()*pool.length)];
+-    const baseHp=Math.max(1,Number(pick.hp)||1);
+-    const floor=zoneTier<=1?240:zoneTier===2?420:0;
+-    const hp=Math.max(baseHp,floor);
+-    const payload={...pick,sourceTier:Number(pick.tier)||0,tier:zoneTier,kind:'mutant',
+-        hp,enemyHp:hp,maxEnemyHp:hp,medkitsUsed:0};
+-    return typeof pveAdaptiveMutantPayloadServer==='function'
+-        ?pveAdaptiveMutantPayloadServer(data,payload):payload;
++    const total=pool.reduce((sum,m)=>sum+(Number(m.chance)||1),0);
++    let roll=Math.random()*total,pick=pool[pool.length-1];
++    for(const m of pool){const w=Number(m.chance)||1;if(roll<w){pick=m;break;}roll-=w;}
++    const hp=Math.max(1,Number(pick.hp)||1);
++    const payload={...pick,sourceTier:tier,tier,kind:'mutant',hp,enemyHp:hp,maxEnemyHp:hp,medkitsUsed:0};
++    return payload;
++}
++
++const ZONE_MAP_LUCKY_CHANCE=Object.freeze({1:0.10,2:0.08,3:0.065,4:0.05,5:0.035,6:0.025});
++function zoneMapMarkerEventKind(zoneKind,zoneLocation){
++    const lucky=Number(ZONE_MAP_LUCKY_CHANCE[zoneLocation])||0.025;
++    const weights=zoneKind==='anomaly'
++        ?[['anomaly',0.62],['mutant',0.12],['npc',0.10],['lucky',lucky]]
++        :zoneKind==='mutant'
++        ?[['mutant',0.58],['npc',0.13],['anomaly',0.10],['lucky',lucky]]
++        :[['npc',0.56],['mutant',0.14],['anomaly',0.10],['lucky',lucky]];
++    let roll=Math.random();
++    for(const [kind,weight] of weights){if(roll<weight)return kind;roll-=weight;}
++    return'none';
++}
++
++function zoneMapLuckyReward(zoneTier){
++    const tier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const supplies={
++        1:[['Хлеб',30],['Вода',30],['Аптечка гражданская',25],['Тушенка',8],['Энергетик',7]],
++        2:[['Хлеб',18],['Вода',18],['Тушенка',20],['Энергетик',20],['Аптечка гражданская',12],['Аптечка армейская',8],['Антирад',4]],
++        3:[['Хлеб',8],['Вода',8],['Тушенка',20],['Энергетик',20],['Аптечка армейская',24],['Антирад',15],['Аптечка гражданская',5]],
++        4:[['Тушенка',20],['Энергетик',20],['Аптечка армейская',28],['Антирад',22],['Аптечка научная',10]],
++        5:[['Тушенка',15],['Энергетик',18],['Аптечка армейская',20],['Аптечка научная',22],['Антирад',25]],
++        6:[['Тушенка',10],['Энергетик',15],['Аптечка армейская',15],['Аптечка научная',30],['Антирад',30]]
++    }[tier];
++    const pickWeighted=list=>{let total=list.reduce((s,x)=>s+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list[list.length-1][0];};
++    const category=Math.random();
++    let item=null,text='';
++    if(category<0.94){
++        item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';
++    }else if(category<0.965){
++        const pool=SHOP_WEAPONS.filter(x=>x&&!x.adminOnly&&!x.isPremiumWeapon&&Number(x.tier)===tier);
++        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл оружие!';}
++    }else if(category<0.985){
++        const pool=SHOP_ARMOR.filter(x=>x&&!x.adminOnly&&!x.isPremiumArmor&&!x.isResearchSuit&&Number(x.tier)===tier);
++        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл броню!';}
++    }else{
++        const pool=SHOP_ARTIFACTS.filter(x=>x&&!x.adminOnly&&!x.isNamedArtifact&&Number(x.tier)===tier);
++        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл артефакт!';}
++    }
++    if(!item){item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';}
++    const nonStacking=!!(SHOP_WEAPONS.some(x=>x.name===item)||SHOP_ARMOR.some(x=>x.name===item)||SHOP_ARTIFACTS.some(x=>x.name===item));
++    return{name:item,nonStacking,text};
+ }
+ 
+ 
++
+ // ZONE_ROUTE_API_V1
+ const ZONE_ROUTE_REQUIRED_WINS=10;
+ const ZONE_ROUTE_EDGES=new Set(['1>2','2>1','2>3','3>2','2>4','4>2','4>5','5>4','5>6','6>5']);
+@@ -5436,8 +5464,6 @@
+     const pool=[];
+     for(const name of ['Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'])
+         pool.push({weight:24,reward:{name,nonStacking:false,text:`Мне повезло, я нашёл ${name.toLowerCase()}!`}});
+-    const body=PVE_MUTANTS.filter(m=>m.loot&&Number(m.tier)<=tier);
+-    if(body.length){const x=body[Math.floor(Math.random()*body.length)];pool.push({weight:8,reward:{name:x.loot,nonStacking:false,text:'Мне повезло, я нашёл часть тела мутанта!'}});}
+     const arm=SHOP_ARMOR.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit&&Number(a.tier)<=tier);
+     if(arm.length){const x=arm[Math.floor(Math.random()*arm.length)];pool.push({weight:3,reward:{name:x.name,nonStacking:true,text:'Мне повезло, я нашёл броню!'}});}
+     const weap=SHOP_WEAPONS.filter(w=>!w.adminOnly&&!w.isPremiumWeapon&&Number(w.tier)<=tier);
+@@ -5601,9 +5627,9 @@
+             }
+ 
+             let event={type:'none'},pendingType=null,pendingPayload=null;
+-            const roll=Math.random();
++            const encounterKind=zoneMapMarkerEventKind(zoneKind,zoneLocation);
+ 
+-            if(zoneKind==='enemy'&&roll<0.30){
++            if(encounterKind==='npc'){
+                 const npc=zoneMapNpcPayload(data,zoneTier,zoneLocation);
+                 if(npc){
+                     const battleToken=crypto.randomBytes(24).toString('hex');
+@@ -5613,18 +5639,7 @@
+                     pendingType='battle';pendingPayload=JSON.stringify({battleToken});
+                     event={type:'battle',enemy:{...npc,battleToken,faction:{name:npc.faction}}};
+                 }
+-            }else if(zoneKind==='anomaly'&&roll<0.30){
+-                const pool=(Array.isArray(RAID_ANOMALIES)?RAID_ANOMALIES:[])
+-                    .filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly);
+-                if(pool.length){
+-                    const a=pool[Math.floor(Math.random()*pool.length)];
+-                    const tierArtifacts=zoneTier===5
+-                        ?(Array.isArray(a.artifacts)?a.artifacts:[]).filter(name=>(Array.isArray(SHOP_ARTIFACTS)?SHOP_ARTIFACTS:[]).some(item=>item&&item.name===name&&Number(item.tier)===5))
+-                        :a.artifacts;
+-                    const payload={...a,artifacts:tierArtifacts,tier:zoneTier,attemptsUsed:0,resolved:false};
+-                    pendingType='anomaly';pendingPayload=JSON.stringify(payload);event={type:'anomaly',anomaly:payload};
+-                }
+-            }else if(zoneKind==='mutant'&&roll<0.20){
++            }else if(encounterKind==='mutant'){
+                 const mutant=zoneMapMutantPayload(data,zoneTier);
+                 if(mutant){
+                     const battleToken=crypto.randomBytes(24).toString('hex');
+@@ -5634,6 +5649,17 @@
+                     pendingType='battle';pendingPayload=JSON.stringify({battleToken});
+                     event={type:'battle',enemy:{...mutant,battleToken}};
+                 }
++            }else if(encounterKind==='anomaly'){
++                const pool=(Array.isArray(RAID_ANOMALIES)?RAID_ANOMALIES:[])
++                    .filter(a=>Number(a.tier)===zoneTier&&!a.isNamedArtifactAnomaly);
++                if(pool.length){
++                    const a=pool[Math.floor(Math.random()*pool.length)];
++                    const payload={...a,tier:zoneTier,attemptsUsed:0,resolved:false};
++                    pendingType='anomaly';pendingPayload=JSON.stringify(payload);event={type:'anomaly',anomaly:payload};
++                }
++            }else if(encounterKind==='lucky'){
++                const reward=zoneMapLuckyReward(zoneTier);
++                pendingType='lucky';pendingPayload=JSON.stringify(reward);event={type:'lucky',text:reward.text};
+             }
+ 
+             db.prepare('UPDATE raid_sessions SET pending_type=?,pending_payload=?,updated_at=? WHERE player_id=? AND token=?')

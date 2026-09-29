@@ -143,5 +143,3 @@
          const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
            .run(JSON.stringify(data),Date.now(),playerId);
          if(result&&Number(result.changes)===0)return res.status(409).json({success:false,error:'Позиция не сохранена'});
-
-[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
