@@ -1,0 +1,64 @@
+--- server.js
++++ server.js
+@@ -5354,7 +5354,7 @@
+     return npc;
+ }
+ function zoneMapMutantPayload(data,zoneTier){
+-    const tier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const tier=Math.max(1,Number(zoneTier)||1);
+     let pool=(Array.isArray(PVE_MUTANTS)?PVE_MUTANTS:[])
+         .filter(m=>m&&!m.adminOnly&&Number(m.tier)===tier);
+     pool=pool.filter(m=>!['стронглав','самка стронглава'].includes(String(m.name||'').trim().toLowerCase()));
+@@ -5367,9 +5367,12 @@
+     return payload;
+ }
+ 
+-const ZONE_MAP_LUCKY_CHANCE=Object.freeze({1:0.10,2:0.08,3:0.065,4:0.05,5:0.035,6:0.025});
++function zoneMapLuckyChance(zoneLocation){
++    const tier=Math.max(1,Number(zoneLocation)||1);
++    return Math.max(0.01,0.10*Math.pow(0.75,tier-1));
++}
+ function zoneMapMarkerEventKind(zoneKind,zoneLocation){
+-    const lucky=Number(ZONE_MAP_LUCKY_CHANCE[zoneLocation])||0.025;
++    const lucky=zoneMapLuckyChance(zoneLocation);
+     const weights=zoneKind==='anomaly'
+         ?[['anomaly',0.62],['mutant',0.12],['npc',0.10],['lucky',lucky]]
+         :zoneKind==='mutant'
+@@ -5381,7 +5384,7 @@
+ }
+ 
+ function zoneMapLuckyReward(zoneTier){
+-    const locationTier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const locationTier=Math.max(1,Number(zoneTier)||1);
+     const supplies=[
+         ['Хлеб',20],['Вода',20],['Тушенка',18],['Энергетик',18],
+         ['Аптечка гражданская',10],['Аптечка армейская',6],['Аптечка научная',2],['Антирад',6]
+@@ -5389,7 +5392,7 @@
+     const pickWeighted=list=>{let total=list.reduce((sum,x)=>sum+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list[list.length-1][0];};
+     // Обычные припасы доминируют на любой локации. Чем глубже игрок в Зоне,
+     // тем немного выше шанс именно снаряжения, но оно всё равно остаётся редкой находкой.
+-    const gearChance=0.03+(locationTier-1)*0.01; // Кордон 3% ... Янтарь 8%
++    const gearChance=Math.min(0.15,0.03+(locationTier-1)*0.01); // T1 3%, T6 8%, T11 13%
+     let item=null,text='',lootTier=1;
+     if(Math.random()>=gearChance){
+         item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';
+@@ -5590,7 +5593,7 @@
+     const zoneLocation=Number(req.body?.zoneLocation||1);
+     if(!['enemy','mutant','anomaly'].includes(zoneKind))
+         return res.status(400).json({success:false,error:'Неизвестная точка на карте'});
+-    if(![1,2,3,4,5,6].includes(zoneLocation))
++    if(!Number.isInteger(zoneLocation)||zoneLocation<1||zoneLocation>11)
+         return res.status(400).json({success:false,error:'Неизвестная локация'});
+     try{
+         const tx=db.transaction(()=>{
+@@ -5599,7 +5602,9 @@
+             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);if(!row)return{success:false,error:'Игрок не найден'};
+             const data=safeParsePlayerData(row.data);
+             if(!zoneMapLocationUnlocked(data,zoneLocation)){
+-                const error=zoneLocation===6
++                const error=zoneLocation>6
++                    ?'Эта локация пока закрыта.'
++                    :zoneLocation===6
+                     ?'Янтарь пока закрыт. Сначала должна быть открыта Темная долина.'
+                     :zoneLocation===5
+                     ?'Темная долина пока закрыта. Сначала должен быть открыт Росток.'
