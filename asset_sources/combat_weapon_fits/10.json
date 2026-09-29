@@ -31,7 +31,8 @@
     "The solid stock must retain its visible connection to the receiver while its rear section tucks behind the near arm.",
     "Only verified anatomical body contacts and hand masks are reused. Weapon transforms are calculated independently from the Saiga-12 source.",
     "The original shared weapon PNG remains unchanged; review composites are kept outside the game.",
-    "The rear polymer handguard was inspected directly: x935/y449 lies on its smooth lower edge. Restricting contact to the ribs forced unnecessary sleeve translations. All suits retain native arm positions except19; four individually reviewed downward-carry poses use25–30 degree angles to preserve sleeve seams."
+    "The rear polymer handguard was inspected directly: x935/y449 lies on its smooth lower edge. Restricting contact to the ribs forced unnecessary sleeve translations. All suits retain native arm positions except19; four individually reviewed downward-carry poses use25–30 degree angles to preserve sleeve seams.",
+    "User clarification on 2026-09-29: shoulder contact is optional. Tuck the buttstock between the bent near elbow and torso, maintaining continuous stock/receiver and both hand contacts. Reuse existing weapon-free heavy poses."
   ],
   "armorOverrides": {
     "1": {

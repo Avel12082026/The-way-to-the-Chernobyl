@@ -33,22 +33,31 @@ These releases correct both hand contacts, detached stock ends, shifted-arm
 seams and demonstrated cropped fingertips. Other weapons and shared armor
 images/definitions retain their previous fits. No source PNG was added or edited.
 
+## Fitting rule clarified by the user — 2026-09-29
+
+For shotguns, automatic weapons and rifles, shoulder contact is optional.
+The buttstock may tuck between the character's bent elbow and side. Prioritize
+an intact right-hand grip with the index at the trigger and the left palm on
+the actual fore-end. Keep the stock/receiver continuous and hide the rear stock
+behind the near arm where the pose calls for it. Do not redraw characters with
+individual weapons: retain one transparent source PNG per weapon.
+
 ## Remaining queue
 
-Current weapon is **10, Saiga-12**. Its contact/seam refinement is ready for
-publication and has been visually reviewed on all96 suits. See `10-review.json`.
-The shared PNG, all other weapon fits and renderer code remain unchanged.
-The reviewed support surface now includes the smooth rear handguard, reducing
-support-arm translations from38 to1 and eliminating clipped sleeve gaps.
+Current weapon is **10, Saiga-12**. Its contact/seam refinement has been
+reviewed on all 96 suits; see `10-review.json`. The shared PNG, all other
+weapon fits and renderer code remain unchanged. The inspected support surface
+includes the smooth rear handguard, reducing support-arm translations from
+38 to 1 and eliminating clipped sleeve gaps.
 
-**Do not mark10 fully finished or advance to11 yet:** source poses43,45–56,
-60,61,64 hold the stock against chest/upper arm below the shoulder pocket.
-Hand contacts and sleeve continuity are reviewed, but the requested strict
-shoulder placement needs a separate pose adjustment. Save and preserve the
-current contact improvements while finishing this detail.
+The earlier shoulder-only TODO for suits 43, 45–56, 60, 61 and 64 is superseded
+by the user's explicit low-ready fitting rule above. All 16 stock occlusions
+were reinspected and accepted: continuous stocks tuck behind the near arm,
+with intact grip/fore-end contacts and sleeve seams. No new pose PNGs are used.
 
-After completing10, continue remaining heavy IDs ascending, then pistol poses.
-The other109 weapons are not certified by the 114/32/20 or10 contact reviews.
+After publishing and verifying 10, continue remaining heavy IDs ascending
+(starting with **11, АКС-74У**), then pistol poses. The other 109 weapons are
+not certified by the 114/32/20/10 reviews.
 
 `asset_sources/combat_weapon_fits/heavy-source-anchors.json` records the inspected
 source contact surfaces for all 87 heavy weapons. This is source inspection,

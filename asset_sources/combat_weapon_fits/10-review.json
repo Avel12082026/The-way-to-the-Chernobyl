@@ -22,12 +22,23 @@
   "renderedArmorCount": 96,
   "completeArmorCoverage": true,
   "humanReview": {
-    "status": "contacts-and-seams-reviewed-shoulder-posture-pending",
+    "status": "accepted-user-authorized-low-carry",
     "reviewedOn": "2026-09-29",
     "all96ContactCropsInspected": true,
     "sourceWeaponUnchanged": true,
     "strictShoulderAimingAccepted": false,
-    "shoulderPoseFollowupArmors": [
+    "shoulderPoseFollowupArmors": [],
+    "findings": [
+      "All 96 assemblies reviewed for index/trigger and support/fore-end contact, stock continuity and arm seams. Original body and weapon images remain unchanged.",
+      "All previously flagged arm cutouts and detached sleeve fragments were removed by retaining native support-arm positions. Only armor19 retains a bounded rigid support-arm translation.",
+      "Armors29/30/33/66 retain visually reviewed natural downward-carry angles under30 degrees.",
+      "The user explicitly accepts low-carry poses. All 16 previously shoulder-flagged suits were reinspected: stock/receiver remain connected, rear stock tucks behind near arm against torso, hands and sleeve seams remain intact. No raised-arm sprites are used.",
+      "Geometric reflection passes all96. Strict raster threshold fails on6/9/19 due inspected isolated antialias/clip edges; exact or strict pixel equality is not claimed."
+    ],
+    "strictShoulderAimingRequired": false,
+    "stockPlacementRule": "Buttstock may tuck between bent near elbow and torso. Shoulder contact is optional; prioritize right grip/index and left fore-end contact.",
+    "ruleClarifiedByUserOn": "2026-09-29",
+    "lowCarryRecheckedArmors": [
       43,
       45,
       46,
@@ -44,13 +55,6 @@
       60,
       61,
       64
-    ],
-    "findings": [
-      "All 96 assemblies reviewed for index/trigger and support/fore-end contact, stock continuity and arm seams. Original body and weapon images remain unchanged.",
-      "All previously flagged arm cutouts and detached sleeve fragments were removed by retaining native support-arm positions. Only armor19 retains a bounded rigid support-arm translation.",
-      "Armors29/30/33/66 retain visually reviewed natural downward-carry angles under30 degrees.",
-      "Listed source poses keep the stock low against chest/upper arm. Their strict buttstock-in-shoulder requirement is not complete; remain on weapon10 before advancing the queue.",
-      "Geometric reflection passes all96. Strict raster threshold fails on6/9/19 due inspected isolated antialias/clip edges; exact or strict pixel equality is not claimed."
     ]
   },
   "sheets": [
@@ -100,7 +104,7 @@
       "actor": "actors/armor-001.jpg",
       "contactCrop": "crops/armor-001.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -142,7 +146,7 @@
       "actor": "actors/armor-002.jpg",
       "contactCrop": "crops/armor-002.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -184,7 +188,7 @@
       "actor": "actors/armor-003.jpg",
       "contactCrop": "crops/armor-003.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -226,7 +230,7 @@
       "actor": "actors/armor-004.jpg",
       "contactCrop": "crops/armor-004.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -268,7 +272,7 @@
       "actor": "actors/armor-005.jpg",
       "contactCrop": "crops/armor-005.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -310,7 +314,7 @@
       "actor": "actors/armor-006.jpg",
       "contactCrop": "crops/armor-006.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -352,7 +356,7 @@
       "actor": "actors/armor-007.jpg",
       "contactCrop": "crops/armor-007.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -394,7 +398,7 @@
       "actor": "actors/armor-008.jpg",
       "contactCrop": "crops/armor-008.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -436,7 +440,7 @@
       "actor": "actors/armor-009.jpg",
       "contactCrop": "crops/armor-009.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -478,7 +482,7 @@
       "actor": "actors/armor-010.jpg",
       "contactCrop": "crops/armor-010.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -520,7 +524,7 @@
       "actor": "actors/armor-011.jpg",
       "contactCrop": "crops/armor-011.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -562,7 +566,7 @@
       "actor": "actors/armor-012.jpg",
       "contactCrop": "crops/armor-012.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -604,7 +608,7 @@
       "actor": "actors/armor-013.jpg",
       "contactCrop": "crops/armor-013.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -646,7 +650,7 @@
       "actor": "actors/armor-014.jpg",
       "contactCrop": "crops/armor-014.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -688,7 +692,7 @@
       "actor": "actors/armor-015.jpg",
       "contactCrop": "crops/armor-015.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -730,7 +734,7 @@
       "actor": "actors/armor-016.jpg",
       "contactCrop": "crops/armor-016.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -772,7 +776,7 @@
       "actor": "actors/armor-017.jpg",
       "contactCrop": "crops/armor-017.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -814,7 +818,7 @@
       "actor": "actors/armor-018.jpg",
       "contactCrop": "crops/armor-018.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1053,7 +1057,7 @@
       "actor": "actors/armor-019.jpg",
       "contactCrop": "crops/armor-019.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1095,7 +1099,7 @@
       "actor": "actors/armor-020.jpg",
       "contactCrop": "crops/armor-020.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1137,7 +1141,7 @@
       "actor": "actors/armor-021.jpg",
       "contactCrop": "crops/armor-021.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1179,7 +1183,7 @@
       "actor": "actors/armor-022.jpg",
       "contactCrop": "crops/armor-022.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1221,7 +1225,7 @@
       "actor": "actors/armor-023.jpg",
       "contactCrop": "crops/armor-023.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1263,7 +1267,7 @@
       "actor": "actors/armor-024.jpg",
       "contactCrop": "crops/armor-024.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1305,7 +1309,7 @@
       "actor": "actors/armor-025.jpg",
       "contactCrop": "crops/armor-025.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1347,7 +1351,7 @@
       "actor": "actors/armor-026.jpg",
       "contactCrop": "crops/armor-026.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1389,7 +1393,7 @@
       "actor": "actors/armor-027.jpg",
       "contactCrop": "crops/armor-027.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1431,7 +1435,7 @@
       "actor": "actors/armor-028.jpg",
       "contactCrop": "crops/armor-028.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1473,7 +1477,7 @@
       "actor": "actors/armor-029.jpg",
       "contactCrop": "crops/armor-029.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1515,7 +1519,7 @@
       "actor": "actors/armor-030.jpg",
       "contactCrop": "crops/armor-030.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1557,7 +1561,7 @@
       "actor": "actors/armor-031.jpg",
       "contactCrop": "crops/armor-031.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1599,7 +1603,7 @@
       "actor": "actors/armor-032.jpg",
       "contactCrop": "crops/armor-032.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1641,7 +1645,7 @@
       "actor": "actors/armor-033.jpg",
       "contactCrop": "crops/armor-033.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1683,7 +1687,7 @@
       "actor": "actors/armor-034.jpg",
       "contactCrop": "crops/armor-034.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1725,7 +1729,7 @@
       "actor": "actors/armor-035.jpg",
       "contactCrop": "crops/armor-035.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1767,7 +1771,7 @@
       "actor": "actors/armor-036.jpg",
       "contactCrop": "crops/armor-036.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1809,7 +1813,7 @@
       "actor": "actors/armor-037.jpg",
       "contactCrop": "crops/armor-037.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1851,7 +1855,7 @@
       "actor": "actors/armor-038.jpg",
       "contactCrop": "crops/armor-038.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1893,7 +1897,7 @@
       "actor": "actors/armor-039.jpg",
       "contactCrop": "crops/armor-039.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1935,7 +1939,7 @@
       "actor": "actors/armor-040.jpg",
       "contactCrop": "crops/armor-040.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -1977,7 +1981,7 @@
       "actor": "actors/armor-041.jpg",
       "contactCrop": "crops/armor-041.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -2019,7 +2023,7 @@
       "actor": "actors/armor-042.jpg",
       "contactCrop": "crops/armor-042.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -2061,7 +2065,7 @@
       "actor": "actors/armor-043.jpg",
       "contactCrop": "crops/armor-043.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2105,7 +2109,7 @@
       "actor": "actors/armor-044.jpg",
       "contactCrop": "crops/armor-044.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -2147,7 +2151,7 @@
       "actor": "actors/armor-045.jpg",
       "contactCrop": "crops/armor-045.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2191,7 +2195,7 @@
       "actor": "actors/armor-046.jpg",
       "contactCrop": "crops/armor-046.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2235,7 +2239,7 @@
       "actor": "actors/armor-047.jpg",
       "contactCrop": "crops/armor-047.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2279,7 +2283,7 @@
       "actor": "actors/armor-048.jpg",
       "contactCrop": "crops/armor-048.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2323,7 +2327,7 @@
       "actor": "actors/armor-049.jpg",
       "contactCrop": "crops/armor-049.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2367,7 +2371,7 @@
       "actor": "actors/armor-050.jpg",
       "contactCrop": "crops/armor-050.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2621,7 +2625,7 @@
       "actor": "actors/armor-051.jpg",
       "contactCrop": "crops/armor-051.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2665,7 +2669,7 @@
       "actor": "actors/armor-052.jpg",
       "contactCrop": "crops/armor-052.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2899,7 +2903,7 @@
       "actor": "actors/armor-053.jpg",
       "contactCrop": "crops/armor-053.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2943,7 +2947,7 @@
       "actor": "actors/armor-054.jpg",
       "contactCrop": "crops/armor-054.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -2987,7 +2991,7 @@
       "actor": "actors/armor-055.jpg",
       "contactCrop": "crops/armor-055.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -3193,7 +3197,7 @@
       "actor": "actors/armor-056.jpg",
       "contactCrop": "crops/armor-056.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -3237,7 +3241,7 @@
       "actor": "actors/armor-057.jpg",
       "contactCrop": "crops/armor-057.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -3279,7 +3283,7 @@
       "actor": "actors/armor-058.jpg",
       "contactCrop": "crops/armor-058.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -3321,7 +3325,7 @@
       "actor": "actors/armor-059.jpg",
       "contactCrop": "crops/armor-059.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -3613,7 +3617,7 @@
       "actor": "actors/armor-060.jpg",
       "contactCrop": "crops/armor-060.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -3657,7 +3661,7 @@
       "actor": "actors/armor-061.jpg",
       "contactCrop": "crops/armor-061.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -3939,7 +3943,7 @@
       "actor": "actors/armor-062.jpg",
       "contactCrop": "crops/armor-062.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -3981,7 +3985,7 @@
       "actor": "actors/armor-063.jpg",
       "contactCrop": "crops/armor-063.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4023,7 +4027,7 @@
       "actor": "actors/armor-064.jpg",
       "contactCrop": "crops/armor-064.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": [
           "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
         ]
@@ -4067,7 +4071,7 @@
       "actor": "actors/armor-065.jpg",
       "contactCrop": "crops/armor-065.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4435,7 +4439,7 @@
       "actor": "actors/armor-066.jpg",
       "contactCrop": "crops/armor-066.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4477,7 +4481,7 @@
       "actor": "actors/armor-067.jpg",
       "contactCrop": "crops/armor-067.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4519,7 +4523,7 @@
       "actor": "actors/armor-068.jpg",
       "contactCrop": "crops/armor-068.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4561,7 +4565,7 @@
       "actor": "actors/armor-069.jpg",
       "contactCrop": "crops/armor-069.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4603,7 +4607,7 @@
       "actor": "actors/armor-070.jpg",
       "contactCrop": "crops/armor-070.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4951,7 +4955,7 @@
       "actor": "actors/armor-071.jpg",
       "contactCrop": "crops/armor-071.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -4993,7 +4997,7 @@
       "actor": "actors/armor-072.jpg",
       "contactCrop": "crops/armor-072.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5035,7 +5039,7 @@
       "actor": "actors/armor-073.jpg",
       "contactCrop": "crops/armor-073.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5077,7 +5081,7 @@
       "actor": "actors/armor-074.jpg",
       "contactCrop": "crops/armor-074.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5119,7 +5123,7 @@
       "actor": "actors/armor-075.jpg",
       "contactCrop": "crops/armor-075.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5161,7 +5165,7 @@
       "actor": "actors/armor-076.jpg",
       "contactCrop": "crops/armor-076.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5203,7 +5207,7 @@
       "actor": "actors/armor-077.jpg",
       "contactCrop": "crops/armor-077.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5245,7 +5249,7 @@
       "actor": "actors/armor-078.jpg",
       "contactCrop": "crops/armor-078.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5287,7 +5291,7 @@
       "actor": "actors/armor-079.jpg",
       "contactCrop": "crops/armor-079.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5329,7 +5333,7 @@
       "actor": "actors/armor-080.jpg",
       "contactCrop": "crops/armor-080.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5371,7 +5375,7 @@
       "actor": "actors/armor-081.jpg",
       "contactCrop": "crops/armor-081.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5413,7 +5417,7 @@
       "actor": "actors/armor-082.jpg",
       "contactCrop": "crops/armor-082.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5455,7 +5459,7 @@
       "actor": "actors/armor-083.jpg",
       "contactCrop": "crops/armor-083.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5497,7 +5501,7 @@
       "actor": "actors/armor-084.jpg",
       "contactCrop": "crops/armor-084.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5539,7 +5543,7 @@
       "actor": "actors/armor-085.jpg",
       "contactCrop": "crops/armor-085.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5581,7 +5585,7 @@
       "actor": "actors/armor-086.jpg",
       "contactCrop": "crops/armor-086.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5623,7 +5627,7 @@
       "actor": "actors/armor-087.jpg",
       "contactCrop": "crops/armor-087.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5665,7 +5669,7 @@
       "actor": "actors/armor-088.jpg",
       "contactCrop": "crops/armor-088.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5707,7 +5711,7 @@
       "actor": "actors/armor-089.jpg",
       "contactCrop": "crops/armor-089.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5749,7 +5753,7 @@
       "actor": "actors/armor-090.jpg",
       "contactCrop": "crops/armor-090.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5791,7 +5795,7 @@
       "actor": "actors/armor-091.jpg",
       "contactCrop": "crops/armor-091.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5833,7 +5837,7 @@
       "actor": "actors/armor-092.jpg",
       "contactCrop": "crops/armor-092.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5875,7 +5879,7 @@
       "actor": "actors/armor-093.jpg",
       "contactCrop": "crops/armor-093.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5917,7 +5921,7 @@
       "actor": "actors/armor-094.jpg",
       "contactCrop": "crops/armor-094.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -5959,7 +5963,7 @@
       "actor": "actors/armor-095.jpg",
       "contactCrop": "crops/armor-095.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     },
@@ -6001,7 +6005,7 @@
       "actor": "actors/armor-096.jpg",
       "contactCrop": "crops/armor-096.jpg",
       "humanReview": {
-        "status": "contacts-and-seams-reviewed",
+        "status": "accepted-contacts-seams-and-low-carry",
         "findings": []
       }
     }
@@ -6025,5 +6029,11 @@
     "pixelsOverTwoLevels": 210,
     "opaquePixels": 13849556,
     "note": "Magnified player/reflected-NPC and isolated-layer inspection found fingertip/alpha clip rounding; no geometry displacement. Original strict results retained."
+  },
+  "visualReview": {
+    "status": "accepted",
+    "method": "Existing all-96 contact and seam review, plus independent reinspection of all 16 previously shoulder-flagged full-resolution crops against the user’s clarified low-carry rule. Assistant QA, not a new user sign-off of individual pixels.",
+    "reviewedOn": "2026-09-29",
+    "outstandingFindings": []
   }
 }
