@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
 const fighters=require('../images/combat/fighters.js');
 const data=fighters.data;
-// Freeze deployed e423b52a. Only these three reviewed contours may differ.
+// Freeze deployed e423b52a outside explicitly recorded visual reviews.
 const oldMasks=require('./baseline-old-masks.json'),fixes=require('./baseline-mask-fixes.json');
 const oldWeaponIds=[1,2,3,5,6,7,10,11,12,15,16,17,18,19,20,21,22,25,26,29,32,37,38,43,44,45,47,50,51,53,56,57,59,61,62,63,65,67,68,69,71,74,75,77,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125];
 function canonical(value){return Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;}
@@ -30,6 +30,18 @@ for(const [key,original]of Object.entries(reviewedFits.pairAdjustments)){
  assert.ok(oldAdjustments[key],'Reviewed fit must already exist in the frozen release');
  oldAdjustments[key]=original;
 }
+// Armor-first review changes only these thirteen inspected Yunost pairs.
+// Pin the approved values as well as the allowlist: editing a ledger must not
+// silently permit an arbitrary new transform or relax the frozen baseline.
+const armorReview=require('../asset_sources/combat_armor_reviews/1.json');
+const reviewedArmorKeys=['1-116','1-121','1-22','1-43','1-52','1-55','1-56','1-60','1-62','1-73','1-75','1-77','1-78'];
+assert.deepEqual(Object.keys(armorReview.pairAdjustments).sort(),reviewedArmorKeys);
+assert.deepEqual(Object.keys(armorReview.originalPairAdjustments).sort(),reviewedArmorKeys);
+assert.equal(hash(armorReview.pairAdjustments),'c16748330aad731d950a02b1a071a363c3866ef6ff5704e238a203a5b3f61a8c','Yunost review must retain exactly the thirteen visually accepted transforms');
+for(const key of reviewedArmorKeys){
+ assert.deepEqual(data.pairAdjustments[key],armorReview.pairAdjustments[key],'Runtime differs from accepted Yunost pair '+key);
+ if(Object.hasOwn(oldAdjustments,key))oldAdjustments[key]=armorReview.originalPairAdjustments[key];
+}
 assert.equal(data.version,'combat-environments-flashes-v1');
 assert.equal(Object.keys(data.characters).length,96);
 assert.equal(Object.keys(oldWeapons).length,84);
@@ -48,4 +60,4 @@ const acceptedFits=Array.from({length:96},(_,index)=>{
 });
 assert.equal(createHash('sha256').update(JSON.stringify(acceptedFits)).digest('hex'),accepted.weaponFitSha256,'Accepted fits for weapon'+weaponId+' must remain exactly unchanged while reviewing the next weapon');
 }
-console.log('PASS: deployed e423b52a preserved outside the exact reviewed masks and384 MCS/Saiga fits;84 shared weapon definitions unchanged');
+console.log('PASS: deployed e423b52a preserved outside the exact reviewed masks,384 MCS/Saiga fits and13 Yunost pairs;84 shared weapon definitions unchanged');

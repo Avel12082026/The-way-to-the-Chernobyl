@@ -1,0 +1,690 @@
+{
+  "armorId": 1,
+  "status": "visually-reviewed-and-accepted",
+  "baselineRendererSha256": "82744e20693df7928b7b7cf840e17185ec92e612c39a15962b9e26d293bc265c",
+  "method": "Only 13 visually defective armor1 weapon pair transforms changed. Same two shared poses and original weapon PNGs. Hand placement uses inspected source contacts; far forearm moves rigidly behind torso. No composited runtime assets.",
+  "pairAdjustments": {
+    "1-22": {
+      "size": 130,
+      "angle": 6.695053,
+      "dx": -39.064236,
+      "dy": 21.396344,
+      "supportShift": [
+        -46.732083,
+        0.712379
+      ]
+    },
+    "1-43": {
+      "size": 83.333333,
+      "angle": 0,
+      "dx": -20.4,
+      "dy": 13.7,
+      "supportShift": [
+        -259.925,
+        42.975
+      ]
+    },
+    "1-56": {
+      "size": 80,
+      "angle": 4.511577,
+      "dx": -26.927087,
+      "dy": 9.798926,
+      "supportShift": [
+        -131.957481,
+        2.011547
+      ]
+    },
+    "1-60": {
+      "size": 101.238,
+      "angle": 3.8071,
+      "dx": -22.896369,
+      "dy": -5.32991,
+      "supportShift": [
+        -154.323973,
+        2.3525
+      ]
+    },
+    "1-62": {
+      "size": 88.095238,
+      "angle": 4.485811,
+      "dx": -28.614312,
+      "dy": 13.061605,
+      "supportShift": [
+        -129.947181,
+        1.980902
+      ]
+    },
+    "1-73": {
+      "size": 109.52381,
+      "angle": 4.479283,
+      "dx": -7.340505,
+      "dy": 19.910387,
+      "supportShift": [
+        -71.61166,
+        1.091641
+      ]
+    },
+    "1-75": {
+      "size": 94,
+      "angle": 0,
+      "dx": -22.17,
+      "dy": 10.38,
+      "supportShift": [
+        -125.9,
+        11.11
+      ]
+    },
+    "1-77": {
+      "size": 98,
+      "angle": 3.545277,
+      "dx": -17.815911,
+      "dy": 19.839869,
+      "supportShift": [
+        -111.782397,
+        1.704
+      ]
+    },
+    "1-78": {
+      "size": 105.638,
+      "angle": -3.052024,
+      "dx": -7.955093,
+      "dy": 17.173295,
+      "supportShift": [
+        -133.508068,
+        2.035184
+      ]
+    },
+    "1-116": {
+      "size": 99.924,
+      "angle": 6.453063,
+      "dx": -26.137689,
+      "dy": -29.897197,
+      "supportShift": [
+        -169.342668,
+        2.581443
+      ]
+    },
+    "1-121": {
+      "size": 100.009,
+      "angle": 2.969109,
+      "dx": -45.989765,
+      "dy": -26.952849,
+      "supportShift": [
+        -126.552426,
+        1.929153
+      ]
+    },
+    "1-52": {
+      "size": 110,
+      "angle": 3.783003,
+      "dx": -28.998622,
+      "dy": 10.312549,
+      "supportShift": [
+        -206.061666,
+        3.141184
+      ]
+    },
+    "1-55": {
+      "size": 104,
+      "angle": 5.060502,
+      "dx": -27.710928,
+      "dy": -11.757907,
+      "supportShift": [
+        3.940203,
+        -0.060064
+      ]
+    }
+  },
+  "pairs": {
+    "1-22": {
+      "weaponId": 22,
+      "name": "Пулемёт ПКМ",
+      "adjustment": {
+        "size": 130,
+        "angle": 6.695053,
+        "dx": -39.064236,
+        "dy": 21.396344,
+        "supportShift": [
+          -46.732083,
+          0.712379
+        ]
+      },
+      "sourceTrigger": [
+        489,
+        457
+      ],
+      "sourceSupport": [
+        918,
+        400
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        861.267917,
+        448.712379
+      ]
+    },
+    "1-43": {
+      "weaponId": 43,
+      "name": "Автомат ОЦ-14 «Гроза»",
+      "adjustment": {
+        "size": 83.333333,
+        "angle": 0,
+        "dx": -20.4,
+        "dy": 13.7,
+        "supportShift": [
+          -259.925,
+          42.975
+        ]
+      },
+      "sourceTrigger": [
+        974,
+        543
+      ],
+      "sourceSupport": [
+        1168.5,
+        651.5
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        648.075,
+        490.975
+      ]
+    },
+    "1-56": {
+      "weaponId": 56,
+      "name": "Дробовик AA-12",
+      "adjustment": {
+        "size": 80,
+        "angle": 4.511577,
+        "dx": -26.927087,
+        "dy": 9.798926,
+        "supportShift": [
+          -131.957481,
+          2.011547
+        ]
+      },
+      "sourceTrigger": [
+        762,
+        557
+      ],
+      "sourceSupport": [
+        1250,
+        511
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        776.042519,
+        450.011547
+      ]
+    },
+    "1-60": {
+      "weaponId": 60,
+      "name": "Винтовка Accuracy International AXMC",
+      "adjustment": {
+        "size": 101.238,
+        "angle": 3.8071,
+        "dx": -22.896369,
+        "dy": -5.32991,
+        "supportShift": [
+          -154.323973,
+          2.3525
+        ]
+      },
+      "sourceTrigger": [
+        468,
+        574
+      ],
+      "sourceSupport": [
+        810,
+        546
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        753.676027,
+        450.3525
+      ]
+    },
+    "1-62": {
+      "weaponId": 62,
+      "name": "Дробовик Kel-Tec KSG",
+      "adjustment": {
+        "size": 88.095238,
+        "angle": 4.485811,
+        "dx": -28.614312,
+        "dy": 13.061605,
+        "supportShift": [
+          -129.947181,
+          1.980902
+        ]
+      },
+      "sourceTrigger": [
+        822,
+        572
+      ],
+      "sourceSupport": [
+        1355,
+        522
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        778.052819,
+        449.980902
+      ]
+    },
+    "1-73": {
+      "weaponId": 73,
+      "name": "Прототип X-17",
+      "adjustment": {
+        "size": 109.52381,
+        "angle": 4.479283,
+        "dx": -7.340505,
+        "dy": 19.910387,
+        "supportShift": [
+          -71.61166,
+          1.091641
+        ]
+      },
+      "sourceTrigger": [
+        695,
+        568
+      ],
+      "sourceSupport": [
+        1250,
+        516
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        836.38834,
+        449.091641
+      ]
+    },
+    "1-75": {
+      "weaponId": 75,
+      "name": "Автомат SCAR-H",
+      "adjustment": {
+        "size": 94,
+        "angle": 0,
+        "dx": -22.17,
+        "dy": 10.38,
+        "supportShift": [
+          -125.9,
+          11.11
+        ]
+      },
+      "sourceTrigger": [
+        601,
+        591
+      ],
+      "sourceSupport": [
+        1031,
+        604
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        782.1,
+        459.11
+      ]
+    },
+    "1-77": {
+      "weaponId": 77,
+      "name": "Пулемёт Negev NG7",
+      "adjustment": {
+        "size": 98,
+        "angle": 3.545277,
+        "dx": -17.815911,
+        "dy": 19.839869,
+        "supportShift": [
+          -111.782397,
+          1.704
+        ]
+      },
+      "sourceTrigger": [
+        598,
+        563
+      ],
+      "sourceSupport": [
+        1038,
+        529
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        796.217603,
+        449.704
+      ]
+    },
+    "1-78": {
+      "weaponId": 78,
+      "name": "Винтовка Cheytac M200 Intervention",
+      "adjustment": {
+        "size": 105.638,
+        "angle": -3.052024,
+        "dx": -7.955093,
+        "dy": 17.173295,
+        "supportShift": [
+          -133.508068,
+          2.035184
+        ]
+      },
+      "sourceTrigger": [
+        400,
+        543
+      ],
+      "sourceSupport": [
+        768,
+        557
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        774.491932,
+        450.035184
+      ]
+    },
+    "1-116": {
+      "weaponId": 116,
+      "name": "Дробовик TOZ-194",
+      "adjustment": {
+        "size": 99.924,
+        "angle": 6.453063,
+        "dx": -26.137689,
+        "dy": -29.897197,
+        "supportShift": [
+          -169.342668,
+          2.581443
+        ]
+      },
+      "sourceTrigger": [
+        585,
+        522
+      ],
+      "sourceSupport": [
+        900,
+        481.5
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        738.657332,
+        450.581443
+      ]
+    },
+    "1-121": {
+      "weaponId": 121,
+      "name": "Дробовик Browning A5",
+      "adjustment": {
+        "size": 100.009,
+        "angle": 2.969109,
+        "dx": -45.989765,
+        "dy": -26.952849,
+        "supportShift": [
+          -126.552426,
+          1.929153
+        ]
+      },
+      "sourceTrigger": [
+        613,
+        526
+      ],
+      "sourceSupport": [
+        1015,
+        499
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        781.447574,
+        449.929153
+      ]
+    },
+    "1-52": {
+      "weaponId": 52,
+      "adjustment": {
+        "size": 110,
+        "angle": 3.783003,
+        "dx": -28.998622,
+        "dy": 10.312549,
+        "supportShift": [
+          -206.061666,
+          3.141184
+        ]
+      },
+      "sourceTrigger": [
+        484,
+        517
+      ],
+      "sourceSupport": [
+        705,
+        499
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        701.938334,
+        451.141184
+      ],
+      "notes": "Direct source reinspection: lower receiver above the magazine, x665..705. The entire broad palm stays on receiver and magwell, behind exposed barrel start~x790. Receiver/magwell support carry hold, not a conventional fore-end. Existing blocked source metadata remains unchanged."
+    },
+    "1-55": {
+      "weaponId": 55,
+      "adjustment": {
+        "size": 104,
+        "angle": 5.060502,
+        "dx": -27.710928,
+        "dy": -11.757907,
+        "supportShift": [
+          3.940203,
+          -0.060064
+        ]
+      },
+      "sourceTrigger": [
+        590,
+        604
+      ],
+      "sourceSupport": [
+        1225,
+        538
+      ],
+      "targetTrigger": [
+        580,
+        453
+      ],
+      "sourceBodySupport": [
+        908,
+        448
+      ],
+      "targetSupport": [
+        911.940203,
+        447.939936
+      ],
+      "notes": "Direct source reinspection: solid lower housing rail under forward energy chamber, beyond exposed central coils and cables. This is a housing carry grip, not a conventional fore-end. Existing blocked source metadata remains unchanged."
+    }
+  },
+  "sourceContactReviewNotes": {
+    "60": "Direct source reinspection: rear tan fore-end lower edge x750..843 at y546 behind bipod; choose x810 so entire palm stays on fore-end.",
+    "52": "Carrying support exception: solid lower receiver/magwell at x705/y499, excludes bare barrel beginning x790; not labeled conventional fore-end.",
+    "55": "Carrying support exception: solid lower forward energy-chamber housing rail x1225/y538, excludes central exposed coils/cables; not labeled conventional fore-end.",
+    "75": "Foregrip contact raised from y626 to604 to eliminate visible palm gap, keeping upright foregrip and horizontal weapon."
+  },
+  "originalPairAdjustments": {
+    "1-22": {
+      "size": 143.154,
+      "angle": 8.258,
+      "dx": -35.039,
+      "dy": 16.978
+    },
+    "1-43": {
+      "size": 130.95238095238096,
+      "angle": 0,
+      "dx": -41,
+      "dy": 21.150000000000006,
+      "supportShift": [
+        -179,
+        -27.600000000000023
+      ]
+    },
+    "1-56": {
+      "size": 101.081,
+      "angle": 0.901,
+      "dx": -18.179,
+      "dy": 19.069
+    },
+    "1-60": {
+      "size": 101.238,
+      "angle": 4.511,
+      "dx": -5.644,
+      "dy": -6.037
+    },
+    "1-62": {
+      "size": 123.598,
+      "angle": 3.519,
+      "dx": -23.799,
+      "dy": 23.091
+    },
+    "1-73": {
+      "size": 126.085,
+      "angle": 4.539,
+      "dx": -0.057,
+      "dy": 27.01
+    },
+    "1-75": {
+      "size": 114.668,
+      "angle": 8.63,
+      "dx": -25.503,
+      "dy": 4.14
+    },
+    "1-77": {
+      "size": 130.652,
+      "angle": 3.311,
+      "dx": -26.83,
+      "dy": 26.441
+    },
+    "1-78": {
+      "size": 105.638,
+      "angle": 6.889,
+      "dx": -4.254,
+      "dy": 5.93
+    },
+    "1-116": {
+      "size": 99.924,
+      "angle": 5.789,
+      "dx": -5.841,
+      "dy": -32.281
+    },
+    "1-121": {
+      "size": 100.009,
+      "angle": 4.275,
+      "dx": -22.506,
+      "dy": -27.887
+    },
+    "1-52": {
+      "size": 110.00000000000001,
+      "angle": 0,
+      "dx": -10.750000000000007,
+      "dy": 8.500000000000004,
+      "supportShift": [
+        -156.45000000000005,
+        -22.649999999999977
+      ]
+    },
+    "1-55": {
+      "size": 136.858,
+      "angle": 2.624,
+      "dx": -26.054,
+      "dy": -10.198
+    }
+  },
+  "reviewedOn": "2026-09-29",
+  "baselineCommit": "a22070c6bf9eba7f41b08bc39e77a76092c831a0",
+  "visualCoverage": {
+    "armorId": 1,
+    "availableWeaponPairsReviewed": 113,
+    "catalogWeapons": 116,
+    "missingModularWeaponIds": [
+      4,
+      8,
+      9
+    ],
+    "scope": "All 113 existing weapons on both poses were inspected in production Canvas contact crops. Only 13 visible defects were changed. The final 13 crops were independently reviewed."
+  },
+  "acceptedRendererSha256": "6b80685c9399261ae223460b41eb446ba3c968cb53c37b14a3514c31c1aa2aab"
+}

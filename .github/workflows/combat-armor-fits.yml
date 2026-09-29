@@ -1,0 +1,27 @@
+name: Combat armor fits
+on:
+  push:
+    branches: [main]
+    paths: ['images/combat/fighters.js', 'asset_sources/combat_armor_reviews/**', 'tests/combat_fighters*', '.github/workflows/combat-armor-fits.yml']
+  pull_request:
+    paths: ['images/combat/fighters.js', 'asset_sources/combat_armor_reviews/**', 'tests/combat_fighters*', '.github/workflows/combat-armor-fits.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preserve shared poses and reviewed weapon contacts
+        run: |
+          node --check images/combat/fighters.js
+          node tests/combat_fighters.test.cjs
+          node tests/combat_fighters_baseline.test.cjs
+          node tests/combat_fighters_compact.test.cjs
+          node tests/combat_weapon_contacts.test.cjs
+          node tests/combat_fighters_scene.test.cjs
+          git diff --check
