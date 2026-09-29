@@ -23,5 +23,5 @@ const bytes=Buffer.from(b64,'base64');
 assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF','portrait is not WebP/RIFF');
 assert(bytes.length>30000,'portrait asset unexpectedly small');
 assert(index.includes('ui/bunker-menu.css?v=20260928-yantar-hud1'));
-assert(index.includes('ui/bunker-menu.js?v=20260929-leonov-return1'));
+assert(index.includes('ui/bunker-menu.js?v=20260929-zone-economy3'));
 console.log('PASS: smoking stalker portrait remains available internally while Cordon camp stays Zhuchara-only');
