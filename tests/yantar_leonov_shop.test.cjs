@@ -15,6 +15,6 @@ assert(trade.includes("serverVendor = 'zhuchara'"),'Yantar regular gear must reu
 assert(trade.includes("!item?.isResearchSuit"),'research suits must stay on Leonov server validation');
 assert(trade.includes("version: '1.4.0'"),'TradeMenu version mismatch');
 assert(trade.includes("slot === 'weapon' || slot === 'armor'"),'Leonov must accept weapons and armor');
-assert(trade.includes("vendorId === 'technician' && isVizir(item)")&&trade.includes("tokens:200"),'Vizir must cost 200 stalkcoins in Diesel trade');
+assert(trade.includes("vendorId === 'technician' && isVizir(item)")&&trade.includes("tokens:100"),'Vizir must cost 100 stalkcoins in Diesel trade');
 assert(trade.includes("window.BunkerMenu?.openYantarWarehouse"),'Leonov trade warehouse must preserve Yantar return');
 console.log('PASS: Yantar Leonov progression stock, gear buyback, Vizir stalkcoin price and warehouse return are wired');

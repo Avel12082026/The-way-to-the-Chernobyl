@@ -48,7 +48,7 @@
   const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
   const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Антирад']);
   const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
-  const LEONOV_BUYBACK_TYPES = new Set(['food','water','medkit']);
+  const LEONOV_BUYBACK_TYPES = new Set(['food','water','medkit','antirad']);
   const vendors = {
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
@@ -171,7 +171,7 @@
   const offerText = value => [value.coins ? `${money(value.coins)} сталбайтов` : '', value.tokens ? `${money(value.tokens)} сталкоинов` : ''].filter(Boolean).join(' + ') || '0 сталбайтов';
   const isVizir = item => !!item && item.category === 'detector' && String(item.name).toUpperCase() === 'ВИЗИРЬ';
   const buyCost = (vendorId, item) => (vendorId === 'technician' && isVizir(item))
-    ? {coins:0, tokens:200}
+    ? {coins:0, tokens:100}
     : {coins:number(vendors[vendorId].price(item)), tokens:0};
   const buyCostText = cost => offerText(cost);
   const canAfford = cost => number(player.coins) >= number(cost.coins) && number(player.breedCredits) >= number(cost.tokens);

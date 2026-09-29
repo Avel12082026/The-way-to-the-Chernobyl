@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Install Yantar trade fixes: Vizir for 200 stalkcoins and Leonov gear buyback."""
+"""Install Yantar trade fixes: Vizir for 100 stalkcoins and Leonov gear buyback."""
 from pathlib import Path
 import argparse, os, shutil, subprocess, tempfile, time
 
 VIZIR_MARK='// DIESEL_VIZIR_STALKCOIN_V1'
 VIZIR_ROUTE=r"""// DIESEL_VIZIR_STALKCOIN_V1
-const DIESEL_VIZIR_STALKCOIN_PRICE=200;
+const DIESEL_VIZIR_STALKCOIN_PRICE=100;
 app.post('/api/shop/buy',requireAuth,rateLimit('shop-buy-vizir',10,10000),(req,res,next)=>{
     const sourceVendor=String(req.body?.sourceVendor||req.body?.vendor||'');
     const category=String(req.body?.category||'');
@@ -23,7 +23,7 @@ app.post('/api/shop/buy',requireAuth,rateLimit('shop-buy-vizir',10,10000),(req,r
     data.coins=Number(data.coins)||0;
     data.breedCredits=Number(data.breedCredits)||0;
     if(data.breedCredits<DIESEL_VIZIR_STALKCOIN_PRICE)
-        return res.json({success:false,error:'Недостаточно сталкоинов. Нужно 200'});
+        return res.json({success:false,error:'Недостаточно сталкоинов. Нужно 100'});
     if(countNonStackingSlotsServer(data.inventory)>=50)
         return res.json({success:false,error:'Достигнут предел в 50 разных единиц снаряжения в инвентаре'});
     let finalName=item.name;
@@ -54,7 +54,7 @@ def patch(source):
     new="""        } else if (category === 'detector') {
             item = SHOP_DETECTORS.find(d => d.name === name);
             if (!item) return res.json({ success: false, error: 'Детектор не найден' });
-            if (item.specialOnly) return res.json({ success: false, error: 'ВИЗИРЬ продаётся у Дизеля за 200 сталкоинов' });
+            if (item.specialOnly) return res.json({ success: false, error: 'ВИЗИРЬ продаётся у Дизеля за 100 сталкоинов' });
         } else if (category === 'armor') {"""
     if old in text:
         text=text.replace(old,new,1);changed=True

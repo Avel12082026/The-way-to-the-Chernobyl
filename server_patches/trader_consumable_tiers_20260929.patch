@@ -7,10 +7,10 @@
 -    if (!['artifact','loot','weapon','armor'].includes(resolved.category)) {
 -        return res.json({ success: false, error: 'Леонов покупает артефакты, трофеи мутантов, оружие и броню' });
 +    const leonovConsumable = SHOP_CONSUMABLES.find(c =>
-+        c.name === name && ['food','water','medkit'].includes(String(c.type||''))
++        c.name === name && ['food','water','medkit','antirad'].includes(String(c.type||''))
 +    );
 +    if (!['artifact','loot','weapon','armor'].includes(resolved.category) && !leonovConsumable) {
-+        return res.json({ success: false, error: 'Леонов покупает артефакты, трофеи мутантов, оружие, броню, аптечки, еду и воду' });
++        return res.json({ success: false, error: 'Леонов покупает артефакты, трофеи мутантов, оружие, броню, аптечки, еду, воду и антирад' });
      }
  
      if (resolved.isNamed) {

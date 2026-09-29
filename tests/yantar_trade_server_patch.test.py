@@ -37,11 +37,11 @@ app.post('/api/shop/buy', requireAuth, rateLimit('shop-buy', 20, 10000), (req, r
 patched,changed=mod.patch(source)
 assert changed
 assert patched.count(mod.VIZIR_MARK)==1
-assert "DIESEL_VIZIR_STALKCOIN_PRICE=200" in patched
+assert "DIESEL_VIZIR_STALKCOIN_PRICE=100" in patched
 assert "sourceVendor!=='technician'||category!=='detector'||name!=='ВИЗИРЬ'" in patched
 assert "data.breedCredits<DIESEL_VIZIR_STALKCOIN_PRICE" in patched
 assert "data.breedCredits-=DIESEL_VIZIR_STALKCOIN_PRICE" in patched
-assert "item.specialOnly" in patched and "ВИЗИРЬ продаётся у Дизеля за 200 сталкоинов" in patched
+assert "item.specialOnly" in patched and "ВИЗИРЬ продаётся у Дизеля за 100 сталкоинов" in patched
 assert "['artifact','loot','weapon','armor'].includes(resolved.category)" in patched
 assert "resolved.category === 'loot' ? 1.20 : 1" in patched
 
