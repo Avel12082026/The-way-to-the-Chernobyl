@@ -80,7 +80,7 @@ const anomalies=[
  {id:2,name:'Электра',tier:2,artifacts:['А2Т']},
  {id:5,name:'Разлом',tier:5,artifacts:['А5Т']}
 ];
-const data={level:120,coins:0,inventory:{},quests:{}};
+const data={level:120,coins:0,inventory:{},quests:{},worldPosition:{zoneLocation:3},zoneUnlockedLocations:[1,2,3]};
 const db=new FakeDB(data);
 function sell(name){
  const all=[...weapons,...armor,...artifacts,...loot];const item=all.find(x=>x.name===name);
