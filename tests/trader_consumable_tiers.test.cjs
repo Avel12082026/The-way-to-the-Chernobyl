@@ -24,3 +24,5 @@ assert(patch.includes("['food','water','medkit'].includes"));
 assert(patch.includes("аптечки, еду и воду"));
 
 console.log('PASS: trader consumable progression and Leonov buyback rules');
+
+[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
