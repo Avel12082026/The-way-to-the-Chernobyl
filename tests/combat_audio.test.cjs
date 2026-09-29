@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const source=fs.readFileSync(path.join(__dirname,'../audio/combat-audio.js'),'utf8');
 function harness(options={}){
  let now=0,nextTimer=1;
- const timers=new Map(),listeners=new Map(),windowListeners=new Map(),contexts=[],fetches=[],sources=[],gains=[],compressors=[],originalCalls=[],pulses=[],storageWrites=[];
+ const timers=new Map(),listeners=new Map(),windowListeners=new Map(),contexts=[],fetches=[],sources=[],gains=[],compressors=[],originalCalls=[],pulses=[],mutantAttacks=[],storageWrites=[];
  const add=(map,type,callback)=>{if(!map.has(type))map.set(type,[]);map.get(type).push(callback);};
  const document={hidden:false,baseURI:options.documentBase??'https://game.test/app/index.html',currentScript:{src:options.scriptSrc??'https://assets.test/game/audio/combat-audio.js?v=7'},addEventListener(type,fn){add(listeners,type,fn);}};
  class FakeAudioContext{
@@ -11,16 +11,17 @@ function harness(options={}){
   createGain(){const gain={gain:{value:1},connections:[],connect(target){this.connections.push(target);},disconnect(){this.disconnected=true;}};gains.push(gain);return gain;}
   createDynamicsCompressor(){const node={threshold:{value:0},knee:{value:0},ratio:{value:1},attack:{value:0},release:{value:0},connections:[],connect(target){this.connections.push(target);}};compressors.push(node);return node;}
   createBufferSource(){const sound={playbackRate:{value:1},connections:[],connect(target){this.connections.push(target);},disconnect(){this.disconnected=true;},start(){this.startedAt=now;this.started=true;this.timer=window.setTimeout(()=>this.onended?.(),this.buffer.duration/this.playbackRate.value*1000);},stop(){this.stopped=true;window.clearTimeout(this.timer);this.onended?.();}};sources.push(sound);return sound;}
-  decodeAudioData(bytes,resolve){const url=bytes.url||'',buffer={bytes,url,duration:url.includes('/reactions/')?(options.reactionDuration??.8):(options.duration??.8)};resolve(buffer);return Promise.resolve(buffer);}
+  decodeAudioData(bytes,resolve){const url=bytes.url||'',buffer={bytes,url,duration:url.includes('/mutants/')?(options.mutantDuration??.8):url.includes('/reactions/')?(options.reactionDuration??.8):(options.duration??.8)};resolve(buffer);return Promise.resolve(buffer);}
   resume(){this.resumeCalls++;if(this.state==='closed')return Promise.reject(new Error('Context closed'));this.state='running';return Promise.resolve();}
  }
- const scene={show(next){originalCalls.push(['show',next]);return options.showResult??true;},react(...args){originalCalls.push(['react',...args,now]);return 'visual';},pulse(token,side){pulses.push({token,side,at:now});return true;},hide(){originalCalls.push(['hide']);}};
+ const scene={show(next){originalCalls.push(['show',next]);return options.showResult??true;},react(...args){originalCalls.push(['react',...args,now]);return 'visual';},pulse(token,side){pulses.push({token,side,at:now});return true;},mutantAttack(token){mutantAttacks.push({token,at:now});return options.mutantVisual!==false;},hide(){originalCalls.push(['hide']);}};
  const specs={1:[3,180],2:[3,100],3:[6,100],4:[2,350],5:[2,260],6:[3,260]};
  const weapons=Object.fromEntries(Object.entries(specs).map(([id,[shots,intervalMs]])=>[id,{name:'weapon-'+id,profile:Number(id)===1?'pistol':'rifle',rate:1,gain:1,burst:{shots,intervalMs}}]));
  weapons[85]={name:'nonfirearm',profile:null};
  const window={document,location:{href:options.locationHref??document.baseURI},performance:{now:()=>now},URL,console,
   COMBAT_SOUND_BANK:{version:'test-v1',base:'audio/gunshots/',profiles:{pistol:{files:['pistol.mp3'],gain:1},rifle:{files:['rifle.mp3'],gain:.8}},weapons},
   COMBAT_REACTION_BANK:options.reactions?{version:'hurt-v1',base:'audio/reactions/',reactions:{player:{files:['player-hurt-1.mp3','player-hurt-2.mp3'],gain:.85},enemy:{files:Array.from({length:8},(_,i)=>'enemy-hurt-'+(i+1)+'.mp3'),gain:.85}}}:undefined,
+  COMBAT_MUTANT_SOUND_BANK:options.mutants?{version:'mutant-v1',base:'audio/mutants/',species:Object.fromEntries(['dog','bloodsucker'].map(id=>[id,Object.fromEntries(['hurt','attack'].map(action=>[action,{files:Array.from({length:3},(_,i)=>id+'-'+action+'-'+(i+1)+'.mp3'),gain:.85,impactMs:120}]))])),resolve(enemy){return enemy?.kind==='npc'?null:/Dog/i.test(enemy?.name)?'dog':/Blood/i.test(enemy?.name)?'bloodsucker':null;}}:undefined,
   CombatScene:scene,AudioContext:options.unsupported?undefined:FakeAudioContext,
   Audio(){throw Error('The soundtrack must not be accessed');},
   localStorage:{getItem(key){return key==='zone.combatSound'?(options.settings?JSON.stringify(options.settings):null):'{"enabled":true,"volume":0.25}';},setItem(key,value){storageWrites.push([key,value]);}},
@@ -34,12 +35,92 @@ function harness(options={}){
  const advance=async ms=>{await settle();const target=now+ms;for(;;){const times=Array.from(timers.values()).map(timer=>timer.at).filter(at=>at<=target);if(!times.length)break;tick(Math.min(...times)-now);await settle();}tick(target-now);await settle();};
  const dispatch=type=>{for(const fn of listeners.get(type)||[])fn({type});};
  const show=(extra={})=>scene.show({enemy:{battleToken:'fight',kind:'npc'},weaponId:1,enemyGear:{weaponId:2},...extra});
- return {window,document,api:window.CombatAudio,scene,show,tick,advance,dispatch,contexts,sources,gains,compressors,fetches,originalCalls,pulses,storageWrites,timers,now:()=>now};
+ return {window,document,api:window.CombatAudio,scene,show,tick,advance,dispatch,contexts,sources,gains,compressors,fetches,originalCalls,pulses,mutantAttacks,storageWrites,timers,now:()=>now};
 }
 async function settle(){for(let i=0;i<16;i++)await Promise.resolve();}
 async function ready(h,scene={}){h.show(scene);await Promise.all([h.api.preload(scene.weaponId||1),h.api.preload(scene.enemyGear?.weaponId||2),h.api.preloadReactions()]);await h.api.unlock();}
 const applied=h=>h.originalCalls.filter(call=>call[0]==='react');
 const won={success:true,playerDamage:0,victoryReady:true,enemyTurn:{hit:false,damage:0}};
+
+const mutantVoices=(h,event)=>h.sources.filter(sound=>sound.buffer.url.includes('/mutants/')&&(!event||sound.buffer.url.includes('-'+event+'-')));
+async function readyMutant(h,extra={}){
+ h.show({enemy:{battleToken:'fight',kind:'mutant',name:'Dog'},weaponId:1,enemyGear:{weaponId:2},...extra});
+ await Promise.all([h.api.preload(extra.weaponId??1),h.api.preloadMutant('dog')]);await settle();await h.api.unlock();
+}
+test('mutant encounters preload only current six variants and player pain; sexes share their species profile',async()=>{
+ const h=harness({mutants:true,reactions:true,showResult:false});await readyMutant(h);
+ assert.equal(h.fetches.filter(url=>url.includes('/mutants/')).length,6);assert.equal(h.fetches.filter(url=>url.includes('/reactions/player-')).length,2);
+ assert.equal(h.fetches.filter(url=>url.includes('/reactions/enemy-')).length,0);assert.equal(h.fetches.filter(url=>url.includes('/mutants/bloodsucker-')).length,0);
+ h.show({enemy:{battleToken:'female',kind:'mutant',name:'Female Dog'},weaponId:1,enemyGear:{weaponId:0}});await settle();
+ assert.equal(h.fetches.filter(url=>url.includes('/mutants/')).length,6);
+ assert.equal(h.api.getState().cachedBuffers,9);
+});
+test('a mutant exchange has one species hurt, one attack and one player hurt, synchronized with attack impact and all tails',async()=>{
+ const h=harness({mutants:true,reactions:true});await readyMutant(h);
+ const result={success:true,playerDamage:7,enemyTurn:{hit:true,damage:4}},presentation=h.scene.react('fight',result,'attack');
+ assert.equal(h.scene.react('fight',result,'attack'),presentation);await h.advance(1519);assert.equal(applied(h).length,0);
+ assert.equal(h.sources.length,6);assert.equal(h.pulses.length,3);
+ assert.equal(mutantVoices(h,'hurt')[0].startedAt,440);assert.equal(mutantVoices(h,'attack')[0].startedAt,600);assert.equal(hurts(h,'player')[0].startedAt,720);
+ assert.deepEqual(h.mutantAttacks,[{token:'fight',at:600}]);assert.equal(hurts(h,'enemy').length,0);
+ await h.advance(1);assert.equal((await presentation).cancelled,false);assert.equal(applied(h)[0][4].externalMutantAttack,true);assert.equal(applied(h)[0][5],1520);
+ assert.equal(h.api.getState().played,3);assert.equal(h.api.getState().hurtPlayed,2);assert.equal(h.api.getState().mutantHurtPlayed,1);assert.equal(h.api.getState().mutantAttackPlayed,1);
+});
+test('mutant attack attempts sound on misses and absorbed hits, but not after victory or radiation-only death',async()=>{
+ for(const enemyTurn of [{hit:false,damage:0},{hit:true,damage:0}]){
+  const h=harness({mutants:true,reactions:true});await readyMutant(h);const presentation=h.scene.react('fight',{success:true,enemyTurn},'wait');
+  await h.advance(800);await presentation;assert.equal(mutantVoices(h,'attack').length,1);assert.equal(hurts(h,'player').length,0);assert.equal(h.pulses.length,0);
+ }
+ for(const result of [{success:true,victoryReady:true,enemyTurn:{hit:false,damage:0}},{success:true,died:true,radiationDamage:99},{success:true,died:true,radiationDamage:99,enemyTurn:{hit:false,damage:0}}]){
+  const h=harness({mutants:true,reactions:true});await readyMutant(h);await h.scene.react('fight',result,'wait');
+  assert.equal(h.sources.length,0);assert.equal(h.mutantAttacks.length,0);
+ }
+});
+test('a killing player hit keeps mutant hurt without a reply, and a fatal mutant hit completes before death',async()=>{
+ const killed=harness({mutants:true,reactions:true});await readyMutant(killed);const victory=killed.scene.react('fight',{success:true,playerDamage:99,victoryReady:true,enemyTurn:{hit:false,damage:0}},'attack');
+ await killed.advance(1239);assert.equal(applied(killed).length,0);await killed.advance(1);await victory;
+ assert.equal(mutantVoices(killed,'hurt').length,1);assert.equal(mutantVoices(killed,'attack').length,0);assert.equal(killed.mutantAttacks.length,0);
+ const dead=harness({mutants:true,reactions:true});await readyMutant(dead);const death=dead.scene.react('fight',{success:true,playerDamage:3,died:true,enemyTurn:{hit:true,damage:999}},'attack');
+ await dead.advance(1519);assert.equal(applied(dead).length,0);await dead.advance(1);await death;
+ assert.equal(mutantVoices(dead,'attack').length,1);assert.equal(hurts(dead,'player').length,1);assert.equal(applied(dead)[0][5],1520);
+});
+test('all mutant variants are selectable and consecutive hurt/attack choices never repeat',async()=>{
+ for(const action of ['hurt','attack'])for(let i=0;i<3;i++){
+  const h=harness({mutants:true,random:()=>i/3});await readyMutant(h,{weaponId:0});
+  const result=action==='hurt'?{success:true,playerDamage:2,victoryReady:true}:{success:true,enemyTurn:{hit:false,damage:0}};
+  const presentation=h.scene.react('fight',result,action==='hurt'?'attack':'wait');await h.advance(1200);await presentation;
+  assert.match(mutantVoices(h,action)[0].buffer.url,new RegExp('/dog-'+action+'-'+(i+1)+'\\.mp3\\?'));
+ }
+ const h=harness({mutants:true,random:()=>0});await readyMutant(h,{weaponId:0});const previous={};
+ for(let i=0;i<4;i++){
+  const presentation=h.scene.react('fight',{success:true,playerDamage:3,enemyTurn:{hit:false,damage:0}},'attack');await h.advance(1200);await presentation;
+  for(const action of ['hurt','attack']){const url=mutantVoices(h,action).at(-1).buffer.url;if(previous[action])assert.notEqual(url,previous[action]);previous[action]=url;}
+ }
+ assert.equal(h.pulses.length,0);assert.equal(h.api.getState().mutantHurtPlayed,4);assert.equal(h.api.getState().mutantAttackPlayed,4);
+});
+test('muted mutant attack retains a 360ms visual window, with no artificial delay when animation is unavailable',async()=>{
+ const h=harness({mutants:true,settings:{enabled:false,volume:.65}});await readyMutant(h);const presentation=h.scene.react('fight',{success:true,enemyTurn:{hit:false,damage:0}},'wait');
+ await h.advance(359);assert.equal(applied(h).length,0);assert.equal(h.sources.length,0);assert.deepEqual(h.mutantAttacks,[{token:'fight',at:0}]);
+ await h.advance(1);await presentation;assert.equal(applied(h)[0][4].externalMutantAttack,true);assert.equal(applied(h)[0][5],360);
+ const reduced=harness({mutants:true,mutantVisual:false,settings:{enabled:false,volume:.65}});await readyMutant(reduced);
+ await reduced.scene.react('fight',{success:true,enemyTurn:{hit:false,damage:0}},'wait');assert.equal(applied(reduced)[0][5],0);assert.equal(applied(reduced)[0][4].externalMutantAttack,true);
+});
+test('mutant sounds require explicit identity, support flag aliases and never affect NPC fallback',async()=>{
+ for(const enemy of [{battleToken:'fight',kind:'npc',name:'Dog'},{battleToken:'fight',name:'Dog'},{battleToken:'fight',kind:'mutant',name:'Unknown'}]){
+  const h=harness({mutants:true});await readyMutant(h,{enemy,weaponId:0,enemyGear:{weaponId:0}});
+  await h.scene.react('fight',{success:true,playerDamage:3,victoryReady:true},'attack');assert.equal(mutantVoices(h).length,0);
+ }
+ for(const flag of ['mutant','isMutant']){
+  const h=harness({mutants:true});await readyMutant(h,{enemy:{battleToken:'fight',name:'Dog',[flag]:true},weaponId:0});
+  const presentation=h.scene.react('fight',{success:true,enemyTurn:{hit:false,damage:0}},'wait');await h.advance(800);await presentation;assert.equal(mutantVoices(h,'attack').length,1);
+ }
+});
+test('mutant attack cancellation suppresses future audio and onset hooks, including cancellation during its tail',async()=>{
+ for(const cancelAt of [500,650]){
+  const h=harness({mutants:true,reactions:true});await readyMutant(h);
+  const presentation=h.scene.react('fight',{success:true,playerDamage:3,enemyTurn:{hit:true,damage:2}},'attack');await h.advance(cancelAt);h.scene.hide();
+  assert.equal((await presentation).cancelled,true);await h.advance(2500);assert.equal(applied(h).length,0);assert.equal(h.mutantAttacks.length,cancelAt<600?0:1);assert.equal(h.api.getState().activeVoices,0);
+ }
+});
 
 const hurts=(h,role)=>h.sources.filter(sound=>sound.buffer.url.includes('/reactions/'+(role?role+'-hurt-':'')));
 test('all ten reaction variants preload and each role avoids repeating its previous audible file',async()=>{

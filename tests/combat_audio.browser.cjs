@@ -10,9 +10,10 @@ const { chromium } = require(require.resolve('playwright', { paths: [process.env
 const root = path.resolve(__dirname, '..');
 const bank = require(path.join(root, 'audio/combat-sounds.js'));
 const reactions = require(path.join(root, 'audio/combat-reactions.js'));
+const mutants = require(path.join(root, 'audio/combat-mutants.js'));
 
 function transportTone() {
-  const sampleRate = 22050, samples = sampleRate * 120;
+  const sampleRate = 22050, samples = sampleRate * 180;
   const wav = Buffer.alloc(44 + samples * 2);
   wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
   wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
@@ -29,7 +30,7 @@ const fixture = `<!doctype html><html lang="ru"><meta charset="utf-8">
 <div id="mainMenu"><button id="trustedUnlock" style="min-height:48px">Начать</button></div>
 <script>
 window.SERVER_URL=location.origin;
-window.__starts=[];window.__ends=[];window.__sourceSequence=0;window.__pulses=[];window.__rendered=[];window.__originalCalls=[];window.__trustedPointer=false;
+window.__starts=[];window.__ends=[];window.__sourceSequence=0;window.__pulses=[];window.__mutantAttacks=[];window.__rendered=[];window.__originalCalls=[];window.__trustedPointer=false;
 window.__decodedSounds={};const pcmHashes=new WeakMap();
 window.__hashPCM=function(buffer){
  if(pcmHashes.has(buffer))return pcmHashes.get(buffer);
@@ -50,9 +51,9 @@ AudioContext.prototype.createBufferSource=function(...args){
  source.start=function(...params){record={id:++window.__sourceSequence,at:performance.now(),duration:source.buffer?.duration,rate:source.playbackRate.value,pcmPromise:__hashPCM(source.buffer)};window.__starts.push(record);return start.apply(this,params);};
  return source;
 };
-window.CombatScene={show(next){__originalCalls.push(['show',next]);return true;},pulse(token,side){__pulses.push({token,side,at:performance.now()});return true;},react(...args){__originalCalls.push(['react',...args]);__rendered.push({at:performance.now(),externalShots:args[3]?.externalShots});return 'visual';},hide(){__originalCalls.push(['hide']);}};
+window.CombatScene={show(next){__originalCalls.push(['show',next]);return true;},pulse(token,side){__pulses.push({token,side,at:performance.now()});return true;},mutantAttack(token){__mutantAttacks.push({token,at:performance.now()});return true;},react(...args){__originalCalls.push(['react',...args]);__rendered.push({at:performance.now(),externalShots:args[3]?.externalShots,externalMutantAttack:args[3]?.externalMutantAttack});return 'visual';},hide(){__originalCalls.push(['hide']);}};
 </script>
-<script src="/audio/combat-sounds.js"></script><script src="/audio/combat-reactions.js"></script><script src="/audio/combat-audio.js"></script>
+<script src="/audio/combat-sounds.js"></script><script src="/audio/combat-reactions.js"></script><script src="/audio/combat-mutants.js"></script><script src="/audio/combat-audio.js"></script>
 <script src="/audio/menu-music.js"></script>
 <script>CombatScene.show({weaponId:1,enemy:{battleToken:'browser-fight',kind:'npc'},enemyGear:{weaponId:12}});</script>
 </html>`;
@@ -90,7 +91,10 @@ async function main() {
       const context = new AudioContext(), results = [];
       const files = [...new Set(Object.values(COMBAT_SOUND_BANK.profiles).flatMap(profile => profile.files))].map(file=>({file,kind:'gunshot',base:COMBAT_SOUND_BANK.base}));
       for(const [role,reaction] of Object.entries(COMBAT_REACTION_BANK.reactions))for(const file of reaction.files)files.push({file,kind:'reaction',role,base:COMBAT_REACTION_BANK.base});
-      for (const entry of files) {
+      for(const [species,profile] of Object.entries(COMBAT_MUTANT_SOUND_BANK.species))for(const role of ['hurt','attack'])for(const file of profile[role].files)files.push({file,kind:'mutant',species,role,base:COMBAT_MUTANT_SOUND_BANK.base});
+      let cursor=0;
+      await Promise.all(Array.from({length:8},async()=>{while(cursor<files.length){
+        const entry=files[cursor++];
         const response = await fetch('/' + entry.base + entry.file);
         if (!response.ok) throw Error('Cannot fetch ' + entry.file);
         const buffer = await context.decodeAudioData(await response.arrayBuffer());
@@ -103,12 +107,15 @@ async function main() {
         if(__decodedSounds[pcm])throw Error('Two source files decoded to identical PCM: '+entry.file+' and '+__decodedSounds[pcm].file);
         __decodedSounds[pcm]=entry;
         results.push({ ...entry, pcm, duration: buffer.duration, sampleRate: buffer.sampleRate, channels: buffer.numberOfChannels, peak });
-      }
+      }}));
       await context.close(); return results;
     });
     const files = new Set(Object.values(bank.profiles).flatMap(profile => profile.files));
     const reactionFiles = Object.values(reactions.reactions).flatMap(reaction => reaction.files);
-    assert.equal(decoded.length, files.size + reactionFiles.length);
+    const mutantFiles=Object.values(mutants.species).flatMap(profile=>[...profile.hurt.files,...profile.attack.files]);
+    assert.equal(Object.keys(mutants.species).length,29);
+    assert.equal(mutantFiles.length,174);
+    assert.equal(decoded.length, files.size + reactionFiles.length + mutantFiles.length);
     assert.equal(reactions.reactions.player.files.length, 2);
     assert.equal(reactions.reactions.enemy.files.length, 8);
     assert.equal(new Set(decoded.map(sound=>sound.pcm)).size, decoded.length, 'All gunshots and actor performances have distinct decoded PCM');
@@ -259,16 +266,17 @@ async function main() {
       return page.evaluate(async config => {
         CombatAudio.stop();
         const token='reaction-'+config.name;
-        CombatScene.show({weaponId:config.playerWeapon||0,enemy:{battleToken:token,kind:config.kind},enemyGear:{weaponId:config.enemyWeapon||0}});
+        CombatScene.show({weaponId:config.playerWeapon||0,enemy:{battleToken:token,kind:config.kind,...config.enemy},enemyGear:{weaponId:config.enemyWeapon||0}});
         await Promise.all([CombatAudio.preload(config.playerWeapon||0),CombatAudio.preload(config.enemyWeapon||0)]);
-        __starts.length=0;__ends.length=0;__pulses.length=0;__rendered.length=0;
+        if(config.enemy)await CombatAudio.preloadMutant(COMBAT_MUTANT_SOUND_BANK.resolve({kind:config.kind,...config.enemy}));
+        __starts.length=0;__ends.length=0;__pulses.length=0;__mutantAttacks.length=0;__rendered.length=0;
         const startedAt=performance.now(),musicBefore=__musicAudio.currentTime;
         const completion=CombatScene.react(token,config.result,config.action||'attack');
         const renderedBefore=__rendered.length;
         if(config.cancel)CombatScene.hide();
         const status=await completion;
         if(config.cancel)await new Promise(resolve=>setTimeout(resolve,200));
-        return {status,startedAt,completedAt:performance.now(),renderedBefore,starts:await __snapshotStarts(),ends:__ends.filter(end=>__starts.some(start=>start.id===end.id)),pulses:__pulses.slice(),rendered:__rendered.slice(),musicBefore,musicAfter:__musicAudio.currentTime,musicPaused:__musicAudio.paused};
+        return {status,startedAt,completedAt:performance.now(),renderedBefore,starts:await __snapshotStarts(),ends:__ends.filter(end=>__starts.some(start=>start.id===end.id)),pulses:__pulses.slice(),mutantAttacks:__mutantAttacks.slice(),rendered:__rendered.slice(),musicBefore,musicAfter:__musicAudio.currentTime,musicPaused:__musicAudio.paused};
       }, config);
     }
     function completeReaction(report, label) {
@@ -338,6 +346,90 @@ async function main() {
     const cancelledHurt=await reactionTurn({name:'cancelled-player',kind:'mutant',action:'wait',cancel:true,result:{success:true,enemyTurn:{hit:true,damage:7}}});
     assert.equal(cancelledHurt.status.cancelled,true);assert.equal(cancelledHurt.starts.length,0);assert.equal(cancelledHurt.rendered.length,0,'Cancelled pending hurt cannot update the old enemy');
 
+    function mutantSources(report,role){return report.starts.filter(start=>start.source?.kind==='mutant'&&start.source.role===role);}
+    function completeMutantAttack(report,species,label){
+      completeReaction(report,label);
+      const attack=mutantSources(report,'attack');
+      assert.equal(attack.length,1,label+' emits one mutant attack recording');
+      assert.equal(attack[0].source.species,species,label+' plays the actual species PCM');
+      assert.equal(report.mutantAttacks.length,1,label+' starts exactly one creature animation');
+      assert(Math.abs(report.mutantAttacks[0].at-attack[0].at)<35,label+' starts the animation with its actual sound');
+      assert(report.completedAt>=report.mutantAttacks[0].at+350,label+' waits for the 360ms visual attack window');
+      assert.equal(report.rendered[0].externalMutantAttack,true,label+' prevents a duplicate final legacy attack');
+      assert(!report.pulses.some(pulse=>pulse.side==='enemy'),label+' creates no enemy muzzle flash');
+      return attack[0];
+    }
+    const mutantReports=[];
+    for(const [species,profile] of Object.entries(mutants.species)){
+      assert.equal(profile.hurt.files.length,3);assert.equal(profile.attack.files.length,3);
+      for(const sex of ['male','female'])assert.equal(mutants.resolve({kind:'mutant',species,sex}),species,species+' shares its sound bank across sexes');
+      for(const name of profile.aliases)assert.equal(mutants.resolve({kind:'mutant',name}),species,'Real server name resolves without species or sex metadata');
+      const name=profile.aliases[mutantReports.length%profile.aliases.length];
+      const report=await reactionTurn({name:'species-'+species,kind:'mutant',enemy:{name},result:{success:true,playerDamage:7,enemyHp:60,enemyTurn:{hit:true,damage:6}}});
+      const attack=completeMutantAttack(report,species,species+' damaging turn'),hurt=mutantSources(report,'hurt');
+      assert.equal(hurt.length,1);assert.equal(hurt[0].source.species,species);
+      const player=report.starts.filter(start=>start.source?.kind==='reaction');
+      assert.equal(player.length,1);assert.equal(player[0].source.role,'player');
+      assert.equal(report.starts.length,3,'Only the damaged mutant, attacking mutant and damaged player emit a voice');
+      assert.equal(report.pulses.length,0,'A nonfirearm fixture emits no muzzle flash');
+      assert(Math.abs(hurt[0].at-report.startedAt-80)<90,species+' hurt follows the accepted player hit');
+      assert(Math.abs(attack.at-report.startedAt-240)<90,species+' attack follows the player action');
+      assert(Math.abs(player[0].at-attack.at-profile.attack.impactMs)<65,species+' player hurt matches attack impact');
+      assert(!report.musicPaused&&report.musicAfter>report.musicBefore+.3,species+' leaves music advancing');
+      mutantReports.push({species,distinctRecordingsDecoded:6,correctSpeciesPCM:true});
+    }
+    const sampleSpecies='blind-dog',sampleProfile=mutants.species[sampleSpecies];
+    const mutantVariants={hurt:[],attack:[]};
+    for(let i=0;i<6;i++){
+      const report=await reactionTurn({name:'mutant-variants-'+i,kind:'mutant',enemy:{name:sampleProfile.aliases[i%2]},result:{success:true,playerDamage:4,enemyTurn:{hit:false,damage:0}}});
+      completeMutantAttack(report,sampleSpecies,'Mutant variants '+i);
+      assert.equal(report.starts.length,2,'A missed mutant attack has no player hurt voice');
+      for(const role of ['hurt','attack']){
+        const sounds=mutantSources(report,role);assert.equal(sounds.length,1);
+        const file=sounds[0].source.file,previous=mutantVariants[role].at(-1);
+        assert(sampleProfile[role].files.includes(file),'The actual variant PCM belongs to its species and action');
+        if(previous)assert.notEqual(file,previous,role+' avoids consecutive repeats across male/female turns');
+        mutantVariants[role].push(file);
+      }
+    }
+    for(const role of ['hurt','attack'])assert(new Set(mutantVariants[role]).size>=2,role+' actually varies the recordings');
+    for(const name of ['Псевдо собака','Самка пси собаки','Электро химера','Контролер']){
+      const species=mutants.resolve({kind:'mutant',name});assert(species,name+' known gameplay spelling resolves');
+      const report=await reactionTurn({name:'alias-'+name,kind:'mutant',enemy:{name},action:'wait',result:{success:true,enemyTurn:{hit:false,damage:0}}});
+      completeMutantAttack(report,species,name+' actual PCM resolution');assert.equal(report.starts.length,1);
+    }
+    const mutantMiss=await reactionTurn({name:'mutant-miss',kind:'mutant',enemy:{species:sampleSpecies},action:'wait',result:{success:true,enemyTurn:{hit:false,damage:0}}});
+    completeMutantAttack(mutantMiss,sampleSpecies,'Missed mutant attack');assert.equal(mutantMiss.starts.length,1);assert.equal(mutantMiss.pulses.length,0);
+    const mutantFatal=await reactionTurn({name:'mutant-fatal',kind:'mutant',enemy:{species:sampleSpecies},action:'wait',result:{success:true,died:true,enemyTurn:{hit:true,damage:100}}});
+    const fatalAttack=completeMutantAttack(mutantFatal,sampleSpecies,'Fatal mutant attack');
+    assert.equal(mutantFatal.starts.length,2);assert.equal(mutantFatal.starts.find(start=>start.source.kind==='reaction')?.source.role,'player');
+    assert(Math.abs(mutantFatal.starts.find(start=>start.source.kind==='reaction').at-fatalAttack.at-120)<65,'Fatal player hurt occurs at impact');
+    const mutantVictory=await reactionTurn({name:'mutant-victory',kind:'mutant',enemy:{species:sampleSpecies},playerWeapon:17,result:{success:true,playerDamage:100,enemyHp:0,victoryReady:true,enemyTurn:{hit:false,damage:0}}});
+    completeReaction(mutantVictory,'Fatal six-shot hit on mutant');
+    assert.equal(mutantVictory.starts.filter(start=>start.source.kind==='gunshot').length,6);assert.equal(mutantVictory.pulses.length,6);
+    assert.equal(mutantSources(mutantVictory,'hurt').length,1,'A six-shot burst causes one mutant hurt performance');
+    assert.equal(mutantSources(mutantVictory,'attack').length,0);assert.equal(mutantVictory.mutantAttacks.length,0,'A defeated mutant cannot retaliate');
+    assert.equal(mutantVictory.starts.length,7);
+    for(const [name,result] of [
+      ['radiation-only',{success:true,died:true,radiationDamage:100}],
+      ['radiation-with-dummy-turn',{success:true,died:true,radiationDamage:100,enemyTurn:{hit:false,damage:0}}]
+    ]){
+      const report=await reactionTurn({name:'mutant-'+name,kind:'mutant',enemy:{species:sampleSpecies},action:'wait',result});
+      completeReaction(report,name);assert.equal(report.starts.length,0);assert.equal(report.mutantAttacks.length,0,'Radiation cannot invent a mutant attack');
+    }
+    const humanWithSpecies=await reactionTurn({name:'npc-with-mutant-species',kind:'npc',enemy:{species:sampleSpecies,name:sampleProfile.name},result:{success:true,playerDamage:3,victoryReady:true}});
+    completeReaction(humanWithSpecies,'Human NPC with stray species metadata');
+    assert.equal(humanWithSpecies.starts.length,1);assert.equal(humanWithSpecies.starts[0].source.role,'enemy');assert.equal(humanWithSpecies.starts[0].source.kind,'reaction');
+    assert.equal(humanWithSpecies.mutantAttacks.length,0,'Explicit NPC never resolves to mutant sounds');
+    await page.locator('#combatSoundEnabled').uncheck();
+    const mutedMutant=await reactionTurn({name:'muted-mutant',kind:'mutant',enemy:{species:sampleSpecies},action:'wait',result:{success:true,enemyTurn:{hit:true,damage:7}}});
+    completeReaction(mutedMutant,'Muted mutant turn');assert.equal(mutedMutant.starts.length,0);assert.equal(mutedMutant.mutantAttacks.length,1);
+    assert(mutedMutant.completedAt>=mutedMutant.mutantAttacks[0].at+350,'Mute keeps the complete creature attack animation');
+    assert(!mutedMutant.musicPaused&&mutedMutant.musicAfter>mutedMutant.musicBefore+.25,'Muted mutant effects leave music playing');
+    await page.locator('#combatSoundEnabled').check();
+    const cancelledMutant=await reactionTurn({name:'cancelled-mutant',kind:'mutant',enemy:{species:sampleSpecies},cancel:true,result:{success:true,playerDamage:4,enemyTurn:{hit:true,damage:7}}});
+    assert.equal(cancelledMutant.status.cancelled,true);assert.equal(cancelledMutant.starts.length,0);assert.equal(cancelledMutant.mutantAttacks.length,0);assert.equal(cancelledMutant.rendered.length,0);
+
     for (const [selector, value] of [['#combatSoundVolume', '37'], ['#menuMusicVolume', '41']]) {
       await page.locator(selector).evaluate((element, next) => { element.value = next; element.dispatchEvent(new Event('input', { bubbles: true })); }, value);
     }
@@ -357,7 +449,7 @@ async function main() {
     assert.equal(await page.locator('#combatSoundVolume').inputValue(), '37');
     assert.equal(await page.locator('#menuMusicVolume').inputValue(), '41');
     assert.deepEqual(errors, []); assert.deepEqual(failedRequests, []);
-    console.log(JSON.stringify({ passed: true, realMp3FilesDecoded: decoded.length, gunshotFiles:files.size,hurtFiles:reactionFiles.length,distinctDecodedPCM:true,soundFamilies: Object.keys(bank.profiles).length, firearmsMapped: Object.keys(bank.weapons).length, trustedGestureUnlock: true, overlappingEffects: true, independentMusicAndEffects: true, bursts: burstReports, actorHurtVariants:variantReports,actualActorPCMSelection:true,hurtTimingAndDamageGates:true,realSoundAndFlashTiming: true, stateApplicationAfterFullAudioTails: true, npcDelayAndCancellation: true, reducedMotion: true, settingsPersistence: true, mobileViewport: '320x480', musicFixture: '120-second local PCM transport tone; production ambient files not exercised' }, null, 2));
+    console.log(JSON.stringify({ passed: true, realMp3FilesDecoded: decoded.length, gunshotFiles:files.size,hurtFiles:reactionFiles.length,mutantFiles:mutantFiles.length,distinctDecodedPCM:true,soundFamilies: Object.keys(bank.profiles).length, firearmsMapped: Object.keys(bank.weapons).length, trustedGestureUnlock: true, overlappingEffects: true, independentMusicAndEffects: true, bursts: burstReports, actorHurtVariants:variantReports,actualActorPCMSelection:true,hurtTimingAndDamageGates:true,mutantSpecies:mutantReports,mutantVariants:Object.fromEntries(Object.entries(mutantVariants).map(([role,takes])=>[role,{turns:takes.length,distinctTakes:new Set(takes).size,noConsecutiveRepeat:true}])),mutantAttackImpactAndCompletion:true,mutantMissFatalVictoryMuteCancellation:true,realSoundAndFlashTiming: true, stateApplicationAfterFullAudioTails: true, npcDelayAndCancellation: true, reducedMotion: true, settingsPersistence: true, mobileViewport: '320x480', musicFixture: '180-second local PCM transport tone; production ambient files not exercised',visualFixture:'Records production coordinator mutantAttack calls; actual renderer transforms are covered by dedicated scene tests' }, null, 2));
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));

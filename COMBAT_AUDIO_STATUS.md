@@ -54,6 +54,37 @@ The reaction begins 80 ms after the relevant burst's final shot. Non-shooting
 enemy attacks still trigger the player's reaction. Reactions share the turn's
 cancellation and audio-tail wait, without adding flashes, damage or requests.
 
+## Mutant voices
+
+`audio/combat-mutants.js` covers all 29 species and all 57 gameplay names,
+including the female variants. Each species has three hurt clips and three
+attack clips: 174 distinct sound designs in total. Both sexes use the exact same
+six files. Native catalog tiers shape the voices; location-adjusted battle tiers
+do not change them. Licensed creature and animal recordings are adapted into
+species profiles, with deeper layered textures for larger and more dangerous
+mutants. Sources and reproducible processing are documented in
+`audio/MUTANT_SOURCES.md` and `audio/mutant-sources.json`.
+
+Resolution uses explicit mutant identity and the gameplay name, independently of
+image loading. Gameplay/art spelling differences for pseudodog, psydog and
+electrochimera, as well as Russian ё/е, resolve to the same species. Unknown names
+and NPCs never borrow a mutant voice. Only the current species' six clips and
+the player's two wound clips preload for a mutant encounter; the decoded cache
+remains bounded at 24 buffers.
+
+Positive player damage triggers one mutant hurt reaction after the final shot.
+An actual enemy turn triggers one mutant attack sound even on a miss, but a
+player hurt reaction requires a confirmed positive hit. Victory, successful
+escape, rejected actions and radiation-only death do not create an attack.
+Hurt and attack variants avoid their own last audible clip independently.
+
+The attack sound and `scene.mutantAttack(token)` start together. The existing
+creature scale animation peaks at 120 ms, matching the player's wound reaction,
+and returns to rest by 360 ms. Both renderers support this timing; reduced motion
+suppresses movement. Final HP/death awaits the full audio tails and any active
+attack movement, with no second lunge, extra muzzle flashes or extra damage.
+Mute keeps the visual timing; leaving a battle cancels its sounds and movement.
+
 Effects use a separate WebAudio bus and limiter. The existing soundtrack keeps
 playing through its own HTMLAudio element. The ♫ panel has independent music and
 «Звуки боя» controls; effects default to enabled at 65%, stored as `zone.combatSound`.
@@ -67,7 +98,7 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
 - Client turn tests cover one server request, deferred lethal HP and rewards,
   duplicate taps, consumable locking, stale battles and presentation failures.
 - Existing combat effects, fighter scene, and legacy race tests passed.
-- Real Chromium 1243 smoke test passed: all 44 MP3s decode with distinct, nonzero samples;
+- Real Chromium 1243 smoke test passed: all 218 MP3s decode with distinct, nonzero samples;
   trusted input unlocks WebAudio; three shots overlap while music time advances;
   independent mutes, NPC timing/cancellation, duplicate suppression, reduced
   motion, saved settings and 320×480 settings layout work without browser errors.
@@ -79,6 +110,11 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
   varying NPC takes use the correct role, never repeat consecutively, and play
   once per damaging turn. Damage gates, the 80 ms reaction offset, full hurt
   tails before final HP/death, mute and cancellation passed in Chromium.
+- All 29 mutant species passed actual-PCM playback checks using server names,
+  including shared male/female profiles and spelling aliases. The browser checks
+  independent three-variant selection, attack/hurt gates, 120 ms impact, 360 ms
+  visual completion floor, and all sound tails. The dedicated renderer harness
+  verifies geometry, reduced motion, cancellation and no duplicate final lunge.
 - Browser soundtrack transport uses a documented local PCM fixture; that test
   does not claim to validate the six externally hosted ambient recordings.
 
@@ -86,4 +122,5 @@ Run lightweight checks with the `Combat audio` GitHub workflow. Reproduce the
 browser test with Playwright installed and `node tests/combat_audio.browser.cjs`
 (set CHROMIUM_EXECUTABLE_PATH if using an existing Chromium binary). Rebuild the
 manifest with `node tools/build_combat_sound_manifest.cjs`; audio reconstruction
-instructions are in the source credits file.
+instructions are in the source credits files. Regenerate the mutant name/sound
+manifest with `node tools/build_mutant_sound_manifest.cjs`.
