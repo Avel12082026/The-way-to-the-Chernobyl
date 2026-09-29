@@ -13,7 +13,7 @@ assert(trade.includes("ZHUCHARA_CONSUMABLES.has(item.name)"));
 assert(trade.includes("BARMAN_CONSUMABLES.has(item.name)"));
 assert(trade.includes("LEONOV_CONSUMABLE_TYPES.has(c.type)"));
 assert(trade.includes("LEONOV_BUYBACK_TYPES.has(supply.type)"));
-assert(html.includes('ui/trade-menu.js?v=20260929-vizir100-leonov-antirad1'));
+assert(html.includes('ui/trade-menu.js?v=20260929-zone-economy2'));
 
 assert(patch.includes("TRADER_CONSUMABLE_TIERS_V1"));
 assert(patch.includes("ZHUCHARA_CONSUMABLES_SERVER"));
