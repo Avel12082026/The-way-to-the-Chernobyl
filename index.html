@@ -1582,38 +1582,42 @@ button:active {filter:brightness(1.18);}
         { id: 85, name: "Убиваю взглядом", tier: 14, dmg: 6660, price: 666000, adminOnly: true }
     ];
 
-    // WEAPON_UNLOCK_EVERY_3_LEVELS_V1
-    // Последовательность продажи/лут-прогрессии: 29 пистолетов → 29 дробовиков →
-    // 29 автоматов/пулемётов → 29 винтовок. Первый ствол доступен с 1 уровня,
-    // каждый следующий открывается через 3 уровня: 1, 4, 7, ... 346.
-    function buildWeaponProgressionOrder(list = weapons) {
-        const regular = list.filter(w => w && !w.adminOnly);
-        const classSize = 29;
-        if (regular.length !== classSize * 4) {
-            console.error('[weapon progression] Ожидалось 116 обычных стволов.');
-            return regular.slice();
-        }
-        const pistolStart = regular.findIndex(w =>
-            !!w?.starterGear || String(w?.name || '') === 'Beretta 21A Bobcat' || Number(w?.id) === 86
-        );
-        if (pistolStart !== classSize * 2) {
-            console.error('[weapon progression] Нарушена структура каталога оружия.');
-            return regular.slice();
-        }
-        const automatics = regular.slice(0, classSize);
-        const rifles = regular.slice(classSize, classSize * 2);
-        const pistols = regular.slice(classSize * 2, classSize * 3);
-        const shotguns = regular.slice(classSize * 3, classSize * 4);
-        return [...pistols, ...shotguns, ...automatics, ...rifles];
+    // WEAPON_UNLOCK_EVERY_3_LEVELS_V1 (legacy metadata only; purchases are NOT level-gated)
+// WEAPON_TIER_ECONOMY_V2
+    // 10 + 10 + 9 внутри каждого класса: T1-T3 пистолеты, T4-T6 дробовики,
+    // T7-T9 автоматы/пулемёты, T10-T12 винтовки. Покупку ограничивают деньги и торговец, не уровень.
+    const WEAPON_TIER_PRICE_RANGES = Object.freeze({
+        1:[150,5000],2:[7000,18000],3:[22000,45000],
+        4:[55000,100000],5:[120000,200000],6:[230000,350000],
+        7:[400000,600000],8:[700000,950000],9:[1050000,1350000],
+        10:[1500000,2000000],11:[2200000,2900000],12:[3200000,4200000]
+    });
+    function weaponTierForProgressionIndex(index) {
+        const i=Math.max(0,Math.min(115,Math.floor(Number(index)||0)));
+        const within=i%29, base=Math.floor(i/29)*3;
+        return base+(within<10?1:within<20?2:3);
     }
-    const WEAPON_PROGRESSION_ORDER = buildWeaponProgressionOrder(weapons);
-    WEAPON_PROGRESSION_ORDER.forEach((weapon, index) => {
-        weapon.progressionIndex = index;
-        weapon.unlockLevel = 1 + index * 3;
-        weapon.progressionClass =
-            index < 29 ? 'pistol' :
-            index < 58 ? 'shotgun' :
-            index < 87 ? 'automatic' : 'rifle';
+    function weaponPriceForProgressionIndex(index) {
+        const tier=weaponTierForProgressionIndex(index),within=index%29;
+        const local=within<10?within:within<20?within-10:within-20,count=within<20?10:9;
+        const [lo,hi]=WEAPON_TIER_PRICE_RANGES[tier],raw=lo+(hi-lo)*(local/(count-1));
+        const step=raw<10000?50:raw<100000?500:5000;
+        return index===0?150:Math.max(150,Math.round(raw/step)*step);
+    }
+    function buildWeaponProgressionOrder(list = weapons) {
+        const regular=list.filter(w=>w&&!w.adminOnly),classSize=29;
+        if(regular.length!==classSize*4){console.error('[weapon progression] Ожидалось 116 обычных стволов.');return regular.slice();}
+        const pistolStart=regular.findIndex(w=>!!w?.starterGear||String(w?.name||'')==='Beretta 21A Bobcat'||Number(w?.id)===86);
+        if(pistolStart!==classSize*2){console.error('[weapon progression] Нарушена структура каталога оружия.');return regular.slice();}
+        return [...regular.slice(classSize*2,classSize*3),...regular.slice(classSize*3,classSize*4),
+            ...regular.slice(0,classSize),...regular.slice(classSize,classSize*2)];
+    }
+    const WEAPON_PROGRESSION_ORDER=buildWeaponProgressionOrder(weapons);
+    WEAPON_PROGRESSION_ORDER.forEach((weapon,index)=>{
+        weapon.legacyTier=Number(weapon.tier)||1;weapon.progressionIndex=index;
+        weapon.unlockLevel=1+index*3; // metadata/sorting only; not a purchase gate
+        weapon.progressionClass=index<29?'pistol':index<58?'shotgun':index<87?'automatic':'rifle';
+        weapon.tier=weaponTierForProgressionIndex(index);weapon.price=weaponPriceForProgressionIndex(index);
     });
 
     // ===== БРОНЯ =====
@@ -1716,6 +1720,22 @@ button:active {filter:brightness(1.18);}
         { id: 96, name: "Исследовательский комбинезон K", tier: 14, armor: 99, price: 428220, isResearchSuit: true, stats: {"radiation":42,"anomaly_Жарка":40,"anomaly_Электра":32,"anomaly_Воронка":48,"anomaly_Кислотный туман":32,"anomaly_Карусель":51,"anomaly_Мясорубка":48,"anomaly_Печка":45,"anomaly_Плазменная сфера":51}, hitAbsorption: 50 }
     ];
 
+    // ARMOR_LOCATION_TIERS_V1: обычная броня T1-T11 по порядку реальной силы.
+    const ARMOR_TIER_SIZES = Object.freeze([8,8,8,7,7,7,7,7,7,7,7]);
+    function armorTierForProgressionIndex(index) {
+        let cursor=0;
+        for(let tier=1;tier<=ARMOR_TIER_SIZES.length;tier++){
+            cursor+=ARMOR_TIER_SIZES[tier-1];
+            if(index<cursor)return tier;
+        }
+        return ARMOR_TIER_SIZES.length;
+    }
+    armorItems.filter(a=>a&&!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit).forEach((armor,index)=>{
+        armor.legacyTier=Number(armor.tier)||1;
+        armor.progressionIndex=index;
+        armor.tier=armorTierForProgressionIndex(index);
+    });
+
     // ===== ДЕТЕКТОРЫ =====
     // Цены на 40% выше, чем были изначально — детекторы теперь продаются только у Бункера экологов, не у Торговца
     const detectors = [
@@ -1758,9 +1778,9 @@ button:active {filter:brightness(1.18);}
         { id: 2, name: "Тушенка", type: "food", restore: 100, price: 52 },
         { id: 3, name: "Вода", type: "water", restore: 25, price: 20 },
         { id: 4, name: "Энергетик", type: "water", restore: 100, price: 52 },
-        { id: 5, name: "Аптечка гражданская", type: "medkit", restore: 50, price: 130 },
-        { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 195 },
-        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 400, radiationRemove: 100 },
+        { id: 5, name: "Аптечка гражданская", type: "medkit", restore: 50, price: 750, healTicks: 5, healIntervalMs: 2000 },
+        { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 2000, healTicks: 5, healIntervalMs: 2000 },
+        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 6000, radiationRemove: 100, healTicks: 5, healIntervalMs: 2000 },
         // "Антирад" не лечит здоровье — только снимает радиацию, но за счёт еды и воды. Продаётся
         // только в Бункере экологов (не у обычного Торговца)
         { id: 8, name: "Антирад", type: "antirad", radiationRemove: 100, foodCost: 50, waterCost: 50, price: 200 }
@@ -2706,6 +2726,16 @@ button:active {filter:brightness(1.18);}
     function saveGame() { savePending = false; }
     async function flushSaveQueue() { savePending = false; saveInFlight = false; }
 
+    let healingSyncTimer = 0;
+    function scheduleHealingSync() {
+        clearTimeout(healingSyncTimer);
+        if (!player?.healingEffect || (typeof currentEnemy!=='undefined' && currentEnemy)) return;
+        healingSyncTimer=setTimeout(async()=>{
+            try { await reloadPrivatePlayerState(); } catch(_) {}
+            scheduleHealingSync();
+        }, 2000);
+    }
+
     async function reloadPrivatePlayerState() {
         const initData=window.Telegram?.WebApp?.initData;
         if(!initData) return null;
@@ -2721,6 +2751,7 @@ button:active {filter:brightness(1.18);}
             sanitizePlayerNumbers();
             reinjectCraftedArtifacts();
             updateUI();
+            scheduleHealingSync();
         }
         return data;
     }
@@ -2746,6 +2777,7 @@ button:active {filter:brightness(1.18);}
                 sanitizePlayerNumbers();
                 reinjectCraftedArtifacts();
                 updateUI();
+                scheduleHealingSync();
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 queueMicrotask(() => window.GamePosition?.restoreFromPlayer?.());
@@ -5045,11 +5077,12 @@ button:active {filter:brightness(1.18);}
     function applyPveServerState(state) {
         if (!state) return;
         const keys=['coins','exp','level','breedCredits','strength','accuracy','inventory','quickSlots',
-                    'health','maxHealth','hunger','thirst','radiation','stats','worldPosition','lastSafeCamp'];
+                    'health','maxHealth','hunger','thirst','radiation','stats','worldPosition','lastSafeCamp','healingEffect'];
         for(const key of keys) if(state[key] !== undefined) player[key]=state[key];
         renderInventory();
         renderQuickSlots();
         updateUI();
+        scheduleHealingSync();
     }
 
     function returnToDeathSafeCamp() {
@@ -5301,7 +5334,7 @@ function startBattle(enemy) {
                 raidLogs.push(`Вы атаковали!${x.crit?' 💥 КРИТ!':''} Урон: ${Number(x.playerDamage)||0}. У врага ${Math.max(0,Number(x.enemyHp)||0)} HP.`);
             }else if(x.usedMedkit){
                 battleMedkitsUsed=PVE_BATTLE_MEDKIT_LIMIT_CLIENT-(Number(x.usedMedkit.remaining)||0);
-                raidLogs.push(`Вы использовали «${x.usedMedkit.name}»! +${Number(x.usedMedkit.restore)||0} HP. Осталось аптечек в бою: ${Number(x.usedMedkit.remaining)||0}.`);
+                raidLogs.push(`Вы использовали «${x.usedMedkit.name}». Лечение: +${Number(x.usedMedkit.healPerTick)||0} HP за тик, ${Number(x.usedMedkit.ticks)||0} тиков. Вторую аптечку пока использовать нельзя.`);
             }
 
             if(x.enemyTurn && Number(x.enemyTurn.damage)>0){
@@ -5403,6 +5436,7 @@ function startBattle(enemy) {
     function endBattle(win) {
         window.CombatScene?.hide();
         currentEnemy=null;battleTurn=0;
+        scheduleHealingSync();
         document.getElementById('battleButtonsContainer').innerHTML='';
         const nav=document.getElementById('raidNavButtons');if(nav)nav.style.display='grid';
         updateUI();
@@ -6065,10 +6099,10 @@ function startBattle(enemy) {
         if(!st) return;
         const keys=['inventory','weapon','armor','detector','artifactSlots','quickSlots','armorUpgradeData',
             'health','maxHealth','hunger','maxHunger','thirst','maxThirst','radiation',
-            'radiationResist','radiationLeakTotal','anomalyResist','namedArtifactBonus','worldPosition','lastSafeCamp'];
+            'radiationResist','radiationLeakTotal','anomalyResist','namedArtifactBonus','worldPosition','lastSafeCamp','healingEffect'];
         keys.forEach(k=>{if(st[k]!==undefined) player[k]=st[k];});
         sanitizePlayerNumbers();
-        renderInventory(); renderQuickSlots(); updateUI();
+        renderInventory(); renderQuickSlots(); updateUI(); scheduleHealingSync();
         if(document.getElementById('shopScreen').classList.contains('active'))renderShop();
     }
 
@@ -7237,17 +7271,12 @@ function startBattle(enemy) {
         // каждые 5 уровней открывается ровно 1 новый предмет брони (от слабой защиты к сильной,
         // экзокостюмы и экзоскелеты — в самом конце). Исследовательские комбинезоны сюда не входят —
         // они продаются только в Бункере экологов.
-        const unlockArmorByLevel = () => armorItems.filter(a => {
-            if (a.adminOnly || a.isResearchSuit || a.isPremiumArmor) return false;
-            return player.level >= (a.unlockLevel || 0);
-        });
-
-        // Оружие открывается строго по новой прогрессии: один новый ствол каждые 3 уровня.
-        // Порядок: 29 пистолетов → 29 дробовиков → 29 автоматов/пулемётов → 29 винтовок.
-        // Первый ствол — 1 уровень, последний — 346 уровень.
-        const unlockWeaponsByLevel = () => WEAPON_PROGRESSION_ORDER.filter(w =>
-            player.level >= (w.unlockLevel || 0)
+        const unlockArmorByLevel = () => armorItems.filter(a =>
+            a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor
         );
+
+        // Уровень игрока больше не блокирует оружие: деньги — главный ограничитель покупки.
+        const unlockWeaponsByLevel = () => WEAPON_PROGRESSION_ORDER.filter(w => w && !w.adminOnly);
 
         return [
             // У Торговца Жучары аптечки (включая "Антирад") стоят на 1% дороже базовой цены —
