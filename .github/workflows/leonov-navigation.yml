@@ -1,0 +1,23 @@
+name: Leonov selection return
+on:
+  push:
+    branches: [main]
+    paths: ['ui/bunker-menu.js', 'index.html', 'tests/leonov_selection_return*', '.github/workflows/leonov-navigation.yml']
+  pull_request:
+    paths: ['ui/bunker-menu.js', 'index.html', 'tests/leonov_selection_return*', '.github/workflows/leonov-navigation.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Preserve Yantar when leaving artifact selection
+        run: |
+          node --check ui/bunker-menu.js
+          node tests/leonov_selection_return.test.cjs
+          git diff --check

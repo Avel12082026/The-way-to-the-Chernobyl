@@ -1579,10 +1579,9 @@
     const nativeOpen = window.openScreen;
     const nativeRender = window.renderScientists;
     const nativeBreed = window.doBreedArtifacts;
-    const nativeExit = window.exitScientists;
     const nativeBuy = window.openScientistsBuyView;
     const nativeSell = window.openScientistsSellView;
-    if (![nativeOpen, nativeRender, nativeBreed, nativeExit, nativeBuy, nativeSell].every(fn => typeof fn === 'function')) return null;
+    if (![nativeOpen, nativeRender, nativeBreed, nativeBuy, nativeSell].every(fn => typeof fn === 'function')) return null;
 
     let mode = 'hub';
     let activeSlot = 1;
@@ -1930,10 +1929,17 @@
 
     window.exitScientists = function() {
       if (busy) return;
+      const returnOrigin = leonovReturnOrigin;
       cleanup();
       mode = 'hub';
-      nativeExit();
-      openLeonov('cordon-camp');
+      // The original exit opens main and persists Cordon before returning here.
+      // Close this workspace directly, keeping Leonov's original location.
+      breedSlot1 = null;
+      breedSlot2 = null;
+      buyList.replaceChildren();
+      sellList.replaceChildren();
+      root.classList.remove('active');
+      openLeonov(returnOrigin);
     };
 
     // Any legacy entry to the scientist screen now lands on the two-choice Leonov hub.
