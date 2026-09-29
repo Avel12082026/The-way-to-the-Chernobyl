@@ -73,7 +73,7 @@ function pveAnomalyExposureServer(data,a){
     const upgradeLevel=research?Math.max(0,Number(parsedArmor.level)||0):0;
 
     // Tiers 1-8 scale smoothly. Tier 9 is intentionally a major wall:
-    // only an upgraded research suit gets generic extra protection against named tier-9 anomalies.
+    // only an upgraded research suit gets generic extra protection against named T11 anomalies.
     const rawRadiation=tier>=9
         ? 55+Math.random()*20
         : 4+tier*2.5+Math.random()*(2+tier*1.4);

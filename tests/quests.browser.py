@@ -155,8 +155,8 @@ async def main():
     await page.locator('[data-quest-tab="completed"]').click()
     assert await page.locator('#questPdaList [data-quest-id="done1"]').count()==1
 
-    # Tier-9 artifacts are not changed by the regular rarity model.
-    assert await page.evaluate("GameBalanceTuning.artifactModel.every(x=>x.tier>=1&&x.tier<=8)")
+    # Ordinary artifacts through T11 participate; named T11 stays outside this model.
+    assert await page.evaluate("GameBalanceTuning.artifactModel.every(x=>x.tier>=1&&x.tier<=11)")
     assert not errors,errors
     print(json.dumps({'status':'passed','tabs':tabs,'tracker':'live green/white','dialogue':'zhuchara quest offer'},ensure_ascii=False))
     await browser.close()

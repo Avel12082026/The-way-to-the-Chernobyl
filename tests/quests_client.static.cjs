@@ -13,7 +13,7 @@ assert(hubs.includes("openTraderDialogue('leonov')")&&hubs.includes("openTraderD
 assert(bunker.includes("openTraderDialogue('barman')"),'Barman Talk must open quest dialogue');
 assert(!hubs.includes('data-leonov-action="quests"')&&!hubs.includes("{id:'quests', label:'Квесты'}"),'Quest givers must not expose a separate Quests button');
 assert(q.includes("barman:{name:'Бармен'")&&q.includes("артефакты, броню и оружие 5 тира"),'Barman quest dialogue metadata missing');
-assert(balance.includes("if(tier<1||tier>8")&&balance.includes('catchChancePercent')&&balance.includes('RESEARCH_UNLOCKS=[[4,135]')&&balance.includes('[14,570]'));
+assert(balance.includes("if(tier<1||tier>11")&&balance.includes('catchChancePercent')&&balance.includes('RESEARCH_UNLOCKS=[[4,135]')&&balance.includes('[14,570]'));
 assert(balance.includes("artifacts.filter(a=>!a.adminOnly)")&&balance.includes("a.isResearchSuit&&!a.adminOnly"),'admin-only items must stay outside client balance tuning');
 assert(drag.includes('sanitizeDragCell')&&drag.includes("e.target.closest('#inventoryScreen [data-drag-item]')"));
 assert(drag.includes('stopImmediatePropagation()'));

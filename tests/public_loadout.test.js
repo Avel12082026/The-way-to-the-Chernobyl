@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const patch=JSON.parse(fs.readFileSync('server_patches/pda_loadout.json','utf8'));
 const source=patch.replacements[0].new.split("app.get('/api/player/:id'")[0];
-const c=vm.createContext({getStableArmorKeyServer:n=>n.replace(/ \+\d+(?=[\u200B\u200C]*$)/,''),serverArtifactDef:n=>({name:n,tier:9,gen:4,isNamedArtifact:n==='Named',stats:{luck:5,radiationLeak:-3,invalid:Infinity},owner:'PRIVATE',price:999})});
+const c=vm.createContext({getStableArmorKeyServer:n=>n.replace(/ \+\d+(?=[\u200B\u200C]*$)/,''),serverArtifactDef:n=>({name:n,tier:11,gen:4,isNamedArtifact:n==='Named',stats:{luck:5,radiationLeak:-3,invalid:Infinity},owner:'PRIVATE',price:999})});
 vm.runInContext(source,c);
 c.full={artifactSlots:['Named',null,'Hybrid\u200b',null,null,'Medusa','EXTRA'],armor:{name:'Armor +3\u200b'},armorUpgradeData:{'Armor\u200b':{armor:2,hitAbsorption:1},'Other':{armor:99}},inventory:{secret:1},warehouse:{secret:2},token:'SECRET'};
 const before=JSON.stringify(c.full);const d=JSON.parse(vm.runInContext('JSON.stringify(publicEquippedLoadout(full))',c));

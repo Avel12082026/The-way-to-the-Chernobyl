@@ -1341,19 +1341,22 @@ button:active {filter:brightness(1.18);}
         { id: 6, name: 'Мясорубка', tier: 6, dmg: 75, dropChance: 0.5, artifacts: ['Кусок мяса', 'Коготь', 'Зуб', 'Ржавый механизм', 'Кристалл разума', 'Тлеющий уголь', 'Ледяная слеза', 'Шёпот бездны', 'Стальное перо'] },
         { id: 7, name: 'Печка', tier: 7, dmg: 90, dropChance: 0.5, artifacts: ['Кровь земли', 'Пепел', 'Пламя', 'Осколок звезды', 'Сердце бури', 'Плачущий кристалл', 'Вой пустоты', 'Живая ртуть', 'Тень зоны'] },
         { id: 8, name: 'Плазменная сфера', tier: 8, dmg: 110, dropChance: 0.5, artifacts: ['Ядро', 'Звезда', 'Антиматерия', 'Сердце Зоны', 'Осколок Монолита', 'Слеза Вселенной', 'Дыхание Чернобыля', 'Кровь Зоны', 'Разум Аномалии', 'Шустряк'] },
-        // Тир 9 — особые аномалии, доступны только с детектором тира 9. Артефакты в них — НЕ из
+        { id: 19, name: 'Трамплин', tier: 9, dmg: 116, dropChance: 0.5, artifacts: ['Слизь','Слизняк','Капли','Кристалл','Колючка','Кристальная колючка','Морской ёж','Бенгальский огонь','Лунный свет','Плёнка'] },
+        { id: 20, name: 'Газировка', tier: 10, dmg: 142, dropChance: 0.5, artifacts: ['Каменный цветок','Ночная звезда','Выверт','Грави','Золотая рыбка','Кровь камня','Ломоть мяса','Душа','Колобок','Мамины бусы'] },
+        { id: 21, name: 'Жгучий пух', tier: 11, dmg: 172, dropChance: 0.5, artifacts: ['Светляк','Снежинка','Пустышка','Компас','Аленький цветочек','Изменённый изолятор','Изменённый штурвал','Аномальное растение','Сердце Оазиса','Гиперкуб'] },
+        // Особые T11-анomalии доступны только с ВИЗИРЕМ. Артефакты в них — НЕ из
         // общего пула (isNamedArtifactAnomaly: true), а именные, привязанные к конкретным игрокам
         // (первые 100 зарегистрированных) — список приходит с сервера отдельно
-        { id: 9, name: 'Смерч', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 10, name: 'Стужа', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 11, name: 'Гравитоид', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 12, name: 'Кровавый родник', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 13, name: 'Чёрное пятно', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 14, name: 'Разлом', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 15, name: 'Бездна', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 16, name: 'Зеркало Зоны', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 17, name: 'Пульсар', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] },
-        { id: 18, name: 'Аномальный столб', tier: 9, dmg: 130, isNamedArtifactAnomaly: true, artifacts: [] }
+        { id: 9, name: 'Смерч', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 10, name: 'Стужа', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 11, name: 'Гравитоид', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 12, name: 'Кровавый родник', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 13, name: 'Чёрное пятно', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 14, name: 'Разлом', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 15, name: 'Бездна', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 16, name: 'Зеркало Зоны', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 17, name: 'Пульсар', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] },
+        { id: 18, name: 'Аномальный столб', tier: 11, dmg: 230, isNamedArtifactAnomaly: true, artifacts: [] }
     ];
 
     // ===== АРТЕФАКТЫ =====
@@ -1431,11 +1434,41 @@ button:active {filter:brightness(1.18);}
         { name: "Кровь Зоны", tier: 8, price: 41000, stats: {"anomaly_Воронка":17,"health":19,"radiation":25,"thirst":24, "bulletResist":32, "hitAbsorption":-16} },
         { name: "Разум Аномалии", tier: 8, price: 43000, stats: {"anomaly_Мясорубка":31,"anomaly_Плазменная сфера":19,"anomaly_Печка":18,"anomaly_Электра":21, "hitAbsorption":32, "bulletResist":-16} },
         { name: "Шустряк", tier: 8, price: 45000, stats: {"anomaly_Плазменная сфера":19,"anomaly_Электра":23,"anomaly_Кислотный туман":19,"anomaly_Мясорубка":27, "bulletResist":32, "hitAbsorption":-16} },
+        { name:"Слизь", tier:9, price:65000, stats:{"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Печка":-1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1} },
+        { name:"Слизняк", tier:9, price:69444, stats:{"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"radiationLeak":-1,"hunger":-1,"thirst":-1} },
+        { name:"Капли", tier:9, price:73889, stats:{"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"thirst":-1,"anomaly_Жарка":-1,"anomaly_Электра":-1} },
+        { name:"Кристалл", tier:9, price:78333, stats:{"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"radiation":1,"anomaly_Электра":-1,"anomaly_Воронка":-1,"anomaly_Кислотный туман":-1} },
+        { name:"Колючка", tier:9, price:82778, stats:{"hunger":1,"thirst":1,"radiation":1,"vitality":1,"agility":1,"strength":1,"anomaly_Кислотный туман":-1,"anomaly_Карусель":-1,"anomaly_Мясорубка":-1} },
+        { name:"Кристальная колючка", tier:9, price:87222, stats:{"vitality":1,"agility":1,"strength":1,"accuracy":1,"intellect":1,"luck":1,"anomaly_Мясорубка":-1,"anomaly_Печка":-1,"anomaly_Плазменная сфера":-1} },
+        { name:"Морской ёж", tier:9, price:91667, stats:{"accuracy":1,"intellect":1,"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1,"hunger":-1} },
+        { name:"Бенгальский огонь", tier:9, price:96111, stats:{"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"hunger":-1,"thirst":-1,"anomaly_Карусель":-1} },
+        { name:"Лунный свет", tier:9, price:100556, stats:{"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Жарка":-1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1} },
+        { name:"Плёнка", tier:9, price:105000, stats:{"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"anomaly_Воронка":-1,"anomaly_Кислотный туман":-1,"radiationLeak":-1} },
+        { name:"Каменный цветок", tier:10, price:120000, stats:{"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1,"hunger":-1} },
+        { name:"Ночная звезда", tier:10, price:126667, stats:{"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"hunger":-1,"thirst":-1,"anomaly_Жарка":-1} },
+        { name:"Выверт", tier:10, price:133333, stats:{"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"anomaly_Жарка":-1,"anomaly_Электра":-1,"anomaly_Воронка":-1} },
+        { name:"Грави", tier:10, price:140000, stats:{"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"radiation":1,"vitality":1,"agility":1,"anomaly_Воронка":-1,"anomaly_Кислотный туман":-1,"anomaly_Карусель":-1} },
+        { name:"Золотая рыбка", tier:10, price:146667, stats:{"thirst":1,"radiation":1,"vitality":1,"agility":1,"strength":1,"accuracy":1,"intellect":1,"anomaly_Карусель":-1,"anomaly_Мясорубка":-1,"anomaly_Печка":-1} },
+        { name:"Кровь камня", tier:10, price:153333, stats:{"agility":1,"strength":1,"accuracy":1,"intellect":1,"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Печка":-1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1} },
+        { name:"Ломоть мяса", tier:10, price:160000, stats:{"intellect":1,"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"radiationLeak":-1,"hunger":-1,"thirst":-1} },
+        { name:"Душа", tier:10, price:166667, stats:{"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"thirst":-1,"anomaly_Печка":-1,"anomaly_Плазменная сфера":-1} },
+        { name:"Колобок", tier:10, price:173333, stats:{"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"anomaly_Электра":-1,"radiationLeak":-1,"hunger":-1} },
+        { name:"Мамины бусы", tier:10, price:180000, stats:{"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"radiation":1,"anomaly_Кислотный туман":-1,"anomaly_Карусель":-1,"radiationLeak":-1} },
+        { name:"Светляк", tier:11, price:220000, stats:{"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"radiationLeak":-1,"hunger":-1,"thirst":-1} },
+        { name:"Снежинка", tier:11, price:232222, stats:{"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":-1,"anomaly_Жарка":-1,"anomaly_Электра":-1} },
+        { name:"Пустышка", tier:11, price:244444, stats:{"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"radiation":1,"vitality":1,"anomaly_Электра":-1,"anomaly_Воронка":-1,"anomaly_Кислотный туман":-1} },
+        { name:"Компас", tier:11, price:256667, stats:{"health":1,"hunger":1,"thirst":1,"radiation":1,"vitality":1,"agility":1,"strength":1,"accuracy":1,"anomaly_Кислотный туман":-1,"anomaly_Карусель":-1,"anomaly_Мясорубка":-1} },
+        { name:"Аленький цветочек", tier:11, price:268889, stats:{"radiation":1,"vitality":1,"agility":1,"strength":1,"accuracy":1,"intellect":1,"luck":1,"bulletResist":1,"anomaly_Мясорубка":-1,"anomaly_Печка":-1,"anomaly_Плазменная сфера":-1} },
+        { name:"Изменённый изолятор", tier:11, price:281111, stats:{"strength":1,"accuracy":1,"intellect":1,"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Плазменная сфера":-1,"radiationLeak":-1,"hunger":-1} },
+        { name:"Изменённый штурвал", tier:11, price:293333, stats:{"luck":1,"bulletResist":1,"hitAbsorption":1,"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"hunger":-1,"thirst":-1,"anomaly_Мясорубка":-1} },
+        { name:"Аномальное растение", tier:11, price:305556, stats:{"anomaly_Жарка":1,"anomaly_Электра":1,"anomaly_Воронка":1,"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"radiationLeak":-1,"hunger":-1,"thirst":-1} },
+        { name:"Сердце Оазиса", tier:11, price:317778, stats:{"anomaly_Кислотный туман":1,"anomaly_Карусель":1,"anomaly_Мясорубка":1,"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"anomaly_Воронка":-1,"radiationLeak":-1,"anomaly_Жарка":-1} },
+        { name:"Гиперкуб", tier:11, price:330000, stats:{"anomaly_Печка":1,"anomaly_Плазменная сфера":1,"health":1,"hunger":1,"thirst":1,"radiation":1,"vitality":1,"agility":1,"anomaly_Карусель":-1,"anomaly_Мясорубка":-1,"radiationLeak":-1} },
         { name: "Сердце Зоны: Абсолют", tier: 8, price: 666000, adminOnly: true, stats: {"radiation":666,"anomaly_Жарка":666,"anomaly_Электра":666,"anomaly_Воронка":666,"anomaly_Кислотный туман":666,"anomaly_Карусель":666,"anomaly_Мясорубка":666,"anomaly_Печка":666,"anomaly_Плазменная сфера":666,"health":666,"hunger":666,"thirst":666} }
     ];
 
     // Пулестойкость (защита от урона NPC) и Гашение ударов (защита от урона мутантов) — теперь есть
-    // у ВСЕХ артефактов, не только именных тира 9. Значение может быть и положительным (защита), и
+    // у ВСЕХ артефактов, не только именных тира 11. Значение может быть и положительным (защита), и
     // отрицательным (уязвимость) — считается один раз детерминированно от названия артефакта, чтобы
     // у конкретного артефакта бонус был одним и тем же при каждой перезагрузке игры, а не случайным
     // при каждом заходе. Величина растёт вместе с тиром — как и у остальных характеристик артефактов.
@@ -1747,7 +1780,8 @@ button:active {filter:brightness(1.18);}
         { id: 6, name: "ГРОМ", tier: 6, price: 21840 },
         { id: 7, name: "ВЕДЬМАК", tier: 7, price: 32760 },
         { id: 8, name: "СВЕТЛЯК", tier: 8, price: 47320 },
-        // Тир 9 — особый детектор, не продаётся обычным способом (только за Жетоны сталкера или
+        // ВИЗИРЬ — особый донатный детектор: внутренний тир сохраняется для совместимости, но аномалии ищет до T11.
+        // Не продаётся обычным способом (только за Сталкоины или
         // Telegram Stars в донатном магазине), нужен, чтобы вообще встречать аномалии тира 9
         { id: 9, name: "ВИЗИРЬ", tier: 9, price: 0, specialOnly: true }
     ];
@@ -2530,7 +2564,7 @@ button:active {filter:brightness(1.18);}
         load(state.primary, 0);
     }
     window.addEventListener('online', () => updateCharacterPortrait(true));
-    // Запасной значок для ЛЮБОГО именного артефакта тира 9 — у них нет фиксированного названия
+    // Запасной значок для ЛЮБОГО именного артефакта тира 11 — у них нет фиксированного названия
     // (каждый игрок называет свой сам), поэтому обычная запись по имени не подходит. getItemIcon
     // ниже сначала ищет точное совпадение в ITEM_ICONS, а если не находит — проверяет через
     // findArtifactDef, не именной ли это артефакт, и если да, отдаёт этот общий файл.
@@ -2783,7 +2817,7 @@ button:active {filter:brightness(1.18);}
                 queueMicrotask(() => window.GamePosition?.restoreFromPlayer?.());
                 if (!player.nickname) promptForNickname(true);
                 fetchMyFactionStatus(); // нужен рано — бонусы фракции применяются в бою/поиске артефактов сразу же
-                loadNamedArtifacts(); // именные артефакты тира 9 — нужны для findArtifactDef и поиска в аномалиях
+                loadNamedArtifacts(); // именные артефакты тира 11 — нужны для findArtifactDef и поиска в аномалиях
                 // ВАЖНО: чат НЕ трогаем и никуда не переносим здесь — loadGame() вызывается из
                 // множества мест как обычная пересинхронизация данных (например, после покупки
                 // фракции), в том числе когда игрок находится совсем на другом экране (КПК и т.д.).
@@ -2835,7 +2869,7 @@ button:active {filter:brightness(1.18);}
         player.radiationResist = 0;
         player.radiationLeakTotal = 0; // суммарный вредный эффект «Радиация +N» от надетых артефактов за ход
         player.anomalyResist = {};
-        // Именные артефакты тира 9 — особый случай, дают бонус к перкам и Пулестойкости/Гашению
+        // Именные артефакты тира 11 — особый случай, дают бонус к перкам и Пулестойкости/Гашению
         // ударов напрямую (обычные артефакты так не умеют — это исключительно их привилегия)
         player.namedArtifactBonus = { vitality: 0, agility: 0, strength: 0, accuracy: 0, intellect: 0, luck: 0, bulletResist: 0, hitAbsorption: 0 };
         const perkKeys = ['vitality', 'agility', 'strength', 'accuracy', 'intellect', 'luck'];
@@ -4906,7 +4940,7 @@ button:active {filter:brightness(1.18);}
         { id: 'knowledge_book', stars: 20, itemName: 'Книга знаний', title: 'Книга знаний', desc: 'Использование поднимает уровень персонажа на 1' },
         { id: 'breed_credit', stars: 10, itemName: '🧬 Жетон сталкера', title: 'Жетон сталкера', desc: 'Даёт 1 скрещивание артефактов у Бункера экологов' },
         { id: 'nickname_credit', stars: 20, itemName: '✏️ Жетон смены ника', title: 'Жетон смены ника', desc: 'Первая смена ника бесплатна, далее нужен этот жетон' },
-        { id: 'detector_t9', stars: 100, itemName: 'ВИЗИРЬ', title: 'ВИЗИРЬ', desc: 'Открывает доступ к 10 особым аномалиям тира 9 с именными артефактами первых 100 игроков' },
+        { id: 'detector_t9', stars: 100, itemName: 'ВИЗИРЬ', title: 'ВИЗИРЬ', desc: 'Ищет все аномалии T1–T11, включая 10 особых T11 с именными артефактами первых 100 игроков' },
         // Премиальная броня — не продаётся в обычном магазине ни у кого, только тут за Stars
         // (или выпадает случайно с арены каждые 5000 убитых игроков)
         { id: 'armor_81', stars: 200, itemName: 'Броня Зоны', title: 'Броня Зоны', desc: 'При поиске артефактов — 50% шанс двойного выпадения из аномалии. +20 к перку «Удача»' },
@@ -6132,7 +6166,7 @@ function startBattle(enemy) {
     // у каждого своя уникальная невидимая часть имени), а если не нашли — пробуем без невидимого
     // суффикса (это второй и последующий экземпляр БАЗОВОГО артефакта — у них общее определение
     // статов, суффикс есть только чтобы не стакаться в инвентаре)
-    let namedArtifactsList = []; // именные артефакты тира 9 — грузятся отдельно с сервера (не входят в статичный массив artifacts)
+    let namedArtifactsList = []; // именные артефакты тира 11 — грузятся отдельно с сервера (не входят в статичный массив artifacts)
 
     function loadNamedArtifacts() {
         fetch(`${SERVER_URL}/api/named-artifacts`)
@@ -6147,9 +6181,9 @@ function startBattle(enemy) {
         const clean = stripInvisibleSuffix(itemName);
         const regular = artifacts.find(a => a.name === clean);
         if (regular) return regular;
-        // Именной артефакт тира 9 — не в общем массиве, ищем в отдельно загруженном списке
+        // Именной артефакт тира 11 — не в общем массиве, ищем в отдельно загруженном списке
         const named = namedArtifactsList.find(a => a.name === itemName || a.name === clean);
-        if (named) return { name: named.name, tier: 9, gen: 0, stats: named.stats, isNamedArtifact: true };
+        if (named) return { name: named.name, tier: Number(named.tier)||11, gen: 0, stats: named.stats, isNamedArtifact: true };
         return null;
     }
 
@@ -6257,9 +6291,10 @@ function startBattle(enemy) {
         }
         const detector = detectors.find(d => d.name === parsed.baseName);
         if (detector) {
+            const anomalyMax=detector.name==='ВИЗИРЬ'?11:detector.tier;
             return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
-                Тир: ${detector.tier}<br>
-                Позволяет находить артефакты из аномалий тира ${detector.tier} и ниже
+                Тир детектора: ${detector.tier}<br>
+                Позволяет находить артефакты из аномалий T${anomalyMax} и ниже${detector.name==='ВИЗИРЬ'?'<br><span style="color:#e6c229;">Особые именные аномалии T11 доступны только ВИЗИРЮ.</span>':''}
             </div>`;
         }
         const artifact = findArtifactDef(itemName);
@@ -6501,7 +6536,7 @@ function startBattle(enemy) {
             el.innerHTML = '<p style="padding:10px; color:#888;">В инвентаре нет артефактов или частей тел мутантов для продажи</p>';
             return;
         }
-        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Артефакты — на 35% дороже, чем торговцу (именные тира 9 — фиксированно за 🧬 50 Жетонов сталкера). Части тел мутантов — на 20% дороже:</div>`;
+        let html = `<div style="font-size:12px; color:#888; margin:10px 0;">Артефакты — на 35% дороже, чем торговцу (именные тира 11 — фиксированно за 🧬 50 Жетонов сталкера). Части тел мутантов — на 20% дороже:</div>`;
         html += ownedArtifacts.map(name => {
             const artifact = findArtifactDef(name);
             const esc = name.replace(/'/g, "\\'");
@@ -6861,7 +6896,7 @@ function startBattle(enemy) {
             if (context === 'shop' && !artifact.isNamedArtifact) {
                 buttons += sellButtonHtml('shop', itemName, player.inventory[itemName], getSellPrice(itemName));
             } else if (context === 'shop' && artifact.isNamedArtifact) {
-                buttons += `<p style="font-size:11px; color:#888; margin:6px 0;">Именной артефакт тира 9 продаётся только у «Эколог Леонов» — за 🧬 50 Жетонов сталкера.</p>`;
+                buttons += `<p style="font-size:11px; color:#888; margin:6px 0;">Именной артефакт тира 11 продаётся только у «Эколог Леонов» — за 🧬 50 Жетонов сталкера.</p>`;
             }
             buttons += `<button onclick="dropInventoryItem('${esc}')" style="background:#c0392b;">🗑️ Выкинуть</button>`;
             btnsEl.innerHTML = buttons;

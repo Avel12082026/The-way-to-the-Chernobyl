@@ -7,7 +7,7 @@
   // trading/upgrades keep their original routes in Telegram and Android.
   if (!document.querySelector('script[data-zone-balance]')) {
     const balanceScript = document.createElement('script');
-    balanceScript.src = 'ui/balance-tuning.js?v=20260927-money-only1';
+    balanceScript.src = 'ui/balance-tuning.js?v=20260929-artifacts-t11-v1';
     balanceScript.defer = true;
     balanceScript.dataset.zoneBalance = '1';
     document.head.append(balanceScript);

@@ -9,7 +9,7 @@ function array(name){
 }
 const rawWeapons=array('weapons').filter(w=>!w.adminOnly);
 const armor=array('armorItems').filter(a=>!a.adminOnly&&!a.isResearchSuit&&Number.isFinite(Number(a.unlockLevel)));
-const artifacts=array('artifacts').filter(a=>!a.adminOnly&&Number(a.tier)<=8);
+const artifacts=array('artifacts').filter(a=>!a.adminOnly&&Number(a.tier)<=11);
 const mutants=array('mutants').filter(m=>!m.adminOnly);
 assert.equal(rawWeapons.length,116);
 assert(armor.length&&artifacts.length&&mutants.length);

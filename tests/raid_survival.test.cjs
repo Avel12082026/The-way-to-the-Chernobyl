@@ -4,7 +4,7 @@ const {DatabaseSync}=require('node:sqlite');
 const model=require('../server_patches/raid-survival.cjs');
 const fullDose={health:200,radiation:100};assert.equal(model.radiationDamage(fullDose),15);assert.equal(fullDose.health,185);
 const rows=[];
-for(let tier=1;tier<=9;tier++){
+for(let tier=1;tier<=11;tier++){
   const d={health:1000,radiation:0,anomalyResist:{},radiationResist:0};
   const x=model.search(d,{name:'Жарка',tier},{},()=>.5);rows.push(x);
   assert.equal(x.searchDmg,0);assert.equal(d.health,1000-x.anomalyDmg);
@@ -12,7 +12,7 @@ for(let tier=1;tier<=9;tier++){
   if(tier>1){assert(x.anomalyDmg>rows[tier-2].anomalyDmg);assert(x.radiationDose>rows[tier-2].radiationDose);}
 }
 const protection=Object.fromEntries(model.ANOMALY_KEYS.map(k=>[k,120]));
-const run=(gear,rad=90)=>{const d={health:1000,radiation:rad,radiationResist:120,anomalyResist:protection};return [model.search(d,{tier:9,name:'Смерч'},gear,()=>.5),d];};
+const run=(gear,rad=90)=>{const d={health:1000,radiation:rad,radiationResist:120,anomalyResist:protection};return [model.search(d,{tier:11,name:'Смерч',isNamedArtifactAnomaly:true},gear,()=>.5),d];};
 const ordinary=run({}),baseResearch=run({researchSuit:true}),upgraded=run({researchSuit:true,upgrades:{radiation:25,'anomaly_Жарка':25}});
 assert.equal(ordinary[0].anomalyDmg,baseResearch[0].anomalyDmg);
 assert(upgraded[0].anomalyDmg<ordinary[0].anomalyDmg/2);
@@ -24,6 +24,7 @@ const negative=model.search(neg,{tier:1,name:'Жарка'},{},()=>.5);assert(neg
 
 assert.equal(model.DAMAGE[1],10,'tier-1 direct anomaly damage was raised');
 assert.equal(model.DAMAGE[8],94,'tier-8 direct anomaly damage was raised');
+assert.equal(model.DAMAGE[9],116);assert.equal(model.DAMAGE[10],142);assert.equal(model.DAMAGE[11],172);
 const exactHazard=(anomalyStat=0,radiationStat=0)=>{
   const d={health:1000,radiation:0,radiationResist:radiationStat,anomalyResist:{Жарка:anomalyStat}};
   return model.search(d,{tier:3,name:'Жарка'},{
@@ -151,5 +152,5 @@ assert.equal(call('/api/raid/step').radiationDamage,0);
 setup(3);const unchanged=JSON.stringify(state());assert.equal(call('/api/raid/anomaly/search').success,false);assert.equal(JSON.stringify(state()),unchanged);
 setup(0,1);assert.equal(call('/api/raid/anomaly/search').died,true);
 assert.equal(raw.prepare('SELECT COUNT(*) AS n FROM raid_sessions').get().n,0);
-console.log('PASS: stronger tiers 1–9; exact belt anomaly/radioprotection stats; harmful Radiation +N every turn; armor radioprotection; delayed radiation; antirad; no duplicate/dead search; travel -2/-2');
-console.log(JSON.stringify({tier9:{ordinary:ordinary[0],research50:upgraded[0]},tiers:rows},null,2));
+console.log('PASS: stronger ordinary tiers 1–11 + severe named T11; exact belt anomaly/radioprotection stats; harmful Radiation +N every turn; armor radioprotection; delayed radiation; antirad; no duplicate/dead search; travel -2/-2');
+console.log(JSON.stringify({namedT11:{ordinary:ordinary[0],research50:upgraded[0]},tiers:rows},null,2));

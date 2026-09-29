@@ -98,7 +98,7 @@ def healthy():
         market=endpoint('/api/market')
         return (
             selection.get('success') is True and selection.get('version')==VERSION
-            and raid.get('success') is True and raid.get('version')=='20260920.3'
+            and raid.get('success') is True and raid.get('version')=='20260929.4'
             and isinstance(market,list)
         )
     except Exception:

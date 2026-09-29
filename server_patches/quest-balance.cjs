@@ -10,7 +10,7 @@ module.exports=function installQuestBalance({
   if(!app||!db||typeof requireAuth!=='function')throw new Error('quest-balance: missing server dependencies');
 
   const vendors=new Set(['leonov','zhuchara','barman','diesel']);
-  const regularAnomalies=(RAID_ANOMALIES||[]).filter(a=>Number(a.tier)>=1&&Number(a.tier)<=8&&!a.isNamedArtifactAnomaly);
+  const regularAnomalies=(RAID_ANOMALIES||[]).filter(a=>Number(a.tier)>=1&&Number(a.tier)<=11&&!a.isNamedArtifactAnomaly);
   const artifactByName=new Map((SHOP_ARTIFACTS||[]).filter(a=>!a.adminOnly).map(a=>[a.name,a]));
   const artifactMeta=new Map();
 
@@ -328,7 +328,8 @@ module.exports=function installQuestBalance({
       candidates=band([...lookup.values()].filter(x=>x.kind==='weapon'&&questTier(x)<=zoneTier));
       selected=sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30,epoch);
     }else{
-      const artifactTier=Math.min(8,1+Math.floor(level/20));
+      const unlocked=[Number(data?.worldPosition?.zoneLocation)||1,...(Array.isArray(data?.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number):[])];
+      const artifactTier=Math.max(1,Math.min(11,Math.max(...unlocked.filter(Number.isFinite))));
       const mutantTier=Math.min(28,1+Math.floor(level/20));
       const lootTier=new Map((PVE_MUTANTS||[]).filter(m=>m.loot&&Number(m.lootChance)>0).map(m=>[m.loot,Number(m.tier)]));
       const artBand=band([...lookup.values()].filter(x=>x.kind==='artifact'&&questTier(x)<=artifactTier));

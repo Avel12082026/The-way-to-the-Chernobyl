@@ -1,10 +1,10 @@
 'use strict';
 // Environmental balance. All values are calculated by the server, never by the client.
-const VERSION='20260920.3';
+const VERSION='20260929.4';
 const ANOMALY_KEYS=Object.freeze(['Жарка','Электра','Воронка','Кислотный туман','Карусель','Мясорубка','Печка','Плазменная сфера']);
-// Direct HP damage grows sharply with anomaly tier. Tier 9 remains a separate end-game wall.
-const DAMAGE=Object.freeze([0,10,16,24,34,46,60,76,94,230]);
-const DOSE=Object.freeze([0,6,10,14,18,23,28,34,40,120]);
+// Direct HP/radiation damage grows through T11; named T11 anomalies remain a separate end-game wall.
+const DAMAGE=Object.freeze([0,10,16,24,34,46,60,76,94,116,142,172]);
+const DOSE=Object.freeze([0,6,10,14,18,23,28,34,40,48,58,70]);
 const finite=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
 const clamp=(v,lo,hi)=>Math.min(hi,Math.max(lo,v));
 const round=v=>Math.round(v*10)/10;
@@ -22,13 +22,13 @@ function environmentalUpgrades(upgrades){
 function anomalyValue(map,anomaly,tier){
   const src=map&&typeof map==='object'?map:{};
   let value=finite(src[anomaly.name]);
-  if(tier===9){
+  if(tier>=9){
     value+=ANOMALY_KEYS.reduce((n,key)=>n+finite(src[key]),0)/ANOMALY_KEYS.length;
   }
   return value;
 }
 function search(data,anomaly,gear={},rng=Math.random){
-  const tier=clamp(Math.floor(finite(anomaly.tier,1)),1,9);
+  const tier=clamp(Math.floor(finite(anomaly.tier,1)),1,11);
   const artifactScale=clamp(finite(gear.artifactDerivedScale,1),0,10);
 
   // serverRecomputeArtifactDerived stores armour + belt artifacts together. The
@@ -50,16 +50,18 @@ function search(data,anomaly,gear={},rng=Math.random){
     : finite(data.radiationResist)-artifactRadiationProtection*artifactScale;
 
   const upgrades=environmentalUpgrades(gear.upgrades);
-  const severe=tier===9;
+  const severe=!!anomaly.isNamedArtifactAnomaly;
   const cap=gear.adminSuit?0.995:!severe?0.95:
     gear.researchSuit&&upgrades>0?Math.min(0.75,0.15+0.012*upgrades):0.15;
   const scale=severe?40:20;
   const variation=()=>0.95+clamp(finite(rng(),0.5),0,1)*0.10;
 
-  const armourAdjustedDamage=DAMAGE[tier]*variation()*reduction(armourAnomaly,scale,cap);
+  const damageBase=severe?230:DAMAGE[tier];
+  const armourAdjustedDamage=damageBase*variation()*reduction(armourAnomaly,scale,cap);
   const anomalyDmg=round(Math.max(0,armourAdjustedDamage-artifactAnomaly));
 
-  const armourAdjustedDose=DOSE[tier]*variation()*reduction(armourRadiation,scale,cap);
+  const doseBase=severe?120:DOSE[tier];
+  const armourAdjustedDose=doseBase*variation()*reduction(armourRadiation,scale,cap);
   const radiationDose=round(Math.max(0,armourAdjustedDose-artifactRadiationProtection));
 
   const oldRad=clamp(finite(data.radiation),0,100);

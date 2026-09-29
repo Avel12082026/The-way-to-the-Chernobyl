@@ -36,7 +36,7 @@ assert.doesNotMatch(fn('renderProfileEquipment'),/<figcaption/);
 assert.doesNotMatch(fn('renderProfileAppearance'),/<figcaption/);
 console.log('PASS: six ordered slots, empty vs unavailable, viewed-player isolation, escaped names, armor upgrade context, modal close/focus, no equipment prose');
 ctx.NAMED_ARTIFACT_ICON='named.webp';ctx.getHybridIconFile=gen=>'hybrid_'+gen+'.webp';ctx.formatStatEffect=(stat,v)=>stat+': '+v;
-ctx.sample={artifactSlots:['Named',null,'Гибрид X'],equippedArtifactDetails:[{name:'Named',tier:9,isNamedArtifact:true,stats:{luck:17}},null,{name:'Гибрид X',tier:8,gen:7,stats:{health:42}}]};
+ctx.sample={artifactSlots:['Named',null,'Гибрид X'],equippedArtifactDetails:[{name:'Named',tier:11,isNamedArtifact:true,stats:{luck:17}},null,{name:'Гибрид X',tier:8,gen:7,stats:{health:42}}]};
 rendered=run('renderProfileArtifacts(sample)');assert.match(rendered,/named.webp/);assert.match(rendered,/hybrid_7.webp/);
 ctx.button.dataset.profileItem=run("profileItemAttributes(sample,'artifact',0)").match(/data-profile-item="([^"]+)"/)[1];run('showProfileItemInfo(button)');assert.match(nodes.profileItemBody.innerHTML,/luck: 17/);
 console.log('PASS: named/hybrid icons and descriptions use viewed player metadata');

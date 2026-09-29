@@ -15,8 +15,8 @@ ctx.window=ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync('ui/balance-tuning.js','utf8'),ctx);
 const model=ctx.GameBalanceTuning.artifactModel;
-assert(model.length>=70,'expected regular artifact model');
-assert(model.every(x=>x.tier>=1&&x.tier<=8),'tier-9 named artifacts must stay outside rebalance');
+assert(model.length>=100,'expected regular artifact model through T11');
+assert(model.every(x=>x.tier>=1&&x.tier<=11),'ordinary artifact model must stay within T1-T11');
 const balancedNames=new Set(model.map(x=>x.name));
 for(const admin of artifacts.filter(a=>a.adminOnly))assert(!balancedNames.has(admin.name),'admin artifact entered balance model: '+admin.name);
 for(const level of [1,134,135,174,175,569,570]) assert.equal(ctx.GameBalanceTuning.researchTier(level),14,'research suits are money-gated, not level-gated');
@@ -36,7 +36,7 @@ for(const row of researchPrices){
 
 const byName=new Map(artifacts.map(a=>[a.name,a]));
 const tierStrength=new Map();
-for(const anomaly of anomalies.filter(a=>a.tier>=1&&a.tier<=8)){
+for(const anomaly of anomalies.filter(a=>a.tier>=1&&a.tier<=11&&!a.isNamedArtifactAnomaly)){
   const defs=anomaly.artifacts.map(n=>byName.get(n)).filter(a=>a&&!a.adminOnly).sort((a,b)=>a.price-b.price);
   assert(defs.length>=8,anomaly.name);
   for(let i=1;i<defs.length;i++){
@@ -48,9 +48,14 @@ for(const anomaly of anomalies.filter(a=>a.tier>=1&&a.tier<=8)){
   }
   tierStrength.set(anomaly.tier,Math.max(...Object.values(defs.at(-1).stats).filter(v=>v>0)));
 }
-for(let t=2;t<=8;t++)assert(tierStrength.get(t)>tierStrength.get(t-1),'tier '+t+' should improve smoothly');
+for(let t=2;t<=11;t++)assert(tierStrength.get(t)>tierStrength.get(t-1),'tier '+t+' should improve smoothly');
+for(const [tier,minPos] of [[9,6],[10,7],[11,8]]){
+  for(const a of artifacts.filter(x=>Number(x.tier)===tier&&!x.adminOnly)){
+    assert(Object.values(a.stats).filter(v=>v>0).length>=minPos,'T'+tier+' '+a.name+' positive-property count');
+  }
+}
 assert.match(html,/const\s+UPGRADE_MAX_LEVEL\s*=\s*100\s*;/);
 assert.match(html,/const\s+UPGRADE_BYTE_THRESHOLD\s*=\s*50\s*;/);
 assert(!/UPGRADE_MAX_BONUS_PCT\s*=/.test(html),'percentage upgrade curve must be gone');
 assert(html.includes('UPGRADE_FLAT_100_V1'));
-console.log('artifact tiers/rarity and flat +100 upgrade budget: OK');
+console.log('artifact tiers T1-T11, growing positive-property counts/rarity and flat +100 upgrade budget: OK');

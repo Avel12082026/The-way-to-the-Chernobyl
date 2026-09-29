@@ -31,7 +31,7 @@ function rebalanceArtifacts(){
   const byName=new Map(artifacts.filter(a=>!a.adminOnly).map(a=>[a.name,a]));
   for(const anomaly of anomalies){
     const tier=Number(anomaly.tier)||0;
-    if(tier<1||tier>8||!Array.isArray(anomaly.artifacts))continue; // named tier-9 anomalies stay untouched
+    if(tier<1||tier>11||anomaly.isNamedArtifactAnomaly||!Array.isArray(anomaly.artifacts))continue;
     const defs=anomaly.artifacts.map(name=>byName.get(name)).filter(Boolean);
     const ranked=[...defs].sort((a,b)=>(Number(a.price)||0)-(Number(b.price)||0)||String(a.name).localeCompare(String(b.name),'ru'));
     const n=ranked.length;
@@ -111,7 +111,7 @@ if(typeof nativeInfo==='function'){
         if(firstInfo)body.insertBefore(box,firstInfo);else body.append(box);
       }
       const def=typeof artifacts!=='undefined'?artifacts.find(a=>a.name===clean):null;
-      if(def&&!def.adminOnly&&Number(def.tier)<=8&&Number.isFinite(Number(def.catchChancePercent))){
+      if(def&&!def.adminOnly&&Number(def.tier)<=11&&Number.isFinite(Number(def.catchChancePercent))){
         const body=document.getElementById('itemInfoModalBody');
         if(body&&!body.querySelector('.artifact-catch-chance')){
           const line=document.createElement('div');
@@ -126,7 +126,7 @@ if(typeof nativeInfo==='function'){
 }
 
 window.GameBalanceTuning=Object.freeze({
-  version:'1.3.0',
+  version:'1.4.0',
   maxUpgradeLevel:100,
   flatUpgradePerPoint:1,
   maxUpgradeBonusPct:null,
