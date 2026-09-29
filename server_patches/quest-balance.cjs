@@ -324,7 +324,7 @@ module.exports=function installQuestBalance({
       selected=candidates;
     }else if(vendor==='diesel'){
       const unlocked=[Number(data?.worldPosition?.zoneLocation)||1,...(Array.isArray(data?.zoneUnlockedLocations)?data.zoneUnlockedLocations.map(Number):[])];
-      const zoneTier=Math.max(1,Math.min(12,...unlocked.filter(Number.isFinite)));
+      const zoneTier=Math.max(1,Math.min(12,Math.max(...unlocked.filter(Number.isFinite))));
       candidates=band([...lookup.values()].filter(x=>x.kind==='weapon'&&questTier(x)<=zoneTier));
       selected=sample(candidates,OFFERS_PER_VENDOR,playerId,vendor,30,epoch);
     }else{
