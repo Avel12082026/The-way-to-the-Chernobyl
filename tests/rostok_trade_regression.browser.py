@@ -162,7 +162,7 @@ async def main():
 
         # Capture the actual destination loading screens from the integrated client.
         await page.set_viewport_size({'width':390,'height':844})
-        await page.evaluate("player.level=1000;window.__zoneMapTravelMs=2200")
+        await page.evaluate("player.level=1000;window.__zoneMapTravelMs=2200;window.__zoneMapLegacyDirectTravelTest=true")
         travel_cases=[
             (1,'transition-to-2','zone-travel-svalka.png','СВАЛКА','/images/zone-travel/svalka-loading.png','images/anomaly/background.jpg'),
             (2,'transition-to-1','zone-travel-cordon.png','КОРДОН','/images/zone-travel/kordon-original.jpg','images/zone-travel/kordon-village.webp'),
