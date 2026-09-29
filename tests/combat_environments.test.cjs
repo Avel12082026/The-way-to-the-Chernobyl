@@ -1,10 +1,10 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const environments=require('../images/combat/environments-v2.js');
-assert.equal(environments.entries.length,20);
-assert.equal(new Set(environments.entries.map(x=>x.path)).size,20);
-assert.equal(environments.zones.length,4);
-const zoneAliases=[[1,'1','cordon','Кордон'],[2,'2','garbage','Свалка'],[3,'3','agroprom','Агропром','НИИ Агропром'],[4,'4','rostok','rosstok','Росток','Россток']];
-for(let zoneId=1;zoneId<=4;zoneId++){
+assert.equal(environments.entries.length,30);
+assert.equal(new Set(environments.entries.slice(0,20).map(x=>x.path)).size,20);
+assert.equal(environments.zones.length,6);
+const zoneAliases=[[1,'1','cordon','Кордон'],[2,'2','garbage','Свалка'],[3,'3','agroprom','Агропром','НИИ Агропром'],[4,'4','rostok','rosstok','Росток','Россток'],[5,'5','dark-valley','Тёмная долина','Темная долина'],[6,'6','yantar','Янтарь']];
+for(let zoneId=1;zoneId<=6;zoneId++){
  const reachable=new Set();
  const zone=environments.zones[zoneId-1];
  assert.equal(zone.entries.length,5);
@@ -23,9 +23,10 @@ for(let zoneId=1;zoneId<=4;zoneId++){
   }
   assert.equal(environments.select({zoneLocation:zoneId,battleToken:token,level:999,player:{level:999}}),expected,'Unlock level cannot move a battle to another zone');
  }
- assert.equal(reachable.size,5,'Every variant within this location is reachable');
+ if(zoneId<=4)assert.equal(reachable.size,5,'Every finished environment variant is reachable');
+ else assert.equal(reachable.size,5,'Placeholder zone still has five stable encounter ids');
 }
-for(const location of [undefined,null,'Зона','Припять','Чернобыль','pripyat',0,5,999,-1,{},'__proto__','constructor']){
+for(const location of [undefined,null,'Зона','Припять','Чернобыль','pripyat',0,7,999,-1,{},'__proto__','constructor']){
  assert.equal(environments.select({location,battleToken:'unknown'}).zoneId,1,'An unknown location has a Cordon fallback, never a late-game city');
 }
 assert.equal(environments.select({zoneLocation:2,location:4,enemy:{zoneLocation:3},battleToken:'priority'}).zoneId,2,'The canonical current zone is authoritative');
@@ -57,7 +58,7 @@ async function flush(promise){delayed.splice(0).forEach(done=>done());return awa
  const before=loads.length;
  assert.equal(await flush(scene.show({...input,pending:true})),true);
  assert.equal(loads.length,before,'Repeated state update reuses selected image');
- for(const zoneLocation of [2,3,4,1]){
+ for(const zoneLocation of [2,3,4,5,6,1]){
   const next={...input,zoneLocation};
   const nextPath=environments.select(next).path+'?v=test';
   assert.equal(await flush(scene.show(next)),true);
@@ -76,5 +77,5 @@ async function flush(promise){delayed.splice(0).forEach(done=>done());return awa
  assert.equal(draws.at(-1),environments.select(newest).path+'?v=test');
  const hidden=scene.show({...input,enemy:{...input.enemy,battleToken:'hidden-token'}});scene.hide();
  assert.equal(await flush(hidden),false);assert.equal(host.hidden,true);
- console.log('PASS: 4 location-specific groups of 5 environments, aliases, Cordon fallback, level independence, human and mutant scenes, navigation, cache and stale-load protection');
+ console.log('PASS: 4 finished + 2 dark placeholder combat zones, aliases, fallback, navigation and stale-load protection');
 })().catch(error=>{console.error(error);process.exitCode=1;});
