@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),{DatabaseSync}=require('node:sqlite')
 const install=require('../server_patches/quest-balance.cjs');
 const sql=new DatabaseSync(':memory:');
 sql.exec('CREATE TABLE players(id TEXT PRIMARY KEY,data TEXT,last_seen INTEGER); CREATE TABLE raid_sessions(player_id TEXT,pending_type TEXT); CREATE TABLE pve_battles(player_id TEXT);');
-sql.prepare('INSERT INTO players VALUES(?,?,0)').run('1',JSON.stringify({level:100,coins:100,inventory:{},quests:{}}));
+sql.prepare('INSERT INTO players VALUES(?,?,0)').run('1',JSON.stringify({level:100,coins:100,inventory:{},quests:{},worldPosition:{zoneLocation:3},zoneUnlockedLocations:[1,2,3]}));
 const db={exec:s=>sql.exec(s),prepare:s=>sql.prepare(s),transaction:fn=>(...args)=>{sql.exec('BEGIN');try{const r=fn(...args);sql.exec('COMMIT');return r;}catch(e){sql.exec('ROLLBACK');throw e;}}};
 const routes={},app={post:(url,...hs)=>routes[url]=hs.at(-1),get:(url,fn)=>routes[url]=fn};
 const weapons=[1,2,3].map(n=>({name:'Ствол '+n,tier:n,price:200*n,unlockLevel:n}));
