@@ -130,5 +130,3 @@ with tempfile.TemporaryDirectory() as td:
     assert 'TECHNICIAN BUY PASS' in proc.stdout
 
 print('PASS: stable-ID Zhuchara/Barman armor ranges, Barman stock validation and Diesel detector purchases')
-
-[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
