@@ -18,17 +18,28 @@ function init(){
  track=pickTrack();
  const audio=new Audio(audioRoot+tracks[track][0]);audio.loop=false;audio.preload='metadata';audio.volume=0;
  let unlocked=true,fade=0,epoch=0,playing=false,naturalFade=false;
- const button=document.createElement('button');button.id='menuMusicButton';button.type='button';button.textContent='♫';button.setAttribute('aria-label','Настройки музыки');button.title='Фоновая музыка';
- const panel=document.createElement('dialog');panel.id='menuMusicPanel';panel.setAttribute('aria-labelledby','menuMusicTitle');panel.innerHTML='<h3 id="menuMusicTitle">Фоновая музыка</h3><p id="musicTrackTitle"></p><button type="button" id="musicNext">Следующий трек</button><label><input id="menuMusicEnabled" type="checkbox"> Включить музыку</label><label for="menuMusicVolume">Громкость <output id="menuMusicValue"></output></label><input id="menuMusicVolume" type="range" min="0" max="100" step="1"><p id="menuMusicStatus" role="status"></p><button type="button" id="menuMusicClose">Закрыть</button>';
+ const button=document.createElement('button');button.id='menuMusicButton';button.type='button';button.textContent='♫';button.setAttribute('aria-label','Настройки звука');button.title='Звук';
+ const panel=document.createElement('dialog');panel.id='menuMusicPanel';panel.setAttribute('aria-labelledby','menuMusicTitle');panel.innerHTML='<h3 id="menuMusicTitle">Фоновая музыка</h3><p id="musicTrackTitle"></p><button type="button" id="musicNext">Следующий трек</button><label><input id="menuMusicEnabled" type="checkbox"> Включить музыку</label><label for="menuMusicVolume">Громкость музыки <output id="menuMusicValue"></output></label><input id="menuMusicVolume" type="range" min="0" max="100" step="1"><p id="menuMusicStatus" role="status"></p><button type="button" id="menuMusicClose">Закрыть</button>';
  document.body.append(button,panel);
  const enabled=panel.querySelector('#menuMusicEnabled'),volume=panel.querySelector('#menuMusicVolume'),value=panel.querySelector('output'),status=panel.querySelector('#menuMusicStatus'),title=panel.querySelector('#musicTrackTitle');enabled.checked=settings.enabled;volume.value=Math.round(settings.volume*100);value.value=volume.value+'%';title.textContent=tracks[track][1];
+ if(window.CombatAudio){
+  panel.querySelector('#menuMusicTitle').textContent='Звук';
+  const effects=document.createElement('section');effects.className='combat-sound-settings';
+  effects.innerHTML='<label><input id="combatSoundEnabled" type="checkbox"> Звуки выстрелов</label><label for="combatSoundVolume">Громкость выстрелов <output id="combatSoundValue"></output></label><input id="combatSoundVolume" type="range" min="0" max="100" step="1">';
+  panel.insertBefore(effects,panel.querySelector('#menuMusicClose'));
+  const soundEnabled=effects.querySelector('#combatSoundEnabled'),soundVolume=effects.querySelector('#combatSoundVolume'),soundValue=effects.querySelector('output');
+  function syncEffects(){const s=window.CombatAudio.getSettings();soundEnabled.checked=s.enabled;soundVolume.value=Math.round(s.volume*100);soundValue.value=soundVolume.value+'%';button.dataset.enabled=String(settings.enabled||s.enabled);}
+  soundEnabled.onchange=()=>{window.CombatAudio.setEnabled(soundEnabled.checked);window.CombatAudio.unlock();syncEffects();};
+  soundVolume.oninput=()=>{window.CombatAudio.setVolume(Number(soundVolume.value)/100);syncEffects();};
+  window.addEventListener('combat-audio-settings',syncEffects);syncEffects();
+ }
  function wanted(){return settings.enabled&&settings.volume>0&&!document.hidden}
  function save(){try{localStorage.setItem('zone.menuMusic',JSON.stringify(settings))}catch{}}
  function clearFade(){if(fade){clearInterval(fade);fade=0}}
  function stop(){epoch++;clearFade();audio.pause();audio.volume=0;playing=false;naturalFade=false}
  function ramp(target,duration=FADE_MS,pauseAtZero=false){clearFade();const from=audio.volume,start=performance.now(),span=Math.max(1,duration);fade=setInterval(()=>{const fraction=Math.min(1,(performance.now()-start)/span);audio.volume=Math.max(0,Math.min(1,from+(target-from)*fraction));if(fraction===1){clearFade();if(!target&&pauseAtZero){audio.pause();playing=false}}},40)}
  function sync(){
-  button.dataset.enabled=String(settings.enabled);
+  button.dataset.enabled=String(settings.enabled||window.CombatAudio?.getSettings().enabled);
   if(!wanted()){stop();return}
   if(!unlocked)return;
   if(playing){if(!naturalFade)ramp(settings.volume);return}

@@ -1,0 +1,28 @@
+name: Combat audio
+on:
+  push:
+    branches: [main]
+    paths: ['audio/**', 'index.html', 'tests/combat_audio*', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
+  pull_request:
+    paths: ['audio/**', 'index.html', 'tests/combat_audio*', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Audio coverage and combat timing
+        run: |
+          node --check audio/combat-audio.js
+          node --check audio/menu-music.js
+          node tests/combat_sound_catalog.test.cjs
+          node --test tests/combat_audio.test.cjs
+          node tests/combat_effects_scene.test.cjs
+          node tests/combat_fighters_scene.test.cjs
+          node tests/combat_fighters_legacy_race.test.cjs
+          git diff --check

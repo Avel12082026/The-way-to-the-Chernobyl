@@ -1,0 +1,1537 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-29T11:05:30.634355+00:00",
+  "license": "CC0-1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "notice": "A compact set of real recorded weapon families and designed effects, not authentic recordings of every game weapon. Model mappings may use family/caliber proxies.",
+  "source_metadata_csv": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20Master%20Sheet.csv",
+  "build": {
+    "script": "tools/build_gunshot_bank.py",
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers"
+  },
+  "sources": [
+    {
+      "key": "pistol45",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/1911/A_42P.wav",
+      "original_filename": "1911/A_42P.wav",
+      "recorded_weapon": "1911 .45 pistol",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "8e84438e771c157155a6a1ff47a6a7a7d81b6f39b185d41e426c57337a82254a",
+      "original_bytes": 5489450,
+      "original_duration_seconds": 9.522857142857143,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:40.779131+00:00",
+        "last_modified": null,
+        "etag": "\"4c0f3a80feb8d9c283371449d89f092db43dcc0dfd5e369c3b0d73ed21077c1f\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/pistol45-1.mp3",
+          "sha256": "e2555f572e5ec3a261cbc1a2fa985c627b1ed206c015ea5a1c60d7f8e906cab9",
+          "bytes": 28420,
+          "cut_start_seconds": 0.933424,
+          "cut_end_seconds": 2.633424,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0005263917846605182,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.91897,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0856,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079365,
+            "last_20ms_rms_dbfs": -99.43,
+            "final_sample": -2.160228831371569e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/pistol45-2.mp3",
+          "sha256": "d87fc1a6f44b337806fe023274832269685525be0d37d6de2674d6d2444c4709",
+          "bytes": 28420,
+          "cut_start_seconds": 4.9935374,
+          "cut_end_seconds": 6.6935374,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00044286728370934725,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.48216,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0095,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0078685,
+            "last_20ms_rms_dbfs": -98.56,
+            "final_sample": -2.810072032843891e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "pistol380",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Bersa/F_47P.wav",
+      "original_filename": "Bersa/F_47P.wav",
+      "recorded_weapon": "Bersa .380 pistol",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "f800c86f9a724bd52f6fe844909adbb9ad3c50cac654908ee83bf15d1ad18ce3",
+      "original_bytes": 4357762,
+      "original_duration_seconds": 7.558117913832199,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:40.616103+00:00",
+        "last_modified": null,
+        "etag": "\"356eb3a1f1ba18385acc0da289281836b37375e00c085b62e8d7499bc8e4dee9\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/pistol380-1.mp3",
+          "sha256": "3593dd371146bebf8c5ac04e297ecd9ff4de4c9143fa355c88585fc8b4adf2f0",
+          "bytes": 28420,
+          "cut_start_seconds": 0.3259864,
+          "cut_end_seconds": 2.0259864,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 1.1654016134343692e-06,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -6.50977,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0128,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0069388,
+            "last_20ms_rms_dbfs": -95.38,
+            "final_sample": -1.2707590713034733e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/pistol380-2.mp3",
+          "sha256": "550b509c12988507c66ff63275a4a13fff58e213cc7d58e510b5bb8d79b17db5",
+          "bytes": 28420,
+          "cut_start_seconds": 4.4015193,
+          "cut_end_seconds": 6.1015193,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -7.112558523658663e-05,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -6.20092,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.064,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007619,
+            "last_20ms_rms_dbfs": -93.2,
+            "final_sample": -3.9660665152041474e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "pistol9",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Walther%20PPQ/X_39P.wav",
+      "original_filename": "Walther PPQ/X_39P.wav",
+      "recorded_weapon": "Walther PPQ 9 mm pistol",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "d679a3cd87eae2898d984159f83544392932e6b77526045b672e3aaa9c2dda9f",
+      "original_bytes": 9069762,
+      "original_duration_seconds": 15.73857142857143,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:41.059061+00:00",
+        "last_modified": null,
+        "etag": "\"abe9e3fab5f2f985711705796dd79a85ff1ee5183e9169a84dfac52d69d31c10\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/pistol9-1.mp3",
+          "sha256": "8ecf6b6eca7768813eddd20951018936dc72a94c1b0190656b73ba0b27cc8b67",
+          "bytes": 28420,
+          "cut_start_seconds": 1.3988209,
+          "cut_end_seconds": 3.0988209,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -8.444076956948265e-05,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -0.68984,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0555,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0072562,
+            "last_20ms_rms_dbfs": -103.3,
+            "final_sample": -1.2162534801518632e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/pistol9-2.mp3",
+          "sha256": "5f4de518a7651d23638bfacd60768b68515301979345bd6cacb3e79406f27b3c",
+          "bytes": 28420,
+          "cut_start_seconds": 6.4362585,
+          "cut_end_seconds": 8.1362585,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00016875279834493995,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -2.07011,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9956,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0072336,
+            "last_20ms_rms_dbfs": -103.39,
+            "final_sample": 1.4919518775968754e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "revolver38",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Smith%20%26%20Wesson%20642/V_27P.wav",
+      "original_filename": "Smith & Wesson 642/V_27P.wav",
+      "recorded_weapon": "Smith & Wesson 642 .38 Special revolver",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "dc9a11f7e6544139f38cadccf3373fed733f2e000caca1b2328575293838fc58",
+      "original_bytes": 6034334,
+      "original_duration_seconds": 10.46859410430839,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:40.696889+00:00",
+        "last_modified": null,
+        "etag": "\"e75cc30a70d87b434bbbfb3e79b2f43ebaee25d0581e34f2e591831682295ddc\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/revolver38-1.mp3",
+          "sha256": "53ba006fd65b9d97ce143df0466aaf249b3e7f05529eb2d4860eff9173a3720b",
+          "bytes": 28420,
+          "cut_start_seconds": 0.7973469,
+          "cut_end_seconds": 2.4973469,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00021854613441973925,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -3.34633,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0791,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079365,
+            "last_20ms_rms_dbfs": -109.13,
+            "final_sample": 2.684052446966234e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/revolver38-2.mp3",
+          "sha256": "2068d84fc822a0c753c3f59f6c2757f0083b01af845cefc903c705bcd74cd5f6",
+          "bytes": 28420,
+          "cut_start_seconds": 6.2106803,
+          "cut_end_seconds": 7.9106803,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0002654138661455363,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.01887,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9884,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079365,
+            "last_20ms_rms_dbfs": -110.27,
+            "final_sample": -2.0499420827491122e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "ak762",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/AK-47/C_28P.wav",
+      "original_filename": "AK-47/C_28P.wav",
+      "recorded_weapon": "AK-47 7.62x39 mm rifle",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "e0934c1d79192d2216db62fdf6ab57bf9d5d585267af367a1cfb21f0972a537d",
+      "original_bytes": 7188780,
+      "original_duration_seconds": 12.47281179138322,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:40.337831+00:00",
+        "last_modified": null,
+        "etag": "\"ddf32f1527cfe1337f900d645d6cde0365c8fedccdb101440b420b457b14997a\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/ak762-1.mp3",
+          "sha256": "9a65e3e8e0c153381ddfa97b2edcfa16cc6eb5d265683e8c170265b18c613782",
+          "bytes": 28420,
+          "cut_start_seconds": 0.6031066,
+          "cut_end_seconds": 2.3031066,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0007351418025791645,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -2.22321,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.1273,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0069615,
+            "last_20ms_rms_dbfs": -96.84,
+            "final_sample": -1.016340434034646e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/ak762-2.mp3",
+          "sha256": "d197c61058d4fa3db2aad1e5673162eae969917e720d1f19186271efb2e46301",
+          "bytes": 28420,
+          "cut_start_seconds": 3.2493424,
+          "cut_end_seconds": 4.9493424,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0003953887498937547,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.29549,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0045,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007551,
+            "last_20ms_rms_dbfs": -98.59,
+            "final_sample": -7.22162099009438e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "ar556",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/AR-15/D_32P.wav",
+      "original_filename": "AR-15/D_32P.wav",
+      "recorded_weapon": "AR-15 / M4 .223 / 5.56x45 mm rifle",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "acee9d2106b68fe5956225a19d7aedf943d97793817f9bda9d486a2b74b0a812",
+      "original_bytes": 5889684,
+      "original_duration_seconds": 10.217528344671202,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:48.093807+00:00",
+        "last_modified": null,
+        "etag": "\"fb989736c2e0ce776c2a7ef178280545d9c44321782876343f54f554458730f5\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/ar556-1.mp3",
+          "sha256": "53a8aef9c8ee318aecaa95972424b7f0acaae4caed54696b2736a9925167178e",
+          "bytes": 28420,
+          "cut_start_seconds": 0.6956689,
+          "cut_end_seconds": 2.3956689,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0006882491870783269,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.6077,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.989,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007415,
+            "last_20ms_rms_dbfs": -100.62,
+            "final_sample": -3.197386320152873e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/ar556-2.mp3",
+          "sha256": "97737aad5d7441472330b94319b8f74e38a83da8697d136928ebf88146410612",
+          "bytes": 28420,
+          "cut_start_seconds": 5.6393878,
+          "cut_end_seconds": 7.3393878,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.000630090304184705,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.49404,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0393,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079592,
+            "last_20ms_rms_dbfs": -100.78,
+            "final_sample": -2.2216241291062033e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "smg9",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Carl%20Gustav%20M45/G_31P.wav",
+      "original_filename": "Carl Gustav M45/G_31P.wav",
+      "recorded_weapon": "Carl Gustav M45 9 mm submachine gun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "5982c6c2fa44545b750ba6217ed57797a6a15c02f5c9943ac0e99e5f3ab2b158",
+      "original_bytes": 5294180,
+      "original_duration_seconds": 9.183560090702947,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:48.385959+00:00",
+        "last_modified": null,
+        "etag": "\"4896187891d2971f7ec4226ffdc889e68996d9ffd1c61927633390cc42d4c71d\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/smg9-1.mp3",
+          "sha256": "4abb31c376137c6efd9e8bffc813b63a4ccba1bb13610ede90d030dddf93c7b5",
+          "bytes": 28420,
+          "cut_start_seconds": 0.3022676,
+          "cut_end_seconds": 2.0022676,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0003516342840157449,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -2.68465,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0278,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0068027,
+            "last_20ms_rms_dbfs": -100.58,
+            "final_sample": -2.646866903432965e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/smg9-2.mp3",
+          "sha256": "a8ea36fba463edc8fed35ecdd9d06b01c47c2407b8c10b301413552c03a3b642",
+          "bytes": 28420,
+          "cut_start_seconds": 3.4931973,
+          "cut_end_seconds": 5.1931973,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00021879252744838595,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -2.96633,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0771,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.00678,
+            "last_20ms_rms_dbfs": -99.73,
+            "final_sample": -3.6350124332784617e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "ppsh",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/PPSh/P_30P.wav",
+      "original_filename": "PPSh/P_30P.wav",
+      "recorded_weapon": "PPSh 7.62x25 mm submachine gun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "75621034e31c390edc44c963e00d44c995fb62ebcb11bec36ad7a752fafd4346",
+      "original_bytes": 10529940,
+      "original_duration_seconds": 18.273469387755103,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:48.170587+00:00",
+        "last_modified": null,
+        "etag": "\"04b2b8ffeae34e8455dfe7e698ca24af38cdc97382b10209e45bdef3f8298a38\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/ppsh-1.mp3",
+          "sha256": "c5612a47ae38841b97b477e2c89010f5dd55f188bf9bb7697d48ead8d642cf8f",
+          "bytes": 28420,
+          "cut_start_seconds": 0.9607937,
+          "cut_end_seconds": 2.6607937,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0003473741526249796,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -0.80967,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9329,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0036961,
+            "last_20ms_rms_dbfs": -98.09,
+            "final_sample": 8.08832254506342e-08
+          }
+        },
+        {
+          "path": "audio/gunshots/ppsh-2.mp3",
+          "sha256": "c4dfb2030288951dd43d5961cc836b6a80f231db7a206dbf5288a12ce0428732",
+          "bytes": 28420,
+          "cut_start_seconds": 4.3792063,
+          "cut_end_seconds": 6.0792063,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00022845530475024134,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -0.42778,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0446,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.004263,
+            "last_20ms_rms_dbfs": -95.28,
+            "final_sample": -8.649622600387374e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "shotgun_cd",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/CD/H_21P.wav",
+      "original_filename": "CD/H_21P.wav",
+      "recorded_weapon": "Charles Daly 12 gauge pump-action shotgun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "29d1565cf449bc0e61e5d4b8090a1212faa3d1060df243bffb3ccc1d21cbc26a",
+      "original_bytes": 3473324,
+      "original_duration_seconds": 6.022562358276644,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:48.179762+00:00",
+        "last_modified": null,
+        "etag": "\"478d246346fe41cacdae353dbffc654ba648430c6fe47cf2dcc916e25675970a\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/shotgun_cd-1.mp3",
+          "sha256": "82fc9b4378dd5231a1d62311a38fb5a351d61ea10e0a304fdd410f8f0991e782",
+          "bytes": 28420,
+          "cut_start_seconds": 0.4562585,
+          "cut_end_seconds": 2.1562585,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0005323020741343498,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.33567,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0093,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0072789,
+            "last_20ms_rms_dbfs": -106.15,
+            "final_sample": -3.5064357462033513e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/shotgun_cd-2.mp3",
+          "sha256": "3fd6a480f448decc315203119c6dafe7ec79ba0c81c43268db8eab6a33ff0157",
+          "bytes": 28420,
+          "cut_start_seconds": 3.0673016,
+          "cut_end_seconds": 4.7673016,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0005327879916876554,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -3.94917,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.001,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079592,
+            "last_20ms_rms_dbfs": -103.48,
+            "final_sample": -8.265293161002774e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "shotgun_winchester",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Model%2012/K_22P.wav",
+      "original_filename": "Model 12/K_22P.wav",
+      "recorded_weapon": "Winchester Model 12 12 gauge pump-action shotgun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "ea19e9a0be4686054847a58b0a43f6be82fbe65345489f41aa02dbcf166d34d0",
+      "original_bytes": 6141774,
+      "original_duration_seconds": 10.65530612244898,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:48.313970+00:00",
+        "last_modified": null,
+        "etag": "\"cc2ebe2c4e5b6a80a7f3bade2bc5df4c78975123fdcb82a17c46395736500f75\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/shotgun_winchester-1.mp3",
+          "sha256": "e67c9cd6058ccecf64a204889aefe5b060c51ec6bb21a2fc5a6e3a7611365ba4",
+          "bytes": 28420,
+          "cut_start_seconds": 0.8340816,
+          "cut_end_seconds": 2.5340816,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0004066485271323472,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.92989,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9771,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.00678,
+            "last_20ms_rms_dbfs": -94.35,
+            "final_sample": 1.5608836179126229e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/shotgun_winchester-2.mp3",
+          "sha256": "b1a1c09b42cd0201b681fae2f8471938cedbd07e670b706f9dfd4b1391707319",
+          "bytes": 28420,
+          "cut_start_seconds": 7.4373696,
+          "cut_end_seconds": 9.1373696,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00039247996755875647,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.69925,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.8183,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0075964,
+            "last_20ms_rms_dbfs": -95.08,
+            "final_sample": 7.819076017767657e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "shotgun_mossberg",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Mossberg/N_30P.wav",
+      "original_filename": "Mossberg/N_30P.wav",
+      "recorded_weapon": "Mossberg Model 190 12 gauge bolt-action shotgun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "b5a28243e16f8cb10adfc5225d96e90f108d24393fcfffcaa6dcf203af03634a",
+      "original_bytes": 4940968,
+      "original_duration_seconds": 8.570589569160997,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:55.730636+00:00",
+        "last_modified": null,
+        "etag": "\"fc4eeb53f33a1cc5e9c10c8389762d0375a67edf4eaf5f4d604b2e8689fb4184\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/shotgun_mossberg-1.mp3",
+          "sha256": "58173b8741bdb34c652420dba6935c82d8e34d2ba0fc8f459586de661e47f7b6",
+          "bytes": 28420,
+          "cut_start_seconds": 1.6877098,
+          "cut_end_seconds": 3.3877098,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00020815116295125335,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.70223,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9734,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0076644,
+            "last_20ms_rms_dbfs": -98.6,
+            "final_sample": -1.328829455360392e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/shotgun_mossberg-2.mp3",
+          "sha256": "90e93a777bc9b64de15893c5279a27f65240c191502c94e14a5cb572322dbe8e",
+          "bytes": 28420,
+          "cut_start_seconds": 4.9523583,
+          "cut_end_seconds": 6.6523583,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00027917171246372163,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -6.48506,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9835,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0077324,
+            "last_20ms_rms_dbfs": -97.02,
+            "final_sample": 7.607141583321209e-09
+          }
+        }
+      ]
+    },
+    {
+      "key": "shotgun_benelli",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Nova/O_21P.wav",
+      "original_filename": "Nova/O_21P.wav",
+      "recorded_weapon": "Benelli Nova 12 gauge pump-action shotgun",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "5661d0625e4634f19e6e316c13693b80c8e28cd9f716cf9c75c465153ae40815",
+      "original_bytes": 3931936,
+      "original_duration_seconds": 6.818843537414966,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:55.576956+00:00",
+        "last_modified": null,
+        "etag": "\"28e07fc071e88a880780ea5a40c2b461f5efec10791edbfbbd50e9bed10b26cc\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/shotgun_benelli-1.mp3",
+          "sha256": "2348b1e55fe1ba74f0596ccd206e47337f251a2cb65229dceb636dd5b035ede0",
+          "bytes": 28420,
+          "cut_start_seconds": 0.4228118,
+          "cut_end_seconds": 2.1228118,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0002637784054968506,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.32459,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9568,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0053515,
+            "last_20ms_rms_dbfs": -98.38,
+            "final_sample": -2.3187774900179647e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/shotgun_benelli-2.mp3",
+          "sha256": "c4dc0b77cac13f88971d6fed7a972d6947efdeeff33d582f752d03d2c0b91ac0",
+          "bytes": 28420,
+          "cut_start_seconds": 3.4572109,
+          "cut_end_seconds": 5.1572109,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0004366832145024091,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.87319,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9981,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0060544,
+            "last_20ms_rms_dbfs": -100.13,
+            "final_sample": -1.266125906340676e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "mosin",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Mosin%20Nagant/M_21P.wav",
+      "original_filename": "Mosin Nagant/M_21P.wav",
+      "recorded_weapon": "Mosin Nagant 7.62x54 mm bolt-action rifle",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "970ed2322ba61579dc8afaefb4f25e6ae791a3acb1e6e23372ea948cfe2a97b3",
+      "original_bytes": 9864044,
+      "original_duration_seconds": 17.11764172335601,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:55.826601+00:00",
+        "last_modified": null,
+        "etag": "\"f8f12288347878eece04644e86f407b567c208fafed1cac6adf2a4720cc1e8f6\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/mosin-1.mp3",
+          "sha256": "ff5c3704389cefb1b78d8a3e29cabc0cb16345c2f1bb7c9ed2f153bf31fbcb10",
+          "bytes": 28420,
+          "cut_start_seconds": 1.025737,
+          "cut_end_seconds": 2.725737,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.00023659235739614815,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -1.12257,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9589,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007415,
+            "last_20ms_rms_dbfs": -99.13,
+            "final_sample": -3.8246415101639286e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/mosin-2.mp3",
+          "sha256": "e48ce63be3a2a76b6c9d70f56d446219a1fc429eb2f58e169e9762349a1c1345",
+          "bytes": 28420,
+          "cut_start_seconds": 5.011746,
+          "cut_end_seconds": 6.711746,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.0002286362723680213,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -0.82311,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9257,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0070068,
+            "last_20ms_rms_dbfs": -98.88,
+            "final_sample": -2.5229437028428947e-07
+          }
+        }
+      ]
+    },
+    {
+      "key": "sks",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/SKS/U_14P.wav",
+      "original_filename": "SKS/U_14P.wav",
+      "recorded_weapon": "Norinco SKS 7.62x39 mm carbine",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "ad33d11af79d73ec8b7a527a8aed948a086a0d764cec5a54d2e86887351d6c96",
+      "original_bytes": 12482484,
+      "original_duration_seconds": 21.663469387755104,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:56.220130+00:00",
+        "last_modified": null,
+        "etag": "\"800b60c86e3d0ecf6d3274a9962e088883ffa9c775d7d01dfded76dc41be7f5c\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/sks-1.mp3",
+          "sha256": "55fe3606f436c600567f8a891968bde849287ad459579398492109fc07dba873",
+          "bytes": 28420,
+          "cut_start_seconds": 3.5689796,
+          "cut_end_seconds": 5.2689796,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00019635325588751584,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -2.43785,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0311,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0056916,
+            "last_20ms_rms_dbfs": -97.17,
+            "final_sample": -6.926752860181296e-08
+          }
+        },
+        {
+          "path": "audio/gunshots/sks-2.mp3",
+          "sha256": "64711562cd71a80f11b34aed0421cff8d489c2c3898383a07db2eeb520a77cc8",
+          "bytes": 28420,
+          "cut_start_seconds": 6.7470748,
+          "cut_end_seconds": 8.4470748,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00010271026258124039,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -1.89816,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9468,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007483,
+            "last_20ms_rms_dbfs": -94.56,
+            "final_sample": -6.459399060076976e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "rifle300",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Savage%2010%20.300%20Blackout/T_27P.wav",
+      "original_filename": "Savage 10 .300 Blackout/T_27P.wav",
+      "recorded_weapon": "Savage Model 10 .300 AAC Blackout bolt-action rifle",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "92296c320f7854da29ff28d1687da21a110cb1242bb03e5e1e62f6a4e7f79f3b",
+      "original_bytes": 4153180,
+      "original_duration_seconds": 7.20281179138322,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:00:55.552990+00:00",
+        "last_modified": null,
+        "etag": "\"6f35f1d55b6e4d18a922612382e68ec1ef8ebab79f9351a7ce65093d9e21a787\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/rifle300-1.mp3",
+          "sha256": "d68aabacf2c6d70ad2dee4cda25a4e9448e95543574e52496fb00f09805fb847",
+          "bytes": 28420,
+          "cut_start_seconds": 0.9425397,
+          "cut_end_seconds": 2.6425397,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00035692568053491414,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -3.00714,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9567,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0076871,
+            "last_20ms_rms_dbfs": -104.67,
+            "final_sample": 2.40167679521619e-07
+          }
+        },
+        {
+          "path": "audio/gunshots/rifle300-2.mp3",
+          "sha256": "d37a716b8d953e0ed689652d05695babd7e04b436de485953e944d92b54106ee",
+          "bytes": 28420,
+          "cut_start_seconds": 4.96,
+          "cut_end_seconds": 6.66,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.00036869142786599696,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -4.73578,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9339,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0079365,
+            "last_20ms_rms_dbfs": -102.49,
+            "final_sample": 8.462927070240767e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "rifle3006",
+      "url": "https://raw.githubusercontent.com/buddingmonkey/FreeFirearmsSFXLibrary/main/Prepared%20SFX/Tikka/W_29P.wav",
+      "original_filename": "Tikka/W_29P.wav",
+      "recorded_weapon": "Tikka T3 .30-06 bolt-action rifle",
+      "creator": [
+        "Ben Jaszczak",
+        "Brian Nelson",
+        "Kevin Heras",
+        "Matthew Nanney"
+      ],
+      "source_page": "https://opengameart.org/node/21826",
+      "collection": "The Free Firearm Sound Library",
+      "kind": "field recording",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "b1ffe3c104391bf8ceb8337aa4d5a2ca47938fb88ccbd051cdd2b2e205d9e72b",
+      "original_bytes": 5593406,
+      "original_duration_seconds": 9.703333333333333,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:01:01.650704+00:00",
+        "last_modified": null,
+        "etag": "\"59cf4669f9466799fa02b78500de10a0d016eb18369a0b8ed57eafdf602a7cf5\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/rifle3006-1.mp3",
+          "sha256": "4a79a39189ea52266b4dcd336927a536c8a53553b59649335f2263c788e145b2",
+          "bytes": 28420,
+          "cut_start_seconds": 0.5693197,
+          "cut_end_seconds": 2.2693197,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0014661927707493305,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -3.22377,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -3.0137,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.007483,
+            "last_20ms_rms_dbfs": -97.34,
+            "final_sample": -7.597245144097542e-08
+          }
+        },
+        {
+          "path": "audio/gunshots/rifle3006-2.mp3",
+          "sha256": "19bbedb18e3376b19df9ce6bcc7d6fab9ed70e0258a7e33caf0861c0cca1b349",
+          "bytes": 28420,
+          "cut_start_seconds": 5.6568481,
+          "cut_end_seconds": 7.3568481,
+          "duration_seconds": 1.7,
+          "cut_note": "Distinct isolated single shot; 8 ms pre-onset and 1.692 s decay retained.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.001559786032885313,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.09,
+            "gain_db": -3.13967,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9371,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0071882,
+            "last_20ms_rms_dbfs": -97.0,
+            "final_sample": -7.509345323342131e-08
+          }
+        }
+      ]
+    },
+    {
+      "key": "suppressed",
+      "url": "https://opengameart.org/sites/default/files/silencer.wav",
+      "original_filename": "silencer.wav",
+      "recorded_weapon": null,
+      "creator": [
+        "bart"
+      ],
+      "source_page": "https://opengameart.org/content/hollywood-style-pistol-silencer-sound-effect",
+      "collection": "Hollywood-style pistol silencer sound effect",
+      "kind": "designed silencer effect",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "e851d01faf5674f80d1f881ed9299edcdecfeff1cca512a014ff8e694349059c",
+      "original_bytes": 303364,
+      "original_duration_seconds": 1.7187528344671201,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:01:01.984158+00:00",
+        "last_modified": "Sat, 09 Jul 2011 04:23:43 GMT",
+        "etag": "\"4e17d7cf-4a104\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/suppressed-1.mp3",
+          "sha256": "c5f98ec17ef47ccbf100fe7fde7ea1c3d49ae14767a18708173e7189a0556cfe",
+          "bytes": 11283,
+          "cut_start_seconds": 0.0,
+          "cut_end_seconds": 0.65,
+          "duration_seconds": 0.65,
+          "cut_note": "Complete designed discharge and decay; only trailing silence removed.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": -0.002327895490452647,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.0004988662131519275,
+            "fade_out_seconds": 0.09,
+            "gain_db": -5.41953,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9853,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0001587,
+            "last_20ms_rms_dbfs": -138.14,
+            "final_sample": -2.195122306147823e-09
+          }
+        }
+      ]
+    },
+    {
+      "key": "gauss",
+      "url": "https://opengameart.org/sites/default/files/doomsday_laser_cannon_short.wav",
+      "original_filename": "doomsday_laser_cannon_short.wav",
+      "recorded_weapon": null,
+      "creator": [
+        "TAD"
+      ],
+      "source_page": "https://opengameart.org/content/doomsday-laser-cannon-sound-effect",
+      "collection": "Doomsday Laser Cannon Sound Effect",
+      "kind": "designed fictional energy effect",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "license_checked_on": "2026-09-29",
+      "original_sha256": "434b3a06d91260e61452b5cde8ff71ab8306cf0ad4551af6fd2a11b674937ba6",
+      "original_bytes": 619388,
+      "original_duration_seconds": 3.5,
+      "download": {
+        "downloaded_utc": "2026-09-29T11:01:02.070032+00:00",
+        "last_modified": "Wed, 27 Oct 2021 04:14:15 GMT",
+        "etag": "\"6178d217-9737c\""
+      },
+      "outputs": [
+        {
+          "path": "audio/gunshots/gauss-1.mp3",
+          "sha256": "3475145b0d320c08785194b7b704dfb084ad8087a364b03b2fc3d65f8b445c6a",
+          "bytes": 25076,
+          "cut_start_seconds": 1.9919955,
+          "cut_end_seconds": 3.5,
+          "duration_seconds": 1.5080045,
+          "cut_note": "Remove 1.992 s charging prelude; retain discharge and the designed energy tail. Final 150 ms faded.",
+          "processing": {
+            "downmix": "ffmpeg stereo-to-mono float32, resample to 44100 Hz",
+            "dc_removed": 0.0003622696967795491,
+            "highpass": "30 Hz second-order Butterworth, causal",
+            "fade_in_seconds": 0.00199546485260771,
+            "fade_out_seconds": 0.15,
+            "gain_db": -0.14646,
+            "codec": "MP3 libmp3lame",
+            "bitrate_bps": 128000,
+            "sample_rate": 44100,
+            "channels": 1
+          },
+          "qa": {
+            "decoded_peak_dbfs": -2.9237,
+            "loud_discharge_clusters": 1,
+            "attack_seconds": 0.0003401,
+            "last_20ms_rms_dbfs": -60.14,
+            "final_sample": 7.541477316408418e-06
+          }
+        }
+      ]
+    }
+  ],
+  "bank": {
+    "pistol45": [
+      "audio/gunshots/pistol45-1.mp3",
+      "audio/gunshots/pistol45-2.mp3"
+    ],
+    "pistol380": [
+      "audio/gunshots/pistol380-1.mp3",
+      "audio/gunshots/pistol380-2.mp3"
+    ],
+    "pistol9": [
+      "audio/gunshots/pistol9-1.mp3",
+      "audio/gunshots/pistol9-2.mp3"
+    ],
+    "revolver38": [
+      "audio/gunshots/revolver38-1.mp3",
+      "audio/gunshots/revolver38-2.mp3"
+    ],
+    "ak762": [
+      "audio/gunshots/ak762-1.mp3",
+      "audio/gunshots/ak762-2.mp3"
+    ],
+    "ar556": [
+      "audio/gunshots/ar556-1.mp3",
+      "audio/gunshots/ar556-2.mp3"
+    ],
+    "smg9": [
+      "audio/gunshots/smg9-1.mp3",
+      "audio/gunshots/smg9-2.mp3"
+    ],
+    "ppsh": [
+      "audio/gunshots/ppsh-1.mp3",
+      "audio/gunshots/ppsh-2.mp3"
+    ],
+    "shotgun_cd": [
+      "audio/gunshots/shotgun_cd-1.mp3",
+      "audio/gunshots/shotgun_cd-2.mp3"
+    ],
+    "shotgun_winchester": [
+      "audio/gunshots/shotgun_winchester-1.mp3",
+      "audio/gunshots/shotgun_winchester-2.mp3"
+    ],
+    "shotgun_mossberg": [
+      "audio/gunshots/shotgun_mossberg-1.mp3",
+      "audio/gunshots/shotgun_mossberg-2.mp3"
+    ],
+    "shotgun_benelli": [
+      "audio/gunshots/shotgun_benelli-1.mp3",
+      "audio/gunshots/shotgun_benelli-2.mp3"
+    ],
+    "mosin": [
+      "audio/gunshots/mosin-1.mp3",
+      "audio/gunshots/mosin-2.mp3"
+    ],
+    "sks": [
+      "audio/gunshots/sks-1.mp3",
+      "audio/gunshots/sks-2.mp3"
+    ],
+    "rifle300": [
+      "audio/gunshots/rifle300-1.mp3",
+      "audio/gunshots/rifle300-2.mp3"
+    ],
+    "rifle3006": [
+      "audio/gunshots/rifle3006-1.mp3",
+      "audio/gunshots/rifle3006-2.mp3"
+    ],
+    "suppressed": [
+      "audio/gunshots/suppressed-1.mp3"
+    ],
+    "gauss": [
+      "audio/gunshots/gauss-1.mp3"
+    ]
+  },
+  "total_output_bytes": 945799
+}
