@@ -59,7 +59,7 @@ const ZHUCHARA_CONSUMABLES_SERVER=new Set([
 ]);
 const ROSTOK_BARMAN_CONSUMABLES_SERVER=new Set([
     'Хлеб','Тушенка','Вода','Энергетик',
-    'Аптечка гражданская','Аптечка армейская'
+    'Аптечка гражданская','Аптечка армейская','Антирад'
 ]);
 const LEONOV_CONSUMABLES_SERVER=new Set([
     'Хлеб','Тушенка','Вода','Энергетик',

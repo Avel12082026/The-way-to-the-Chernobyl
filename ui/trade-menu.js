@@ -46,7 +46,7 @@
     return (afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe.slice(58,87));
   };
   const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
-  const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская']);
+  const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Антирад']);
   const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
   const LEONOV_BUYBACK_TYPES = new Set(['food','water','medkit']);
   const vendors = {
