@@ -3,8 +3,11 @@ const f=require('../images/combat/fighters.js');
 const originals=require('./baseline-reviewed-weapon-fits.json');
 const distance=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
 // These native forearm poses were separately reviewed at their exact scale.
-const reviewedScaleBounds={'32-56':[.38967,.38969],'32-62':[.39707,.39709],'32-91':[.38501,.38504],'32-96':[.37985,.37988]};
-for(const weaponId of [114,32]){
+const reviewedScaleBounds={
+ '32-56':[.38967,.38969],'32-62':[.39707,.39709],'32-91':[.38501,.38504],'32-96':[.37985,.37988],
+ '20-56':[.37655,.37658],'20-62':[.38370,.38373],'20-91':[.37204,.37208],'20-96':[.36706,.36709]
+};
+for(const weaponId of [114,32,20]){
 const profile=require('../asset_sources/combat_weapon_fits/'+weaponId+'.json');
 assert.equal(profile.weaponId,weaponId);
 assert.equal(Object.keys(profile.armorOverrides).length,96,'Every armor needs an independently inspected index-finger target');
@@ -39,7 +42,7 @@ for(let armorId=1;armorId<=96;armorId++){
 console.log(JSON.stringify({passed:true,weapon:weaponId,indexContacts:count,foreEndContacts:count,sharedWeaponPNGs:1,movedArms}));
 }
 // Overrides are local to the reviewed pair and never replace a shared PNG/pose.
-const reviewed=f.resolve({armorId:19,weaponId:114}),unreviewed=f.resolve({armorId:19,weaponId:20});
+const reviewed=f.resolve({armorId:19,weaponId:114}),unreviewed=f.resolve({armorId:19,weaponId:43});
 assert.equal(reviewed.character,unreviewed.character);
 assert.notEqual(reviewed.adjustment.handMasks,unreviewed.adjustment.handMasks);
 assert.equal(unreviewed.adjustment.handMasks,undefined);

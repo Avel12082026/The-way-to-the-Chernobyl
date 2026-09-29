@@ -28,6 +28,6 @@ for(let armorId=1;armorId<=96;armorId++){
  const front=[c.grip[0]+a.dx+(1230-w.grip[0])*scale,c.grip[1]+a.dy+(500-w.grip[1])*scale];
  for(let axis=0;axis<2;axis++)assert.ok(Math.abs(front[axis]-(c.support[axis]+a.supportShift[axis]))<1e-8,'Far hand misses the real fore-end on armor '+armorId);
  }
- for(const weaponId of oldWeaponIds)if(weaponId!==43&&weaponId!==114&&weaponId!==32)assert.equal(f.resolve({armorId,weaponId}).adjustment?.supportShift,undefined,'Far-arm fitting must not alter an unreviewed weapon');
+ for(const weaponId of oldWeaponIds)if(weaponId!==43&&weaponId!==114&&weaponId!==32&&weaponId!==20)assert.equal(f.resolve({armorId,weaponId}).adjustment?.supportShift,undefined,'Far-arm fitting must not alter an unreviewed weapon');
 }
 console.log('PASS:96 arm outlines,87 horizontal compact Groza poses,9 reviewed native poses; MCS and Saiga use the same rigid far-arm path and unreviewed weapons remain unchanged');

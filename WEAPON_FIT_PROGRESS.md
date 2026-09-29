@@ -20,6 +20,12 @@ Saiga-12K, weapon **32**, has also been visually reviewed on all 96 suits.
 Its accepted fingerprints and verdicts are in
 `asset_sources/combat_weapon_fits/32-review.json`. The 32 release preserves every
 previously accepted 114 fit, all shared PNGs and runtime drawing code.
+Published as `a102fe8a136670e1dbc3b26164f26509a24bbfcf`: Pages succeeded,
+live index/renderer bytes matched, and Telegram loaded the new script version.
+
+Saiga-410, weapon **20**, is accepted on all 96 suits; see
+`asset_sources/combat_weapon_fits/20-review.json`. Its source PNG remains
+unchanged and the accepted 114/32 fits are preserved exactly.
 
 These releases correct both hand contacts, detached stock ends, shifted-arm
 seams and demonstrated cropped fingertips. Other weapons and shared armor
@@ -27,9 +33,9 @@ images/definitions retain their previous fits. No source PNG was added or edited
 
 ## Remaining queue
 
-Publish and verify 32 before starting the next weapon: **20, Saiga-410**, then
-the remaining catalog. The other 111 weapons are not certified by the 114/32
-reviews or by the automated render-coverage check.
+Publish and verify 20, then continue with **10, Saiga-12**, followed by the
+remaining heavy weapons in ascending ID order, then the pistol poses. The
+other 110 weapons are not certified by the 114/32/20 reviews or automated coverage.
 
 `asset_sources/combat_weapon_fits/heavy-source-anchors.json` records the inspected
 source contact surfaces for all 87 heavy weapons. This is source inspection,
@@ -42,8 +48,8 @@ Use the existing modular source PNGs, preserving their hashes. The review cache
 contains `ID-heavy.png`, `hands/ID-heavy.png`, and `weapons/ID.png`.
 
 ```sh
-node tools/fit_combat_weapon.cjs --weapon 32 --report /tmp/32-fit.json
-node tools/review_weapon_fits.cjs --weapon 32 --cache /path/to/cache --out /tmp/32-review
+node tools/fit_combat_weapon.cjs --weapon 20 --report /tmp/20-fit.json
+node tools/review_weapon_fits.cjs --weapon 20 --cache /path/to/cache --out /tmp/20-review
 node tests/combat_weapon_contacts.test.cjs
 node tests/combat_fighters.test.cjs
 node tests/combat_fighters_baseline.test.cjs
@@ -56,3 +62,10 @@ node tests/combat_fighters_compact.raster.cjs
 Render checks do not replace visual inspection. Inspect all 96 hand contacts,
 stock connections and arm silhouettes before accepting a weapon. Publish that
 one weapon, verify the deployed bytes and refresh the game, then proceed.
+
+## Existing unrelated CI failure
+
+The Zone map navigation workflow fails the Barman consumable string assertion
+in`tests/rostok_barman_trade_client.test.cjs`. The referenced`ui/trade-menu.js`
+is byte-identical to the pre-fitting base`eda12ac2`; the expected string was
+already absent there. Weapon-contact, baseline and rendering checks pass.
