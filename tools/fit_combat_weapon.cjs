@@ -10,6 +10,40 @@ const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const rounded = value => Math.round(value * 1e6) / 1e6;
 const point = value => Array.isArray(value) && value.length === 2 && value.every(Number.isFinite);
 
+function segmentContact(sourceTrigger, start, end, radius) {
+  // Preserve the exact arithmetic of already published horizontal profiles.
+  if (start[1] === end[1] && start[0] <= end[0] && sourceTrigger[0] <= start[0]) {
+    const dy = start[1] - sourceTrigger[1];
+    return [clamp(sourceTrigger[0] + Math.sqrt(Math.max(0, radius ** 2 - dy ** 2)), start[0], end[0]), start[1]];
+  }
+  const vector = [end[0] - start[0], end[1] - start[1]];
+  const relative = [start[0] - sourceTrigger[0], start[1] - sourceTrigger[1]];
+  const a = vector[0] ** 2 + vector[1] ** 2;
+  if (!(a > 0)) throw Error('Support segment must have positive length');
+  const b = 2 * (relative[0] * vector[0] + relative[1] * vector[1]);
+  const c = relative[0] ** 2 + relative[1] ** 2 - radius ** 2;
+  const discriminant = b ** 2 - 4 * a * c;
+  const candidates = [0, 1, clamp(-b / (2 * a), 0, 1)];
+  if (discriminant >= 0) {
+    candidates.push(clamp((-b + Math.sqrt(discriminant)) / (2 * a), 0, 1));
+    candidates.push(clamp((-b - Math.sqrt(discriminant)) / (2 * a), 0, 1));
+  }
+  const error = t => Math.abs(Math.hypot(relative[0] + vector[0] * t, relative[1] + vector[1] * t) - radius);
+  const t = candidates.sort((first, second) => error(first) - error(second))[0];
+  return [start[0] + vector[0] * t, start[1] + vector[1] * t];
+}
+
+function onSegment(value, start, end) {
+  if (!point(value)) return false;
+  const vector = [end[0] - start[0], end[1] - start[1]];
+  const lengthSquared = vector[0] ** 2 + vector[1] ** 2;
+  if (!(lengthSquared > 0)) return false;
+  const relative = [value[0] - start[0], value[1] - start[1]];
+  const t = (relative[0] * vector[0] + relative[1] * vector[1]) / lengthSquared;
+  const cross = relative[0] * vector[1] - relative[1] * vector[0];
+  return t >= -1e-9 && t <= 1 + 1e-9 && Math.abs(cross) / Math.sqrt(lengthSquared) <= 1e-6;
+}
+
 function fit(character, weapon, profile, override = {}) {
   const trigger = override.trigger || character.trigger;
   const support = override.support || character.support;
@@ -18,14 +52,12 @@ function fit(character, weapon, profile, override = {}) {
   if (![trigger, support, sourceTrigger, start, end, character.grip, weapon.grip].every(point)) {
     throw Error('Missing finite trigger, support or grip coordinates');
   }
-  if (start[1] !== end[1] || start[0] > end[0]) throw Error('Support segment must be horizontal and ordered');
+  if (start[0] === end[0] && start[1] === end[1]) throw Error('Support segment must have positive length');
 
   const distance = Math.hypot(support[0] - trigger[0], support[1] - trigger[1]);
   const scale = override.scale ?? clamp(distance / profile.nominalContactDistance, ...profile.scaleBounds);
-  const sourceDy = start[1] - sourceTrigger[1];
-  const sourceX = clamp(sourceTrigger[0] + Math.sqrt(Math.max(0, (distance / scale) ** 2 - sourceDy ** 2)), start[0], end[0]);
-  const sourceSupport = override.sourceSupport || [sourceX, start[1]];
-  if (!point(sourceSupport) || sourceSupport[0] < start[0] || sourceSupport[0] > end[0] || sourceSupport[1] !== start[1]) {
+  const sourceSupport = override.sourceSupport || segmentContact(sourceTrigger, start, end, distance / scale);
+  if (!onSegment(sourceSupport, start, end)) {
     throw Error('Support contact must remain on the inspected fore-end segment');
   }
   const rawAngle = (Math.atan2(support[1] - trigger[1], support[0] - trigger[0]) -
@@ -86,5 +118,5 @@ function main(argv) {
   console.log(`${argv.includes('--write') ? 'Wrote' : 'Computed'} ${Object.keys(report.armors).length} candidate fits for weapon ${weaponId}; shared PNG unchanged.`);
 }
 
-module.exports = {fit};
+module.exports = {fit, segmentContact, onSegment};
 if (require.main === module) main(process.argv.slice(2));
