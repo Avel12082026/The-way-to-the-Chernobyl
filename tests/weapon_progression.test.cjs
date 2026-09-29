@@ -61,10 +61,13 @@ assert.equal(unlockedAt(262).at(-1).progressionClass,'rifle');
 assert.equal(unlockedAt(346).length,116);
 
 assert(html.includes('const unlockWeaponsByLevel = () => WEAPON_PROGRESSION_ORDER.filter'));
-assert(html.includes('player.level >= (w.unlockLevel || 0)'));
+assert(!html.includes('player.level >= (w.unlockLevel || 0)'),'weapon shop must not be level-gated');
+const tierSlices=[[0,9,1],[10,19,2],[20,28,3],[29,38,4],[39,48,5],[49,57,6],[58,67,7],[68,77,8],[78,86,9],[87,96,10],[97,106,11],[107,115,12]];
+for(const [a,b,t] of tierSlices)for(let i=a;i<=b;i++)assert.equal(order[i].tier,t,'weapon tier '+i);
+for(let i=1;i<order.length;i++)assert(order[i].price>=order[i-1].price,'weapon prices must not reset between tiers/classes');
 
 console.log(JSON.stringify({
-  status:'passed',
+  status:'passed-money-gated-12-tiers',
   first:order[0].name,
   pistolEnd:{name:order[28].name,level:order[28].unlockLevel},
   shotgunStart:{name:order[29].name,level:order[29].unlockLevel},
