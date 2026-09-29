@@ -1,0 +1,63 @@
+--- server.js
++++ server.js
+@@ -5414,33 +5415,35 @@
+ }
+ 
+ function zoneMapLuckyReward(zoneTier){
+-    const tier=Math.max(1,Math.min(6,Number(zoneTier)||1));
+-    const supplies={
+-        1:[['Хлеб',30],['Вода',30],['Аптечка гражданская',25],['Тушенка',8],['Энергетик',7]],
+-        2:[['Хлеб',18],['Вода',18],['Тушенка',20],['Энергетик',20],['Аптечка гражданская',12],['Аптечка армейская',8],['Антирад',4]],
+-        3:[['Хлеб',8],['Вода',8],['Тушенка',20],['Энергетик',20],['Аптечка армейская',24],['Антирад',15],['Аптечка гражданская',5]],
+-        4:[['Тушенка',20],['Энергетик',20],['Аптечка армейская',28],['Антирад',22],['Аптечка научная',10]],
+-        5:[['Тушенка',15],['Энергетик',18],['Аптечка армейская',20],['Аптечка научная',22],['Антирад',25]],
+-        6:[['Тушенка',10],['Энергетик',15],['Аптечка армейская',15],['Аптечка научная',30],['Антирад',30]]
+-    }[tier];
+-    const pickWeighted=list=>{let total=list.reduce((s,x)=>s+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list[list.length-1][0];};
+-    const category=Math.random();
+-    let item=null,text='';
+-    if(category<0.94){
++    const locationTier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const supplies=[
++        ['Хлеб',20],['Вода',20],['Тушенка',18],['Энергетик',18],
++        ['Аптечка гражданская',10],['Аптечка армейская',6],['Аптечка научная',2],['Антирад',6]
++    ];
++    const pickWeighted=list=>{let total=list.reduce((sum,x)=>sum+x[1],0),roll=Math.random()*total;for(const x of list){if(roll<x[1])return x[0];roll-=x[1];}return list[list.length-1][0];};
++    // Обычные припасы доминируют на любой локации. Чем глубже игрок в Зоне,
++    // тем немного выше шанс именно снаряжения, но оно всё равно остаётся редкой находкой.
++    const gearChance=0.03+(locationTier-1)*0.01; // Кордон 3% ... Янтарь 8%
++    let item=null,text='',lootTier=1;
++    if(Math.random()>=gearChance){
+         item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';
+-    }else if(category<0.965){
+-        const pool=SHOP_WEAPONS.filter(x=>x&&!x.adminOnly&&!x.isPremiumWeapon&&Number(x.tier)===tier);
+-        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл оружие!';}
+-    }else if(category<0.985){
+-        const pool=SHOP_ARMOR.filter(x=>x&&!x.adminOnly&&!x.isPremiumArmor&&!x.isResearchSuit&&Number(x.tier)===tier);
+-        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл броню!';}
+     }else{
+-        const pool=SHOP_ARTIFACTS.filter(x=>x&&!x.adminOnly&&!x.isNamedArtifact&&Number(x.tier)===tier);
+-        if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text='Мне повезло, я нашёл артефакт!';}
++        lootTier=Math.min(14,locationTier+(Math.random()<0.10?1:0));
++        const kindRoll=Math.random();
++        if(kindRoll<0.45){
++            const pool=SHOP_WEAPONS.filter(x=>x&&!x.adminOnly&&!x.isPremiumWeapon&&Number(x.tier)===lootTier);
++            if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл оружие ${lootTier}-го тира!`;}
++        }else if(kindRoll<0.80){
++            const pool=SHOP_ARMOR.filter(x=>x&&!x.adminOnly&&!x.isPremiumArmor&&!x.isResearchSuit&&Number(x.tier)===lootTier);
++            if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл броню ${lootTier}-го тира!`;}
++        }else{
++            const pool=SHOP_ARTIFACTS.filter(x=>x&&!x.adminOnly&&!x.isNamedArtifact&&Number(x.tier)===lootTier);
++            if(pool.length){item=pool[Math.floor(Math.random()*pool.length)].name;text=`Мне повезло, я нашёл артефакт ${lootTier}-го тира!`;}
++        }
++        if(!item){lootTier=1;item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';}
+     }
+-    if(!item){item=pickWeighted(supplies);text='Мне повезло, я нашёл припасы!';}
+     const nonStacking=!!(SHOP_WEAPONS.some(x=>x.name===item)||SHOP_ARMOR.some(x=>x.name===item)||SHOP_ARTIFACTS.some(x=>x.name===item));
+-    return{name:item,nonStacking,text};
++    return{name:item,nonStacking,text,lootTier,locationTier};
+ }
+ 
+ 
+
+[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
