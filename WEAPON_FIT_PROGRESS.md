@@ -44,8 +44,7 @@ individual weapons: retain one transparent source PNG per weapon.
 
 ## Remaining queue
 
-Current weapon is **10, Saiga-12**. Its contact/seam refinement has been
-reviewed on all 96 suits; see `10-review.json`. The shared PNG, all other
+**10, Saiga-12**, has been reviewed on all 96 suits; see `10-review.json`. The shared PNG, all other
 weapon fits and renderer code remain unchanged. The inspected support surface
 includes the smooth rear handguard, reducing support-arm translations from
 38 to 1 and eliminating clipped sleeve gaps.
@@ -55,8 +54,16 @@ by the user's explicit low-ready fitting rule above. All 16 stock occlusions
 were reinspected and accepted: continuous stocks tuck behind the near arm,
 with intact grip/fore-end contacts and sleeve seams. No new pose PNGs are used.
 
-After publishing and verifying 10, continue remaining heavy IDs ascending
-(starting with **11, АКС-74У**), then pistol poses. The other 109 weapons are
+Publication commit: `4ca333b93fa5b868075a335c5df324be8339a4cb`.
+Pages succeeded. Live `index.html` and `images/combat/fighters.js` matched
+the reviewed release byte-for-byte. The existing Telegram WebApp reopened
+with `combat-fitting-10-20260929-v1` and displayed the inventory normally.
+The QA browser page had crashed during the first reload; restarting only
+`pocketzone-qa-browser.service` restored it. No equipment, inventory or
+production game service was changed during this check. All-96 visual review
+used the production Canvas renderer, not 96 live inventory changes.
+
+Next weapon: **11, АКС-74У**. Continue remaining heavy IDs ascending, then pistol poses. The other 109 weapons are
 not certified by the 114/32/20/10 reviews.
 
 `asset_sources/combat_weapon_fits/heavy-source-anchors.json` records the inspected
