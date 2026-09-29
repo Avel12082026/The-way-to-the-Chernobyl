@@ -48,3 +48,5 @@
              if (!item) return res.json({ success: false, error: 'У Леонова этот товар не продаётся' });
          } else if (category === 'detector') {
              item = SHOP_DETECTORS.find(d => d.name === name);
+
+[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
