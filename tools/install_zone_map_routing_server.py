@@ -45,13 +45,23 @@ app.post('/api/shop/buy',(req,res,next)=>{
         return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
         return res.status(400).json({success:false,error:'У Жучары продаются только первые 29 костюмов'});
+    if(category==='consumable'&&!ZHUCHARA_CONSUMABLES_SERVER.has(rawName))
+        return res.status(400).json({success:false,error:'У Жучары из припасов продаются только хлеб, вода и гражданская аптечка'});
     return next();
 });
 
 """
 
 BARMAN_GUARD=r"""// ROSTOK_BARMAN_SHOP_V1
+// TRADER_CONSUMABLE_TIERS_V1
+const ZHUCHARA_CONSUMABLES_SERVER=new Set([
+    'Хлеб','Вода','Аптечка гражданская'
+]);
 const ROSTOK_BARMAN_CONSUMABLES_SERVER=new Set([
+    'Хлеб','Тушенка','Вода','Энергетик',
+    'Аптечка гражданская','Аптечка армейская'
+]);
+const LEONOV_CONSUMABLES_SERVER=new Set([
     'Хлеб','Тушенка','Вода','Энергетик',
     'Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'
 ]);

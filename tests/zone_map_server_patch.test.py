@@ -155,7 +155,8 @@ assert legacy_upgraded.count(mod.BARMAN_MARK)==1
 assert "ROSTOK_BARMAN_CONSUMABLES_SERVER" in legacy_upgraded
 assert "ROSTOK_BARMAN_SHOTGUNS_SERVER" in legacy_upgraded
 assert "ROSTOK_BARMAN_ARMOR_SERVER" in legacy_upgraded
-assert "'Энергетик'" in legacy_upgraded and "'Аптечка научная'" in legacy_upgraded
+assert "'Энергетик'" in legacy_upgraded and "'Аптечка армейская'" in legacy_upgraded
+assert "ZHUCHARA_CONSUMABLES_SERVER" in legacy_upgraded and "LEONOV_CONSUMABLES_SERVER" in legacy_upgraded
 assert legacy_barman not in legacy_upgraded
 
 # A live V3 install must upgrade in place to V4.

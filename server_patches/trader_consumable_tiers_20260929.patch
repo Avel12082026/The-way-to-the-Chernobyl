@@ -1,0 +1,50 @@
+--- server.js
++++ server.js
+@@ -966,8 +966,11 @@
+     if (have <= 0) return res.json({ success: false, error: 'Этого предмета нет в инвентаре' });
+ 
+     const resolved = resolveSellPriceServer(name, playerId);
+-    if (!['artifact','loot','weapon','armor'].includes(resolved.category)) {
+-        return res.json({ success: false, error: 'Леонов покупает артефакты, трофеи мутантов, оружие и броню' });
++    const leonovConsumable = SHOP_CONSUMABLES.find(c =>
++        c.name === name && ['food','water','medkit'].includes(String(c.type||''))
++    );
++    if (!['artifact','loot','weapon','armor'].includes(resolved.category) && !leonovConsumable) {
++        return res.json({ success: false, error: 'Леонов покупает артефакты, трофеи мутантов, оружие, броню, аптечки, еду и воду' });
+     }
+ 
+     if (resolved.isNamed) {
+@@ -1282,7 +1285,15 @@
+ });
+ 
+ // ROSTOK_BARMAN_SHOP_V1
++// TRADER_CONSUMABLE_TIERS_V1
++const ZHUCHARA_CONSUMABLES_SERVER=new Set([
++    'Хлеб','Вода','Аптечка гражданская'
++]);
+ const ROSTOK_BARMAN_CONSUMABLES_SERVER=new Set([
++    'Хлеб','Тушенка','Вода','Энергетик',
++    'Аптечка гражданская','Аптечка армейская'
++]);
++const LEONOV_CONSUMABLES_SERVER=new Set([
+     'Хлеб','Тушенка','Вода','Энергетик',
+     'Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад'
+ ]);
+@@ -1385,6 +1396,8 @@
+         return res.status(400).json({success:false,error:'У Жучары продаются только пистолеты'});
+     if(category==='armor'&&!ZONE_MAP_LOCATION1_ARMOR.has(name))
+         return res.status(400).json({success:false,error:'У Жучары продаются только первые 29 костюмов'});
++    if(category==='consumable'&&!ZHUCHARA_CONSUMABLES_SERVER.has(rawName))
++        return res.status(400).json({success:false,error:'У Жучары из припасов продаются только хлеб, вода и гражданская аптечка'});
+     return next();
+ });
+ 
+@@ -1422,7 +1435,7 @@
+         }
+     } else if (vendor === 'leonov') {
+         if (category === 'consumable') {
+-            item = SHOP_CONSUMABLES.find(c => c.name === name && (c.type === 'medkit' || c.type === 'antirad'));
++            item = SHOP_CONSUMABLES.find(c => c.name === name && LEONOV_CONSUMABLES_SERVER.has(c.name));
+             if (!item) return res.json({ success: false, error: 'У Леонова этот товар не продаётся' });
+         } else if (category === 'detector') {
+             item = SHOP_DETECTORS.find(d => d.name === name);

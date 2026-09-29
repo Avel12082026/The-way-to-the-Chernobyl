@@ -45,6 +45,10 @@
     const afterBarman = safe.filter(a => Number(a.id || 0) > 58);
     return (afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe.slice(58,87));
   };
+  const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
+  const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская']);
+  const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
+  const LEONOV_BUYBACK_TYPES = new Set(['food','water','medkit']);
   const vendors = {
     zhuchara: {
       title: () => 'ТОРГОВЕЦ ЖУЧАРА',
@@ -56,7 +60,7 @@
         const pistols = markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []);
         const zhucharaArmor = regularArmorRange(1, 29);
         return [
-          ...getShopCatalog().filter(item => item?.category === 'consumable'),
+          ...getShopCatalog().filter(item => item?.category === 'consumable' && ZHUCHARA_CONSUMABLES.has(item.name)),
           ...pistols.map(w => ({...w, category:'weapon'})),
           ...zhucharaArmor.map(a => ({...a, category:'armor'}))
         ];
@@ -75,7 +79,7 @@
         const shotguns = markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []);
         const barmanArmor = regularArmorRange(30, 58);
         return [
-          ...getShopCatalog().filter(item => item?.category === 'consumable'),
+          ...getShopCatalog().filter(item => item?.category === 'consumable' && BARMAN_CONSUMABLES.has(item.name)),
           ...shotguns.map(w => ({...w, category:'weapon'})),
           ...barmanArmor.map(a => ({...a, category:'armor'}))
         ];
@@ -88,7 +92,7 @@
     leonov: {
       title: () => 'ЭКОЛОГ ЛЕОНОВ — ТОРГОВЛЯ',
       stock: () => {
-        const supplies = consumables.filter(c => ['medkit', 'antirad'].includes(c.type)).map(c => ({...c, category: 'consumable'}));
+        const supplies = consumables.filter(c => LEONOV_CONSUMABLE_TYPES.has(c.type)).map(c => ({...c, category: 'consumable'}));
         if (!isYantarLeonovContext()) {
           return [
             ...supplies,
@@ -104,14 +108,19 @@
       price: item => getBuyPrice(item.price),
       accepts: name => {
         const slot = getEquipSlotType(name);
-        return !!artifact(name) || mutants.some(m => m.loot === name) || slot === 'weapon' || slot === 'armor';
+        const supply = consumables.find(c => c.name === name);
+        return !!artifact(name) || mutants.some(m => m.loot === name) ||
+          slot === 'weapon' || slot === 'armor' || !!(supply && LEONOV_BUYBACK_TYPES.has(supply.type));
       },
       offer: name => {
         const art = artifact(name);
         if (art?.isNamedArtifact) return {coins:0, tokens:50};
         const isLoot = mutants.some(m => m.loot === name);
         const slot = getEquipSlotType(name);
-        const multiplier = art ? 1.35 : (isLoot ? 1.20 : ((slot === 'weapon' || slot === 'armor') ? 1 : 0));
+        const supply = consumables.find(c => c.name === name);
+        const multiplier = art ? 1.35 :
+          (isLoot ? 1.20 :
+            ((slot === 'weapon' || slot === 'armor' || (supply && LEONOV_BUYBACK_TYPES.has(supply.type))) ? 1 : 0));
         return {coins: multiplier ? Math.round(getSellPrice(name) * multiplier) : 0, tokens:0};
       }
     },
@@ -613,3 +622,5 @@
   // Do not cancel touchstart/pointerdown: taps, custom dragging and scrolling need them.
   window.TradeItemContextGuard = Object.freeze({version:'1.0.0'});
 })();
+
+[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]

@@ -36,9 +36,13 @@ const okArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',nam
 if(!okArmor.next)throw new Error('armor 30 blocked');
 const okLastArmor=call({vendor:'zhuchara',sourceVendor:'barman',category:'armor',name:'A58'});
 if(!okLastArmor.next)throw new Error('armor 58 blocked');
-for(const name of ['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Аптечка научная','Антирад']){
+for(const name of ['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская']){
   const r=call({vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name});
   if(!r.next)throw new Error('Barman consumable blocked '+name);
+}
+for(const name of ['Аптечка научная','Антирад']){
+  const r=call({vendor:'zhuchara',sourceVendor:'barman',category:'consumable',name});
+  if(r.next||r.status!==400)throw new Error('Barman forbidden consumable passed '+name);
 }
 for(const payload of [
  {vendor:'zhuchara',sourceVendor:'barman',category:'weapon',name:'P1'},
