@@ -39,7 +39,7 @@ assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized HUD strip m
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
-  'ui/bunker-menu.js?v=20260929-zone-routes1',
+  'ui/bunker-menu.js?v=20260929-zone-routes2',
   'ui/bunker-menu.css?v=20260928-yantar-hud1',
   'ui/trade-menu.js?v=20260928-yantar-trade1',
   'ui/trader-hubs.js?v=20260927-cordon-zhuchara2'

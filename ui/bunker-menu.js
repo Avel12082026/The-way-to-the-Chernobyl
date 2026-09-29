@@ -1267,6 +1267,19 @@
     const target=Number(point?.targetLocation||0);
     const from=Number(zoneLocation);
     if(!ZONE_MAP_ASSETS[target]||target===from)return;
+    if(zoneTravelRoute&&!zoneTravelRoute.completed){
+      const same=Number(zoneTravelRoute.fromLocation)===from&&Number(zoneTravelRoute.toLocation)===target;
+      if(!same){
+        if(typeof showGameAlert==='function')showGameAlert('Сначала завершите уже начатый переход.');
+        return;
+      }
+      if(typeof raidActive!=='undefined'&&raidActive&&typeof returnToRaid==='function'){
+        hideZoneMap();
+        returnToRaid();
+        renderZoneRouteProgress();
+        return;
+      }
+    }
     if(typeof startRaid!=='function'){
       if(typeof showGameAlert==='function')showGameAlert('Не удалось начать переход: рейд недоступен.');
       return;
