@@ -1,0 +1,268 @@
+--- a/server.js
++++ b/server.js
+@@ -4580,7 +4580,7 @@
+     if (String(myPlayerId) === String(ADMIN_ID)) return 0;
+     if (!myFaction) {
+         // "Одиночка" — бонус растёт с уровнем, на каждые полных 5 уровней +0.5%
+-        return Math.floor((Number(myLevel) || 1) / 5) * 0.5;
++        return Math.min(10, Math.floor((Number(myLevel) || 1) / 5) * 0.5);
+     }
+     if (myFaction === 'Долг' && targetFaction === 'Свобода') return 5;
+     if (myFaction === 'Экологи') return -2;
+@@ -4635,6 +4635,256 @@
+ // за КАЖДЫЕ 5000 убитых игроков (не одноразово, а повторяется: 5000, 10000, 15000...)
+ const PREMIUM_ARENA_ARMOR_DROPS = ['Броня Зоны', 'Экзоскелет Титан-Финал', 'Экзоскелет Абсолют-Финал', 'Экзокостюм Апокалипсис'];
+ 
++
++// ARENA_TACTICAL_PVP_V1
++// Пошаговый PvP использует отдельную нормализованную формулу: PvE-урон не даёт ваншоты на арене.
++db.exec('CREATE TABLE IF NOT EXISTS arena_battles ('+
++    'player_id TEXT PRIMARY KEY, token TEXT NOT NULL UNIQUE, defender_id TEXT NOT NULL, '+
++    'payload TEXT NOT NULL, started_at INTEGER NOT NULL, updated_at INTEGER NOT NULL)');
++
++const ARENA_BATTLE_MAX_ROUNDS=12;
++const ARENA_BATTLE_EXPIRE_MS=30*60*1000;
++const ARENA_ACTIONS=new Set(['attack','aim','defend','reposition','medkit']);
++const ARENA_CLASS_BALANCE=Object.freeze({
++    pistol:{damage:0.92,accuracy:0.08},
++    shotgun:{damage:1.08,accuracy:-0.06},
++    automatic:{damage:1.00,accuracy:0.00},
++    rifle:{damage:1.15,accuracy:-0.10}
++});
++function arenaClamp(v,lo,hi){return Math.min(hi,Math.max(lo,Number(v)||0));}
++function arenaRound(v){return Math.round((Number(v)||0)*10)/10;}
++function arenaActorSnapshot(id,row,data){
++    const weaponName=parseGearNameServer(data?.weapon?.name||'').baseName;
++    const armorName=parseGearNameServer(data?.armor?.name||'').baseName;
++    const weapon=SHOP_WEAPONS.find(w=>w.name===weaponName&&!w.adminOnly);
++    const armor=SHOP_ARMOR.find(a=>a.name===armorName&&!a.adminOnly);
++    const className=String(weapon?.progressionClass||weaponDamageClassServer(SHOP_WEAPONS,weapon)||'pistol');
++    const maxHealth=Math.max(100,Number(data?.maxHealth)||100);
++    const maxHp=Math.round(arenaClamp(100+Math.max(0,maxHealth-100)*0.5,100,160));
++    const bonusArmor=Number(data?.namedArtifactBonus?.bulletResist)||0;
++    return{
++        id:String(id),name:String(data?.nickname||row?.username||id),hp:maxHp,maxHp,
++        weaponName:weapon?.name||weaponName||'Кулаки',armorName:armor?.name||armorName||'Без брони',
++        weaponTier:Math.max(1,Math.min(12,Number(weapon?.tier)||1)),
++        armorTier:Math.max(0,Math.min(14,Number(armor?.tier)||0)),
++        progressionIndex:Math.max(0,Number(weapon?.progressionIndex)||0),weaponClass:className,
++        armor:Math.max(0,(Number(data?.armor?.armor)||0)+bonusArmor),
++        strength:arenaClamp(data?.strength,0,100),accuracy:arenaClamp(data?.accuracy,0,100),
++        level:Math.max(1,Number(data?.level)||1),faction:getFactionForPlayer(id),
++        aimed:false,defending:false,evasive:false,medkitUsed:false,healTicks:0
++    };
++}
++function arenaPublicActor(actor){
++    return{id:actor.id,name:actor.name,hp:arenaRound(actor.hp),maxHp:actor.maxHp,
++        weaponName:actor.weaponName,armorName:actor.armorName,weaponTier:actor.weaponTier,
++        armorTier:actor.armorTier,weaponClass:actor.weaponClass,aimed:!!actor.aimed,
++        defending:!!actor.defending,evasive:!!actor.evasive,medkitUsed:!!actor.medkitUsed,
++        healTicks:Number(actor.healTicks)||0};
++}
++function arenaPublicBattle(payload,token){
++    return{token,round:Number(payload.round)||1,maxRounds:ARENA_BATTLE_MAX_ROUNDS,
++        player:arenaPublicActor(payload.a),enemy:arenaPublicActor(payload.b),
++        finished:!!payload.finished,winner:payload.winner||null,zoneLocation:4};
++}
++function arenaTierLocalPower(actor){
++    const within=Math.max(0,Math.floor(Number(actor.progressionIndex)||0)%29);
++    const start=within<10?0:within<20?10:20,count=within<20?10:9;
++    return (within-start)/Math.max(1,count-1)*2.5;
++}
++function arenaAttackRoll(attacker,target){
++    const cfg=ARENA_CLASS_BALANCE[attacker.weaponClass]||ARENA_CLASS_BALANCE.pistol;
++    const aimed=!!attacker.aimed;
++    let hitChance=0.82+cfg.accuracy+attacker.accuracy*0.001+(aimed?0.24:0);
++    if(target.evasive){hitChance-=0.22;if(attacker.weaponClass==='shotgun')hitChance-=0.08;}
++    hitChance=arenaClamp(hitChance,0.35,0.98);
++    const hit=Math.random()<hitChance;let crit=false,damage=0;
++    if(hit){
++        let raw=(13+(attacker.weaponTier-1)*1.6+arenaTierLocalPower(attacker))*cfg.damage;
++        raw*=1+attacker.strength*0.0015;
++        const factionBonus=getFactionArenaDamageBonusPct(attacker.id,attacker.faction,attacker.level,target.faction);
++        raw*=1+arenaClamp(factionBonus,-20,20)/100;
++        if(aimed)raw*=1.25;
++        if(parseGearNameServer(attacker.armorName).baseName==='Экзоскелет Абсолют-Финал')raw+=2.5;
++        const critChance=arenaClamp(0.05+attacker.accuracy*0.0005+(aimed?0.06:0),0.05,0.16);
++        crit=Math.random()<critChance;if(crit)raw*=1.45;
++        const armorReduction=Math.min(0.45,Math.max(0,target.armor)/(Math.max(0,target.armor)+300));
++        raw*=1-armorReduction;if(target.defending)raw*=0.55;
++        damage=Math.max(1,arenaRound(raw));
++    }
++    attacker.aimed=false;
++    return{hit,crit,damage,hitChance:arenaRound(hitChance*100)};
++}
++function arenaAiAction(actor,other){
++    const ratio=actor.hp/Math.max(1,actor.maxHp),roll=Math.random();
++    if(ratio<0.35&&!actor.medkitUsed)return'medkit';
++    if(actor.aimed)return'attack';
++    if(other.aimed&&roll<0.35)return'defend';
++    if(other.aimed&&roll<0.58)return'reposition';
++    if(actor.weaponClass==='rifle')return roll<0.36?'aim':roll<0.84?'attack':'reposition';
++    if(actor.weaponClass==='shotgun')return roll<0.72?'attack':roll<0.86?'defend':'reposition';
++    if(actor.weaponClass==='automatic')return roll<0.70?'attack':roll<0.84?'aim':roll<0.93?'defend':'reposition';
++    return roll<0.66?'attack':roll<0.80?'aim':roll<0.90?'defend':'reposition';
++}
++function arenaPrepareAction(actor,action){
++    if(action==='aim')actor.aimed=true;
++    else if(action==='defend')actor.defending=true;
++    else if(action==='reposition'){actor.evasive=true;actor.aimed=false;}
++    else if(action==='medkit'){if(actor.medkitUsed)return false;actor.medkitUsed=true;actor.healTicks=3;}
++    return true;
++}
++function arenaHealTick(actor){
++    if(actor.hp<=0||Number(actor.healTicks)<=0)return 0;
++    const before=actor.hp;actor.hp=Math.min(actor.maxHp,actor.hp+actor.maxHp*0.08);
++    actor.healTicks=Math.max(0,Number(actor.healTicks)-1);return arenaRound(actor.hp-before);
++}
++function arenaResolveRound(payload,playerAction){
++    const a=payload.a,b=payload.b;a.defending=a.evasive=false;b.defending=b.evasive=false;
++    if(playerAction==='medkit'&&a.medkitUsed)return{error:'Аптечка на этой арене уже использована'};
++    const enemyAction=arenaAiAction(b,a);
++    if(!arenaPrepareAction(a,playerAction))return{error:'Аптечка на этой арене уже использована'};
++    arenaPrepareAction(b,enemyAction);
++    const aAttack=playerAction==='attack'?arenaAttackRoll(a,b):null;
++    const bAttack=enemyAction==='attack'?arenaAttackRoll(b,a):null;
++    b.hp=Math.max(0,b.hp-(aAttack?.damage||0));a.hp=Math.max(0,a.hp-(bAttack?.damage||0));
++    const aHeal=arenaHealTick(a),bHeal=arenaHealTick(b);
++    payload.round=(Number(payload.round)||1)+1;let winner=null;
++    if(a.hp<=0&&b.hp<=0)winner='draw';
++    else if(b.hp<=0)winner='a';else if(a.hp<=0)winner='b';
++    else if(payload.round>ARENA_BATTLE_MAX_ROUNDS){
++        const ar=a.hp/a.maxHp,br=b.hp/b.maxHp;
++        winner=Math.abs(ar-br)<0.03?'draw':ar>br?'a':'b';
++    }
++    if(winner){payload.finished=true;payload.winner=winner;}
++    return{enemyAction,events:{player:{action:playerAction,attack:aAttack,healed:aHeal},
++        enemy:{action:enemyAction,attack:bAttack,healed:bHeal}},winner};
++}
++function arenaAwardMilestones(winnerData,winnerRow){
++    let legendAnnounce=null,premiumArmorDrop=null;
++    winnerData.arenaKillMilestone=Number(winnerData.arenaKillMilestone)||0;
++    for(const tier of ARENA_KILL_MILESTONES){
++        if(Number(winnerData.arenaKills)>=tier.threshold&&winnerData.arenaKillMilestone<tier.threshold){
++            winnerData.arenaKillMilestone=tier.threshold;
++            winnerData.coins=(Number(winnerData.coins)||0)+tier.coins;
++            winnerData.breedCredits=(Number(winnerData.breedCredits)||0)+tier.breedCredits;
++            if(tier.title)legendAnnounce=winnerRow.username||winnerRow.id;
++        }
++    }
++    winnerData.premiumArmorMilestone=Number(winnerData.premiumArmorMilestone)||0;
++    const next=Math.floor((Number(winnerData.arenaKills)||0)/5000)*5000;
++    if(next>0&&next>winnerData.premiumArmorMilestone){
++        winnerData.premiumArmorMilestone=next;
++        premiumArmorDrop=PREMIUM_ARENA_ARMOR_DROPS[Math.floor(Math.random()*PREMIUM_ARENA_ARMOR_DROPS.length)];
++        winnerData.inventory=winnerData.inventory||{};
++        winnerData.inventory[premiumArmorDrop]=(Number(winnerData.inventory[premiumArmorDrop])||0)+1;
++    }
++    return{legendAnnounce,premiumArmorDrop};
++}
++function arenaFinalizeTactical(attackerId,defenderId,winner){
++    if(winner==='draw')return{ratingChange:0,premiumArmorDrop:null,draw:true};
++    const attackerRow=db.prepare('SELECT * FROM players WHERE id=?').get(attackerId);
++    const defenderRow=db.prepare('SELECT * FROM players WHERE id=?').get(defenderId);
++    if(!attackerRow||!defenderRow)throw new Error('Участник арены не найден');
++    const attacker=safeParsePlayerData(attackerRow.data),defender=safeParsePlayerData(defenderRow.data);
++    const win=winner==='a',ar=Math.max(0,Number(attacker.arenaRating)||0),dr=Math.max(0,Number(defender.arenaRating)||0);
++    attacker.arenaRating=Math.max(0,ar+(win?25:-10));defender.arenaRating=Math.max(0,dr+(win?-10:25));
++    attacker.arenaWins=(Number(attacker.arenaWins)||0)+(win?1:0);attacker.arenaLosses=(Number(attacker.arenaLosses)||0)+(win?0:1);
++    defender.arenaWins=(Number(defender.arenaWins)||0)+(win?0:1);defender.arenaLosses=(Number(defender.arenaLosses)||0)+(win?1:0);
++    const winnerData=win?attacker:defender,winnerRow=win?attackerRow:defenderRow;
++    winnerData.coins=(Number(winnerData.coins)||0)+250;
++    const winnerArmor=parseGearNameServer(winnerData?.armor?.name||'').baseName;
++    const killDelta=winnerArmor==='Экзоскелет Абсолют-Финал'?2:1;
++    attacker.arenaKills=Math.max(0,(Number(attacker.arenaKills)||0)+(win?killDelta:-killDelta));
++    defender.arenaKills=Math.max(0,(Number(defender.arenaKills)||0)+(win?-killDelta:killDelta));
++    const awards=arenaAwardMilestones(winnerData,winnerRow);
++    db.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(attacker),attackerId);
++    db.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(defender),defenderId);
++    if(awards.legendAnnounce){
++        db.prepare('INSERT INTO chat_messages (channel,sender_id,sender_name,text,created_at) VALUES (?,?,?,?,?)')
++          .run('general',SYSTEM_SENDER_ID,'no name','На арене появился Легенда Арены, этого человека следует уважать!',Date.now());
++        pruneChatChannel('general',CHAT_LIMITS.general);
++    }
++    return{ratingChange:win?25:-10,premiumArmorDrop:win?awards.premiumArmorDrop:null,draw:false};
++}
++function arenaLoadBattle(playerId,token=''){
++    const row=token?db.prepare('SELECT * FROM arena_battles WHERE player_id=? AND token=?').get(playerId,token)
++      :db.prepare('SELECT * FROM arena_battles WHERE player_id=?').get(playerId);
++    if(!row)return null;let payload;try{payload=JSON.parse(row.payload||'{}')}catch(_){return null;}
++    return{row,payload};
++}
++
++app.post('/api/arena/battle/status',requireAuth,(req,res)=>{
++    const playerId=String(req.telegramUser.id),now=Date.now();
++    db.prepare('DELETE FROM arena_battles WHERE updated_at<?').run(now-ARENA_BATTLE_EXPIRE_MS);
++    const current=arenaLoadBattle(playerId);
++    return res.json({success:true,active:!!current,state:current?arenaPublicBattle(current.payload,current.row.token):null});
++});
++
++app.post('/api/arena/battle/start',requireAuth,rateLimit('arena-start',10,10000),(req,res)=>{
++    const attackerId=String(req.telegramUser.id),targetId=String(req.body?.targetId||'').trim(),now=Date.now();
++    if(!/^\d{1,30}$/.test(targetId))return res.status(400).json({success:false,error:'Некорректный ID противника'});
++    if(targetId===attackerId)return res.status(400).json({success:false,error:'Нельзя атаковать самого себя'});
++    db.prepare('DELETE FROM arena_battles WHERE updated_at<?').run(now-ARENA_BATTLE_EXPIRE_MS);
++    const existing=arenaLoadBattle(attackerId);
++    if(existing)return res.json({success:true,resumed:true,state:arenaPublicBattle(existing.payload,existing.row.token)});
++    if(db.prepare('SELECT 1 FROM pve_battles WHERE player_id=?').get(attackerId))
++        return res.status(409).json({success:false,error:'Сначала завершите текущий бой'});
++    const attackerRow=db.prepare('SELECT * FROM players WHERE id=?').get(attackerId);
++    const defenderRow=db.prepare('SELECT * FROM players WHERE id=?').get(targetId);
++    if(!attackerRow||!defenderRow)return res.status(404).json({success:false,error:'Игрок не найден'});
++    const attacker=safeParsePlayerData(attackerRow.data),defender=safeParsePlayerData(defenderRow.data);
++    if(attacker.lastArenaAttack&&now-Number(attacker.lastArenaAttack)<ARENA_COOLDOWN_MS){
++        const wait=Math.ceil((ARENA_COOLDOWN_MS-(now-Number(attacker.lastArenaAttack)))/1000);
++        return res.status(429).json({success:false,error:'Подождите ещё '+wait+' сек. перед следующим боем'});
++    }
++    if(attacker.lastArenaTarget===targetId&&attacker.lastArenaTargetAt&&now-Number(attacker.lastArenaTargetAt)<ARENA_SAME_TARGET_COOLDOWN_MS){
++        const wait=Math.ceil((ARENA_SAME_TARGET_COOLDOWN_MS-(now-Number(attacker.lastArenaTargetAt)))/1000);
++        return res.status(429).json({success:false,error:'Эту цель можно снова атаковать через '+wait+' сек.'});
++    }
++    const token=crypto.randomBytes(24).toString('hex');
++    const payload={round:1,finished:false,winner:null,a:arenaActorSnapshot(attackerId,attackerRow,attacker),b:arenaActorSnapshot(targetId,defenderRow,defender)};
++    attacker.lastArenaAttack=now;attacker.lastArenaTarget=targetId;attacker.lastArenaTargetAt=now;
++    const tx=db.transaction(()=>{
++        db.prepare('UPDATE players SET data=? WHERE id=?').run(JSON.stringify(attacker),attackerId);
++        db.prepare('INSERT INTO arena_battles(player_id,token,defender_id,payload,started_at,updated_at) VALUES(?,?,?,?,?,?)')
++          .run(attackerId,token,targetId,JSON.stringify(payload),now,now);
++    });tx();touchLastSeen(attackerId);
++    return res.json({success:true,resumed:false,state:arenaPublicBattle(payload,token)});
++});
++
++app.post('/api/arena/battle/action',requireAuth,rateLimit('arena-action',20,10000),(req,res)=>{
++    const playerId=String(req.telegramUser.id),token=String(req.body?.battleToken||''),action=String(req.body?.action||'');
++    if(!token)return res.status(400).json({success:false,error:'Бой на арене не найден'});
++    if(!ARENA_ACTIONS.has(action))return res.status(400).json({success:false,error:'Неизвестное действие'});
++    try{
++        const out=db.transaction(()=>{
++            const current=arenaLoadBattle(playerId,token);
++            if(!current)return{success:false,error:'Бой на арене уже завершён или истёк'};
++            const payload=current.payload;if(payload.finished)return{success:false,error:'Бой уже завершён'};
++            const resolved=arenaResolveRound(payload,action);if(resolved.error)return{success:false,error:resolved.error};
++            let outcome=null;
++            if(resolved.winner){
++                outcome=arenaFinalizeTactical(playerId,current.row.defender_id,resolved.winner);
++                db.prepare('DELETE FROM arena_battles WHERE player_id=? AND token=?').run(playerId,token);
++            }else{
++                db.prepare('UPDATE arena_battles SET payload=?,updated_at=? WHERE player_id=? AND token=?')
++                  .run(JSON.stringify(payload),Date.now(),playerId,token);
++            }
++            return{success:true,state:arenaPublicBattle(payload,token),events:resolved.events,
++                finished:!!resolved.winner,winner:resolved.winner||null,
++                ...(outcome||{ratingChange:0,premiumArmorDrop:null,draw:false})};
++        })();
++        return res.json(out);
++    }catch(e){
++        console.error('[/api/arena/battle/action]',e);
++        return res.status(500).json({success:false,error:'Не удалось обработать ход арены'});
++    }
++});
++
++// Старый мгновенный API отключён: он иначе позволял бы обходить пошаговую арену.
++app.post('/api/arena/attack',requireAuth,(req,res)=>{
++    return res.status(410).json({success:false,error:'Арена обновлена. Откройте её заново для тактического боя.'});
++});
++
+ app.post('/api/arena/attack', requireAuth, (req, res) => {
+     const attackerId = String(req.telegramUser.id);
+     const targetId = String(req.body.targetId || '').trim();
