@@ -1,0 +1,6029 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-29T10:11:14.215Z",
+  "weaponId": 10,
+  "name": "Карабин Сайга-12",
+  "pose": "heavy",
+  "rendererSha256": "82744e20693df7928b7b7cf840e17185ec92e612c39a15962b9e26d293bc265c",
+  "sharedWeapon": {
+    "path": "images/combat/modular/weapons/10.png",
+    "sha256": "45b280d7a24ca4b263d534339a691c990be7c204dda89e23f12c10483413938d",
+    "bbox": [
+      16,
+      256,
+      1520,
+      817
+    ],
+    "transparentFraction": 0.807214101155599
+  },
+  "rendererCodeSha256": "761ac0d6e81c262eeb0b93d5f1d1d2a92eeaad2792d260ad06200a9defd46d82",
+  "weaponFitSha256": "226b453b71de9bc789983bf78b82f29b38cfea4cf81553ad3e2be41e78a2d417",
+  "expectedArmorCount": 96,
+  "renderedArmorCount": 96,
+  "completeArmorCoverage": true,
+  "humanReview": {
+    "status": "contacts-and-seams-reviewed-shoulder-posture-pending",
+    "reviewedOn": "2026-09-29",
+    "all96ContactCropsInspected": true,
+    "sourceWeaponUnchanged": true,
+    "strictShoulderAimingAccepted": false,
+    "shoulderPoseFollowupArmors": [
+      43,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      60,
+      61,
+      64
+    ],
+    "findings": [
+      "All 96 assemblies reviewed for index/trigger and support/fore-end contact, stock continuity and arm seams. Original body and weapon images remain unchanged.",
+      "All previously flagged arm cutouts and detached sleeve fragments were removed by retaining native support-arm positions. Only armor19 retains a bounded rigid support-arm translation.",
+      "Armors29/30/33/66 retain visually reviewed natural downward-carry angles under30 degrees.",
+      "Listed source poses keep the stock low against chest/upper arm. Their strict buttstock-in-shoulder requirement is not complete; remain on weapon10 before advancing the queue.",
+      "Geometric reflection passes all96. Strict raster threshold fails on6/9/19 due inspected isolated antialias/clip edges; exact or strict pixel equality is not claimed."
+    ]
+  },
+  "sheets": [
+    "sheet-01.jpg",
+    "sheet-02.jpg",
+    "sheet-03.jpg",
+    "sheet-04.jpg",
+    "sheet-05.jpg",
+    "sheet-06.jpg"
+  ],
+  "armors": [
+    {
+      "armorId": 1,
+      "bodySha256": "82c438e4a9bfaa6d8dc547b8cfc6eab409b22ff937613cc60a56c63f3b6596a0",
+      "handsSha256": "37772b22233a4262aca2ffc9c45fa3c91c6a610c5efd50032a4b92146e6b6da4",
+      "fitSha256": "180bc36e4ae5ca889610b7db209f8dfe507f2e915bf14c7a594e936b866644fd",
+      "adjustment": {
+        "size": 104,
+        "angle": 5.183219,
+        "dx": -34.592153,
+        "dy": -16.682192
+      },
+      "supportShift": null,
+      "crop": [
+        167,
+        289,
+        505,
+        308
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 589,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1124,
+        "opaquePixelCount": 122764,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 816.4588235294121,
+        "pixelsOverTwoLevels": 9
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 74,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-001.jpg",
+      "contactCrop": "crops/armor-001.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 2,
+      "bodySha256": "2bb2b88a01de6c884e6ec982ef008851c449f293866373646be5f1a61c40c933",
+      "handsSha256": "5268d5bb085d44e724c80f0ea4a4488f25ce8a7c5f4c6f1bca6e257cf3500116",
+      "fitSha256": "cba9da43591c3601ef15bdd2fa2a6dbffeaa779f86df03fb0af516cbe8cde416",
+      "adjustment": {
+        "size": 104,
+        "angle": 6.699594,
+        "dx": -35.525018,
+        "dy": -12.390882
+      },
+      "supportShift": null,
+      "crop": [
+        164,
+        286,
+        514,
+        317
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 572,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2161,
+        "opaquePixelCount": 124103,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 753.6274509803926,
+        "pixelsOverTwoLevels": 4
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-002.jpg",
+      "contactCrop": "crops/armor-002.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 3,
+      "bodySha256": "2df7fbccb04825bea160467dc0d0763de30e765a2956fc90e483b17c03b48f5d",
+      "handsSha256": "92fa566aac4bf25db1b43e3bffe93feb5786db851fc33882a0c255906916d325",
+      "fitSha256": "12a40beb20bfc64f1ff8b2f095e2a935d5dc79babc69eeec251e26cb89fbd9ec",
+      "adjustment": {
+        "size": 104,
+        "angle": 5.354989,
+        "dx": -32.58682,
+        "dy": -0.875828
+      },
+      "supportShift": null,
+      "crop": [
+        155,
+        293,
+        518,
+        308
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 544,
+        "maxChannelDifference": 43,
+        "absoluteDifference": 981,
+        "opaquePixelCount": 125079,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 733.5803921568631,
+        "pixelsOverTwoLevels": 6
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-003.jpg",
+      "contactCrop": "crops/armor-003.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 4,
+      "bodySha256": "899f8a63c808e3a97c811399f8ad89910257cdbec6adde9e8789ab2d762d4372",
+      "handsSha256": "efddcf596c2bc395adfdb833c2992149f31e3edb43c76cf3ed3617ebfc6eccc2",
+      "fitSha256": "2af27d15c6ddf21c56462e641a84645e7c2b888c264b82e1d529388f1f4c90e5",
+      "adjustment": {
+        "size": 104,
+        "angle": 12.620386,
+        "dx": -23.831025,
+        "dy": -30.028774
+      },
+      "supportShift": null,
+      "crop": [
+        150,
+        229,
+        531,
+        355
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 718,
+        "maxChannelDifference": 8,
+        "absoluteDifference": 950,
+        "opaquePixelCount": 166015,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 899.0313725490198,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-004.jpg",
+      "contactCrop": "crops/armor-004.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 5,
+      "bodySha256": "927717d77ba989dc7145367e140bd8540d7d84f559a40a67c96c35595cb0ca5d",
+      "handsSha256": "592c5a93f1039b706e0e5fc61795b16d97756ed8ccd4c5ada5d01b0ff02b0b96",
+      "fitSha256": "662b9c13f3d75474d18b205763e967b8f3a81958cd2b48ef4049699bec63d0da",
+      "adjustment": {
+        "size": 104,
+        "angle": 9.890094,
+        "dx": -31.236282,
+        "dy": -26.976828
+      },
+      "supportShift": null,
+      "crop": [
+        181,
+        268,
+        522,
+        343
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 601,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1448,
+        "opaquePixelCount": 127830,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 818.2745098039218,
+        "pixelsOverTwoLevels": 9
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 85,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-005.jpg",
+      "contactCrop": "crops/armor-005.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 6,
+      "bodySha256": "16981b6dd60408202be69eee0f82afa359ca9e06a627553b72d5f8df5b3c97b2",
+      "handsSha256": "955ef714f7a951a84536e9e1205aadebf5187b74eb2e9acdde05f5218e442f4a",
+      "fitSha256": "dc37c2d525dcd53c44e249a9475bbfd9d031ec355da408a94a51922b299cf98d",
+      "adjustment": {
+        "size": 104,
+        "angle": 7.073672,
+        "dx": -23.501504,
+        "dy": -30.812083
+      },
+      "supportShift": null,
+      "crop": [
+        163,
+        280,
+        527,
+        312
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": false,
+        "differingPixels": 618,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1645,
+        "opaquePixelCount": 127331,
+        "maxPremultipliedDifference": 12,
+        "premultipliedAbsoluteDifference": 904.0745098039216,
+        "pixelsOverTwoLevels": 9
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 63,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-006.jpg",
+      "contactCrop": "crops/armor-006.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 7,
+      "bodySha256": "04bc1e6c0b14e1007ca3dc2e5272dd31522e334d5682f963ef388b04f6f67352",
+      "handsSha256": "5ea738cf4288b8b219861621f314d32ce9250b96d2de693e242fe8c0b6239f43",
+      "fitSha256": "a73dd2263ef6df35c70d632577217cc8fdeebb5db0265d443e1497e3b13aaa1d",
+      "adjustment": {
+        "size": 105.706409,
+        "angle": 15.429449,
+        "dx": -35.30084,
+        "dy": -50.360618
+      },
+      "supportShift": null,
+      "crop": [
+        140,
+        215,
+        529,
+        370
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 637,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1641,
+        "opaquePixelCount": 145868,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 798.9215686274507,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-007.jpg",
+      "contactCrop": "crops/armor-007.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 8,
+      "bodySha256": "d5ffc747a279728d3070356bd8e5ef5f9851a6eb05cbb61231b9a6a499dd045b",
+      "handsSha256": "f7a04b71b6a3308bb8afd7518e39e36d0abd7550881ccbc03fae702c15b4ee40",
+      "fitSha256": "a2b537c2c30371c9c070d3255901acba99db86c47d3f34bc11f0f1375615121e",
+      "adjustment": {
+        "size": 112.173535,
+        "angle": 13.9179,
+        "dx": -16.585021,
+        "dy": -29.373161
+      },
+      "supportShift": null,
+      "crop": [
+        130,
+        212,
+        552,
+        376
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 622,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1877,
+        "opaquePixelCount": 149743,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 843.3882352941174,
+        "pixelsOverTwoLevels": 6
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-008.jpg",
+      "contactCrop": "crops/armor-008.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 9,
+      "bodySha256": "7399736f86bf2c1018c02e0dce7e665bc0563b96aabffc3998e1806db7ce90ca",
+      "handsSha256": "ed3275e47fd2c5249016d4c2298ae686589c2b655de952b9c363b4c4bc61452e",
+      "fitSha256": "2efccd746c9249b7699cdb174b41aaf4daf8b21d2980a67ab4eb1474de881fcd",
+      "adjustment": {
+        "size": 108.959673,
+        "angle": 10.541048,
+        "dx": -39.212269,
+        "dy": -43.073669
+      },
+      "supportShift": null,
+      "crop": [
+        148,
+        221,
+        523,
+        346
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": false,
+        "differingPixels": 775,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1916,
+        "opaquePixelCount": 137221,
+        "maxPremultipliedDifference": 9,
+        "premultipliedAbsoluteDifference": 1009.6980392156861,
+        "pixelsOverTwoLevels": 8
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-009.jpg",
+      "contactCrop": "crops/armor-009.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 10,
+      "bodySha256": "996cab3ece06977ea7a499fa476b69750f939c3dcd5d2b49c0f1b47530ace062",
+      "handsSha256": "8bdac98ec974a81c9ea5f53e407c60f158b9bc6b6c84fc2ba14efda799ba414f",
+      "fitSha256": "5324b087f0ac03e1d2f816b588d7df3b636d0620ae2973faa0daf7f6755a1876",
+      "adjustment": {
+        "size": 104,
+        "angle": 18.451867,
+        "dx": -36.481748,
+        "dy": -41.462294
+      },
+      "supportShift": null,
+      "crop": [
+        132,
+        210,
+        523,
+        384
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 705,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1781,
+        "opaquePixelCount": 150563,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 902.1450980392151,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-010.jpg",
+      "contactCrop": "crops/armor-010.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 11,
+      "bodySha256": "0acbe68651ad15472ee0233ef013159214bb8b09a68623b31eae7c712151a547",
+      "handsSha256": "466c7d30d3188ff2d354024ab3af329e95463355c99986a804d1247e85df6094",
+      "fitSha256": "ac8f3924318872753fde2bea2679fa7aa121196a07d2f1e9a1986f2c30195148",
+      "adjustment": {
+        "size": 104,
+        "angle": 13.469134,
+        "dx": -3.675466,
+        "dy": -43.973197
+      },
+      "supportShift": null,
+      "crop": [
+        134,
+        207,
+        563,
+        354
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 801,
+        "maxChannelDifference": 127,
+        "absoluteDifference": 1735,
+        "opaquePixelCount": 154245,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 935.8941176470588,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-011.jpg",
+      "contactCrop": "crops/armor-011.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 12,
+      "bodySha256": "b4258ec754223f586d36403586458ddbcb2104ce2c9a62d38c1842371b12498c",
+      "handsSha256": "c18daf87fa673964a643306af0a81b4c289de59b96330016f633af9570a2636f",
+      "fitSha256": "0840b069c832d72fb9fc2e512806a33244a87d5dead2f9172e63f195ae0ca4b6",
+      "adjustment": {
+        "size": 104,
+        "angle": 16.394512,
+        "dx": 2.967533,
+        "dy": -45.208593
+      },
+      "supportShift": null,
+      "crop": [
+        150,
+        207,
+        560,
+        372
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 695,
+        "maxChannelDifference": 8,
+        "absoluteDifference": 870,
+        "opaquePixelCount": 141844,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 820.6705882352942,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-012.jpg",
+      "contactCrop": "crops/armor-012.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 13,
+      "bodySha256": "e1619516d90cab01ecdcc4442c2cbfa20398b8ad489c76208700f5b77bac42b7",
+      "handsSha256": "7b8f574805c920cbc10520f8248a865cd79a647b0bca62af871fb0c932a6e9c2",
+      "fitSha256": "f7fdb7026058f40568bebae8b3e696cd1be047b53118f8c33af9c830dedaa44d",
+      "adjustment": {
+        "size": 104,
+        "angle": 19.948792,
+        "dx": -23.030376,
+        "dy": -53.088905
+      },
+      "supportShift": null,
+      "crop": [
+        161,
+        217,
+        519,
+        393
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 635,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2311,
+        "opaquePixelCount": 139685,
+        "maxPremultipliedDifference": 2.007843137254902,
+        "premultipliedAbsoluteDifference": 811.9803921568622,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-013.jpg",
+      "contactCrop": "crops/armor-013.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 14,
+      "bodySha256": "03620be9064c52c58365f0954e27c57eb62367d95eaaccb3bfeb4b7c255047f3",
+      "handsSha256": "85c85b817d9e47686dd7638920786cf68e810be1923954b950de1de5d34727cc",
+      "fitSha256": "e68c0c7897eed3ac4e8a3887cfda6e2e471ee7b58442e5138f8de09b5f6af2b2",
+      "adjustment": {
+        "size": 104,
+        "angle": 19.208859,
+        "dx": -20.258802,
+        "dy": -59.286342
+      },
+      "supportShift": null,
+      "crop": [
+        167,
+        203,
+        525,
+        389
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 716,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1196,
+        "opaquePixelCount": 150154,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 933.5764705882357,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-014.jpg",
+      "contactCrop": "crops/armor-014.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 15,
+      "bodySha256": "2d5289cc445d853a2eb067c5bee04b8b6b092df175b273825f12a1be7e742ef8",
+      "handsSha256": "808604abc4db617f59157e304f8a30f68117d63965b46749dbc63181fcb0a05f",
+      "fitSha256": "08d7d9246789c7a66baa6b616d95b785c984b1e0bb7352500faa4519a8e83065",
+      "adjustment": {
+        "size": 104,
+        "angle": 18.840908,
+        "dx": -15.368529,
+        "dy": -38.886166
+      },
+      "supportShift": null,
+      "crop": [
+        138,
+        197,
+        549,
+        387
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 759,
+        "maxChannelDifference": 26,
+        "absoluteDifference": 1112,
+        "opaquePixelCount": 152319,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 1026.9294117647055,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-015.jpg",
+      "contactCrop": "crops/armor-015.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 16,
+      "bodySha256": "779800cedfa7955f6062b34c35b64ba84649ea2e397a4b01af96e5a04309bea5",
+      "handsSha256": "3b791f132ad89b75c84c5a448844e172897dde65e38d952ff555faa894a21fd9",
+      "fitSha256": "4db8e39f2c38144d0b4a17cb597af388ead61a0338adcedd4caea8c45f1a4298",
+      "adjustment": {
+        "size": 104,
+        "angle": 23.314323,
+        "dx": -33.861469,
+        "dy": -52.699253
+      },
+      "supportShift": null,
+      "crop": [
+        149,
+        204,
+        525,
+        412
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 954,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1396,
+        "opaquePixelCount": 144848,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1130.407843137255,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-016.jpg",
+      "contactCrop": "crops/armor-016.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 17,
+      "bodySha256": "e2127bd7e04af81378db9b8e1662548719a2b9a91ce399021eb701472caac287",
+      "handsSha256": "927fda03e0be7fe4e11bfc27d79fd086f43a5ee7200f009a3d1cad16de5b4634",
+      "fitSha256": "dd7fdd09cf43661e016f67d1e7190c50c8b96dda8ceac8aa832fd7ca4a5b16d8",
+      "adjustment": {
+        "size": 118.371029,
+        "angle": 17.306517,
+        "dx": -39.475985,
+        "dy": -64.311842
+      },
+      "supportShift": null,
+      "crop": [
+        125,
+        183,
+        565,
+        414
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 673,
+        "maxChannelDifference": 51,
+        "absoluteDifference": 1003,
+        "opaquePixelCount": 156718,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 830.3529411764704,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-017.jpg",
+      "contactCrop": "crops/armor-017.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 18,
+      "bodySha256": "4fe97b02bf4574668547ae69afc37b903f1838d4e6c3de0e2bd9e6f9f589b576",
+      "handsSha256": "7b12dcdb73030ae03569cde2e691ac74445cefd8e5484c51d57af20229343134",
+      "fitSha256": "71a59e116e6488b2e37b85f8cbd1ee9f0a03269fe3e8e914c1015e09ab8a0a11",
+      "adjustment": {
+        "size": 104,
+        "angle": 14.213745,
+        "dx": -10.527486,
+        "dy": -37.799768
+      },
+      "supportShift": null,
+      "crop": [
+        150,
+        220,
+        517,
+        358
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 890,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1923,
+        "opaquePixelCount": 144343,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1153.149019607842,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-018.jpg",
+      "contactCrop": "crops/armor-018.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 19,
+      "bodySha256": "44a9af2c71eae6ab295fc0f753705de22c6b4b16dd03a9b935c81a47093c11cb",
+      "handsSha256": "acddae6663dbe3a3996ff0b4046b43a95b6388c17d3846c538de1186a33aec93",
+      "fitSha256": "b2b4f4a97bdb4cd816c8e3e678284865bf7c474bbbd658691a1d09ea64e472d3",
+      "adjustment": {
+        "size": 84,
+        "angle": 20,
+        "dx": 10.911621,
+        "dy": -39.655042,
+        "supportShift": [
+          16.062476,
+          -45.062494
+        ],
+        "handMasks": [
+          [
+            [
+              545,
+              412
+            ],
+            [
+              573,
+              398
+            ],
+            [
+              599,
+              382
+            ],
+            [
+              622,
+              373
+            ],
+            [
+              646,
+              377
+            ],
+            [
+              663,
+              382
+            ],
+            [
+              678,
+              388
+            ],
+            [
+              681,
+              397
+            ],
+            [
+              676,
+              403
+            ],
+            [
+              660,
+              399
+            ],
+            [
+              651,
+              399
+            ],
+            [
+              657,
+              410
+            ],
+            [
+              656,
+              425
+            ],
+            [
+              649,
+              442
+            ],
+            [
+              637,
+              455
+            ],
+            [
+              610,
+              467
+            ],
+            [
+              562,
+              471
+            ]
+          ],
+          [
+            [
+              778,
+              475
+            ],
+            [
+              781,
+              451
+            ],
+            [
+              795,
+              430
+            ],
+            [
+              815,
+              415
+            ],
+            [
+              833,
+              408
+            ],
+            [
+              838,
+              401
+            ],
+            [
+              850,
+              398
+            ],
+            [
+              859,
+              400
+            ],
+            [
+              863,
+              406
+            ],
+            [
+              861,
+              413
+            ],
+            [
+              852,
+              418
+            ],
+            [
+              861,
+              417
+            ],
+            [
+              869,
+              416
+            ],
+            [
+              873,
+              410
+            ],
+            [
+              879,
+              408
+            ],
+            [
+              885,
+              412
+            ],
+            [
+              891,
+              420
+            ],
+            [
+              894,
+              431
+            ],
+            [
+              897,
+              441
+            ],
+            [
+              894,
+              451
+            ],
+            [
+              890,
+              460
+            ],
+            [
+              884,
+              467
+            ],
+            [
+              876,
+              477
+            ],
+            [
+              865,
+              484
+            ],
+            [
+              850,
+              490
+            ],
+            [
+              835,
+              494
+            ],
+            [
+              820,
+              496
+            ],
+            [
+              804,
+              493
+            ],
+            [
+              790,
+              486
+            ]
+          ]
+        ]
+      },
+      "supportShift": [
+        16.062476,
+        -45.062494
+      ],
+      "crop": [
+        166,
+        221,
+        506,
+        339
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": false,
+        "differingPixels": 853,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 2127,
+        "opaquePixelCount": 138894,
+        "maxPremultipliedDifference": 12,
+        "premultipliedAbsoluteDifference": 1408.7607843137241,
+        "pixelsOverTwoLevels": 33
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 162,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-019.jpg",
+      "contactCrop": "crops/armor-019.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 20,
+      "bodySha256": "bccb9979ee7d0550f0a6c36d77e31f5f3c80d72aafc65722b502f6721c8751ec",
+      "handsSha256": "16a659ebe1a3426392f0955309f159e0a9eafd653d1c9ddfae8ba44ecf968c91",
+      "fitSha256": "823d8481af33db1fd6798e9c6721782a8e94b0234b59ccf9031c850d5b9a339e",
+      "adjustment": {
+        "size": 104,
+        "angle": 13.620636,
+        "dx": -2.646228,
+        "dy": -47.14153
+      },
+      "supportShift": null,
+      "crop": [
+        157,
+        214,
+        535,
+        355
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 773,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1834,
+        "opaquePixelCount": 150887,
+        "maxPremultipliedDifference": 7,
+        "premultipliedAbsoluteDifference": 1003.8627450980395,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-020.jpg",
+      "contactCrop": "crops/armor-020.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 21,
+      "bodySha256": "b62a8a23f1629c8d61b863d60d1b77c408b88b09e50787788a1d4bb19865967e",
+      "handsSha256": "3489065ffb924ef16d127015e4792133e94b0ae6cbf6e0a4f0660e2c2dff416e",
+      "fitSha256": "0e45018c37e2d360aef6fed3830ae1f2f709ecb8585fc1cbbacf240aee5866ac",
+      "adjustment": {
+        "size": 104,
+        "angle": 18.221267,
+        "dx": -13.547498,
+        "dy": -56.210689
+      },
+      "supportShift": null,
+      "crop": [
+        164,
+        205,
+        547,
+        383
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 837,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2485,
+        "opaquePixelCount": 153546,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1132.2745098039206,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-021.jpg",
+      "contactCrop": "crops/armor-021.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 22,
+      "bodySha256": "e8d1869065673963c396afe11573a0390a821864045a6ee294d638b5e83d533a",
+      "handsSha256": "e520d3026ca1922173c92fb244f68fbba688270b700e2a3a71eccc0a71c7c940",
+      "fitSha256": "ea8237816e771faa5dcd657a819d1927307b355e4548f14435ba7ca7cc1d90d9",
+      "adjustment": {
+        "size": 102.534788,
+        "angle": 12.23074,
+        "dx": -32.997521,
+        "dy": -27.459284
+      },
+      "supportShift": null,
+      "crop": [
+        168,
+        279,
+        520,
+        352
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 703,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2047,
+        "opaquePixelCount": 132087,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 891.5686274509802,
+        "pixelsOverTwoLevels": 4
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-022.jpg",
+      "contactCrop": "crops/armor-022.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 23,
+      "bodySha256": "2828f61e10259b76f2e27d2897b0fc28b327ded520cff90194af4cdd481c732f",
+      "handsSha256": "a6745946113a28c545a960c4d0fabff73ca5ebb58065889ecd8008dcc4d13157",
+      "fitSha256": "dfd533fe2ef6a7c06022ebe3ba6ee598ec9a9976cbf187353dcc73f45218d1f8",
+      "adjustment": {
+        "size": 85.051618,
+        "angle": 16.775166,
+        "dx": 16.530131,
+        "dy": -34.962055
+      },
+      "supportShift": null,
+      "crop": [
+        160,
+        244,
+        532,
+        326
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 791,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1324,
+        "opaquePixelCount": 143505,
+        "maxPremultipliedDifference": 1.890196078431373,
+        "premultipliedAbsoluteDifference": 1011.6705882352937,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-023.jpg",
+      "contactCrop": "crops/armor-023.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 24,
+      "bodySha256": "ef37be0248f1a474854120baeda1e0dbd3476fd7e4fc8adc72e98b20c8d411ac",
+      "handsSha256": "58bb370d85ec95c3e368aa1f168b71c88f97cf54e1ab64f89353de7f2d92c8b0",
+      "fitSha256": "9d863eef72155a3aaefac8b187529a4838b33d1594021a0fd4b5622f3718d908",
+      "adjustment": {
+        "size": 104,
+        "angle": 13.216998,
+        "dx": -30.723138,
+        "dy": -46.692881
+      },
+      "supportShift": null,
+      "crop": [
+        150,
+        211,
+        520,
+        352
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 696,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1705,
+        "opaquePixelCount": 140769,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 902.8509803921565,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-024.jpg",
+      "contactCrop": "crops/armor-024.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 25,
+      "bodySha256": "b13517b623607fb9e79e7ea73e8634ac5769982df19d6926b5858b8e0a18d696",
+      "handsSha256": "97ecabbe8138a94386973c7f3ac34f513c14cea1a87070595cb089c44df426cf",
+      "fitSha256": "15f77da88dba7e76a442557f3acc2dad39fe2a6947e48e08031934aaa9c95396",
+      "adjustment": {
+        "size": 104,
+        "angle": 12.903473,
+        "dx": -27.780695,
+        "dy": -42.344027
+      },
+      "supportShift": null,
+      "crop": [
+        152,
+        219,
+        535,
+        350
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 761,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1828,
+        "opaquePixelCount": 142458,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1004.0078431372549,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-025.jpg",
+      "contactCrop": "crops/armor-025.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 26,
+      "bodySha256": "c5e6f7ad71e8f2a7f8044042be6752b7a46e64784044b20cf59f737d3d872373",
+      "handsSha256": "64b9f3124754ffd9c82f4f8fda3dac57c9ad509c6860def47c17350d11dcf915",
+      "fitSha256": "04c0cae075d62560a9009d2aaa46d09c24144b3579e2f905589b8653cdd29f9c",
+      "adjustment": {
+        "size": 104,
+        "angle": 11.670441,
+        "dx": -25.988518,
+        "dy": -34.969147
+      },
+      "supportShift": null,
+      "crop": [
+        149,
+        268,
+        526,
+        352
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 705,
+        "maxChannelDifference": 13,
+        "absoluteDifference": 1039,
+        "opaquePixelCount": 138872,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 974.5294117647056,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-026.jpg",
+      "contactCrop": "crops/armor-026.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 27,
+      "bodySha256": "a77471e46031bc0725eaf7040727d7e7f54b4e528c4b59979c4d5fa5bc8949d4",
+      "handsSha256": "5c0272e73df3378dbfa19e4825f7fbdcd2a5bd4fc84c0071941a3a1bc10408fb",
+      "fitSha256": "49fa71443effa8ace2cd0097b54c9ea5c688898d099203f16d8ef675fc5f2b28",
+      "adjustment": {
+        "size": 104,
+        "angle": 9.236864,
+        "dx": -26.311648,
+        "dy": -23.244032
+      },
+      "supportShift": null,
+      "crop": [
+        146,
+        253,
+        509,
+        326
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 734,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1545,
+        "opaquePixelCount": 139235,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 919.1019607843141,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-027.jpg",
+      "contactCrop": "crops/armor-027.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 28,
+      "bodySha256": "50930971ad0653e195fc9b8f5e5bc1b67d46212a86759b6081ad34b245112d80",
+      "handsSha256": "6c87f938a26c66801c6cd4184d31e48ce411952f0a3571fa010101e0a1f224b6",
+      "fitSha256": "01fa4d482920c89c4e6daaf6891143628552818bd0bdcc61c58fe1265437c586",
+      "adjustment": {
+        "size": 104,
+        "angle": 12.045239,
+        "dx": -69.928478,
+        "dy": -30.387531
+      },
+      "supportShift": null,
+      "crop": [
+        156,
+        253,
+        511,
+        372
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 837,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1940,
+        "opaquePixelCount": 138132,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1011.2392156862743,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 57,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-028.jpg",
+      "contactCrop": "crops/armor-028.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 29,
+      "bodySha256": "389f2405c906301b34d95317dab0d7ad7111322eba59c279608593222b55a3be",
+      "handsSha256": "49453d095d3aff362de030a1484e1b250029c503ba7201f4cd4907e209e96989",
+      "fitSha256": "cdaa19af0e54af8709841841798707a1a0670ed24876e0b975452fa1ad97362e",
+      "adjustment": {
+        "size": 104,
+        "angle": 25.894526,
+        "dx": -25.822914,
+        "dy": -59.417104
+      },
+      "supportShift": null,
+      "crop": [
+        148,
+        188,
+        525,
+        425
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 776,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 1206,
+        "opaquePixelCount": 145669,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1001.9450980392158,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-029.jpg",
+      "contactCrop": "crops/armor-029.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 30,
+      "bodySha256": "59b9d32ecd3c97535bf725cdbcf0fc389704ef3b51ac4063d417eebcfd471936",
+      "handsSha256": "5fe6755258ef87ad12445af35fb66101561c998757483495966aefc50a5a2846",
+      "fitSha256": "d87bf909079df5d9c13129d407c7a9c24ff8a530e18f89a6b7047c05bad35f7d",
+      "adjustment": {
+        "size": 104,
+        "angle": 25.947645,
+        "dx": -19.800251,
+        "dy": -40.472555
+      },
+      "supportShift": null,
+      "crop": [
+        169,
+        223,
+        507,
+        426
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 580,
+        "maxChannelDifference": 42,
+        "absoluteDifference": 868,
+        "opaquePixelCount": 133097,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 752.8039215686267,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-030.jpg",
+      "contactCrop": "crops/armor-030.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 31,
+      "bodySha256": "7ba41d118e61da34f8bedfed6fd2c9f3cc6f201cbd6cb04d8e926a6c40724a5f",
+      "handsSha256": "f8075691c36d2afb9bcac439312d1f95f33af14b9ea7a5605957cf7d1f0cc279",
+      "fitSha256": "ca5c1ffc7cc59ef1d66143472b461824810d9466d070501fe5d498858ab73044",
+      "adjustment": {
+        "size": 104,
+        "angle": 15.022241,
+        "dx": -20.354661,
+        "dy": -14.694994
+      },
+      "supportShift": null,
+      "crop": [
+        160,
+        258,
+        533,
+        385
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 810,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 1215,
+        "opaquePixelCount": 140547,
+        "maxPremultipliedDifference": 2.462745098039221,
+        "premultipliedAbsoluteDifference": 963.0431372549025,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-031.jpg",
+      "contactCrop": "crops/armor-031.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 32,
+      "bodySha256": "beb817d5cacba3ab37fa700a0a9dccf3d1eefffe0feb9bf5ed6fdb5cceaa35a1",
+      "handsSha256": "88a61fbcaf0182e19d84672c5084068bdb497a2c0d75e85a3e0327d976df23e4",
+      "fitSha256": "942788d5682dee6f9b7e7b86e654f181c641e18dd32b7a7d0b13d64bbd82fc66",
+      "adjustment": {
+        "size": 109.319673,
+        "angle": 12.486928,
+        "dx": -44.120399,
+        "dy": -24.385439
+      },
+      "supportShift": null,
+      "crop": [
+        134,
+        250,
+        531,
+        360
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 753,
+        "maxChannelDifference": 42,
+        "absoluteDifference": 1078,
+        "opaquePixelCount": 144053,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 950.2941176470587,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-032.jpg",
+      "contactCrop": "crops/armor-032.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 33,
+      "bodySha256": "06cfa0ac9a9c580be134ea1835529a0dfee2fd15cf276b55aca4314cb7023bac",
+      "handsSha256": "ccaaa9372911b608cf41566089b74aff9e9807573797ac5cc58ea794086d39c5",
+      "fitSha256": "255f5db346e3878918764e10cee2d1c390e5680fbd111659a99992ad564077ba",
+      "adjustment": {
+        "size": 104,
+        "angle": 27.582139,
+        "dx": -22.077879,
+        "dy": -54.168306
+      },
+      "supportShift": null,
+      "crop": [
+        152,
+        187,
+        529,
+        434
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 651,
+        "maxChannelDifference": 25,
+        "absoluteDifference": 934,
+        "opaquePixelCount": 144550,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 828.0901960784316,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-033.jpg",
+      "contactCrop": "crops/armor-033.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 34,
+      "bodySha256": "86f63f0efec5aaefe6c14077ed7db9a31f984209437cbd640acf3cfaf408c961",
+      "handsSha256": "fb2d2bb5abbf977f04c05b9d2153d4fc52f83240f91c101156eeb6fd0f924361",
+      "fitSha256": "e562631e8b216d752c0119a51c5aa5e60d73d385d4d6e61be74e491a87d4e98c",
+      "adjustment": {
+        "size": 104,
+        "angle": 19.02375,
+        "dx": -26.314325,
+        "dy": -39.085109
+      },
+      "supportShift": null,
+      "crop": [
+        149,
+        268,
+        506,
+        388
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 685,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1363,
+        "opaquePixelCount": 129760,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 818.3490196078432,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-034.jpg",
+      "contactCrop": "crops/armor-034.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 35,
+      "bodySha256": "4a3b76aa8dd7f134b4b39bf7afe42b18c254d57202abb71dbedf3c843d94e080",
+      "handsSha256": "91f3e77f9e8d21fd07f9afb3692451a30baecd3eb50d30c83bba8930122eb76a",
+      "fitSha256": "206bf868734263e03b2eae3e78e1dbbd5f526d60c55410331dc7c7b52a0efba8",
+      "adjustment": {
+        "size": 104,
+        "angle": 17.605801,
+        "dx": -31.71802,
+        "dy": -42.537887
+      },
+      "supportShift": null,
+      "crop": [
+        138,
+        248,
+        515,
+        379
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 713,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1813,
+        "opaquePixelCount": 142645,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 921.2588235294122,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-035.jpg",
+      "contactCrop": "crops/armor-035.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 36,
+      "bodySha256": "a9bf30062ec8fc0f07b185e859be01fbd8370c5d312c6758cd9321b85363f50b",
+      "handsSha256": "0d8e7423d0c0fcdda8077ef82cf8c52eda686b1f537f2179ef599e7b53604a5d",
+      "fitSha256": "ddb5ff3634660838b41f35934ba6382be400188145b6ab0b9c0ea286af1ec8b7",
+      "adjustment": {
+        "size": 104,
+        "angle": 10.986637,
+        "dx": -43.091002,
+        "dy": -30.204847
+      },
+      "supportShift": null,
+      "crop": [
+        151,
+        271,
+        525,
+        371
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 708,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1480,
+        "opaquePixelCount": 134013,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 875.5411764705879,
+        "pixelsOverTwoLevels": 4
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-036.jpg",
+      "contactCrop": "crops/armor-036.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 37,
+      "bodySha256": "9bf17419a8cef7f47d983fca77f7d33251f173368ba2efb734b76a24753f630c",
+      "handsSha256": "469c00e10e8a48d3680b69e9ea026772d31ec7bfa814b8b3edc13922483040f2",
+      "fitSha256": "a023cadf2e60c35d8ecf0593c3b775204024a96845ae2df5326faf5e83a92475",
+      "adjustment": {
+        "size": 93.620722,
+        "angle": 19.812606,
+        "dx": 7.121756,
+        "dy": -42.150848
+      },
+      "supportShift": null,
+      "crop": [
+        153,
+        250,
+        505,
+        364
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 775,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1226,
+        "opaquePixelCount": 136878,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1005.9137254901964,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-037.jpg",
+      "contactCrop": "crops/armor-037.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 38,
+      "bodySha256": "09934dfb9f5a6b8cd69576b3e163eab10d601bc9365cef3bc038652f9ae804e9",
+      "handsSha256": "dcf7bf43ab0c17ee071592baa90e1a268cdd6f09f71543aec6b4e0d1dc9f9c6b",
+      "fitSha256": "eda58fbc95847aba013d0ea8df402c477f9b4636edd4abb469fa7269a3789034",
+      "adjustment": {
+        "size": 104,
+        "angle": 22.812717,
+        "dx": -9.049104,
+        "dy": -42.165605
+      },
+      "supportShift": null,
+      "crop": [
+        166,
+        209,
+        540,
+        409
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 697,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 980,
+        "opaquePixelCount": 151128,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 834.474509803922,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-038.jpg",
+      "contactCrop": "crops/armor-038.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 39,
+      "bodySha256": "1c2a90532fc947dade477f74a3a6b274f236a5488995fe2e6445ad6736340496",
+      "handsSha256": "10114e224882fe96c13b1a228ddb6a54dc349070813c53ba5d97cd5d402e04bb",
+      "fitSha256": "2b28614cbda24ddb8584a75617505f7882d8228fc17f132e7da39ef94cfd71d4",
+      "adjustment": {
+        "size": 110.661418,
+        "angle": 12.892854,
+        "dx": -23.868021,
+        "dy": -27.994005
+      },
+      "supportShift": null,
+      "crop": [
+        121,
+        217,
+        550,
+        365
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 942,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 3523,
+        "opaquePixelCount": 169839,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1146.6627450980388,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 57,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-039.jpg",
+      "contactCrop": "crops/armor-039.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 40,
+      "bodySha256": "9fe009557c686ecc27412a744f0750bd6e41da35731cd16982506735e3bb33ba",
+      "handsSha256": "531cc2fed81f257f81f8d320b2362c9a91610fb6f88887ea5ad45216506f4de2",
+      "fitSha256": "6f985a0c06bb1338bca7073302beec397839709ed402292b242db1364d0b60c2",
+      "adjustment": {
+        "size": 104,
+        "angle": 18.051447,
+        "dx": -31.595271,
+        "dy": -36.025232
+      },
+      "supportShift": null,
+      "crop": [
+        143,
+        199,
+        544,
+        382
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 946,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1661,
+        "opaquePixelCount": 167322,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1224.521568627451,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-040.jpg",
+      "contactCrop": "crops/armor-040.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 41,
+      "bodySha256": "48a4057d60e98a8e67e156c34642d13d6c635e9a1a095e4af8e0748506b99772",
+      "handsSha256": "e7a8026faea2a26a73f6477ce61da256d2850e67271144cd2e69b9fbaeb498e0",
+      "fitSha256": "667b509ba0b68df38c046492e8e6650e95406d91f442497bedc19ed9806ca9c5",
+      "adjustment": {
+        "size": 109.867979,
+        "angle": 12.128605,
+        "dx": -20.521005,
+        "dy": -40.015456
+      },
+      "supportShift": null,
+      "crop": [
+        122,
+        203,
+        541,
+        358
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 611,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 873,
+        "opaquePixelCount": 163416,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 731.8862745098044,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-041.jpg",
+      "contactCrop": "crops/armor-041.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 42,
+      "bodySha256": "a8820b1fece9544de5615491c6b23afbbdcfe03fcc506c3ef5eeabefa8c09c23",
+      "handsSha256": "5a7042d3c11ab04d085968be2e750f48b5d16b17c4935c1d3d664232a34a414a",
+      "fitSha256": "eca038f2b4b3fd76a5e7c96a8ddaef272756224da2148fbb4f37eead4f62d0bb",
+      "adjustment": {
+        "size": 104,
+        "angle": 22.658412,
+        "dx": -10.105885,
+        "dy": -40.001115
+      },
+      "supportShift": null,
+      "crop": [
+        151,
+        199,
+        533,
+        408
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 682,
+        "maxChannelDifference": 26,
+        "absoluteDifference": 946,
+        "opaquePixelCount": 150514,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 842.6000000000001,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-042.jpg",
+      "contactCrop": "crops/armor-042.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 43,
+      "bodySha256": "ea099d6c854bf12e6cce0d9dd8b1f0586e60d22f4e9b26b227fa522a8d2b75d2",
+      "handsSha256": "66b30dac3bfd44dba050685578588d7e7a5a232306456d26e340ae9072172643",
+      "fitSha256": "9eeb202dfc6048f2aefea18bef71857c5429e86a184a3fb88849fefddea3db59",
+      "adjustment": {
+        "size": 86.278332,
+        "angle": 9.822321,
+        "dx": -4.297186,
+        "dy": -27.724932
+      },
+      "supportShift": null,
+      "crop": [
+        148,
+        242,
+        518,
+        332
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 854,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1323,
+        "opaquePixelCount": 148826,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 1074.3411764705882,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-043.jpg",
+      "contactCrop": "crops/armor-043.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 44,
+      "bodySha256": "09415b65abc77aced89a766dd2cec0766caf4cd137824c4f3fbd56816ef4284f",
+      "handsSha256": "deb14201e39cfc558602b2f079e98f031eb678fdd19f5a4336627e1d9456d965",
+      "fitSha256": "c82f6585aa8acc754fb2a9ef30b4e13a4d8403f517887344d40de90a5d5b1e2f",
+      "adjustment": {
+        "size": 84,
+        "angle": 18.824683,
+        "dx": 23.621559,
+        "dy": -46.62456
+      },
+      "supportShift": null,
+      "crop": [
+        162,
+        244,
+        480,
+        346
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 556,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1977,
+        "opaquePixelCount": 138060,
+        "maxPremultipliedDifference": 2.007843137254902,
+        "premultipliedAbsoluteDifference": 727.6627450980392,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-044.jpg",
+      "contactCrop": "crops/armor-044.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 45,
+      "bodySha256": "59669aca38f9fbd56eb12d8293596f85657a835e535338b9dcdf7667adef136c",
+      "handsSha256": "c629d1cce7080bd9a8c83cbc98e818d1fb4fa7e1068d26ccd13126505fe0494b",
+      "fitSha256": "1d8f7c95d8ca64aec64cff8b4760db0f6a4e19f3841fc81902cfc5380b8c19b9",
+      "adjustment": {
+        "size": 84,
+        "angle": 12.401543,
+        "dx": -1.58639,
+        "dy": -13.903186
+      },
+      "supportShift": null,
+      "crop": [
+        183,
+        246,
+        499,
+        350
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 566,
+        "maxChannelDifference": 8,
+        "absoluteDifference": 737,
+        "opaquePixelCount": 138650,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 713.3411764705879,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-045.jpg",
+      "contactCrop": "crops/armor-045.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 46,
+      "bodySha256": "dc6bf3beba7ecae325aa6ae7fa1a9b968d59d2c11df57964393574b913c48c4d",
+      "handsSha256": "59c030e7915ad8d124609bfd119cde34b551fae287a863a6ea6cbdd716227367",
+      "fitSha256": "5ae5f5ca6d16c3436d3506f75e0ec8a1556f50cf2a75dc517bdb8d254d476a6c",
+      "adjustment": {
+        "size": 71.77404,
+        "angle": 19.666597,
+        "dx": -2.8703,
+        "dy": -41.272791
+      },
+      "supportShift": null,
+      "crop": [
+        192,
+        268,
+        453,
+        348
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 689,
+        "maxChannelDifference": 7,
+        "absoluteDifference": 941,
+        "opaquePixelCount": 127246,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 889.7411764705886,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-046.jpg",
+      "contactCrop": "crops/armor-046.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 47,
+      "bodySha256": "26e72c94f65955f1c2686d94cb0066715f1d03655185c630ebe6169b1e317145",
+      "handsSha256": "69c7eb31fb37546d83c482641fbd920cbcd73e3743e51f9ec9301f3814bf4a5e",
+      "fitSha256": "70874da6791ac8c55047b6eefc56a0be713a2412c4544d79aa24a8486e39173d",
+      "adjustment": {
+        "size": 84,
+        "angle": 10.710166,
+        "dx": 4.202816,
+        "dy": -32.377129
+      },
+      "supportShift": null,
+      "crop": [
+        172,
+        260,
+        471,
+        322
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 598,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 921,
+        "opaquePixelCount": 132743,
+        "maxPremultipliedDifference": 1.6078431372549034,
+        "premultipliedAbsoluteDifference": 714.6196078431371,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 64,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-047.jpg",
+      "contactCrop": "crops/armor-047.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 48,
+      "bodySha256": "2bbc9644f43dcaec955539a715043d832b4e738b627a915e89bb4172e8977f0a",
+      "handsSha256": "742144013e0eb53b69754db951abf2a08d1b7800073af16df672dc9f3986b6e0",
+      "fitSha256": "03904069b0de107a6e12e09ead2f4f04b6711103f110656913b078478563b99e",
+      "adjustment": {
+        "size": 85.707513,
+        "angle": 13.111669,
+        "dx": -28.531031,
+        "dy": -42.715563
+      },
+      "supportShift": null,
+      "crop": [
+        166,
+        263,
+        486,
+        336
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 680,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1252,
+        "opaquePixelCount": 136238,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 838.2549019607842,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-048.jpg",
+      "contactCrop": "crops/armor-048.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 49,
+      "bodySha256": "65d5c0f3086bb61f3a49d81820a000d858555f98408768de25d8d88148abc243",
+      "handsSha256": "a4287ac7414cdacae68feac109b8e04776cc01a717a78de515d05ca8eec436d8",
+      "fitSha256": "973a564e9c5e626c436a7392d68eb7cba3645a63cf9581812fc3e2f410fe3fb8",
+      "adjustment": {
+        "size": 84,
+        "angle": 15.815578,
+        "dx": 10.975804,
+        "dy": -35.961176
+      },
+      "supportShift": null,
+      "crop": [
+        169,
+        228,
+        501,
+        381
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 682,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1115,
+        "opaquePixelCount": 143006,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 824.2745098039215,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-049.jpg",
+      "contactCrop": "crops/armor-049.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 50,
+      "bodySha256": "3c843fd9edd92a5677451a048285160803351932f05978b1c7267592d414ec52",
+      "handsSha256": "89cde73f0657f70d3dc1f06480853a42a5ca9d3db877dc36e4f42f4f24a3d3bf",
+      "fitSha256": "4b6bbf5419a00d11fbb1a676db0d433578487349715ffa3b685191fac2ad8896",
+      "adjustment": {
+        "size": 103.573675,
+        "angle": 2.338822,
+        "dx": -16.331254,
+        "dy": -13.481069
+      },
+      "supportShift": null,
+      "crop": [
+        173,
+        257,
+        521,
+        344
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 578,
+        "maxChannelDifference": 11,
+        "absoluteDifference": 785,
+        "opaquePixelCount": 137994,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 735.0313725490192,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-050.jpg",
+      "contactCrop": "crops/armor-050.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 51,
+      "bodySha256": "99d48a70da681193edf15629f28d94adb126bc6d7af0ce8909a38590466ffbd0",
+      "handsSha256": "c4acd435d16612a63f8272b2332a34b0af0eea23a91aa61b414f3a6861a9224d",
+      "fitSha256": "099a7ca681901c796b71a588f60a0a4e3a7524ce973657dadff77b012b6b5c48",
+      "adjustment": {
+        "size": 84,
+        "angle": 4.902623,
+        "dx": -14.176613,
+        "dy": -15.103182,
+        "handMasks": [
+          [
+            [
+              574,
+              497
+            ],
+            [
+              587,
+              485
+            ],
+            [
+              608,
+              467
+            ],
+            [
+              629,
+              464
+            ],
+            [
+              646,
+              466
+            ],
+            [
+              665,
+              466
+            ],
+            [
+              671,
+              470
+            ],
+            [
+              670,
+              477
+            ],
+            [
+              662,
+              483
+            ],
+            [
+              653,
+              486
+            ],
+            [
+              670,
+              484
+            ],
+            [
+              679,
+              489
+            ],
+            [
+              684,
+              496
+            ],
+            [
+              682,
+              504
+            ],
+            [
+              679,
+              507
+            ],
+            [
+              684,
+              511
+            ],
+            [
+              684,
+              518
+            ],
+            [
+              680,
+              524
+            ],
+            [
+              675,
+              527
+            ],
+            [
+              676,
+              533
+            ],
+            [
+              671,
+              541
+            ],
+            [
+              663,
+              546
+            ],
+            [
+              661,
+              552
+            ],
+            [
+              654,
+              557
+            ],
+            [
+              650,
+              563
+            ],
+            [
+              621,
+              565
+            ],
+            [
+              600,
+              560
+            ],
+            [
+              576,
+              553
+            ]
+          ],
+          [
+            [
+              757,
+              502
+            ],
+            [
+              768,
+              489
+            ],
+            [
+              789,
+              480
+            ],
+            [
+              800,
+              468
+            ],
+            [
+              807,
+              463
+            ],
+            [
+              814,
+              466
+            ],
+            [
+              818,
+              472
+            ],
+            [
+              820,
+              464
+            ],
+            [
+              826,
+              459
+            ],
+            [
+              835,
+              460
+            ],
+            [
+              840,
+              455
+            ],
+            [
+              848,
+              453
+            ],
+            [
+              854,
+              457
+            ],
+            [
+              861,
+              458
+            ],
+            [
+              867,
+              465
+            ],
+            [
+              870,
+              480
+            ],
+            [
+              867,
+              495
+            ],
+            [
+              857,
+              513
+            ],
+            [
+              842,
+              527
+            ],
+            [
+              824,
+              537
+            ],
+            [
+              804,
+              539
+            ],
+            [
+              784,
+              535
+            ],
+            [
+              767,
+              525
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        178,
+        253,
+        495,
+        319
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 611,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 1044,
+        "opaquePixelCount": 132672,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 837.619607843137,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 91,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-051.jpg",
+      "contactCrop": "crops/armor-051.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 52,
+      "bodySha256": "f338c8bb0440f6006832fbdb58e96bdffc85249ec8205805718856d514b6680d",
+      "handsSha256": "97f9f707bcd96e4a142c910c9a0694230078b9ddd5895fe551f3ca9bb99512d2",
+      "fitSha256": "a5e45dd62c4819b4575c928358c18b1f1c5cbb5681d8bab4ad008f130271993e",
+      "adjustment": {
+        "size": 86.415591,
+        "angle": 3.922167,
+        "dx": -17.688619,
+        "dy": -36.216253
+      },
+      "supportShift": null,
+      "crop": [
+        179,
+        246,
+        483,
+        313
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 692,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1866,
+        "opaquePixelCount": 138009,
+        "maxPremultipliedDifference": 7,
+        "premultipliedAbsoluteDifference": 909.6901960784321,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-052.jpg",
+      "contactCrop": "crops/armor-052.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 53,
+      "bodySha256": "d5ca92ef375450c976f341dcbe5b27cb196957341974b902466f66782313190d",
+      "handsSha256": "aa4fa5385713eeba39689dcfad063a5973df28f0812ec874e2c1a5d6573a83d3",
+      "fitSha256": "90755ba5dcaafa432afbfb41c33f5228198a4efc7e91d5af9a1f323a0ae8aef5",
+      "adjustment": {
+        "size": 84,
+        "angle": 10.662205,
+        "dx": 12.197496,
+        "dy": -55.333768,
+        "handMasks": [
+          [
+            [
+              594,
+              468
+            ],
+            [
+              618,
+              454
+            ],
+            [
+              640,
+              444
+            ],
+            [
+              660,
+              442
+            ],
+            [
+              678,
+              444
+            ],
+            [
+              695,
+              443
+            ],
+            [
+              706,
+              447
+            ],
+            [
+              711,
+              455
+            ],
+            [
+              711,
+              464
+            ],
+            [
+              706,
+              471
+            ],
+            [
+              707,
+              479
+            ],
+            [
+              705,
+              488
+            ],
+            [
+              697,
+              495
+            ],
+            [
+              701,
+              502
+            ],
+            [
+              696,
+              510
+            ],
+            [
+              684,
+              515
+            ],
+            [
+              683,
+              523
+            ],
+            [
+              677,
+              530
+            ],
+            [
+              660,
+              534
+            ],
+            [
+              639,
+              535
+            ],
+            [
+              616,
+              532
+            ],
+            [
+              596,
+              527
+            ]
+          ],
+          [
+            [
+              774,
+              482
+            ],
+            [
+              789,
+              467
+            ],
+            [
+              811,
+              456
+            ],
+            [
+              831,
+              452
+            ],
+            [
+              845,
+              441
+            ],
+            [
+              851,
+              432
+            ],
+            [
+              857,
+              432
+            ],
+            [
+              865,
+              442
+            ],
+            [
+              870,
+              432
+            ],
+            [
+              878,
+              428
+            ],
+            [
+              885,
+              432
+            ],
+            [
+              891,
+              443
+            ],
+            [
+              895,
+              433
+            ],
+            [
+              902,
+              435
+            ],
+            [
+              909,
+              446
+            ],
+            [
+              914,
+              458
+            ],
+            [
+              911,
+              476
+            ],
+            [
+              904,
+              490
+            ],
+            [
+              889,
+              505
+            ],
+            [
+              869,
+              516
+            ],
+            [
+              844,
+              526
+            ],
+            [
+              816,
+              531
+            ],
+            [
+              792,
+              526
+            ],
+            [
+              777,
+              514
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        187,
+        241,
+        494,
+        319
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 882,
+        "maxChannelDifference": 42,
+        "absoluteDifference": 1354,
+        "opaquePixelCount": 146895,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 1178.2117647058815,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 86,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-053.jpg",
+      "contactCrop": "crops/armor-053.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 54,
+      "bodySha256": "16ae04e0a77e24fdc007dbd38957c3bfcb3599bbd6e35a74a357e9c9f9f5aa72",
+      "handsSha256": "15a6ecf1f17ba1615bd2d5a04c69e1e0a98ecebab2e247d6d5b24f4937f88d77",
+      "fitSha256": "81ccf9d55feb955c70af87ce60e0af567396f89ea0a90d0dfb0b6eae16eb45dd",
+      "adjustment": {
+        "size": 87.151918,
+        "angle": 9.509249,
+        "dx": -7.867626,
+        "dy": -19.488642
+      },
+      "supportShift": null,
+      "crop": [
+        181,
+        265,
+        475,
+        354
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 636,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 1027,
+        "opaquePixelCount": 131541,
+        "maxPremultipliedDifference": 1.8274509803921575,
+        "premultipliedAbsoluteDifference": 732.1921568627447,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-054.jpg",
+      "contactCrop": "crops/armor-054.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 55,
+      "bodySha256": "0d689e149bd44734ff62e3425a169c2e52a31c76edc85970efc47e515620947e",
+      "handsSha256": "0f5af2fe425ca4b8348a3b64d8f01ffde96026c42369a98ca042fbd44bcd0874",
+      "fitSha256": "d03bc0a0f24576b3ab7f0ce0d1b7d9ea2d394ac7ac0fb03a465cc3c55558e3b3",
+      "adjustment": {
+        "size": 84,
+        "angle": 6.949189,
+        "dx": -5.103935,
+        "dy": -23.965794
+      },
+      "supportShift": null,
+      "crop": [
+        185,
+        254,
+        473,
+        340
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 679,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1122,
+        "opaquePixelCount": 131184,
+        "maxPremultipliedDifference": 1.9294117647058826,
+        "premultipliedAbsoluteDifference": 814.3058823529407,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-055.jpg",
+      "contactCrop": "crops/armor-055.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 56,
+      "bodySha256": "c5f96983b64f9f424c3b4efb086c44817e72dcdaa0a79ba3d54a07b1fedb8f1d",
+      "handsSha256": "cb9b676d8d0f63fcc1cf25d4fea7518a391a77c375d32e04d5dfdf097df7882c",
+      "fitSha256": "ec44f356c57f4603c42973ed7b6fa208490941e2fce2f15a24550573e10a11fe",
+      "adjustment": {
+        "size": 76.816254,
+        "angle": 17.315216,
+        "dx": -8.382257,
+        "dy": -46.241471,
+        "handMasks": [
+          [
+            [
+              547,
+              481
+            ],
+            [
+              560,
+              473
+            ],
+            [
+              580,
+              465
+            ],
+            [
+              601,
+              464
+            ],
+            [
+              619,
+              469
+            ],
+            [
+              628,
+              476
+            ],
+            [
+              631,
+              485
+            ],
+            [
+              628,
+              495
+            ],
+            [
+              632,
+              501
+            ],
+            [
+              629,
+              511
+            ],
+            [
+              623,
+              519
+            ],
+            [
+              623,
+              529
+            ],
+            [
+              616,
+              539
+            ],
+            [
+              603,
+              547
+            ],
+            [
+              583,
+              549
+            ],
+            [
+              563,
+              544
+            ],
+            [
+              545,
+              535
+            ]
+          ],
+          [
+            [
+              667,
+              511
+            ],
+            [
+              682,
+              495
+            ],
+            [
+              708,
+              485
+            ],
+            [
+              725,
+              479
+            ],
+            [
+              731,
+              471
+            ],
+            [
+              738,
+              469
+            ],
+            [
+              748,
+              474
+            ],
+            [
+              752,
+              466
+            ],
+            [
+              758,
+              462
+            ],
+            [
+              765,
+              465
+            ],
+            [
+              774,
+              474
+            ],
+            [
+              782,
+              471
+            ],
+            [
+              788,
+              478
+            ],
+            [
+              793,
+              493
+            ],
+            [
+              790,
+              507
+            ],
+            [
+              780,
+              520
+            ],
+            [
+              764,
+              535
+            ],
+            [
+              748,
+              543
+            ],
+            [
+              729,
+              548
+            ],
+            [
+              706,
+              548
+            ],
+            [
+              684,
+              541
+            ],
+            [
+              669,
+              530
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        182,
+        253,
+        450,
+        343
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 799,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 2367,
+        "opaquePixelCount": 133914,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 1089.3764705882352,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 79,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-056.jpg",
+      "contactCrop": "crops/armor-056.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 57,
+      "bodySha256": "5e5d85e4a8b7a7800b09d311c581a0b686e8233b83399278bb9e21457e8200b8",
+      "handsSha256": "86517e5bf59e92bb02cfce2e13648cfb894f8a6e78b30398db1637db19d08510",
+      "fitSha256": "1e01dae6126a0f3a53695080d6c4cd4310ae97ffc7571364f6a6948e4c6229ec",
+      "adjustment": {
+        "size": 84,
+        "angle": 11.892982,
+        "dx": 6.345494,
+        "dy": -33.444997
+      },
+      "supportShift": null,
+      "crop": [
+        186,
+        236,
+        490,
+        333
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 771,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1780,
+        "opaquePixelCount": 142571,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 940.7372549019602,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-057.jpg",
+      "contactCrop": "crops/armor-057.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 58,
+      "bodySha256": "13667d9a85f87d8ecdb658e43c1bb048ba51b6dcabce8df71cfc00f5aecf2bf7",
+      "handsSha256": "3198ed62f92e90ef88846f7f66ac5ee6a8c6307afb42485b2d8a7c532bb84165",
+      "fitSha256": "7855db86aefda967aaad27bd79e5fd2ee7e7c34e2cadae3a422f33db42db5760",
+      "adjustment": {
+        "size": 84,
+        "angle": 13.375753,
+        "dx": -1.44456,
+        "dy": -28.779134
+      },
+      "supportShift": null,
+      "crop": [
+        191,
+        235,
+        496,
+        337
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 697,
+        "maxChannelDifference": 51,
+        "absoluteDifference": 1055,
+        "opaquePixelCount": 144091,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 910.9921568627447,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-058.jpg",
+      "contactCrop": "crops/armor-058.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 59,
+      "bodySha256": "03bbde0be8ca0580f085e82b97016b52e2bbaacc373f1ad8d00fa30636403085",
+      "handsSha256": "0d11fc0ed6fdaad16f313ba1b830b44c691f3fdf19041188863b3ea5b3e7358e",
+      "fitSha256": "017ae945f1e576c1ddcb6ab3f62af82163d786a87f1cb076564685af1a7be5f7",
+      "adjustment": {
+        "size": 103.131224,
+        "angle": 13.196176,
+        "dx": 5.805331,
+        "dy": -44.580592
+      },
+      "supportShift": null,
+      "crop": [
+        174,
+        262,
+        515,
+        360
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 613,
+        "maxChannelDifference": 20,
+        "absoluteDifference": 890,
+        "opaquePixelCount": 138246,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 797.6862745098032,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-059.jpg",
+      "contactCrop": "crops/armor-059.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 60,
+      "bodySha256": "910d67ca21cb1ea090622817a3feae99a6dbeb8d7f8bca5e9a58d21ff5ec3e17",
+      "handsSha256": "c6f19c6a9d9abe96e1802ed5d60473bf25627d84cd82daeb0d6984435143ea75",
+      "fitSha256": "d1522d669532bc4383066cc3370f4bbdf3540bfe7a27b52468f4d217b36965b6",
+      "adjustment": {
+        "size": 104,
+        "angle": 4.039195,
+        "dx": -11.612864,
+        "dy": -11.392232,
+        "handMasks": [
+          [
+            [
+              491,
+              449
+            ],
+            [
+              506,
+              442
+            ],
+            [
+              520,
+              436
+            ],
+            [
+              531,
+              435
+            ],
+            [
+              543,
+              438
+            ],
+            [
+              555,
+              441
+            ],
+            [
+              565,
+              447
+            ],
+            [
+              581,
+              450
+            ],
+            [
+              589,
+              455
+            ],
+            [
+              594,
+              461
+            ],
+            [
+              595,
+              468
+            ],
+            [
+              591,
+              474
+            ],
+            [
+              586,
+              477
+            ],
+            [
+              580,
+              479
+            ],
+            [
+              583,
+              486
+            ],
+            [
+              580,
+              493
+            ],
+            [
+              574,
+              498
+            ],
+            [
+              579,
+              502
+            ],
+            [
+              577,
+              509
+            ],
+            [
+              570,
+              514
+            ],
+            [
+              566,
+              516
+            ],
+            [
+              569,
+              522
+            ],
+            [
+              565,
+              529
+            ],
+            [
+              553,
+              533
+            ],
+            [
+              532,
+              534
+            ],
+            [
+              516,
+              532
+            ],
+            [
+              503,
+              527
+            ],
+            [
+              494,
+              522
+            ]
+          ],
+          [
+            [
+              811,
+              442
+            ],
+            [
+              825,
+              431
+            ],
+            [
+              842,
+              424
+            ],
+            [
+              860,
+              419
+            ],
+            [
+              876,
+              415
+            ],
+            [
+              891,
+              411
+            ],
+            [
+              898,
+              411
+            ],
+            [
+              903,
+              415
+            ],
+            [
+              904,
+              422
+            ],
+            [
+              900,
+              431
+            ],
+            [
+              890,
+              439
+            ],
+            [
+              883,
+              445
+            ],
+            [
+              900,
+              431
+            ],
+            [
+              904,
+              426
+            ],
+            [
+              910,
+              425
+            ],
+            [
+              914,
+              427
+            ],
+            [
+              919,
+              417
+            ],
+            [
+              925,
+              415
+            ],
+            [
+              929,
+              417
+            ],
+            [
+              934,
+              412
+            ],
+            [
+              941,
+              412
+            ],
+            [
+              946,
+              416
+            ],
+            [
+              950,
+              421
+            ],
+            [
+              950,
+              431
+            ],
+            [
+              946,
+              446
+            ],
+            [
+              938,
+              462
+            ],
+            [
+              925,
+              475
+            ],
+            [
+              909,
+              486
+            ],
+            [
+              889,
+              494
+            ],
+            [
+              866,
+              500
+            ],
+            [
+              844,
+              500
+            ],
+            [
+              824,
+              497
+            ],
+            [
+              811,
+              489
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        175,
+        250,
+        508,
+        328
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 757,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1924,
+        "opaquePixelCount": 152147,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 962.5607843137259,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 101,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-060.jpg",
+      "contactCrop": "crops/armor-060.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 61,
+      "bodySha256": "518351b5802572083e01e3b2fa090138a0ba8e1a017aed2b7e103616d0b4798d",
+      "handsSha256": "ca00fd0c28a60ed5f484e11afd790b149c46ff66c21f2af67964f3e7392cdf9c",
+      "fitSha256": "128bc13e0ea16699372a59545ef2bbe811170e568fdf5a7aa00f3879e9c4fac5",
+      "adjustment": {
+        "size": 98.675675,
+        "angle": 6.981624,
+        "dx": -13.205054,
+        "dy": -24.518598
+      },
+      "supportShift": null,
+      "crop": [
+        178,
+        224,
+        491,
+        333
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 754,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1089,
+        "opaquePixelCount": 148343,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 940.8509803921568,
+        "pixelsOverTwoLevels": 5
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-061.jpg",
+      "contactCrop": "crops/armor-061.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 62,
+      "bodySha256": "dfb5a9ca6b6a298435d16e75fd79425ffcbd6e9abcdfdd41e0006e86ae2dd32f",
+      "handsSha256": "ebf86dd7b07e2e34f963936e6c783eb9bc7755ed87b4000017ca7e0b1792d904",
+      "fitSha256": "1995d948a2307ef060e64ea24a1852e62f6b7105e2c77c51e9bf18f4fb4450e7",
+      "adjustment": {
+        "size": 78.274774,
+        "angle": 22.872325,
+        "dx": 1.068474,
+        "dy": -36.977918,
+        "handMasks": [
+          [
+            [
+              563,
+              487
+            ],
+            [
+              580,
+              480
+            ],
+            [
+              598,
+              474
+            ],
+            [
+              616,
+              469
+            ],
+            [
+              632,
+              469
+            ],
+            [
+              647,
+              474
+            ],
+            [
+              663,
+              477
+            ],
+            [
+              674,
+              481
+            ],
+            [
+              680,
+              487
+            ],
+            [
+              682,
+              494
+            ],
+            [
+              678,
+              499
+            ],
+            [
+              671,
+              501
+            ],
+            [
+              676,
+              507
+            ],
+            [
+              678,
+              513
+            ],
+            [
+              674,
+              520
+            ],
+            [
+              668,
+              523
+            ],
+            [
+              673,
+              528
+            ],
+            [
+              672,
+              535
+            ],
+            [
+              666,
+              541
+            ],
+            [
+              659,
+              543
+            ],
+            [
+              660,
+              548
+            ],
+            [
+              653,
+              554
+            ],
+            [
+              637,
+              557
+            ],
+            [
+              618,
+              557
+            ],
+            [
+              599,
+              554
+            ],
+            [
+              581,
+              550
+            ],
+            [
+              562,
+              546
+            ]
+          ],
+          [
+            [
+              743,
+              516
+            ],
+            [
+              757,
+              504
+            ],
+            [
+              772,
+              497
+            ],
+            [
+              793,
+              493
+            ],
+            [
+              810,
+              489
+            ],
+            [
+              818,
+              489
+            ],
+            [
+              822,
+              492
+            ],
+            [
+              823,
+              498
+            ],
+            [
+              819,
+              504
+            ],
+            [
+              811,
+              509
+            ],
+            [
+              815,
+              510
+            ],
+            [
+              820,
+              516
+            ],
+            [
+              824,
+              503
+            ],
+            [
+              830,
+              499
+            ],
+            [
+              835,
+              502
+            ],
+            [
+              837,
+              493
+            ],
+            [
+              842,
+              490
+            ],
+            [
+              847,
+              491
+            ],
+            [
+              850,
+              496
+            ],
+            [
+              854,
+              496
+            ],
+            [
+              857,
+              501
+            ],
+            [
+              857,
+              514
+            ],
+            [
+              851,
+              532
+            ],
+            [
+              840,
+              545
+            ],
+            [
+              824,
+              556
+            ],
+            [
+              807,
+              564
+            ],
+            [
+              787,
+              568
+            ],
+            [
+              766,
+              567
+            ],
+            [
+              749,
+              562
+            ],
+            [
+              737,
+              551
+            ],
+            [
+              734,
+              536
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        190,
+        259,
+        464,
+        362
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 687,
+        "maxChannelDifference": 10,
+        "absoluteDifference": 925,
+        "opaquePixelCount": 133968,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 903.2039215686265,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 98,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-062.jpg",
+      "contactCrop": "crops/armor-062.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 63,
+      "bodySha256": "092236d1a8e95146bb6d22b783806e781f8877e4a0bde1843c9c0454f48a93d3",
+      "handsSha256": "1102157bf4a64c04390f1b1f5ff9fbb5e910c905842c8f370b325c30dcfa7638",
+      "fitSha256": "ddf4480053f12ee85e11f67e5b38422d2cee6f86fd21f1d7f6598c93cdf33a80",
+      "adjustment": {
+        "size": 91.192376,
+        "angle": 17.86088,
+        "dx": -9.933081,
+        "dy": -31.86909
+      },
+      "supportShift": null,
+      "crop": [
+        185,
+        230,
+        505,
+        362
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 704,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1103,
+        "opaquePixelCount": 146406,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 874.5921568627451,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-063.jpg",
+      "contactCrop": "crops/armor-063.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 64,
+      "bodySha256": "7086478be42100126fdaf4988f039c923999245501925ccd37f2215e3ddd274f",
+      "handsSha256": "de74e97de85997b701db1e832ed1a642aa07ab339f9b6a65cffde8d5f6c70370",
+      "fitSha256": "621fb6cf2e0aae850050187700aeff8fe4a24465e913627aceb796d95eda276d",
+      "adjustment": {
+        "size": 104,
+        "angle": 0.399101,
+        "dx": -15.507413,
+        "dy": -12.289241
+      },
+      "supportShift": null,
+      "crop": [
+        165,
+        253,
+        499,
+        313
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 476,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1368,
+        "opaquePixelCount": 138331,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 568.478431372549,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-064.jpg",
+      "contactCrop": "crops/armor-064.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": [
+          "Source lowered-carry posture: stock lies below the shoulder pocket; strict shoulder-aiming pose remains pending."
+        ]
+      }
+    },
+    {
+      "armorId": 65,
+      "bodySha256": "7de471aa9fce5a8cb756ecd6b9b7de71f12da469ea2302199746e0cd3ea05151",
+      "handsSha256": "f6330edd1e9a18c1401f0b8497cb8fb6c461ab0e2b235cfdf8ad719b806a5176",
+      "fitSha256": "afbb84147033ffdd44e9c139a3bca90ffbdd972bbe590ab2b0a2c8deed0377fd",
+      "adjustment": {
+        "size": 104,
+        "angle": 6.958616,
+        "dx": -15.509029,
+        "dy": -4.68255
+      },
+      "supportShift": null,
+      "crop": [
+        166,
+        239,
+        533,
+        384
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 888,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2583,
+        "opaquePixelCount": 140165,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 1109.866666666666,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 85,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-065.jpg",
+      "contactCrop": "crops/armor-065.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 66,
+      "bodySha256": "aa5f8e0912fb79f278a4fb233e1a52dca45b8c478fc36642614e10e1f738dd6c",
+      "handsSha256": "e7bc7f9aaa65cc7b1393b5fff4698599f567d17d37d0873f3c4fe17f32fe4b70",
+      "fitSha256": "262fd2eb0aa45cae223a417f95664fde50c00ceec606f4314586d8fc3c904a88",
+      "adjustment": {
+        "size": 84,
+        "angle": 29.616932,
+        "dx": 7.0638,
+        "dy": -34.816861,
+        "handMasks": [
+          [
+            [
+              598,
+              455
+            ],
+            [
+              615,
+              446
+            ],
+            [
+              632,
+              436
+            ],
+            [
+              653,
+              430
+            ],
+            [
+              670,
+              425
+            ],
+            [
+              675,
+              426
+            ],
+            [
+              683,
+              431
+            ],
+            [
+              698,
+              434
+            ],
+            [
+              709,
+              432
+            ],
+            [
+              716,
+              433
+            ],
+            [
+              719,
+              438
+            ],
+            [
+              718,
+              445
+            ],
+            [
+              714,
+              451
+            ],
+            [
+              705,
+              453
+            ],
+            [
+              683,
+              450
+            ],
+            [
+              669,
+              448
+            ],
+            [
+              654,
+              446
+            ],
+            [
+              668,
+              448
+            ],
+            [
+              683,
+              450
+            ],
+            [
+              708,
+              454
+            ],
+            [
+              720,
+              460
+            ],
+            [
+              723,
+              468
+            ],
+            [
+              722,
+              477
+            ],
+            [
+              717,
+              482
+            ],
+            [
+              712,
+              483
+            ],
+            [
+              717,
+              487
+            ],
+            [
+              717,
+              495
+            ],
+            [
+              713,
+              503
+            ],
+            [
+              708,
+              505
+            ],
+            [
+              708,
+              517
+            ],
+            [
+              703,
+              525
+            ],
+            [
+              697,
+              526
+            ],
+            [
+              699,
+              533
+            ],
+            [
+              692,
+              541
+            ],
+            [
+              679,
+              544
+            ],
+            [
+              657,
+              542
+            ],
+            [
+              637,
+              536
+            ],
+            [
+              620,
+              532
+            ],
+            [
+              608,
+              528
+            ],
+            [
+              599,
+              508
+            ]
+          ],
+          [
+            [
+              798,
+              505
+            ],
+            [
+              807,
+              495
+            ],
+            [
+              820,
+              490
+            ],
+            [
+              835,
+              488
+            ],
+            [
+              855,
+              488
+            ],
+            [
+              870,
+              485
+            ],
+            [
+              879,
+              486
+            ],
+            [
+              884,
+              490
+            ],
+            [
+              884,
+              498
+            ],
+            [
+              881,
+              504
+            ],
+            [
+              875,
+              508
+            ],
+            [
+              863,
+              512
+            ],
+            [
+              860,
+              513
+            ],
+            [
+              872,
+              518
+            ],
+            [
+              880,
+              524
+            ],
+            [
+              886,
+              510
+            ],
+            [
+              892,
+              505
+            ],
+            [
+              899,
+              506
+            ],
+            [
+              903,
+              511
+            ],
+            [
+              908,
+              500
+            ],
+            [
+              916,
+              495
+            ],
+            [
+              922,
+              495
+            ],
+            [
+              926,
+              492
+            ],
+            [
+              931,
+              492
+            ],
+            [
+              935,
+              496
+            ],
+            [
+              937,
+              499
+            ],
+            [
+              941,
+              499
+            ],
+            [
+              944,
+              503
+            ],
+            [
+              945,
+              510
+            ],
+            [
+              942,
+              528
+            ],
+            [
+              935,
+              541
+            ],
+            [
+              924,
+              548
+            ],
+            [
+              911,
+              554
+            ],
+            [
+              890,
+              561
+            ],
+            [
+              864,
+              566
+            ],
+            [
+              839,
+              564
+            ],
+            [
+              817,
+              564
+            ],
+            [
+              803,
+              561
+            ],
+            [
+              792,
+              548
+            ],
+            [
+              790,
+              527
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        193,
+        239,
+        492,
+        380
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 837,
+        "maxChannelDifference": 15,
+        "absoluteDifference": 1209,
+        "opaquePixelCount": 155364,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 1154.631372549019,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 120,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-066.jpg",
+      "contactCrop": "crops/armor-066.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 67,
+      "bodySha256": "23cf0dd4ad32586568cbf94541fa1c9461ba352c78dd0741ab3f308cb3c3fc4f",
+      "handsSha256": "875441379f71af17b60c0b003933b0fbb6e591f2bd95a23703db97ea7a04bc21",
+      "fitSha256": "d21af57c353c09c6d2ac9008c070f884029dc4b3f51efbf26dcd33c6541e4491",
+      "adjustment": {
+        "size": 104,
+        "angle": -5.079731,
+        "dx": -9.858417,
+        "dy": -21.147155
+      },
+      "supportShift": null,
+      "crop": [
+        172,
+        226,
+        514,
+        351
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 640,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1217,
+        "opaquePixelCount": 152474,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 760.5568627450979,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-067.jpg",
+      "contactCrop": "crops/armor-067.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 68,
+      "bodySha256": "2acdeb9807cb5de00e06cfe75a5f72fb8dc12d6199e6a550477f1b6e4007d238",
+      "handsSha256": "674292f4c5977518a62b92c54c0d7e35a14ef149d40018a3be9837cf0f0ca885",
+      "fitSha256": "601af9540aee73f379455900ed73d5fcc483e7ca2294852f896becf0e7eecde2",
+      "adjustment": {
+        "size": 104,
+        "angle": 8.897387,
+        "dx": 15.652485,
+        "dy": -26.862878
+      },
+      "supportShift": null,
+      "crop": [
+        176,
+        231,
+        525,
+        355
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 875,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1331,
+        "opaquePixelCount": 157828,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 1061.2352941176468,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-068.jpg",
+      "contactCrop": "crops/armor-068.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 69,
+      "bodySha256": "7cc6f84bd2bb5b2e3dd0df382416caf701c600a275d646131219ceb37009bd00",
+      "handsSha256": "a670cb166486eead5ba10e22a761cdf6e0d53a4aaf5e3b620500e2a11ed48a3f",
+      "fitSha256": "8c2a945eee422993237e8882349982b14d6c37de91abe37348fce8503df52aeb",
+      "adjustment": {
+        "size": 100.125354,
+        "angle": 13.871347,
+        "dx": 16.772512,
+        "dy": -40.994458
+      },
+      "supportShift": null,
+      "crop": [
+        177,
+        241,
+        501,
+        347
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 557,
+        "maxChannelDifference": 28,
+        "absoluteDifference": 759,
+        "opaquePixelCount": 136203,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 673.5568627450986,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-069.jpg",
+      "contactCrop": "crops/armor-069.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 70,
+      "bodySha256": "091e14237f0219b2dc47a524b904491ddd8519347614e92454898acc07bff010",
+      "handsSha256": "55ae73fe435a2130aad60c4ff59ecab8bb9b66faf6aa47cfabfe875fb36e4637",
+      "fitSha256": "84e6e81191438b87d40e8a108a4076d5b7396ffdb6045a0ef64656b3d815e70c",
+      "adjustment": {
+        "size": 104,
+        "angle": 6.099779,
+        "dx": 5.44302,
+        "dy": -18.715213
+      },
+      "supportShift": null,
+      "crop": [
+        177,
+        242,
+        517,
+        326
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 718,
+        "maxChannelDifference": 6,
+        "absoluteDifference": 867,
+        "opaquePixelCount": 151358,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 851.0549019607839,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-070.jpg",
+      "contactCrop": "crops/armor-070.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 71,
+      "bodySha256": "f47016eac9a325d8a1b852c535362a1874a48f6914240cb79744215e777cf3f1",
+      "handsSha256": "9a923718e505b8dc07e8857187bb86266275b06775169d6c037e2868ee33c754",
+      "fitSha256": "396cc578297021baf81b37e745537d3c6df46ce7b9562231092153707883d329",
+      "adjustment": {
+        "size": 104,
+        "angle": 6.033295,
+        "dx": -8.560087,
+        "dy": -36.640301,
+        "handMasks": [
+          [
+            [
+              529,
+              488
+            ],
+            [
+              537,
+              481
+            ],
+            [
+              550,
+              477
+            ],
+            [
+              559,
+              475
+            ],
+            [
+              576,
+              476
+            ],
+            [
+              587,
+              478
+            ],
+            [
+              595,
+              478
+            ],
+            [
+              605,
+              481
+            ],
+            [
+              620,
+              487
+            ],
+            [
+              630,
+              494
+            ],
+            [
+              634,
+              501
+            ],
+            [
+              633,
+              507
+            ],
+            [
+              628,
+              513
+            ],
+            [
+              620,
+              513
+            ],
+            [
+              613,
+              508
+            ],
+            [
+              599,
+              498
+            ],
+            [
+              605,
+              508
+            ],
+            [
+              611,
+              516
+            ],
+            [
+              611,
+              525
+            ],
+            [
+              607,
+              532
+            ],
+            [
+              603,
+              534
+            ],
+            [
+              603,
+              541
+            ],
+            [
+              600,
+              548
+            ],
+            [
+              594,
+              553
+            ],
+            [
+              593,
+              560
+            ],
+            [
+              586,
+              568
+            ],
+            [
+              572,
+              575
+            ],
+            [
+              551,
+              576
+            ],
+            [
+              535,
+              568
+            ],
+            [
+              529,
+              556
+            ],
+            [
+              526,
+              548
+            ]
+          ],
+          [
+            [
+              810,
+              476
+            ],
+            [
+              820,
+              462
+            ],
+            [
+              837,
+              451
+            ],
+            [
+              850,
+              446
+            ],
+            [
+              871,
+              443
+            ],
+            [
+              878,
+              440
+            ],
+            [
+              882,
+              441
+            ],
+            [
+              885,
+              445
+            ],
+            [
+              885,
+              451
+            ],
+            [
+              882,
+              456
+            ],
+            [
+              874,
+              461
+            ],
+            [
+              862,
+              465
+            ],
+            [
+              859,
+              468
+            ],
+            [
+              864,
+              471
+            ],
+            [
+              878,
+              476
+            ],
+            [
+              883,
+              477
+            ],
+            [
+              883,
+              466
+            ],
+            [
+              887,
+              458
+            ],
+            [
+              892,
+              457
+            ],
+            [
+              897,
+              461
+            ],
+            [
+              898,
+              467
+            ],
+            [
+              899,
+              454
+            ],
+            [
+              903,
+              447
+            ],
+            [
+              909,
+              444
+            ],
+            [
+              914,
+              445
+            ],
+            [
+              918,
+              450
+            ],
+            [
+              922,
+              446
+            ],
+            [
+              928,
+              443
+            ],
+            [
+              933,
+              445
+            ],
+            [
+              935,
+              452
+            ],
+            [
+              940,
+              452
+            ],
+            [
+              944,
+              456
+            ],
+            [
+              944,
+              464
+            ],
+            [
+              940,
+              479
+            ],
+            [
+              933,
+              495
+            ],
+            [
+              919,
+              508
+            ],
+            [
+              902,
+              518
+            ],
+            [
+              883,
+              523
+            ],
+            [
+              861,
+              527
+            ],
+            [
+              840,
+              529
+            ],
+            [
+              824,
+              529
+            ],
+            [
+              814,
+              525
+            ],
+            [
+              809,
+              515
+            ],
+            [
+              808,
+              496
+            ]
+          ]
+        ]
+      },
+      "supportShift": null,
+      "crop": [
+        178,
+        242,
+        516,
+        343
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 926,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1637,
+        "opaquePixelCount": 153472,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1147.070588235294,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-071.jpg",
+      "contactCrop": "crops/armor-071.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 72,
+      "bodySha256": "bb10d99b8dd69874bbab8b65ba446dac47036add2074fadf0ff59b0013742649",
+      "handsSha256": "eb884d37c9235306aa00fa6e113b91b655282bcef78d9244de29a93508b356ad",
+      "fitSha256": "bde837cc0060e894af22b46668f0f9fc9bb7e96f272504daf771a76c2f8869c5",
+      "adjustment": {
+        "size": 88.161468,
+        "angle": 11.224073,
+        "dx": -7.301064,
+        "dy": -32.180389
+      },
+      "supportShift": null,
+      "crop": [
+        186,
+        220,
+        492,
+        326
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 744,
+        "maxChannelDifference": 23,
+        "absoluteDifference": 1019,
+        "opaquePixelCount": 161381,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 882.8784313725484,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-072.jpg",
+      "contactCrop": "crops/armor-072.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 73,
+      "bodySha256": "68b730ea7c15a166b34e2d56af7d20013a0b2bf4158b4cfd3c30b8b37d67cd47",
+      "handsSha256": "ff06b70730a564ef2932d040d7642bba60ad2314397e673a650912527d217774",
+      "fitSha256": "13c41ff0442120f5136b6232115176a389e786d99f630f948d77b916698d6bda",
+      "adjustment": {
+        "size": 104,
+        "angle": 8.163999,
+        "dx": 1.582714,
+        "dy": -34.03877
+      },
+      "supportShift": null,
+      "crop": [
+        178,
+        243,
+        523,
+        352
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 807,
+        "maxChannelDifference": 10,
+        "absoluteDifference": 975,
+        "opaquePixelCount": 150248,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 944.1921568627449,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-073.jpg",
+      "contactCrop": "crops/armor-073.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 74,
+      "bodySha256": "9653c0f50569cbd385b2b46aef8939a0461eb544e8904c470764aab205c84a58",
+      "handsSha256": "135d91ff2cf1290451ac58a57520c9c058917b9c1582fc9a534d90994e65c4c9",
+      "fitSha256": "df4623f6329ef765f893fe42f47bb51a237a71afc18984f2255af5b9b6dc4ec0",
+      "adjustment": {
+        "size": 91.085091,
+        "angle": 19.010948,
+        "dx": 3.420639,
+        "dy": -32.951254
+      },
+      "supportShift": null,
+      "crop": [
+        176,
+        234,
+        494,
+        355
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 1366,
+        "maxChannelDifference": 127,
+        "absoluteDifference": 1848,
+        "opaquePixelCount": 147660,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1610.6941176470561,
+        "pixelsOverTwoLevels": 4
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-074.jpg",
+      "contactCrop": "crops/armor-074.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 75,
+      "bodySha256": "f1bd09ccb0261e9bee2c8d7561a7b588925326701a42638d82a2bac9aa903986",
+      "handsSha256": "ab4ca914d1d289e289e498ef10ff931e91e255eaebcb090be111aa1cf18af0fe",
+      "fitSha256": "c35964866f81ce6172d9e702353b23f492fcbf70acb07c08c1cf2431f36d171e",
+      "adjustment": {
+        "size": 102.025898,
+        "angle": 11.752547,
+        "dx": -10.76123,
+        "dy": -28.888845
+      },
+      "supportShift": null,
+      "crop": [
+        177,
+        242,
+        513,
+        358
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 804,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1193,
+        "opaquePixelCount": 150078,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 971.603921568627,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-075.jpg",
+      "contactCrop": "crops/armor-075.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 76,
+      "bodySha256": "506c12a2f5cce14a4d0295fd7eec9f609ba2003037c56ffff84a96a559f6f95f",
+      "handsSha256": "f25960f43577cc7caae2badb918e6d51f9d1513f4841ce8ec976d16cd15d3f49",
+      "fitSha256": "091a38d18b6b331efba591927182d23ce6fec4c52e616d1fdfdc9bfe4fda1d2c",
+      "adjustment": {
+        "size": 104,
+        "angle": 9.533633,
+        "dx": -95.278444,
+        "dy": -15.577055
+      },
+      "supportShift": null,
+      "crop": [
+        182,
+        240,
+        498,
+        337
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 690,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1651,
+        "opaquePixelCount": 142831,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 882.4784313725492,
+        "pixelsOverTwoLevels": 4
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-076.jpg",
+      "contactCrop": "crops/armor-076.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 77,
+      "bodySha256": "7708117a2bdb2aea2e0abf2d48541c683e618b1790459c8c978b1b7c2d2364a4",
+      "handsSha256": "3792128dbb677c4b47408b85e466f7354317e349a8a6be0233afb791c2ad7451",
+      "fitSha256": "f1ecea6c8b7193b75bda7179edf081e4d1cead6cabbcd214229ba9e179918595",
+      "adjustment": {
+        "size": 104,
+        "angle": 8.487314,
+        "dx": -20.387828,
+        "dy": -15.402189
+      },
+      "supportShift": null,
+      "crop": [
+        173,
+        240,
+        509,
+        351
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 865,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1501,
+        "opaquePixelCount": 137691,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1020.1098039215689,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-077.jpg",
+      "contactCrop": "crops/armor-077.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 78,
+      "bodySha256": "fceb356aa59e8e26eb4f33a98887a1b60ef51f9d72a1e18cc268bb533e0c2c64",
+      "handsSha256": "1acdd9e1b63c5a8ec1152140e502d451cb2c8976a2f1dd76fb098fa710916a21",
+      "fitSha256": "7fc4fdb48099f63a5a521a07b01bfc2c9c40ee7b4e78ed0f4d754e505bdc8e80",
+      "adjustment": {
+        "size": 104,
+        "angle": 5.84366,
+        "dx": -13.568472,
+        "dy": -26.426609
+      },
+      "supportShift": null,
+      "crop": [
+        173,
+        246,
+        511,
+        350
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 867,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1309,
+        "opaquePixelCount": 151777,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1045.7921568627448,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-078.jpg",
+      "contactCrop": "crops/armor-078.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 79,
+      "bodySha256": "8f7fb842dcbec63677fd80e3905c00542a9f8287848ee4e617aaefcdebddedfc",
+      "handsSha256": "afa7f23f5fa4192be2b2c477062ff8d26fc04ccefca10a7b17c9349212e32091",
+      "fitSha256": "319c513552ae53210d225aab3ad6e479f2c960fee3fd0bcee9b49a25066263ab",
+      "adjustment": {
+        "size": 89.039872,
+        "angle": 22.208272,
+        "dx": 11.544393,
+        "dy": -40.568593
+      },
+      "supportShift": null,
+      "crop": [
+        184,
+        246,
+        498,
+        363
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 635,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1610,
+        "opaquePixelCount": 138737,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 831.2235294117643,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-079.jpg",
+      "contactCrop": "crops/armor-079.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 80,
+      "bodySha256": "2538e9427ce17c60bb4a5a8d690b3ddac4ae6cea6ec1c1343c481c3b2fa5320e",
+      "handsSha256": "b9d2d8461489a09f8dba11aef1454ef59da93609580ff21a986d06b21d75a135",
+      "fitSha256": "e533719711172f84c9300a7f18b8d3fbd8adc9c0d9603c78af3207be901971dc",
+      "adjustment": {
+        "size": 104,
+        "angle": 3.80637,
+        "dx": -14.613924,
+        "dy": -17.12967
+      },
+      "supportShift": null,
+      "crop": [
+        174,
+        254,
+        502,
+        334
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 678,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1609,
+        "opaquePixelCount": 137635,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 862.1450980392158,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-080.jpg",
+      "contactCrop": "crops/armor-080.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 81,
+      "bodySha256": "545bca198a73bda6bb823806610248f19f98023f0fcc33d92f16bc56c1ccd721",
+      "handsSha256": "ed12e1601b79cd4f5452e43196c9e47ac606befee91d55372b5908a1a93d65d1",
+      "fitSha256": "2e5463030a9a8d3b57a3f53824c183662dff3eb50bb1f6d808be34977ccf156b",
+      "adjustment": {
+        "size": 84,
+        "angle": 10.263513,
+        "dx": 14.154677,
+        "dy": -22.973151
+      },
+      "supportShift": null,
+      "crop": [
+        194,
+        229,
+        496,
+        332
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 807,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1449,
+        "opaquePixelCount": 177626,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 1018.6901960784318,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-081.jpg",
+      "contactCrop": "crops/armor-081.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 82,
+      "bodySha256": "fb58400c1a3c6223bf64112bc6ea9efb8573b178e0326ea04fccad820b5832b8",
+      "handsSha256": "a271e6734e5ef2a3161ca442142e5fd7d0e0a0c9caeff9117abd31cd0a676837",
+      "fitSha256": "b318bdc1830582b2127c59d97ec49bbbd911806d412ba3558aaccef4d91bec51",
+      "adjustment": {
+        "size": 91.556634,
+        "angle": 7.477711,
+        "dx": -12.758967,
+        "dy": -17.75632
+      },
+      "supportShift": null,
+      "crop": [
+        187,
+        250,
+        512,
+        322
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 632,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1240,
+        "opaquePixelCount": 150411,
+        "maxPremultipliedDifference": 1.9058823529411768,
+        "premultipliedAbsoluteDifference": 740.2784313725489,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-082.jpg",
+      "contactCrop": "crops/armor-082.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 83,
+      "bodySha256": "fa5111c8e31750a207cb2a5b4b9df89f84583275aee70499a19d918a175cc439",
+      "handsSha256": "2b40c81507d2b8c27c6d510d3c8e085b0e0ff29b266fe2442ac5a6cd40cfa585",
+      "fitSha256": "17f96d8c0c27d243e18c2644ee63692eb72bd422fe5a08269823cf27fb12f76a",
+      "adjustment": {
+        "size": 104,
+        "angle": 13.067607,
+        "dx": -37.750801,
+        "dy": -60.526695
+      },
+      "supportShift": null,
+      "crop": [
+        193,
+        281,
+        507,
+        351
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 649,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1544,
+        "opaquePixelCount": 185525,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 792.98431372549,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-083.jpg",
+      "contactCrop": "crops/armor-083.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 84,
+      "bodySha256": "e2aaf72ab16c0cec7a9d720961b4e179697ced39759fd44deebf4dd9b6507352",
+      "handsSha256": "6455c13b2717d913d01b82d0554444e84ff1fe845d2e2c89dbce220efa67c10c",
+      "fitSha256": "4201f46980c9ac38b170ab83a534b86a79db5836de48d8d04cdaca0a0b74ce4d",
+      "adjustment": {
+        "size": 84,
+        "angle": 10.315901,
+        "dx": -10.839839,
+        "dy": -22.020553
+      },
+      "supportShift": null,
+      "crop": [
+        212,
+        268,
+        491,
+        309
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 695,
+        "maxChannelDifference": 64,
+        "absoluteDifference": 1139,
+        "opaquePixelCount": 170236,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 866.9843137254906,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-084.jpg",
+      "contactCrop": "crops/armor-084.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 85,
+      "bodySha256": "bf50312bf628163beacd9c832d0c1a1401cf3157d05a763ab0ad1be88150428e",
+      "handsSha256": "e5e0303065d4438e8801f5077ceae4c5bec052768a7fe56381465e0e96b03157",
+      "fitSha256": "00fee3988c7ae3f4bc6939c5355a71a7da9275039c1676f1fd5251b955d5cb31",
+      "adjustment": {
+        "size": 88,
+        "angle": 7.755844,
+        "dx": -12.535924,
+        "dy": -26.875181
+      },
+      "supportShift": null,
+      "crop": [
+        190,
+        238,
+        494,
+        326
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 611,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1197,
+        "opaquePixelCount": 163450,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 748.9686274509793,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-085.jpg",
+      "contactCrop": "crops/armor-085.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 86,
+      "bodySha256": "1fef2d330049700f1920034b0201af4f366f08eb4e641da8cf0b3bcea6b1c87b",
+      "handsSha256": "49a2fc7e077f9ab5d2fa1a4adde67fcf68547023775bab9ec50972736f9590a5",
+      "fitSha256": "d01fb219c8e82808e9773bd0bc31daeb4c47da167cd388a78f23c0e02381d6a6",
+      "adjustment": {
+        "size": 100.542725,
+        "angle": 10.289403,
+        "dx": 10.947642,
+        "dy": -42.177526
+      },
+      "supportShift": null,
+      "crop": [
+        184,
+        274,
+        513,
+        345
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 871,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1660,
+        "opaquePixelCount": 132265,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 1083.078431372548,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-086.jpg",
+      "contactCrop": "crops/armor-086.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 87,
+      "bodySha256": "528a1d1ca3b1859e38dedd010886babebf83f5eacff46b47746fe0958a36e953",
+      "handsSha256": "90e10c59199ced129634d1109b43421f2f5d0a9d5f45345194bd283240de2d22",
+      "fitSha256": "624896aa4df7940f738a2e7e1ffba22470aa923be61279a2506d7081438fd0c5",
+      "adjustment": {
+        "size": 84,
+        "angle": 18.873898,
+        "dx": -2.36672,
+        "dy": -46.667828
+      },
+      "supportShift": null,
+      "crop": [
+        187,
+        256,
+        473,
+        349
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 614,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1148,
+        "opaquePixelCount": 132717,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 789.0470588235285,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-087.jpg",
+      "contactCrop": "crops/armor-087.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 88,
+      "bodySha256": "e652f983d18fdb839c549ed798eecb9138e6bdbb0d7276ea6b925373e898a271",
+      "handsSha256": "2b63c24c420d4fc9f35b0a5b91f28e13ce8d7e565b399c253efa8524aaf50143",
+      "fitSha256": "5b97965b212237dfc21ef033302db70b9429787c725e204e285f73dd57eeea12",
+      "adjustment": {
+        "size": 91.866785,
+        "angle": 12.473446,
+        "dx": -6.406678,
+        "dy": -33.714131
+      },
+      "supportShift": null,
+      "crop": [
+        180,
+        241,
+        496,
+        333
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 644,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1292,
+        "opaquePixelCount": 142488,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 811.3607843137256,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-088.jpg",
+      "contactCrop": "crops/armor-088.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 89,
+      "bodySha256": "56f523b25be1a7d1ce177b5e173d61f870ad5c4f73cb383c0561810f0acfa2ac",
+      "handsSha256": "e1bb704e7080ad5519ec95ce7307deff5381c71149beb05aaf3b594a83a960c0",
+      "fitSha256": "b747a12dd5ebad8abe13083940e4073e1e27783cd4984b6803b2f64b15345840",
+      "adjustment": {
+        "size": 104,
+        "angle": 13.619579,
+        "dx": 33.353567,
+        "dy": -63.140355
+      },
+      "supportShift": null,
+      "crop": [
+        177,
+        273,
+        523,
+        355
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 704,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 1679,
+        "opaquePixelCount": 132800,
+        "maxPremultipliedDifference": 1.9372549019607845,
+        "premultipliedAbsoluteDifference": 904.2901960784314,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-089.jpg",
+      "contactCrop": "crops/armor-089.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 90,
+      "bodySha256": "e143afd0a92ac330936f52f9f2cee7a448c4f4ac239a27903fc9abb82f73b0a8",
+      "handsSha256": "7f1e2057055362a6ab8d3c626b8de624d979cd5b2070ee43c137dfd5cd5e003f",
+      "fitSha256": "2c2bd2ecd8686e9883d6931de5237c867c8ee34443b8831705164375df82d49b",
+      "adjustment": {
+        "size": 96.690929,
+        "angle": 21.855962,
+        "dx": -8.079269,
+        "dy": -55.727612
+      },
+      "supportShift": null,
+      "crop": [
+        183,
+        245,
+        519,
+        383
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 645,
+        "maxChannelDifference": 37,
+        "absoluteDifference": 902,
+        "opaquePixelCount": 154191,
+        "maxPremultipliedDifference": 1.0588235294117645,
+        "premultipliedAbsoluteDifference": 767.1843137254901,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-090.jpg",
+      "contactCrop": "crops/armor-090.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 91,
+      "bodySha256": "e145409219f4df13becf5e9ae67a167eff72acb159c97c58f7436447e7aa26c9",
+      "handsSha256": "1ec0c903aaa2c7d6f7356d8a693936785d10f61e4089b39a193f9c4ca9a73ab5",
+      "fitSha256": "4ab30e3d574b59bcf9136eb4d3174fd1602a57c196042dc5e03446b23f67c77d",
+      "adjustment": {
+        "size": 75.897345,
+        "angle": 24.16523,
+        "dx": 2.824453,
+        "dy": -49.493578
+      },
+      "supportShift": null,
+      "crop": [
+        194,
+        231,
+        471,
+        334
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 851,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2670,
+        "opaquePixelCount": 143018,
+        "maxPremultipliedDifference": 3,
+        "premultipliedAbsoluteDifference": 1014.6431372549017,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-091.jpg",
+      "contactCrop": "crops/armor-091.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 92,
+      "bodySha256": "59cbcf454cb70146e7c235d7450b7cd171684f35afadee95bfa5a7d264d2a55a",
+      "handsSha256": "17c796cb5e0b00a83b75e18f2fa65f0a56615dd9cfd7d68c076995bc4af50dd2",
+      "fitSha256": "f50d389c5dba0a96fbff85466a6663eb82e0903ddf4b3156ae95bb1e01f2eb2f",
+      "adjustment": {
+        "size": 104,
+        "angle": 9.713459,
+        "dx": -18.257485,
+        "dy": -27.778763
+      },
+      "supportShift": null,
+      "crop": [
+        171,
+        233,
+        502,
+        347
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 567,
+        "maxChannelDifference": 17,
+        "absoluteDifference": 775,
+        "opaquePixelCount": 145607,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 709.7137254901961,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-092.jpg",
+      "contactCrop": "crops/armor-092.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 93,
+      "bodySha256": "91bc6297c91caecc106f25cfee9a754fa258230c477f80b111aaf48b223b7eda",
+      "handsSha256": "b460966ccfca5ea56ad10f1490b81d25475578e4e3af618f8cebbab454beea80",
+      "fitSha256": "45195aa1d68ab8b4f0775edda1adbfe5909ee8dbb51bac0c0422a278c90200db",
+      "adjustment": {
+        "size": 96.050398,
+        "angle": 9.612002,
+        "dx": 11.643266,
+        "dy": -39.155508
+      },
+      "supportShift": null,
+      "crop": [
+        174,
+        240,
+        502,
+        333
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 795,
+        "maxChannelDifference": 85,
+        "absoluteDifference": 1414,
+        "opaquePixelCount": 147721,
+        "maxPremultipliedDifference": 4,
+        "premultipliedAbsoluteDifference": 971.5882352941179,
+        "pixelsOverTwoLevels": 1
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-093.jpg",
+      "contactCrop": "crops/armor-093.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 94,
+      "bodySha256": "53ac3eda3fd5c55c494c2991b373ee72a8f45714029366744b8cd5db82ce39b6",
+      "handsSha256": "bc33d2cf3872bbc5a1287120c93346fb833883e3bd5ff6864a644501b87411fe",
+      "fitSha256": "4d7a82c21163c05730a1afdd6aa9a27d5b7589663c333f057ab6cfbbad5c70f9",
+      "adjustment": {
+        "size": 84,
+        "angle": 0.362435,
+        "dx": 9.899788,
+        "dy": -24.969507
+      },
+      "supportShift": null,
+      "crop": [
+        184,
+        263,
+        482,
+        283
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 732,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1548,
+        "opaquePixelCount": 143904,
+        "maxPremultipliedDifference": 5,
+        "premultipliedAbsoluteDifference": 894.4823529411766,
+        "pixelsOverTwoLevels": 2
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-094.jpg",
+      "contactCrop": "crops/armor-094.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 95,
+      "bodySha256": "80f5155fee268d1ee824a1f8f48a9d5089369aad24b4cd952eda9d1636b2c97b",
+      "handsSha256": "dc64e421ed112944d86a4173f73d3698b4cf99577e4ba926b44381fc7087ef4c",
+      "fitSha256": "15c77393800b5f5b6b973f10271b8b419c49f33290d69b53e3b77272e9adb864",
+      "adjustment": {
+        "size": 90.659041,
+        "angle": 13.38259,
+        "dx": -15.521661,
+        "dy": -43.481719
+      },
+      "supportShift": null,
+      "crop": [
+        189,
+        269,
+        502,
+        336
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 595,
+        "maxChannelDifference": 128,
+        "absoluteDifference": 1052,
+        "opaquePixelCount": 140675,
+        "maxPremultipliedDifference": 6,
+        "premultipliedAbsoluteDifference": 753.2823529411766,
+        "pixelsOverTwoLevels": 3
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-095.jpg",
+      "contactCrop": "crops/armor-095.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    },
+    {
+      "armorId": 96,
+      "bodySha256": "fc7c0e54112271edb2b5f1caf0e456c0ac0481420646a7830aad742a7e3781cb",
+      "handsSha256": "251423989410a785b45a0453c6e6ee59e1ba3612c14443adb93522e669a986df",
+      "fitSha256": "c2967dfdb50f6169a981d36153109f0d85dd597da3b6544a862562365a6cd3b3",
+      "adjustment": {
+        "size": 74.881313,
+        "angle": 20.929848,
+        "dx": 17.566892,
+        "dy": -65.787037
+      },
+      "supportShift": null,
+      "crop": [
+        189,
+        273,
+        480,
+        324
+      ],
+      "mirror": {
+        "exact": false,
+        "withinRasterTolerance": true,
+        "differingPixels": 658,
+        "maxChannelDifference": 255,
+        "absoluteDifference": 2040,
+        "opaquePixelCount": 128450,
+        "maxPremultipliedDifference": 2,
+        "premultipliedAbsoluteDifference": 797.2549019607842,
+        "pixelsOverTwoLevels": 0
+      },
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      },
+      "actor": "actors/armor-096.jpg",
+      "contactCrop": "crops/armor-096.jpg",
+      "humanReview": {
+        "status": "contacts-and-seams-reviewed",
+        "findings": []
+      }
+    }
+  ],
+  "automated": {
+    "renderedAllRequested": true,
+    "nonemptyAll": true,
+    "mirrorGeometryAll": true,
+    "exactMirrorAll": false,
+    "mirrorWithinRasterToleranceAll": false,
+    "humanGripApproval": false
+  },
+  "rasterReview": {
+    "status": "visually-inspected-edge-rounding",
+    "strictFailures": [
+      6,
+      9,
+      19
+    ],
+    "maximumPremultipliedDifference": 12,
+    "pixelsOverTwoLevels": 210,
+    "opaquePixels": 13849556,
+    "note": "Magnified player/reflected-NPC and isolated-layer inspection found fingertip/alpha clip rounding; no geometry displacement. Original strict results retained."
+  }
+}

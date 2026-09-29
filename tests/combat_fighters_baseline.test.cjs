@@ -23,8 +23,8 @@ const oldAdjustments=Object.fromEntries(Object.entries(data.pairAdjustments).fil
 // Retain the original deployed fingerprint outside explicitly reviewed weapon fits.
 // These source values were captured from Git before the sequential refitting pass.
 const reviewedFits=require('./baseline-reviewed-weapon-fits.json');
-assert.deepEqual(reviewedFits.weaponIds,[114,32,20]);
-assert.equal(Object.keys(reviewedFits.pairAdjustments).length,288);
+assert.deepEqual(reviewedFits.weaponIds,[114,32,20,10]);
+assert.equal(Object.keys(reviewedFits.pairAdjustments).length,384);
 for(const [key,original]of Object.entries(reviewedFits.pairAdjustments)){
  assert.ok(reviewedFits.weaponIds.includes(Number(key.split('-')[1])));
  assert.ok(oldAdjustments[key],'Reviewed fit must already exist in the frozen release');
@@ -40,7 +40,7 @@ assert.equal(hash(oldWeapons),'719b8f47589443897a49ab6013cc85a9fd4b6bc31748f2f02
 assert.equal(hash(oldAdjustments),'af82d8342541e87d8921be45f8dca63aa13786bcb14ea213e68ddf5fbfc7a346','All unreviewed shotgun/automatic fits, including Groza87/9, must remain unchanged');
 assert.equal(hash(supportArms),'75b1ac151cce923c0f7a74e8e0200d30e14e79e7792ba9d71974b4cb9f62ddf6','All support-arm contours except the exact reviewed20/69 fixes must remain unchanged');
 // The next weapon must preserve every previously accepted fit exactly.
-for(const weaponId of [114,32]){
+for(const weaponId of [114,32,20]){
 const accepted=require('../asset_sources/combat_weapon_fits/'+weaponId+'-review.json');
 const acceptedFits=Array.from({length:96},(_,index)=>{
  const armorId=index+1,fit=fighters.resolve({armorId,weaponId});
@@ -48,4 +48,4 @@ const acceptedFits=Array.from({length:96},(_,index)=>{
 });
 assert.equal(createHash('sha256').update(JSON.stringify(acceptedFits)).digest('hex'),accepted.weaponFitSha256,'Accepted fits for weapon'+weaponId+' must remain exactly unchanged while reviewing the next weapon');
 }
-console.log('PASS: deployed e423b52a preserved outside the exact reviewed masks and288 MCS/Saiga fits;84 shared weapon definitions unchanged');
+console.log('PASS: deployed e423b52a preserved outside the exact reviewed masks and384 MCS/Saiga fits;84 shared weapon definitions unchanged');

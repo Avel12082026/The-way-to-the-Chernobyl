@@ -20,8 +20,8 @@
       ],
       "supportSegment": [
         [
-          1045,
-          444
+          935,
+          449
         ],
         [
           1215,
@@ -32,7 +32,7 @@
         1130,
         442
       ],
-      "supportSurface": "Ribbed black polymer fore-end; exclude the large curved magazine below x686..951.",
+      "supportSurface": "Smooth rear and ribbed front of black polymer fore-end; rear contact is on the handguard lower edge above/ahead of the magazine, never on the magazine.",
       "stockExtent": [
         16,
         377,
@@ -44,7 +44,8 @@
       "notes": [
         "Manual palm center on pistol grip; legacy fitting grip is [450, 515], and is not a trigger target.",
         "Foreground masks must preserve the visible connection between stock and receiver.",
-        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed.",
+        "2026-09-29: direct source reinspection widened contact to x935/y449 on the smooth rear handguard; ribbing-only x1045 was unnecessarily restrictive and opened sleeve seams."
       ],
       "sourceSha256": "45b280d7a24ca4b263d534339a691c990be7c204dda89e23f12c10483413938d"
     },

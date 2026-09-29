@@ -1,0 +1,3187 @@
+{
+  "weaponId": 10,
+  "name": "Сайга-12",
+  "sourceImage": "images/combat/modular/weapons/10.png",
+  "sourceTrigger": [
+    574,
+    507
+  ],
+  "sourceSupportSegment": [
+    [
+      935,
+      449
+    ],
+    [
+      1215,
+      440
+    ]
+  ],
+  "nominalContactDistance": 450,
+  "scaleBounds": [
+    0.42,
+    0.52
+  ],
+  "angleBounds": [
+    -8,
+    20
+  ],
+  "maximumSupportShift": 110,
+  "notes": [
+    "The support contact spans the smooth rear and ribbed front of the black polymer handguard, beginning ahead of the receiver. The curved magazine is never a supporting surface.",
+    "The solid stock must retain its visible connection to the receiver while its rear section tucks behind the near arm.",
+    "Only verified anatomical body contacts and hand masks are reused. Weapon transforms are calculated independently from the Saiga-12 source.",
+    "The original shared weapon PNG remains unchanged; review composites are kept outside the game.",
+    "The rear polymer handguard was inspected directly: x935/y449 lies on its smooth lower edge. Restricting contact to the ribs forced unnecessary sleeve translations. All suits retain native arm positions except19; four individually reviewed downward-carry poses use25–30 degree angles to preserve sleeve seams."
+  ],
+  "armorOverrides": {
+    "1": {
+      "trigger": [
+        580,
+        453
+      ],
+      "scale": 0.52,
+      "angle": 5.183219190464987,
+      "sourceSupport": [
+        1201.321290051732,
+        440.43967281976575
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "2": {
+      "trigger": [
+        589,
+        451
+      ],
+      "scale": 0.52,
+      "angle": 6.699594218276071,
+      "sourceSupport": [
+        1185.855506473894,
+        440.93678729191055
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "3": {
+      "trigger": [
+        582,
+        461
+      ],
+      "scale": 0.52,
+      "angle": 5.354989055825729,
+      "sourceSupport": [
+        1170.4839855859022,
+        441.43087189188174
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "4": {
+      "trigger": [
+        590,
+        425
+      ],
+      "scale": 0.52,
+      "angle": 12.620385582094485,
+      "sourceSupport": [
+        1103.7102315355178,
+        443.5771711292155
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "5": {
+      "trigger": [
+        633,
+        480
+      ],
+      "scale": 0.52,
+      "angle": 9.890094487005971,
+      "sourceSupport": [
+        1051.257895132082,
+        445.2631390850402
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "6": {
+      "trigger": [
+        611,
+        423
+      ],
+      "scale": 0.52,
+      "angle": 7.073671600527799,
+      "sourceSupport": [
+        1183.9763468474598,
+        440.99718885133166
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "7": {
+      "trigger": [
+        559,
+        383
+      ],
+      "scale": 0.5285320474119237,
+      "angle": 15.429448694734445,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "8": {
+      "trigger": [
+        552,
+        383
+      ],
+      "scale": 0.560867675815695,
+      "angle": 13.917899913101829,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "9": {
+      "trigger": [
+        548,
+        370
+      ],
+      "scale": 0.5447983645008309,
+      "angle": 10.54104774660969,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "10": {
+      "trigger": [
+        541,
+        385
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 18.45186673657723,
+      "sourceSupport": [
+        1198.5302381112779,
+        440.52938520356605
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "11": {
+      "trigger": [
+        620,
+        377
+      ],
+      "scale": 0.52,
+      "angle": 13.469133651943391,
+      "sourceSupport": [
+        1112.433001509776,
+        443.2967963800429
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "12": {
+      "trigger": [
+        646,
+        389
+      ],
+      "scale": 0.52,
+      "angle": 16.39451192012448,
+      "sourceSupport": [
+        1110.5445973457986,
+        443.35749508531364
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "13": {
+      "trigger": [
+        589,
+        395
+      ],
+      "scale": 0.52,
+      "angle": 19.948791714138736,
+      "sourceSupport": [
+        1184.2481712487913,
+        440.9884516384317
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "14": {
+      "trigger": [
+        612,
+        398
+      ],
+      "scale": 0.5199999999999999,
+      "angle": 19.20885874703082,
+      "sourceSupport": [
+        1152.1151421034351,
+        442.02129900381817
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "15": {
+      "trigger": [
+        602,
+        363
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 18.840908349288185,
+      "sourceSupport": [
+        1125.1337865430683,
+        442.88855686111566
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "16": {
+      "trigger": [
+        582,
+        409
+      ],
+      "scale": 0.52,
+      "angle": 23.314323449246302,
+      "sourceSupport": [
+        1204.8950233652956,
+        440.3248028204012
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "17": {
+      "trigger": [
+        537,
+        373
+      ],
+      "scale": 0.5918551429970249,
+      "angle": 17.306516942458906,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "18": {
+      "trigger": [
+        563,
+        389
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 14.213745238464064,
+      "sourceSupport": [
+        1160.550318417731,
+        441.7501683365729
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "19": {
+      "trigger": [
+        671,
+        390
+      ],
+      "handMasks": [
+        [
+          [
+            545,
+            412
+          ],
+          [
+            573,
+            398
+          ],
+          [
+            599,
+            382
+          ],
+          [
+            622,
+            373
+          ],
+          [
+            646,
+            377
+          ],
+          [
+            663,
+            382
+          ],
+          [
+            678,
+            388
+          ],
+          [
+            681,
+            397
+          ],
+          [
+            676,
+            403
+          ],
+          [
+            660,
+            399
+          ],
+          [
+            651,
+            399
+          ],
+          [
+            657,
+            410
+          ],
+          [
+            656,
+            425
+          ],
+          [
+            649,
+            442
+          ],
+          [
+            637,
+            455
+          ],
+          [
+            610,
+            467
+          ],
+          [
+            562,
+            471
+          ]
+        ],
+        [
+          [
+            778,
+            475
+          ],
+          [
+            781,
+            451
+          ],
+          [
+            795,
+            430
+          ],
+          [
+            815,
+            415
+          ],
+          [
+            833,
+            408
+          ],
+          [
+            838,
+            401
+          ],
+          [
+            850,
+            398
+          ],
+          [
+            859,
+            400
+          ],
+          [
+            863,
+            406
+          ],
+          [
+            861,
+            413
+          ],
+          [
+            852,
+            418
+          ],
+          [
+            861,
+            417
+          ],
+          [
+            869,
+            416
+          ],
+          [
+            873,
+            410
+          ],
+          [
+            879,
+            408
+          ],
+          [
+            885,
+            412
+          ],
+          [
+            891,
+            420
+          ],
+          [
+            894,
+            431
+          ],
+          [
+            897,
+            441
+          ],
+          [
+            894,
+            451
+          ],
+          [
+            890,
+            460
+          ],
+          [
+            884,
+            467
+          ],
+          [
+            876,
+            477
+          ],
+          [
+            865,
+            484
+          ],
+          [
+            850,
+            490
+          ],
+          [
+            835,
+            494
+          ],
+          [
+            820,
+            496
+          ],
+          [
+            804,
+            493
+          ],
+          [
+            790,
+            486
+          ]
+        ]
+      ]
+    },
+    "20": {
+      "trigger": [
+        611,
+        394
+      ],
+      "scale": 0.5199999999999999,
+      "angle": 13.620636425370988,
+      "sourceSupport": [
+        1030.1420206856149,
+        445.9418636208195
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "21": {
+      "trigger": [
+        649,
+        380
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 18.221266686603684,
+      "sourceSupport": [
+        1043.7092125491658,
+        445.50577531091966
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "22": {
+      "trigger": [
+        610,
+        502
+      ],
+      "scale": 0.5126739391672203,
+      "angle": 12.230740411666797,
+      "sourceSupport": [
+        1019.8834621268015,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "23": {
+      "trigger": [
+        703,
+        397
+      ],
+      "scale": 0.4252580915684549,
+      "angle": 16.775166336802382,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "24": {
+      "trigger": [
+        568,
+        364
+      ],
+      "scale": 0.52,
+      "angle": 13.216997633049276,
+      "sourceSupport": [
+        1212.1443199257412,
+        440.0917897166726
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "25": {
+      "trigger": [
+        601,
+        358
+      ],
+      "scale": 0.52,
+      "angle": 12.903473393187822,
+      "sourceSupport": [
+        1100.0708181777643,
+        443.6941522728576
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "26": {
+      "trigger": [
+        578,
+        499
+      ],
+      "scale": 0.52,
+      "angle": 11.67044078582221,
+      "sourceSupport": [
+        1098.977245999823,
+        443.72930280714854
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "27": {
+      "trigger": [
+        543,
+        413
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 9.236864394242348,
+      "sourceSupport": [
+        1198.3502188740272,
+        440.53517153619197
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "28": {
+      "trigger": [
+        564,
+        479
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 12.04523944691994,
+      "sourceSupport": [
+        1101.2355008420145,
+        443.6567160443638
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "29": {
+      "trigger": [
+        584,
+        385
+      ],
+      "scale": 0.5200000001838366,
+      "angle": 25.8945259317566,
+      "sourceSupport": [
+        1124.344367,
+        442.913931
+      ],
+      "fitNote": "Visually reviewed natural downward carry retains the original sleeve/torso seam and both hand contacts."
+    },
+    "30": {
+      "trigger": [
+        590,
+        434
+      ],
+      "scale": 0.5200000000993574,
+      "angle": 25.947644507634756,
+      "sourceSupport": [
+        1076.098247,
+        444.464699
+      ],
+      "fitNote": "Visually reviewed natural downward carry retains the original sleeve/torso seam and both hand contacts."
+    },
+    "31": {
+      "trigger": [
+        613,
+        508
+      ],
+      "scale": 0.52,
+      "angle": 15.022240925621588,
+      "sourceSupport": [
+        1090.7125917176818,
+        443.99495240907453
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "32": {
+      "trigger": [
+        533,
+        446
+      ],
+      "scale": 0.546598364001392,
+      "angle": 12.486928238365813,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "33": {
+      "trigger": [
+        602,
+        377
+      ],
+      "scale": 0.5200000003063018,
+      "angle": 27.582138634279506,
+      "sourceSupport": [
+        1115.62924,
+        443.19406
+      ],
+      "fitNote": "Visually reviewed natural downward carry retains the original sleeve/torso seam and both hand contacts."
+    },
+    "34": {
+      "trigger": [
+        541,
+        478
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 19.023749970135054,
+      "sourceSupport": [
+        1177.8371823848577,
+        441.1945191376296
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "35": {
+      "trigger": [
+        536,
+        453
+      ],
+      "scale": 0.52,
+      "angle": 17.60580081224896,
+      "sourceSupport": [
+        1196.5353298351392,
+        440.5935072552991
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "36": {
+      "trigger": [
+        581,
+        518
+      ],
+      "scale": 0.52,
+      "angle": 10.986637055822815,
+      "sourceSupport": [
+        1162.726346915357,
+        441.68022456343493
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "37": {
+      "trigger": [
+        598,
+        439
+      ],
+      "scale": 0.4681036078202355,
+      "angle": 19.812606439253326,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "38": {
+      "trigger": [
+        642,
+        429
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 22.812717489420407,
+      "sourceSupport": [
+        1069.3551778249116,
+        444.6814407127707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "39": {
+      "trigger": [
+        539,
+        418
+      ],
+      "scale": 0.5533070891131735,
+      "angle": 12.892853971421843,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "40": {
+      "trigger": [
+        601,
+        395
+      ],
+      "scale": 0.52,
+      "angle": 18.051446529445442,
+      "sourceSupport": [
+        1117.50002636448,
+        443.13392772399885
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "41": {
+      "trigger": [
+        527,
+        390
+      ],
+      "scale": 0.5493398963202076,
+      "angle": 12.128604590379446,
+      "sourceSupport": [
+        1215,
+        440
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "42": {
+      "trigger": [
+        601,
+        426
+      ],
+      "scale": 0.52,
+      "angle": 22.658411676979384,
+      "sourceSupport": [
+        1116.2648747322185,
+        443.1736290264644
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "43": {
+      "trigger": [
+        649,
+        483
+      ],
+      "scale": 0.4313916612917995,
+      "angle": 9.822320891064932,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "44": {
+      "trigger": [
+        614,
+        467
+      ],
+      "scale": 0.41999999999999993,
+      "angle": 18.824682744444466,
+      "sourceSupport": [
+        1001.2612834814166,
+        446.87017303095445
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "45": {
+      "trigger": [
+        690,
+        514
+      ],
+      "scale": 0.42000000000000004,
+      "angle": 12.401542754250693,
+      "sourceSupport": [
+        989.9171533808696,
+        447.23480578418634
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "46": {
+      "trigger": [
+        680,
+        521
+      ],
+      "scale": 0.3588702023283079,
+      "angle": 19.666597370735804,
+      "sourceSupport": [
+        935,
+        449
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "47": {
+      "trigger": [
+        616,
+        489
+      ],
+      "scale": 0.42,
+      "angle": 10.71016643029757,
+      "sourceSupport": [
+        1008.4458539527675,
+        446.63924040866107
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "48": {
+      "trigger": [
+        624,
+        491
+      ],
+      "scale": 0.42853756479968513,
+      "angle": 13.111668948275888,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "49": {
+      "trigger": [
+        667,
+        535
+      ],
+      "scale": 0.4200000000000001,
+      "angle": 15.815577891165578,
+      "sourceSupport": [
+        945.987838075242,
+        448.64681949043865
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "50": {
+      "trigger": [
+        628,
+        535
+      ],
+      "scale": 0.5178683754787383,
+      "angle": 2.3388217915640865,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "51": {
+      "trigger": [
+        678,
+        491
+      ],
+      "support": [
+        837,
+        480
+      ],
+      "handMasks": [
+        [
+          [
+            574,
+            497
+          ],
+          [
+            587,
+            485
+          ],
+          [
+            608,
+            467
+          ],
+          [
+            629,
+            464
+          ],
+          [
+            646,
+            466
+          ],
+          [
+            665,
+            466
+          ],
+          [
+            671,
+            470
+          ],
+          [
+            670,
+            477
+          ],
+          [
+            662,
+            483
+          ],
+          [
+            653,
+            486
+          ],
+          [
+            670,
+            484
+          ],
+          [
+            679,
+            489
+          ],
+          [
+            684,
+            496
+          ],
+          [
+            682,
+            504
+          ],
+          [
+            679,
+            507
+          ],
+          [
+            684,
+            511
+          ],
+          [
+            684,
+            518
+          ],
+          [
+            680,
+            524
+          ],
+          [
+            675,
+            527
+          ],
+          [
+            676,
+            533
+          ],
+          [
+            671,
+            541
+          ],
+          [
+            663,
+            546
+          ],
+          [
+            661,
+            552
+          ],
+          [
+            654,
+            557
+          ],
+          [
+            650,
+            563
+          ],
+          [
+            621,
+            565
+          ],
+          [
+            600,
+            560
+          ],
+          [
+            576,
+            553
+          ]
+        ],
+        [
+          [
+            757,
+            502
+          ],
+          [
+            768,
+            489
+          ],
+          [
+            789,
+            480
+          ],
+          [
+            800,
+            468
+          ],
+          [
+            807,
+            463
+          ],
+          [
+            814,
+            466
+          ],
+          [
+            818,
+            472
+          ],
+          [
+            820,
+            464
+          ],
+          [
+            826,
+            459
+          ],
+          [
+            835,
+            460
+          ],
+          [
+            840,
+            455
+          ],
+          [
+            848,
+            453
+          ],
+          [
+            854,
+            457
+          ],
+          [
+            861,
+            458
+          ],
+          [
+            867,
+            465
+          ],
+          [
+            870,
+            480
+          ],
+          [
+            867,
+            495
+          ],
+          [
+            857,
+            513
+          ],
+          [
+            842,
+            527
+          ],
+          [
+            824,
+            537
+          ],
+          [
+            804,
+            539
+          ],
+          [
+            784,
+            535
+          ],
+          [
+            767,
+            525
+          ]
+        ]
+      ],
+      "scale": 0.42000000000000004,
+      "angle": 4.9026232264639935,
+      "sourceSupport": [
+        948.9480766358874,
+        448.55166896527504
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "52": {
+      "trigger": [
+        646,
+        494
+      ],
+      "scale": 0.43207795364342677,
+      "angle": 3.92216736833262,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "53": {
+      "trigger": [
+        689,
+        451
+      ],
+      "support": [
+        874,
+        460
+      ],
+      "handMasks": [
+        [
+          [
+            594,
+            468
+          ],
+          [
+            618,
+            454
+          ],
+          [
+            640,
+            444
+          ],
+          [
+            660,
+            442
+          ],
+          [
+            678,
+            444
+          ],
+          [
+            695,
+            443
+          ],
+          [
+            706,
+            447
+          ],
+          [
+            711,
+            455
+          ],
+          [
+            711,
+            464
+          ],
+          [
+            706,
+            471
+          ],
+          [
+            707,
+            479
+          ],
+          [
+            705,
+            488
+          ],
+          [
+            697,
+            495
+          ],
+          [
+            701,
+            502
+          ],
+          [
+            696,
+            510
+          ],
+          [
+            684,
+            515
+          ],
+          [
+            683,
+            523
+          ],
+          [
+            677,
+            530
+          ],
+          [
+            660,
+            534
+          ],
+          [
+            639,
+            535
+          ],
+          [
+            616,
+            532
+          ],
+          [
+            596,
+            527
+          ]
+        ],
+        [
+          [
+            774,
+            482
+          ],
+          [
+            789,
+            467
+          ],
+          [
+            811,
+            456
+          ],
+          [
+            831,
+            452
+          ],
+          [
+            845,
+            441
+          ],
+          [
+            851,
+            432
+          ],
+          [
+            857,
+            432
+          ],
+          [
+            865,
+            442
+          ],
+          [
+            870,
+            432
+          ],
+          [
+            878,
+            428
+          ],
+          [
+            885,
+            432
+          ],
+          [
+            891,
+            443
+          ],
+          [
+            895,
+            433
+          ],
+          [
+            902,
+            435
+          ],
+          [
+            909,
+            446
+          ],
+          [
+            914,
+            458
+          ],
+          [
+            911,
+            476
+          ],
+          [
+            904,
+            490
+          ],
+          [
+            889,
+            505
+          ],
+          [
+            869,
+            516
+          ],
+          [
+            844,
+            526
+          ],
+          [
+            816,
+            531
+          ],
+          [
+            792,
+            526
+          ],
+          [
+            777,
+            514
+          ]
+        ]
+      ],
+      "scale": 0.42000000000000004,
+      "angle": 10.662204695970585,
+      "sourceSupport": [
+        1010.8360745101334,
+        446.5624118907457
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "54": {
+      "trigger": [
+        626,
+        536
+      ],
+      "scale": 0.4357595893988867,
+      "angle": 9.509248765492234,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "55": {
+      "trigger": [
+        647,
+        524
+      ],
+      "scale": 0.41999999999999993,
+      "angle": 6.949188653225446,
+      "sourceSupport": [
+        984.0900274168665,
+        447.42210626160073
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "56": {
+      "trigger": [
+        628,
+        480
+      ],
+      "support": [
+        767,
+        500
+      ],
+      "handMasks": [
+        [
+          [
+            547,
+            481
+          ],
+          [
+            560,
+            473
+          ],
+          [
+            580,
+            465
+          ],
+          [
+            601,
+            464
+          ],
+          [
+            619,
+            469
+          ],
+          [
+            628,
+            476
+          ],
+          [
+            631,
+            485
+          ],
+          [
+            628,
+            495
+          ],
+          [
+            632,
+            501
+          ],
+          [
+            629,
+            511
+          ],
+          [
+            623,
+            519
+          ],
+          [
+            623,
+            529
+          ],
+          [
+            616,
+            539
+          ],
+          [
+            603,
+            547
+          ],
+          [
+            583,
+            549
+          ],
+          [
+            563,
+            544
+          ],
+          [
+            545,
+            535
+          ]
+        ],
+        [
+          [
+            667,
+            511
+          ],
+          [
+            682,
+            495
+          ],
+          [
+            708,
+            485
+          ],
+          [
+            725,
+            479
+          ],
+          [
+            731,
+            471
+          ],
+          [
+            738,
+            469
+          ],
+          [
+            748,
+            474
+          ],
+          [
+            752,
+            466
+          ],
+          [
+            758,
+            462
+          ],
+          [
+            765,
+            465
+          ],
+          [
+            774,
+            474
+          ],
+          [
+            782,
+            471
+          ],
+          [
+            788,
+            478
+          ],
+          [
+            793,
+            493
+          ],
+          [
+            790,
+            507
+          ],
+          [
+            780,
+            520
+          ],
+          [
+            764,
+            535
+          ],
+          [
+            748,
+            543
+          ],
+          [
+            729,
+            548
+          ],
+          [
+            706,
+            548
+          ],
+          [
+            684,
+            541
+          ],
+          [
+            669,
+            530
+          ]
+        ]
+      ],
+      "scale": 0.38408126765934575,
+      "angle": 17.31521565401208,
+      "sourceSupport": [
+        935,
+        449
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "57": {
+      "trigger": [
+        678,
+        474
+      ],
+      "support": [
+        846,
+        484
+      ],
+      "scale": 0.4199999999999999,
+      "angle": 11.892982458226568,
+      "sourceSupport": [
+        970.3204633200131,
+        447.8646993932853
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "58": {
+      "trigger": [
+        700,
+        480
+      ],
+      "support": [
+        866,
+        494
+      ],
+      "scale": 0.41999999999999993,
+      "angle": 13.375753309473783,
+      "sourceSupport": [
+        966.2280199144853,
+        447.9962422170344
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "59": {
+      "trigger": [
+        609,
+        486
+      ],
+      "scale": 0.5156561204600417,
+      "angle": 13.196175936426204,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "60": {
+      "trigger": [
+        603,
+        469
+      ],
+      "handMasks": [
+        [
+          [
+            491,
+            449
+          ],
+          [
+            506,
+            442
+          ],
+          [
+            520,
+            436
+          ],
+          [
+            531,
+            435
+          ],
+          [
+            543,
+            438
+          ],
+          [
+            555,
+            441
+          ],
+          [
+            565,
+            447
+          ],
+          [
+            581,
+            450
+          ],
+          [
+            589,
+            455
+          ],
+          [
+            594,
+            461
+          ],
+          [
+            595,
+            468
+          ],
+          [
+            591,
+            474
+          ],
+          [
+            586,
+            477
+          ],
+          [
+            580,
+            479
+          ],
+          [
+            583,
+            486
+          ],
+          [
+            580,
+            493
+          ],
+          [
+            574,
+            498
+          ],
+          [
+            579,
+            502
+          ],
+          [
+            577,
+            509
+          ],
+          [
+            570,
+            514
+          ],
+          [
+            566,
+            516
+          ],
+          [
+            569,
+            522
+          ],
+          [
+            565,
+            529
+          ],
+          [
+            553,
+            533
+          ],
+          [
+            532,
+            534
+          ],
+          [
+            516,
+            532
+          ],
+          [
+            503,
+            527
+          ],
+          [
+            494,
+            522
+          ]
+        ],
+        [
+          [
+            811,
+            442
+          ],
+          [
+            825,
+            431
+          ],
+          [
+            842,
+            424
+          ],
+          [
+            860,
+            419
+          ],
+          [
+            876,
+            415
+          ],
+          [
+            891,
+            411
+          ],
+          [
+            898,
+            411
+          ],
+          [
+            903,
+            415
+          ],
+          [
+            904,
+            422
+          ],
+          [
+            900,
+            431
+          ],
+          [
+            890,
+            439
+          ],
+          [
+            883,
+            445
+          ],
+          [
+            900,
+            431
+          ],
+          [
+            904,
+            426
+          ],
+          [
+            910,
+            425
+          ],
+          [
+            914,
+            427
+          ],
+          [
+            919,
+            417
+          ],
+          [
+            925,
+            415
+          ],
+          [
+            929,
+            417
+          ],
+          [
+            934,
+            412
+          ],
+          [
+            941,
+            412
+          ],
+          [
+            946,
+            416
+          ],
+          [
+            950,
+            421
+          ],
+          [
+            950,
+            431
+          ],
+          [
+            946,
+            446
+          ],
+          [
+            938,
+            462
+          ],
+          [
+            925,
+            475
+          ],
+          [
+            909,
+            486
+          ],
+          [
+            889,
+            494
+          ],
+          [
+            866,
+            500
+          ],
+          [
+            844,
+            500
+          ],
+          [
+            824,
+            497
+          ],
+          [
+            811,
+            489
+          ]
+        ]
+      ],
+      "scale": 0.52,
+      "angle": 4.039195425227228,
+      "sourceSupport": [
+        1128.5460821990087,
+        442.77887592931756
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "61": {
+      "trigger": [
+        598,
+        454
+      ],
+      "scale": 0.4933783763220903,
+      "angle": 6.981623740492634,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "62": {
+      "trigger": [
+        667,
+        489
+      ],
+      "support": [
+        806,
+        523
+      ],
+      "handMasks": [
+        [
+          [
+            563,
+            487
+          ],
+          [
+            580,
+            480
+          ],
+          [
+            598,
+            474
+          ],
+          [
+            616,
+            469
+          ],
+          [
+            632,
+            469
+          ],
+          [
+            647,
+            474
+          ],
+          [
+            663,
+            477
+          ],
+          [
+            674,
+            481
+          ],
+          [
+            680,
+            487
+          ],
+          [
+            682,
+            494
+          ],
+          [
+            678,
+            499
+          ],
+          [
+            671,
+            501
+          ],
+          [
+            676,
+            507
+          ],
+          [
+            678,
+            513
+          ],
+          [
+            674,
+            520
+          ],
+          [
+            668,
+            523
+          ],
+          [
+            673,
+            528
+          ],
+          [
+            672,
+            535
+          ],
+          [
+            666,
+            541
+          ],
+          [
+            659,
+            543
+          ],
+          [
+            660,
+            548
+          ],
+          [
+            653,
+            554
+          ],
+          [
+            637,
+            557
+          ],
+          [
+            618,
+            557
+          ],
+          [
+            599,
+            554
+          ],
+          [
+            581,
+            550
+          ],
+          [
+            562,
+            546
+          ]
+        ],
+        [
+          [
+            743,
+            516
+          ],
+          [
+            757,
+            504
+          ],
+          [
+            772,
+            497
+          ],
+          [
+            793,
+            493
+          ],
+          [
+            810,
+            489
+          ],
+          [
+            818,
+            489
+          ],
+          [
+            822,
+            492
+          ],
+          [
+            823,
+            498
+          ],
+          [
+            819,
+            504
+          ],
+          [
+            811,
+            509
+          ],
+          [
+            815,
+            510
+          ],
+          [
+            820,
+            516
+          ],
+          [
+            824,
+            503
+          ],
+          [
+            830,
+            499
+          ],
+          [
+            835,
+            502
+          ],
+          [
+            837,
+            493
+          ],
+          [
+            842,
+            490
+          ],
+          [
+            847,
+            491
+          ],
+          [
+            850,
+            496
+          ],
+          [
+            854,
+            496
+          ],
+          [
+            857,
+            501
+          ],
+          [
+            857,
+            514
+          ],
+          [
+            851,
+            532
+          ],
+          [
+            840,
+            545
+          ],
+          [
+            824,
+            556
+          ],
+          [
+            807,
+            564
+          ],
+          [
+            787,
+            568
+          ],
+          [
+            766,
+            567
+          ],
+          [
+            749,
+            562
+          ],
+          [
+            737,
+            551
+          ],
+          [
+            734,
+            536
+          ]
+        ]
+      ],
+      "scale": 0.3913738684185195,
+      "angle": 22.872325148677266,
+      "sourceSupport": [
+        935,
+        449
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "63": {
+      "trigger": [
+        670,
+        452
+      ],
+      "scale": 0.455961878415182,
+      "angle": 17.860880270458654,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "64": {
+      "trigger": [
+        574,
+        474
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 0.39910124420153353,
+      "sourceSupport": [
+        1175.4798235904498,
+        441.27029138459267
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "65": {
+      "trigger": [
+        629,
+        554
+      ],
+      "scale": 0.52,
+      "angle": 6.958615937470534,
+      "sourceSupport": [
+        1046.944051399747,
+        445.4017983478653
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "66": {
+      "trigger": [
+        709,
+        463
+      ],
+      "handMasks": [
+        [
+          [
+            598,
+            455
+          ],
+          [
+            615,
+            446
+          ],
+          [
+            632,
+            436
+          ],
+          [
+            653,
+            430
+          ],
+          [
+            670,
+            425
+          ],
+          [
+            675,
+            426
+          ],
+          [
+            683,
+            431
+          ],
+          [
+            698,
+            434
+          ],
+          [
+            709,
+            432
+          ],
+          [
+            716,
+            433
+          ],
+          [
+            719,
+            438
+          ],
+          [
+            718,
+            445
+          ],
+          [
+            714,
+            451
+          ],
+          [
+            705,
+            453
+          ],
+          [
+            683,
+            450
+          ],
+          [
+            669,
+            448
+          ],
+          [
+            654,
+            446
+          ],
+          [
+            668,
+            448
+          ],
+          [
+            683,
+            450
+          ],
+          [
+            708,
+            454
+          ],
+          [
+            720,
+            460
+          ],
+          [
+            723,
+            468
+          ],
+          [
+            722,
+            477
+          ],
+          [
+            717,
+            482
+          ],
+          [
+            712,
+            483
+          ],
+          [
+            717,
+            487
+          ],
+          [
+            717,
+            495
+          ],
+          [
+            713,
+            503
+          ],
+          [
+            708,
+            505
+          ],
+          [
+            708,
+            517
+          ],
+          [
+            703,
+            525
+          ],
+          [
+            697,
+            526
+          ],
+          [
+            699,
+            533
+          ],
+          [
+            692,
+            541
+          ],
+          [
+            679,
+            544
+          ],
+          [
+            657,
+            542
+          ],
+          [
+            637,
+            536
+          ],
+          [
+            620,
+            532
+          ],
+          [
+            608,
+            528
+          ],
+          [
+            599,
+            508
+          ]
+        ],
+        [
+          [
+            798,
+            505
+          ],
+          [
+            807,
+            495
+          ],
+          [
+            820,
+            490
+          ],
+          [
+            835,
+            488
+          ],
+          [
+            855,
+            488
+          ],
+          [
+            870,
+            485
+          ],
+          [
+            879,
+            486
+          ],
+          [
+            884,
+            490
+          ],
+          [
+            884,
+            498
+          ],
+          [
+            881,
+            504
+          ],
+          [
+            875,
+            508
+          ],
+          [
+            863,
+            512
+          ],
+          [
+            860,
+            513
+          ],
+          [
+            872,
+            518
+          ],
+          [
+            880,
+            524
+          ],
+          [
+            886,
+            510
+          ],
+          [
+            892,
+            505
+          ],
+          [
+            899,
+            506
+          ],
+          [
+            903,
+            511
+          ],
+          [
+            908,
+            500
+          ],
+          [
+            916,
+            495
+          ],
+          [
+            922,
+            495
+          ],
+          [
+            926,
+            492
+          ],
+          [
+            931,
+            492
+          ],
+          [
+            935,
+            496
+          ],
+          [
+            937,
+            499
+          ],
+          [
+            941,
+            499
+          ],
+          [
+            944,
+            503
+          ],
+          [
+            945,
+            510
+          ],
+          [
+            942,
+            528
+          ],
+          [
+            935,
+            541
+          ],
+          [
+            924,
+            548
+          ],
+          [
+            911,
+            554
+          ],
+          [
+            890,
+            561
+          ],
+          [
+            864,
+            566
+          ],
+          [
+            839,
+            564
+          ],
+          [
+            817,
+            564
+          ],
+          [
+            803,
+            561
+          ],
+          [
+            792,
+            548
+          ],
+          [
+            790,
+            527
+          ]
+        ]
+      ],
+      "scale": 0.41999999982600633,
+      "angle": 29.61693227944045,
+      "sourceSupport": [
+        1002.645922,
+        446.825667
+      ],
+      "fitNote": "Visually reviewed natural downward carry retains the original sleeve/torso seam and both hand contacts."
+    },
+    "67": {
+      "trigger": [
+        604,
+        519
+      ],
+      "scale": 0.52,
+      "angle": -5.079731091868562,
+      "sourceSupport": [
+        1067.9925696357566,
+        444.7252388331364
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "68": {
+      "trigger": [
+        630,
+        499
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 8.897386852140436,
+      "sourceSupport": [
+        1087.759787758611,
+        444.0898639649018
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "69": {
+      "trigger": [
+        603,
+        425
+      ],
+      "support": [
+        827,
+        449
+      ],
+      "scale": 0.5006267676561322,
+      "angle": 13.871347471706104,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "70": {
+      "trigger": [
+        620,
+        454
+      ],
+      "scale": 0.52,
+      "angle": 6.099779161340491,
+      "sourceSupport": [
+        1091.385870959872,
+        443.97331129057557
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "71": {
+      "trigger": [
+        621,
+        491
+      ],
+      "handMasks": [
+        [
+          [
+            529,
+            488
+          ],
+          [
+            537,
+            481
+          ],
+          [
+            550,
+            477
+          ],
+          [
+            559,
+            475
+          ],
+          [
+            576,
+            476
+          ],
+          [
+            587,
+            478
+          ],
+          [
+            595,
+            478
+          ],
+          [
+            605,
+            481
+          ],
+          [
+            620,
+            487
+          ],
+          [
+            630,
+            494
+          ],
+          [
+            634,
+            501
+          ],
+          [
+            633,
+            507
+          ],
+          [
+            628,
+            513
+          ],
+          [
+            620,
+            513
+          ],
+          [
+            613,
+            508
+          ],
+          [
+            599,
+            498
+          ],
+          [
+            605,
+            508
+          ],
+          [
+            611,
+            516
+          ],
+          [
+            611,
+            525
+          ],
+          [
+            607,
+            532
+          ],
+          [
+            603,
+            534
+          ],
+          [
+            603,
+            541
+          ],
+          [
+            600,
+            548
+          ],
+          [
+            594,
+            553
+          ],
+          [
+            593,
+            560
+          ],
+          [
+            586,
+            568
+          ],
+          [
+            572,
+            575
+          ],
+          [
+            551,
+            576
+          ],
+          [
+            535,
+            568
+          ],
+          [
+            529,
+            556
+          ],
+          [
+            526,
+            548
+          ]
+        ],
+        [
+          [
+            810,
+            476
+          ],
+          [
+            820,
+            462
+          ],
+          [
+            837,
+            451
+          ],
+          [
+            850,
+            446
+          ],
+          [
+            871,
+            443
+          ],
+          [
+            878,
+            440
+          ],
+          [
+            882,
+            441
+          ],
+          [
+            885,
+            445
+          ],
+          [
+            885,
+            451
+          ],
+          [
+            882,
+            456
+          ],
+          [
+            874,
+            461
+          ],
+          [
+            862,
+            465
+          ],
+          [
+            859,
+            468
+          ],
+          [
+            864,
+            471
+          ],
+          [
+            878,
+            476
+          ],
+          [
+            883,
+            477
+          ],
+          [
+            883,
+            466
+          ],
+          [
+            887,
+            458
+          ],
+          [
+            892,
+            457
+          ],
+          [
+            897,
+            461
+          ],
+          [
+            898,
+            467
+          ],
+          [
+            899,
+            454
+          ],
+          [
+            903,
+            447
+          ],
+          [
+            909,
+            444
+          ],
+          [
+            914,
+            445
+          ],
+          [
+            918,
+            450
+          ],
+          [
+            922,
+            446
+          ],
+          [
+            928,
+            443
+          ],
+          [
+            933,
+            445
+          ],
+          [
+            935,
+            452
+          ],
+          [
+            940,
+            452
+          ],
+          [
+            944,
+            456
+          ],
+          [
+            944,
+            464
+          ],
+          [
+            940,
+            479
+          ],
+          [
+            933,
+            495
+          ],
+          [
+            919,
+            508
+          ],
+          [
+            902,
+            518
+          ],
+          [
+            883,
+            523
+          ],
+          [
+            861,
+            527
+          ],
+          [
+            840,
+            529
+          ],
+          [
+            824,
+            529
+          ],
+          [
+            814,
+            525
+          ],
+          [
+            809,
+            515
+          ],
+          [
+            808,
+            496
+          ]
+        ]
+      ],
+      "scale": 0.52,
+      "angle": 6.033295344006547,
+      "sourceSupport": [
+        1047.068626765286,
+        445.3977941396872
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "72": {
+      "trigger": [
+        662,
+        445
+      ],
+      "scale": 0.44080734012844086,
+      "angle": 11.224073164337845,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "73": {
+      "trigger": [
+        631,
+        491
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 8.163999208152779,
+      "sourceSupport": [
+        1025.6964883978171,
+        446.0847557300702
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "74": {
+      "trigger": [
+        633,
+        447
+      ],
+      "scale": 0.4554254556774492,
+      "angle": 19.01094789903523,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "75": {
+      "trigger": [
+        617,
+        470
+      ],
+      "scale": 0.5101294921541314,
+      "angle": 11.752547380739614,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "76": {
+      "trigger": [
+        589,
+        451
+      ],
+      "scale": 0.52,
+      "angle": 9.533633142426128,
+      "sourceSupport": [
+        1159.7487433595152,
+        441.7759332491584
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "77": {
+      "trigger": [
+        594,
+        480
+      ],
+      "scale": 0.5199999999999999,
+      "angle": 8.48731388914109,
+      "sourceSupport": [
+        1103.1291851015992,
+        443.5958476217343
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "78": {
+      "trigger": [
+        601,
+        516
+      ],
+      "scale": 0.52,
+      "angle": 5.843659809286019,
+      "sourceSupport": [
+        1097.2058916530934,
+        443.78623919686487
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "79": {
+      "trigger": [
+        669,
+        442
+      ],
+      "scale": 0.44519935886724094,
+      "angle": 22.208272156513676,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "80": {
+      "trigger": [
+        590,
+        493
+      ],
+      "scale": 0.5199999999999999,
+      "angle": 3.806369652590066,
+      "sourceSupport": [
+        1082.4951090303987,
+        444.25908578116577
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "81": {
+      "trigger": [
+        706,
+        493
+      ],
+      "scale": 0.41999999999999993,
+      "angle": 10.26351293444407,
+      "sourceSupport": [
+        1015.5075296740856,
+        446.41225797476153
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "82": {
+      "trigger": [
+        689,
+        476
+      ],
+      "scale": 0.4577831714892601,
+      "angle": 7.477711238124334,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "83": {
+      "trigger": [
+        626,
+        480
+      ],
+      "scale": 0.52,
+      "angle": 13.067606942768213,
+      "sourceSupport": [
+        1102.1953951666833,
+        443.62586229821375
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "84": {
+      "trigger": [
+        731,
+        474
+      ],
+      "scale": 0.42000000000000004,
+      "angle": 10.315901195589893,
+      "sourceSupport": [
+        948.1574430008541,
+        448.57708218925825
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "85": {
+      "trigger": [
+        677,
+        482
+      ],
+      "scale": 0.4399999999999999,
+      "angle": 7.755843905420696,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "86": {
+      "trigger": [
+        638,
+        500
+      ],
+      "scale": 0.5027136238996521,
+      "angle": 10.289402793815272,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "87": {
+      "trigger": [
+        648,
+        487
+      ],
+      "scale": 0.4200000000000001,
+      "angle": 18.87389769045161,
+      "sourceSupport": [
+        1016.2674997210466,
+        446.3878303661092
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "88": {
+      "trigger": [
+        640,
+        470
+      ],
+      "scale": 0.4593339246354307,
+      "angle": 12.473446409982381,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "89": {
+      "trigger": [
+        627,
+        478
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 13.61957860914128,
+      "sourceSupport": [
+        1077.2633505438614,
+        444.42724944680447
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "90": {
+      "trigger": [
+        669,
+        483
+      ],
+      "scale": 0.48345464633378826,
+      "angle": 21.855962240433694,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "91": {
+      "trigger": [
+        702,
+        412
+      ],
+      "support": [
+        836,
+        448
+      ],
+      "scale": 0.3794867233096155,
+      "angle": 24.165229545689822,
+      "sourceSupport": [
+        935,
+        449
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "92": {
+      "trigger": [
+        576,
+        464
+      ],
+      "scale": 0.5200000000000001,
+      "angle": 9.71345919397765,
+      "sourceSupport": [
+        1146.2725973019913,
+        442.20909508672173
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "93": {
+      "trigger": [
+        621,
+        477
+      ],
+      "scale": 0.4802519914676481,
+      "angle": 9.612001952869567,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "94": {
+      "trigger": [
+        672,
+        482
+      ],
+      "scale": 0.41999999999999993,
+      "angle": 0.3624351691718782,
+      "sourceSupport": [
+        990.2968649590798,
+        447.22260076917246
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "95": {
+      "trigger": [
+        675,
+        486
+      ],
+      "scale": 0.4532952053682859,
+      "angle": 13.382589620561427,
+      "sourceSupport": [
+        1019.8834621268016,
+        446.27160300306707
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    },
+    "96": {
+      "trigger": [
+        712,
+        458
+      ],
+      "support": [
+        846,
+        486
+      ],
+      "scale": 0.37440656314484905,
+      "angle": 20.92984784989112,
+      "sourceSupport": [
+        935,
+        449
+      ],
+      "fitNote": "Exact two-contact fit to this weapon handguard; original support arm remains connected without translation."
+    }
+  }
+}

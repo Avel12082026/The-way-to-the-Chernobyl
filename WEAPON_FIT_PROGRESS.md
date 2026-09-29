@@ -26,6 +26,8 @@ live index/renderer bytes matched, and Telegram loaded the new script version.
 Saiga-410, weapon **20**, is accepted on all 96 suits; see
 `asset_sources/combat_weapon_fits/20-review.json`. Its source PNG remains
 unchanged and the accepted 114/32 fits are preserved exactly.
+Published as `c5877de40346eb8470b797668aea21566ad5ddf1`: live index and
+renderer bytes matched the release; the existing Telegram game reloaded successfully.
 
 These releases correct both hand contacts, detached stock ends, shifted-arm
 seams and demonstrated cropped fingertips. Other weapons and shared armor
@@ -33,9 +35,20 @@ images/definitions retain their previous fits. No source PNG was added or edited
 
 ## Remaining queue
 
-Publish and verify 20, then continue with **10, Saiga-12**, followed by the
-remaining heavy weapons in ascending ID order, then the pistol poses. The
-other 110 weapons are not certified by the 114/32/20 reviews or automated coverage.
+Current weapon is **10, Saiga-12**. Its contact/seam refinement is ready for
+publication and has been visually reviewed on all96 suits. See `10-review.json`.
+The shared PNG, all other weapon fits and renderer code remain unchanged.
+The reviewed support surface now includes the smooth rear handguard, reducing
+support-arm translations from38 to1 and eliminating clipped sleeve gaps.
+
+**Do not mark10 fully finished or advance to11 yet:** source poses43,45–56,
+60,61,64 hold the stock against chest/upper arm below the shoulder pocket.
+Hand contacts and sleeve continuity are reviewed, but the requested strict
+shoulder placement needs a separate pose adjustment. Save and preserve the
+current contact improvements while finishing this detail.
+
+After completing10, continue remaining heavy IDs ascending, then pistol poses.
+The other109 weapons are not certified by the 114/32/20 or10 contact reviews.
 
 `asset_sources/combat_weapon_fits/heavy-source-anchors.json` records the inspected
 source contact surfaces for all 87 heavy weapons. This is source inspection,
@@ -48,8 +61,8 @@ Use the existing modular source PNGs, preserving their hashes. The review cache
 contains `ID-heavy.png`, `hands/ID-heavy.png`, and `weapons/ID.png`.
 
 ```sh
-node tools/fit_combat_weapon.cjs --weapon 20 --report /tmp/20-fit.json
-node tools/review_weapon_fits.cjs --weapon 20 --cache /path/to/cache --out /tmp/20-review
+node tools/fit_combat_weapon.cjs --weapon 10 --report /tmp/10-fit.json
+node tools/review_weapon_fits.cjs --weapon 10 --cache /path/to/cache --out /tmp/10-review
 node tests/combat_weapon_contacts.test.cjs
 node tests/combat_fighters.test.cjs
 node tests/combat_fighters_baseline.test.cjs
