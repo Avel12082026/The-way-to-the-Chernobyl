@@ -24,6 +24,8 @@
   let zoneMapOrigin = 'camp';
   let zoneMapLoadSeq = 0;
   let zoneMapTravelling = false;
+  let zoneTravelRoute = null;
+  let zoneRouteFinishPending = false;
   let worldPositionRestored = false;
   let worldPositionRestoring = false;
   let worldPositionTimer = 0;
@@ -385,22 +387,129 @@
     window.getShopCatalog = limited;
   }
 
+  function renderZoneRouteProgress() {
+    const raid=document.getElementById('raidScreen');
+    if(!raid)return;
+    let el=document.getElementById('zoneRouteProgress');
+    if(!zoneTravelRoute){if(el)el.remove();return;}
+    if(!el){
+      el=document.createElement('div');
+      el.id='zoneRouteProgress';
+      el.setAttribute('role','status');
+      el.style.cssText='margin:8px 0;padding:8px 10px;border:1px solid #75663f;border-radius:7px;background:#17160f;color:#e6d39b;font-weight:700;text-align:center;';
+      const nav=document.getElementById('raidNavButtons');
+      (nav?.parentElement||raid).insertBefore(el,nav||null);
+    }
+    const from=ZONE_MAP_NAMES[Number(zoneTravelRoute.fromLocation)]||('Локация '+zoneTravelRoute.fromLocation);
+    const to=ZONE_MAP_NAMES[Number(zoneTravelRoute.toLocation)]||('Локация '+zoneTravelRoute.toLocation);
+    const wins=Math.max(0,Number(zoneTravelRoute.wins)||0);
+    const required=Math.max(1,Number(zoneTravelRoute.requiredWins)||10);
+    el.textContent='Переход '+from+' → '+to+' · Победы '+wins+'/'+required+' · Враги '+(Number(zoneTravelRoute.enemyTier)||1)+' тира';
+  }
+
+  function setZoneTravelRoute(route) {
+    zoneTravelRoute=route?{
+      fromLocation:Number(route.fromLocation),
+      toLocation:Number(route.toLocation),
+      enemyTier:Number(route.enemyTier)||Number(route.toLocation)||1,
+      wins:Math.max(0,Number(route.wins)||0),
+      requiredWins:Math.max(1,Number(route.requiredWins)||10),
+      completed:!!route.completed
+    }:null;
+    window.__zoneTravelRoute=zoneTravelRoute?{...zoneTravelRoute}:null;
+    renderZoneRouteProgress();
+    return zoneTravelRoute;
+  }
+
+  async function finishZoneTravelRoute(route) {
+    if(zoneRouteFinishPending||!route?.completed)return;
+    zoneRouteFinishPending=true;
+    const target=Number(route.toLocation);
+    try{
+      setZoneTravelRoute(null);
+      setZoneRaidKind('');
+      if(typeof raidActive!=='undefined')raidActive=false;
+      if(typeof raidSessionToken!=='undefined')raidSessionToken=null;
+      if(typeof currentEnemy!=='undefined')currentEnemy=null;
+      if(typeof currentAnomaly!=='undefined')currentAnomaly=null;
+      if(typeof currentLuckyFind!=='undefined')currentLuckyFind=null;
+      if(typeof isFriendlyEncounterActive!=='undefined')isFriendlyEncounterActive=false;
+      if(typeof battleTurn!=='undefined')battleTurn=0;
+      if(typeof clearBattleUiAndRestoreNav==='function')clearBattleUiAndRestoreNav();
+      const el=ensureZoneMapScreen();
+      document.querySelectorAll('.screen').forEach(screen=>screen.classList.remove('active'));
+      if(main)main.style.display='none';
+      el.classList.add('active');
+      document.body.classList.add('zone-map-visible');
+      if(typeof raidLogs!=='undefined'){
+        raidLogs.push('✅ Путь пройден: '+(Number(route.requiredWins)||10)+'/'+(Number(route.requiredWins)||10)+' побед.');
+        if(typeof updateRaidLog==='function')updateRaidLog();
+      }
+      await travelToZoneLocation(target);
+    }finally{zoneRouteFinishPending=false;}
+  }
+
+  function inspectZoneRoutePayload(payload) {
+    if(!payload||typeof payload!=='object')return;
+    if(payload.died){setZoneTravelRoute(null);return;}
+    if(payload.route){
+      const route=setZoneTravelRoute(payload.route);
+      if(route?.completed)setTimeout(()=>void finishZoneTravelRoute(route),500);
+    }
+  }
+
+  async function restoreZoneTravelRoute(initData) {
+    try{
+      const response=await window.__zoneRouteNativeFetch(SERVER_URL+'/api/zone-route/status',{
+        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({initData})
+      });
+      const payload=await response.json();
+      if(payload?.success&&payload.route)setZoneTravelRoute(payload.route);
+      else setZoneTravelRoute(null);
+    }catch(_){}
+  }
+
   function patchZoneRaidFetch() {
     if (window.__zoneRaidFetchPatched || typeof window.fetch !== 'function') return;
     const nativeFetch = window.fetch.bind(window);
+    window.__zoneRouteNativeFetch=nativeFetch;
     window.fetch = function(input, init) {
       const url = typeof input === 'string' ? input : (input && input.url) || '';
-      if (zoneRaidKind && /\/api\/raid\/step(?:\?|$)/.test(url) && (!input || typeof input === 'string')) {
+      let request;
+      if (zoneTravelRoute && /\/api\/raid\/step(?:\?|$)/.test(url) && (!input || typeof input === 'string')) {
+        const nextUrl=url.replace('/api/raid/step','/api/zone-route/step');
+        let body={};try{body=JSON.parse(init?.body||'{}');}catch(_){}
+        request=nativeFetch(nextUrl,{
+          ...(init||{}),
+          headers:{...(init?.headers||{}),'Content-Type':'application/json'},
+          body:JSON.stringify({...body,fromLocation:zoneTravelRoute.fromLocation,toLocation:zoneTravelRoute.toLocation})
+        });
+      } else if (zoneRaidKind && /\/api\/raid\/step(?:\?|$)/.test(url) && (!input || typeof input === 'string')) {
         const nextUrl = url.replace('/api/raid/step', '/api/raid/zone-step');
         let body = {};
         try { body = JSON.parse(init?.body || '{}'); } catch (_) {}
-        return nativeFetch(nextUrl, {
+        request=nativeFetch(nextUrl, {
           ...(init || {}),
           headers: {...(init?.headers || {}), 'Content-Type':'application/json'},
           body: JSON.stringify({...body, zoneKind: zoneRaidKind, zoneLocation})
         });
+      } else {
+        request=nativeFetch(input,init);
       }
-      return nativeFetch(input, init);
+      const observedUrl=url;
+      request.then(response=>{
+        try{
+          const clone=response.clone();
+          clone.json().then(payload=>{
+            if(/\/api\/raid\/start(?:\?|$)/.test(observedUrl)&&payload?.success){
+              let initData='';try{initData=JSON.parse(init?.body||'{}').initData||'';}catch(_){}
+              setTimeout(()=>void restoreZoneTravelRoute(initData),250);
+            }
+            if(zoneTravelRoute||payload?.route||payload?.died)inspectZoneRoutePayload(payload);
+          }).catch(()=>{});
+        }catch(_){}
+      }).catch(()=>{});
+      return request;
     };
     window.__zoneRaidFetchPatched = true;
   }
@@ -1153,6 +1262,48 @@
     }
   }
 
+  async function beginZoneTravelRoute(point) {
+    if(zoneMapTravelling||zoneRouteFinishPending)return;
+    const target=Number(point?.targetLocation||0);
+    const from=Number(zoneLocation);
+    if(!ZONE_MAP_ASSETS[target]||target===from)return;
+    if(typeof startRaid!=='function'){
+      if(typeof showGameAlert==='function')showGameAlert('Не удалось начать переход: рейд недоступен.');
+      return;
+    }
+    setZoneRaidKind('');
+    await startRaid();
+    if(typeof raidActive==='undefined'||!raidActive||typeof raidSessionToken==='undefined'||!raidSessionToken)return;
+    try{
+      const response=await window.__zoneRouteNativeFetch(SERVER_URL+'/api/zone-route/start',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          initData:window.Telegram?.WebApp?.initData,
+          raidToken:raidSessionToken,
+          fromLocation:from,
+          toLocation:target
+        })
+      });
+      const payload=await response.json();
+      if(!payload?.success){
+        if(typeof showGameAlert==='function')showGameAlert(payload?.error||'Не удалось начать переход.');
+        return;
+      }
+      const route=setZoneTravelRoute(payload.route);
+      if(typeof raidLogs!=='undefined'){
+        const fromName=ZONE_MAP_NAMES[from]||('Локация '+from);
+        const toName=ZONE_MAP_NAMES[target]||('Локация '+target);
+        raidLogs.push('🚶 Переход '+fromName+' → '+toName+'. Нужно победить '+(route?.requiredWins||10)+' противников '+(route?.enemyTier||target)+' тира.');
+        raidLogs.push('По пути могут встретиться аномалии, торговцы и случайный хабар.');
+        if(typeof updateRaidLog==='function')updateRaidLog();
+      }
+      renderZoneRouteProgress();
+    }catch(error){
+      console.error('[zone route start]',error);
+      if(typeof showGameAlert==='function')showGameAlert('Ошибка соединения при начале перехода.');
+    }
+  }
+
   async function activateZoneMapPoint(point) {
     const kind = point?.kind || '';
     if (kind === 'camp') {
@@ -1185,58 +1336,38 @@
 
     if (kind === 'transition') {
       const target = Number(point?.targetLocation || 0);
-      if (target === 1) {
-        await travelToZoneLocation(1);
-        return;
-      }
-      if (target === 2) {
-        if (zoneLocation === 1 && !firstLocationToSecondReady()) {
-          if (typeof showGameAlert === 'function') {
-            showGameAlert('У меня ещё недостаточно хорошего снаряжения, чтобы идти на Свалку.');
+      if (window.__zoneMapLegacyDirectTravelTest === true) {
+        if (target === 1) { await travelToZoneLocation(1); return; }
+        if (target === 2) {
+          if (zoneLocation === 1 && !firstLocationToSecondReady()) {
+            if (typeof showGameAlert === 'function') showGameAlert('У меня ещё недостаточно хорошего снаряжения, чтобы идти на Свалку.');
+            return;
           }
-          return;
+          await travelToZoneLocation(2); return;
         }
-        await travelToZoneLocation(2);
-        return;
-      }
-      if (target === 3) {
-        if (!lastNinePistolsReady()) {
-          if (typeof showGameAlert === 'function') {
-            showGameAlert('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.');
+        if (target === 3) {
+          if (!lastNinePistolsReady()) {
+            if (typeof showGameAlert === 'function') showGameAlert('Чтобы попасть на НИИ Агропром, должны быть открыты последние 9 пистолетов.');
+            return;
           }
-          return;
+          await travelToZoneLocation(3); return;
         }
-        await travelToZoneLocation(3);
-        return;
-      }
-      if (target === 4) {
-        if (zoneLocation !== 5 && !secondPistolDecadeReady()) {
-          if (typeof showGameAlert === 'function') {
-            showGameAlert('Чтобы попасть в Росток, должна быть открыта вторая десятка пистолетов.');
+        if (target === 4) {
+          if (zoneLocation !== 5 && !secondPistolDecadeReady()) {
+            if (typeof showGameAlert === 'function') showGameAlert('Чтобы попасть в Росток, должна быть открыта вторая десятка пистолетов.');
+            return;
           }
-          return;
+          await travelToZoneLocation(4); return;
         }
-        await travelToZoneLocation(4);
-        return;
-      }
-      if (target === 5) {
-        await travelToZoneLocation(5);
-        return;
-      }
-      if (target === 6) {
-        await travelToZoneLocation(6);
-        return;
+        if (target === 5) { await travelToZoneLocation(5); return; }
+        if (target === 6) { await travelToZoneLocation(6); return; }
       }
       if (point?.future) {
-        if (!secondPistolDecadeReady()) {
-          if (typeof showGameAlert === 'function') {
-            showGameAlert('Переход откроется, когда станет доступна вторая десятка пистолетов.');
-          }
-          return;
-        }
         if (typeof showGameAlert === 'function') showGameAlert('Локация ещё не открыта сталкерами.');
         return;
       }
+      if (!target) return;
+      await beginZoneTravelRoute(point);
       return;
     }
 
@@ -1891,7 +2022,7 @@
     get current(){return typeof player==='object'&&player?.worldPosition ? {...player.worldPosition} : null;}
   });
   window.ZoneMap = Object.freeze({
-    version: '0.8.0',
+    version: '0.9.0',
     open: openZoneMap,
     close: closeZoneMap,
     continueRaid: continueFromZoneMap,
@@ -1903,9 +2034,11 @@
     setLocation: setZoneLocation,
     firstLocationToSecondReady,
     secondPistolDecadeReady,
-    lastNinePistolsReady
+    lastNinePistolsReady,
+    get travelRoute(){return zoneTravelRoute?{...zoneTravelRoute}:null;},
+    beginTravel:beginZoneTravelRoute
   });
-  window.BunkerMenu = {version: '1.22.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, openYantarWarehouse, closeYantarCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.23.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, openYantarWarehouse, closeYantarCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();

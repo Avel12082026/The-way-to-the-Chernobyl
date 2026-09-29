@@ -36,6 +36,7 @@ async def main():
         await page.add_style_tag(content=css)
         await page.evaluate("""()=>{
           window.SERVER_URL='http://game.test';
+          window.__zoneMapLegacyDirectTravelTest=true;
           window.Telegram={WebApp:{initData:'test-init-data'}};
           window.__zoneMapTravelMs=90;
           window.__calls={start:0,back:0,end:0,open:[],alerts:[],fetches:[]};
@@ -77,7 +78,7 @@ async def main():
           };
         }""")
         await page.add_script_tag(content=js)
-        await page.wait_for_function("window.BunkerMenu?.version==='1.22.0' && window.ZoneMap?.version==='0.8.0'")
+        await page.wait_for_function("window.BunkerMenu?.version==='1.23.0' && window.ZoneMap?.version==='0.9.0'")
 
         zone=page.locator('#zoneMapScreen')
         await page.locator('#bunkerRaid').click()
@@ -417,6 +418,7 @@ async def main():
         await page2.add_style_tag(content=css)
         await page2.evaluate("""()=>{
           window.SERVER_URL='http://game.test';
+          window.__zoneMapLegacyDirectTravelTest=true;
           window.Telegram={WebApp:{initData:'test-init-data'}};
           window.raidActive=false;window.currentEnemy=null;window.currentAnomaly=null;window.currentLuckyFind=null;
           window.expNeededForLevel=()=>100;
