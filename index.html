@@ -761,12 +761,12 @@ button:active {filter:brightness(1.18);}
 <script src="images/combat/layout.js?v=mutants-side-20260925-v3"></script>
 <script src="images/combat/environments-v2.js?v=combat-environments-flashes-v1"></script>
 <script src="images/combat/effects.js?v=combat-environments-flashes-v1"></script>
-<script src="images/combat/scene.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/scene.js?v=combat-bursts-20260929-v1"></script>
 <script src="images/combat/fighters.js?v=combat-fitting-10-20260929-v1"></script>
 <script src="images/combat/mutants-side/manifest.js?v=mutants-side-20260925-v3"></script>
-<script src="images/combat/side-scene.js?v=mutants-side-20260925-v3"></script>
-<script src="audio/combat-sounds.js?v=gunshots-20260929-v1"></script>
-<script src="audio/combat-audio.js?v=gunshots-20260929-v2"></script>
+<script src="images/combat/side-scene.js?v=combat-bursts-20260929-v1"></script>
+<script src="audio/combat-sounds.js?v=combat-bursts-20260929-v1"></script>
+<script src="audio/combat-audio.js?v=combat-bursts-20260929-v1"></script>
 <link rel="stylesheet" href="images/anomaly/scene.css?v=2">
 <script src="images/anomaly/assets.js"></script>
 <script src="images/anomaly/detector-layout.js?v=1"></script>
@@ -5167,7 +5167,7 @@ function startBattle(enemy) {
             `;
         } else {
             battleDiv.innerHTML = `
-                <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px; grid-column: 1 / -1;">Ход врага...</button>
+                <button disabled style="background: #333; border: none; padding: 12px; color: #888; border-radius: 8px; grid-column: 1 / -1;">Ход выполняется…</button>
             `;
         }
 
@@ -5209,6 +5209,10 @@ function startBattle(enemy) {
                     raidLogs.push('❌ Ошибка побега: '+(x.error||'сервер отказал'));
                     battleTurn=0; updateRaidLog(); renderBattleButtons(); return;
                 }
+                if(!x.escaped){
+                    await presentCombatResult(enemyAtAction,x,'escape');
+                    if(currentEnemy!==enemyAtAction)return;
+                }
                 if(x.state) applyPveServerState(x.state);
                 if(Number(x.radiationDamage)>0) raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
                 if(x.died){
@@ -5227,7 +5231,6 @@ function startBattle(enemy) {
                     endBattle(true);
                     return;
                 }
-                window.CombatScene?.react(enemyAtAction.battleToken,x,'escape');
                 raidLogs.push('Побег не удался!');
                 if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)
                     raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
@@ -5267,6 +5270,8 @@ function startBattle(enemy) {
                 battleTurn=0; updateRaidLog(); renderBattleButtons(); return;
             }
 
+            await presentCombatResult(enemyAtAction,x,action);
+            if(currentEnemy!==enemyAtAction)return;
             if(x.state) applyPveServerState(x.state);
 
             if(Number(x.radiationDamage)>0)
@@ -5282,7 +5287,6 @@ function startBattle(enemy) {
                 raidLogs.push(`Вы использовали «${x.usedMedkit.name}»! +${Number(x.usedMedkit.restore)||0} HP. Осталось аптечек в бою: ${Number(x.usedMedkit.remaining)||0}.`);
             }
 
-            window.CombatScene?.react(enemyAtAction.battleToken,x,action);
             if(x.enemyTurn && Number(x.enemyTurn.damage)>0){
                 raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}. Ваше HP: ${Math.max(0,Number(player.health)||0)}`);
             }else if(x.enemyTurn && !x.victoryReady){
@@ -5321,6 +5325,13 @@ function startBattle(enemy) {
         }
     }
 
+    async function presentCombatResult(enemy,result,action) {
+        // One server turn can contain several audiovisual shots. Keep its result
+        // off screen until the full presentation finishes; never send extra turns.
+        try { await window.CombatScene?.react(enemy.battleToken,result,action); }
+        catch(error) { console.warn('[combat presentation]',error); }
+    }
+
     // Единая логика ответного хода врага — вызывается после ЛЮБОГО действия игрока во время боя
     // (атака, аптечка в бою, использование расходника из рюкзака или быстрого слота), чтобы враг
     // не мог оставаться безнаказанным, пока игрок бесплатно лечится в обход боевых кнопок
@@ -5336,7 +5347,11 @@ function startBattle(enemy) {
             });
             const x=await r.json();
             if(enemy&&currentEnemy!==enemy)return null;
-            return {battleToken,x};
+            if(enemy&&x.success){
+                await presentCombatResult(enemy,x,'consumable');
+                if(currentEnemy!==enemy)return null;
+            }
+            return {battleToken,x,enemy};
         }finally{
             if(battleToken&&currentEnemy===enemy){battleTurn=0;renderBattleButtons();}
         }
@@ -5354,8 +5369,9 @@ function startBattle(enemy) {
             const x=await r.json();
             if(currentEnemy!==enemyAtAction)return;
             if(!x.success){raidLogs.push('❌ '+(x.error||'Ход не выполнен'));battleTurn=0;renderBattleButtons();updateRaidLog();return;}
+            await presentCombatResult(enemyAtAction,x,'wait');
+            if(currentEnemy!==enemyAtAction)return;
             if(x.state)applyPveServerState(x.state);
-            window.CombatScene?.react(enemyAtAction.battleToken,x,'wait');
             if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
             if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy.name} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
             else if(x.enemyTurn)raidLogs.push(`${currentEnemy.name} промахнулся!`);
@@ -6705,10 +6721,11 @@ function startBattle(enemy) {
                 await waitForSaveQueue();
                 const outcome=await requestCombatConsumable(itemName);
             if(!outcome)return;
-            const {battleToken,x}=outcome;if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
+            const {battleToken,x,enemy}=outcome;
+            if(enemy&&currentEnemy!==enemy)return;
+            if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
                 if(x.state)applyEquipmentServerState(x.state);
                 if(battleToken){
-                    window.CombatScene?.react(battleToken,x,'consumable');
                     if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
                     if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);
                     else if(x.enemyTurn)raidLogs.push(`${currentEnemy?.name||'Враг'} промахнулся!`);
@@ -7089,10 +7106,11 @@ function startBattle(enemy) {
             await waitForSaveQueue();
             const outcome=await requestCombatConsumable(itemName);
             if(!outcome)return;
-            const {battleToken,x}=outcome;if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
+            const {battleToken,x,enemy}=outcome;
+            if(enemy&&currentEnemy!==enemy)return;
+            if(!x.success){showGameAlert(x.error||'Предмет не использован');return;}
             if(x.state)applyEquipmentServerState(x.state);
             if(battleToken){
-                window.CombatScene?.react(battleToken,x,'consumable');
                 raidLogs.push(`Использован(а) ${itemName}!`);
                 if(Number(x.radiationDamage)>0)raidLogs.push(`☢️ Лучевая болезнь: -${Number(x.radiationDamage)} HP`);
                 if(x.enemyTurn&&Number(x.enemyTurn.damage)>0)raidLogs.push(`${currentEnemy?.name||'Враг'} атаковал! Урон: ${Number(x.enemyTurn.damage)}.`);

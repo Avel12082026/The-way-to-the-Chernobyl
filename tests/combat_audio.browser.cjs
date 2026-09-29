@@ -11,7 +11,7 @@ const root = path.resolve(__dirname, '..');
 const bank = require(path.join(root, 'audio/combat-sounds.js'));
 
 function transportTone() {
-  const sampleRate = 22050, samples = sampleRate * 12;
+  const sampleRate = 22050, samples = sampleRate * 60;
   const wav = Buffer.alloc(44 + samples * 2);
   wav.write('RIFF', 0); wav.writeUInt32LE(wav.length - 8, 4); wav.write('WAVEfmt ', 8);
   wav.writeUInt32LE(16, 16); wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22);
@@ -28,18 +28,19 @@ const fixture = `<!doctype html><html lang="ru"><meta charset="utf-8">
 <div id="mainMenu"><button id="trustedUnlock" style="min-height:48px">Начать</button></div>
 <script>
 window.SERVER_URL=location.origin;
-window.__starts=[];window.__originalCalls=[];window.__trustedPointer=false;
+window.__starts=[];window.__ends=[];window.__sourceSequence=0;window.__pulses=[];window.__rendered=[];window.__originalCalls=[];window.__trustedPointer=false;
 document.addEventListener('pointerdown',event=>{window.__trustedPointer=event.isTrusted;},{capture:true});
 const NativeAudio=window.Audio;
 window.Audio=function(...args){const audio=new NativeAudio(...args);window.__musicAudio=audio;return audio;};
 window.Audio.prototype=NativeAudio.prototype;
 const originalCreate=AudioContext.prototype.createBufferSource;
 AudioContext.prototype.createBufferSource=function(...args){
- const source=originalCreate.apply(this,args),start=source.start;
- source.start=function(...params){window.__starts.push({at:performance.now(),duration:source.buffer?.duration,rate:source.playbackRate.value});return start.apply(this,params);};
+ const source=originalCreate.apply(this,args),start=source.start;let record;
+ source.addEventListener('ended',()=>{if(record)window.__ends.push({id:record.id,at:performance.now()});});
+ source.start=function(...params){record={id:++window.__sourceSequence,at:performance.now(),duration:source.buffer?.duration,rate:source.playbackRate.value};window.__starts.push(record);return start.apply(this,params);};
  return source;
 };
-window.CombatScene={show(next){__originalCalls.push(['show',next]);return true;},react(...args){__originalCalls.push(['react',...args]);return 'visual';},hide(){__originalCalls.push(['hide']);}};
+window.CombatScene={show(next){__originalCalls.push(['show',next]);return true;},pulse(token,side){__pulses.push({token,side,at:performance.now()});return true;},react(...args){__originalCalls.push(['react',...args]);__rendered.push({at:performance.now(),externalShots:args[3]?.externalShots});return 'visual';},hide(){__originalCalls.push(['hide']);}};
 </script>
 <script src="/audio/combat-sounds.js"></script><script src="/audio/combat-audio.js"></script>
 <script src="/audio/menu-music.js"></script>
@@ -129,28 +130,107 @@ async function main() {
     const mutedMusic = await page.evaluate(async () => ({ musicPaused: __musicAudio.paused, played: await CombatAudio.play(1), active: CombatAudio.getState().activeVoices }));
     assert(mutedMusic.musicPaused && mutedMusic.played && mutedMusic.active > 0, 'Muting soundtrack leaves effects playable');
 
-    const npc = await page.evaluate(async () => {
-      CombatAudio.stop(); __starts.length = 0;
+    await page.locator('#menuMusicEnabled').check();
+    await page.waitForFunction(() => !__musicAudio.paused);
+    const burstCases = [[86, 3, 'pistol'], [17, 6, 'machine gun'], [13, 2, 'rifle'], [4, 2, 'sawed-off'], [10, 3, 'repeating shotgun']];
+    const burstReports = [];
+    for (const [weaponId, shots, kind] of burstCases) {
+      assert.equal(bank.weapons[weaponId].burst.shots, shots, kind + ' catalog burst');
+      const burst = await page.evaluate(async ({ weaponId }) => {
+        CombatAudio.stop();
+        const token = 'burst-' + weaponId;
+        CombatScene.show({ weaponId, enemy: { battleToken: token, kind: 'npc' }, enemyGear: { weaponId: 0 } });
+        await CombatAudio.preload(weaponId);
+        __starts.length = 0; __ends.length = 0; __pulses.length = 0; __rendered.length = 0;
+        const musicBefore = __musicAudio.currentTime, startedAt = performance.now();
+        let hp = 100, dead = false;
+        const result = { success: true, playerDamage: 100, victoryReady: true };
+        const completion = CombatScene.react(token, result, 'attack');
+        const duplicate = CombatScene.react(token, result, 'attack');
+        const before = { hp, dead, renders: __rendered.length };
+        const status = await completion;
+        // Models the client's awaited state-application boundary; the real client
+        // request count and database behavior are tested separately.
+        hp = 0; dead = true;
+        return { status, samePromise: completion === duplicate, before, hp, dead, startedAt, completedAt: performance.now(), starts: __starts.slice(), ends: __ends.filter(end=>__starts.some(start=>start.id===end.id)), pulses: __pulses.slice(), rendered: __rendered.slice(), musicBefore, musicAfter: __musicAudio.currentTime, musicPaused: __musicAudio.paused, reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches };
+      }, { weaponId });
+      assert.equal(burst.samePromise, true, kind + ' duplicate result shares completion');
+      assert.deepEqual(burst.before, { hp: 100, dead: false, renders: 0 }, kind + ' preserves the live enemy while the burst is pending');
+      assert.equal(burst.status.cancelled, false); assert.equal(burst.hp, 0); assert.equal(burst.dead, true);
+      assert.equal(burst.starts.length, shots, kind + ' real source count');
+      assert.equal(burst.ends.length, shots, kind + ' completion waits for every actual source end');
+      assert.equal(burst.pulses.length, shots, kind + ' flash count');
+      assert.equal(burst.rendered.length, 1, kind + ' applies visual result once');
+      assert.equal(burst.rendered[0].externalShots, true, kind + ' suppresses the old single-shot renderer');
+      for (let i = 0; i < shots; i++) {
+        assert.equal(burst.pulses[i].side, 'player');
+        assert(Math.abs(burst.pulses[i].at - burst.starts[i].at) < 35, kind + ' flash starts with its real sound');
+        const end = burst.ends.find(item => item.id === burst.starts[i].id);
+        assert(end.at - burst.starts[i].at >= burst.starts[i].duration / burst.starts[i].rate * 1000 - 80, kind + ' does not cut off an earlier shot tail');
+        if (i) assert(Math.abs(burst.starts[i].at - burst.starts[i - 1].at - bank.weapons[weaponId].burst.intervalMs) < 80, kind + ' follows its catalog cadence');
+      }
+      const lastEnd = Math.max(...burst.ends.map(end => end.at));
+      assert(burst.rendered[0].at >= lastEnd - 5, kind + ' renderer waits for full audio tails');
+      assert(burst.completedAt >= burst.rendered[0].at, kind + ' caller may apply HP only after renderer completion');
+      assert(burst.completedAt >= burst.pulses.at(-1).at + 100, kind + ' final muzzle flash completes first');
+      assert(!burst.musicPaused && burst.musicAfter > burst.musicBefore + .3, kind + ' does not interrupt soundtrack transport');
+      assert(burst.reducedMotion, 'Burst coordinator remains active with reduced motion');
+      burstReports.push({ weaponId, kind, shots, intervalMs: bank.weapons[weaponId].burst.intervalMs, completionMs: Math.round(burst.completedAt - burst.startedAt) });
+    }
+
+    for (const [playerWeapon, enemyWeapon] of [[86, 13], [17, 17]]) {
+    const playerShots = bank.weapons[playerWeapon].burst.shots, enemyShots = bank.weapons[enemyWeapon].burst.shots;
+    const npc = await page.evaluate(async ({ playerWeapon, enemyWeapon }) => {
+      CombatAudio.stop();
+      CombatScene.show({ weaponId: playerWeapon, enemy: { battleToken: 'npc-burst', kind: 'npc' }, enemyGear: { weaponId: enemyWeapon } });
+      await Promise.all([CombatAudio.preload(playerWeapon), CombatAudio.preload(enemyWeapon)]);
+      __starts.length = 0; __ends.length = 0; __pulses.length = 0; __rendered.length = 0;
       const result = { success: true, playerDamage: 0, enemyTurn: { hit: false, damage: 0 } };
-      const returnValue = CombatScene.react('browser-fight', result, 'attack');
-      const immediate = __starts.length, pending = CombatAudio.getState().pendingShots;
-      CombatScene.react('browser-fight', result, 'attack');
-      await new Promise(resolve => setTimeout(resolve, 330));
-      return { returnValue, immediate, pending, starts: __starts.slice(), reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches };
+      const completion = CombatScene.react('npc-burst', result, 'attack');
+      const samePromise = completion === CombatScene.react('npc-burst', result, 'attack');
+      const status = await completion;
+      return { status, samePromise, starts: __starts.slice(), ends: __ends.filter(end=>__starts.some(start=>start.id===end.id)), pulses: __pulses.slice(), rendered: __rendered.slice() };
+    }, { playerWeapon, enemyWeapon });
+    assert(npc.samePromise); assert.equal(npc.status.cancelled, false);
+    assert.equal(npc.starts.length, playerShots + enemyShots); assert.equal(npc.ends.length, playerShots + enemyShots); assert.equal(npc.pulses.length, playerShots + enemyShots); assert.equal(npc.rendered.length, 1);
+    assert.deepEqual(npc.pulses.map(pulse => pulse.side), [...Array(playerShots).fill('player'), ...Array(enemyShots).fill('enemy')]);
+    const replyDelay = npc.pulses[playerShots].at - npc.pulses[playerShots - 1].at;
+    assert(replyDelay >= 200 && replyDelay < 500, 'NPC series begins after the final player shot plus its reply delay');
+    for (let i = 0; i < npc.starts.length; i++) {
+      assert(Math.abs(npc.pulses[i].at - npc.starts[i].at) < 35, 'NPC and player flashes match real sound starts');
+      const end = npc.ends.find(item => item.id === npc.starts[i].id);
+      assert(end.at - npc.starts[i].at >= npc.starts[i].duration / npc.starts[i].rate * 1000 - 80, 'Both six-shot machine-gun bursts retain every audio tail');
+    }
+    }
+
+    await page.locator('#combatSoundEnabled').uncheck();
+    const silentBurst = await page.evaluate(async () => {
+      CombatAudio.stop();
+      CombatScene.show({ weaponId: 17, enemy: { battleToken: 'silent-burst', kind: 'npc' }, enemyGear: { weaponId: 0 } });
+      __starts.length = 0; __pulses.length = 0; __rendered.length = 0;
+      const musicBefore = __musicAudio.currentTime;
+      const status = await CombatScene.react('silent-burst', { success: true, playerDamage: 100, victoryReady: true }, 'attack');
+      return { status, starts: __starts.length, pulses: __pulses.slice(), renders: __rendered.length, completedAt: performance.now(), musicBefore, musicAfter: __musicAudio.currentTime };
     });
-    assert.equal(npc.returnValue, 'visual'); assert.equal(npc.immediate, 1); assert.equal(npc.pending, 1);
-    assert.equal(npc.starts.length, 2, 'A repeated result does not duplicate shots');
-    assert(npc.starts[1].at - npc.starts[0].at >= 200 && npc.starts[1].at - npc.starts[0].at < 500, 'NPC reply follows the player after its actual delay');
-    assert(npc.reducedMotion, 'Effects work when reduced motion is selected');
+    assert.equal(silentBurst.status.cancelled, false); assert.equal(silentBurst.starts, 0);
+    assert.equal(silentBurst.pulses.length, 6); assert.equal(silentBurst.renders, 1);
+    assert(silentBurst.completedAt >= silentBurst.pulses.at(-1).at + 60, 'Muting effects preserves the complete visual burst');
+    assert(silentBurst.musicAfter > silentBurst.musicBefore + .3, 'Muted effects do not interrupt soundtrack');
+    await page.locator('#combatSoundEnabled').check();
 
     const hiddenReply = await page.evaluate(async () => {
-      CombatAudio.stop(); __starts.length = 0;
-      CombatScene.react('browser-fight', { success: true, playerDamage: 5, enemyTurn: { hit: true, damage: 4 } }, 'attack');
+      CombatAudio.stop();
+      CombatScene.show({ weaponId: 86, enemy: { battleToken: 'cancel-burst', kind: 'npc' }, enemyGear: { weaponId: 13 } });
+      __starts.length = 0; __pulses.length = 0;
+      const completion = CombatScene.react('cancel-burst', { success: true, playerDamage: 5, enemyTurn: { hit: true, damage: 4 } }, 'attack');
+      const deadline = performance.now() + 1000;
+      while (!__starts.length && performance.now() < deadline) await new Promise(resolve => setTimeout(resolve, 5));
       CombatScene.hide();
-      await new Promise(resolve => setTimeout(resolve, 320));
-      return { count: __starts.length, pending: CombatAudio.getState().pendingShots };
+      const status = await completion;
+      await new Promise(resolve => setTimeout(resolve, 350));
+      return { status, count: __starts.length, pulses: __pulses.length, pending: CombatAudio.getState().pendingShots };
     });
-    assert.deepEqual(hiddenReply, { count: 1, pending: 0 }, 'Hiding battle cancels the delayed NPC sound');
+    assert.deepEqual(hiddenReply, { status: { cancelled: true }, count: 1, pulses: 1, pending: 0 }, 'Hiding battle settles the caller and cancels every future shot and flash');
 
     for (const [selector, value] of [['#combatSoundVolume', '37'], ['#menuMusicVolume', '41']]) {
       await page.locator(selector).evaluate((element, next) => { element.value = next; element.dispatchEvent(new Event('input', { bubbles: true })); }, value);
@@ -171,7 +251,7 @@ async function main() {
     assert.equal(await page.locator('#combatSoundVolume').inputValue(), '37');
     assert.equal(await page.locator('#menuMusicVolume').inputValue(), '41');
     assert.deepEqual(errors, []); assert.deepEqual(failedRequests, []);
-    console.log(JSON.stringify({ passed: true, realMp3FilesDecoded: decoded.length, soundFamilies: Object.keys(bank.profiles).length, firearmsMapped: Object.keys(bank.weapons).length, trustedGestureUnlock: true, overlappingEffects: true, independentMusicAndEffects: true, npcDelayAndCancellation: true, reducedMotion: true, settingsPersistence: true, mobileViewport: '320x480', musicFixture: '12-second local PCM transport tone; production ambient files not exercised' }, null, 2));
+    console.log(JSON.stringify({ passed: true, realMp3FilesDecoded: decoded.length, soundFamilies: Object.keys(bank.profiles).length, firearmsMapped: Object.keys(bank.weapons).length, trustedGestureUnlock: true, overlappingEffects: true, independentMusicAndEffects: true, bursts: burstReports, realSoundAndFlashTiming: true, stateApplicationAfterFullAudioTails: true, npcDelayAndCancellation: true, reducedMotion: true, settingsPersistence: true, mobileViewport: '320x480', musicFixture: '60-second local PCM transport tone; production ambient files not exercised' }, null, 2));
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));

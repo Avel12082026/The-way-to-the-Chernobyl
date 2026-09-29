@@ -1,7 +1,7 @@
 (function(root){
 'use strict';
 // A separate effects bus: the soundtrack owns its own Audio element and settings.
-const doc=root.document,STORE='zone.combatSound',MAX_BUFFERS=24,MAX_VOICES=10,MAX_LATE_MS=400;
+const doc=root.document,STORE='zone.combatSound',MAX_BUFFERS=24,MAX_VOICES=16,MAX_LATE_MS=400,MAX_PRESENTATION_MS=5000,FLASH_MS=130;
 // Inline previews can use about:blank, which cannot resolve relative URLs.
 // A real script URL remains authoritative for production assets/CDN paths.
 const siteRoot=(()=>{
@@ -13,9 +13,9 @@ const siteRoot=(()=>{
 })();
 let settings={enabled:true,volume:.65};
 try{const saved=JSON.parse(root.localStorage?.getItem(STORE)||'null');if(saved){settings.enabled=saved.enabled!==false;const volume=Number(saved.volume);if(Number.isFinite(volume))settings.volume=Math.max(0,Math.min(1,volume));}}catch(_){}
-let context=null,bus=null,limiter=null,active=null,epoch=0,unsupported=false;
-const buffers=new Map(),voices=new Set(),pending=new Map(),seen=new WeakSet(),attached=new WeakSet();
-const stats={played:0,dropped:0,errors:0,lastError:'',lastWeaponId:0};
+let context=null,bus=null,limiter=null,active=null,epoch=0,audioEpoch=0,unsupported=false;
+const buffers=new Map(),voices=new Set(),pending=new Map(),seen=new WeakMap(),attached=new WeakSet(),presentations=new Set();
+const stats={played:0,dropped:0,errors:0,lastError:'',lastWeaponId:0,completedPresentations:0,cancelledPresentations:0};
 const clock=()=>root.performance?.now?.()??Date.now();
 const levelOrOne=value=>value==null||!Number.isFinite(Number(value))?1:Number(value);
 function bank(){return root.COMBAT_SOUND_BANK;}
@@ -68,27 +68,30 @@ function preload(weaponId){
  if(!description||!ensureContext())return Promise.resolve(false);
  return Promise.all(description.profile.files.slice(0,4).map(file=>loadBuffer(sourceUrl(description,file)).promise)).then(loaded=>loaded.some(Boolean));
 }
-function cancelPending(){
- epoch++;
- for(const [timer,resolve] of pending){root.clearTimeout(timer);resolve(false);}
- pending.clear();
+function schedule(callback,delay,presentation,onCancel=()=>{}){
+ const timer=root.setTimeout(()=>{pending.delete(timer);presentation?.timers.delete(timer);callback();},Math.max(0,delay));
+ pending.set(timer,()=>{root.clearTimeout(timer);pending.delete(timer);presentation?.timers.delete(timer);onCancel();});
+ presentation?.timers.add(timer);return timer;
 }
+function wait(delay,presentation){return new Promise(resolve=>schedule(()=>resolve(true),delay,presentation,()=>resolve(false)));}
+function cancelPending(){epoch++;for(const presentation of Array.from(presentations))finishPresentation(presentation,true);for(const cancel of Array.from(pending.values()))cancel();}
 function removeVoice(voice){
+ if(voice.ended)return;voice.ended=true;
  voices.delete(voice);
  try{voice.source.disconnect();voice.gain.disconnect();}catch(_){}
+ voice.resolveEnd();
 }
-function stop(){
- cancelPending();
- for(const voice of Array.from(voices)){try{voice.source.stop();}catch(_){}removeVoice(voice);}
-}
+function stopVoice(voice){if(voice.ended)return;try{voice.source.stop();}catch(_){}removeVoice(voice);}
+function silence(){audioEpoch++;for(const voice of Array.from(voices))stopVoice(voice);}
+function stop(){cancelPending();silence();}
 function persist(){
  try{root.localStorage?.setItem(STORE,JSON.stringify(settings));}catch(_){}
  if(bus)bus.gain.value=settings.enabled?settings.volume:0;
  if(root.CustomEvent)root.dispatchEvent?.(new root.CustomEvent('combat-audio-settings',{detail:getSettings()}));
 }
 function getSettings(){return {...settings};}
-function setEnabled(enabled){settings.enabled=!!enabled;if(!settings.enabled)stop();persist();return getSettings();}
-function setVolume(volume){const next=Number(volume);if(Number.isFinite(next)){settings.volume=Math.max(0,Math.min(1,next));if(!settings.volume)stop();persist();}return getSettings();}
+function setEnabled(enabled){settings.enabled=!!enabled;if(!settings.enabled)silence();persist();return getSettings();}
+function setVolume(volume){const next=Number(volume);if(Number.isFinite(next)){settings.volume=Math.max(0,Math.min(1,next));if(!settings.volume)silence();persist();}return getSettings();}
 function unlock(){
  const audioContext=ensureContext();if(!audioContext)return Promise.resolve(false);
  try{return Promise.resolve(audioContext.state!=='running'?audioContext.resume():undefined).then(()=>audioContext.state==='running').catch(error=>{recordError(error);return false;});}catch(error){recordError(error);return Promise.resolve(false);}
@@ -96,7 +99,7 @@ function unlock(){
 function startVoice(description,buffer,options,requestEpoch,requestedAt){
  if(!buffer||requestEpoch!==epoch||doc?.hidden||!settings.enabled||settings.volume<=0||context?.state!=='running'||clock()-requestedAt>MAX_LATE_MS){stats.dropped++;return false;}
  try{
-  while(voices.size>=MAX_VOICES){const oldest=voices.values().next().value;try{oldest.source.stop();}catch(_){}removeVoice(oldest);}
+  while(voices.size>=MAX_VOICES)stopVoice(voices.values().next().value);
   const source=context.createBufferSource(),gain=context.createGain();
   source.buffer=buffer;
   const rate=Number(description.weapon.rate)||1;
@@ -104,24 +107,26 @@ function startVoice(description,buffer,options,requestEpoch,requestedAt){
   const level=levelOrOne(description.profile.gain)*levelOrOne(description.weapon.gain)*levelOrOne(options.gain);
   gain.gain.value=Math.max(0,Math.min(2,level));
   source.connect(gain);gain.connect(bus);
-  const voice={source,gain};voices.add(voice);source.onended=()=>removeVoice(voice);
-  source.start();stats.played++;stats.lastWeaponId=description.weaponId;return true;
+  let resolveEnd;const finished=new Promise(resolve=>{resolveEnd=resolve;});
+  const voice={source,gain,finished,resolveEnd,ended:false,durationMs:buffer.duration/source.playbackRate.value*1000};
+  voices.add(voice);source.onended=()=>removeVoice(voice);
+  try{source.start();}catch(error){removeVoice(voice);throw error;}
+  stats.played++;stats.lastWeaponId=description.weaponId;return voice;
  }catch(error){recordError(error);return false;}
 }
 function play(weaponId,options={}){
- const description=describe(weaponId),requestEpoch=epoch;
+ const description=describe(weaponId),requestEpoch=epoch,requestAudioEpoch=audioEpoch;
  if(!description||doc?.hidden||!settings.enabled||settings.volume<=0||!ensureContext()||context.state!=='running'){stats.dropped++;return Promise.resolve(false);}
  function fire(){
-  if(requestEpoch!==epoch||doc?.hidden){stats.dropped++;return Promise.resolve(false);}
+  if(requestEpoch!==epoch||requestAudioEpoch!==audioEpoch||doc?.hidden){stats.dropped++;return Promise.resolve(false);}
   const file=description.profile.files[Math.floor(Math.random()*description.profile.files.length)],entry=loadBuffer(sourceUrl(description,file)),requestedAt=clock();
-  // Cached shots start synchronously, before a fatal combat result closes the scene.
-  if(entry.buffer)return Promise.resolve(startVoice(description,entry.buffer,options,requestEpoch,requestedAt));
-  return entry.promise.then(buffer=>startVoice(description,buffer,options,requestEpoch,requestedAt));
+  if(entry.buffer)return Promise.resolve(!!startVoice(description,entry.buffer,options,requestEpoch,requestedAt));
+  return entry.promise.then(buffer=>requestAudioEpoch===audioEpoch&&!!startVoice(description,buffer,options,requestEpoch,requestedAt));
  }
  const delay=Math.max(0,Math.min(1000,Number(options.delayMs)||0));
  if(!delay)return fire();
  return new Promise(resolve=>{
-  const timer=root.setTimeout(()=>{pending.delete(timer);fire().then(resolve);},delay);pending.set(timer,resolve);
+  schedule(()=>fire().then(resolve),delay,null,()=>resolve(false));
  });
 }
 function rememberScene(next){
@@ -130,26 +135,89 @@ function rememberScene(next){
  active=token?{token,weaponId:Number(next.weaponId)||0,enemyWeaponId:next.enemy?.kind==='mutant'?0:Number(next.enemyGear?.weaponId)||0}:null;
  if(active){preload(active.weaponId);preload(active.enemyWeaponId);}
 }
-function react(token,result,action){
- if(!active||token!==active.token||!result?.success||typeof result!=='object'||seen.has(result))return;
- seen.add(result);
- if(doc?.hidden)return;
- const playerShot=action==='attack'&&Object.prototype.hasOwnProperty.call(result,'playerDamage');
- if(playerShot)play(active.weaponId);
- // Damage-zero misses still fire. A radiation-only death has no enemy attack.
- const enemyShot=active.enemyWeaponId>0&&!!result.enemyTurn&&!result.victoryReady&&(!result.died||Number(result.enemyTurn.damage)>0);
- if(enemyShot)play(active.enemyWeaponId,{gain:.78,delayMs:playerShot&&!result.died?240:0});
+function current(presentation){return !presentation.settled&&presentation.epoch===epoch&&active?.token===presentation.token&&!doc?.hidden;}
+function finishPresentation(presentation,cancelled){
+ if(presentation.settled)return;
+ cancelled=!!cancelled||!current(presentation);presentation.settled=true;
+ for(const timer of Array.from(presentation.timers))pending.get(timer)?.();
+ presentations.delete(presentation);
+ if(cancelled){for(const voice of presentation.voices)stopVoice(voice);stats.cancelledPresentations++;}
+ else{
+  stats.completedPresentations++;
+  try{presentation.originalReact.call(presentation.scene,presentation.token,presentation.result,presentation.action,{externalShots:true});}catch(error){recordError(error);}
+ }
+ presentation.resolve({cancelled});
+}
+function burst(weaponId){
+ const description=describe(weaponId);if(!description)return null;
+ const sequence=description.weapon.burst||{};
+ return {description,shots:Math.max(1,Math.min(8,Math.floor(Number(sequence.shots)||1))),intervalMs:Math.max(60,Math.min(1000,Number(sequence.intervalMs)||180))};
+}
+function readyBuffers(description){return description.profile.files.map(file=>buffers.get(sourceUrl(description,file))?.buffer).filter(Boolean);}
+function prepare(presentation,series){
+ if(!settings.enabled||settings.volume<=0||context?.state!=='running')return Promise.resolve();
+ const loads=series.filter(Boolean).filter(item=>!readyBuffers(item.description).length).map(item=>preload(item.description.weaponId));
+ if(!loads.length)return Promise.resolve();
+ return new Promise(resolve=>{
+  const timer=schedule(resolve,MAX_LATE_MS,presentation,resolve);
+  Promise.all(loads).then(()=>{pending.get(timer)?.();resolve();});
+ });
+}
+function pulse(presentation,series,side){
+ if(!current(presentation))return;
+ const available=readyBuffers(series.description),buffer=available[Math.floor(Math.random()*available.length)];
+ const voice=startVoice(series.description,buffer,{gain:side==='enemy'?.78:1},presentation.epoch,clock());
+ if(voice){presentation.voices.add(voice);presentation.ends.push(voice.finished);}
+ // This is the single timing source for a muzzle flash and its audible impulse.
+ try{presentation.scene.pulse?.(presentation.token,side);}catch(error){recordError(error);}
+ presentation.flashUntil=clock()+FLASH_MS;
+}
+async function runPresentation(presentation,playerSeries,enemySeries){
+ await prepare(presentation,[playerSeries,enemySeries]);
+ if(!current(presentation))return;
+ const events=[];
+ if(playerSeries)for(let i=0;i<playerSeries.shots;i++)events.push({at:i*playerSeries.intervalMs,series:playerSeries,side:'player'});
+ const enemyDelay=playerSeries?(playerSeries.shots-1)*playerSeries.intervalMs+240:0;
+ if(enemySeries)for(let i=0;i<enemySeries.shots;i++)events.push({at:enemyDelay+i*enemySeries.intervalMs,series:enemySeries,side:'enemy'});
+ if(!events.length){finishPresentation(presentation,false);return;}
+ let remaining=events.length;
+ function fire(event){
+  if(!current(presentation))return;
+  pulse(presentation,event.series,event.side);
+  if(--remaining===0)Promise.all(presentation.ends).then(async()=>{
+   if(!current(presentation))return;
+   const delay=Math.max(0,presentation.flashUntil-clock());
+   if(delay&&!await wait(delay,presentation))return;
+   finishPresentation(presentation,false);
+  });
+ }
+ for(const event of events){if(event.at===0)fire(event);else schedule(()=>fire(event),event.at,presentation);}
+}
+function present(scene,originalReact,token,result,action){
+ if(result&&typeof result==='object'&&seen.has(result))return seen.get(result);
+ if(!active||token!==active.token||!result?.success||typeof result!=='object'||doc?.hidden){
+  const skipped=Promise.resolve({cancelled:true});if(result&&typeof result==='object')seen.set(result,skipped);return skipped;
+ }
+ let resolve;const promise=new Promise(done=>{resolve=done;});seen.set(result,promise);
+ const presentation={scene,originalReact,token,result,action,resolve,epoch,timers:new Set(),voices:new Set(),ends:[],flashUntil:0,settled:false};
+ presentations.add(presentation);
+ const playerSeries=action==='attack'&&Object.prototype.hasOwnProperty.call(result,'playerDamage')?burst(active.weaponId):null;
+ // Misses still fire; radiation-only deaths contain no actual enemy attack.
+ const enemySeries=active.enemyWeaponId>0&&!!result.enemyTurn&&!result.victoryReady&&(!result.died||Number(result.enemyTurn.damage)>0)?burst(active.enemyWeaponId):null;
+ schedule(()=>{for(const voice of presentation.voices)stopVoice(voice);finishPresentation(presentation,false);},MAX_PRESENTATION_MS,presentation);
+ runPresentation(presentation,playerSeries,enemySeries).catch(error=>{recordError(error);finishPresentation(presentation,false);});
+ return promise;
 }
 function attach(scene=root.CombatScene){
  if(!scene||attached.has(scene)||typeof scene.show!=='function'||typeof scene.react!=='function')return false;
  attached.add(scene);
  const originalShow=scene.show,originalReact=scene.react,originalHide=scene.hide;
  scene.show=function(next){rememberScene(next);return originalShow.apply(this,arguments);};
- scene.react=function(token,result,action){react(token,result,action);return originalReact.apply(this,arguments);};
+ scene.react=function(token,result,action){return present(this,originalReact,token,result,action);};
  scene.hide=function(){active=null;cancelPending();return originalHide?.apply(this,arguments);};
  return true;
 }
-function getState(){return {supported:!unsupported,contextState:context?.state||'uninitialized',limiterEnabled:!!limiter,settings:getSettings(),activeToken:active?.token||null,cachedBuffers:buffers.size,activeVoices:voices.size,pendingShots:pending.size,...stats};}
+function getState(){return {supported:!unsupported,contextState:context?.state||'uninitialized',limiterEnabled:!!limiter,settings:getSettings(),activeToken:active?.token||null,cachedBuffers:buffers.size,activeVoices:voices.size,pendingShots:pending.size,activePresentations:presentations.size,...stats};}
 root.CombatAudio={getSettings,setEnabled,setVolume,unlock,stop,preload,play,getState,attach};
 doc?.addEventListener('pointerdown',unlock,{passive:true,capture:true});
 doc?.addEventListener('keydown',unlock,{capture:true});

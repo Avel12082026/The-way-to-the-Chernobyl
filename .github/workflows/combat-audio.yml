@@ -2,9 +2,9 @@ name: Combat audio
 on:
   push:
     branches: [main]
-    paths: ['audio/**', 'index.html', 'tests/combat_audio*', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
+    paths: ['audio/**', 'images/combat/*scene.js', 'index.html', 'tests/combat_audio*', 'tests/combat_effects_scene.test.cjs', 'tests/combat_legacy_pulses.test.cjs', 'tests/combat_turns.test.cjs', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
   pull_request:
-    paths: ['audio/**', 'index.html', 'tests/combat_audio*', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
+    paths: ['audio/**', 'images/combat/*scene.js', 'index.html', 'tests/combat_audio*', 'tests/combat_effects_scene.test.cjs', 'tests/combat_legacy_pulses.test.cjs', 'tests/combat_turns.test.cjs', 'tests/combat_sound_catalog.test.cjs', 'tools/build_combat_sound_manifest.cjs', '.github/workflows/combat-audio.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -21,8 +21,10 @@ jobs:
           node --check audio/combat-audio.js
           node --check audio/menu-music.js
           node tests/combat_sound_catalog.test.cjs
+          node tests/combat_turns.test.cjs
           node --test tests/combat_audio.test.cjs
           node tests/combat_effects_scene.test.cjs
+          node tests/combat_legacy_pulses.test.cjs
           node tests/combat_fighters_scene.test.cjs
           node tests/combat_fighters_legacy_race.test.cjs
           git diff --check

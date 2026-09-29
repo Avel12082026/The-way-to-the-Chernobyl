@@ -9,8 +9,30 @@ related firearm recordings and modest playback-rate adjustments are used. See
 `audio/combat-audio.js` wraps the existing CombatScene after side-scene loads.
 Player attacks, including misses, and actual armed NPC replies trigger sounds.
 Mutants and radiation-only deaths do not trigger gunshots. Pending replies are
-cancelled when the scene closes; duplicate results are ignored. Existing visuals
-and combat/server state are unchanged.
+cancelled when the scene closes; duplicate results share one presentation promise.
+
+## Requested attack series
+
+| Gameplay class | Weapons | Shots per attack | Interval |
+| --- | ---: | ---: | ---: |
+| Pistols and revolvers | 26 | 3 | 180 ms |
+| Automatics, SMGs and the ordinary Vepr carbine | 19 | 3 | 100 ms |
+| Machine guns | 11 | 6 | 100 ms |
+| Rifle progression, including X-17 and Gauss | 29 | 2 | 350 ms |
+| Sawed-off double-barrel (ID 4) | 1 | 2 | 260 ms |
+| Repeating shotguns, including Saiga-12 | 30 | 3 | 260 ms |
+
+Each sound starts a scene pulse on the same scheduling callback. Modular weapon
+flames last 70 ms, leaving visible gaps even in the 100 ms automatic series. The
+legacy first-person fallback repeats its supported recoil; it has no reviewed
+muzzle coordinates. Reduced-motion preferences still suppress animated flashes.
+
+CombatScene.react now returns a promise that waits for every pulse and playing
+sound tail. The client holds the turn lock and delays HP, combat logs, death and
+victory/reward handling until it finishes. A series sends exactly one action to
+the existing server endpoint and applies its damage once. It does not multiply
+damage, consume extra turns or change server combat rules. Accepted results still
+apply if presentation is cancelled or fails, provided the same battle is active.
 
 Effects use a separate WebAudio bus and limiter. The existing soundtrack keeps
 playing through its own HTMLAudio element. The ♫ panel has independent music and
@@ -20,13 +42,19 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
 ## Verification
 
 - Catalog coverage, source hashes, byte budget, and script ordering passed.
-- All 11 playback/timing unit tests passed, including initialization in inline
-  about:blank previews used by the quest browser tests.
+- Playback/timing tests cover exact series lengths, paired shot/pulse timing,
+  completion after sound tails, mute, cancellation, and inline about:blank startup.
+- Client turn tests cover one server request, deferred lethal HP and rewards,
+  duplicate taps, consumable locking, stale battles and presentation failures.
 - Existing combat effects, fighter scene, and legacy race tests passed.
 - Real Chromium 1243 smoke test passed: all 34 MP3s decode with nonzero samples;
   trusted input unlocks WebAudio; three shots overlap while music time advances;
   independent mutes, NPC timing/cancellation, duplicate suppression, reduced
   motion, saved settings and 320×480 settings layout work without browser errors.
+- The browser also verifies all five distinct burst cases (3/6/2/2/3 shots),
+  paired sound/pulse starts, actual audio completion before the result boundary,
+  3+2 and 6+6 player/NPC sequences with complete tails, and six visual pulses
+  when effects are muted. The longest measured single-weapon case was 2.30 s.
 - Browser soundtrack transport uses a documented local PCM fixture; that test
   does not claim to validate the six externally hosted ambient recordings.
 

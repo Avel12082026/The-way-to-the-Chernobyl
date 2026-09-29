@@ -32,11 +32,34 @@ for (const [profile, entries] of Object.entries(groups)) for (const [id, rate] o
   if (assignments[id]) throw Error('Duplicate weapon '+id);
   assignments[id] = {profile, rate, gain:1};
 }
+// These are presentation bursts for one gameplay attack, not magazine capacities.
+// Classify by the game's weapon class: a recorded sound family can contain both
+// rifles and machine guns, and the TT happens to use the PPSh recording.
+const burstTypes = {
+  pistol:{shots:3,intervalMs:180},
+  automatic:{shots:3,intervalMs:100},
+  machineGun:{shots:6,intervalMs:100},
+  doubleBarrel:{shots:2,intervalMs:260},
+  shotgun:{shots:3,intervalMs:260},
+  rifle:{shots:2,intervalMs:350}
+};
+function burstType(weapon, profile) {
+  if (weapon.name.startsWith('Пулемёт ')) return 'machineGun';
+  if (weapon.id === 4) return 'doubleBarrel'; // The catalog's hunting sawed-off.
+  if (weapon.name.startsWith('Дробовик ') || weapon.id === 10) return 'shotgun'; // Saiga-12 is named a carbine.
+  if (weapon.name.startsWith('Винтовка ') || [55,73].includes(weapon.id)) return 'rifle'; // Gauss/X-17 rifle progression.
+  if (weapon.name.startsWith('Автомат ') || weapon.name.startsWith('ПП') || weapon.id === 16) return 'automatic'; // Vepr carbine.
+  if (['pistol380','pistol9','pistol45','revolver38'].includes(profile) || weapon.id === 7) return 'pistol';
+  throw Error('Missing presentation burst for '+weapon.id+' '+weapon.name);
+}
 const weapons = {};
+const burstCounts = {};
 for (const weapon of catalog) {
   if (weapon.adminOnly) continue; // "Убиваю взглядом" is not a firearm.
   if (!assignments[weapon.id]) throw Error('Missing weapon '+weapon.id+' '+weapon.name);
-  weapons[weapon.id] = {name:weapon.name,...assignments[weapon.id]};
+  const type = burstType(weapon, assignments[weapon.id].profile);
+  weapons[weapon.id] = {name:weapon.name,...assignments[weapon.id],burst:{...burstTypes[type]}};
+  burstCounts[type] = (burstCounts[type] || 0) + 1;
 }
 if (Object.keys(weapons).length !== 116 || Object.keys(assignments).length !== 116) throw Error('Catalog coverage changed');
 const profiles = {};
@@ -49,3 +72,4 @@ for (const key of Object.keys(groups)) {
 const manifest = {version:'gunshots-20260929-v1',base:'audio/gunshots/',profiles,weapons};
 fs.writeFileSync(path.join(root,'audio/combat-sounds.js'), '(function(root){\n\'use strict\';\nconst bank='+JSON.stringify(manifest,null,2)+';\nroot.COMBAT_SOUND_BANK=bank;\nif(typeof module!==\'undefined\')module.exports=bank;\n})(typeof window!==\'undefined\'?window:globalThis);\n');
 console.log('Mapped '+Object.keys(weapons).length+' firearms to '+Object.keys(profiles).length+' licensed sound families.');
+console.log('Presentation bursts: '+JSON.stringify(burstCounts));
