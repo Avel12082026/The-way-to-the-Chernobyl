@@ -1,0 +1,1298 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-29T09:15:07.434Z",
+  "weaponId": 114,
+  "name": "Дробовик Remington 870 MCS",
+  "pose": "heavy",
+  "rendererSha256": "2be11278b68ba21f78bdeac2b862ed5bb33a5008af297ce4be9b16fb5fb32fa5",
+  "rendererCodeSha256": "761ac0d6e81c262eeb0b93d5f1d1d2a92eeaad2792d260ad06200a9defd46d82",
+  "weaponFitSha256": "3b6a858640837d0c8dde1645bc7efba2ce75a93711bf78ceb4c7eac380e63e65",
+  "sharedWeapon": {
+    "path": "images/combat/modular/weapons/114.png",
+    "sha256": "be630ffcb84e2b398325a51af830e61fe26890d246746965894fa8ff5187dd4b",
+    "bbox": [
+      31,
+      359,
+      1509,
+      708
+    ],
+    "transparentFraction": 0.8526287078857422
+  },
+  "expectedArmorCount": 96,
+  "renderedArmorCount": 96,
+  "completeArmorCoverage": true,
+  "visualReview": {
+    "status": "accepted",
+    "reviewedAt": "2026-09-29",
+    "method": "Assistant visual inspection of the production renderer output, contact crops and player/NPC scenes; not user sign-off.",
+    "coverage": "Root reviewed suits1–48; independent reviewer reviewed49–96. Separate targeted second review covered19/51/53/56/57/60/62/66/67/69/71. Stock corrections1/2/3/7/9/10/13/14/17/34 received an additional review.",
+    "checks": [
+      "Index finger contacts trigger opening",
+      "Supporting palm contacts pump fore-end",
+      "Continuous stock connection without detached rear slivers",
+      "No visible translated-arm seam holes",
+      "Foreground fingers remain complete",
+      "One unchanged transparent shared weapon PNG"
+    ],
+    "outstandingFindings": []
+  },
+  "automated": {
+    "renderedAllRequested": true,
+    "nonemptyAll": true,
+    "mirrorGeometryAll": true,
+    "exactMirrorAll": false,
+    "mirrorWithinRasterToleranceAll": false
+  },
+  "mirrorNote": "Draw and clip geometry is mirrored within1/1024screen pixel. Antialiasing produces small raster differences, so byte-identical reflection is not claimed.",
+  "armors": [
+    {
+      "armorId": 1,
+      "bodySha256": "82c438e4a9bfaa6d8dc547b8cfc6eab409b22ff937613cc60a56c63f3b6596a0",
+      "handsSha256": "37772b22233a4262aca2ffc9c45fa3c91c6a610c5efd50032a4b92146e6b6da4",
+      "fitSha256": "b4811f914c8604d7b1e5fcb9bc0b0a874a92dd230cf7a414b1de82fbd7746c23",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 122,
+        "maxCoordinateDifference": 3.814697265625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 2,
+      "bodySha256": "2bb2b88a01de6c884e6ec982ef008851c449f293866373646be5f1a61c40c933",
+      "handsSha256": "5268d5bb085d44e724c80f0ea4a4488f25ce8a7c5f4c6f1bca6e257cf3500116",
+      "fitSha256": "478184dd80f2cee66a3d704f0a1bf282de7113ab1f24fd5260c8aee2fb1616c9",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 110,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 3,
+      "bodySha256": "2df7fbccb04825bea160467dc0d0763de30e765a2956fc90e483b17c03b48f5d",
+      "handsSha256": "92fa566aac4bf25db1b43e3bffe93feb5786db851fc33882a0c255906916d325",
+      "fitSha256": "8a17c8f556407c506b4bbf105e298c6cea50328b720b5936df43325858103bd5",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 106,
+        "maxCoordinateDifference": 8.392333984375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 4,
+      "bodySha256": "899f8a63c808e3a97c811399f8ad89910257cdbec6adde9e8789ab2d762d4372",
+      "handsSha256": "efddcf596c2bc395adfdb833c2992149f31e3edb43c76cf3ed3617ebfc6eccc2",
+      "fitSha256": "575b4719ef29926ac78fc81e867a8f1fa8aca36dc5fbe482d1c03d0e27f989c4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 5,
+      "bodySha256": "927717d77ba989dc7145367e140bd8540d7d84f559a40a67c96c35595cb0ca5d",
+      "handsSha256": "592c5a93f1039b706e0e5fc61795b16d97756ed8ccd4c5ada5d01b0ff02b0b96",
+      "fitSha256": "286d4e3e4b7d06f72f487edaa66adfd3ef281faf3ce920b28d05d7a7f85bd9b2",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 85,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 6,
+      "bodySha256": "16981b6dd60408202be69eee0f82afa359ca9e06a627553b72d5f8df5b3c97b2",
+      "handsSha256": "955ef714f7a951a84536e9e1205aadebf5187b74eb2e9acdde05f5218e442f4a",
+      "fitSha256": "32ad034d86248615daeff338b5a968318636b586613bd5cf478517610366dd5f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 114,
+        "maxCoordinateDifference": 3.814697265625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 7,
+      "bodySha256": "04bc1e6c0b14e1007ca3dc2e5272dd31522e334d5682f963ef388b04f6f67352",
+      "handsSha256": "5ea738cf4288b8b219861621f314d32ce9250b96d2de693e242fe8c0b6239f43",
+      "fitSha256": "94bf9e1c224660c3fbf80d81fbdbfb10f8f55e23afcc7ddecf169494828cf6bd",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 107,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 8,
+      "bodySha256": "d5ffc747a279728d3070356bd8e5ef5f9851a6eb05cbb61231b9a6a499dd045b",
+      "handsSha256": "f7a04b71b6a3308bb8afd7518e39e36d0abd7550881ccbc03fae702c15b4ee40",
+      "fitSha256": "d11188b226092b87eb6e2d80ce547805e31a3f3bd5136349872ce79ad771c47b",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 112,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 9,
+      "bodySha256": "7399736f86bf2c1018c02e0dce7e665bc0563b96aabffc3998e1806db7ce90ca",
+      "handsSha256": "ed3275e47fd2c5249016d4c2298ae686589c2b655de952b9c363b4c4bc61452e",
+      "fitSha256": "80ecb06cd9da5749b6229d88c92b3dc1f4282a8196ecf21ad4c443cbbd7da5cc",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 113,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 10,
+      "bodySha256": "996cab3ece06977ea7a499fa476b69750f939c3dcd5d2b49c0f1b47530ace062",
+      "handsSha256": "8bdac98ec974a81c9ea5f53e407c60f158b9bc6b6c84fc2ba14efda799ba414f",
+      "fitSha256": "69cb94b005046329f1b49050d4a463e1644d501a43a76ba7692a58e7bd9334d4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 112,
+        "maxCoordinateDifference": 8.7738037109375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 11,
+      "bodySha256": "0acbe68651ad15472ee0233ef013159214bb8b09a68623b31eae7c712151a547",
+      "handsSha256": "466c7d30d3188ff2d354024ab3af329e95463355c99986a804d1247e85df6094",
+      "fitSha256": "4dda32ae2e86cf133bd9bfe0ec0de45a1f415184888fb05cc0c0a1a227c99585",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 12,
+      "bodySha256": "b4258ec754223f586d36403586458ddbcb2104ce2c9a62d38c1842371b12498c",
+      "handsSha256": "c18daf87fa673964a643306af0a81b4c289de59b96330016f633af9570a2636f",
+      "fitSha256": "3ebf6d304ce682011f95eabd175102cce623ae7ff15c45cb8a352b054fcbf948",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 100,
+        "maxCoordinateDifference": 8.392333984375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 13,
+      "bodySha256": "e1619516d90cab01ecdcc4442c2cbfa20398b8ad489c76208700f5b77bac42b7",
+      "handsSha256": "7b8f574805c920cbc10520f8248a865cd79a647b0bca62af871fb0c932a6e9c2",
+      "fitSha256": "2ccaddfd81805d4c1bd6fe87e31989cbc5b9d722cae92ca83d16ce4e74e7eb49",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 111,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 14,
+      "bodySha256": "03620be9064c52c58365f0954e27c57eb62367d95eaaccb3bfeb4b7c255047f3",
+      "handsSha256": "85c85b817d9e47686dd7638920786cf68e810be1923954b950de1de5d34727cc",
+      "fitSha256": "97c95d21bf1d022cd300d82d23f30fb43d70f4d8632803944bd95afc933b91dd",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 104,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 15,
+      "bodySha256": "2d5289cc445d853a2eb067c5bee04b8b6b092df175b273825f12a1be7e742ef8",
+      "handsSha256": "808604abc4db617f59157e304f8a30f68117d63965b46749dbc63181fcb0a05f",
+      "fitSha256": "b476cd69c711725709dc6b52a192f34e9fa8abd29a31a403e810074637127c31",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 101,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 16,
+      "bodySha256": "779800cedfa7955f6062b34c35b64ba84649ea2e397a4b01af96e5a04309bea5",
+      "handsSha256": "3b791f132ad89b75c84c5a448844e172897dde65e38d952ff555faa894a21fd9",
+      "fitSha256": "aa8fb80f304db5b3e93a132e661f5eb22cc1524b6f80b3b6174ceef3fe042f76",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 109,
+        "maxCoordinateDifference": 6.4849853515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 17,
+      "bodySha256": "e2127bd7e04af81378db9b8e1662548719a2b9a91ce399021eb701472caac287",
+      "handsSha256": "927fda03e0be7fe4e11bfc27d79fd086f43a5ee7200f009a3d1cad16de5b4634",
+      "fitSha256": "21345d250ba0130cac824ccda98866f94b7976ec5b836ea1e00b5c26a81def89",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 107,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 18,
+      "bodySha256": "4fe97b02bf4574668547ae69afc37b903f1838d4e6c3de0e2bd9e6f9f589b576",
+      "handsSha256": "7b12dcdb73030ae03569cde2e691ac74445cefd8e5484c51d57af20229343134",
+      "fitSha256": "683a1e0a3bf35af510163044234c1df50a7b8ff4bda4cfe81f7288fa4c04da5f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 110,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 19,
+      "bodySha256": "44a9af2c71eae6ab295fc0f753705de22c6b4b16dd03a9b935c81a47093c11cb",
+      "handsSha256": "acddae6663dbe3a3996ff0b4046b43a95b6388c17d3846c538de1186a33aec93",
+      "fitSha256": "e6fdbe26099286206ffc1b87517bc875ce3cb9034c1ceaca821cbd52815e87a9",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 162,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 20,
+      "bodySha256": "bccb9979ee7d0550f0a6c36d77e31f5f3c80d72aafc65722b502f6721c8751ec",
+      "handsSha256": "16a659ebe1a3426392f0955309f159e0a9eafd653d1c9ddfae8ba44ecf968c91",
+      "fitSha256": "9bb5d56c228d5b311889911560dc5d617d8605f7041eb6c70c1dd25557f92823",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 21,
+      "bodySha256": "b62a8a23f1629c8d61b863d60d1b77c408b88b09e50787788a1d4bb19865967e",
+      "handsSha256": "3489065ffb924ef16d127015e4792133e94b0ae6cbf6e0a4f0660e2c2dff416e",
+      "fitSha256": "93cc6459d0d2d8ed32da181fde92ca55ae7b4cf3974402e6744c1bed7d7ece7a",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 123,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 22,
+      "bodySha256": "e8d1869065673963c396afe11573a0390a821864045a6ee294d638b5e83d533a",
+      "handsSha256": "e520d3026ca1922173c92fb244f68fbba688270b700e2a3a71eccc0a71c7c940",
+      "fitSha256": "d3641ca1c19f3b4d4a2d1ce2e8cff2232c458ecf9bded094efebbd39de355745",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 60,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 23,
+      "bodySha256": "2828f61e10259b76f2e27d2897b0fc28b327ded520cff90194af4cdd481c732f",
+      "handsSha256": "a6745946113a28c545a960c4d0fabff73ca5ebb58065889ecd8008dcc4d13157",
+      "fitSha256": "14d5bdf71e27907e9ecca06d1c3c486392b31fa874c68a7deaccd96e68ed66b5",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 116,
+        "maxCoordinateDifference": 6.866455078125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 24,
+      "bodySha256": "ef37be0248f1a474854120baeda1e0dbd3476fd7e4fc8adc72e98b20c8d411ac",
+      "handsSha256": "58bb370d85ec95c3e368aa1f168b71c88f97cf54e1ab64f89353de7f2d92c8b0",
+      "fitSha256": "43229ad6f6e121e716c711aab78f04344056a67fd5140c29b3ec8aa030a72f70",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 112,
+        "maxCoordinateDifference": 8.7738037109375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 25,
+      "bodySha256": "b13517b623607fb9e79e7ea73e8634ac5769982df19d6926b5858b8e0a18d696",
+      "handsSha256": "97ecabbe8138a94386973c7f3ac34f513c14cea1a87070595cb089c44df426cf",
+      "fitSha256": "4a974228526e4912f276e5ac4f851601b2b700c14062c2659f613a4a065646d0",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 61,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 26,
+      "bodySha256": "c5e6f7ad71e8f2a7f8044042be6752b7a46e64784044b20cf59f737d3d872373",
+      "handsSha256": "64b9f3124754ffd9c82f4f8fda3dac57c9ad509c6860def47c17350d11dcf915",
+      "fitSha256": "b82cc30766414872380e642e5b519bfb92320d847a5cb303c5fa4fdc427b1c88",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 58,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 27,
+      "bodySha256": "a77471e46031bc0725eaf7040727d7e7f54b4e528c4b59979c4d5fa5bc8949d4",
+      "handsSha256": "5c0272e73df3378dbfa19e4825f7fbdcd2a5bd4fc84c0071941a3a1bc10408fb",
+      "fitSha256": "e8725ec46c0b0b80bd0d0bb894aa49b981b1d3beeb0f5373f9fd55df3e987c62",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 110,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 28,
+      "bodySha256": "50930971ad0653e195fc9b8f5e5bc1b67d46212a86759b6081ad34b245112d80",
+      "handsSha256": "6c87f938a26c66801c6cd4184d31e48ce411952f0a3571fa010101e0a1f224b6",
+      "fitSha256": "cfb59d2fc2d4550c9126fb0d863e3ce1c1aff5e1904fe5988f636d41d3a60f68",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 57,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 29,
+      "bodySha256": "389f2405c906301b34d95317dab0d7ad7111322eba59c279608593222b55a3be",
+      "handsSha256": "49453d095d3aff362de030a1484e1b250029c503ba7201f4cd4907e209e96989",
+      "fitSha256": "a7efbf03681f1d46e4da5bd9e7640dae49e9069a8436c9d8c14e98ad32d1e33b",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 111,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 30,
+      "bodySha256": "59b9d32ecd3c97535bf725cdbcf0fc389704ef3b51ac4063d417eebcfd471936",
+      "handsSha256": "5fe6755258ef87ad12445af35fb66101561c998757483495966aefc50a5a2846",
+      "fitSha256": "0fa6d7d1f00915a2184ebccbed974af6b4d2e4fa149bc5dcc0f5d72fdae903a7",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 110,
+        "maxCoordinateDifference": 4.57763671875e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 31,
+      "bodySha256": "7ba41d118e61da34f8bedfed6fd2c9f3cc6f201cbd6cb04d8e926a6c40724a5f",
+      "handsSha256": "f8075691c36d2afb9bcac439312d1f95f33af14b9ea7a5605957cf7d1f0cc279",
+      "fitSha256": "f0b44feb76b14435ad1e149a1345dd2f19dc77208c22fbb8e6695891358af732",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 117,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 32,
+      "bodySha256": "beb817d5cacba3ab37fa700a0a9dccf3d1eefffe0feb9bf5ed6fdb5cceaa35a1",
+      "handsSha256": "88a61fbcaf0182e19d84672c5084068bdb497a2c0d75e85a3e0327d976df23e4",
+      "fitSha256": "323f255dc913f232920c1bd4e00f401bf7f09615950c6535d94a9fec55e22b3f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 111,
+        "maxCoordinateDifference": 7.62939453125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 33,
+      "bodySha256": "06cfa0ac9a9c580be134ea1835529a0dfee2fd15cf276b55aca4314cb7023bac",
+      "handsSha256": "ccaaa9372911b608cf41566089b74aff9e9807573797ac5cc58ea794086d39c5",
+      "fitSha256": "96c51effc40c7e681e7a98163c7353fb18a7071566403268cfa4a4c3ee107c21",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 111,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 34,
+      "bodySha256": "86f63f0efec5aaefe6c14077ed7db9a31f984209437cbd640acf3cfaf408c961",
+      "handsSha256": "fb2d2bb5abbf977f04c05b9d2153d4fc52f83240f91c101156eeb6fd0f924361",
+      "fitSha256": "a46f057c7a9292ef3db2398741b46c8f7086c4c7a01b8b7829b9629e813cf3a4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 118,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 35,
+      "bodySha256": "4a3b76aa8dd7f134b4b39bf7afe42b18c254d57202abb71dbedf3c843d94e080",
+      "handsSha256": "91f3e77f9e8d21fd07f9afb3692451a30baecd3eb50d30c83bba8930122eb76a",
+      "fitSha256": "6fcd9f3431246360e69ece93cb3664832e2f7900012f927800ae110bbe14f80a",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 36,
+      "bodySha256": "a9bf30062ec8fc0f07b185e859be01fbd8370c5d312c6758cd9321b85363f50b",
+      "handsSha256": "0d8e7423d0c0fcdda8077ef82cf8c52eda686b1f537f2179ef599e7b53604a5d",
+      "fitSha256": "6ccdddbf557aaa4a19c665d93982d3683c9c81ea97fa90fcd8695c04094ef05c",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 112,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 37,
+      "bodySha256": "9bf17419a8cef7f47d983fca77f7d33251f173368ba2efb734b76a24753f630c",
+      "handsSha256": "469c00e10e8a48d3680b69e9ea026772d31ec7bfa814b8b3edc13922483040f2",
+      "fitSha256": "e485775488c2e3d24dc6ed6109707430465ffa28a814079850b98d3bdf26c4eb",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 118,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 38,
+      "bodySha256": "09934dfb9f5a6b8cd69576b3e163eab10d601bc9365cef3bc038652f9ae804e9",
+      "handsSha256": "dcf7bf43ab0c17ee071592baa90e1a268cdd6f09f71543aec6b4e0d1dc9f9c6b",
+      "fitSha256": "623d991f69dd36693f64c9a4c6de69cd458b08c30e54ae0aaf15c53919749e31",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 119,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 39,
+      "bodySha256": "1c2a90532fc947dade477f74a3a6b274f236a5488995fe2e6445ad6736340496",
+      "handsSha256": "10114e224882fe96c13b1a228ddb6a54dc349070813c53ba5d97cd5d402e04bb",
+      "fitSha256": "7a9b7b852a291e1282780dde610ccd8d7df74b3beabc2330919745dfd6f9ad8f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 114,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 40,
+      "bodySha256": "9fe009557c686ecc27412a744f0750bd6e41da35731cd16982506735e3bb33ba",
+      "handsSha256": "531cc2fed81f257f81f8d320b2362c9a91610fb6f88887ea5ad45216506f4de2",
+      "fitSha256": "efeb5315ba0527fc75257dbfc1b270071852f3b39e71bd4a0720db560e6c4002",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 119,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 41,
+      "bodySha256": "48a4057d60e98a8e67e156c34642d13d6c635e9a1a095e4af8e0748506b99772",
+      "handsSha256": "e7a8026faea2a26a73f6477ce61da256d2850e67271144cd2e69b9fbaeb498e0",
+      "fitSha256": "79b560f6d05ddf15ab8633a83b46ec1fc6b7a4294d9c0483c593026b624dc3d4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 116,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 42,
+      "bodySha256": "a8820b1fece9544de5615491c6b23afbbdcfe03fcc506c3ef5eeabefa8c09c23",
+      "handsSha256": "5a7042d3c11ab04d085968be2e750f48b5d16b17c4935c1d3d664232a34a414a",
+      "fitSha256": "c631fce7527c5994921630bab790ffb7b1850234846e4f9cb93f0b3a76bd2cd5",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 120,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 43,
+      "bodySha256": "ea099d6c854bf12e6cce0d9dd8b1f0586e60d22f4e9b26b227fa522a8d2b75d2",
+      "handsSha256": "66b30dac3bfd44dba050685578588d7e7a5a232306456d26e340ae9072172643",
+      "fitSha256": "786c9d0202da9463cbead84fcec2c4864f6fff1b13d3288b993b32abdd84af52",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 59,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 44,
+      "bodySha256": "09415b65abc77aced89a766dd2cec0766caf4cd137824c4f3fbd56816ef4284f",
+      "handsSha256": "deb14201e39cfc558602b2f079e98f031eb678fdd19f5a4336627e1d9456d965",
+      "fitSha256": "f227a921d77db798244b401457f958e2997772db8db3a4b0492ca46373fa762d",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 125,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 45,
+      "bodySha256": "59669aca38f9fbd56eb12d8293596f85657a835e535338b9dcdf7667adef136c",
+      "handsSha256": "c629d1cce7080bd9a8c83cbc98e818d1fb4fa7e1068d26ccd13126505fe0494b",
+      "fitSha256": "f65017184c3acb491ac63034782529f3278b36fc6112e2bd2836060777cc2b04",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 46,
+      "bodySha256": "dc6bf3beba7ecae325aa6ae7fa1a9b968d59d2c11df57964393574b913c48c4d",
+      "handsSha256": "59c030e7915ad8d124609bfd119cde34b551fae287a863a6ea6cbdd716227367",
+      "fitSha256": "2458bd29e8c53525a5e0c6ed554edc95873f50e4b99f84ddca61f5ba990728d3",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 130,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 47,
+      "bodySha256": "26e72c94f65955f1c2686d94cb0066715f1d03655185c630ebe6169b1e317145",
+      "handsSha256": "69c7eb31fb37546d83c482641fbd920cbcd73e3743e51f9ec9301f3814bf4a5e",
+      "fitSha256": "c550d53ae85aaa067c76c9534db3b51c37d791fe6c229e1a6c1725085ab9fe13",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 64,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 48,
+      "bodySha256": "2bbc9644f43dcaec955539a715043d832b4e738b627a915e89bb4172e8977f0a",
+      "handsSha256": "742144013e0eb53b69754db951abf2a08d1b7800073af16df672dc9f3986b6e0",
+      "fitSha256": "a3e46c7063000df9f0427682152fff44a091cab9f9c2fffd7855e0c0f951fce7",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 62,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 49,
+      "bodySha256": "65d5c0f3086bb61f3a49d81820a000d858555f98408768de25d8d88148abc243",
+      "handsSha256": "a4287ac7414cdacae68feac109b8e04776cc01a717a78de515d05ca8eec436d8",
+      "fitSha256": "63749b39812ec4e7c2438da253d98924ca1c9b324a7d6091192dc256d312c02b",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 6.866455078125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 50,
+      "bodySha256": "3c843fd9edd92a5677451a048285160803351932f05978b1c7267592d414ec52",
+      "handsSha256": "89cde73f0657f70d3dc1f06480853a42a5ca9d3db877dc36e4f42f4f24a3d3bf",
+      "fitSha256": "9911ed022db0e29b6ba2a934dbed63e3b0d42c1d0caebc3f29f736e5b8927432",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 51,
+      "bodySha256": "99d48a70da681193edf15629f28d94adb126bc6d7af0ce8909a38590466ffbd0",
+      "handsSha256": "c4acd435d16612a63f8272b2332a34b0af0eea23a91aa61b414f3a6861a9224d",
+      "fitSha256": "45fdcfefdad00f7db253e9aae3710224721614dc6d69956b34de585b9ea934d7",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 91,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 52,
+      "bodySha256": "f338c8bb0440f6006832fbdb58e96bdffc85249ec8205805718856d514b6680d",
+      "handsSha256": "97f9f707bcd96e4a142c910c9a0694230078b9ddd5895fe551f3ca9bb99512d2",
+      "fitSha256": "db4b65176a286b284844a3dfd027ae10bda891769decc37f3c47fdc41307f2c0",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 53,
+      "bodySha256": "d5ca92ef375450c976f341dcbe5b27cb196957341974b902466f66782313190d",
+      "handsSha256": "aa4fa5385713eeba39689dcfad063a5973df28f0812ec874e2c1a5d6573a83d3",
+      "fitSha256": "f02ec89789ddf2b99b00a3f7c2d9c704bdf48fad07fae0bb3edea2218f99419c",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 86,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 54,
+      "bodySha256": "16ae04e0a77e24fdc007dbd38957c3bfcb3599bbd6e35a74a357e9c9f9f5aa72",
+      "handsSha256": "15a6ecf1f17ba1615bd2d5a04c69e1e0a98ecebab2e247d6d5b24f4937f88d77",
+      "fitSha256": "6251b94cf38437385c688a79bc0ed0b22c83c9ca4662a48f4eedb09c4c08ef93",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 55,
+      "bodySha256": "0d689e149bd44734ff62e3425a169c2e52a31c76edc85970efc47e515620947e",
+      "handsSha256": "0f5af2fe425ca4b8348a3b64d8f01ffde96026c42369a98ca042fbd44bcd0874",
+      "fitSha256": "d64c222c45296266e07f410c1f57ee3fa76a1e8e67c22b96d4ac49a4950db4f8",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 56,
+      "bodySha256": "c5f96983b64f9f424c3b4efb086c44817e72dcdaa0a79ba3d54a07b1fedb8f1d",
+      "handsSha256": "cb9b676d8d0f63fcc1cf25d4fea7518a391a77c375d32e04d5dfdf097df7882c",
+      "fitSha256": "fa91cd94424b9ea5818bd61a87623688d9af355a934ecae4b025947d0f9719bd",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 79,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 57,
+      "bodySha256": "5e5d85e4a8b7a7800b09d311c581a0b686e8233b83399278bb9e21457e8200b8",
+      "handsSha256": "86517e5bf59e92bb02cfce2e13648cfb894f8a6e78b30398db1637db19d08510",
+      "fitSha256": "882414a32a27c7c711e315f97518c6d4e8a0569a91df1b0a72d3903ed6a62d85",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 58,
+      "bodySha256": "13667d9a85f87d8ecdb658e43c1bb048ba51b6dcabce8df71cfc00f5aecf2bf7",
+      "handsSha256": "3198ed62f92e90ef88846f7f66ac5ee6a8c6307afb42485b2d8a7c532bb84165",
+      "fitSha256": "11dae2f142ae3b198c618858e049c26a3b40cd8128b9a64d587790cff59d824f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 125,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 59,
+      "bodySha256": "03bbde0be8ca0580f085e82b97016b52e2bbaacc373f1ad8d00fa30636403085",
+      "handsSha256": "0d11fc0ed6fdaad16f313ba1b830b44c691f3fdf19041188863b3ea5b3e7358e",
+      "fitSha256": "11fce4552aab85ae1f82a64d6e3b27fa747d985bffcccda111f4003ad908f4ad",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 60,
+      "bodySha256": "910d67ca21cb1ea090622817a3feae99a6dbeb8d7f8bca5e9a58d21ff5ec3e17",
+      "handsSha256": "c6f19c6a9d9abe96e1802ed5d60473bf25627d84cd82daeb0d6984435143ea75",
+      "fitSha256": "98f11be50a231a23a5bffc8a76e46da90e9927d1e77b1ae56b073cb5ccd2876b",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 101,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 61,
+      "bodySha256": "518351b5802572083e01e3b2fa090138a0ba8e1a017aed2b7e103616d0b4798d",
+      "handsSha256": "ca00fd0c28a60ed5f484e11afd790b149c46ff66c21f2af67964f3e7392cdf9c",
+      "fitSha256": "4d28346eff8480aeea586a1016e78354e2498a4adca95950d107042ff9dfa387",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 62,
+      "bodySha256": "dfb5a9ca6b6a298435d16e75fd79425ffcbd6e9abcdfdd41e0006e86ae2dd32f",
+      "handsSha256": "ebf86dd7b07e2e34f963936e6c783eb9bc7755ed87b4000017ca7e0b1792d904",
+      "fitSha256": "42ded47365223dfb2b7bef7f035f2c1c9bf2f9a48d14cfe21cbb27cc697b3c37",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 98,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 63,
+      "bodySha256": "092236d1a8e95146bb6d22b783806e781f8877e4a0bde1843c9c0454f48a93d3",
+      "handsSha256": "1102157bf4a64c04390f1b1f5ff9fbb5e910c905842c8f370b325c30dcfa7638",
+      "fitSha256": "905856167a546bf5c5b11ff3d542934b3f596886a805975f50e67e230ff271cb",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 120,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 64,
+      "bodySha256": "7086478be42100126fdaf4988f039c923999245501925ccd37f2215e3ddd274f",
+      "handsSha256": "de74e97de85997b701db1e832ed1a642aa07ab339f9b6a65cffde8d5f6c70370",
+      "fitSha256": "3db69f3a03d9fbd918301cb5652217781e3b6e14c42f7aed3b994ac957235bb5",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 110,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 65,
+      "bodySha256": "7de471aa9fce5a8cb756ecd6b9b7de71f12da469ea2302199746e0cd3ea05151",
+      "handsSha256": "f6330edd1e9a18c1401f0b8497cb8fb6c461ab0e2b235cfdf8ad719b806a5176",
+      "fitSha256": "95ff2140a2636c9034805db7d2347d18d8361db3383ba9a93a9588281c1b5cc4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 85,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 66,
+      "bodySha256": "aa5f8e0912fb79f278a4fb233e1a52dca45b8c478fc36642614e10e1f738dd6c",
+      "handsSha256": "e7bc7f9aaa65cc7b1393b5fff4698599f567d17d37d0873f3c4fe17f32fe4b70",
+      "fitSha256": "7d07a039b9b2ea721486a2875100b8587fa1c2a0993cf031343aacb5dc93a123",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 183,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 67,
+      "bodySha256": "23cf0dd4ad32586568cbf94541fa1c9461ba352c78dd0741ab3f308cb3c3fc4f",
+      "handsSha256": "875441379f71af17b60c0b003933b0fbb6e591f2bd95a23703db97ea7a04bc21",
+      "fitSha256": "b58da065632d4bb5e38089f99acfde2743c37e570b4302b3005d132d70a65244",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 68,
+      "bodySha256": "2acdeb9807cb5de00e06cfe75a5f72fb8dc12d6199e6a550477f1b6e4007d238",
+      "handsSha256": "674292f4c5977518a62b92c54c0d7e35a14ef149d40018a3be9837cf0f0ca885",
+      "fitSha256": "04dbb3b73a174d151ebce53dbf169d5c3010acb407b37ae1897d2f919d10da7f",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 69,
+      "bodySha256": "7cc6f84bd2bb5b2e3dd0df382416caf701c600a275d646131219ceb37009bd00",
+      "handsSha256": "a670cb166486eead5ba10e22a761cdf6e0d53a4aaf5e3b620500e2a11ed48a3f",
+      "fitSha256": "0f26e09826fd4770c2a2b0267117065a360384c4879528d0e6525228d826bd8e",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 70,
+      "bodySha256": "091e14237f0219b2dc47a524b904491ddd8519347614e92454898acc07bff010",
+      "handsSha256": "55ae73fe435a2130aad60c4ff59ecab8bb9b66faf6aa47cfabfe875fb36e4637",
+      "fitSha256": "007a70eb152e758c3c829391b16b1a05473bfe64fe4276f2aeb08b926d6d38c6",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 71,
+      "bodySha256": "f47016eac9a325d8a1b852c535362a1874a48f6914240cb79744215e777cf3f1",
+      "handsSha256": "9a923718e505b8dc07e8857187bb86266275b06775169d6c037e2868ee33c754",
+      "fitSha256": "f03f73da2007b93888961ff0dad760d5aee3889a39d1bd4ae1482cfdcaef0cf4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 72,
+      "bodySha256": "bb10d99b8dd69874bbab8b65ba446dac47036add2074fadf0ff59b0013742649",
+      "handsSha256": "eb884d37c9235306aa00fa6e113b91b655282bcef78d9244de29a93508b356ad",
+      "fitSha256": "19fe8c286d600e0bd86b933c770256036d605c865f3a6d342c491349164480e2",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 73,
+      "bodySha256": "68b730ea7c15a166b34e2d56af7d20013a0b2bf4158b4cfd3c30b8b37d67cd47",
+      "handsSha256": "ff06b70730a564ef2932d040d7642bba60ad2314397e673a650912527d217774",
+      "fitSha256": "dec3e9ee7e4dff195935092ff2891044e3058b98701aa7c526c90a0bbb39c2ee",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 74,
+      "bodySha256": "9653c0f50569cbd385b2b46aef8939a0461eb544e8904c470764aab205c84a58",
+      "handsSha256": "135d91ff2cf1290451ac58a57520c9c058917b9c1582fc9a534d90994e65c4c9",
+      "fitSha256": "d6482756e2b81cbd7b653f4b09eaa0f25fcd96665def1c221acb40fb6039717c",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 135,
+        "maxCoordinateDifference": 0.0001068115234375,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 75,
+      "bodySha256": "f1bd09ccb0261e9bee2c8d7561a7b588925326701a42638d82a2bac9aa903986",
+      "handsSha256": "ab4ca914d1d289e289e498ef10ff931e91e255eaebcb090be111aa1cf18af0fe",
+      "fitSha256": "c90a0796e10d2ec7f086b8f5f2a01802c06456bc272036038f5012d0342e4075",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 76,
+      "bodySha256": "506c12a2f5cce14a4d0295fd7eec9f609ba2003037c56ffff84a96a559f6f95f",
+      "handsSha256": "f25960f43577cc7caae2badb918e6d51f9d1513f4841ce8ec976d16cd15d3f49",
+      "fitSha256": "c582d22993d4c65aacbfb418d7efe5bd186bfa9b179134187601b74eea77b5f0",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 135,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 77,
+      "bodySha256": "7708117a2bdb2aea2e0abf2d48541c683e618b1790459c8c978b1b7c2d2364a4",
+      "handsSha256": "3792128dbb677c4b47408b85e466f7354317e349a8a6be0233afb791c2ad7451",
+      "fitSha256": "58afaaeb74d819e40d881669357323390ca3e03809eea0d78ca592b96fb95470",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 78,
+      "bodySha256": "fceb356aa59e8e26eb4f33a98887a1b60ef51f9d72a1e18cc268bb533e0c2c64",
+      "handsSha256": "1acdd9e1b63c5a8ec1152140e502d451cb2c8976a2f1dd76fb098fa710916a21",
+      "fitSha256": "4d3c2c4f917794867b4cbbbe8fd679302783933537798402415a1fa8e78b3d17",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 79,
+      "bodySha256": "8f7fb842dcbec63677fd80e3905c00542a9f8287848ee4e617aaefcdebddedfc",
+      "handsSha256": "afa7f23f5fa4192be2b2c477062ff8d26fc04ccefca10a7b17c9349212e32091",
+      "fitSha256": "b5c6bb461f55db61678aba18daec21c90a8943e7156d131e1980a7bf642d8669",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 135,
+        "maxCoordinateDifference": 9.1552734375e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 80,
+      "bodySha256": "2538e9427ce17c60bb4a5a8d690b3ddac4ae6cea6ec1c1343c481c3b2fa5320e",
+      "handsSha256": "b9d2d8461489a09f8dba11aef1454ef59da93609580ff21a986d06b21d75a135",
+      "fitSha256": "e33af4bc4e529effa9b18f7fdb2f5c60bb0f873526e37c01f9cc21fdbc5b71ec",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 81,
+      "bodySha256": "545bca198a73bda6bb823806610248f19f98023f0fcc33d92f16bc56c1ccd721",
+      "handsSha256": "ed12e1601b79cd4f5452e43196c9e47ac606befee91d55372b5908a1a93d65d1",
+      "fitSha256": "d100ed558a8ade6e2defd86fb74ff3861612d2d003283a452eabde5374701692",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 82,
+      "bodySha256": "fb58400c1a3c6223bf64112bc6ea9efb8573b178e0326ea04fccad820b5832b8",
+      "handsSha256": "a271e6734e5ef2a3161ca442142e5fd7d0e0a0c9caeff9117abd31cd0a676837",
+      "fitSha256": "534ea69a3a8094bae61da1006942eb32fbac12c25479234ca3eda48a3cab37b4",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 83,
+      "bodySha256": "fa5111c8e31750a207cb2a5b4b9df89f84583275aee70499a19d918a175cc439",
+      "handsSha256": "2b40c81507d2b8c27c6d510d3c8e085b0e0ff29b266fe2442ac5a6cd40cfa585",
+      "fitSha256": "76d30d586f6bb29edc39585608a3a92d8adea8ff3fd4c945bdc155dcc27bdfd8",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 84,
+      "bodySha256": "e2aaf72ab16c0cec7a9d720961b4e179697ced39759fd44deebf4dd9b6507352",
+      "handsSha256": "6455c13b2717d913d01b82d0554444e84ff1fe845d2e2c89dbce220efa67c10c",
+      "fitSha256": "5de76bb8c80ccb19c358ee3d7d6a7518dd14052b21ee272d04ef4a2857574693",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 140,
+        "maxCoordinateDifference": 7.62939453125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 85,
+      "bodySha256": "bf50312bf628163beacd9c832d0c1a1401cf3157d05a763ab0ad1be88150428e",
+      "handsSha256": "e5e0303065d4438e8801f5077ceae4c5bec052768a7fe56381465e0e96b03157",
+      "fitSha256": "1f7fb3c7ca00c6544e545dafc54645ea82f1231a509e00bd0825a20a7c73b47a",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 86,
+      "bodySha256": "1fef2d330049700f1920034b0201af4f366f08eb4e641da8cf0b3bcea6b1c87b",
+      "handsSha256": "49a2fc7e077f9ab5d2fa1a4adde67fcf68547023775bab9ec50972736f9590a5",
+      "fitSha256": "f0a3e32843ee28174b2b50bed4df175ebd014703181a9f6e5a531e7fead09a69",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 87,
+      "bodySha256": "528a1d1ca3b1859e38dedd010886babebf83f5eacff46b47746fe0958a36e953",
+      "handsSha256": "90e10c59199ced129634d1109b43421f2f5d0a9d5f45345194bd283240de2d22",
+      "fitSha256": "8414e47e79a3ecf3b579ef35e0b86edefdfc744af28b0f17b21087441478d4c3",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 135,
+        "maxCoordinateDifference": 7.62939453125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 88,
+      "bodySha256": "e652f983d18fdb839c549ed798eecb9138e6bdbb0d7276ea6b925373e898a271",
+      "handsSha256": "2b63c24c420d4fc9f35b0a5b91f28e13ce8d7e565b399c253efa8524aaf50143",
+      "fitSha256": "609f8beefde6947e50a59f770ec465055bfd829dc5f4f4ace75ccc3b9862bdb5",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 89,
+      "bodySha256": "56f523b25be1a7d1ce177b5e173d61f870ad5c4f73cb383c0561810f0acfa2ac",
+      "handsSha256": "e1bb704e7080ad5519ec95ce7307deff5381c71149beb05aaf3b594a83a960c0",
+      "fitSha256": "407e97e96eb0b9f6b762f7d8d9c4106a5cdf01d2c69921d25812e7de0cea064c",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 90,
+      "bodySha256": "e143afd0a92ac330936f52f9f2cee7a448c4f4ac239a27903fc9abb82f73b0a8",
+      "handsSha256": "7f1e2057055362a6ab8d3c626b8de624d979cd5b2070ee43c137dfd5cd5e003f",
+      "fitSha256": "dd040edd1b569ad9a9bb8099daaf7f05e0e95b994d47198cf82032972aba91d1",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 130,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 91,
+      "bodySha256": "e145409219f4df13becf5e9ae67a167eff72acb159c97c58f7436447e7aa26c9",
+      "handsSha256": "1ec0c903aaa2c7d6f7356d8a693936785d10f61e4089b39a193f9c4ca9a73ab5",
+      "fitSha256": "3990d3d1d3efb029919cd0256800d31eee4fdbe1e9db229758dd07f2d501e189",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 135,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 92,
+      "bodySha256": "59cbcf454cb70146e7c235d7450b7cd171684f35afadee95bfa5a7d264d2a55a",
+      "handsSha256": "17c796cb5e0b00a83b75e18f2fa65f0a56615dd9cfd7d68c076995bc4af50dd2",
+      "fitSha256": "977fcbddf3932d8eba238eaece36bf62068c76ebf3105d1b5aebee43eb30d432",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 115,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 93,
+      "bodySha256": "91bc6297c91caecc106f25cfee9a754fa258230c477f80b111aaf48b223b7eda",
+      "handsSha256": "b460966ccfca5ea56ad10f1490b81d25475578e4e3af618f8cebbab454beea80",
+      "fitSha256": "1b83f6cd12fc9c4f7f285fc95a044d09375ee8fb80ef128722e9abc5af17a018",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 94,
+      "bodySha256": "53ac3eda3fd5c55c494c2991b373ee72a8f45714029366744b8cd5db82ce39b6",
+      "handsSha256": "bc33d2cf3872bbc5a1287120c93346fb833883e3bd5ff6864a644501b87411fe",
+      "fitSha256": "30d0fb7306a04139d96f5aeb038368e13ac30be1b78ef713d987d0f73819f206",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 6.103515625e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 95,
+      "bodySha256": "80f5155fee268d1ee824a1f8f48a9d5089369aad24b4cd952eda9d1636b2c97b",
+      "handsSha256": "dc64e421ed112944d86a4173f73d3698b4cf99577e4ba926b44381fc7087ef4c",
+      "fitSha256": "86783db1e97158b1cb1f93256a4f8ce730d5bac147559bf7ccea4696593cfd66",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 34,
+        "maxCoordinateDifference": 3.0517578125e-05,
+        "tolerance": 0.0009765625
+      }
+    },
+    {
+      "armorId": 96,
+      "bodySha256": "fc7c0e54112271edb2b5f1caf0e456c0ac0481420646a7830aad742a7e3781cb",
+      "handsSha256": "251423989410a785b45a0453c6e6ee59e1ba3612c14443adb93522e669a986df",
+      "fitSha256": "e8f7c61ba04cc7062f3402e65e7f9035daf7f991fac20b2416161778be4fb2a0",
+      "visualStatus": "accepted",
+      "geometryMirror": {
+        "equivalent": true,
+        "commands": 145,
+        "maxCoordinateDifference": 6.866455078125e-05,
+        "tolerance": 0.0009765625
+      }
+    }
+  ],
+  "packaging": "Review rasters are temporary QA output and are not included in runtime assets."
+}

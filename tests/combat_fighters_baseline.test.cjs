@@ -19,6 +19,16 @@ characters[20].poses.heavy.handMasks[1]=oldMasks.handMasks[20][1];
 const oldWeapons=Object.fromEntries(oldWeaponIds.map(id=>[id,data.weapons[id]]));
 for(const id of oldWeaponIds)assert.ok(oldWeapons[id],'Missing previously published weapon '+id);
 const oldAdjustments=Object.fromEntries(Object.entries(data.pairAdjustments).filter(([key])=>oldWeaponIds.includes(Number(key.split('-')[1]))));
+// Retain the original deployed fingerprint outside explicitly reviewed weapon fits.
+// These source values were captured from Git before the sequential refitting pass.
+const reviewedFits=require('./baseline-reviewed-weapon-fits.json');
+assert.deepEqual(reviewedFits.weaponIds,[114]);
+assert.equal(Object.keys(reviewedFits.pairAdjustments).length,96);
+for(const [key,original]of Object.entries(reviewedFits.pairAdjustments)){
+ assert.ok(reviewedFits.weaponIds.includes(Number(key.split('-')[1])));
+ assert.ok(oldAdjustments[key],'Reviewed fit must already exist in the frozen release');
+ oldAdjustments[key]=original;
+}
 assert.equal(data.version,'combat-environments-flashes-v1');
 assert.equal(Object.keys(data.characters).length,96);
 assert.equal(Object.keys(oldWeapons).length,84);
@@ -26,6 +36,6 @@ assert.equal(Object.keys(oldAdjustments).length,5568);
 assert.equal(Object.keys(data.supportArms).length,96);
 assert.equal(hash(characters),'9c70bf0368d06b7b68faef84163fe76a0e254eae1cfb2de50192fc3cabfc75e5','Every character field except the exact reviewed armor20 support-hand outline must remain unchanged');
 assert.equal(hash(oldWeapons),'719b8f47589443897a49ab6013cc85a9fd4b6bc31748f2f02a3728176151a39d','All existing 84 weapons must remain unchanged');
-assert.equal(hash(oldAdjustments),'af82d8342541e87d8921be45f8dca63aa13786bcb14ea213e68ddf5fbfc7a346','All 5568 shotgun/automatic fits, including Groza87/9, must remain unchanged');
+assert.equal(hash(oldAdjustments),'af82d8342541e87d8921be45f8dca63aa13786bcb14ea213e68ddf5fbfc7a346','All unreviewed shotgun/automatic fits, including Groza87/9, must remain unchanged');
 assert.equal(hash(supportArms),'75b1ac151cce923c0f7a74e8e0200d30e14e79e7792ba9d71974b4cb9f62ddf6','All support-arm contours except the exact reviewed20/69 fixes must remain unchanged');
-console.log('PASS: deployed e423b52a preserved with exactly three approved mask corrections;84 weapons and5568 fits frozen');
+console.log('PASS: deployed e423b52a preserved outside the exact reviewed masks and96 MCS fits;84 shared weapon definitions unchanged');

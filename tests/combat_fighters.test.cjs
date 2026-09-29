@@ -34,12 +34,14 @@ function context() {
       for (const side of ['player', 'enemy']) {
         const ctx = context();
         assert.equal(f.draw(ctx, layers, side), true);
-        const forearm = gear.pose === 'heavy' && Array.isArray(gear.character.foregroundArm) && gear.character.foregroundArm.length >= 3;
-        const hasHands = !Array.isArray(gear.character.handMasks) || gear.character.handMasks.some(p => Array.isArray(p) && p.length >= 3 && p.every(v => Array.isArray(v) && v.length === 2 && v.every(Number.isFinite)));
-        const handSource = Array.isArray(gear.character.handMasks) ? gear.body : gear.hands;
+        const foregroundArm = gear.adjustment?.foregroundArm ?? gear.character.foregroundArm;
+        const handMasks = gear.adjustment?.handMasks ?? gear.character.handMasks;
+        const forearm = gear.pose === 'heavy' && Array.isArray(foregroundArm) && foregroundArm.length >= 3;
+        const hasHands = !Array.isArray(handMasks) || handMasks.some(p => Array.isArray(p) && p.length >= 3 && p.every(v => Array.isArray(v) && v.length === 2 && v.every(Number.isFinite)));
+        const handSource = Array.isArray(handMasks) ? gear.body : gear.hands;
         const guard=gear.weapon.foregroundGuard,hasGuard=Array.isArray(guard)&&guard.length===4&&guard.every(Number.isFinite)&&guard[2]>0&&guard[3]>0;
         const compact=gear.pose==='heavy'&&Array.isArray(gear.supportArm)&&gear.supportArm.length>=3&&Array.isArray(gear.adjustment?.supportShift)&&gear.adjustment.supportShift.length===2;
-        const handPasses=compact?(Array.isArray(gear.character.handMasks)?gear.character.handMasks.filter(p=>Array.isArray(p)&&p.length>=3).length:2):(hasHands?1:0);
+        const handPasses=compact?(Array.isArray(handMasks)?handMasks.filter(p=>Array.isArray(p)&&p.length>=3).length:2):(hasHands?1:0);
         assert.deepEqual(ctx.calls.filter(c => c[0] === 'drawImage').map(c => c[1].url), [...Array(compact?2:1).fill(gear.body), gear.gun, ...(forearm ? [gear.body] : []), ...Array(handPasses).fill(handSource), ...(hasGuard ? [gear.gun] : [])]);
         assert.deepEqual(ctx.calls.filter(c => c[0] === 'scale')[0], ['scale', (side === 'enemy' ? -1 : 1) * 800/1536, 800/1536]);
         assert.equal(ctx.calls.filter(c => c[0] === 'save').length, ctx.calls.filter(c => c[0] === 'restore').length);

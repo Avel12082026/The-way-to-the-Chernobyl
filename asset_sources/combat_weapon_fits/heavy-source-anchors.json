@@ -1,0 +1,3929 @@
+{
+  "schemaVersion": 1,
+  "coordinateSpace": "source PNG pixels",
+  "method": "Manual native-resolution source inspection with coordinate grids and magnified ambiguous trigger details. trigger marks the clear opening immediately ahead of the trigger face; grip marks palm contact, not an index-finger target. supportSegment identifies the inspected handguard/foregrip contact surface; it may be vertical on a foregrip. Generic receiver, magazine, belt, bipod and exposed barrel pixels are not accepted as handguards. Explicitly documented short housing exceptions have medium confidence. supportSegment and preferredSupport are null if no trustworthy surface is present; needsPoseReview then blocks automatic acceptance. stockExtent is [left, top, right, bottom]. Alpha sampling verifies points touch the intended source surfaces after manual selection, never selects surfaces automatically. Metadata is an inspection aid, not proof of accepted runtime armor fits.",
+  "weapons": {
+    "10": {
+      "name": "Карабин Сайга-12",
+      "source": "images/combat/modular/weapons/10.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        574,
+        507
+      ],
+      "grip": [
+        455,
+        561
+      ],
+      "supportSegment": [
+        [
+          1045,
+          444
+        ],
+        [
+          1215,
+          440
+        ]
+      ],
+      "preferredSupport": [
+        1130,
+        442
+      ],
+      "supportSurface": "Ribbed black polymer fore-end; exclude the large curved magazine below x686..951.",
+      "stockExtent": [
+        16,
+        377,
+        416,
+        623
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [450, 515], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "45b280d7a24ca4b263d534339a691c990be7c204dda89e23f12c10483413938d"
+    },
+    "11": {
+      "name": "Автомат АКС-74У",
+      "source": "images/combat/modular/weapons/11.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        668,
+        511
+      ],
+      "grip": [
+        532,
+        572
+      ],
+      "supportSegment": [
+        [
+          1105,
+          450
+        ],
+        [
+          1277,
+          442
+        ]
+      ],
+      "preferredSupport": [
+        1190,
+        446
+      ],
+      "supportSurface": "Brown wooden lower fore-end; magazine below x794..1075 and exposed muzzle are not safe contact surfaces.",
+      "stockExtent": [
+        17,
+        374,
+        503,
+        630
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [525, 530], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "d5e059dff1a15685ce1eb63f3a61c6c396aa71f7467bf86e5ab2a2d6cb829362"
+    },
+    "12": {
+      "name": "Автомат АК-74",
+      "source": "images/combat/modular/weapons/12.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        574,
+        509
+      ],
+      "grip": [
+        456,
+        551
+      ],
+      "supportSegment": [
+        [
+          936,
+          453
+        ],
+        [
+          1097,
+          448
+        ]
+      ],
+      "preferredSupport": [
+        1015,
+        450
+      ],
+      "supportSurface": "Brown wooden lower fore-end, forward of the curved magazine and behind the gas block.",
+      "stockExtent": [
+        22,
+        395,
+        419,
+        589
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [455, 515], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "38d83d0176728ac19ce181e849ad9cd1a9c57e3468eaf1416cf619e264eb980e"
+    },
+    "13": {
+      "name": "Винтовка СВД",
+      "source": "images/combat/modular/weapons/13.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        438,
+        570
+      ],
+      "grip": [
+        349,
+        591
+      ],
+      "supportSegment": [
+        [
+          788,
+          523
+        ],
+        [
+          970,
+          524
+        ]
+      ],
+      "preferredSupport": [
+        880,
+        524
+      ],
+      "supportSurface": "Wooden ventilated fore-end below the barrel, x736..1000; exclude the detachable magazine and exposed barrel.",
+      "stockExtent": [
+        18,
+        482,
+        405,
+        667
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on integrated thumbhole stock grip; legacy fitting grip is [350, 565], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "073dafe11f80d66a66985fc9fa8a6991815599ccd8026f4ccb3ae2c24be8ae0e"
+    },
+    "14": {
+      "name": "Винтовка СКС",
+      "source": "images/combat/modular/weapons/14.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        483,
+        550
+      ],
+      "grip": [
+        390,
+        525
+      ],
+      "supportSegment": [
+        [
+          840,
+          490
+        ],
+        [
+          1046,
+          475
+        ]
+      ],
+      "preferredSupport": [
+        947,
+        482
+      ],
+      "supportSurface": "Wooden stock fore-end ahead of the integral magazine, on its lower sloping edge.",
+      "stockExtent": [
+        22,
+        478,
+        445,
+        685
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [405, 510], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "60dc4373740af69ac7daaccc884678b036bf0e5f55118ca3101ca562f46066ba"
+    },
+    "15": {
+      "name": "Автомат АК-103",
+      "source": "images/combat/modular/weapons/15.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        530,
+        501
+      ],
+      "grip": [
+        435,
+        553
+      ],
+      "supportSegment": [
+        [
+          890,
+          464
+        ],
+        [
+          1065,
+          456
+        ]
+      ],
+      "preferredSupport": [
+        979,
+        460
+      ],
+      "supportSurface": "Lower edge of black polymer fore-end ahead of receiver/magazine.",
+      "stockExtent": [
+        24,
+        389,
+        372,
+        600
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [430, 550], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "03a1dc59fe9e3964fe402083d4d089ea5e7925793c055982e9e742a93bbd8e0e"
+    },
+    "16": {
+      "name": "Карабин «Вепрь»",
+      "source": "images/combat/modular/weapons/16.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        545,
+        525
+      ],
+      "grip": [
+        440,
+        565
+      ],
+      "supportSegment": [
+        [
+          890,
+          485
+        ],
+        [
+          1067,
+          471
+        ]
+      ],
+      "preferredSupport": [
+        973,
+        480
+      ],
+      "supportSurface": "Lower edge of brown wooden fore-end ahead of receiver and detachable curved magazine.",
+      "stockExtent": [
+        24,
+        427,
+        381,
+        683
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [440, 555], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "24c2143a5eb429f5352538887281aa1603fb73e5afaa3add7151f85976e6422f"
+    },
+    "17": {
+      "name": "Пулемёт РПК-74",
+      "source": "images/combat/modular/weapons/17.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        480,
+        503
+      ],
+      "grip": [
+        392,
+        551
+      ],
+      "supportSegment": [
+        [
+          770,
+          462
+        ],
+        [
+          907,
+          454
+        ]
+      ],
+      "preferredSupport": [
+        838,
+        457
+      ],
+      "supportSurface": "Short wooden fore-end just ahead of receiver. Long exposed barrel, bipod and magazine must not be used as contact surfaces.",
+      "stockExtent": [
+        18,
+        414,
+        352,
+        601
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [400, 540], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "18c77c8bbdec0497827bfbbf51e9553282b5a4a238d703ccae054f1914df55f4"
+    },
+    "18": {
+      "name": "Автомат АС «Вал»",
+      "source": "images/combat/modular/weapons/18.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        590,
+        503
+      ],
+      "grip": [
+        476,
+        559
+      ],
+      "supportSegment": [
+        [
+          900,
+          462
+        ],
+        [
+          1031,
+          458
+        ]
+      ],
+      "preferredSupport": [
+        967,
+        460
+      ],
+      "supportSurface": "Black ventilated fore-end ahead of receiver/magazine, before the suppressor. Do not position hand on suppressor.",
+      "stockExtent": [
+        26,
+        401,
+        440,
+        632
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [475, 555], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "8a934b300a680d29d7d066790eb13a01b67e1137a15bb4f0c5495d8485b21486"
+    },
+    "19": {
+      "name": "Дробовик СПАС-12",
+      "source": "images/combat/modular/weapons/19.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        484,
+        517
+      ],
+      "grip": [
+        390,
+        582
+      ],
+      "supportSegment": [
+        [
+          910,
+          506
+        ],
+        [
+          1145,
+          516
+        ]
+      ],
+      "preferredSupport": [
+        1022,
+        510
+      ],
+      "supportSurface": "Wide ribbed pump fore-end along lower edge, not heat shield or bare magazine tube.",
+      "stockExtent": [
+        18,
+        385,
+        433,
+        638
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [390, 570], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "30e1973b93e9f1781ec266f27ce6aceed6e32c3d25928f9b59539e85c3fbfe26"
+    },
+    "20": {
+      "name": "Дробовик Сайга-410",
+      "source": "images/combat/modular/weapons/20.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        566,
+        526
+      ],
+      "grip": [
+        455,
+        555
+      ],
+      "supportSegment": [
+        [
+          935,
+          472
+        ],
+        [
+          1140,
+          466
+        ]
+      ],
+      "preferredSupport": [
+        1040,
+        469
+      ],
+      "supportSurface": "Lower edge of the long polymer fore-end ahead of magazine/receiver and behind the exposed barrel. Palm supports the edge while fingers wrap over its side.",
+      "stockExtent": [
+        18,
+        416,
+        414,
+        655
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Magazine occupies approximately x665..826 and y483..724 and is not the support surface.",
+        "Trigger opening lies approximately x536..620 and y493..546. The trigger face curves through x554..570; selected target lies immediately ahead of it.",
+        "The old grip [455,555] denotes palm contact on the upper pistol grip, not the index finger.",
+        "Stock neck connects to receiver around x410,y470. A correct foreground mask must retain a continuous visible stock-to-receiver connection.",
+        "Original shared PNG must remain unchanged and be reused for all armor combinations."
+      ],
+      "sourceSha256": "60f9a4db67f6e5ee63d3ae9cf62cf26dcc25467a2d1228de6532c42f08e6dbb4"
+    },
+    "21": {
+      "name": "Автомат АК-12",
+      "source": "images/combat/modular/weapons/21.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        566,
+        487
+      ],
+      "grip": [
+        445,
+        546
+      ],
+      "supportSegment": [
+        [
+          982,
+          425
+        ],
+        [
+          1148,
+          425
+        ]
+      ],
+      "preferredSupport": [
+        1066,
+        425
+      ],
+      "supportSurface": "Lower accessory rail/fore-end ahead of curved magazine; fingers overlap the side of the handguard, not magazine.",
+      "stockExtent": [
+        19,
+        363,
+        369,
+        608
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [440, 550], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "4d691d29fdd2ec601be46ad8f9289e009c3e643707ed41c894ffe98ad0178d1e"
+    },
+    "22": {
+      "name": "Пулемёт ПКМ",
+      "source": "images/combat/modular/weapons/22.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        489,
+        457
+      ],
+      "grip": [
+        401,
+        494
+      ],
+      "supportSegment": [
+        [
+          848,
+          403
+        ],
+        [
+          918,
+          400
+        ]
+      ],
+      "preferredSupport": [
+        883,
+        402
+      ],
+      "supportSurface": "SPECIAL CASE: this source has no insulated fore-end. Only the short lower receiver/gas-tube housing ahead of the ammo box is present; do not confuse box, belt or exposed barrel with a handguard. Requires careful pose-specific inspection.",
+      "stockExtent": [
+        24,
+        343,
+        370,
+        529
+      ],
+      "poseFamily": "heavy",
+      "confidence": "medium; exceptional support geometry",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [390, 525], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "5caca40a9ea473be40ca309e4504c6d3b7add2a9dfcc2c2f7227e60df3f3c465"
+    },
+    "23": {
+      "name": "Винтовка Т-5000",
+      "source": "images/combat/modular/weapons/23.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        471,
+        553
+      ],
+      "grip": [
+        373,
+        578
+      ],
+      "supportSegment": [
+        [
+          838,
+          498
+        ],
+        [
+          995,
+          498
+        ]
+      ],
+      "preferredSupport": [
+        913,
+        498
+      ],
+      "supportSurface": "Lower edge of ventilated fore-end, ahead of detachable magazine and before folded bipod.",
+      "stockExtent": [
+        25,
+        433,
+        453,
+        650
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [390, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "0cb965bd88c1ec294c72951f4f199fbc7745cb7f4bc60fc5cbcba8d010511fd8"
+    },
+    "24": {
+      "name": "Винтовка СВДС",
+      "source": "images/combat/modular/weapons/24.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        481,
+        547
+      ],
+      "grip": [
+        375,
+        580
+      ],
+      "supportSegment": [
+        [
+          880,
+          510
+        ],
+        [
+          1068,
+          509
+        ]
+      ],
+      "preferredSupport": [
+        974,
+        510
+      ],
+      "supportSurface": "Black ventilated polymer fore-end ahead of receiver/magazine.",
+      "stockExtent": [
+        25,
+        449,
+        384,
+        655
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [385, 585], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "213c853e8606c9a1fa96213899fc726426e9cf914a9adccff1bf9e6a2e66d370"
+    },
+    "25": {
+      "name": "Пулемёт РПД",
+      "source": "images/combat/modular/weapons/25.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        474,
+        484
+      ],
+      "grip": [
+        395,
+        548
+      ],
+      "supportSegment": [
+        [
+          803,
+          436
+        ],
+        [
+          921,
+          429
+        ]
+      ],
+      "preferredSupport": [
+        862,
+        432
+      ],
+      "supportSurface": "Brown wood fore-end ahead of belt-fed receiver/drum, below barrel shroud. Avoid large drum and bipod.",
+      "stockExtent": [
+        25,
+        398,
+        362,
+        635
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [390, 555], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "30445f41541bcc7ddf08c500abe6fa8fecec1e3fd0e7da86cb8ebeebd12f7c92"
+    },
+    "26": {
+      "name": "Автомат АН-94 «Абакан»",
+      "source": "images/combat/modular/weapons/26.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        530,
+        487
+      ],
+      "grip": [
+        424,
+        540
+      ],
+      "supportSegment": [
+        [
+          981,
+          452
+        ],
+        [
+          1077,
+          452
+        ]
+      ],
+      "preferredSupport": [
+        1035,
+        452
+      ],
+      "supportSurface": "Ribbed polymer lower fore-end ahead of magazine; do not use receiver shelf or exposed muzzle tubes.",
+      "stockExtent": [
+        24,
+        373,
+        405,
+        603
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [410, 555], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f32922818e69bb61821a46e0a796d672d2eb1cf5b7f2a44b0d112ed24f55446c"
+    },
+    "27": {
+      "name": "Винтовка ОРСИС T-5000M",
+      "source": "images/combat/modular/weapons/27.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        467,
+        574
+      ],
+      "grip": [
+        375,
+        608
+      ],
+      "supportSegment": [
+        [
+          812,
+          519
+        ],
+        [
+          1052,
+          512
+        ]
+      ],
+      "preferredSupport": [
+        934,
+        515
+      ],
+      "supportSurface": "Ventilated chassis fore-end below barrel, before bipod.",
+      "stockExtent": [
+        25,
+        456,
+        449,
+        674
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [395, 605], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ab5c3c5fa0228031943c1d7ee73bd4931a069daaba9b98a8a6179f5813cc288c"
+    },
+    "28": {
+      "name": "Винтовка СВ-98",
+      "source": "images/combat/modular/weapons/28.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        466,
+        554
+      ],
+      "grip": [
+        370,
+        593
+      ],
+      "supportSegment": [
+        [
+          800,
+          530
+        ],
+        [
+          976,
+          520
+        ]
+      ],
+      "preferredSupport": [
+        889,
+        525
+      ],
+      "supportSurface": "Green stock fore-end below barrel, ahead of magazine and before bipod.",
+      "stockExtent": [
+        25,
+        454,
+        459,
+        680
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on integrated thumbhole stock grip; legacy fitting grip is [395, 595], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "bfc8997b3bb6990e2d51e607c1cb698e06d7f425d773dedab23951c24a3ed91e"
+    },
+    "29": {
+      "name": "Пулемёт «Печенег»",
+      "source": "images/combat/modular/weapons/29.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        458,
+        532
+      ],
+      "grip": [
+        372,
+        583
+      ],
+      "supportSegment": [
+        [
+          821,
+          488
+        ],
+        [
+          966,
+          488
+        ]
+      ],
+      "preferredSupport": [
+        895,
+        488
+      ],
+      "supportSurface": "Ribbed lower shroud/fore-end ahead of ammo box, not the ammo belt or barrel.",
+      "stockExtent": [
+        17,
+        411,
+        345,
+        647
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [370, 580], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "6682636907fd8225fa094d3347e6854b372bd855f1b4e7f43e220809625407f8"
+    },
+    "30": {
+      "name": "Винтовка ВСС «Винторез»",
+      "source": "images/combat/modular/weapons/30.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        605,
+        553
+      ],
+      "grip": [
+        520,
+        599
+      ],
+      "supportSegment": [
+        [
+          825,
+          529
+        ],
+        [
+          937,
+          509
+        ]
+      ],
+      "preferredSupport": [
+        881,
+        519
+      ],
+      "supportSurface": "Short sloping black fore-end before suppressor, directly ahead of receiver.",
+      "stockExtent": [
+        26,
+        463,
+        565,
+        701
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on integrated thumbhole stock grip; legacy fitting grip is [515, 595], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "e8e2a897218eb270dff27ae5b3029ac228ce5006fbfc0622dda562a1f4a0d7f2"
+    },
+    "31": {
+      "name": "Винтовка СВ-338",
+      "source": "images/combat/modular/weapons/31.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        499,
+        564
+      ],
+      "grip": [
+        408,
+        601
+      ],
+      "supportSegment": [
+        [
+          820,
+          496
+        ],
+        [
+          960,
+          494
+        ]
+      ],
+      "preferredSupport": [
+        890,
+        495
+      ],
+      "supportSurface": "Lower edge of ventilated chassis fore-end before folded bipod, ahead of magazine.",
+      "stockExtent": [
+        25,
+        433,
+        456,
+        680
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [415, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "fb1b4c88e25ef80bdd0c5e1f373ea6bd64ab1864bb943bac3699e230c76271c0"
+    },
+    "32": {
+      "name": "Дробовик Сайга-12К",
+      "source": "images/combat/modular/weapons/32.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        574,
+        502
+      ],
+      "grip": [
+        470,
+        570
+      ],
+      "supportSegment": [
+        [
+          930,
+          446
+        ],
+        [
+          1110,
+          442
+        ]
+      ],
+      "preferredSupport": [
+        1020,
+        444
+      ],
+      "supportSurface": "Lower edge of the ribbed black polymer fore-end, ahead of receiver/magazine and behind the front barrel band. Palm should support this edge; fingers may overlap its side.",
+      "stockExtent": [
+        24,
+        404,
+        428,
+        629
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Large curved magazine occupies approximately x635..895 and y457..830. Never count magazine contact as a correct support-hand contact.",
+        "Trigger opening is approximately x542..616 and y480..525. The trigger face curves through x562..575; selected target lies immediately ahead of it.",
+        "The old grip [470,570] is anatomically on the pistol grip and must not be interpreted as the index-finger target.",
+        "Skeleton stock extends far behind the grip. Mask only portions truly behind the near arm/body; preserve its visible bridge to the receiver.",
+        "Original shared PNG must remain unchanged and be reused for all armor combinations."
+      ],
+      "sourceSha256": "0917ff7a74b4c70db53ae8e5ee9486baf5fa06c22d03dbe8b53a95764e3c370d"
+    },
+    "33": {
+      "name": "Винтовка «Выхлоп»",
+      "source": "images/combat/modular/weapons/33.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        578,
+        571
+      ],
+      "grip": [
+        482,
+        615
+      ],
+      "supportSegment": [
+        [
+          800,
+          545
+        ],
+        [
+          875,
+          534
+        ]
+      ],
+      "preferredSupport": [
+        839,
+        539
+      ],
+      "supportSurface": "SPECIAL CASE: very short receiver-extension housing before the suppressor. No full-length insulated fore-end in this source; keep hand behind suppressor and inspect this pose carefully.",
+      "stockExtent": [
+        26,
+        474,
+        475,
+        661
+      ],
+      "poseFamily": "heavy",
+      "confidence": "medium; exceptional support geometry",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [480, 620], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "00c7d76b5644c1f1b14718430d3c95a7b27f94dd08a0a0b7fb6983609627a584"
+    },
+    "35": {
+      "name": "Винтовка ОСВ-96",
+      "source": "images/combat/modular/weapons/35.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        429,
+        530
+      ],
+      "grip": [
+        352,
+        574
+      ],
+      "supportSegment": [
+        [
+          773,
+          455
+        ],
+        [
+          856,
+          455
+        ]
+      ],
+      "preferredSupport": [
+        814,
+        455
+      ],
+      "supportSurface": "Short ventilated lower fore-end ahead of receiver and behind deployed bipod.",
+      "stockExtent": [
+        26,
+        437,
+        348,
+        603
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [360, 575], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "a8d0e6fd43c5e2ce4dfbc78e7873682b801e5371cf4c43630f5e1128af606a59"
+    },
+    "36": {
+      "name": "Винтовка СВК",
+      "source": "images/combat/modular/weapons/36.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        493,
+        546
+      ],
+      "grip": [
+        411,
+        588
+      ],
+      "supportSegment": [
+        [
+          875,
+          491
+        ],
+        [
+          1043,
+          491
+        ]
+      ],
+      "preferredSupport": [
+        958,
+        491
+      ],
+      "supportSurface": "Lower edge of ventilated fore-end before deployed bipod.",
+      "stockExtent": [
+        25,
+        444,
+        395,
+        640
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [415, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "cc4e00f674313f96897d4e42b459ccbc56c7c39eeb385f3be47b3a3331fa5d21"
+    },
+    "37": {
+      "name": "Автомат АК-107",
+      "source": "images/combat/modular/weapons/37.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        529,
+        541
+      ],
+      "grip": [
+        433,
+        593
+      ],
+      "supportSegment": [
+        [
+          857,
+          494
+        ],
+        [
+          978,
+          486
+        ]
+      ],
+      "preferredSupport": [
+        920,
+        490
+      ],
+      "supportSurface": "Ribbed black lower fore-end ahead of receiver and curved magazine.",
+      "stockExtent": [
+        26,
+        443,
+        370,
+        622
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [415, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "4497aa7883feef6fcc30115c0067ffb97499f0293e4cff796f76a1ba67e16041"
+    },
+    "38": {
+      "name": "Автомат ADAR 2-15",
+      "source": "images/combat/modular/weapons/38.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        588,
+        546
+      ],
+      "grip": [
+        461,
+        610
+      ],
+      "supportSegment": [
+        [
+          905,
+          483
+        ],
+        [
+          1159,
+          483
+        ]
+      ],
+      "preferredSupport": [
+        1028,
+        483
+      ],
+      "supportSurface": "Long wood fore-end, lower edge ahead of magazine and behind front sight.",
+      "stockExtent": [
+        23,
+        391,
+        407,
+        628
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [465, 590], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "06567ac623d34b348b3b63017c537bdf9d0889f3e482cecd627e59de4fade8c0"
+    },
+    "39": {
+      "name": "Винтовка ORSIS T-5000 Sniper Pro",
+      "source": "images/combat/modular/weapons/39.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        477,
+        534
+      ],
+      "grip": [
+        376,
+        576
+      ],
+      "supportSegment": [
+        [
+          701,
+          489
+        ],
+        [
+          810,
+          484
+        ]
+      ],
+      "preferredSupport": [
+        756,
+        487
+      ],
+      "supportSurface": "Lower shelf at rear of chassis fore-end before its diagonal cutout; far-forward underside is higher and not part of this segment.",
+      "stockExtent": [
+        26,
+        431,
+        403,
+        635
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [385, 570], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ff8c09d103395980e6ee0048822a4f63ce7b25742fbd5a1826f2cf883516e95f"
+    },
+    "40": {
+      "name": "Винтовка ВСК-94",
+      "source": "images/combat/modular/weapons/40.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        565,
+        580
+      ],
+      "grip": [
+        463,
+        617
+      ],
+      "supportSegment": [
+        [
+          822,
+          540
+        ],
+        [
+          992,
+          540
+        ]
+      ],
+      "preferredSupport": [
+        907,
+        540
+      ],
+      "supportSurface": "Long lower fore-end below barrel ahead of receiver/magazine and behind exposed barrel/suppressor.",
+      "stockExtent": [
+        26,
+        448,
+        514,
+        703
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [465, 620], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "93f5319c1ebe114f4fd5fd7f71d1c0c063114a2d7df76093d87710fdd6565737"
+    },
+    "42": {
+      "name": "Винтовка SR-25",
+      "source": "images/combat/modular/weapons/42.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        573,
+        572
+      ],
+      "grip": [
+        462,
+        616
+      ],
+      "supportSegment": [
+        [
+          923,
+          506
+        ],
+        [
+          1070,
+          506
+        ]
+      ],
+      "preferredSupport": [
+        999,
+        506
+      ],
+      "supportSurface": "Lower edge of long ventilated handguard, behind added rail section and ahead of magazine.",
+      "stockExtent": [
+        25,
+        437,
+        408,
+        666
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [470, 650], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "3a0ea06afa40219e7a9be1a77efde5af467c1be855aefdbe1f5506812f906801"
+    },
+    "43": {
+      "name": "Автомат ОЦ-14 «Гроза»",
+      "source": "images/combat/modular/weapons/43.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        974,
+        543
+      ],
+      "grip": [
+        848,
+        627
+      ],
+      "supportSegment": [
+        [
+          1165,
+          608
+        ],
+        [
+          1172,
+          695
+        ]
+      ],
+      "preferredSupport": [
+        1171,
+        640
+      ],
+      "supportSurface": "Vertical foregrip: segment runs vertically on its ribbed body. Supporting hand wraps the foregrip, not a horizontal underside. Bullpup magazine is behind firing hand.",
+      "stockExtent": [
+        55,
+        350,
+        161,
+        691
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [830, 625], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "96039ddc3f2b3fa36e2658c522711e5a4ad13419cfd2d7f92f0a9cab266dc5a3"
+    },
+    "44": {
+      "name": "Дробовик «Вепрь-12»",
+      "source": "images/combat/modular/weapons/44.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        557,
+        528
+      ],
+      "grip": [
+        463,
+        571
+      ],
+      "supportSegment": [
+        [
+          930,
+          490
+        ],
+        [
+          1105,
+          490
+        ]
+      ],
+      "preferredSupport": [
+        1017,
+        490
+      ],
+      "supportSurface": "Lower accessory rail/fore-end ahead of large curved shotgun magazine.",
+      "stockExtent": [
+        24,
+        430,
+        430,
+        660
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [470, 580], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "4d4c345dc6dc3d8be241bfe1535201b6ab38746bdb50c59250fea466727126b6"
+    },
+    "45": {
+      "name": "Автомат АК-19",
+      "source": "images/combat/modular/weapons/45.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        585,
+        518
+      ],
+      "grip": [
+        472,
+        574
+      ],
+      "supportSegment": [
+        [
+          984,
+          478
+        ],
+        [
+          1148,
+          478
+        ]
+      ],
+      "preferredSupport": [
+        1068,
+        478
+      ],
+      "supportSurface": "Lower accessory rail/fore-end ahead of curved magazine.",
+      "stockExtent": [
+        29,
+        402,
+        418,
+        622
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [485, 580], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "313ed4271f892cabc0a331ba80f5d2dab7b58423faff3a7b8b1561f24e0fcbc4"
+    },
+    "46": {
+      "name": "Винтовка SSG 08",
+      "source": "images/combat/modular/weapons/46.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        520,
+        573
+      ],
+      "grip": [
+        442,
+        619
+      ],
+      "supportSegment": [
+        [
+          896,
+          525
+        ],
+        [
+          1088,
+          525
+        ]
+      ],
+      "preferredSupport": [
+        995,
+        525
+      ],
+      "supportSurface": "Lower edge of ventilated narrow fore-end ahead of magazine, before folded bipod.",
+      "stockExtent": [
+        24,
+        448,
+        487,
+        674
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [435, 625], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "992f3d1247228140abc2cc8cabbca113fd4dbfb206cf0c31959a0a618d664df1"
+    },
+    "47": {
+      "name": "Автомат АК-АН «Абакан-100»",
+      "source": "images/combat/modular/weapons/47.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        522,
+        525
+      ],
+      "grip": [
+        435,
+        566
+      ],
+      "supportSegment": [
+        [
+          930,
+          505
+        ],
+        [
+          930,
+          535
+        ]
+      ],
+      "preferredSupport": [
+        930,
+        521
+      ],
+      "supportSurface": "Short vertical/angled foregrip: vertical contact segment on its post below the handguard. Do not grip grenade-laser-like box under receiver or bare suppressor.",
+      "stockExtent": [
+        26,
+        433,
+        390,
+        613
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [430, 555], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "431a8cd0cf24b10045cfa170b49ccb95afb98877f8f8454f979c53faca1c8a6d"
+    },
+    "48": {
+      "name": "Винтовка Barrett M98B",
+      "source": "images/combat/modular/weapons/48.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        480,
+        549
+      ],
+      "grip": [
+        376,
+        608
+      ],
+      "supportSegment": [
+        [
+          815,
+          480
+        ],
+        [
+          894,
+          480
+        ]
+      ],
+      "preferredSupport": [
+        855,
+        480
+      ],
+      "supportSurface": "Lower tan fore-end edge ahead of receiver, behind the bipod mounting foot. Exclude magazine and exposed barrel.",
+      "stockExtent": [
+        26,
+        431,
+        330,
+        635
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [385, 590], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "6f0866ecb239d4e381c15f163cc1fe839ac0c672d4a3c1b473862eeacddc04e8"
+    },
+    "49": {
+      "name": "Винтовка Barrett M82",
+      "source": "images/combat/modular/weapons/49.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        501,
+        540
+      ],
+      "grip": [
+        418,
+        594
+      ],
+      "supportSegment": [
+        [
+          810,
+          476
+        ],
+        [
+          953,
+          476
+        ]
+      ],
+      "preferredSupport": [
+        882,
+        476
+      ],
+      "supportSurface": "Lower edge of the ventilated fore-end before the bipod mounting hinge. Exclude the large magazine and bipod legs.",
+      "stockExtent": [
+        25,
+        405,
+        404,
+        615
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [410, 575], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ab557a7998a5dc496e25f740677bf9429a9042a3749e08cfa00a840447c1901b"
+    },
+    "50": {
+      "name": "Дробовик Benelli M4",
+      "source": "images/combat/modular/weapons/50.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        596,
+        546
+      ],
+      "grip": [
+        454,
+        624
+      ],
+      "supportSegment": [
+        [
+          905,
+          525
+        ],
+        [
+          1020,
+          525
+        ]
+      ],
+      "preferredSupport": [
+        966,
+        525
+      ],
+      "supportSurface": "Ribbed black polymer fore-end ahead of receiver, before its projecting bottom accessory rail.",
+      "stockExtent": [
+        28,
+        438,
+        475,
+        685
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [465, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "165a8666419f8b0598164d3074225ff776175b94119bba92c15f96cda114de11"
+    },
+    "51": {
+      "name": "Автомат ЛР-308",
+      "source": "images/combat/modular/weapons/51.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        610,
+        585
+      ],
+      "grip": [
+        460,
+        675
+      ],
+      "supportSegment": [
+        [
+          910,
+          504
+        ],
+        [
+          1230,
+          502
+        ]
+      ],
+      "preferredSupport": [
+        1065,
+        503
+      ],
+      "supportSurface": "Long black ventilated handguard on its solid lower edge, forward of the large magazine.",
+      "stockExtent": [
+        24,
+        437,
+        425,
+        678
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [470, 650], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f1204837a23388807df6f2a5cea7d9a3b2d0f5ed456b13f792902f0ae9adc4e8"
+    },
+    "52": {
+      "name": "Винтовка АСВК «Корд»",
+      "source": "images/combat/modular/weapons/52.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        484,
+        517
+      ],
+      "grip": [
+        369,
+        582
+      ],
+      "supportSegment": null,
+      "preferredSupport": null,
+      "supportSurface": "No separate safe fore-end contact visible: forward of receiver is bare barrel and bipod. Magazine, exposed barrel and bipod are excluded. Requires a reviewed carrying/support pose.",
+      "stockExtent": [
+        22,
+        436,
+        301,
+        604
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for trigger and grip identity; no accepted fore-end support surface",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [380, 570], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed.",
+        "Null support values are intentional: do not fall back to barrel, magazine, bipod, wires or receiver. This source requires a special reviewed support pose before fitting acceptance."
+      ],
+      "sourceSha256": "4fac61e0e43edde9c83028fbcf778ede0dc1ea2491c9d8db1e38e1b7e00173ab",
+      "exceptionalSupport": true,
+      "needsPoseReview": true
+    },
+    "53": {
+      "name": "Пулемёт «Печенег-СП»",
+      "source": "images/combat/modular/weapons/53.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        475,
+        515
+      ],
+      "grip": [
+        363,
+        592
+      ],
+      "supportSegment": [
+        [
+          750,
+          467
+        ],
+        [
+          881,
+          465
+        ]
+      ],
+      "preferredSupport": [
+        812,
+        466
+      ],
+      "supportSurface": "Short black ribbed fore-end ahead of ammunition feed housing, before exposed barrel/gas tube. Exclude belt and ammunition box.",
+      "stockExtent": [
+        30,
+        419,
+        298,
+        606
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [375, 560], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "3483b43648cdfde3fbce0cb49f2afc4ab08843992f20ff3f82afd348de195fa2"
+    },
+    "54": {
+      "name": "Винтовка McMillan TAC-50",
+      "source": "images/combat/modular/weapons/54.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        462,
+        600
+      ],
+      "grip": [
+        341,
+        674
+      ],
+      "supportSegment": [
+        [
+          867,
+          540
+        ],
+        [
+          1087,
+          540
+        ]
+      ],
+      "preferredSupport": [
+        977,
+        540
+      ],
+      "supportSurface": "Lower tan ventilated fore-end edge, forward of attached vertical grip and behind the exposed barrel.",
+      "stockExtent": [
+        25,
+        471,
+        414,
+        716
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [345, 640], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "9a11332413851638b18b1b0030b27e9b98122151e0931c543d83ce6cced746f3",
+      "alternativeSupport": {
+        "point": [
+          805,
+          650
+        ],
+        "surface": "Vertical foregrip",
+        "requiresPoseReview": true,
+        "reason": "Palm wraps around vertical grip; cannot reuse a horizontal under-fore-end hand angle."
+      }
+    },
+    "55": {
+      "name": "Гаусс-пушка",
+      "source": "images/combat/modular/weapons/55.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        590,
+        604
+      ],
+      "grip": [
+        478,
+        630
+      ],
+      "supportSegment": null,
+      "preferredSupport": null,
+      "supportSurface": "No unambiguous insulated fore-end or support grip visible. Underside has exposed energy cables, small mounting plates and powered components; these are not accepted as palm contact without a reviewed special pose.",
+      "stockExtent": [
+        36,
+        418,
+        454,
+        640
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for trigger and grip identity; no accepted fore-end support surface",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [480, 620], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed.",
+        "Null support values are intentional: do not fall back to barrel, magazine, bipod, wires or receiver. This source requires a special reviewed support pose before fitting acceptance."
+      ],
+      "sourceSha256": "9e285e81f097b9d2193f6c822675f79d12f2940ae14cd67c2f7861f6528b9c22",
+      "exceptionalSupport": true,
+      "needsPoseReview": true
+    },
+    "56": {
+      "name": "Дробовик AA-12",
+      "source": "images/combat/modular/weapons/56.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        762,
+        557
+      ],
+      "grip": [
+        620,
+        644
+      ],
+      "supportSegment": [
+        [
+          1030,
+          521
+        ],
+        [
+          1250,
+          511
+        ]
+      ],
+      "preferredSupport": [
+        1140,
+        516
+      ],
+      "supportSurface": "Solid polymer forward body/fore-end below barrel, ahead of drum magazine and behind front sling loop. This fore-end is integral with the body shell.",
+      "stockExtent": [
+        35,
+        366,
+        552,
+        665
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [625, 630], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed.",
+        "Support selected on forward polymer shell ahead of drum; source has an integrated fore-end, not a separate bolt-on handguard."
+      ],
+      "sourceSha256": "436d0a356c7c67ba762e3dc5bfd5d711eb1735f95652b83c869ccc0a2e2b37bf"
+    },
+    "57": {
+      "name": "Автомат HK416",
+      "source": "images/combat/modular/weapons/57.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        674,
+        560
+      ],
+      "grip": [
+        535,
+        649
+      ],
+      "supportSegment": [
+        [
+          904,
+          484
+        ],
+        [
+          1025,
+          484
+        ]
+      ],
+      "preferredSupport": [
+        969,
+        484
+      ],
+      "supportSurface": "Lower handguard rail behind the mounted vertical grip; magazine, receiver and vertical-grip bracket are excluded.",
+      "stockExtent": [
+        28,
+        412,
+        478,
+        680
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [540, 620], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ed4ba7cb415907af4a30a8abc8a214e8d06c9c0b7ed8c501245b5cf13e26e728",
+      "alternativeSupport": {
+        "point": [
+          1105,
+          594
+        ],
+        "surface": "Vertical foregrip",
+        "requiresPoseReview": true,
+        "reason": "Palm wraps around vertical grip; cannot reuse a horizontal under-fore-end hand angle."
+      }
+    },
+    "58": {
+      "name": "Винтовка Steyr HS .50",
+      "source": "images/combat/modular/weapons/58.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        432,
+        545
+      ],
+      "grip": [
+        320,
+        595
+      ],
+      "supportSegment": [
+        [
+          704,
+          529
+        ],
+        [
+          889,
+          529
+        ]
+      ],
+      "preferredSupport": [
+        793,
+        529
+      ],
+      "supportSurface": "Separate short black ribbed fore-end beneath barrel, ahead of receiver and behind bipod.",
+      "stockExtent": [
+        25,
+        437,
+        375,
+        657
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [320, 560], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "33ec7fd1d9c7011944641aaf6c40da11d3c583ae9308fd8d93b4c6141749173f"
+    },
+    "59": {
+      "name": "Пулемёт M240",
+      "source": "images/combat/modular/weapons/59.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        450,
+        537
+      ],
+      "grip": [
+        348,
+        615
+      ],
+      "supportSegment": [
+        [
+          753,
+          490
+        ],
+        [
+          915,
+          490
+        ]
+      ],
+      "preferredSupport": [
+        830,
+        490
+      ],
+      "supportSurface": "Solid lower edge of perforated forward handguard, ahead of ammunition feed housing. Exclude ammunition belt, box, exposed barrel and bipod.",
+      "stockExtent": [
+        28,
+        412,
+        259,
+        604
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [350, 590], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "374e2d2a717ee2aa460845d4587a70ee5293184aeeceadbb4ff93d592e70690c"
+    },
+    "60": {
+      "name": "Винтовка Accuracy International AXMC",
+      "source": "images/combat/modular/weapons/60.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        468,
+        574
+      ],
+      "grip": [
+        354,
+        617
+      ],
+      "supportSegment": [
+        [
+          1007,
+          520
+        ],
+        [
+          1092,
+          520
+        ]
+      ],
+      "preferredSupport": [
+        1051,
+        520
+      ],
+      "supportSurface": "Lower edge of the tan fore-end forward of the folded bipod leg/mount, before exposed barrel.",
+      "stockExtent": [
+        39,
+        469,
+        408,
+        690
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [365, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "dbadda28b2c41d5e3cde9ad6eecd1e9ed6289cb6811bdd769063bee1f4ffedd0"
+    },
+    "61": {
+      "name": "Пулемёт M60E6",
+      "source": "images/combat/modular/weapons/61.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        552,
+        510
+      ],
+      "grip": [
+        438,
+        598
+      ],
+      "supportSegment": [
+        [
+          829,
+          479
+        ],
+        [
+          998,
+          479
+        ]
+      ],
+      "preferredSupport": [
+        910,
+        479
+      ],
+      "supportSurface": "Black ribbed handguard lower edge ahead of ammunition feed, behind exposed barrel/gas tube and bipod.",
+      "stockExtent": [
+        25,
+        366,
+        298,
+        603
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [445, 560], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "a4904d680261abd85ed65aff83f675a6bffdb6fb2f7e075cc2b1e2fc9a72a237"
+    },
+    "62": {
+      "name": "Дробовик Kel-Tec KSG",
+      "source": "images/combat/modular/weapons/62.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        822,
+        572
+      ],
+      "grip": [
+        662,
+        690
+      ],
+      "supportSegment": [
+        [
+          1045,
+          523
+        ],
+        [
+          1355,
+          522
+        ]
+      ],
+      "preferredSupport": [
+        1200,
+        522
+      ],
+      "supportSurface": "Broad lower forward polymer pump/fore-end, ahead of trigger and behind muzzles; exclude rear body/stock.",
+      "stockExtent": [
+        31,
+        375,
+        591,
+        681
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [670, 660], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "581ab69adbd4fdeaf9b96da04b88f4a22001427b1a763f284af782d8249bcba3"
+    },
+    "63": {
+      "name": "Автомат АК-308",
+      "source": "images/combat/modular/weapons/63.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        568,
+        516
+      ],
+      "grip": [
+        455,
+        568
+      ],
+      "supportSegment": [
+        [
+          958,
+          469
+        ],
+        [
+          1077,
+          469
+        ]
+      ],
+      "preferredSupport": [
+        1017,
+        469
+      ],
+      "supportSurface": "Ribbed lower polymer fore-end forward of magazine, behind gas block.",
+      "stockExtent": [
+        26,
+        428,
+        421,
+        643
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [460, 580], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "17f1d6ca01af2c94ee2208f7316062d6671b280b1fadbce5fc973c7e79ac9166"
+    },
+    "64": {
+      "name": "Винтовка ORSIS T-5000 Elite",
+      "source": "images/combat/modular/weapons/64.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        454,
+        550
+      ],
+      "grip": [
+        360,
+        592
+      ],
+      "supportSegment": [
+        [
+          866,
+          607
+        ],
+        [
+          866,
+          661
+        ]
+      ],
+      "preferredSupport": [
+        866,
+        630
+      ],
+      "supportSurface": "Vertical foregrip under stock fore-end: palm wraps its shaft, not the horizontal bottom of stock.",
+      "stockExtent": [
+        25,
+        467,
+        396,
+        640
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [375, 590], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "61abcb81d27d2d026e10a1729b9662e64ee32a736b42d898d20cf0a5b7c3db50"
+    },
+    "65": {
+      "name": "Пулемёт «Утёс-М»",
+      "source": "images/combat/modular/weapons/65.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        476,
+        585
+      ],
+      "grip": [
+        388,
+        607
+      ],
+      "supportSegment": [
+        [
+          824,
+          536
+        ],
+        [
+          923,
+          532
+        ]
+      ],
+      "preferredSupport": [
+        872,
+        534
+      ],
+      "supportSurface": "Lower front shroud/housing ahead of belt/box; very heavy weapon with limited grip surface. Inspect pose and weight support separately.",
+      "stockExtent": [
+        26,
+        439,
+        355,
+        623
+      ],
+      "poseFamily": "heavy",
+      "confidence": "medium; exceptional support geometry",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [395, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed.",
+        "Source trigger opening is very small and has antialiased residual pixels around its edge. Chosen clear contact at [476,585] is inside this real opening; fit review should inspect source art quality separately."
+      ],
+      "sourceSha256": "c0262a848c276665b42917ea765c66e0ef0ecfe7decbcc2f7e11bf3b154e0593"
+    },
+    "66": {
+      "name": "Винтовка Zastava M93 Black Arrow",
+      "source": "images/combat/modular/weapons/66.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        455,
+        550
+      ],
+      "grip": [
+        378,
+        588
+      ],
+      "supportSegment": [
+        [
+          717,
+          531
+        ],
+        [
+          843,
+          531
+        ]
+      ],
+      "preferredSupport": [
+        780,
+        531
+      ],
+      "supportSurface": "Short lower fore-end below barrel opening ahead of receiver; avoid exposed barrel and deployed bipod.",
+      "stockExtent": [
+        39,
+        455,
+        395,
+        635
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [385, 580], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "c2745c4d59e3d25443c0418a596436c19b0037cef9e44e83d6a6ae05d69baef5"
+    },
+    "67": {
+      "name": "Пулемёт Minimi Mk3",
+      "source": "images/combat/modular/weapons/67.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        477,
+        588
+      ],
+      "grip": [
+        388,
+        637
+      ],
+      "supportSegment": [
+        [
+          807,
+          550
+        ],
+        [
+          939,
+          550
+        ]
+      ],
+      "preferredSupport": [
+        873,
+        550
+      ],
+      "supportSurface": "Wide dark lower fore-end ahead of belt/box; not ammo belt, box or bipod.",
+      "stockExtent": [
+        25,
+        423,
+        278,
+        574
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [395, 640], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ab1b15c1713b4417d343eaba69380485669a5d821363f023418e1b3ae10d51e9"
+    },
+    "68": {
+      "name": "Дробовик Franchi SPAS-15",
+      "source": "images/combat/modular/weapons/68.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        537,
+        546
+      ],
+      "grip": [
+        440,
+        609
+      ],
+      "supportSegment": [
+        [
+          1007,
+          547
+        ],
+        [
+          1274,
+          543
+        ]
+      ],
+      "preferredSupport": [
+        1136,
+        545
+      ],
+      "supportSurface": "Long ribbed pump fore-end ahead of shotgun magazine. Fingers wrap the ridged side.",
+      "stockExtent": [
+        26,
+        413,
+        376,
+        579
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [425, 605], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "211c197014873d0a43432623c752a3e92ca4ea6d056f43feb1cef2772a6cf3a6"
+    },
+    "69": {
+      "name": "Автомат CZ Bren 2",
+      "source": "images/combat/modular/weapons/69.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        607,
+        543
+      ],
+      "grip": [
+        501,
+        586
+      ],
+      "supportSegment": [
+        [
+          999,
+          575
+        ],
+        [
+          999,
+          638
+        ]
+      ],
+      "preferredSupport": [
+        999,
+        610
+      ],
+      "supportSurface": "Vertical foregrip under accessory rail: palm wraps vertical shaft.",
+      "stockExtent": [
+        25,
+        381,
+        408,
+        620
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [510, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "08cc69c794babeb35ac59aa536a466443c5f6ad352382027b8199a21cdfe7b27"
+    },
+    "70": {
+      "name": "Винтовка Sako TRG-42",
+      "source": "images/combat/modular/weapons/70.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        477,
+        530
+      ],
+      "grip": [
+        384,
+        574
+      ],
+      "supportSegment": [
+        [
+          830,
+          499
+        ],
+        [
+          996,
+          495
+        ]
+      ],
+      "preferredSupport": [
+        915,
+        497
+      ],
+      "supportSurface": "Lower stock fore-end ahead of magazine and behind deployed bipod.",
+      "stockExtent": [
+        24,
+        423,
+        436,
+        623
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [395, 575], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f1d126f3e50aaf054c4b6ac8ca4640438063a9e6aee3bc8e4a66dcbb612db846"
+    },
+    "71": {
+      "name": "Пулемёт FN MAG",
+      "source": "images/combat/modular/weapons/71.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        475,
+        544
+      ],
+      "grip": [
+        389,
+        598
+      ],
+      "supportSegment": [
+        [
+          802,
+          528
+        ],
+        [
+          865,
+          525
+        ]
+      ],
+      "preferredSupport": [
+        833,
+        526
+      ],
+      "supportSurface": "Short lower rear shelf of fore-end ahead of belt/box. Farther-forward underside is higher; do not project shelf through it.",
+      "stockExtent": [
+        23,
+        437,
+        322,
+        621
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [390, 620], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f7c069ce457045c80fb00ace5ba6f631f950b1af1f8fd405daaa191484e66de2"
+    },
+    "72": {
+      "name": "Винтовка Desert Tech HTI",
+      "source": "images/combat/modular/weapons/72.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        511,
+        591
+      ],
+      "grip": [
+        434,
+        648
+      ],
+      "supportSegment": [
+        [
+          895,
+          510
+        ],
+        [
+          966,
+          510
+        ]
+      ],
+      "preferredSupport": [
+        931,
+        510
+      ],
+      "supportSurface": "Lower edge of tan fore-end ahead of receiver, above folded bipod. Fingers may cover fore-end side but must not float underneath bipod.",
+      "stockExtent": [
+        32,
+        439,
+        420,
+        641
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [415, 655], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "d416b2454ebff1a25d08fcfb7fc578a2f4568a33c6a07cf564c829f875a9c7db"
+    },
+    "73": {
+      "name": "Прототип X-17",
+      "source": "images/combat/modular/weapons/73.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        695,
+        568
+      ],
+      "grip": [
+        630,
+        644
+      ],
+      "supportSegment": [
+        [
+          1050,
+          516
+        ],
+        [
+          1250,
+          516
+        ]
+      ],
+      "preferredSupport": [
+        1149,
+        516
+      ],
+      "supportSurface": "Fictional weapon: lower edge of long outer barrel housing ahead of magazine. Narrow brace/loop below housing is separate and must not be mistaken for handguard edge.",
+      "stockExtent": [
+        26,
+        444,
+        592,
+        642
+      ],
+      "poseFamily": "heavy",
+      "confidence": "medium; exceptional support geometry",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [620, 650], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "259cae05acae55a802f789233c6ad91e4c53e6110d5340fba3715693344b5bd3"
+    },
+    "74": {
+      "name": "Дробовик USAS-12",
+      "source": "images/combat/modular/weapons/74.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        546,
+        518
+      ],
+      "grip": [
+        451,
+        568
+      ],
+      "supportSegment": [
+        [
+          970,
+          607
+        ],
+        [
+          979,
+          679
+        ]
+      ],
+      "preferredSupport": [
+        974,
+        642
+      ],
+      "supportSurface": "Vertical foregrip ahead of drum magazine: palm wraps shaft. Drum is not support surface.",
+      "stockExtent": [
+        24,
+        355,
+        445,
+        628
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [465, 605], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "c5a8e389e24ea1200a7a4e7da7ab8d46d03b0e3f5655dddb238d696a2ff273c3"
+    },
+    "75": {
+      "name": "Автомат SCAR-H",
+      "source": "images/combat/modular/weapons/75.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        601,
+        591
+      ],
+      "grip": [
+        486,
+        649
+      ],
+      "supportSegment": [
+        [
+          1031,
+          600
+        ],
+        [
+          1031,
+          652
+        ]
+      ],
+      "preferredSupport": [
+        1031,
+        627
+      ],
+      "supportSurface": "Vertical foregrip under handguard: palm wraps grooved shaft.",
+      "stockExtent": [
+        27,
+        390,
+        417,
+        651
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [490, 645], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "04ba276f81d2c54b932300252aa284abd05c85c28baf07d7db8e598d8184232a"
+    },
+    "76": {
+      "name": "Винтовка Blaser R93 Tactical 2",
+      "source": "images/combat/modular/weapons/76.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        451,
+        578
+      ],
+      "grip": [
+        360,
+        615
+      ],
+      "supportSegment": [
+        [
+          974,
+          534
+        ],
+        [
+          1088,
+          534
+        ]
+      ],
+      "preferredSupport": [
+        1031,
+        534
+      ],
+      "supportSurface": "Lower forward stock fore-end ahead of magazine, behind barrel muzzle. Deployed bipod below it may constrain finger occlusion.",
+      "stockExtent": [
+        25,
+        485,
+        405,
+        682
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [385, 615], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "bf2071cc2b81d56676211e4376377b66aeb1e4bd5117e66fece1e808c163abad"
+    },
+    "77": {
+      "name": "Пулемёт Negev NG7",
+      "source": "images/combat/modular/weapons/77.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        598,
+        563
+      ],
+      "grip": [
+        519,
+        609
+      ],
+      "supportSegment": [
+        [
+          964,
+          529
+        ],
+        [
+          1038,
+          529
+        ]
+      ],
+      "preferredSupport": [
+        1001,
+        529
+      ],
+      "supportSurface": "Lower front housing/shroud ahead of belt and ammo box, behind deployed bipod.",
+      "stockExtent": [
+        21,
+        395,
+        435,
+        613
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [505, 640], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "7b561e59840c36c922cb71c0efa5610f2b1bfc5401b424838087293cee03d9e1"
+    },
+    "78": {
+      "name": "Винтовка Cheytac M200 Intervention",
+      "source": "images/combat/modular/weapons/78.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        400,
+        543
+      ],
+      "grip": [
+        304,
+        588
+      ],
+      "supportSegment": [
+        [
+          712,
+          557
+        ],
+        [
+          820,
+          557
+        ]
+      ],
+      "preferredSupport": [
+        768,
+        557
+      ],
+      "supportSurface": "Horizontal lower fore-end handle below barrel/chassis and ahead of detachable magazine; wrap lower handle, not upper exposed barrel.",
+      "stockExtent": [
+        24,
+        422,
+        363,
+        611
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manually inspected palm center; legacy fitting grip is [325, 600], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f4ed857dc70b2236d83c8cfdf26d6c2ca633222f9579d130703a4d0b3e8512cb"
+    },
+    "106": {
+      "name": "Дробовик Mossberg 500",
+      "source": "images/combat/modular/weapons/106.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        565,
+        550
+      ],
+      "grip": [
+        413,
+        542
+      ],
+      "supportSegment": [
+        [
+          970,
+          540
+        ],
+        [
+          1215,
+          539
+        ]
+      ],
+      "preferredSupport": [
+        1090,
+        540
+      ],
+      "supportSurface": "Ribbed black polymer pump fore-end; exclude the bare magazine tube on either side.",
+      "stockExtent": [
+        35,
+        445,
+        505,
+        724
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [425, 525], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "1b01a1d98f7dbc6ba7ee5de18aad94408e204686e85066d1546129cb77daab98"
+    },
+    "107": {
+      "name": "Дробовик Stoeger P3000",
+      "source": "images/combat/modular/weapons/107.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        608,
+        530
+      ],
+      "grip": [
+        460,
+        522
+      ],
+      "supportSegment": [
+        [
+          990,
+          512
+        ],
+        [
+          1235,
+          514
+        ]
+      ],
+      "preferredSupport": [
+        1110,
+        513
+      ],
+      "supportSurface": "Lower edge of the broad black pump fore-end, behind the exposed front magazine tube.",
+      "stockExtent": [
+        29,
+        443,
+        550,
+        706
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [455, 505], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "00885578788e5436f4edf98a08863f9be89a7643001eb62cf1ebf70a6b007841"
+    },
+    "108": {
+      "name": "Дробовик Remington 870",
+      "source": "images/combat/modular/weapons/108.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        585,
+        526
+      ],
+      "grip": [
+        430,
+        516
+      ],
+      "supportSegment": [
+        [
+          980,
+          512
+        ],
+        [
+          1255,
+          513
+        ]
+      ],
+      "preferredSupport": [
+        1115,
+        512
+      ],
+      "supportSurface": "Brown wooden ribbed pump fore-end; do not use the exposed tubular magazine.",
+      "stockExtent": [
+        28,
+        419,
+        508,
+        710
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [460, 515], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "f926157d6954ab20a57e4365d0bc6b64b15176dd9643893c90ab14ec92941752"
+    },
+    "109": {
+      "name": "Дробовик Winchester Model 1300",
+      "source": "images/combat/modular/weapons/109.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        592,
+        533
+      ],
+      "grip": [
+        459,
+        536
+      ],
+      "supportSegment": [
+        [
+          970,
+          514
+        ],
+        [
+          1190,
+          514
+        ]
+      ],
+      "preferredSupport": [
+        1080,
+        514
+      ],
+      "supportSurface": "Brown wooden ribbed pump fore-end, ending before the metal barrel/magazine clamp.",
+      "stockExtent": [
+        26,
+        439,
+        529,
+        703
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [460, 510], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "eccf0e7f3b21f2b83dc58aa9e5b8c4c0a5156a17768fc04e32f85a44d26ed2ff"
+    },
+    "110": {
+      "name": "Дробовик Ithaca 37",
+      "source": "images/combat/modular/weapons/110.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        565,
+        523
+      ],
+      "grip": [
+        422,
+        511
+      ],
+      "supportSegment": [
+        [
+          960,
+          512
+        ],
+        [
+          1170,
+          512
+        ]
+      ],
+      "preferredSupport": [
+        1065,
+        512
+      ],
+      "supportSurface": "Brown wooden ribbed pump fore-end, excluding the long bare magazine tube to its right.",
+      "stockExtent": [
+        25,
+        419,
+        504,
+        702
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [425, 505], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "e90b21d8fda0a83ce3f5e6198dbf03023ca2abd3a343ad58cc7f6477b11b21c6"
+    },
+    "111": {
+      "name": "Дробовик Browning BPS",
+      "source": "images/combat/modular/weapons/111.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        589,
+        533
+      ],
+      "grip": [
+        444,
+        531
+      ],
+      "supportSegment": [
+        [
+          900,
+          522
+        ],
+        [
+          1173,
+          522
+        ]
+      ],
+      "preferredSupport": [
+        1035,
+        522
+      ],
+      "supportSurface": "Flat lower edge of the checkered brown wooden fore-end.",
+      "stockExtent": [
+        26,
+        433,
+        527,
+        700
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [455, 515], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "7cfe4581d4c3d46b5ad96d2285b29371fd592a57e4c96a12bcb0c3dfe6576a88"
+    },
+    "112": {
+      "name": "Дробовик Winchester SXP Defender",
+      "source": "images/combat/modular/weapons/112.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        590,
+        547
+      ],
+      "grip": [
+        453,
+        624
+      ],
+      "supportSegment": [
+        [
+          985,
+          532
+        ],
+        [
+          1200,
+          529
+        ]
+      ],
+      "preferredSupport": [
+        1090,
+        530
+      ],
+      "supportSurface": "Black ribbed pump fore-end; keep support behind the projecting metal barrel/magazine clamp.",
+      "stockExtent": [
+        31,
+        420,
+        507,
+        660
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [470, 610], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "718a3663195cb0e284f32dbf58f1edb178283939190e45bf8ef55dbc5c3c5548"
+    },
+    "113": {
+      "name": "Дробовик Mossberg 590A1",
+      "source": "images/combat/modular/weapons/113.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        577,
+        527
+      ],
+      "grip": [
+        430,
+        533
+      ],
+      "supportSegment": [
+        [
+          990,
+          521
+        ],
+        [
+          1240,
+          521
+        ]
+      ],
+      "preferredSupport": [
+        1115,
+        521
+      ],
+      "supportSurface": "Black ribbed pump fore-end below the ventilated heat shield; exclude barrel and magazine tube.",
+      "stockExtent": [
+        28,
+        431,
+        502,
+        715
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [445, 515], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "3518ed20a740a5bc0b37fa710297e7853948028fb781775af2cc749e155289a7"
+    },
+    "114": {
+      "name": "Дробовик Remington 870 MCS",
+      "source": "images/combat/modular/weapons/114.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        650,
+        545
+      ],
+      "grip": [
+        535,
+        610
+      ],
+      "supportSegment": [
+        [
+          980,
+          510
+        ],
+        [
+          1170,
+          510
+        ]
+      ],
+      "preferredSupport": [
+        1139,
+        510
+      ],
+      "supportSurface": "Ribbed pump fore-end; rubber starts around source x950. Keep palm at x980 or farther forward, not receiver or bare tube.",
+      "stockExtent": [
+        30,
+        434,
+        473,
+        679
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high; inspected by weapon114 fit lead",
+      "notes": [
+        "Source anchors supplied by the weapon 114 detailed fit review. Body-specific target anchors are separate.",
+        "One unchanged shared source PNG; this entry alone does not certify runtime armor fits."
+      ],
+      "sourceSha256": "be630ffcb84e2b398325a51af830e61fe26890d246746965894fa8ff5187dd4b"
+    },
+    "115": {
+      "name": "Дробовик Benelli Nova",
+      "source": "images/combat/modular/weapons/115.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        580,
+        540
+      ],
+      "grip": [
+        422,
+        547
+      ],
+      "supportSegment": [
+        [
+          950,
+          524
+        ],
+        [
+          1200,
+          519
+        ]
+      ],
+      "preferredSupport": [
+        1075,
+        522
+      ],
+      "supportSurface": "Lower edge of the textured black fore-end, forward of the receiver.",
+      "stockExtent": [
+        29,
+        443,
+        503,
+        724
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [420, 525], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "5e3a8cf65ccf715c6562760e2154216fe087e988416d7e54881a0621c76f753e"
+    },
+    "116": {
+      "name": "Дробовик TOZ-194",
+      "source": "images/combat/modular/weapons/116.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        585,
+        522
+      ],
+      "grip": [
+        461,
+        522
+      ],
+      "supportSegment": [
+        [
+          770,
+          483
+        ],
+        [
+          1030,
+          480
+        ]
+      ],
+      "preferredSupport": [
+        900,
+        481
+      ],
+      "supportSurface": "Brown wooden fore-end beneath the barrel; only the wood is the support surface.",
+      "stockExtent": [
+        25,
+        396,
+        631,
+        722
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [470, 505], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "4225da2d290969d11c5e0856137aec84cf21a9fb2618e7e6576d717f63b4e43e"
+    },
+    "117": {
+      "name": "Дробовик Remington 1100",
+      "source": "images/combat/modular/weapons/117.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        590,
+        520
+      ],
+      "grip": [
+        454,
+        531
+      ],
+      "supportSegment": [
+        [
+          930,
+          509
+        ],
+        [
+          1175,
+          507
+        ]
+      ],
+      "preferredSupport": [
+        1050,
+        508
+      ],
+      "supportSurface": "Brown wooden ribbed fore-end beneath the barrel, ahead of the receiver.",
+      "stockExtent": [
+        29,
+        423,
+        555,
+        707
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [470, 510], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "903ce6c22106a692ff0ef8a88355e82dfbcbb91a82294cd9c3c5731097c01c89"
+    },
+    "118": {
+      "name": "Дробовик Beretta 1301 Tactical",
+      "source": "images/combat/modular/weapons/118.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        615,
+        561
+      ],
+      "grip": [
+        483,
+        611
+      ],
+      "supportSegment": [
+        [
+          940,
+          536
+        ],
+        [
+          1225,
+          536
+        ]
+      ],
+      "preferredSupport": [
+        1080,
+        536
+      ],
+      "supportSurface": "Long ribbed black fore-end below the barrel; exclude the exposed magazine tube to its right.",
+      "stockExtent": [
+        29,
+        451,
+        458,
+        712
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [485, 625], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "3f1a89242f43809bd7faff2622d634c12597a754f8d0b9bc10c6d42db5bedc30"
+    },
+    "119": {
+      "name": "Дробовик Fabarm STF/12",
+      "source": "images/combat/modular/weapons/119.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        665,
+        568
+      ],
+      "grip": [
+        545,
+        636
+      ],
+      "supportSegment": [
+        [
+          920,
+          540
+        ],
+        [
+          1215,
+          543
+        ]
+      ],
+      "preferredSupport": [
+        1065,
+        542
+      ],
+      "supportSurface": "Broad lower black ribbed pump fore-end, between the receiver and front barrel assembly.",
+      "stockExtent": [
+        41,
+        433,
+        494,
+        722
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [535, 630], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "3426ba1735e2ab903e5be2ab243e5d91186b21bf56351c3130d510f9f4c6d4ed"
+    },
+    "120": {
+      "name": "Дробовик Winchester SX4",
+      "source": "images/combat/modular/weapons/120.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        577,
+        509
+      ],
+      "grip": [
+        445,
+        511
+      ],
+      "supportSegment": [
+        [
+          925,
+          493
+        ],
+        [
+          1170,
+          486
+        ]
+      ],
+      "preferredSupport": [
+        1045,
+        490
+      ],
+      "supportSurface": "Brown wooden ribbed fore-end on its lower sloping edge; exclude magazine tube.",
+      "stockExtent": [
+        30,
+        414,
+        520,
+        702
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [440, 505], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "2ea9ebc4fc177e0112716f3218a9fbe6cac1660442dba2cc28db1bf6eaa484f4"
+    },
+    "121": {
+      "name": "Дробовик Browning A5",
+      "source": "images/combat/modular/weapons/121.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        613,
+        526
+      ],
+      "grip": [
+        452,
+        532
+      ],
+      "supportSegment": [
+        [
+          895,
+          500
+        ],
+        [
+          1135,
+          498
+        ]
+      ],
+      "preferredSupport": [
+        1015,
+        499
+      ],
+      "supportSurface": "Brown wooden checkered fore-end with gently rising lower edge.",
+      "stockExtent": [
+        27,
+        425,
+        540,
+        703
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [460, 510], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "ab798a9d998ca53c1e703ab72d9b6eab7aa59079cce29403054e57e05c090fae"
+    },
+    "122": {
+      "name": "Дробовик Remington 870 Magnum",
+      "source": "images/combat/modular/weapons/122.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        585,
+        535
+      ],
+      "grip": [
+        450,
+        539
+      ],
+      "supportSegment": [
+        [
+          900,
+          518
+        ],
+        [
+          1190,
+          515
+        ]
+      ],
+      "preferredSupport": [
+        1045,
+        517
+      ],
+      "supportSurface": "Broad black textured fore-end on its lower edge, ahead of the receiver.",
+      "stockExtent": [
+        24,
+        415,
+        534,
+        724
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [425, 525], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "9814f893da3b6916986d0491ed401847bde802a8e888dd7f55826c301f5db8fc"
+    },
+    "123": {
+      "name": "Дробовик Benelli Vinci",
+      "source": "images/combat/modular/weapons/123.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        581,
+        540
+      ],
+      "grip": [
+        454,
+        550
+      ],
+      "supportSegment": [
+        [
+          920,
+          524
+        ],
+        [
+          1207,
+          520
+        ]
+      ],
+      "preferredSupport": [
+        1065,
+        522
+      ],
+      "supportSurface": "Long black textured fore-end beneath the barrel; exclude the thin exposed magazine tube.",
+      "stockExtent": [
+        25,
+        449,
+        529,
+        713
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on conventional stock wrist; legacy fitting grip is [450, 520], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "7e46654f08c9d92406b99350afbd00bcbf1afdbb210e287ad183c208445eef48"
+    },
+    "124": {
+      "name": "Дробовик Ithaca Mag-10",
+      "source": "images/combat/modular/weapons/124.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        666,
+        526
+      ],
+      "grip": [
+        538,
+        597
+      ],
+      "supportSegment": [
+        [
+          972,
+          504
+        ],
+        [
+          1180,
+          504
+        ]
+      ],
+      "preferredSupport": [
+        1075,
+        504
+      ],
+      "supportSurface": "Black ribbed pump fore-end ahead of the tall box magazine; the magazine is not a support target.",
+      "stockExtent": [
+        25,
+        428,
+        499,
+        715
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [555, 605], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "1d0665c772b0cd4a93065d32c6413d9816c625f332665cded1d0bfe0b5a9fd7f"
+    },
+    "125": {
+      "name": "Дробовик Remington SP-10",
+      "source": "images/combat/modular/weapons/125.png",
+      "sourceSize": [
+        1536,
+        1024
+      ],
+      "trigger": [
+        631,
+        548
+      ],
+      "grip": [
+        481,
+        626
+      ],
+      "supportSegment": [
+        [
+          986,
+          497
+        ],
+        [
+          1200,
+          500
+        ]
+      ],
+      "preferredSupport": [
+        1090,
+        499
+      ],
+      "supportSurface": "Solid lower surface of the forward handguard, above its short bottom rail; exclude the large curved magazine and exposed muzzle.",
+      "stockExtent": [
+        24,
+        413,
+        460,
+        688
+      ],
+      "poseFamily": "heavy",
+      "confidence": "high for surface identity; manual anchor precision approximately +/- 8 source pixels",
+      "notes": [
+        "Manual palm center on pistol grip; legacy fitting grip is [490, 615], and is not a trigger target.",
+        "Foreground masks must preserve the visible connection between stock and receiver.",
+        "Original shared PNG is reused for every armor; this source inspection does not mark runtime armor fits as passed."
+      ],
+      "sourceSha256": "689ab4f16094c0608c4e96205cfc11200a5ef8449bd562029d73ccb7191f026d"
+    }
+  },
+  "inspectedOn": "2026-09-29",
+  "runtimeFitsAccepted": false
+}
