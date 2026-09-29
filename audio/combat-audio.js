@@ -2,8 +2,15 @@
 'use strict';
 // A separate effects bus: the soundtrack owns its own Audio element and settings.
 const doc=root.document,STORE='zone.combatSound',MAX_BUFFERS=24,MAX_VOICES=10,MAX_LATE_MS=400;
-const scriptUrl=doc?.currentScript?.src||new URL('audio/combat-audio.js',doc?.baseURI||root.location?.href||'http://localhost/').href;
-const siteRoot=new URL('../',scriptUrl);
+// Inline previews can use about:blank, which cannot resolve relative URLs.
+// A real script URL remains authoritative for production assets/CDN paths.
+const siteRoot=(()=>{
+ for(const [source,relative] of [[doc?.currentScript?.src,'../'],[doc?.baseURI,'./'],[root.location?.href,'./']]){
+  if(!source)continue;
+  try{return new URL(relative,source);}catch(_){}
+ }
+ return new URL('http://localhost/');
+})();
 let settings={enabled:true,volume:.65};
 try{const saved=JSON.parse(root.localStorage?.getItem(STORE)||'null');if(saved){settings.enabled=saved.enabled!==false;const volume=Number(saved.volume);if(Number.isFinite(volume))settings.volume=Math.max(0,Math.min(1,volume));}}catch(_){}
 let context=null,bus=null,limiter=null,active=null,epoch=0,unsupported=false;

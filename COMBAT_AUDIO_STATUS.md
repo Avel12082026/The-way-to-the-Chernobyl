@@ -20,7 +20,8 @@ The sound bank is served from the frontend origin, independently of SERVER_URL.
 ## Verification
 
 - Catalog coverage, source hashes, byte budget, and script ordering passed.
-- All 10 playback/timing unit tests passed.
+- All 11 playback/timing unit tests passed, including initialization in inline
+  about:blank previews used by the quest browser tests.
 - Existing combat effects, fighter scene, and legacy race tests passed.
 - Real Chromium 1243 smoke test passed: all 34 MP3s decode with nonzero samples;
   trusted input unlocks WebAudio; three shots overlap while music time advances;

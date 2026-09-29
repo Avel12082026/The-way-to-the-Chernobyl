@@ -10,7 +10,7 @@ function harness(options={}){
  let now=0,nextTimer=1;
  const timers=new Map(),listeners=new Map(),windowListeners=new Map(),contexts=[],fetches=[],sources=[],gains=[],compressors=[],originalCalls=[],storageWrites=[];
  const add=(map,type,callback)=>{if(!map.has(type))map.set(type,[]);map.get(type).push(callback);};
- const document={hidden:false,baseURI:'https://game.test/app/index.html',currentScript:{src:'https://assets.test/game/audio/combat-audio.js?v=7'},addEventListener(type,fn){add(listeners,type,fn);}};
+ const document={hidden:false,baseURI:options.documentBase??'https://game.test/app/index.html',currentScript:{src:options.scriptSrc??'https://assets.test/game/audio/combat-audio.js?v=7'},addEventListener(type,fn){add(listeners,type,fn);}};
  class FakeAudioContext{
   constructor(){this.state='suspended';this.destination={};this.resumeCalls=0;contexts.push(this);}
   createGain(){const gain={gain:{value:1},connections:[],connect(target){this.connections.push(target);},disconnect(){this.disconnected=true;}};gains.push(gain);return gain;}
@@ -20,7 +20,7 @@ function harness(options={}){
   resume(){this.resumeCalls++;if(this.state==='closed')return Promise.reject(new Error('Context closed'));this.state='running';return Promise.resolve();}
  }
  const scene={show(next){originalCalls.push(['show',next]);return options.showResult??true;},react(...args){originalCalls.push(['react',...args]);return 'visual';},hide(){originalCalls.push(['hide']);}};
- const window={document,location:{href:document.baseURI},performance:{now:()=>now},URL,console,
+ const window={document,location:{href:options.locationHref??document.baseURI},performance:{now:()=>now},URL,console,
   COMBAT_SOUND_BANK:{version:'test-v1',base:'audio/gunshots/',profiles:{pistol:{files:['pistol.mp3'],gain:1},rifle:{files:['rifle.mp3'],gain:.8}},weapons:{1:{name:'pistol',profile:'pistol',rate:1,gain:1},2:{name:'rifle',profile:'rifle',rate:1.1,gain:.9},85:{name:'nonfirearm',profile:null}}},
   CombatScene:scene,AudioContext:options.unsupported?undefined:FakeAudioContext,
   Audio(){throw Error('The soundtrack must not be accessed');},
@@ -38,6 +38,16 @@ function harness(options={}){
 }
 async function settle(){for(let i=0;i<8;i++)await Promise.resolve();}
 async function ready(h){h.show();await Promise.all([h.api.preload(1),h.api.preload(2)]);await h.api.unlock();}
+
+test('inline about:blank documents bootstrap without a script URL and keep visual combat working',async()=>{
+ const h=harness({documentBase:'about:blank',scriptSrc:''});await ready(h);
+ assert.equal(h.fetches[0],'http://localhost/audio/gunshots/pistol.mp3?v=test-v1');
+ assert.equal(h.scene.react('fight',{success:true,playerDamage:0,victoryReady:true},'attack'),'visual');
+ assert.equal(h.sources.length,1);
+ const hosted=harness({documentBase:'about:blank',scriptSrc:'',locationHref:'https://game.test/app/index.html'});
+ await hosted.api.preload(1);
+ assert.equal(hosted.fetches[0],'https://game.test/app/audio/gunshots/pistol.mp3?v=test-v1');
+});
 
 test('gesture unlocks effects before an asynchronous combat response; music stays untouched',async()=>{
  const h=harness();h.show();await h.api.preload(1);
