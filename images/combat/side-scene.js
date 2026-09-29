@@ -68,7 +68,8 @@ async function show(next){
  const token=next.enemy?.battleToken;
  if(!token){hide();return false;}
  const visual=root.CombatAssets.getVisuals(next.enemy,variant(token));
- const environment=root.CombatEnvironments?.select(next);
+ const forcedEnvironment=Number(next.environmentId)||0;
+ const environment=forcedEnvironment?root.CombatEnvironments?.entries?.find(e=>Number(e.id)===forcedEnvironment):root.CombatEnvironments?.select(next);
  const player=root.CombatFighters.resolve({armorId:next.armor,weaponId:next.weaponId});
  const enemy=root.CombatFighters.resolve(next.enemyGear);
  const sideCandidate=root.CombatMutantsSide?.species?.[visual.species];
