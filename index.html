@@ -759,7 +759,7 @@ button:active {filter:brightness(1.18);}
 <script src="images/combat/catalog.js?v=combat-environments-flashes-v1"></script>
 <script src="images/combat/assets.js?v=1"></script>
 <script src="images/combat/layout.js?v=mutants-side-20260925-v3"></script>
-<script src="images/combat/environments-v2.js?v=combat-environments-flashes-v1"></script>
+<script src="images/combat/environments-v2.js?v=20260929-dark56-v1"></script>
 <script src="images/combat/effects.js?v=combat-environments-flashes-v1"></script>
 <script src="images/combat/scene.js?v=combat-mutants-20260929-v1"></script>
 <script src="images/combat/fighters.js?v=combat-armor1-20260929-v1"></script>
@@ -7244,8 +7244,8 @@ function startBattle(enemy) {
 
     // Цена покупки с учётом скидки от перка "Интеллект" (0.1 монеты за каждый пункт интеллекта)
     function getBuyPrice(basePrice) {
-        const discount = getEffectiveIntellect() * 0.1;
-        return Math.max(1, Math.round(basePrice - discount));
+        const discountPct=Math.min(0.06,Math.max(0,getEffectiveIntellect())*0.0005);
+        return Math.max(1,Math.round((Number(basePrice)||0)*(1-discountPct)));
     }
 
     // Цена продажи любого предмета торговцу (лут мутантов/фракций, артефакты, снаряжение) — 50% от базовой стоимости
@@ -8149,7 +8149,7 @@ function startBattle(enemy) {
 
 </script>
 <script src="ui/bunker-menu.js?v=20260929-leonov-return1"></script>
-<script src="ui/trade-menu.js?v=20260929-vizir100-leonov-antirad1"></script>
+<script src="ui/trade-menu.js?v=20260929-zone-economy2"></script>
 <script src="ui/terminology-market.js?v=20260928-qa-fix2"></script>
 <script src="ui/trader-portrait-data.js?v=22aab576889b"></script>
 <script src="ui/trader-hubs.js?v=20260927-cordon-zhuchara2"></script>
