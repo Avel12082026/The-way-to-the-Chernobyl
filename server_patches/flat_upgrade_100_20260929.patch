@@ -1,0 +1,145 @@
+--- server.js
++++ server.js
+@@ -817,7 +817,11 @@
+     const base = SHOP_ARMOR.find(a => a.name === parsed.baseName);
+     if (!base) return null;
+     const stableKey = getStableArmorKeyServer(itemName);
+-    const u = (data.armorUpgradeData && data.armorUpgradeData[stableKey]) || {};
++    let u = data.armorUpgradeData && data.armorUpgradeData[stableKey];
++    // Legacy safety: if an old +N armor item somehow has no per-stat record,
++    // preserve those N points as bullet-resistance points instead of losing them.
++    if (!u && parsed.level > 0) u = {armor: Math.min(parsed.level, UPGRADE_MAX_LEVEL)};
++    u = u || {};
+     const bulletResist = getUpgradedStatServer(base.armor, u.armor || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'armor'), !!base.adminOnly);
+     const hitAbsorption = getUpgradedStatServer(base.hitAbsorption || 0, u.hitAbsorption || 0, getNextItemCeilingServer(SHOP_ARMOR, base, 'hitAbsorption'), !!base.adminOnly);
+     const stats = { ...(base.stats || {}) };
+@@ -828,26 +832,17 @@
+     return { bulletResist, hitAbsorption, stats };
+ }
+ 
+-const UPGRADE_MAX_LEVEL = 50;
+-const UPGRADE_BYTE_THRESHOLD = 25;
+-// Та же логика, что getUpgradedStat на клиенте: бонус от улучшения — ПРОЦЕНТ от базовой
+-// характеристики (потолок +50% на 100 уровне), а не плоский +1/уровень — иначе полностью
+-// прокачанный слабый предмет мог обогнать по характеристикам предметы на много тиров дороже
+-const UPGRADE_MAX_BONUS_PCT_SERVER = 0.25;
++const UPGRADE_MAX_LEVEL = 100;
++const UPGRADE_BYTE_THRESHOLD = 50;
++// UPGRADE_FLAT_100_V1: каждое улучшение даёт ровно +1 к выбранной характеристике.
++// Общий бюджет предмета — 100 улучшений: 1-50 за сталбайты, 51-100 за сталкоины.
+ function getUpgradedStatServer(baseStat, level, ceiling, adminOnly = false) {
+-    if (adminOnly) {
+-        const legacyLevel = Math.max(0, Number(level) || 0);
+-        const legacyBase = Number(baseStat) || 0;
+-        const legacyPct = Math.min(0.5, legacyLevel * 0.005);
+-        return legacyBase === 0 ? Math.round(legacyLevel) : Math.round(legacyBase * (1 + legacyPct));
+-    }
+-    const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Number(level) || 0));
++    const lvl = Math.min(UPGRADE_MAX_LEVEL, Math.max(0, Math.floor(Number(level) || 0)));
+     const base = Number(baseStat) || 0;
+-    const pct = Math.min(UPGRADE_MAX_BONUS_PCT_SERVER, lvl * (UPGRADE_MAX_BONUS_PCT_SERVER / UPGRADE_MAX_LEVEL));
+-    // Новая защита с базой 0 должна реально появляться после первого улучшения.
+-    const raw = base === 0 ? Math.round(lvl) : Math.round(base * (1 + pct));
+-    return (typeof ceiling === 'number') ? Math.min(raw, ceiling) : raw;
+-}
++    return base + lvl;
++}
++// Старый helper потолка оставлен только для совместимости старых установщиков; новая система +1
++// не ограничивает улучшение характеристикой следующего предмета.
+ // Жёсткий потолок: улучшенная характеристика никогда не превышает характеристику СЛЕДУЮЩЕГО
+ // по уровню открытия предмета — та же логика, что getNextItemCeiling на клиенте
+ function getNextItemCeilingServer(list, item, statKey) {
+@@ -1028,16 +1023,12 @@
+ 
+     if (weaponBase) {
+         // ===== ОРУЖИЕ: одна характеристика — урон, уровень берём прямо из имени "+N" =====
+-        const weaponMaxLevel=weaponBase.adminOnly?100:UPGRADE_MAX_LEVEL;
+-        if (parsed.level >= weaponMaxLevel) return res.json({ success: false, error: 'Этот предмет уже улучшен до максимума' });
+-        const weaponCeiling = weaponBase.adminOnly ? Infinity : getWeaponClassNextCeilingServer(SHOP_WEAPONS, weaponBase, 'dmg');
+-        if (getUpgradedStatServer(weaponBase.dmg, parsed.level, weaponCeiling, !!weaponBase.adminOnly) >= weaponCeiling) {
+-            return res.json({ success: false, error: 'Дальше улучшать нельзя — урон уже достиг уровня следующего по силе ствола, прокачанного на 20' });
+-        }
+-        const usesTokens = parsed.level >= (weaponBase.adminOnly ? 50 : UPGRADE_BYTE_THRESHOLD);
++        const weaponMaxLevel=UPGRADE_MAX_LEVEL;
++        if (parsed.level >= weaponMaxLevel) return res.json({ success: false, error: 'Этот предмет уже улучшен до максимума: +100' });
++        const usesTokens = parsed.level >= UPGRADE_BYTE_THRESHOLD;
+         const tokenCost = usesTokens ? getUpgradeCostTokensServer(parsed.level) : 0;
+         const byteCost = usesTokens ? 0 : getUpgradeCostBytesServer(parsed.level);
+-        if (usesTokens && data.breedCredits < tokenCost) return res.json({ success: false, error: 'Недостаточно жетонов сталкера' });
++        if (usesTokens && data.breedCredits < tokenCost) return res.json({ success: false, error: 'Недостаточно сталкоинов' });
+         if (!usesTokens && data.coins < byteCost) return res.json({ success: false, error: 'Недостаточно Байт' });
+ 
+         if (usesTokens) data.breedCredits -= tokenCost; else data.coins -= byteCost;
+@@ -1045,7 +1036,7 @@
+         const newName = `${parsed.baseName} +${newLevel}`;
+ 
+         if (isEquipped) {
+-            data.weapon = { name: newName, tier: weaponBase.tier, dmg: getUpgradedStatServer(weaponBase.dmg, newLevel, weaponCeiling, !!weaponBase.adminOnly) };
++            data.weapon = { name: newName, tier: weaponBase.tier, dmg: getUpgradedStatServer(weaponBase.dmg, newLevel) };
+         } else {
+             data.inventory[itemName]--;
+             if (data.inventory[itemName] <= 0) delete data.inventory[itemName];
+@@ -1057,48 +1048,39 @@
+ 
+     // ===== БРОНЯ: игрок выбирает характеристику, уровень считается отдельно по каждой =====
+     if (!statKey || typeof statKey !== 'string') return res.json({ success: false, error: 'Не выбрана характеристика' });
+-    const isSuit = !!armorBase.isResearchSuit;
+     const isCoreStat = statKey === 'armor' || statKey === 'hitAbsorption';
+-    if (isSuit && isCoreStat) return res.json({ success: false, error: 'У исследовательских комбинезонов нельзя улучшать Пулестойкость/Гашение ударов' });
+-    if (!isSuit && !isCoreStat) return res.json({ success: false, error: 'У обычной брони нельзя улучшать защиту от радиации/аномалий' });
+     if (!isCoreStat && statKey !== 'radiation' && !statKey.startsWith('anomaly_')) {
+         return res.json({ success: false, error: 'Недопустимая характеристика' });
+     }
+ 
+     const stableKey = getStableArmorKeyServer(itemName);
+     data.armorUpgradeData = data.armorUpgradeData || {};
+-    const upgradeRecord=data.armorUpgradeData[stableKey]||{};
++    let upgradeRecord=data.armorUpgradeData[stableKey];
++    if (!upgradeRecord && parsed.level > 0) {
++        upgradeRecord={armor:Math.min(parsed.level,UPGRADE_MAX_LEVEL)};
++        data.armorUpgradeData[stableKey]=upgradeRecord;
++    }
++    upgradeRecord=upgradeRecord||{};
+     const statLevel = Number(upgradeRecord[statKey]) || 0;
+-    const adminBalanceExcluded=!!armorBase.adminOnly;
+     const totalUpgrades=Math.max(parsed.level,Object.values(upgradeRecord).reduce((n,x)=>n+(Number.isFinite(Number(x))?Math.max(0,Math.floor(Number(x))):0),0));
+-    if (adminBalanceExcluded ? statLevel >= 100 : totalUpgrades >= UPGRADE_MAX_LEVEL)
+-        return res.json({ success: false, error: adminBalanceExcluded ? 'Администраторская характеристика уже улучшена до максимума' : 'Достигнут общий предел: 50 улучшений предмета' });
++    if (totalUpgrades >= UPGRADE_MAX_LEVEL)
++        return res.json({ success: false, error: 'Достигнут общий предел: 100 улучшений предмета' });
+     if (!isCoreStat && statKey!=='radiation' && !RAID_ANOMALIES.some(a=>'anomaly_'+a.name===statKey))
+         return res.json({success:false,error:'Неизвестная характеристика брони'});
+ 
+-    let armorStatCeiling = Infinity;
+-    if (isCoreStat && !adminBalanceExcluded) {
+-        armorStatCeiling = getNextItemCeilingServer(SHOP_ARMOR, armorBase, statKey);
+-        if (getUpgradedStatServer(armorBase[statKey] || 0, statLevel, armorStatCeiling) >= armorStatCeiling) {
+-            return res.json({ success: false, error: 'Дальше улучшать нельзя — характеристика уже достигла уровня следующей по силе брони, прокачанной на 20' });
+-        }
+-    }
+-
+-    const usesTokens = statLevel >= (adminBalanceExcluded ? 50 : UPGRADE_BYTE_THRESHOLD);
+-    // Та же логика, что на клиенте: у обычной брони 2 характеристики (Пулестойкость/Гашение
+-    // ударов), у исследовательского комбинезона — 9 (радиация + 8 типов аномалий). Без деления
+-    // полная прокачка комбинезона стоила бы в 9 раз дороже, чем у оружия с одной характеристикой
+-    const statCostDivisor = isSuit ? 9 : 2;
+-    const tokenCost = usesTokens ? Math.max(1, Math.round(getUpgradeCostTokensServer(statLevel) / statCostDivisor)) : 0;
+-    const byteCost = usesTokens ? 0 : Math.max(1, Math.round(getUpgradeCostBytesServer(statLevel) / statCostDivisor));
+-    if (usesTokens && data.breedCredits < tokenCost) return res.json({ success: false, error: 'Недостаточно жетонов сталкера' });
++
++    // Валюта и цена зависят от ОБЩЕГО числа вложенных очков в предмет, а не от конкретной строки.
++    const usesTokens = totalUpgrades >= UPGRADE_BYTE_THRESHOLD;
++    const tokenCost = usesTokens ? getUpgradeCostTokensServer(totalUpgrades) : 0;
++    const byteCost = usesTokens ? 0 : getUpgradeCostBytesServer(totalUpgrades);
++    if (usesTokens && data.breedCredits < tokenCost) return res.json({ success: false, error: 'Недостаточно сталкоинов' });
+     if (!usesTokens && data.coins < byteCost) return res.json({ success: false, error: 'Недостаточно Байт' });
+ 
+     if (usesTokens) data.breedCredits -= tokenCost; else data.coins -= byteCost;
+     data.armorUpgradeData[stableKey] = data.armorUpgradeData[stableKey] || {};
+     data.armorUpgradeData[stableKey][statKey] = (Number(data.armorUpgradeData[stableKey][statKey]) || 0) + 1;
+ 
+-    const newLevel = parsed.level + 1;
++    const newLevel = totalUpgrades + 1;
+     const newName = `${parsed.baseName} +${newLevel}`;
+     const newStableKey = getStableArmorKeyServer(newName);
+     if (stableKey !== newStableKey) {

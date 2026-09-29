@@ -25,8 +25,10 @@ assert.equal(ctx.GameBalanceTuning.researchTier(174),4);
 assert.equal(ctx.GameBalanceTuning.researchTier(175),5);
 assert.equal(ctx.GameBalanceTuning.researchTier(569),13);
 assert.equal(ctx.GameBalanceTuning.researchTier(570),14);
-assert.equal(ctx.GameBalanceTuning.maxUpgradeLevel,50);
-assert.equal(ctx.GameBalanceTuning.maxUpgradeBonusPct,.25);
+assert.equal(ctx.GameBalanceTuning.maxUpgradeLevel,100);
+assert.equal(ctx.GameBalanceTuning.flatUpgradePerPoint,1);
+assert.equal(ctx.GameBalanceTuning.maxUpgradeBonusPct,null);
+assert.equal(ctx.GameBalanceTuning.byteUpgradeThreshold,50);
 
 const researchPrices=ctx.GameBalanceTuning.researchPrices;
 assert.equal(researchPrices.length,11);
@@ -52,7 +54,8 @@ for(const anomaly of anomalies.filter(a=>a.tier>=1&&a.tier<=8)){
   tierStrength.set(anomaly.tier,Math.max(...Object.values(defs.at(-1).stats).filter(v=>v>0)));
 }
 for(let t=2;t<=8;t++)assert(tierStrength.get(t)>tierStrength.get(t-1),'tier '+t+' should improve smoothly');
-assert.match(html,/const\s+UPGRADE_MAX_LEVEL\s*=\s*50\s*;/);
-assert.match(html,/const\s+UPGRADE_BYTE_THRESHOLD\s*=\s*25\s*;/);
-assert.match(html,/const\s+UPGRADE_MAX_BONUS_PCT\s*=\s*0\.25\s*;/);
-console.log('artifact tiers/rarity and +50 upgrade cap: OK');
+assert.match(html,/const\s+UPGRADE_MAX_LEVEL\s*=\s*100\s*;/);
+assert.match(html,/const\s+UPGRADE_BYTE_THRESHOLD\s*=\s*50\s*;/);
+assert(!/UPGRADE_MAX_BONUS_PCT\s*=/.test(html),'percentage upgrade curve must be gone');
+assert(html.includes('UPGRADE_FLAT_100_V1'));
+console.log('artifact tiers/rarity and flat +100 upgrade budget: OK');

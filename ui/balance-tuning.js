@@ -126,10 +126,11 @@ if(typeof nativeInfo==='function'){
 }
 
 window.GameBalanceTuning=Object.freeze({
-  version:'1.2.0',
-  maxUpgradeLevel:50,
-  maxUpgradeBonusPct:0.25,
-  byteUpgradeThreshold:25,
+  version:'1.3.0',
+  maxUpgradeLevel:100,
+  flatUpgradePerPoint:1,
+  maxUpgradeBonusPct:null,
+  byteUpgradeThreshold:50,
   researchTier,
   researchPrices,
   artifactModel
