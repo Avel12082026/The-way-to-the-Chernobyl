@@ -622,5 +622,3 @@
   // Do not cancel touchstart/pointerdown: taps, custom dragging and scrolling need them.
   window.TradeItemContextGuard = Object.freeze({version:'1.0.0'});
 })();
-
-[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
