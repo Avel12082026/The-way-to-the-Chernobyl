@@ -25,26 +25,29 @@
   // Armor trader ranges are keyed by stable catalog IDs, never by array position.
   // This keeps client/server stock aligned even if the catalog is reordered.
   const regularArmorRange = (firstId, lastId) => armorItems.filter(a => a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor && Number(a.id) >= firstId && Number(a.id) <= lastId);
+  const reachedZoneTier = () => {
+    const values=[1, Number(player?.worldPosition?.zoneLocation)||1,
+      Number(window.GamePosition?.current?.zoneLocation)||1,
+      Number(window.ZoneMap?.location)||1,
+      ...(Array.isArray(player?.zoneUnlockedLocations)?player.zoneUnlockedLocations.map(Number):[])];
+    return Math.max(1,Math.min(11,...values.filter(Number.isFinite)));
+  };
+  const regularArmorByTier = (minTier,maxTier) => armorItems.filter(a =>
+    a && !a.adminOnly && !a.isResearchSuit && !a.isPremiumArmor &&
+    Number(a.tier)>=minTier && Number(a.tier)<=maxTier
+  );
   const isYantarLeonovContext = () => {
     const pos = window.GamePosition?.current;
     const location = Number(pos?.zoneLocation ?? window.ZoneMap?.location ?? 0);
     return pos?.origin === 'yantar-bunker' && location === 6;
   };
   const yantarLeonovWeapons = () => {
-    const weaponOrder = (typeof WEAPON_PROGRESSION_ORDER !== 'undefined' ? WEAPON_PROGRESSION_ORDER : weapons)
-      .filter(w => w && !w.adminOnly);
-    const marked = weaponOrder.filter(w => w.progressionClass === 'automatic');
-    if (marked.length === 29) return marked;
-    const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
-    return pistolStart >= 0 ? weaponOrder.slice(pistolStart + 58, pistolStart + 87) : [];
+    const reached=reachedZoneTier();
+    const weaponOrder=(typeof WEAPON_PROGRESSION_ORDER!=='undefined'?WEAPON_PROGRESSION_ORDER:weapons)
+      .filter(w=>w&&!w.adminOnly&&w.progressionClass==='automatic');
+    return weaponOrder.filter(w=>Number(w.tier)>=7&&Number(w.tier)<=Math.min(9,reached));
   };
-  const yantarLeonovArmor = () => {
-    const safe = armorItems
-      .filter(a => a && !a.adminOnly && !a.isPremiumArmor)
-      .sort((a,b) => Number(a.id || 0) - Number(b.id || 0));
-    const afterBarman = safe.filter(a => Number(a.id || 0) > 58);
-    return (afterBarman.length >= 29 ? afterBarman.slice(0,29) : safe.slice(58,87));
-  };
+  const yantarLeonovArmor = () => regularArmorByTier(7,reachedZoneTier());
   const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
   const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Антирад']);
   const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
@@ -57,8 +60,9 @@
           .filter(w => w && !w.adminOnly);
         const markedPistols = weaponOrder.filter(w => w.progressionClass === 'pistol');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
-        const pistols = markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []);
-        const zhucharaArmor = regularArmorRange(1, 29);
+        const pistols = (markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []))
+          .filter(w=>Number(w.tier)<=Math.min(3,reachedZoneTier()));
+        const zhucharaArmor=regularArmorByTier(1,Math.min(3,reachedZoneTier()));
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable' && ZHUCHARA_CONSUMABLES.has(item.name)),
           ...pistols.map(w => ({...w, category:'weapon'})),
@@ -76,8 +80,9 @@
           .filter(w => w && !w.adminOnly);
         const markedShotguns = weaponOrder.filter(w => w.progressionClass === 'shotgun');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
-        const shotguns = markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []);
-        const barmanArmor = regularArmorRange(30, 58);
+        const shotguns = (markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []))
+          .filter(w=>Number(w.tier)>=4&&Number(w.tier)<=Math.min(6,reachedZoneTier()));
+        const barmanArmor=regularArmorByTier(4,Math.min(6,reachedZoneTier()));
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable' && BARMAN_CONSUMABLES.has(item.name)),
           ...shotguns.map(w => ({...w, category:'weapon'})),
@@ -101,6 +106,7 @@
         }
         return [
           ...supplies,
+          ...armorItems.filter(a => a.isResearchSuit && !a.adminOnly).map(a => ({...a, category:'armor'})),
           ...yantarLeonovWeapons().map(w => ({...w, category:'weapon'})),
           ...yantarLeonovArmor().map(a => ({...a, category:'armor'}))
         ];
@@ -600,7 +606,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.4.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.5.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
