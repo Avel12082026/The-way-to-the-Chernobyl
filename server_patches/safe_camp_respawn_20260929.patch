@@ -1,0 +1,147 @@
+--- server.js
++++ server.js
+@@ -2143,7 +2143,9 @@
+         hunger:Number(data.hunger)||0,
+         thirst:Number(data.thirst)||0,
+         radiation:Number(data.radiation)||0,
+-        stats:data.stats||{}
++        stats:data.stats||{},
++        worldPosition:data.worldPosition||null,
++        lastSafeCamp:data.lastSafeCamp||null
+     };
+ }
+ 
+@@ -2220,6 +2222,33 @@
+     return RaidSurvival.radiationDamage(data);
+ }
+ 
++const PVE_SAFE_CAMPS=Object.freeze({
++    'cordon-camp':{zoneLocation:1,place:'cordon-camp',origin:'cordon-camp'},
++    'rostok-bar':{zoneLocation:4,place:'rostok-bar',origin:'rostok-bar'},
++    'yantar-bunker':{zoneLocation:6,place:'yantar-bunker',origin:'yantar-bunker'}
++});
++function pveSafeCampAvailable(data,key){
++    if(key==='cordon-camp')return true;
++    if(key==='rostok-bar')return typeof zoneMapLocationUnlocked!=='function'||zoneMapLocationUnlocked(data,4);
++    if(key==='yantar-bunker')return typeof zoneMapLocationUnlocked!=='function'||zoneMapLocationUnlocked(data,6);
++    return false;
++}
++function pveRememberSafeCamp(data,key){
++    const camp=PVE_SAFE_CAMPS[key];
++    if(!camp||!pveSafeCampAvailable(data,key))return;
++    data.lastSafeCamp={...camp,updatedAt:Date.now()};
++}
++function pveResolveDeathSafeCamp(data){
++    const remembered=String(data?.lastSafeCamp?.origin||data?.lastSafeCamp?.place||'');
++    if(PVE_SAFE_CAMPS[remembered]&&pveSafeCampAvailable(data,remembered))return PVE_SAFE_CAMPS[remembered];
++    const origin=String(data?.worldPosition?.origin||'');
++    if(PVE_SAFE_CAMPS[origin]&&pveSafeCampAvailable(data,origin))return PVE_SAFE_CAMPS[origin];
++    const location=Number(data?.worldPosition?.zoneLocation)||1;
++    if(location>=6&&pveSafeCampAvailable(data,'yantar-bunker'))return PVE_SAFE_CAMPS['yantar-bunker'];
++    if(location>=4&&pveSafeCampAvailable(data,'rostok-bar'))return PVE_SAFE_CAMPS['rostok-bar'];
++    return PVE_SAFE_CAMPS['cordon-camp'];
++}
++
+ function pveApplyDeathNow(data) {
+     data.inventory=data.inventory||{};
+     data.stats=data.stats||{};
+@@ -2237,6 +2266,9 @@
+     data.hunger=Number(data.maxHunger)||100;
+     data.thirst=Number(data.maxThirst)||100;
+     data.radiation=0;
++    const respawn=pveResolveDeathSafeCamp(data);
++    data.worldPosition={...respawn,updatedAt:Date.now()};
++    data.lastSafeCamp={...respawn,updatedAt:Date.now()};
+ }
+ 
+ function pveApplyConsumableServer(data,item) {
+@@ -2345,7 +2377,8 @@
+         breedCredits:Number(data.breedCredits)||0,luck:Number(data.luck)||0,
+         vitality:Number(data.vitality)||0,agility:Number(data.agility)||0,strength:Number(data.strength)||0,
+         accuracy:Number(data.accuracy)||0,intellect:Number(data.intellect)||0,
+-        stats:data.stats||{},hostileFactions:Array.isArray(data.hostileFactions)?data.hostileFactions:[]
++        stats:data.stats||{},hostileFactions:Array.isArray(data.hostileFactions)?data.hostileFactions:[],
++        worldPosition:data.worldPosition||null,lastSafeCamp:data.lastSafeCamp||null
+     };
+ }
+ function raidSession(playerId,token){
+@@ -3338,24 +3371,10 @@
+             const row=db.prepare('SELECT data FROM players WHERE id=?').get(playerId);
+             if(!row) return {success:false,error:'Игрок не найден'};
+             const data=safeParsePlayerData(row.data);
+-            data.inventory=data.inventory||{};
+-            data.stats=data.stats||{};
+-
+-            const kept={};
+-            for(const [name,qty] of Object.entries(data.inventory)){
+-                const base=pveBaseName(name);
+-                const art=SHOP_ARTIFACTS.find(a=>a.name===base);
+-                if(art && art.isNamedArtifact) kept[name]=qty;
+-            }
+-            data.inventory=kept;
+-            data.quickSlots=[null,null,null,null];
+-            data.stats.deaths=(Number(data.stats.deaths)||0)+1;
+-            data.health=Number(data.maxHealth)||100;
+-            data.hunger=Number(data.maxHunger)||100;
+-            data.thirst=Number(data.maxThirst)||100;
+-            data.radiation=0;
++            pveApplyDeathNow(data);
+ 
+             db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
++            db.prepare('DELETE FROM raid_sessions WHERE player_id=?').run(playerId);
+             db.prepare('UPDATE players SET data=?, last_seen=? WHERE id=?')
+               .run(JSON.stringify(data),Date.now(),playerId);
+             return {success:true,state:pveSafePublicState(data)};
+@@ -3647,6 +3666,7 @@
+             if(data.health<=0){
+                 pveApplyDeathNow(data);
+                 db.prepare('DELETE FROM pve_battles WHERE player_id=?').run(playerId);
++                db.prepare('DELETE FROM raid_sessions WHERE player_id=?').run(playerId);
+                 db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?').run(JSON.stringify(data),Date.now(),playerId);
+                 return{success:true,died:true,state:pveSafePublicState(data),radiationDamage,enemyTurn};
+             }
+@@ -5354,7 +5374,7 @@
+     return npc;
+ }
+ function zoneMapMutantPayload(data,zoneTier){
+-    const tier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const tier=Math.max(1,Number(zoneTier)||1);
+     let pool=(Array.isArray(PVE_MUTANTS)?PVE_MUTANTS:[])
+         .filter(m=>m&&!m.adminOnly&&Number(m.tier)===tier);
+     pool=pool.filter(m=>!['стронглав','самка стронглава'].includes(String(m.name||'').trim().toLowerCase()));
+@@ -5367,9 +5387,12 @@
+     return payload;
+ }
+ 
+-const ZONE_MAP_LUCKY_CHANCE=Object.freeze({1:0.10,2:0.08,3:0.065,4:0.05,5:0.035,6:0.025});
++function zoneMapLuckyChance(zoneLocation){
++    const tier=Math.max(1,Number(zoneLocation)||1);
++    return Math.max(0.01,0.10*Math.pow(0.75,tier-1));
++}
+ function zoneMapMarkerEventKind(zoneKind,zoneLocation){
+-    const lucky=Number(ZONE_MAP_LUCKY_CHANCE[zoneLocation])||0.025;
++    const lucky=zoneMapLuckyChance(zoneLocation);
+     const weights=zoneKind==='anomaly'
+         ?[['anomaly',0.62],['mutant',0.12],['npc',0.10],['lucky',lucky]]
+         :zoneKind==='mutant'
+@@ -5381,7 +5404,7 @@
+ }
+ 
+ function zoneMapLuckyReward(zoneTier){
+-    const locationTier=Math.max(1,Math.min(6,Number(zoneTier)||1));
++    const locationTier=Math.max(1,Number(zoneTier)||1);
+     const supplies=[
+         ['Хлеб',20],['Вода',20],['Тушенка',18],['Энергетик',18],
+         ['Аптечка гражданская',10],['Аптечка армейская',6],['Аптечка научная',2],['Антирад',6]
+@@ -5780,6 +5803,9 @@
+             origin='zone-map';
+         }
+         data.worldPosition={zoneLocation,place,origin,updatedAt:Date.now()};
++        if(origin==='yantar-bunker'&&zoneLocation===6&&place!=='zone-map')pveRememberSafeCamp(data,'yantar-bunker');
++        else if(origin==='rostok-bar'&&zoneLocation===4&&place!=='zone-map')pveRememberSafeCamp(data,'rostok-bar');
++        else if(origin==='cordon-camp'&&zoneLocation===1&&place!=='zone-map')pveRememberSafeCamp(data,'cordon-camp');
+         const result=db.prepare('UPDATE players SET data=?,last_seen=? WHERE id=?')
+           .run(JSON.stringify(data),Date.now(),playerId);
+         if(result&&Number(result.changes)===0)return res.status(409).json({success:false,error:'Позиция не сохранена'});
+
+[executed on device: psychological-em.ptr.network (49312467-475c-491a-85f2-ebc1df22eeb1)]
