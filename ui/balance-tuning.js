@@ -15,7 +15,7 @@ function rebalanceResearchPrices(){
   const normal=armorItems.filter(a=>!a.adminOnly&&!a.isPremiumArmor&&!a.isResearchSuit);
   const changed=[];
   for(const suit of armorItems.filter(a=>a.isResearchSuit&&!a.adminOnly)){
-    const same=normal.filter(a=>Number(a.tier)===Number(suit.tier));
+    const same=normal.filter(a=>Number(a.legacyTier??a.tier)===Number(suit.tier));
     if(!same.length)continue;
     const floor=Math.min(...same.map(a=>Number(a.price)||Infinity));
     const price=Math.round(floor*1.10);
