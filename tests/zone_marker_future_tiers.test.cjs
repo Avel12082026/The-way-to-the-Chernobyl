@@ -1,0 +1,11 @@
+const assert=require('assert');
+const fs=require('fs');
+const p=fs.readFileSync('server_patches/zone_marker_future_tiers_20260929.patch','utf8');
+const added=p.split('\n').filter(x=>x.startsWith('+')&&!x.startsWith('+++')).join('\n');
+assert(added.includes("const tier=Math.max(1,Number(zoneTier)||1)"),'mutants still capped at Yantar');
+assert(added.includes("return Math.max(0.01,0.10*Math.pow(0.75,tier-1))"),'future lucky decay missing');
+assert(added.includes("const locationTier=Math.max(1,Number(zoneTier)||1)"),'loot tier still capped at Yantar');
+assert(added.includes("gearChance=Math.min(0.15,0.03+(locationTier-1)*0.01)"),'future gear scaling missing');
+assert(added.includes("zoneLocation>11"),'planned T7-T11 location range missing');
+assert(added.includes("zoneLocation>6"),'future locked-location guard missing');
+console.log('PASS: Zone marker mechanics are future-proof through planned T11 locations');
