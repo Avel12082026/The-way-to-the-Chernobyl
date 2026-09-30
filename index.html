@@ -1184,7 +1184,7 @@ button:active {filter:brightness(1.18);}
 <input id="giveAmount" max="1000000" min="-1000000" placeholder="Например: 5 или -5" style="margin-bottom:10px;" type="number"/>
 <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Тир — для оружия/брони/артефактов/детекторов (1-14), для мутантов (0-14):</label>
 <input id="giveTier" max="14" min="0" placeholder="Например: 5" style="margin-bottom:10px;" type="number"/>
-<label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Выбор конкретного вида оружия/брони/перка из списка (появляется автоматически при выборе типа выше):</label>
+<label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Выбор конкретного вида оружия/брони/артефакта/перка из списка (для артефактов доступны тиры 1–11):</label>
 <select id="giveItemSelect" style="width:100%; padding:8px; background:#111; color:#fff; border:1px solid #333; margin-bottom:10px; display:none;"></select>
 <label style="display:block; font-size:12px; color:#8a7a4a; margin-bottom:4px;">Или впишите точное название вручную (необязательно, только если не нашли нужное в списке выше):</label>
 <input id="giveItemName" maxlength="80" placeholder="Например: Автомат SCAR-H" style="margin-bottom:10px;" type="text"/>
@@ -7520,9 +7520,20 @@ function startBattle(enemy) {
     }
 
     // ===== АДМИН: ВЫДАЧА ПРЕДМЕТОВ =====
+    function adminArtifactCatalog() {
+        return artifacts
+            .filter(a => a && Number(a.tier) >= 1 && Number(a.tier) <= 11)
+            .sort((a, b) => Number(a.tier) - Number(b.tier) || String(a.name).localeCompare(String(b.name), 'ru'));
+    }
+
     function updateGiveItemSelect() {
         const giveType = document.getElementById('giveType').value;
         const selectEl = document.getElementById('giveItemSelect');
+        const tierEl = document.getElementById('giveTier');
+        if (tierEl) {
+            tierEl.min = giveType === 'bodypart' ? '0' : '1';
+            tierEl.max = giveType === 'artifact' ? '11' : '14';
+        }
         if (giveType === 'weapon') {
             selectEl.style.display = 'block';
             selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
@@ -7533,8 +7544,9 @@ function startBattle(enemy) {
                 armorItems.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name} (броня ${a.armor})${a.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
         } else if (giveType === 'artifact') {
             selectEl.style.display = 'block';
-            selectEl.innerHTML = '<option value="">— выбрать конкретный вид (необязательно) —</option>' +
-                artifacts.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name}${a.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
+            const list = adminArtifactCatalog();
+            selectEl.innerHTML = '<option value="">— выбрать конкретный артефакт T1–T11 (необязательно) —</option>' +
+                list.map(a => `<option value="${a.name}">Тир ${a.tier}: ${a.name}${a.adminOnly ? ' ⭐АДМИН' : ''}</option>`).join('');
         } else if (giveType === 'perk') {
             selectEl.style.display = 'block';
             selectEl.innerHTML = Object.keys(PERK_INFO).map(key => `<option value="${key}">${PERK_INFO[key].label}</option>`).join('');
@@ -7624,7 +7636,13 @@ function startBattle(enemy) {
                 }
             } else if (giveType === 'artifact') {
                 if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
-                else { const item = pickItem(artifacts); addNonStackingItemTo(targetPlayer.inventory, item.name, amount || 1); }
+                else {
+                    const item = pickItem(adminArtifactCatalog());
+                    if (!item || Number(item.tier) < 1 || Number(item.tier) > 11) {
+                        throw new Error(`Артефакт ${tier} тира не найден в админском каталоге T1–T11`);
+                    }
+                    addNonStackingItemTo(targetPlayer.inventory, item.name, amount || 1);
+                }
             } else if (giveType === 'weapon') {
                 if (amount < 0) removeExactItem(targetPlayer, itemNameFilter, -amount);
                 else { const item = pickItem(weapons); const name = gearLevel > 0 ? `${item.name} +${gearLevel}` : item.name; addNonStackingItemTo(targetPlayer.inventory, name, amount || 1); }
