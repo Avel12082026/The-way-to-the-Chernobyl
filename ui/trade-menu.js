@@ -41,13 +41,9 @@
     const location = Number(pos?.zoneLocation ?? window.ZoneMap?.location ?? 0);
     return pos?.origin === 'yantar-bunker' && location === 6;
   };
-  const yantarLeonovWeapons = () => {
-    const reached=reachedZoneTier();
-    const weaponOrder=(typeof WEAPON_PROGRESSION_ORDER!=='undefined'?WEAPON_PROGRESSION_ORDER:weapons)
-      .filter(w=>w&&!w.adminOnly&&w.progressionClass==='automatic');
-    return weaponOrder.filter(w=>Number(w.tier)>=7&&Number(w.tier)<=Math.min(9,reached));
-  };
-  const yantarLeonovArmor = () => regularArmorByTier(7,reachedZoneTier());
+  const yantarLeonovWeapons = () => (typeof WEAPON_PROGRESSION_ORDER!=='undefined'?WEAPON_PROGRESSION_ORDER:weapons)
+    .filter(w=>w&&!w.adminOnly&&w.progressionClass==='automatic');
+  const yantarLeonovArmor = () => armorItems.filter(a => a && !a.adminOnly && !a.isPremiumArmor && !a.isResearchSuit && Number(a.id)>58);
   const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
   const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Антирад']);
   const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
@@ -60,9 +56,8 @@
           .filter(w => w && !w.adminOnly);
         const markedPistols = weaponOrder.filter(w => w.progressionClass === 'pistol');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
-        const pistols = (markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []))
-          .filter(w=>Number(w.tier)<=Math.min(3,reachedZoneTier()));
-        const zhucharaArmor=regularArmorByTier(1,Math.min(3,reachedZoneTier()));
+        const pistols = markedPistols.length === 29 ? markedPistols : (pistolStart >= 0 ? weaponOrder.slice(pistolStart, pistolStart + 29) : []);
+        const zhucharaArmor=regularArmorRange(1,29);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable' && ZHUCHARA_CONSUMABLES.has(item.name)),
           ...pistols.map(w => ({...w, category:'weapon'})),
@@ -80,9 +75,8 @@
           .filter(w => w && !w.adminOnly);
         const markedShotguns = weaponOrder.filter(w => w.progressionClass === 'shotgun');
         const pistolStart = weaponOrder.findIndex(w => w.starterGear || w.name === 'Beretta 21A Bobcat' || Number(w.id) === 86);
-        const shotguns = (markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []))
-          .filter(w=>Number(w.tier)>=4&&Number(w.tier)<=Math.min(6,reachedZoneTier()));
-        const barmanArmor=regularArmorByTier(4,Math.min(6,reachedZoneTier()));
+        const shotguns = markedShotguns.length === 29 ? markedShotguns : (pistolStart >= 0 ? weaponOrder.slice(pistolStart + 29, pistolStart + 58) : []);
+        const barmanArmor=regularArmorRange(30,58);
         return [
           ...getShopCatalog().filter(item => item?.category === 'consumable' && BARMAN_CONSUMABLES.has(item.name)),
           ...shotguns.map(w => ({...w, category:'weapon'})),
@@ -606,7 +600,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.5.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.6.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
