@@ -10,7 +10,7 @@ const catalog=html.match(/const artifacts = \[([\s\S]*?)\n\s*\];/);
 assert(catalog,'artifact catalog missing');
 for(const [tier,names] of Object.entries(expected)){
   for(const name of names){
-    assert(catalog[1].includes(`name: "${name}", tier: ${tier}`),`missing T${tier} artifact: ${name}`);
+    const re=new RegExp(`name\\s*:\\s*[\"']${name.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\    assert(catalog[1].includes(`name: "${name}", tier: ${tier}`),`missing T${tier} artifact: ${name}`);')}[\"']\\s*,\\s*tier\\s*:\\s*${tier}\\b`);\n    assert(re.test(catalog[1]),`missing T${tier} artifact: ${name}`);
   }
 }
 const start=html.indexOf('function adminArtifactCatalog()');
