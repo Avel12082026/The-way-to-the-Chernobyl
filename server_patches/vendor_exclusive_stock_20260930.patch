@@ -1,0 +1,44 @@
+--- a/server.js
++++ b/server.js
+@@ -1432,29 +1432,25 @@
+         if(!['weapon','armor'].includes(category))return next();
+         const row=db.prepare('SELECT data FROM players WHERE id=?').get(String(req.telegramUser.id));
+         if(!row)return res.status(404).json({success:false,error:'Игрок не найден'});
+-        const data=safeParsePlayerData(row.data),reached=reachedZoneTierServer(data);
++        safeParsePlayerData(row.data); // профиль нужен только для авторизации; ассортимент определяет сам торговец
+         let baseName=rawName;try{baseName=parseGearNameServer(rawName)?.baseName||rawName;}catch(_){}
+         if(category==='weapon'){
+             const weapon=WEAPON_PROGRESSION_BY_NAME_SERVER.get(baseName)?.weapon;
+             if(!weapon)return res.status(400).json({success:false,error:'Оружие не найдено'});
+-            const cls=String(weapon.progressionClass||''),tier=Number(weapon.tier)||1;
+-            const allowed=sourceVendor==='zhuchara'
+-                ? cls==='pistol'&&tier<=Math.min(3,reached)
+-                : sourceVendor==='barman'
+-                  ? cls==='shotgun'&&tier>=4&&tier<=Math.min(6,reached)
+-                  : cls==='automatic'&&tier>=7&&tier<=Math.min(9,reached);
+-            if(!allowed)return res.status(400).json({success:false,error:'Этот тир оружия ещё не открыт достигнутой частью Зоны'});
++            const cls=String(weapon.progressionClass||'');
++            const allowed=sourceVendor==='zhuchara' ? cls==='pistol'
++                : sourceVendor==='barman' ? cls==='shotgun'
++                : cls==='automatic';
++            if(!allowed)return res.status(400).json({success:false,error:'Это оружие продаётся у другого торговца'});
+         }else{
+             const armor=SHOP_ARMOR.find(a=>a&&a.name===baseName);
+             if(!armor||armor.adminOnly||armor.isPremiumArmor)return res.status(400).json({success:false,error:'Броня недоступна'});
+-            if(armor.isResearchSuit)return next();
+-            const tier=Number(armor.tier)||1;
+-            const allowed=sourceVendor==='zhuchara'
+-                ? tier<=Math.min(3,reached)
+-                : sourceVendor==='barman'
+-                  ? tier>=4&&tier<=Math.min(6,reached)
+-                  : tier>=7&&tier<=Math.min(11,reached);
+-            if(!allowed)return res.status(400).json({success:false,error:'Этот тир брони ещё не открыт достигнутой частью Зоны'});
++            if(armor.isResearchSuit)return sourceVendor==='leonov-yantar'?next():res.status(400).json({success:false,error:'Исследовательская броня продаётся у Леонова'});
++            const id=Number(armor.id)||0;
++            const allowed=sourceVendor==='zhuchara' ? id>=1&&id<=29
++                : sourceVendor==='barman' ? id>=30&&id<=58
++                : id>58;
++            if(!allowed)return res.status(400).json({success:false,error:'Эта броня продаётся у другого торговца'});
+         }
+         return next();
+     }catch(e){
