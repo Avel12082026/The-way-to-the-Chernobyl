@@ -10,16 +10,16 @@ assert(trade.includes("title: () => 'БАРМЕН — ТОРГОВЛЯ'"),'Barma
 assert(trade.includes("BARMAN_CONSUMABLES.has(item.name)"),'Barman consumable set missing');
 assert(trade.includes("markedPistols.length === 29"),'Zhuchara 29-pistol class detection missing');
 assert(trade.includes("weaponOrder.slice(pistolStart, pistolStart + 29)"),'Zhuchara pistol fallback range missing');
-assert(trade.includes("regularArmorByTier(1,Math.min(3,reachedZoneTier()))"),'Zhuchara armor must follow reached T1-T3');
+assert(trade.includes("regularArmorRange(1,29)"),'Zhuchara must sell its full exclusive armor block 1-29');
 assert(trade.includes("markedShotguns.length === 29"),'Barman 29-shotgun class detection missing');
 assert(trade.includes("weaponOrder.slice(pistolStart + 29, pistolStart + 58)"),'Barman shotgun fallback range missing');
-assert(trade.includes("regularArmorByTier(4,Math.min(6,reachedZoneTier()))"),'Barman armor must follow reached T4-T6');
-assert(trade.includes("Number(w.tier)>=4&&Number(w.tier)<=Math.min(6,reachedZoneTier())"),'Barman reached-tier weapon gate missing');
-assert(trade.includes("const reachedZoneTier = () =>"),'Reached-zone helper missing');
+assert(trade.includes("regularArmorRange(30,58)"),'Barman must sell its full exclusive armor block 30-58');
+assert(trade.includes("markedShotguns.length === 29"),'Barman must expose all 29 shotguns');
+assert(!trade.includes("Number(w.tier)>=4&&Number(w.tier)<=Math.min(6,reachedZoneTier())"),'Barman must not be tier-truncated');
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
 assert(trade.includes("let sourceVendor = currentVendor"),'trade source-vendor routing missing');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
-assert(trade.includes("version: '1.5.0'"),'TradeMenu version not bumped');
+assert(trade.includes("version: '1.6.0'"),'TradeMenu version not bumped');
 
 assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot missing');
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
@@ -41,8 +41,8 @@ assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling
 for(const ref of [
   'ui/bunker-menu.js?v=20260929-zone-economy3',
   'ui/bunker-menu.css?v=20260928-yantar-hud1',
-  'ui/trade-menu.js?v=20260929-zone-economy2',
+  'ui/trade-menu.js?v=20260930-vendor-exclusive1',
   'ui/trader-hubs.js?v=20260927-cordon-zhuchara2'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
-console.log('PASS: Zhuchara/Barman stock follows reached Zone tiers while preserving class roles');
+console.log('PASS: Zhuchara/Barman use full exclusive weapon classes and non-overlapping armor blocks');
