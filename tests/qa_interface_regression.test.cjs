@@ -29,6 +29,6 @@ assert(!index.includes('<span class="zr-sr">🎒 Инвентарь</span>'), 'i
 assert(!index.includes('<span class="zr-sr">⭐ Магазин Байт</span>'), 'shop title duplicated for assistive text');
 assert(index.includes('empty_slot_weapon.png') && index.includes('alt="" aria-hidden="true"'), 'decorative slot filenames exposed');
 assert(index.includes('ui/terminology-market.js?v=20260928-qa-fix2'), 'terminology cache key missing');
-assert(index.includes('ui/bunker-menu.js?v=20260929-zone-economy3'), 'bunker menu cache key missing');
+assert(index.includes('ui/bunker-menu.js?v=20261001-cordon-hud-sync1'), 'bunker menu cache key missing');
 
 console.log('PASS: terminology is idempotent and QA text/accessibility regressions are fixed');
