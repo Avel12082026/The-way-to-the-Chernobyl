@@ -1814,10 +1814,9 @@ button:active {filter:brightness(1.18);}
         { id: 4, name: "Энергетик", type: "water", restore: 100, price: 52 },
         { id: 5, name: "Аптечка гражданская", type: "medkit", restore: 50, price: 750, healTicks: 5, healIntervalMs: 2000 },
         { id: 6, name: "Аптечка армейская", type: "medkit", restore: 100, price: 2000, healTicks: 5, healIntervalMs: 2000 },
-        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 6000, radiationRemove: 100, healTicks: 5, healIntervalMs: 2000 },
-        // "Антирад" не лечит здоровье — только снимает радиацию, но за счёт еды и воды. Продаётся
-        // только в Бункере экологов (не у обычного Торговца)
-        { id: 8, name: "Антирад", type: "antirad", radiationRemove: 100, foodCost: 50, waterCost: 50, price: 200 }
+        { id: 7, name: "Аптечка научная", type: "medkit", restore: 150, price: 6000, radiationRemove: 100, instantHeal: true },
+        { id: 8, name: "Антирад", type: "antirad", radiationRemove: 100, foodCost: 25, waterCost: 25, price: 200 },
+        { id: 9, name: "Водка Столичная", type: "vodka", radiationRemove: 50, foodCost: 50, waterCost: 50, price: 100 }
     ];
 
     // Иконки расходников (еда/вода/аптечки) — по названию предмета. Пока только эти 7, для
@@ -6264,7 +6263,7 @@ function startBattle(enemy) {
     function getItemInfoHtmlInner(itemName, playerData = player) {
         const consumable = consumables.find(c => c.name === itemName);
         if (consumable) {
-            if (consumable.type === 'antirad') {
+            if (consumable.type === 'antirad' || consumable.type === 'vodka') {
                 return `<div style="font-size:12px; color:#aaa; margin-bottom:10px; background:#111; padding:8px; border-radius:6px;">
                     Снимает радиацию: <b style="color:#8ac926;">-${consumable.radiationRemove}</b><br>
                     Забирает сытость: <b style="color:#e67e22;">-${consumable.foodCost}</b> и жажду: <b style="color:#3498db;">-${consumable.waterCost}</b>
@@ -7299,7 +7298,7 @@ function startBattle(enemy) {
             ...consumables.map(c => ({
                 ...c,
                 category: 'consumable',
-                price: (c.type === 'medkit' || c.type === 'antirad') ? Math.round(c.price * 1.01) : c.price
+                price: (c.type === 'medkit' || c.type === 'antirad' || c.type === 'vodka') ? Math.round(c.price * 1.01) : c.price
             })),
             ...unlockWeaponsByLevel().map(w => ({ ...w, category: 'weapon' })),
             ...unlockArmorByLevel().map(a => ({ ...a, category: 'armor' }))
