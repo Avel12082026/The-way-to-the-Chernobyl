@@ -44,7 +44,7 @@
   const yantarLeonovWeapons = () => (typeof WEAPON_PROGRESSION_ORDER!=='undefined'?WEAPON_PROGRESSION_ORDER:weapons)
     .filter(w=>w&&!w.adminOnly&&w.progressionClass==='automatic');
   const yantarLeonovArmor = () => armorItems.filter(a => a && !a.adminOnly && !a.isPremiumArmor && !a.isResearchSuit && Number(a.id)>58);
-  const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская']);
+  const ZHUCHARA_CONSUMABLES = new Set(['Хлеб','Вода','Аптечка гражданская','Водка Столичная']);
   const BARMAN_CONSUMABLES = new Set(['Хлеб','Тушенка','Вода','Энергетик','Аптечка гражданская','Аптечка армейская','Антирад']);
   const LEONOV_CONSUMABLE_TYPES = new Set(['food','water','medkit','antirad']);
   const LEONOV_BUYBACK_TYPES = new Set(['food','water','medkit','antirad']);
