@@ -35,6 +35,6 @@ assert(env.select({zoneLocation:6,battleToken:'x'}).path.includes('yantar-placeh
 
 assert(html.includes('price: 750, healTicks: 5'),'civilian medkit must remain unchanged');
 assert(html.includes('price: 2000, healTicks: 5'),'army medkit must remain unchanged');
-assert(html.includes('price: 6000, radiationRemove: 100, healTicks: 5'),'scientific medkit must remain unchanged');
+assert(html.includes('price: 6000, radiationRemove: 100, instantHeal: true'),'scientific medkit must heal instantly');
 
-console.log('PASS: NPC loot hardened, zone routes authoritative, shops geography-gated, agility/intellect balanced, dark T5/T6 placeholders, medkits unchanged');
+console.log('PASS: NPC loot hardened, zone routes authoritative, shops geography-gated, agility/intellect balanced, dark T5/T6 placeholders, scientific medkit instant');
