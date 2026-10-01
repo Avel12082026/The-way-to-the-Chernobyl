@@ -19,7 +19,7 @@ assert(!trade.includes("Number(w.tier)>=4&&Number(w.tier)<=Math.min(6,reachedZon
 assert(trade.includes("serverVendor: 'zhuchara'"),'Barman must reuse Zhuchara pricing/route');
 assert(trade.includes("let sourceVendor = currentVendor"),'trade source-vendor routing missing');
 assert(trade.includes("id === 'barman' && window.BunkerMenu?.openBarmanHub"),'Trade Back must return to Barman');
-assert(trade.includes("version: '1.6.0'"),'TradeMenu version not bumped');
+assert(trade.includes("version: '1.6.1'"),'TradeMenu version not bumped');
 
 assert(bunker.includes('id="rostokBarmanHotspot"'),'Barman invisible hotspot missing');
 assert(bunker.includes('id="rostokWarehouseHotspot"'),'Rostok warehouse door hotspot missing');
@@ -31,7 +31,7 @@ for(const action of ['talk','trade','back'])assert(bunker.includes('data-barman-
 assert(bunker.includes("screen === 'main' && rostokReturnPending"),'Rostok sub-screen return interception missing');
 assert(bunker.includes("['inventory','kpk','warehouse'].includes(saved.place)"),'Rostok warehouse/PDA/inventory origin restore missing');
 assert(bunker.includes("function restorePlayerWorldPositionWhenReady"),'startup world-position restore poll missing');
-assert(bunker.includes("window.BunkerMenu = {version: '1.23.0'"),'BunkerMenu version not bumped');
+assert(bunker.includes("window.BunkerMenu = {version: '1.24.0'"),'BunkerMenu version not bumped');
 
 assert(bunker.includes('id="rostokLowerHud"')&&bunker.includes('ui/rostok-lower-hud.png?v=09db18421007'),'Rostok clean lower menu asset missing');
 assert(css.includes('.rostok-lower-hud')&&css.includes('object-fit:fill;object-position:center'),'Clean lower menu styling missing');
@@ -39,10 +39,10 @@ assert(!css.includes('clip-path:inset(84.35% 0 0 0)'),'Old oversized HUD strip m
 assert(css.includes('.rostok-warehouse-hotspot'),'Warehouse door hotspot styling missing');
 
 for(const ref of [
-  'ui/bunker-menu.js?v=20260929-zone-economy3',
+  'ui/bunker-menu.js?v=20261001-cordon-hud-sync1',
   'ui/bunker-menu.css?v=20260928-yantar-hud1',
-  'ui/trade-menu.js?v=20260930-vendor-exclusive1',
-  'ui/trader-hubs.js?v=20260927-cordon-zhuchara2'
+  'ui/trade-menu.js?v=20261001-cordon-hud-sync1',
+  'ui/trader-hubs.js?v=20261001-cordon-hud-sync1'
 ])assert(html.includes(ref),'cache key missing: '+ref);
 
 console.log('PASS: Zhuchara/Barman use full exclusive weapon classes and non-overlapping armor blocks');
