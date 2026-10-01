@@ -2027,7 +2027,16 @@
           saveWorldPosition('zone-map','zone-map');
         }
       }
-      return nativeOpen.apply(this, arguments);
+      const result = nativeOpen.apply(this, arguments);
+      // Cordon HUD must never depend only on a style MutationObserver or on the
+      // caller remembering to run updateUI(). Returning from a trader can happen
+      // after a server-authoritative balance change, so refresh from the current
+      // player snapshot every time the main camp is opened.
+      if (screen === 'main') {
+        refresh();
+        scheduleLayout();
+      }
+      return result;
     };
     wrapped.__worldPositionAware = true;
     wrapped.__worldPositionNative = nativeOpen;
@@ -2062,7 +2071,7 @@
     get travelRoute(){return zoneTravelRoute?{...zoneTravelRoute}:null;},
     beginTravel:beginZoneTravelRoute
   });
-  window.BunkerMenu = {version: '1.23.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, openYantarWarehouse, closeYantarCamp, openBarmanHub, closeBarmanHub};
+  window.BunkerMenu = {version: '1.24.0', refresh, enterRaid, readBook, openLeonov, closeLeonov, openSmoker, closeSmoker, talkSmoker, openZoneMap, openRostokCamp, closeRostokCamp, openYantarCamp, openYantarWarehouse, closeYantarCamp, openBarmanHub, closeBarmanHub};
   layout();
   restorePlayerWorldPositionWhenReady();
 })();
