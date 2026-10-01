@@ -324,6 +324,10 @@
     }
     if (result.craftedArtifacts) reinjectCraftedArtifacts();
     native.updateUI();
+    // Defensive synchronization for the illustrated camp HUD. The transaction
+    // response is authoritative; update the hidden Cordon HUD immediately so
+    // returning from Zhuchara cannot reveal a pre-transaction balance.
+    window.BunkerMenu?.refresh?.();
   }
   async function execute(side) {
     if (busy || needsSync || !vendor || !['buy', 'sell'].includes(side) || !queues[side].size) return;
@@ -600,7 +604,7 @@
   }, true);
   const technicianButton = document.querySelector('[onclick="openTechnicianTab(\'sell\')"]');
   if (technicianButton) technicianButton.textContent = 'Торговля';
-  window.TradeMenu = Object.freeze({version: '1.6.0', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
+  window.TradeMenu = Object.freeze({version: '1.6.1', open, refresh: render, openTechnicianUpgrade(){ if (busy) return false; if (!root.hidden) hide(); technicianTab='upgrade'; native.openScreen('technician'); native.openTechnicianTab('upgrade'); return true; }});
 })();
 
 /* TRADE_HOLD_WAREHOUSE_FIX_V1 */
