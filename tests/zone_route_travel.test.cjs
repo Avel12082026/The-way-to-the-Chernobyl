@@ -5,7 +5,7 @@ const js=fs.readFileSync('ui/bunker-menu.js','utf8');
 const html=fs.readFileSync('index.html','utf8');
 
 assert(js.includes("version: '0.9.0'"),'ZoneMap route API version missing');
-assert(js.includes("window.BunkerMenu = {version: '1.23.0'"),'BunkerMenu route version missing');
+assert(js.includes("window.BunkerMenu = {version: '1.24.0'"),'BunkerMenu route version missing');
 assert(js.includes('async function beginZoneTravelRoute(point)'),'route starter missing');
 assert(js.includes("SERVER_URL+'/api/zone-route/start'"),'route start API missing');
 assert(js.includes("url.replace('/api/raid/step','/api/zone-route/step')"),'raid step is not routed through travel');
@@ -19,6 +19,6 @@ const liveTransition=js.slice(
   js.indexOf("if (!zoneRouteKinds.has(kind))")
 );
 assert(liveTransition.includes('await beginZoneTravelRoute(point)'),'production transition does not start route');
-assert(html.includes('ui/bunker-menu.js?v=20260929-zone-economy3'),'route cache key missing');
+assert(html.includes('ui/bunker-menu.js?v=20261001-cordon-hud-sync1'),'route cache key missing');
 
 console.log('PASS: persistent 10-battle travel route client wiring');
