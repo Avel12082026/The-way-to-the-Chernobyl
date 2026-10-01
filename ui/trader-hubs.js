@@ -157,6 +157,7 @@
 
   function showHub(hub, key) {
     nativeOpenScreen('main');
+    window.BunkerMenu?.refresh?.();
     hub.hidden = false;
     hub.classList.add('active');
     document.body.classList.add('trader-portrait-visible');
@@ -189,6 +190,7 @@
       } else if (action === 'back') {
         hideZhuchara();
         nativeOpenScreen('main');
+        window.BunkerMenu?.refresh?.();
       }
     });
     return zhucharaHub;
@@ -259,7 +261,7 @@
   };
 
   window.TraderHubs = Object.freeze({
-    version:'1.4.5',
+    version:'1.4.6',
     openZhuchara, hideZhuchara,
     openDiesel, hideDiesel,
     decorateLeonov, bindPortrait
