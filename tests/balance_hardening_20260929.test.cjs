@@ -30,11 +30,11 @@ assert(trade.includes('Number(w.tier)>=7&&Number(w.tier)<=Math.min(9,reached)'),
 assert.equal(env.zones.length,6);
 assert.equal(env.select({zoneLocation:5,battleToken:'x'}).zoneId,5);
 assert.equal(env.select({zoneLocation:6,battleToken:'x'}).zoneId,6);
-assert(env.select({zoneLocation:5,battleToken:'x'}).path.includes('dark-valley-placeholder.svg'));
+assert(env.select({zoneLocation:5,battleToken:'x'}).path.match(/\/2[1-5]\.webp$/),'Dark Valley must use real backgrounds');
 assert(env.select({zoneLocation:6,battleToken:'x'}).path.includes('yantar-placeholder.svg'));
 
 assert(html.includes('price: 750, healTicks: 5'),'civilian medkit must remain unchanged');
 assert(html.includes('price: 2000, healTicks: 5'),'army medkit must remain unchanged');
 assert(html.includes('price: 6000, radiationRemove: 100, instantHeal: true'),'scientific medkit must heal instantly');
 
-console.log('PASS: NPC loot hardened, zone routes authoritative, shops geography-gated, agility/intellect balanced, dark T5/T6 placeholders, scientific medkit instant');
+console.log('PASS: NPC loot hardened, zone routes authoritative, shops geography-gated, agility/intellect balanced, Dark Valley real backgrounds + Yantar placeholder, scientific medkit instant');
