@@ -23,8 +23,8 @@ for(let zoneId=1;zoneId<=6;zoneId++){
   }
   assert.equal(environments.select({zoneLocation:zoneId,battleToken:token,level:999,player:{level:999}}),expected,'Unlock level cannot move a battle to another zone');
  }
- if(zoneId<=4)assert.equal(reachable.size,5,'Every finished environment variant is reachable');
- else assert.equal(reachable.size,5,'Placeholder zone still has five stable encounter ids');
+ if(zoneId<=5)assert.equal(reachable.size,5,'Every finished environment variant is reachable');
+ else assert.equal(reachable.size,5,'Yantar placeholder zone still has five stable encounter ids');
 }
 for(const location of [undefined,null,'Зона','Припять','Чернобыль','pripyat',0,7,999,-1,{},'__proto__','constructor']){
  assert.equal(environments.select({location,battleToken:'unknown'}).zoneId,1,'An unknown location has a Cordon fallback, never a late-game city');
@@ -77,5 +77,5 @@ async function flush(promise){delayed.splice(0).forEach(done=>done());return awa
  assert.equal(draws.at(-1),environments.select(newest).path+'?v=test');
  const hidden=scene.show({...input,enemy:{...input.enemy,battleToken:'hidden-token'}});scene.hide();
  assert.equal(await flush(hidden),false);assert.equal(host.hidden,true);
- console.log('PASS: 4 finished + 2 dark placeholder combat zones, aliases, fallback, navigation and stale-load protection');
+ console.log('PASS: 5 finished + 1 Yantar placeholder combat zones, aliases, fallback, navigation and stale-load protection');
 })().catch(error=>{console.error(error);process.exitCode=1;});
